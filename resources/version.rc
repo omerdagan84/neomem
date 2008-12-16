@@ -1,0 +1,64 @@
+// version.rct is a template for the version info file. 
+// version.rc is the compiled file - don't modify that!
+// Compile the template using subwcrev (in tortoiseSvn's bin folder):
+//
+// subwcrev . res\version.rct res\version.rc
+//
+// (or just run the ruby program "build.rb").
+// This will update the versioninfo structure below with the current 
+// subversion repository revision number (replacing the 158's).
+// The resulting version.rc file is included in the project's resource file (neomem.rc).
+// That was done by going to Vis C++'s View/Resource Includes... menu
+// and adding #include "version.rc" in the Compile-Time Directives box. 
+//
+// see 
+// http://tortoisesvn.sourceforge.net/node/18
+// http://support.microsoft.com/default.aspx?scid=kb;en-us;76714
+
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,2,3,158
+ PRODUCTVERSION 1,2,3,158
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "www.neomem.org\0"
+            VALUE "CompanyName", "NeoMem.org\0"
+            VALUE "FileDescription", "NeoMem Executable File\0"
+            VALUE "FileVersion", "1.2c Prerelease, Build 158 (2006-07-06 10:44:59)\0"
+            VALUE "InternalName", "NeoMem\0"
+            VALUE "LegalCopyright", "Copyright (c) 2001-2006 NeoMem.org. All Rights Reserved.\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "NeoMem.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "NeoMem\0"
+            VALUE "ProductVersion", "1.2c Prerelease, Build 158 (2006-07-06 10:44:59)\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+

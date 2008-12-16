@@ -1,0 +1,80 @@
+:Base NeoMem.hlp
+:Title NeoMem Help
+1 Welcome to NeoMem
+2 Overview=HIDR_NEOMEM_TYPE
+2 What's New?=HID_WHATS_NEW
+2 Example File=example_file
+2 Limitations=limitations
+2 Contact Information=contact
+2 Frequently Asked Questions=faq
+2 Technical Support=technical_support
+1 Folders and Objects
+2 Overview=folders_and_objects
+2 Navigating=navigating
+2 Home Folder=home_folder
+2 Adding an Object or Folder=add_object
+2 Renaming an Object=rename_object
+2 Deleting an Object=delete_object
+2 Moving an Object=move_object
+2 Changing the Icon of an Object=change_object_icon
+2 Changing the Class of an Object=change_object_class
+2 Changing the Contents of an Object=change_object_contents
+2 Sorting Objects, Autosort and Moving Items Up and Down=sorting
+2 Printing Objects=printing
+1 Classes and Properties
+2 Overview=classes_and_properties
+2 System Classes and Properties=system_classes
+2 Creating a New Class=add_class
+2 Editing an Existing Class=edit_class
+2 Deleting a Class=delete_class
+2 Properties and Property Types=properties
+1 Views
+2 Overview=views_overview
+2 Modifying Views=modifying_views
+2 Data View=data_view
+2 Search View=search_view
+2 Index View=index_view
+2 Home View=home_view
+2 Text View=text_view
+2 Contents View=contents_view
+2 Properties View=properties_view
+2 Clock View=clock_view
+1 Features
+2 AutoRecover=autorecover
+2 Password Protection/Encryption=encryption
+1 Dialogs
+2 Add Property Dialog=HIDD_ADD_PROPERTY
+2 New Object Dialog=HIDD_EDIT_OBJECT
+2 New Folder Dialog=HIDD_EDIT_FOLDER
+2 Change Class Contents Dialog=HIDD_CHANGE_CLASS_CONTENTS
+2 Change Class Icon Dialog=HIDD_CHANGE_CLASS_ICON
+2 Change Object Class Dialog=HIDD_CHANGE_OBJECT_CLASS
+2 Change Object Contents Dialog=HIDD_CHANGE_OBJECT_CONTENTS
+2 Change Object Icon Dialog=HIDD_CHANGE_OBJECT_ICON
+2 Class Wizard: Intro=HIDD_CLASS_INTRO
+2 Class Wizard: Name and Description=HIDD_CLASS_NAME
+2 Class Wizard: Name Type=HIDD_CLASS_TYPE
+2 Class Wizard: Icon=HIDD_CLASS_ICON
+2 Class Wizard: Properties=HIDD_CLASS_PROPERTIES
+2 Class Wizard: Contents=HIDD_CLASS_CONTENTS
+2 Class Wizard: Summary=HIDD_CLASS_SUMMARY
+2 Edit Date Dialog=HIDD_EDIT_DATE
+2 Edit Link Dialog=HIDD_EDIT_LINK
+2 Edit Person Name Dialog=HIDD_EDIT_PERSON_NAME
+2 Edit Property Dialog=HIDD_EDIT_PROPERTY
+2 File Properties Dialog=HIDD_FILE_GENERAL
+2 File Security Dialog=HIDD_FILE_SECURITY
+2 Move Object Dialog=HIDD_MOVE_TO
+2 Object Properties Dialog=HIDD_OBJECT_GENERAL
+2 Options Dialog=HIDD_OPTIONS_GENERAL
+2 Print Dialog=print_dialog
+2 Print Preview=HIDD_PREVIEW_TOOLBAR
+2 Property Wizard=HIDD_PROPERTY_WIZARD
+1 Files
+2 Import and Export=import_export
+1 Appendix
+2 System Requirements=requirements
+2 Keyboard Shortcuts=HID_KEYBOARD_SHORTCUTS
+2 Legal Information=legal_info
+1 Uninstall
+2 How to Uninstall=uninstall
