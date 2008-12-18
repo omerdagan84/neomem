@@ -11,6 +11,10 @@ would be nice to split out neomem.rc into menus.rc, dialogs.rc, strings.rc, etc.
 but vs probably wouldn't like that
 
 
+note: to get better control over the version information, i made an .rct file, which is a template file for the actual .rc file. 
+
+
+
 from msdn:
 Visual C++ manages a single .RC resource file and a corresponding .H header file as a tightly coupled pair of files. When you edit and save resources in an .RC file, you indirectly edit and save symbols in the corresponding .H file. Although you can open and edit multiple .RC files at a time (using Visual C++'s MDI user interface) for any given .RC file you indirectly edit exactly one corresponding header file.
 By default, Visual C++ always names the corresponding header file RESOURCE.H
