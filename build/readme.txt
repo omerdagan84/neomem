@@ -12,17 +12,12 @@ eg
 * win-vs6
 * ...
 
-
-note: the neomem.opt file stores the vs6 project settings(?). 
-but absurdly, it uses hardcoded paths!
-so to see it correcly must put the build folder at
-  c:\projects\neomem\neomemC\work
-ack!!
-how do people get around this??
-hmm, they don't include the .opt file. 
-try renaming it and see what happens?
-
-oh, .opt stores the project folders (ie when you add folders to organize your source code).
-not actual file system folders. 
-
+note: the neomem.opt file stores the vs6 project folders 
+(ie the ones used to organize your source files). 
+it seems to use hardcoded paths, but is able to reconfigure itself
+if the location changes.
+but if worse comes to worse, it can be deleted.
+some vs6 projects just don't include the .opt file, but i used the
+project folders to try to organize the code and make it easier to understand,
+so i'm including it. 
 
