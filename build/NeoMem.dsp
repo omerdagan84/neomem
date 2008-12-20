@@ -38,8 +38,8 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 5
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\builds\release"
-# PROP Intermediate_Dir "..\builds\release"
+# PROP Output_Dir "..\code\builds\release"
+# PROP Intermediate_Dir "..\code\builds\release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"precompiled.h" /FD /c
@@ -65,8 +65,8 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 5
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\builds\debug"
-# PROP Intermediate_Dir "..\builds\debug"
+# PROP Output_Dir "..\code\builds\debug"
+# PROP Intermediate_Dir "..\code\builds\debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"precompiled.h" /FD /GZ /c
@@ -1637,7 +1637,7 @@ SOURCE=..\help\NeoMem.cnt
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Copying contents file...
-OutDir=.\..\builds\release
+OutDir=..\code\builds\release
 InputPath=..\help\NeoMem.cnt
 InputName=NeoMem
 
@@ -1650,7 +1650,7 @@ InputName=NeoMem
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Copying contents file...
-OutDir=.\..\builds\debug
+OutDir=..\code\builds\debug
 InputPath=..\help\NeoMem.cnt
 InputName=NeoMem
 
@@ -1671,7 +1671,7 @@ SOURCE=..\help\NeoMem.hpj
 # PROP Ignore_Default_Tool 1
 USERDEP__NEOME="..\help\NeoMem.rtf"	"..\help\$(TargetName).hm"	
 # Begin Custom Build - Making help file...
-OutDir=.\..\builds\release
+OutDir=..\code\builds\release
 TargetName=NeoMem
 InputPath=..\help\NeoMem.hpj
 InputName=NeoMem
@@ -1694,7 +1694,7 @@ InputName=NeoMem
 # PROP Ignore_Default_Tool 1
 USERDEP__NEOME="..\help\NeoMem.rtf"	"..\help\$(TargetName).hm"	
 # Begin Custom Build - Making help file...
-OutDir=.\..\builds\debug
+OutDir=..\code\builds\debug
 TargetName=NeoMem
 InputPath=..\help\NeoMem.hpj
 InputName=NeoMem

@@ -15,7 +15,7 @@ eg
 
 note: the neomem.opt file stores the vs6 project folder settings. 
 but absurdly, it stores hardcoded paths!
-so to see it correcly must put the project folder at
+so to see it correcly must put the build folder at
 c:\projects\neomem\neomemC
 ack!!
 
