@@ -44,6 +44,12 @@ BObject::BObject()
 	InitToZero();
 }
 
+BObject::BObject(ULONG lngClassID)
+{
+	InitToZero();
+	m_lngClassID = lngClassID;
+}
+
 BObject::~BObject()
 {
 	// Clear the object, release all its children and properties recursively, and release

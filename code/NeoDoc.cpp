@@ -565,7 +565,8 @@ BObject* CNeoDoc::GetObject(ULONG lngObjectID)
 // Returns a pointer to the new object, or NULL if unsuccessful.
 // Sets document modified flag.
 // Note: This does NOT tell views about new object.
-BObject* CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText, 
+BObject* 
+CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText, 
 							ULONG lngObjectID, ULONG lngIconID, ULONG lngFlags)
 {
 	ASSERT_VALID(this);
@@ -590,7 +591,7 @@ BObject* CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString
 	}
 	
 	// Create the new object
-	BObject* pobjNew = new BObject();
+	BObject* pobjNew = new BObject(lngClassID);
 	ASSERT_VALID(pobjNew);
 
 	// Store pointer to this document
@@ -598,7 +599,7 @@ BObject* CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString
 
 	//, call a Create method now
 	// Set properties
-	pobjNew->m_lngClassID = lngClassID; // it's okay to set this directly instead of calling SetClassID, because that's more for handling /changes/ to classid. 
+//	pobjNew->m_lngClassID = lngClassID; // it's okay to set this directly instead of calling SetClassID, because that's more for handling /changes/ to classid. 
 	pobjNew->m_lngFlags = lngFlags;
 //	pobjNew->SetIconID(lngIconID);
 	pobjNew->m_lngIconID = lngIconID;

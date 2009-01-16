@@ -25,7 +25,8 @@ class BObject : public CObject
 
 // Construction
 public:
-	BObject(); // create from serialization only
+	BObject(); // create from serialization only // huh?
+	BObject(ULONG lngClassID); // so can set class id from neodoc. 
 	virtual ~BObject();
 //	BObject( const BObject& a ); // Copy constructor
 //	const BObject& operator=( const BObject& a ); // Assignment operator
@@ -66,6 +67,7 @@ public:
 	int GetParents(BObjects& aParents, BObject* pobjStopAt, BOOL bIncludeThisObject = TRUE, BOOL bIncludeStopObject = FALSE);
 	BData* GetPropertyData(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	int GetPropertyDefAlignment();
+	CString GetPropertyDefMachineVersionName();
 	int GetPropertyDefWidth();
 	int GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly, BOOL bThisIsAClass);
 	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
@@ -104,11 +106,11 @@ public:
 
 
 // Attributes
-public:
-	CString GetPropertyDefMachineVersionName();
 // These are serialized
+private:
 	ULONG m_lngObjectID; // Unique ObjectID, or 0 if this is a property BObject.
 	ULONG m_lngClassID;	// ClassID of this BObject, or PropertyID if this is a property BObject.
+public:
 	ULONG m_lngIconID;	// IconID of this BObject (0 means it's using the classdef icon)
 	ULONG m_lngFlags; // 32 bit flags
 	BObjects* m_paChildren; // pointer to list containing pointers to child bobjects. null if has no children.

@@ -241,7 +241,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// Default is to show the root node.
 				// If we're loading the main root, see if we're admin or not.
 				BOOL bIncludeStart = TRUE;
-				if (pobjStart->m_lngObjectID == rootMain)
+				if (pobjStart->GetObjectID() == rootMain)
 				{
 					bIncludeStart = (theApp.m_bAdmin);
 				}
