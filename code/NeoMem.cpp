@@ -2878,7 +2878,7 @@ void CNeoMem::Export(BObject *pobj)
 //	CString strExtension = m_strExportFormat;
 	CString strExtension = "csv"; // hardcode as first in list, for now
 	CStringEx strTitle;
-	if (pobj->m_lngObjectID == rootUser)
+	if (pobj->GetObjectID() == rootUser)
 		strTitle = pdoc->GetTitle(); // eg test.neo
 	else
 	{

@@ -194,7 +194,7 @@ void CListCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 			// Special case for Property View - need to display the value of the property for the
 			// document's current object. The Value column has a dummy property of propValue assigned to it.
 			if (lngPropertyID == propValue)
-				pLVITEM->pszText = const_cast <TCHAR*> (m_pDoc->m_pobjCurrent->GetPropertyText(pobj->m_lngObjectID));
+				pLVITEM->pszText = const_cast <TCHAR*> (m_pDoc->m_pobjCurrent->GetPropertyText(pobj->GetObjectID()));
 			else
 				pLVITEM->pszText = const_cast <TCHAR*> (pobj->GetPropertyText(lngPropertyID));
 		}
@@ -764,7 +764,7 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 				if (pobjPropType)
 				{
 					ASSERT_VALID(pobjPropType);
-					ULONG lngPropertyTypeID = pobjPropType->m_lngObjectID;
+					ULONG lngPropertyTypeID = pobjPropType->GetObjectID();
 					xTRACE("     custom draw proptypeid %d\n", lngPropertyTypeID);
 /*					if (lngPropertyTypeID == proptypeHyperlink)
 					{
@@ -1605,7 +1605,7 @@ ULONG CListCtrlEx::GetSelectedObjectID()
 	if (pobjSelected)
 	{
 		ASSERT_VALID(pobjSelected);
-		return pobjSelected->m_lngObjectID;
+		return pobjSelected->GetObjectID();
 	}
 	return 0;
 }
@@ -2128,7 +2128,7 @@ void CListCtrlEx::DeleteColumnProperty(BObject *pobjPropertyDef)
 
 	// Bug: Since the property def has been deleted, m_lngObjectID is no longer valid!!!!!!!
 	// Also, at this point, the bobject has been removed from document index, so can't do GetObject on it!!!!
-	ULONG lngPropertyID = pobjPropertyDef->m_lngObjectID;
+	ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 
 	// Now search through columns and remove if there
 	HDITEM hdi;
@@ -2577,7 +2577,7 @@ BData* CListCtrlEx::GetCellBData(int nRow /* = -1 */, int nCol /* = -1 */)
 			// Special case for Property View - need to display the value of the property for the
 			// document's current object. The Value column has a dummy property of propValue assigned to it.
 			if (lngPropertyID == propValue)
-				pdat = m_pDoc->m_pobjCurrent->GetPropertyData(pobj->m_lngObjectID);
+				pdat = m_pDoc->m_pobjCurrent->GetPropertyData(pobj->GetObjectID());
 			else
 				pdat = pobj->GetPropertyData(lngPropertyID);
 		}
@@ -3272,7 +3272,7 @@ BOOL CListCtrlEx::UpdateColumn(int nCol, BObject* pobjPropertyDef)
 
 	// Get propertydef properties
 	LPCTSTR szText = pobjPropertyDef->GetPropertyText(propName);
-	ULONG lngPropertyID = pobjPropertyDef->m_lngObjectID;
+	ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 	int nAlignment = pobjPropertyDef->GetPropertyDefAlignment();
 	
 	// Edit the column
@@ -3462,7 +3462,7 @@ void CListCtrlEx::SortByProperty(ULONG lngPropertyID /* = 0 */, int iDir /* = 0 
 		if (pobjPropType)
 		{
 			ASSERT_VALID(pobjPropType);
-			lngPropertyTypeID = pobjPropType->m_lngObjectID;
+			lngPropertyTypeID = pobjPropType->GetObjectID();
 		}
 	}
 

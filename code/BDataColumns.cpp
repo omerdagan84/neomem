@@ -346,7 +346,7 @@ BOOL BDataColumns::FindReferences(BObject* pobjFind)
 {
 	ASSERT_VALID(pobjFind);
 
-	ULONG lngPropertyID = pobjFind->m_lngObjectID;
+	ULONG lngPropertyID = pobjFind->GetObjectID();
 	ASSERT(lngPropertyID);
 	ASSERT(m_aci.GetSize() >= m_nColumns);
 	// Walk through columninfo objects and look for references
@@ -367,7 +367,7 @@ BOOL BDataColumns::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 
 	ASSERT_VALID(pobjFind);
 
 	BOOL bFound = FALSE;
-	ULONG lngPropertyID = pobjFind->m_lngObjectID;
+	ULONG lngPropertyID = pobjFind->GetObjectID();
 	ASSERT(lngPropertyID);
 	ASSERT(m_aci.GetSize() >= m_nColumns);
 
@@ -379,7 +379,7 @@ BOOL BDataColumns::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 
 			if (pobjNew)
 			{
 				// Replace the reference with new propertydef
-				m_aci[i].m_lngPropertyID = pobjNew->m_lngObjectID;
+				m_aci[i].m_lngPropertyID = pobjNew->GetObjectID();
 				m_aci[i].m_pobjPropertyDef = pobjNew;
 				m_aci[i].m_nColWidth = pobjNew->GetPropertyDefWidth();
 				m_aci[i].m_nColAlignment = pobjNew->GetPropertyDefAlignment();

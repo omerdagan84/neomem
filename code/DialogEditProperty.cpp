@@ -367,7 +367,7 @@ void CDialogEditProperty::OnSelChangeCboType()
 	if (pobjType)
 	{
 		ASSERT_VALID(pobjType);
-		ULONG lngTypeID = pobjType->m_lngObjectID;
+		ULONG lngTypeID = pobjType->GetObjectID();
 
 		// Get type description
 		m_txtTypeDescription.SetWindowText(pobjType->GetPropertyText(propDescription));

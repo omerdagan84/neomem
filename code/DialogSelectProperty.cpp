@@ -162,7 +162,7 @@ void CDialogSelectProperty::DoDataExchange(CDataExchange* pDX)
 //			m_lvw.GetSelectedItems(m_pdatLink);
 		BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();
 		if (pobj)
-			m_lngSelectedID = pobj->m_lngObjectID;
+			m_lngSelectedID = pobj->GetObjectID();
 	}
 }
 

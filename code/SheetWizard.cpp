@@ -242,8 +242,8 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			BObject* pobjOldPropType = m_pobjEditOriginal->GetPropertyLink(propObjectNamePropertyType);
 			if (pobjNewPropType != pobjOldPropType)
 			{
-				ULONG lngClassID = m_pobjEditOriginal->m_lngObjectID;
-				ULONG lngNewPropertyTypeID = pobjNewPropType->m_lngObjectID;
+				ULONG lngClassID = m_pobjEditOriginal->GetObjectID();
+				ULONG lngNewPropertyTypeID = pobjNewPropType->GetObjectID();
 				m_pDoc->m_pobjRoot->ChangeNamePropertyType(lngClassID, lngNewPropertyTypeID);
 			}
 
@@ -268,7 +268,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			// Move object to new parent, if changed, and notify views
 			// don't do if on base class cause step 20 is screwy
 			// No longer handling inheritance in v1
-//			if (m_pobjEditOriginal->m_lngObjectID != rootClass)
+//			if (m_pobjEditOriginal->GetObjectID() != rootClass)
 //			{
 //				if (m_pobjEditOriginal->m_pobjParent != m_pobj->m_pobjParent)
 //				{
@@ -302,7 +302,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			// it's a member of the class
 			// special hint message?
 //			m_pDoc->UpdateAllViewsEx(NULL, hintRefresh);
-//			h.m_lngClassID = pobjClass->m_lngObjectID;
+//			h.m_lngClassID = pobjClass->GetObjectID();
 //			m_pDoc->UpdateAllViewsEx(NULL, hintClassIconChange, &h);
 
 			// this is now done in seticonid

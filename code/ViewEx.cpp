@@ -1098,7 +1098,7 @@ void CViewEx::OnRButtonDown(UINT nFlags, CPoint point)
 /*
 	// Exit if on Home Object
 	//, allow changes in future versions?
-	if (m_pDoc->GetCurrentObject()->m_lngObjectID == rootUser)
+	if (m_pDoc->GetCurrentObject()->GetObjectID() == rootUser)
 	{
 		AfxMessageBox("The Home Folder views cannot be modified.", MB_ICONINFORMATION);
 		return;

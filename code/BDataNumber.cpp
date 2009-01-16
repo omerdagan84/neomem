@@ -48,7 +48,7 @@ BOOL BDataNumber::SetBDataText(const CString& str, BObject* pobjPropertyDef /* =
 	if (pobjPropType)
 	{
 		ASSERT_VALID(pobjPropType);
-		lngPropertyTypeID = pobjPropType->m_lngObjectID;
+		lngPropertyTypeID = pobjPropType->GetObjectID();
 	}
 
 	switch (lngPropertyTypeID)
@@ -262,7 +262,7 @@ BOOL BDataNumber::FindReferences(BObject* pobjFind)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjFind);
-	if (m_lngUnitID == pobjFind->m_lngObjectID)
+	if (m_lngUnitID == pobjFind->GetObjectID())
 		return TRUE;
 	return FALSE;
 }
@@ -274,10 +274,10 @@ BOOL BDataNumber::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 *
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjFind);
 	BOOL bFound = FALSE;
-	if (m_lngUnitID == pobjFind->m_lngObjectID)
+	if (m_lngUnitID == pobjFind->GetObjectID())
 	{
 		if (pobjNew)
-			m_lngUnitID = pobjNew->m_lngObjectID;
+			m_lngUnitID = pobjNew->GetObjectID();
 		else
 			m_lngUnitID = 0; //, for now
 		// Set flag

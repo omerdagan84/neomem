@@ -71,7 +71,7 @@ BOOL BDataFlags::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 
 		ASSERT_VALID(m_pobj);
 //		BObject* pobj = (BObject*) aResults.GetAt(0);
 //		ASSERT_VALID(pobj);
-//		m_lngID = pobj->m_lngObjectID;
+//		m_lngID = pobj->GetObjectID();
 		return TRUE;
 	}
 */
@@ -163,7 +163,7 @@ BOOL BDataFlags::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 //	dlg.m_pobjStart = ...
 //	dlg.m_pobjSelected = m_pobj;
 //	if (dlg.DoModal() == IDOK)
-	ULONG lngClassID = m_pobj->m_lngObjectID;
+	ULONG lngClassID = m_pobj->GetObjectID();
 	if (dlg.DoModalParameters(folderClasses, lngClassID, 0, 0, TRUE) == IDOK)
 	{
 		// Save new link
@@ -179,11 +179,11 @@ BOOL BDataFlags::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 		// if so, do any special handling required
 
 		// Handle pseudo properties here
-		ULONG lngPropertyID = pobjPropertyDef->m_lngObjectID;
+		ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 		switch (lngPropertyID)
 		{
 			case propClassName:
-				pobj->m_lngClassID = m_pobj->m_lngObjectID;
+				pobj->m_lngClassID = m_pobj->GetObjectID();
 				break;
 			// really shouldn't let user modify this like this...
 //			case propLocation:

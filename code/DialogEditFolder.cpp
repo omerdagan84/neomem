@@ -160,7 +160,7 @@ void CDialogEditFolder::DoDataExchange(CDataExchange* pDX)
 		if (m_pobjDefaultClass)
 		{
 			ASSERT_VALID(m_pobjDefaultClass);
-//			m_lngClassID = m_pobjClass->m_lngObjectID;
+//			m_lngClassID = m_pobjClass->GetObjectID();
 		}
 
 		// Get default class
@@ -274,7 +274,7 @@ void CDialogEditFolder::OnClassChanged()
 		m_txtDescription.SetWindowText(pszClassDescription);
 
 		// Enable default class controls if Folder selected
-		BOOL bFolder = (pobjClass->m_lngObjectID == classFolder);
+		BOOL bFolder = (pobjClass->GetObjectID() == classFolder);
 		m_lblDefaultClass.EnableWindow(bFolder);
 		m_cboDefaultClass.EnableWindow(bFolder);
 		m_btnNewClass2.EnableWindow(bFolder);

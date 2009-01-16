@@ -406,7 +406,7 @@ BObject::GetDefaultIconID()
 		ASSERT_VALID(pobjClassDef);
 		if (pobjClassDef->m_lngIconID)
 			return pobjClassDef->m_lngIconID; // found icon finally, return it
-		if (pobjClassDef->m_lngObjectID == rootSystem)
+		if (pobjClassDef->GetObjectID() == rootSystem)
 			return iconDefault; // reached the end of the line and no icon defined, so return default
 	} while (TRUE);
 
@@ -757,7 +757,7 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 				{
 					ASSERT_VALID(m_pobjParent);
 					// Exit if you've reached the system root - property was never found
-					if (m_pobjParent->m_lngObjectID == rootSystem)
+					if (m_pobjParent->GetObjectID() == rootSystem)
 						return NULL;
 					return m_pobjParent->FindProperty(lngPropertyID, bAddIfNotFound);
 				}
@@ -855,7 +855,7 @@ BObject::SetPropertyText(ULONG lngPropertyID, LPCTSTR pszText,
 				// Create a temporary bdata object to handle the parsing (since that's what bdatalink settext does).
 
 				//, for error checking, could say
-				// bValid = SetClassID(pobjClass->m_lngObjectID);
+				// bValid = SetClassID(pobjClass->GetObjectID());
 				// this code would make sure the id exists, that it's a class, and handle
 				// converting any special properties to the new class (?)
 
@@ -1003,7 +1003,7 @@ BObject::GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 			if (m_pobjParent)
 			{
 				ASSERT_VALID(m_pobjParent);
-				m_strTextCache.Format("%d", m_pobjParent->m_lngObjectID);
+				m_strTextCache.Format("%d", m_pobjParent->GetObjectID());
 			}
 			else
 			{
@@ -1755,7 +1755,7 @@ BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 	}
 	// Exit when reach the system root
 	// NOTE: This assumes that class root is always located in the system root!!
-	while (pobjClass->m_lngObjectID != rootSystem);
+	while (pobjClass->GetObjectID() != rootSystem);
 
 	// Walk through class chain from top to bottom, adding propObjectProperties to our array.
 	// If user just wants inherited props, don't include the object's classdef props.
@@ -1903,7 +1903,7 @@ BObject::GetPropertyDefAlignment()
 	if (pobjPropType)
 	{
 		ASSERT_VALID(pobjPropType);
-		ULONG lngPropTypeID = pobjPropType->m_lngObjectID;
+		ULONG lngPropTypeID = pobjPropType->GetObjectID();
 		switch (lngPropTypeID)
 		{
 			case proptypeNumber:
@@ -2151,7 +2151,7 @@ BObject::IsMoveUpDownValid(BOOL bMoveUp)
 		// Exception for children of the main root object (eg Home, Reference).
 		// (they have NoAutosort but you don't want user to move them around).
 		ASSERT_VALID(m_pobjParent);
-		if (m_pobjParent->m_lngObjectID == rootMain)
+		if (m_pobjParent->GetObjectID() == rootMain)
 		{
 			// let admin move items up and down (note: no handling for first or last item)
 			if (theApp.m_bAdmin)
@@ -2432,7 +2432,7 @@ BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass)
 		ASSERT_VALID(pobjProp);
 		if (!(pobjProp->m_lngFlags & lngExcludeFlags))
 		{
-			ULONG lngPropertyID = pobjProp->m_lngObjectID;
+			ULONG lngPropertyID = pobjProp->GetObjectID();
 			//. kludgy: don't add the Size property by default, though it's available to all objects. 
 			if (lngPropertyID != propSize)
 				pdatCols->InsertColumn(lngPropertyID, m_pDoc);
@@ -2458,7 +2458,7 @@ BObject::ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPropertyDe
 	ASSERT_VALID(pobjPropertyDef);
 	ASSERT_VALID(pobjNewPropertyDef);
 
-	ULONG lngPropertyID = pobjPropertyDef->m_lngObjectID;
+	ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 
 	// Walk through properties looking for property in question
 	if (m_paProperties)
@@ -2568,7 +2568,7 @@ BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse)
 	ASSERT_VALID(&aRefs);
 
 	BOOL bReferenced = FALSE;
-	ULONG lngFindID = pobjFind->m_lngObjectID;
+	ULONG lngFindID = pobjFind->GetObjectID();
 
 	// Search in attributes
 	if (m_lngClassID == lngFindID)
@@ -2648,12 +2648,12 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 	CHint h;
 	h.m_pobjObject = this;
 
-	ULONG lngFindID = pobjFind->m_lngObjectID;
+	ULONG lngFindID = pobjFind->GetObjectID();
 	ULONG lngNewID = 0;
 	if (pobjNew) 
 	{
 		ASSERT_VALID(pobjNew);
-		lngNewID = pobjNew->m_lngObjectID;
+		lngNewID = pobjNew->GetObjectID();
 	}
 
 	// Check class
@@ -3239,7 +3239,7 @@ BObject::CopyFrom(BObject* pobjSource)
 	this->m_lngIconID = pobjSource->m_lngIconID;
 	this->m_bytViewHeight = pobjSource->m_bytViewHeight;
 	this->m_lngClassID = pobjSource->m_lngClassID;
-	this->m_lngObjectID = pobjSource->m_lngObjectID;
+	this->SetObjectID(pobjSource->GetObjectID());
 
 	// Leave this->pDoc as is
 
@@ -3251,7 +3251,7 @@ BObject::CopyFrom(BObject* pobjSource)
 	// done in top down recursive order!!
 	BObject* pobjSourceParent = pobjSource->m_pobjParent;
 	ASSERT_VALID(pobjSourceParent);
-	ULONG nSourceParentID = pobjSourceParent->m_lngObjectID;
+	ULONG nSourceParentID = pobjSourceParent->GetObjectID();
 	
 	// Lookup the parent object in THIS document, and make this bobject a child. 
 	// This will handle moving the object if its parent has changed for some reason
@@ -3362,7 +3362,7 @@ BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			{
 				BObject* pobjProp = datProps.GetLinkAt(i);
 				ASSERT_VALID(pobjProp);
-				ULONG lngPropertyID = pobjProp->m_lngObjectID;
+				ULONG lngPropertyID = pobjProp->GetObjectID();
 		//		LPCTSTR psz = this->GetPropertyText(lngPropertyID);
 		//		file.WriteValue(psz); // will add quotes, etc
 				BData* pdat = this->GetPropertyData(lngPropertyID);
@@ -3479,10 +3479,10 @@ BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			// no indent for xml - exporting flat list of objects
 //			str.Format("%s<object id=\"%d\">\r\n",
 //				(LPCTSTR) strIndent,
-//				(LPCTSTR) this->m_lngObjectID
+//				(LPCTSTR) this->GetObjectID()
 //				);
 			str.Format("  <object id=\"%d\">\r\n",
-				(LPCTSTR) this->m_lngObjectID
+				(LPCTSTR) this->GetObjectID()
 				);
 			file.WriteString(str);
 
@@ -3503,7 +3503,7 @@ BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 				BObject* pobjProp = datProps.GetLinkAt(i);
 				ASSERT_VALID(pobjProp);
 				strPropName = pobjProp->GetName(FALSE);
-				ULONG lngPropertyID = pobjProp->m_lngObjectID;
+				ULONG lngPropertyID = pobjProp->GetObjectID();
 				BData* pdat = this->GetPropertyData(lngPropertyID);
 				if (pdat)
 				{
@@ -3598,7 +3598,7 @@ BObject::PropertyDefHasMachineVersion()
 	if (pobjPropType)
 	{
 		ASSERT_VALID(pobjPropType);
-		ULONG lngPropTypeID = pobjPropType->m_lngObjectID;
+		ULONG lngPropTypeID = pobjPropType->GetObjectID();
 		switch (lngPropTypeID)
 		{
 		case proptypeLink:
@@ -3618,7 +3618,7 @@ BObject::GetPropertyDefMachineVersionName()
 {
 	// get property def name, add "ID" or "_value"
 	// eg "ClassID", "ParentID"
-	switch (this->m_lngObjectID)
+	switch (this->GetObjectID())
 	{
 	case propClassID:
 		return _T("ClassID");

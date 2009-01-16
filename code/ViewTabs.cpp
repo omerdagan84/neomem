@@ -353,7 +353,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				BObject* pobjView = (BObject*) pHint;
 				ASSERT_VALID(pobjView);
-				ULONG lngViewID = pobjView->m_lngObjectID;
+				ULONG lngViewID = pobjView->GetObjectID();
 				ASSERT(lngViewID);
 				AddView(lngViewID);
 			}
@@ -365,7 +365,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				BObject* pobjView = (BObject*) pHint;
 				ASSERT_VALID(pobjView);
-				ULONG lngViewID = pobjView->m_lngObjectID;
+				ULONG lngViewID = pobjView->GetObjectID();
 				ASSERT(lngViewID);
 				RemoveView(lngViewID);
 			}
@@ -376,7 +376,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				BObject* pobjView = (BObject*) pHint;
 				ASSERT_VALID(pobjView);
-				ULONG lngViewID = pobjView->m_lngObjectID;
+				ULONG lngViewID = pobjView->GetObjectID();
 				ASSERT(lngViewID);
 				MoveViewUp(lngViewID);
 			}
@@ -1418,7 +1418,7 @@ void CViewTabs::OnTabRightClick(NMHDR* pNotify, LRESULT* result)
 /*
 	// Exit if we're on the Home Object
 	//, allow view changes in v2?
-	if (m_pDoc->GetCurrentObject()->m_lngObjectID == rootUser)
+	if (m_pDoc->GetCurrentObject()->GetObjectID() == rootUser)
 	{
 		AfxMessageBox("The Home Folder views cannot be modified.", MB_ICONINFORMATION);
 		return;
@@ -1482,7 +1482,7 @@ void CViewTabs::OnTabRightClick(NMHDR* pNotify, LRESULT* result)
 				if (!(pobjView->m_lngFlags & theApp.m_lngExcludeFlags))
 				{
 					CString strName = CString("Show ") + pobjView->GetPropertyText(propName) + CString(" View");
-					ULONG lngViewID = pobjView->m_lngObjectID;
+					ULONG lngViewID = pobjView->GetObjectID();
 					//, make macros to convert back and forth!
 					UINT nCommandID = lngViewID - viewData + ID_VIEW_DATA;
 					pPopup->InsertMenu(nAdded, MF_BYPOSITION | MF_STRING, nCommandID, (LPCTSTR) strName);

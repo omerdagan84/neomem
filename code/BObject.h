@@ -61,6 +61,7 @@ public:
 //	int GetLinks(BObjects& aObjects, BObject* pobjStart);
 	ULONG GetMemoryUsed(BOOL bRecurse) const;
 	LPCTSTR GetName(BOOL bIncludeClassName);
+	ULONG GetObjectID() { return m_lngObjectID; }; // inline
 	int GetParents(BObjects& aParents, BObject* pobjStopAt, BOOL bIncludeThisObject = TRUE, BOOL bIncludeStopObject = FALSE);
 	BData* GetPropertyData(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	int GetPropertyDefAlignment();
@@ -90,6 +91,7 @@ public:
 	BOOL SetData(BData* pData);
 	BOOL SetFlag(ULONG lngFlag, BOOL bValue, BOOL bRecurse = FALSE);
 	BOOL SetIconID(ULONG lngIconID);
+	void SetObjectID(ULONG lngObjectID) { m_lngObjectID = lngObjectID; }; // inline
 	void SetObjectText(const CString& strText);
 	void SetParent(BObject* pobjNewParent);
 	BOOL SetPropertyData(ULONG lngPropertyID, BData *pdat, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);

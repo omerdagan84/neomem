@@ -115,7 +115,7 @@ BOOL CPageObjectGeneral::OnInitDialog()
 	// If in admin mode, show ObjectID, otherwise hide it
 //	if (theApp.m_bAdmin)
 //	{
-//		str.Format("%d", m_pobj->m_lngObjectID);
+//		str.Format("%d", m_pobj->GetObjectID());
 //		m_txtObjectID.SetWindowText(str);
 //	}
 //	else
@@ -179,7 +179,7 @@ BOOL CPageObjectGeneral::OnApply()
 		CString str;
 		m_txtObjectID.GetWindowText(str);
 		ULONG lngObjectID = atol(str);
-		m_pobj->m_lngObjectID = lngObjectID;
+		m_pobj->SetObjectID(lngObjectID);
 
 		CHint h;
 		h.m_pobjObject = m_pobj;

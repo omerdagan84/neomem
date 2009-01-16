@@ -357,7 +357,7 @@ int BDataViews::GetViewTab(ULONG lngViewID)
 			ASSERT_VALID(pdatView);
 //			ASSERT_VALID(pdatView->m_pobjView);
 			if (pdatView->m_lngViewID == lngViewID)
-//			if (pdatView->m_pobjView->m_lngObjectID == lngViewID)
+//			if (pdatView->m_pobjView->GetObjectID() == lngViewID)
 			{
 				// Found view
 				// Note: Easier to return here than try to break out of all the loops
@@ -403,7 +403,7 @@ BOOL BDataViews::FindReferences(BObject* pobjFind)
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjFind);
 
-	ULONG lngViewID = pobjFind->m_lngObjectID;
+	ULONG lngViewID = pobjFind->GetObjectID();
 	// Walk through viewinfo objects and look for references
 	int nItems = m_avi.GetSize();
 	for (int i = 0; i < nItems; i++)
@@ -424,7 +424,7 @@ BOOL BDataViews::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */
 
 	BOOL bFound = FALSE;
 
-	ULONG lngViewID = pobjFind->m_lngObjectID;
+	ULONG lngViewID = pobjFind->GetObjectID();
 	// Walk through viewinfo objects and look for references
 	int nItems = m_avi.GetSize();
 	for (int i = 0; i < nItems; i++)
@@ -434,7 +434,7 @@ BOOL BDataViews::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */
 			if (pobjNew)
 			{
 				// Replace reference
-				m_avi[i].m_lngViewID = pobjNew->m_lngObjectID;
+				m_avi[i].m_lngViewID = pobjNew->GetObjectID();
 			}
 			else
 			{

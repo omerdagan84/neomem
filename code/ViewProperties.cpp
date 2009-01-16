@@ -308,7 +308,7 @@ void CViewProperties::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		BObject* pobjProperty = (BObject*) m_lvw.GetItemData(pLVITEM->iItem);
 		ASSERT_VALID(pobjProperty);
-		ULONG lngPropertyID = pobjProperty->m_lngObjectID;
+		ULONG lngPropertyID = pobjProperty->GetObjectID();
 
 		// Change property
 		m_pobjCurrent->SetPropertyText(lngPropertyID, pLVITEM->pszText);
@@ -340,7 +340,7 @@ void CViewProperties::OnObjEditInDialog()
 		ASSERT_VALID(pobjPropertyDef);
 
 		// Edit the property value in an appropriate dialog
-		ULONG lngPropertyID = pobjPropertyDef->m_lngObjectID;
+		ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 		m_pobjCurrent->EditValue(lngPropertyID);
 	}
 }
@@ -472,7 +472,7 @@ ULONG CViewProperties::GetSelectedPropertyID()
 	{
 		ASSERT_VALID(pobjPropertyDef);
 		// Return the propertyid
-		ULONG lngPropertyID = pobjPropertyDef->m_lngObjectID;
+		ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 		return lngPropertyID;
 	}
 	return 0;
@@ -535,7 +535,7 @@ ULONG CViewProperties::FindNext(CString &strFindText, BOOL bMatchCase, BOOL bWho
 				m_lvw.SelectCell(i, 1);
 				BObject* pobjPropDef = (BObject*) m_lvw.GetSelectedItemData();
 				ASSERT_VALID(pobjPropDef);
-				lngHighlightPropID = pobjPropDef->m_lngObjectID;
+				lngHighlightPropID = pobjPropDef->GetObjectID();
 				return lngHighlightPropID;
 			}
 		}
@@ -732,7 +732,7 @@ void CViewProperties::OnCmdDeleteProperty()
 	// Delete the selected property value
 	BObject* pobjPropDef = (BObject*) m_lvw.GetSelectedItemData();
 	ASSERT_VALID(pobjPropDef);
-	ULONG lngPropertyID = pobjPropDef->m_lngObjectID;
+	ULONG lngPropertyID = pobjPropDef->GetObjectID();
 //	m_pobjCurrent->DeleteProperty(lngPropertyID);
 	m_pobjCurrent->DeleteProperty(lngPropertyID, TRUE, TRUE, TRUE); // ask user
 

@@ -56,7 +56,7 @@ BOOL CDialogException::OnInitDialog()
 	m_lst.AddString("ThrowAssertion()"); // 4 
 	m_lst.AddString("ASSERT(0)"); // 5
 	m_lst.AddString("ASSERT_VALID(0)"); // 6
-	m_lst.AddString("pobj = 0; n = pobj->m_lngObjectID;"); // 7
+	m_lst.AddString("pobj = 0; n = pobj->GetObjectID();"); // 7
 	m_lst.SetCurSel(0);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -94,7 +94,7 @@ void CDialogException::OnOK()
 		{
 			//! in release mode, this is NOT CAUGHT by unhandled exception handler!
 			BObject* pobj = 0;
-			ULONG n = pobj->m_lngObjectID; // error: using 0 as address!
+			ULONG n = pobj->GetObjectID(); // error: using 0 as address!
 			CString str;
 			str.Format("%d", n);
 			AfxMessageBox(str);

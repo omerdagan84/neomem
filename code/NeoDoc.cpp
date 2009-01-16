@@ -619,8 +619,7 @@ BObject* CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString
 		if (lngObjectID > m_lngNextObjectID)
 			m_lngNextObjectID = lngObjectID;
 	}
-//	pobjNew->SetObjectID(lngObjectID);
-	pobjNew->m_lngObjectID = lngObjectID;
+	pobjNew->SetObjectID(lngObjectID);
 
 	// Add the new object to the document's Index
 	AddObjectToIndex(lngObjectID, pobjNew);
@@ -672,7 +671,7 @@ BOOL CNeoDoc::AddObjectToIndex(ULONG lngObjectID, BObject* pobj)
 		}
 		
 		// Assign new objectid to the object
-		pobj->m_lngObjectID = lngObjectID;
+		pobj->SetObjectID(lngObjectID);
 
 	}
 
@@ -948,7 +947,7 @@ BOOL CNeoDoc::UIChangeObjectContents(BObject* pobj)
 	if (pobjDefaultClass)
 	{
 		ASSERT_VALID(pobjDefaultClass);
-		lngClassID = pobjDefaultClass->m_lngObjectID;
+		lngClassID = pobjDefaultClass->GetObjectID();
 	}
 
 	CDialogEditLink dlg;
@@ -1020,7 +1019,7 @@ BOOL CNeoDoc::UIChangeClassContents(BObject *pobj)
 	if (pobjDefaultClass)
 	{
 		ASSERT_VALID(pobjDefaultClass);
-		lngClassID = pobjDefaultClass->m_lngObjectID;
+		lngClassID = pobjDefaultClass->GetObjectID();
 	}
 
 	CDialogEditLink dlg;
@@ -1286,7 +1285,7 @@ BOOL CNeoDoc::UIEditPropertyDef(BObject* pobjPropertyDef)
 			pobjTemp->SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty, FALSE, FALSE);
 			if (dlg.m_bLimitLinks) pobjTemp->SetPropertyLong(propLimitNumberOfLinks, 1, FALSE, FALSE);
 			if (dlg.m_bDisplayHierarchy) pobjTemp->SetPropertyLong(propDisplayLinkHierarchy, 1, FALSE, FALSE);
-			ULONG lngNewPropertyTypeID = dlg.m_pobjPropertyType->m_lngObjectID;
+			ULONG lngNewPropertyTypeID = dlg.m_pobjPropertyType->GetObjectID();
 
 			// Start at the top object and work down
 			m_pobjRoot->ChangePropertyType(pobjPropertyDef, pobjTemp, lngNewPropertyTypeID);
@@ -1367,7 +1366,7 @@ BData* CNeoDoc::CreateBData(ULONG lngClassOrPropertyID)
 		if (pobjPropType)
 		{
 			ASSERT_VALID(pobjPropType);
-			lngPropertyTypeID = pobjPropType->m_lngObjectID;
+			lngPropertyTypeID = pobjPropType->GetObjectID();
 		}
 	}
 
@@ -1542,7 +1541,7 @@ int CNeoDoc::SearchForText(
 			strPropertyValue = pobjStart->GetPropertyText(propName);
 			if (!bMatchCase)
 				strPropertyValue.MakeLower();
-			xTRACE("  Searching in ObjectID %d's name \"%s\"\n", pobjStart->m_lngObjectID, (LPCTSTR) strPropertyValue);
+			xTRACE("  Searching in ObjectID %d's name \"%s\"\n", pobjStart->GetObjectID(), (LPCTSTR) strPropertyValue);
 			int nPos = strPropertyValue.Find(strFindText, 0);
 			if (nPos != -1)
 			{
@@ -1990,7 +1989,7 @@ BOOL CNeoDoc::UIEditObject(BObject *pobj)
 //	ULONG lngClassID = pobj->m_lngClassID;
 //	BObject* pobjClass = m_pDoc->GetObject(lngClassID);
 //	BObject* pobjNamePropType = pobjClass->GetPropertyLink(propObjectNamePropertyType);
-//	ULONG lngNamePropTypeID = pobjNamePropType->m_lngObjectID;
+//	ULONG lngNamePropTypeID = pobjNamePropType->GetObjectID();
 //	if (lngNamePropTypeID == proptypePersonName)
 	if (bPersonName || bIcon)
 	{
@@ -2912,7 +2911,7 @@ BObject* CNeoDoc::UIAddNewFolder(
 		{
 			ASSERT_VALID(m_pobjRoot);
 			pobjParent = m_pobjRoot;
-			m_lngDefaultFolderLocationID = m_pobjRoot->m_lngObjectID; // remember this in document
+			m_lngDefaultFolderLocationID = m_pobjRoot->GetObjectID(); // remember this in document
 		}
 	}
 	ASSERT_VALID(pobjParent);
@@ -3261,7 +3260,7 @@ void CNeoDoc::Serialize(CArchive& ar)
 		ar << m_lngDefaultFolderLocationID; // 1.1 added
 //		ar << wReserved;
 //		ar << wReserved;
-		m_lngStartObjectID = m_pobjCurrent->m_lngObjectID;
+		m_lngStartObjectID = m_pobjCurrent->GetObjectID();
 		ar << m_lngStartObjectID; // 1.2c added
 		ar << wReserved;
 		ar << wReserved;
@@ -3577,13 +3576,13 @@ BObject* CNeoDoc::UIMoveObjectTo()
 //		BObject* pobj = (BObject*) m_aObjects.GetAt(0);
 //		ASSERT_VALID(pobj);
 //		ASSERT_VALID(pobj->m_pobjParent);
-//		ULONG lngOldParentID = pobj->m_pobjParent->m_lngObjectID;
+//		ULONG lngOldParentID = pobj->m_pobjParent->GetObjectID();
 //		BObject* pobjTarget = m_pobjTarget; //, must save this to local because of focus changing the value!
 		ASSERT_VALID(m_pobjTarget);
 		BObject* pobjParent = m_pobjTarget->m_pobjParent;
 		ASSERT_VALID(pobjParent);
-//		ULONG lngOldParentID = pobjTarget->m_pobjParent->m_lngObjectID;
-		ULONG lngOldParentID = pobjParent->m_lngObjectID;
+//		ULONG lngOldParentID = pobjTarget->m_pobjParent->GetObjectID();
+		ULONG lngOldParentID = pobjParent->GetObjectID();
 
 //		CDialogEditLink dlg;
 //		if (IDOK == dlg.DoModalSelect("Move Object to New Location", strMsg, rootUser, lngOldParentID, lngOldParentID, theApp.m_lngExcludeFlags, TRUE))
@@ -3950,7 +3949,7 @@ void CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate)
 	ASSERT_VALID(pobjTemplate);
 
 	// See if this object exists in this file already
-	ULONG nID = pobjTemplate->m_lngObjectID;
+	ULONG nID = pobjTemplate->GetObjectID();
 	ASSERT(nID < lngUserIDStart); // should be a system object
 	BObject* pobjThis = this->GetObject(nID);
 	if (pobjThis == 0)
@@ -3993,7 +3992,7 @@ void CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate)
 void CNeoDoc::SynchronizeRecurseProps(BObject* pobjTemplate)
 {
 	// Find object in this document
-	ULONG nID = pobjTemplate->m_lngObjectID;
+	ULONG nID = pobjTemplate->GetObjectID();
 	ASSERT(nID < lngUserIDStart); // should be a system object
 	BObject* pobjThis = this->GetObject(nID);
 	ASSERT(pobjThis); // must already have been added if new
@@ -4026,7 +4025,7 @@ void CNeoDoc::SynchronizeDelete(BObject *pobjThis, CNeoDoc* pdocTemplate)
 	ASSERT_VALID(pobjThis);
 	ASSERT_VALID(pdocTemplate);
 
-	ULONG nID = pobjThis->m_lngObjectID;
+	ULONG nID = pobjThis->GetObjectID();
 	BObject* pobjTemplate = pdocTemplate->GetObject(nID);
 	if (pobjTemplate == NULL)
 	{
@@ -4179,7 +4178,7 @@ int CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/)
 		// just user properties
 		if (!(pobjProp->m_lngFlags & flagAdminOnly))
 		{
-			ULONG lngPropID = pobjProp->m_lngObjectID;
+			ULONG lngPropID = pobjProp->GetObjectID();
 			// and not propRtfText (yet)
 			if ((lngPropID != propRtfText) && (lngPropID != propPlainText))
 			{

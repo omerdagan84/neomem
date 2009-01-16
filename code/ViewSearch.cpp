@@ -731,7 +731,7 @@ void CViewSearch::OnBtnGo()
 	if (pobjProp)
 	{
 		ASSERT_VALID(pobjProp);
-		m_lngPropertyID = pobjProp->m_lngObjectID;
+		m_lngPropertyID = pobjProp->GetObjectID();
 	}
 
 	// Do search, starting at the root object so that reference folders, etc. get included in search.

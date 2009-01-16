@@ -773,7 +773,7 @@ void CViewIndex::OnSelchangeClass()
 	if (pobjClass)
 	{
 		ASSERT_VALID(pobjClass);
-		m_lngClassID = pobjClass->m_lngObjectID;
+		m_lngClassID = pobjClass->GetObjectID();
 	}
 	else
 		m_lngClassID = 0; // all classes

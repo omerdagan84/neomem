@@ -137,12 +137,12 @@ void CPageClassIcon::DoDataExchange(CDataExchange* pDX)
 	{
 		BObject* pobjIcon = (BObject*) m_lvw.GetSelectedItemData();
 		ASSERT_VALID(pobjIcon);
-		ULONG lngIconID = pobjIcon->m_lngObjectID;
+		ULONG lngIconID = pobjIcon->GetObjectID();
 		// If user chose to use the default icon, we should set iconid to zero
 		if (lngIconID == m_lngDefaultIconID)
 			m_pobj->m_lngIconID = 0;
 		else
-			m_pobj->m_lngIconID = pobjIcon->m_lngObjectID;
+			m_pobj->m_lngIconID = pobjIcon->GetObjectID();
 	}
 }
 

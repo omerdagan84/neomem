@@ -82,7 +82,7 @@ void CPageClassType::DoDataExchange(CDataExchange* pDX)
 		BObject* pobjPropType = m_pobj->GetPropertyLink(propObjectNamePropertyType);
 		if (pobjPropType)
 		{
-			lngPropTypeID = pobjPropType->m_lngObjectID;
+			lngPropTypeID = pobjPropType->GetObjectID();
 		}
 		// Get combo box index based on property type
 //		int nSel = (lngPropTypeID == proptypeString ? 0 : 1);

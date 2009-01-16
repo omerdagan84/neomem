@@ -57,7 +57,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	ASSERT_VALID(pDoc);
 
 	// Get property we're editing
-	ULONG lngPropertyID = pobjPropertyDef->m_lngObjectID;
+	ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 
 	// Make copy of string and remove leading and trailing spaces
 	CString strCopy = str;
@@ -133,7 +133,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			CString strMsg;
 			BObject* pobjClass = pobjLinkSource->GetPropertyLink(propDefaultClass);
 			ASSERT_VALID(pobjClass);
-			ULONG lngClassID = pobjClass->m_lngObjectID;
+			ULONG lngClassID = pobjClass->GetObjectID();
 			CString strClassName = pobjClass->GetPropertyText(propName);
 			CString strLinkSourceClass = pobjLinkSource->GetPropertyText(propClassName);
 			CString strLinkSourceName = pobjLinkSource->GetPropertyText(propName);
@@ -154,7 +154,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			if (IDYES == AfxMessageBox(strMsg, MB_YESNO + MB_ICONQUESTION))
 			{
 				// Add the new object
-				ULONG lngClassID = pobjClass->m_lngObjectID;
+				ULONG lngClassID = pobjClass->GetObjectID();
 				BObject* pobjNew = pDoc->AddObject(pobjLinkSource, lngClassID, strCopy);
 				ASSERT_VALID(pobjNew);
 
@@ -262,7 +262,7 @@ BOOL BDataLink::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 	if (pobjLinkSource)
 	{
 		ASSERT_VALID(pobjLinkSource);
-		lngStartID = pobjLinkSource->m_lngObjectID;
+		lngStartID = pobjLinkSource->GetObjectID();
 	}
 
 	TCHAR* pszCaption = _T("Edit Link");
@@ -308,7 +308,7 @@ LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 			ASSERT_VALID(pobj);
 			if (bMachineVersion)
 			{
-				m_strText.Format("%d", pobj->m_lngObjectID);
+				m_strText.Format("%d", pobj->GetObjectID());
 				return m_strText;
 			}
 			else
@@ -372,7 +372,7 @@ LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 	//			BObject* pobjAdditionalProp = pobjPropertyDef->GetPropertyLink(propAdditionalDisplayProperty);
 				if (pobjAdditionalProp)
 				{
-					ULONG lngAdditionalPropID = pobjAdditionalProp->m_lngObjectID;
+					ULONG lngAdditionalPropID = pobjAdditionalProp->GetObjectID();
 					// If display link hierarchy is false, then we haven't gotten the object name yet, so get it now.
 					if (bDisplayLinkHierarchy == FALSE)
 						m_strText = pobj->GetPropertyText(propName); // eg "Museum of Fine Arts"
@@ -407,7 +407,7 @@ LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 			ASSERT_VALID(pobj);
 			if (bMachineVersion)
 			{
-				s.Format("%d", pobj->m_lngObjectID);
+				s.Format("%d", pobj->GetObjectID());
 				if (i == 0)
 					m_strText += s;
 				else
@@ -630,7 +630,7 @@ ULONG BDataLink::GetLinkObjectID()
 	if (pobj)
 	{
 		ASSERT_VALID(pobj);
-		return pobj->m_lngObjectID;
+		return pobj->GetObjectID();
 	}
 	return 0;
 }
@@ -699,7 +699,7 @@ int BDataLink::AddLink(BObject *pobj)
 		CUIntArray* pa = (CUIntArray*) m_p;
 
 		// Make sure objectID isn't already in array
-		UINT nID = pobj->m_lngObjectID;
+		UINT nID = pobj->GetObjectID();
 		int nItems = pa->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
@@ -764,7 +764,7 @@ int BDataLink::GetObjectIDArray(CUIntArray &aObjectIDs)
 	{
 		BObject* pobj = (BObject*) pa->GetAt(i);
 		ASSERT_VALID(pobj);
-		aObjectIDs.SetAt(i, pobj->m_lngObjectID);
+		aObjectIDs.SetAt(i, pobj->GetObjectID());
 	}
 	return aObjectIDs.GetSize();	
 }
@@ -791,7 +791,7 @@ BOOL BDataLink::FindReferences(ULONG lngFindObjectID)
 		{
 			BObject* pobj = (BObject*) pa->GetAt(i);
 			ASSERT_VALID(pobj);
-			if (pobj->m_lngObjectID == lngFindObjectID)
+			if (pobj->GetObjectID() == lngFindObjectID)
 				return TRUE;
 		}
 	}
@@ -801,7 +801,7 @@ BOOL BDataLink::FindReferences(ULONG lngFindObjectID)
 		if (pobj)
 		{
 			ASSERT_VALID(pobj);
-			if (pobj->m_lngObjectID == lngFindObjectID)
+			if (pobj->GetObjectID() == lngFindObjectID)
 				return TRUE;
 		}
 	}
@@ -1148,7 +1148,7 @@ void BDataLink::ConvertToSoftLinks()
 		{
 			BObject* pobj = (BObject*) m_p;
 			ASSERT_VALID(pobj);
-			paIDs->Add(pobj->m_lngObjectID);
+			paIDs->Add(pobj->GetObjectID());
 		}
 		// so array could be empty at this point
 	}

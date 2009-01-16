@@ -95,7 +95,7 @@ void CDialogNewLinkSource::DoDataExchange(CDataExchange* pDX)
 		// Get class
 		BObject* pobjClass = (BObject*) m_cboClass.GetSelectedItemData();
 		ASSERT_VALID(pobjClass);
-		m_lngClassID = pobjClass->m_lngObjectID;
+		m_lngClassID = pobjClass->GetObjectID();
 
 		// Get folder name
 		m_txtFolderName.GetWindowText(m_strFolderName);

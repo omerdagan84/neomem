@@ -615,7 +615,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 					// Only concerned with name and property type right now
 					if ((lngPropertyID == propName) || (lngPropertyID == propPropertyType))
 					{
-						ULONG lngObjectID = pobj->m_lngObjectID;
+						ULONG lngObjectID = pobj->GetObjectID();
 						int nCol = m_lvw.FindColumn(lngObjectID);
 						if (nCol != -1)
 						{
@@ -1074,7 +1074,7 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 			BObject* pobjParent = m_pDoc->GetCurrentObject();
 			BObject* pobjClass = pobjParent->GetPropertyLink(propDefaultClass);
 			ASSERT_VALID(pobjClass);
-			ULONG lngClassID = pobjClass->m_lngObjectID;
+			ULONG lngClassID = pobjClass->GetObjectID();
 			CString strName;
 			pobjClass->GetClassDefNewName(strName);
 			BObject* pobjNew = m_pDoc->AddObject(pobjParent, lngClassID, strName);
@@ -1716,7 +1716,7 @@ void CViewContents::OnObjEditInDialog()
 		BObject* pobjParent = m_pDoc->GetCurrentObject();
 		BObject* pobjClass = pobjParent->GetPropertyLink(propDefaultClass);
 		ASSERT_VALID(pobjClass);
-		ULONG lngClassID = pobjClass->m_lngObjectID;
+		ULONG lngClassID = pobjClass->GetObjectID();
 		CString strName;
 		pobjClass->GetClassDefNewName(strName);
 		pobj = m_pDoc->AddObject(pobjParent, lngClassID, strName);

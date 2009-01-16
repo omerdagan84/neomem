@@ -115,7 +115,7 @@ void CDialogGetLocation::OnSelchangedTvw(NMHDR* pNMHDR, LRESULT* pResult)
 
 	// Enable/disable OK button 
 	//, do this based on if object has Text View or not (or whatever)
-	BOOL bHome = (pobj->m_lngObjectID == rootUser);
+	BOOL bHome = (pobj->GetObjectID() == rootUser);
 	m_btnOK.EnableWindow(!(bHome && !m_bAllowSelectHome));
 
 	*pResult = 0;

@@ -102,7 +102,7 @@ void CPageClassInheritance::DoDataExchange(CDataExchange* pDX)
 		m_tvw.SelectItemData((DWORD) pobjParent);
 
 		// Set checkbox
-		BOOL bInherited = (pobjParent->m_lngObjectID != rootClass);
+		BOOL bInherited = (pobjParent->GetObjectID() != rootClass);
 		m_chkInherit.SetCheck(bInherited);
 
 		// Update controls

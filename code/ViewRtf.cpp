@@ -2230,7 +2230,7 @@ CViewRtf::OnEditMoveTo()
 	ASSERT_VALID(m_pDoc);
 	BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 	ASSERT_VALID(pobjCurrent);
-	ULONG lngOldParentID = pobjCurrent->m_lngObjectID;
+	ULONG lngOldParentID = pobjCurrent->GetObjectID();
 
 	CDialogGetLocation dlg;
 	dlg.m_strCaption = "Move Text To...";

@@ -74,7 +74,7 @@ BOOL CDialogInsertLink::OnInitDialog()
 //	ASSERT_VALID(m_pobjStart);
 //	BObject* pobjClass = m_pobjStart->GetPropertyLink(propDefaultClass);
 //	ASSERT_VALID(pobjClass);
-//	m_lngDefaultClassID = pobjClass->m_lngObjectID;
+//	m_lngDefaultClassID = pobjClass->GetObjectID();
 	// Show buttons, etc.
 //	UpdateControls();
 	// Set state of checkbox and listview
