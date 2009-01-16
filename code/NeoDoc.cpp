@@ -1580,7 +1580,7 @@ int CNeoDoc::SearchForText(
 			if (!bFoundInObject)
 			{
 				xTRACE("  Searching in property collection\n");
-				BObjects* paProperties = pobjStart->m_paProperties;
+				BObjects* paProperties = pobjStart->GetProperties();
 				if (paProperties)
 				{
 					ASSERT_VALID(paProperties);
