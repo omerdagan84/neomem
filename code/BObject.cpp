@@ -1641,10 +1641,10 @@ BObject::IsChildOf(BObject* pobjPossibleParent, BOOL bRecurse) const
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjPossibleParent);
-	if (pobjPossibleParent->m_paChildren)
+	if (pobjPossibleParent->GetChildren())
 	{
-		ASSERT_VALID(pobjPossibleParent->m_paChildren);
-		if (pobjPossibleParent->m_paChildren->FindObject(this, bRecurse) != -1)
+		ASSERT_VALID(pobjPossibleParent->GetChildren());
+		if (pobjPossibleParent->GetChildren()->FindObject(this, bRecurse) != -1)
 			return TRUE;
 	}
 	return FALSE;
@@ -1879,13 +1879,13 @@ BObject::GetLinks(BObjects &aObjects, BObject* pobjStart)
 	}
 
 	// Recurse through all objects, searching for links to this object
-	if (pobjStart->m_paChildren)
+	if (pobjStart->GetChildren())
 	{
 		// walk through children
-		int nItems = pobjStart->m_paChildren->GetSize();
+		int nItems = pobjStart->GetChildren()->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) pobjStart->m_paChildren->GetAt(i);
+			BObject* pobj = (BObject*) pobjStart->GetChildren()->GetAt(i);
 			GetLinks(aObjects, pobj);
 		}
 	}
@@ -1959,7 +1959,7 @@ BObject::MoveUp()
 	ASSERT_VALID(this);
 	if (m_pobjParent)
 	{
-		BObjects* pa = m_pobjParent->m_paChildren;
+		BObjects* pa = m_pobjParent->GetChildren();
 		ASSERT_VALID(pa);
 		// Switch the positions of the two pointers
 		int nIndex = pa->FindObject(this);
@@ -2003,7 +2003,7 @@ BObject::MoveDown()
 	ASSERT_VALID(this);
 	if (m_pobjParent)
 	{
-		BObjects* pa = m_pobjParent->m_paChildren;
+		BObjects* pa = m_pobjParent->GetChildren();
 		ASSERT_VALID(pa);
 		// Switch the positions of the two pointers
 		int nIndex = pa->FindObject(this);
@@ -2168,7 +2168,7 @@ BObject::IsMoveUpDownValid(BOOL bMoveUp)
 		else if (bEnable)
 		{
 			// Check if first or last among siblings
-			BObjects* paSiblings = m_pobjParent->m_paChildren;
+			BObjects* paSiblings = m_pobjParent->GetChildren();
 			ASSERT_VALID(paSiblings);
 			int nIndex = paSiblings->FindObject(this);
 			int nItems = paSiblings->GetSize();

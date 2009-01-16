@@ -66,11 +66,11 @@ void CTreeCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 	}
 		
 	// Add children recursively, if any
-	if (pobjStart->m_paChildren)
+	if (pobjStart->GetChildren())
 	{
 		BOOL bSortChildren = !(pobjStart->GetFlag(flagNoAutosort));
-		ASSERT_VALID(pobjStart->m_paChildren);
-		AddChildrenToTree(pobjStart->m_paChildren, htiStart, lngExcludeFlags, bSortChildren, bUseExpandFlags);
+		ASSERT_VALID(pobjStart->GetChildren());
+		AddChildrenToTree(pobjStart->GetChildren(), htiStart, lngExcludeFlags, bSortChildren, bUseExpandFlags);
 	}
 
 	if (bIncludeStart)
@@ -193,11 +193,11 @@ void CTreeCtrlEx::AddChildrenToTree(BObjects* paChildren, HTREEITEM htiParent,
 				// BUG:: Had this code outside of check for valid flags, as a result,
 				// hti was invalid sometimes, and recurse call bombed. Makes sense for listview
 				// but not treeview!
-				if (pobj->m_paChildren)
+				if (pobj->GetChildren())
 				{
 					// Call this routine recursively
 					BOOL bSortGrandchildren = !(pobj->GetFlag(flagNoAutosort));
-					AddChildrenToTree(pobj->m_paChildren, hti, lngExcludeFlags, bSortGrandchildren, bUseExpandFlags);
+					AddChildrenToTree(pobj->GetChildren(), hti, lngExcludeFlags, bSortGrandchildren, bUseExpandFlags);
 
 					// Expand item if specified and flag is set
 					if (bUseExpandFlags && (pobj->GetFlag(flagExpanded)))

@@ -205,7 +205,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 	}
 
 	// Walk through child objects (if any) and add them to the list
-	BObjects* paChildren = pobjStart->m_paChildren;
+	BObjects* paChildren = pobjStart->GetChildren();
 	if (paChildren)
 	{
 		ASSERT_VALID(paChildren);

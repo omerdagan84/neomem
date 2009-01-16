@@ -1874,9 +1874,10 @@ void CListCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 	}
 
 	// Walk through child objects (if any) and add them to the list also
-	BObjects* paChildren = pobjStart->m_paChildren;
+	BObjects* paChildren = pobjStart->GetChildren();
 	if (paChildren)
 	{
+		ASSERT_VALID(paChildren);
 
 		// If we're adding items in a hierarchy, we'll need to sort the children before we add them.
 		// Sort the children alphabetically (otherwise they show up in combo unsorted).

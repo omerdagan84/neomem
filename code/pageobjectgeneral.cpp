@@ -92,7 +92,7 @@ BOOL CPageObjectGeneral::OnInitDialog()
 
 	ULONG lngMem = m_pobj->GetMemoryUsed(FALSE);
 //	str.Format("%d Bytes", m_pobj->GetMemoryUsed(FALSE));
-	if (m_pobj->m_paChildren)
+	if (m_pobj->GetChildren())
 	{
 		ULONG lngMemRecurse = m_pobj->GetMemoryUsed(TRUE);
 //		str.Format("%d Bytes (%d with children)", lngMem, lngMemRecurse);

@@ -53,6 +53,7 @@ public:
 	int FindReferences(BObject* pobjFind, CObArray& aRefs, BOOL bRecurse);
 	BObject* GetChild(int nChild);
 	int GetChildCount(BOOL bRecurse = FALSE, BOOL bIncludeProperties = FALSE) const;
+	BObjects* GetChildren() { return m_paChildren; }; // inline
 	BOOL GetClassDefNewName(CString& strName);
 	ULONG GetClassID() { return m_lngClassID; }; // inline
 	BObject* GetClassObject();
@@ -116,8 +117,8 @@ public:
 	ULONG m_lngIconID;	// IconID of this BObject (0 means it's using the classdef icon)
 private:
 	ULONG m_lngFlags; // 32 bit flags
-public:
 	BObjects* m_paChildren; // pointer to list containing pointers to child bobjects. null if has no children.
+public:
 	BObjects* m_paProperties; // pointer to list containing pointers to property bobjects. null if has no properties.
 	BObject* m_pobjParent; // pointer to parent BObject
 	BData* m_pdat; // pointer to data object containing data (name for an object BObject or property value for a property BObject)

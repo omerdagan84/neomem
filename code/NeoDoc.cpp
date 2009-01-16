@@ -391,13 +391,13 @@ void CNeoDoc::UpdateDocument(BObject* pobj)
 	}
 
 	// Walk through children and call this routine recursively
-	if (pobj->m_paChildren)
+	if (pobj->GetChildren())
 	{
-		ASSERT_VALID(pobj->m_paChildren);
-		int nChildren = pobj->m_paChildren->GetSize();
+		ASSERT_VALID(pobj->GetChildren());
+		int nChildren = pobj->GetChildren()->GetSize();
 		for (int i = 0; i < nChildren; i++)
 		{
-			BObject* pobjChild = (BObject*) pobj->m_paChildren->GetAt(i);
+			BObject* pobjChild = (BObject*) pobj->GetChildren()->GetAt(i);
 			ASSERT_VALID(pobjChild);
 			UpdateDocument(pobjChild);
 		}
@@ -1645,7 +1645,7 @@ int CNeoDoc::SearchForText(
 	} // if (!bExcludeThisObject)
 
 	// Now search through children by calling this routine recursively.
-	BObjects* paChildren = pobjStart->m_paChildren;
+	BObjects* paChildren = pobjStart->GetChildren();
 	if (paChildren)
 	{
 		ASSERT_VALID(paChildren);
@@ -3968,9 +3968,10 @@ void CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate)
 	}
 
 	// Walk through any child objects and recurse
-	BObjects* paChildren = pobjTemplate->m_paChildren;
+	BObjects* paChildren = pobjTemplate->GetChildren();
 	if (paChildren)
 	{
+		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
@@ -4000,9 +4001,10 @@ void CNeoDoc::SynchronizeRecurseProps(BObject* pobjTemplate)
 	pobjThis->CopyFrom(pobjTemplate);
 
 	// Walk through any child objects and recurse
-	BObjects* paChildren = pobjTemplate->m_paChildren;
+	BObjects* paChildren = pobjTemplate->GetChildren();
 	if (paChildren)
 	{
+		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
@@ -4036,9 +4038,10 @@ void CNeoDoc::SynchronizeDelete(BObject *pobjThis, CNeoDoc* pdocTemplate)
 	
 	// Recurse through children
 	// Walk through any child objects and recurse
-	BObjects* paChildren = pobjThis->m_paChildren;
+	BObjects* paChildren = pobjThis->GetChildren();
 	if (paChildren)
 	{
+		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
@@ -4168,11 +4171,11 @@ int CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/)
 	// (duplicates will be ignored)
 	BObject* pobjProps = this->GetObject(folderProperties);
 	ASSERT_VALID(pobjProps);
-	ASSERT_VALID(pobjProps->m_paChildren);
-	int nProps = pobjProps->m_paChildren->GetSize();
+	ASSERT_VALID(pobjProps->GetChildren());
+	int nProps = pobjProps->GetChildren()->GetSize();
 	for (int i = 0; i < nProps; i++)
 	{
-		BObject* pobjProp = (BObject*) pobjProps->m_paChildren->GetAt(i);
+		BObject* pobjProp = (BObject*) pobjProps->GetChildren()->GetAt(i);
 		ASSERT_VALID(pobjProp);
 		// just user properties
 		if (!(pobjProp->GetFlag(flagAdminOnly)))

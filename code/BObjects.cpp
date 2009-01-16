@@ -167,11 +167,11 @@ int BObjects::FindObject(const BObject* pobjFindThis, BOOL bRecursive /* = FALSE
 			return i;
 		
 		// If recursive option is on and this object has children, search through them as well
-		if (bRecursive && pobj->m_paChildren)
+		if (bRecursive && pobj->GetChildren())
 		{
 			ASSERT_VALID(pobj);
-			ASSERT_VALID(pobj->m_paChildren);
-			int n = pobj->m_paChildren->FindObject(pobjFindThis, bRecursive);
+			ASSERT_VALID(pobj->GetChildren());
+			int n = pobj->GetChildren()->FindObject(pobjFindThis, bRecursive);
 			if (n != -1)
 				return n;
 		}
@@ -200,9 +200,9 @@ int BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALS
 			return i;
 		
 		// If recursive option is on and this object has children, search through them as well
-//		if (bRecursive && pobj->m_paChildren)
+//		if (bRecursive && pobj->GetChildren())
 //		{
-//			int n = pobj->m_paChildren->FindObject(pobjFindThis, bRecursive);
+//			int n = pobj->GetChildren()->FindObject(pobjFindThis, bRecursive);
 //			if (n != -1)
 //				return n;
 //		}
@@ -445,10 +445,10 @@ BOOL BObjects::IsDeleteValid()
 */
 
 		// Check children recursively also
-		if (pobj->m_paChildren)
+		if (pobj->GetChildren())
 		{
-			ASSERT_VALID(pobj->m_paChildren);
-			if (!pobj->m_paChildren->IsDeleteValid())
+			ASSERT_VALID(pobj->GetChildren());
+			if (!pobj->GetChildren()->IsDeleteValid())
 				return FALSE;
 		}
 

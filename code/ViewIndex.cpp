@@ -349,7 +349,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 void CViewIndex::AddChildrenToList(BObject* pobjStart)
 {
 	// Walk through child objects and add them to the tree
-	BObjects* paChildren = pobjStart->m_paChildren;
+	BObjects* paChildren = pobjStart->GetChildren();
 	if (paChildren)
 	{
 		ASSERT_VALID(paChildren);
@@ -377,7 +377,7 @@ void CViewIndex::AddChildrenToList(BObject* pobjStart)
 			}
 
 			// If this object has children, then call this routine recursively
-			if (pobj->m_paChildren)
+			if (pobj->GetChildren())
 			{
 				// Call this routine recursively
 				AddChildrenToList(pobj);
