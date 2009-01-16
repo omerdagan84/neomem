@@ -1845,7 +1845,7 @@ void CListCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 	// Add the start object if specified
 	if (bIncludeStart)
 	{
-		if (!(pobjStart->m_lngFlags & lngExcludeFlags))
+		if (!(pobjStart->GetFlag(lngExcludeFlags)))
 		{
 			// Get index of icon associated with this object
 			int nImage = pobjStart->GetIconIndex();
@@ -1865,7 +1865,7 @@ void CListCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 			ASSERT(nIndex != -1);
 
 			// Check for disabled item
-			if (pobjStart->m_lngFlags & flagDisabled)
+			if (pobjStart->GetFlag(flagDisabled))
 				SetItemState(nItem, CListCtrlEx::stateDisabled, LVIS_OVERLAYMASK);
 
 			// Increase the indent level for the children
@@ -1898,7 +1898,7 @@ void CListCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 			ASSERT_VALID(pobj);
 
 			// BUG:: Used && instead of &!!!!!!!
-			if (!(pobj->m_lngFlags & lngExcludeFlags))
+			if (!(pobj->GetFlag(lngExcludeFlags)))
 			{
 				// Always add to the end of the list because of recursion
 				int nItem = ListView_GetItemCount(m_hWnd);
@@ -1920,7 +1920,7 @@ void CListCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 				ASSERT(nIndex != -1);
 
 				// Check for disabled item
-				if (pobj->m_lngFlags & flagDisabled)
+				if (pobj->GetFlag(flagDisabled))
 					SetItemState(nItem, CListCtrlEx::stateDisabled, LVIS_OVERLAYMASK);
 
 				if (bRecurse && pobj->HasChildren())
@@ -1985,7 +1985,7 @@ int CListCtrlEx::AddObject(BObject *pobj, BObject *pobjParent /* = NULL */)
 	}
 
 	// Check for disabled item
-	if (pobj->m_lngFlags & flagDisabled)
+	if (pobj->GetFlag(flagDisabled))
 		SetItemState(nIndex, CListCtrlEx::stateDisabled, LVIS_OVERLAYMASK);
 
 	return nIndex;
@@ -3342,8 +3342,8 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		// Check for high priority items first
 		// If object 1 is high priority and object 2 is not, put object 1 first
 		// If object 2 is high priority and object 1 is not, put object 2 first
-		BOOL bHigh1 = (pobj1->m_lngFlags & flagHighPriority);
-		BOOL bHigh2 = (pobj2->m_lngFlags & flagHighPriority);
+		BOOL bHigh1 = (pobj1->GetFlag(flagHighPriority));
+		BOOL bHigh2 = (pobj2->GetFlag(flagHighPriority));
 		BOOL bDifferent = (bHigh1 ^ bHigh2);
 		if (bDifferent) return iDir * (bHigh1 ? -1 : 1);
 
@@ -3706,7 +3706,7 @@ void CListCtrlEx::OnUpdateColumnSortClear(CCmdUI* pCmdUI)
 	// turn sort off in order to do that).
 	// Also only enable if contents are sorted!
 	BObject* pobjStart = m_pDoc->GetCurrentObject();
-	BOOL bAutosort = !(pobjStart->m_lngFlags & flagNoAutosort);
+	BOOL bAutosort = !(pobjStart->GetFlag(flagNoAutosort));
 	BOOL bEnable = (bAutosort == FALSE) && (m_lngSortPropertyID != 0);
 	pCmdUI->Enable(bEnable);
 }

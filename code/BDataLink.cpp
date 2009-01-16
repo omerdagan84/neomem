@@ -997,7 +997,7 @@ BOOL BDataLink::AddMenuItems(CMenu* pMenu, int nPos)
 		// bug: didn't check for 0 case! could have been bad!!
 		if (pobj)
 		{
-			if (!(pobj->m_lngFlags & theApp.m_lngSearchExcludeFlags))
+			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
 			{
 				_sntprintf(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
 				pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, szBuffer);
@@ -1015,7 +1015,7 @@ BOOL BDataLink::AddMenuItems(CMenu* pMenu, int nPos)
 		for (int i = 0; i < nItems; i++)
 		{
 			BObject* pobj = (BObject*) pa->GetAt(i);
-			if (!(pobj->m_lngFlags & theApp.m_lngSearchExcludeFlags))
+			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
 			{
 				_sntprintf(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
 				pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, szBuffer);

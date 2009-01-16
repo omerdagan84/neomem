@@ -68,7 +68,7 @@ void CTreeCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 	// Add children recursively, if any
 	if (pobjStart->m_paChildren)
 	{
-		BOOL bSortChildren = !(pobjStart->m_lngFlags & flagNoAutosort);
+		BOOL bSortChildren = !(pobjStart->GetFlag(flagNoAutosort));
 		ASSERT_VALID(pobjStart->m_paChildren);
 		AddChildrenToTree(pobjStart->m_paChildren, htiStart, lngExcludeFlags, bSortChildren, bUseExpandFlags);
 	}
@@ -157,7 +157,7 @@ void CTreeCtrlEx::AddChildrenToTree(BObjects* paChildren, HTREEITEM htiParent,
 			BObject* pobj = (BObject*) paChildren->GetAt(i);
 			ASSERT_VALID(pobj);
 		
-			if (!(pobj->m_lngFlags & lngExcludeFlags))
+			if (!(pobj->GetFlag(lngExcludeFlags)))
 			{
 				// Get the index of the icon in the image list
 				int nImage = pobj->GetIconIndex();
@@ -196,11 +196,11 @@ void CTreeCtrlEx::AddChildrenToTree(BObjects* paChildren, HTREEITEM htiParent,
 				if (pobj->m_paChildren)
 				{
 					// Call this routine recursively
-					BOOL bSortGrandchildren = !(pobj->m_lngFlags & flagNoAutosort);
+					BOOL bSortGrandchildren = !(pobj->GetFlag(flagNoAutosort));
 					AddChildrenToTree(pobj->m_paChildren, hti, lngExcludeFlags, bSortGrandchildren, bUseExpandFlags);
 
 					// Expand item if specified and flag is set
-					if (bUseExpandFlags && (pobj->m_lngFlags & flagExpanded))
+					if (bUseExpandFlags && (pobj->GetFlag(flagExpanded)))
 						Expand(hti, TVE_EXPAND);
 				}
 			}
@@ -530,8 +530,8 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		// Check for high priority items first
 		// If object 1 is high priority and object 2 is not, put object 1 first
 		// If object 2 is high priority and object 1 is not, put object 2 first
-		BOOL bHigh1 = (pobj1->m_lngFlags & flagHighPriority);
-		BOOL bHigh2 = (pobj2->m_lngFlags & flagHighPriority);
+		BOOL bHigh1 = (pobj1->GetFlag(flagHighPriority));
+		BOOL bHigh2 = (pobj2->GetFlag(flagHighPriority));
 		BOOL bDifferent = (bHigh1 ^ bHigh2);
 		if (bDifferent) return (bHigh1 ? -1 : 1);
 

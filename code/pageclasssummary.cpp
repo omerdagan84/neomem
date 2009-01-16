@@ -114,7 +114,7 @@ void CPageClassSummary::DoDataExchange(CDataExchange* pDX)
 		if (pdat)
 		{
 			ASSERT_VALID(pdat);
-			bAutosort = !(pdat->m_lngFlags & flagNoAutosort);
+			bAutosort = !(pdat->GetFlag(flagNoAutosort));
 		}
 
 //		CString strFolder;

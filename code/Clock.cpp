@@ -220,7 +220,7 @@ void CClock::ShowPopup()
 		CMenu* pPopup = menu.GetSubMenu(0);
 		if (pPopup)
 		{
-//			BOOL bNoModifyClass = m_pobjPopup->m_lngFlags & flagNoModifyClass;
+//			BOOL bNoModifyClass = m_pobjPopup->GetFlag(flagNoModifyClass);
 //			pPopup->EnableMenuItem(ID_OBJ_CHANGE_OBJECT_CLASS, bNoModifyClass ? MF_GRAYED : MF_ENABLED);
 //			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
 			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, xScreen, yScreen, this);

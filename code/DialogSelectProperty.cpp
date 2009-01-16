@@ -389,7 +389,7 @@ void CDialogSelectProperty::OnOK()
 	if (pobj)
 	{
 		// Bug: Was crashing if no property was selected because pobj was 0! Added a check
-		if (pobj->m_lngFlags & flagDisabled)
+		if (pobj->GetFlag(flagDisabled))
 		{
 			AfxMessageBox("That property is already visible in the view.", MB_ICONINFORMATION);
 			return;

@@ -136,7 +136,7 @@ LPCTSTR BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
 //		BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
-		if (!(pobj->m_lngFlags & lngExcludeFlags))
+		if (!(pobj->GetFlag(lngExcludeFlags)))
 		{
 			if (iIndex == 0)
 				m_strTextCache = pobj->GetPropertyText(propName);
@@ -402,7 +402,7 @@ BOOL BObjects::IsDeleteValid()
 		strClassName.MakeLower();
 
 		// Check flags
-		if (pobj->m_lngFlags & flagNoDelete)
+		if (pobj->GetFlag(flagNoDelete))
 		{
 			strMsg.Format(_T("The %s \"%s\" cannot be deleted - it is marked as undeletable."), 
 									(LPCTSTR) strClassName, 

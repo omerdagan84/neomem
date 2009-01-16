@@ -1479,7 +1479,7 @@ void CViewTabs::OnTabRightClick(NMHDR* pNotify, LRESULT* result)
 			{
 				BObject* pobjView = STATIC_DOWNCAST(BObject, paChildren->GetAt(i));
 				ASSERT_VALID(pobjView);
-				if (!(pobjView->m_lngFlags & theApp.m_lngExcludeFlags))
+				if (!(pobjView->GetFlag(theApp.m_lngExcludeFlags)))
 				{
 					CString strName = CString("Show ") + pobjView->GetPropertyText(propName) + CString(" View");
 					ULONG lngViewID = pobjView->GetObjectID();

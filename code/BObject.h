@@ -58,6 +58,7 @@ public:
 	BObject* GetClassObject();
 	ULONG GetDefaultIconID();
 	BOOL GetFlag(ULONG lngFlag);
+	ULONG GetFlags() { return m_lngFlags; }; // inline
 	ULONG GetIconID();
 	int GetIconIndex();
 //	int GetLinks(BObjects& aObjects, BObject* pobjStart);
@@ -93,6 +94,7 @@ public:
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
 	BOOL SetData(BData* pData);
 	BOOL SetFlag(ULONG lngFlag, BOOL bValue, BOOL bRecurse = FALSE);
+	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; }; // inline
 	BOOL SetIconID(ULONG lngIconID);
 	void SetObjectID(ULONG lngObjectID) { m_lngObjectID = lngObjectID; }; // inline
 	void SetObjectText(const CString& strText);
@@ -112,7 +114,9 @@ private:
 	ULONG m_lngClassID;	// ClassID of this BObject, or PropertyID if this is a property BObject.
 public:
 	ULONG m_lngIconID;	// IconID of this BObject (0 means it's using the classdef icon)
+private:
 	ULONG m_lngFlags; // 32 bit flags
+public:
 	BObjects* m_paChildren; // pointer to list containing pointers to child bobjects. null if has no children.
 	BObjects* m_paProperties; // pointer to list containing pointers to property bobjects. null if has no properties.
 	BObject* m_pobjParent; // pointer to parent BObject

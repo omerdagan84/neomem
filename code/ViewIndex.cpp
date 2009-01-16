@@ -314,7 +314,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			int nItem = m_lvw.FindItemData((LPARAM) pobj);
 			if (nItem == -1)
 			{
-				if (!(pobj->m_lngFlags & theApp.m_lngExcludeFlags))
+				if (!(pobj->GetFlag(theApp.m_lngExcludeFlags)))
 				{
 					// Get index of icon associated with this object
 					int nImage = pobj->GetIconIndex();
@@ -360,8 +360,8 @@ void CViewIndex::AddChildrenToList(BObject* pobjStart)
 			ASSERT_VALID(pobj);
 
 			// Only add this object if it's not a system object
-//			if (!(pobj->m_lngFlags & flagSystem))
-			if (!(pobj->m_lngFlags & theApp.m_lngSearchExcludeFlags))
+//			if (!(pobj->GetFlag(flagSystem)))
+			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
 			{
 				// filter by class
 				if ((m_lngClassID==0) || (pobj->GetClassID() == m_lngClassID))
@@ -791,8 +791,8 @@ void CViewIndex::ReloadItems()
 	// Add root item
 	BObject* pobjRoot = m_pDoc->GetRootMain();
 	ASSERT_VALID(pobjRoot);
-//	if (!(pobjRoot->m_lngFlags & flagSystem))
-	if (!(pobjRoot->m_lngFlags & theApp.m_lngSearchExcludeFlags))
+//	if (!(pobjRoot->GetFlag(flagSystem)))
+	if (!(pobjRoot->GetFlag(theApp.m_lngSearchExcludeFlags)))
 	{
 		// filter by class
 		if ((m_lngClassID==0) || (pobjRoot->GetClassID() == m_lngClassID))

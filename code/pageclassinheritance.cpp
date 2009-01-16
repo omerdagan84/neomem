@@ -109,7 +109,7 @@ void CPageClassInheritance::DoDataExchange(CDataExchange* pDX)
 		OnChkInherit();
 
 		// If this is a system class, disable controls and change label
-		if (m_pobj->m_lngFlags & flagNoModify)
+		if (m_pobj->GetFlag(flagNoModify))
 		{
 			m_lblInstructions.SetWindowText(_T("Because this is a system class, the inheritance cannot be changed."));
 			m_chkInherit.EnableWindow(FALSE);

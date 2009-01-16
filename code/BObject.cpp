@@ -397,7 +397,7 @@ BObject::GetDefaultIconID()
 		// First look to the object's classdef
 		pobjClassDef = m_pDoc->GetObject(m_lngClassID);
 		ASSERT_VALID(pobjClassDef);
-		if (pobjClassDef->m_lngIconID)
+		if (pobjClassDef->m_lngIconID) // leave these as direct refs, not method calls. 
 			return pobjClassDef->m_lngIconID; // found icon, return it
 	}
 	else
@@ -823,7 +823,7 @@ BObject::SetPropertyText(ULONG lngPropertyID, LPCTSTR pszText,
 	// Check if property is read-only and give message.
 	BObject* pobjPropertyDef = m_pDoc->GetObject(lngPropertyID);
 	ASSERT_VALID(pobjPropertyDef);
-	if (pobjPropertyDef->m_lngFlags & flagPropValueReadOnly)
+	if (pobjPropertyDef->GetFlag(flagPropValueReadOnly))
 	{
 		AfxMessageBox("This property value is read-only and cannot be changed.", MB_ICONINFORMATION);
 		return FALSE;
@@ -1934,7 +1934,7 @@ BObject::IsParentSorted()
 	if (m_pobjParent)
 	{
 		ASSERT_VALID(m_pobjParent);
-		return (!(m_pobjParent->m_lngFlags & flagNoAutosort));
+		return (!(m_pobjParent->GetFlag(flagNoAutosort)));
 	}
 	return FALSE;
 }
@@ -1945,7 +1945,7 @@ BOOL
 BObject::IsSorted()
 {
 	ASSERT_VALID(this);
-	return (!(m_lngFlags & flagNoAutosort));
+	return (!(this->GetFlag(flagNoAutosort)));
 }
 
 
@@ -2057,7 +2057,7 @@ BObject::EditValue(ULONG lngPropertyID)
 	ASSERT_VALID(pobjPropertyDef);
 
 	// Check if property is read-only
-	if (pobjPropertyDef->m_lngFlags & flagPropValueReadOnly)
+	if (pobjPropertyDef->GetFlag(flagPropValueReadOnly))
 	{
 		AfxMessageBox("This property value is read-only and cannot be changed.", MB_ICONINFORMATION);
 		return FALSE;
@@ -2338,7 +2338,7 @@ BObject::SetFlag(ULONG lngFlag, BOOL bValue, BOOL bRecurse /* = FALSE */)
 
 
 // Get the value of the specified flag for this object. (flagNoDelete, flagHighPriority, etc).
-BOOL 
+inline BOOL 
 BObject::GetFlag(ULONG lngFlag)
 {
 	return (m_lngFlags & lngFlag);
@@ -2436,7 +2436,7 @@ BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass)
 	{
 		BObject* pobjProp = (BObject*) aProps.GetAt(i);
 		ASSERT_VALID(pobjProp);
-		if (!(pobjProp->m_lngFlags & lngExcludeFlags))
+		if (!(pobjProp->GetFlag(lngExcludeFlags)))
 		{
 			ULONG lngPropertyID = pobjProp->GetObjectID();
 			//. kludgy: don't add the Size property by default, though it's available to all objects. 
@@ -3241,8 +3241,8 @@ BObject::CopyFrom(BObject* pobjSource)
 	ASSERT_VALID(pobjSource);
 
 	// Copy properties
-	this->m_lngFlags = pobjSource->m_lngFlags;
-	this->m_lngIconID = pobjSource->m_lngIconID;
+	this->m_lngFlags = pobjSource->GetFlags();
+	this->m_lngIconID = pobjSource->m_lngIconID; // leave as direct ref
 	this->m_bytViewHeight = pobjSource->m_bytViewHeight;
 	this->m_lngClassID = pobjSource->GetClassID();
 	this->SetObjectID(pobjSource->GetObjectID());

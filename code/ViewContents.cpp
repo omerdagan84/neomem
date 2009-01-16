@@ -478,7 +478,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				m_lvw.AddDummyRow();
 				
 				// Sort items
-				BOOL bAutosort = !(pobjStart->m_lngFlags & flagNoAutosort);
+				BOOL bAutosort = !(pobjStart->GetFlag(flagNoAutosort));
 				if (bAutosort)
 					m_lvw.SortByProperty(propName, 1);
 				else
@@ -841,7 +841,7 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 //			CMenu* pPopup = menu.GetSubMenu(0);
 //			if (pPopup)
 //			{
-////				BOOL bNoModifyClass = m_pobjPopup->m_lngFlags & flagNoModifyClass;
+////				BOOL bNoModifyClass = m_pobjPopup->GetFlag(flagNoModifyClass);
 ////				pPopup->EnableMenuItem(ID_OBJ_CHANGE_OBJECT_CLASS, bNoModifyClass ? MF_GRAYED : MF_ENABLED);
 //				pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
 //			}
@@ -849,7 +849,7 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 		BCMenu* pPopup = InitPopup(IDR_POPUP_CONTENTS_EMPTY);
 		if (pPopup)
 		{
-//			BOOL bNoModifyClass = m_pobjPopup->m_lngFlags & flagNoModifyClass;
+//			BOOL bNoModifyClass = m_pobjPopup->GetFlag(flagNoModifyClass);
 //			pPopup->EnableMenuItem(ID_OBJ_CHANGE_OBJECT_CLASS, bNoModifyClass ? MF_GRAYED : MF_ENABLED);
 			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
 		}
@@ -1902,7 +1902,7 @@ void CViewContents::OnUpdateColumnSortClear(CCmdUI* pCmdUI)
 	// turn sort off in order to do that).
 	// Also only enable if contents are sorted!
 	BObject* pobjStart = m_pDoc->GetCurrentObject();
-	BOOL bAutosort = !(pobjStart->m_lngFlags & flagNoAutosort);
+	BOOL bAutosort = !(pobjStart->GetFlag(flagNoAutosort));
 	BOOL bEnable = (bAutosort == FALSE) && (m_lvw.m_lngSortPropertyID != 0);
 	pCmdUI->Enable(bEnable);
 }

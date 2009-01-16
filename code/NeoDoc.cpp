@@ -597,12 +597,10 @@ CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText
 	// Store pointer to this document
 	pobjNew->m_pDoc = this;
 
-	//, call a Create method now
+	//, call a Create method now?
 	// Set properties
-//	pobjNew->m_lngClassID = lngClassID; // it's okay to set this directly instead of calling SetClassID, because that's more for handling /changes/ to classid. 
-	pobjNew->m_lngFlags = lngFlags;
-//	pobjNew->SetIconID(lngIconID);
-	pobjNew->m_lngIconID = lngIconID;
+	pobjNew->SetFlags(lngFlags);
+	pobjNew->m_lngIconID = lngIconID; // leave as direct ref
 
 	// Set name
 	pobjNew->SetObjectText(strText);
@@ -905,7 +903,7 @@ BOOL CNeoDoc::UIChangeObjectClass(BObject* pobj)
 {
 	ASSERT_VALID(pobj);
 
-	BOOL bNoModifyClass = pobj->m_lngFlags & flagNoModifyClass;
+	BOOL bNoModifyClass = pobj->GetFlag(flagNoModifyClass);
 	if (bNoModifyClass)
 	{
 		AfxMessageBox("The class of this object can't be changed.", MB_ICONINFORMATION);
@@ -1224,7 +1222,7 @@ BObject* CNeoDoc::UIAddNewPropertyDef()
 BOOL CNeoDoc::UIEditPropertyDef(BObject* pobjPropertyDef)
 {
 	// Check if property is marked NoModify
-//	if (pobjPropertyDef->m_lngFlags & flagNoModify)
+//	if (pobjPropertyDef->GetFlag(flagNoModify))
 //	{
 //		AfxMessageBox("This property is a system property and cannot be modified.", MB_ICONINFORMATION);
 //		return FALSE;
@@ -1246,7 +1244,7 @@ BOOL CNeoDoc::UIEditPropertyDef(BObject* pobjPropertyDef)
 	BOOL bAdditionalProperty = (pobjAdditionalProperty != 0);
 	BOOL bLimitLinks = pobjPropertyDef->GetPropertyLong(propLimitNumberOfLinks);
 	BOOL bDisplayHierarchy = pobjPropertyDef->GetPropertyLong(propDisplayLinkHierarchy);
-	BOOL bSystemProperty = (pobjPropertyDef->m_lngFlags & flagNoModify); 
+	BOOL bSystemProperty = (pobjPropertyDef->GetFlag(flagNoModify)); 
 
 	// Set up and show dialog
 	CDialogEditProperty dlg;
@@ -1521,7 +1519,7 @@ int CNeoDoc::SearchForText(
 	// If this object has any of the bits set as specified in lngExcludeFlags, then exclude this object
 	// from the search results
 	// Bug:: Used && instead of & and screwed up results! Be careful of this! & is bitwise and && is logical!
-	BOOL bExcludeThisObject = pobjStart->m_lngFlags & lngExcludeFlags;
+	BOOL bExcludeThisObject = pobjStart->GetFlag(lngExcludeFlags);
 
 	// Convert search string to lower case for case insensitive sort.
 	// unbelievable - there is no case-insensitive search in either cstring or the run-time library!
@@ -1596,7 +1594,7 @@ int CNeoDoc::SearchForText(
 
 						// Exclude property if it's a system prop, etc.
 						// Special case for rtf text - it's a system prop but we still want to search it
-						if ((!(pobjProp->m_lngFlags & lngExcludeFlags)) || pobjProp->GetClassID() == propRtfText)
+						if ((!(pobjProp->GetFlag(lngExcludeFlags))) || pobjProp->GetClassID() == propRtfText)
 						{
 							// Search through this property only if we're interested in all properties,
 							// or it's the property we're interested in.
@@ -4177,7 +4175,7 @@ int CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/)
 		BObject* pobjProp = (BObject*) pobjProps->m_paChildren->GetAt(i);
 		ASSERT_VALID(pobjProp);
 		// just user properties
-		if (!(pobjProp->m_lngFlags & flagAdminOnly))
+		if (!(pobjProp->GetFlag(flagAdminOnly)))
 		{
 			ULONG lngPropID = pobjProp->GetObjectID();
 			// and not propRtfText (yet)

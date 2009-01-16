@@ -194,7 +194,7 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				ASSERT_VALID(pobjPropertyDef);
 
 				// Don't add property def if it should be excluded based on admin settings
-				if (!(pobjPropertyDef->m_lngFlags & theApp.m_lngExcludeFlags))
+				if (!(pobjPropertyDef->GetFlag(theApp.m_lngExcludeFlags)))
 				{
 					// Add the propertydef to the list
 					int nIndex = m_lvw.InsertItem(i, LPSTR_TEXTCALLBACK, nImage);

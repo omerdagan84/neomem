@@ -190,7 +190,7 @@ void CPageClassProperties::OnBtnDelete()
 	{
 		ASSERT_VALID(pobj);
 		// Check if property is marked NoDelete
-		if (pobj->m_lngFlags & flagNoDelete)
+		if (pobj->GetFlag(flagNoDelete))
 		{
 			AfxMessageBox("This property is a system property and cannot be deleted.");
 		}
@@ -238,7 +238,7 @@ void CPageClassProperties::LoadData()
 	{
 		BObject* pobjPropDef = (BObject*) aInheritedProps.GetAt(i);
 		ASSERT_VALID(pobjPropDef);
-		if (!(pobjPropDef->m_lngFlags & theApp.m_lngExcludeFlags))
+		if (!(pobjPropDef->GetFlag(theApp.m_lngExcludeFlags)))
 		{
 			int nItem = m_lvw.AddObject(pobjPropDef);
 			m_lvw.SetCheck(nItem, TRUE);
@@ -280,7 +280,7 @@ void CPageClassProperties::LoadData()
 	{
 		BObject* pobjPropDef = (BObject*) paCopy->GetAt(i);
 		ASSERT_VALID(pobjPropDef);
-		if (!(pobjPropDef->m_lngFlags & theApp.m_lngExcludeFlags))
+		if (!(pobjPropDef->GetFlag(theApp.m_lngExcludeFlags)))
 		{
 			// Add it if it's not in the list already
 			if (m_lvw.FindItemData((LPARAM) pobjPropDef) == -1)

@@ -231,7 +231,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 
 			// Get flags from the edit object
 //			// Get flags from the edit object (need to get flagObjectHasChildren at least)
-			m_pobjEditOriginal->m_lngFlags = m_pobj->m_lngFlags;
+			m_pobjEditOriginal->SetFlags(m_pobj->GetFlags());
 
 			// Remove the temp flag so it will show up
 //			m_pobjEditOriginal->m_lngFlags = m_pobj->m_lngFlags & ~flagTemp;
@@ -283,7 +283,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			// First set them back to base class so we don't screw things up! (in case inheritance was set)
 			m_pobjAdd->m_pobjParent = pobjBaseClass;
 			m_pobjEdit->m_pobjParent = pobjBaseClass;
-			m_pobjEdit->m_lngFlags  &= ~flagNoDelete; // clear no delete flag in case it was set 
+			m_pobjEdit->SetFlag(flagNoDelete, FALSE); // clear no delete flag in case it was set
 			m_pDoc->UIDeleteObject(m_pobjAdd, TRUE);
 			m_pDoc->UIDeleteObject(m_pobjEdit, TRUE);
 
@@ -347,7 +347,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 		// First set objects back to the base class so we don't screw things up
 		m_pobjAdd->m_pobjParent = pobjBaseClass;
 		m_pobjEdit->m_pobjParent = pobjBaseClass;
-		m_pobjEdit->m_lngFlags  &= ~flagNoDelete; // clear no delete flag in case it was set 
+		m_pobjEdit->SetFlag(flagNoDelete, FALSE); // clear no delete flag in case it was set 
 		m_pDoc->UIDeleteObject(m_pobjAdd, TRUE);
 		m_pDoc->UIDeleteObject(m_pobjEdit, TRUE);
 
@@ -378,10 +378,9 @@ void CSheetWizard::SetEditClass(BObject *pobjClass)
 	// Copy flags
 	// Note: If NoDelete is set, then wouldn't be able to delete the temp object if user hit cancel, so...
 	// but we need to copy the NoModify flag, or at least set a m_ variable to alert the inheritance page
-	m_pobj->m_lngFlags = pobjClass->m_lngFlags;
+	m_pobj->SetFlags(pobjClass->GetFlags());
 
 	// Add a flag so the copy object will remain invisible in the class wizard pages
-//	m_pobj->m_lngFlags |= flagTemp;
 	m_pobj->SetFlag(flagTemp, TRUE);
 
 	// Set or clear autosort bit at least

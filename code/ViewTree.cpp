@@ -311,7 +311,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 					// Now reload the child objects, if any, in the tree control
 					if (pobjStart->m_paChildren)
-						AddChildrenToTree(pobjStart->m_paChildren, htiParent, (pobjStart->m_lngFlags & flagNoAutosort));
+						AddChildrenToTree(pobjStart->m_paChildren, htiParent, (pobjStart->GetFlag(flagNoAutosort)));
 				}
 			}
 */
@@ -863,7 +863,7 @@ void CViewTree::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 //				pPopup->CheckMenuItem(ID_OBJ_PRIORITY_HIGH, nCheck);
 
 //				pPopup->SetDefaultItem(ID_OBJ_OPEN);
-//				BOOL bNoModifyClass = m_pobjPopup->m_lngFlags & flagNoModifyClass;
+//				BOOL bNoModifyClass = m_pobjPopup->GetFlag(flagNoModifyClass);
 
 				BOOL bAutosort = pobj->IsSorted();
 				pPopup->CheckMenuItem(ID_OBJ_AUTOSORT, bAutosort ? MF_CHECKED : MF_UNCHECKED);

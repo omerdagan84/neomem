@@ -140,7 +140,7 @@ void CPageClassViews::LoadData()
 	{
 		BObject* pobjPropDef = (BObject*) aInheritedProps.GetAt(i);
 		ASSERT_VALID(pobjPropDef);
-		if (!(pobjPropDef->m_lngFlags & theApp.m_lngExcludeFlags))
+		if (!(pobjPropDef->GetFlag(theApp.m_lngExcludeFlags)))
 		{
 			int nItem = m_lvw.AddObject(pobjPropDef);
 			m_lvw.SetCheck(nItem, TRUE);
@@ -180,7 +180,7 @@ void CPageClassViews::LoadData()
 	{
 		BObject* pobjPropDef = (BObject*) paCopy->GetAt(i);
 		ASSERT_VALID(pobjPropDef);
-		if (!(pobjPropDef->m_lngFlags & theApp.m_lngExcludeFlags))
+		if (!(pobjPropDef->GetFlag(theApp.m_lngExcludeFlags)))
 		{
 			// Add it if it's not in the list already
 			if (m_lvw.FindItemData((LPARAM) pobjPropDef) == -1)
