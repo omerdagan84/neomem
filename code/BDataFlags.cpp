@@ -183,7 +183,8 @@ BOOL BDataFlags::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 		switch (lngPropertyID)
 		{
 			case propClassName:
-				pobj->m_lngClassID = m_pobj->GetObjectID();
+				// pobj->m_lngClassID = m_pobj->GetObjectID();
+				pobj->SetClassID(m_pobj->GetObjectID());
 				break;
 			// really shouldn't let user modify this like this...
 //			case propLocation:

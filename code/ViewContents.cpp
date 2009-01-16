@@ -610,7 +610,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// If the object that is changing is a property, see if it's in the columns.
 				// Note: When you edit a property, several properties get changed so this might get
 				// called several times.
-				if (pobj->m_lngClassID == classProperty)
+				if (pobj->GetClassID() == classProperty)
 				{
 					// Only concerned with name and property type right now
 					if ((lngPropertyID == propName) || (lngPropertyID == propPropertyType))

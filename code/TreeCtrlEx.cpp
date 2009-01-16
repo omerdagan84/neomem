@@ -538,8 +538,8 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		// Check for folders - folders should come before other objects
 		// If object 1 is a folder and object 2 is not, put object 1 first
 		// If object 2 is a folder and object 1 is not, put object 2 first
-		BOOL bFolder1 = (pobj1->m_lngClassID == classFolder);
-		BOOL bFolder2 = (pobj2->m_lngClassID == classFolder);
+		BOOL bFolder1 = (pobj1->GetClassID() == classFolder);
+		BOOL bFolder2 = (pobj2->GetClassID() == classFolder);
 		bDifferent = (bFolder1 ^ bFolder2);
 		if (bDifferent) return (bFolder1 ? -1 : 1);
 */

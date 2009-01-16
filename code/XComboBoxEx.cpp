@@ -181,7 +181,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 	if (bIncludeStart)
 	{
 		BOOL bValidFlags = !(pobjStart->m_lngFlags & lngExcludeFlags);
-		BOOL bValidClass = (pdatValidClasses == 0) ? TRUE : pdatValidClasses->FindReferences(pobjStart->m_lngClassID);
+		BOOL bValidClass = (pdatValidClasses == 0) ? TRUE : pdatValidClasses->FindReferences(pobjStart->GetClassID());
 		if (bValidFlags && bValidClass)
 		{
 			// Get index of icon associated with this object
@@ -227,7 +227,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 
 			// Check that flags and class are valid
 			BOOL bValidFlags = !(pobj->m_lngFlags & lngExcludeFlags);
-			BOOL bValidClass = (pdatValidClasses == 0) ? TRUE : pdatValidClasses->FindReferences(pobj->m_lngClassID);
+			BOOL bValidClass = (pdatValidClasses == 0) ? TRUE : pdatValidClasses->FindReferences(pobj->GetClassID());
 			if (bValidFlags && bValidClass)
 			{
 				// Get index of icon associated with this object

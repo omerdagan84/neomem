@@ -3094,7 +3094,7 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 
 		// Save pdatColumns to class or object.
 		// BUG:: Used = instead of == again!
-		if (pobj->m_lngClassID == classFolder)
+		if (pobj->GetClassID() == classFolder)
 		{
 			xTRACE("  save to object\n");
 			// Save column info to the object
@@ -3105,7 +3105,7 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 		{
 			xTRACE("  save to class\n");
 			// Save column info to the object's class
-			ULONG lngClassID = pobj->m_lngClassID;
+			ULONG lngClassID = pobj->GetClassID();
 			BObject* pobjClass = m_pDoc->GetObject(lngClassID);
 //			pobjClass->SetPropertyData(propObjectColumnInfoArray, pdatColumns, FALSE, FALSE);
 			pobjClass->SetPropertyData(propObjectColumnInfoArray, pdatColumns, TRUE, FALSE);
@@ -3350,8 +3350,8 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		// Check for folders - folders should come before other objects
 		// If object 1 is a folder and object 2 is not, put object 1 first
 		// If object 2 is a folder and object 1 is not, put object 2 first
-		BOOL bFolder1 = (pobj1->m_lngClassID == classFolder);
-		BOOL bFolder2 = (pobj2->m_lngClassID == classFolder);
+		BOOL bFolder1 = (pobj1->GetClassID() == classFolder);
+		BOOL bFolder2 = (pobj2->GetClassID() == classFolder);
 		bDifferent = (bFolder1 ^ bFolder2);
 		if (bDifferent) return iDir * (bFolder1 ? -1 : 1);
 */

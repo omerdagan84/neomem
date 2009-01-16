@@ -74,7 +74,7 @@ BOOL CUndo::IsValid()
 			(m_pobj == m_pDoc->GetObject(m_lngObjectID)) && // check pobj is still valid
 			(m_pdat->IsValid(m_pDoc)) && // check pdat is still valid
 			(pobjPropertyDef != NULL) &&  // check property is still valid
-			(pobjPropertyDef->m_lngClassID == classProperty) // "
+			(pobjPropertyDef->GetClassID() == classProperty) // "
 			)
 		{
 			bValid = TRUE;

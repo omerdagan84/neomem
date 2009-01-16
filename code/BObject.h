@@ -53,6 +53,7 @@ public:
 	BObject* GetChild(int nChild);
 	int GetChildCount(BOOL bRecurse = FALSE, BOOL bIncludeProperties = FALSE) const;
 	BOOL GetClassDefNewName(CString& strName);
+	ULONG GetClassID() { return m_lngClassID; }; // inline
 	BObject* GetClassObject();
 	ULONG GetDefaultIconID();
 	BOOL GetFlag(ULONG lngFlag);

@@ -244,7 +244,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			m_lvw.RedrawWindow();
 
 			// also update class combo
-			ULONG lngClassID = pobj->m_lngClassID;
+			ULONG lngClassID = pobj->GetClassID();
 			if (lngClassID == classClass)
 			{
 				int nItem = m_cboClass.FindItemData((LPARAM) pobj);
@@ -327,7 +327,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				}
 			}
 			// also update class combo
-			ULONG lngClassID = pobj->m_lngClassID;
+			ULONG lngClassID = pobj->GetClassID();
 			if (lngClassID == classClass)
 			{
 				int nItem = m_cboClass.FindItemData((LPARAM) pobj);
@@ -364,7 +364,7 @@ void CViewIndex::AddChildrenToList(BObject* pobjStart)
 			if (!(pobj->m_lngFlags & theApp.m_lngSearchExcludeFlags))
 			{
 				// filter by class
-				if ((m_lngClassID==0) || (pobj->m_lngClassID == m_lngClassID))
+				if ((m_lngClassID==0) || (pobj->GetClassID() == m_lngClassID))
 				{
 					// Get index of icon associated with this object
 					int nImage = pobj->GetIconIndex();
@@ -795,7 +795,7 @@ void CViewIndex::ReloadItems()
 	if (!(pobjRoot->m_lngFlags & theApp.m_lngSearchExcludeFlags))
 	{
 		// filter by class
-		if ((m_lngClassID==0) || (pobjRoot->m_lngClassID == m_lngClassID))
+		if ((m_lngClassID==0) || (pobjRoot->GetClassID() == m_lngClassID))
 		{
 			int nImage = pobjRoot->GetIconIndex();
 			int nIndex = m_lvw.InsertItem(0, LPSTR_TEXTCALLBACK, nImage);

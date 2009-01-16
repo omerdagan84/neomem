@@ -408,7 +408,7 @@ void CDialogEditLink::OnBtnEdit()
 	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();	
 	if (!pobj) return;
 	ASSERT_VALID(pobj);
-	ULONG lngClassID = pobj->m_lngClassID;
+	ULONG lngClassID = pobj->GetClassID();
 
 	BOOL bModified = FALSE;
 	switch (lngClassID)

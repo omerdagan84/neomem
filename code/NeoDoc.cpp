@@ -598,7 +598,7 @@ BObject* CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString
 
 	//, call a Create method now
 	// Set properties
-	pobjNew->m_lngClassID = lngClassID;
+	pobjNew->m_lngClassID = lngClassID; // it's okay to set this directly instead of calling SetClassID, because that's more for handling /changes/ to classid. 
 	pobjNew->m_lngFlags = lngFlags;
 //	pobjNew->SetIconID(lngIconID);
 	pobjNew->m_lngIconID = lngIconID;
@@ -911,7 +911,7 @@ BOOL CNeoDoc::UIChangeObjectClass(BObject* pobj)
 		return FALSE;
 	}
 	
-	ULONG lngClassID = pobj->m_lngClassID;
+	ULONG lngClassID = pobj->GetClassID();
 
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_CHANGE_OBJECT_CLASS;
@@ -1354,11 +1354,11 @@ BData* CNeoDoc::CreateBData(ULONG lngClassOrPropertyID)
 	ULONG lngPropertyTypeID = 0;
 	if (pobjClassDef)
 	{
-		BObject* pobjPropType = 0;
+		BObject* pobjPropType = NULL;
 
 		// For classdefs, get from "object name property type" property,
 		// for propertydefs, get from "property type" property.
-		if (pobjClassDef->m_lngClassID == classClass)
+		if (pobjClassDef->GetClassID() == classClass)
 			// Note: For now this will be BDataString, BDataPersonName, or BDataDate
 			pobjPropType = pobjClassDef->GetPropertyLink(propObjectNamePropertyType);
 		else
@@ -1595,22 +1595,22 @@ int CNeoDoc::SearchForText(
 
 						// Exclude property if it's a system prop, etc.
 						// Special case for rtf text - it's a system prop but we still want to search it
-						if ((!(pobjProp->m_lngFlags & lngExcludeFlags)) || pobjProp->m_lngClassID == propRtfText)
+						if ((!(pobjProp->m_lngFlags & lngExcludeFlags)) || pobjProp->GetClassID() == propRtfText)
 						{
 							// Search through this property only if we're interested in all properties,
 							// or it's the property we're interested in.
-							if ((lngPropertyID == 0) || (lngPropertyID == pobjProp->m_lngClassID))
+							if ((lngPropertyID == 0) || (lngPropertyID == pobjProp->GetClassID()))
 							{
-								xTRACE("    Searching in property %d\n", pobjProp->m_lngClassID);
+								xTRACE("    Searching in property %d\n", pobjProp->GetClassID());
 								strPropertyValue = pobjProp->GetPropertyText(propName);
 								// this trace bombs because of string length!
-//								xTRACE("    Searching in property %d value \"%s\"\n", pobjProp->m_lngClassID, strPropertyValue);
+//								xTRACE("    Searching in property %d value \"%s\"\n", pobjProp->GetClassID(), strPropertyValue);
 
 								// If this is an rtf text property, search through it with the app's hidden rtf control
 								// Bug: Used lngPropertyID instead of pobj->m_lngClassID! wound up
 								// searching rtf text as if it were plain text.
 //								if (lngPropertyID == propRtfText)
-								if (pobjProp->m_lngClassID == propRtfText)
+								if (pobjProp->GetClassID() == propRtfText)
 								{
 									// Assign to invisible rtf control so we can use its searching capabilities.
 									long nPos = theApp.SearchRtfString(strPropertyValue, strFindText, bMatchCase, bWholeWord);
@@ -1983,10 +1983,10 @@ BOOL CNeoDoc::UIEditObject(BObject *pobj)
 
 	// Check if object has a person name, in which case, just bring up the edit person name dialog.
 	// If editing an icon, just let user modify name!
-	ULONG lngClassID = pobj->m_lngClassID;
+	ULONG lngClassID = pobj->GetClassID();
 	BOOL bIcon = (lngClassID == classIcon);
 	BOOL bPersonName = (pobj->m_pdat->IsKindOf(RUNTIME_CLASS(BDataPersonName)));
-//	ULONG lngClassID = pobj->m_lngClassID;
+//	ULONG lngClassID = pobj->GetClassID();
 //	BObject* pobjClass = m_pDoc->GetObject(lngClassID);
 //	BObject* pobjNamePropType = pobjClass->GetPropertyLink(propObjectNamePropertyType);
 //	ULONG lngNamePropTypeID = pobjNamePropType->GetObjectID();

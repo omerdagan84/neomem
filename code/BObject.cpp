@@ -697,7 +697,7 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 		{
 			BObject* pobjPropertyValue = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjPropertyValue);
-			if (pobjPropertyValue->m_lngClassID == lngPropertyID)
+			if (pobjPropertyValue->GetClassID() == lngPropertyID)
 			{
 				// Found, return the property value bobject
 				return pobjPropertyValue;
@@ -770,7 +770,7 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 	{
 		BObject* pobjPropertyValue = new BObject();
 		ASSERT_VALID(pobjPropertyValue);
-		pobjPropertyValue->m_lngClassID = lngPropertyID;
+		pobjPropertyValue->SetClassID(lngPropertyID);
 		pobjPropertyValue->m_pDoc = m_pDoc; // set document pointer
 
 		// Create a bdata object as appropriate for this property, if specified
@@ -1078,7 +1078,7 @@ BObject::GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 				if (pobjPropertyValue->m_pdat == 0)
 				{
 					// No bdata object exists yet - we need to create one appropriate for this class
-					pobjPropertyValue->m_pdat = m_pDoc->CreateBData(pobjPropertyValue->m_lngClassID);
+					pobjPropertyValue->m_pdat = m_pDoc->CreateBData(pobjPropertyValue->GetClassID());
 				}
 				ASSERT_VALID(pobjPropertyValue->m_pdat);
 				return pobjPropertyValue->m_pdat->GetBDataText(m_pDoc, lngPropertyID);
@@ -1801,7 +1801,7 @@ BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 			// Get property value, then property def from it
 			BObject* pobjPropValue = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjPropValue);
-			ULONG lngPropertyID = pobjPropValue->m_lngClassID;
+			ULONG lngPropertyID = pobjPropValue->GetClassID();
 			BObject* pobjPropDef = m_pDoc->GetObject(lngPropertyID);
 			if (!pobjPropDef)
 			{
@@ -2596,7 +2596,7 @@ BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse)
 			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjProp);
 			// Check if this property value is using the find object as its propertydef
-			if (pobjProp->m_lngClassID == lngFindID)
+			if (pobjProp->GetClassID() == lngFindID)
 			{
 				bReferenced = TRUE;
 				break;
@@ -2708,7 +2708,7 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 			ASSERT_VALID(pobjPropertyValue);
 			// If the property def of this property value is the object we're looking for, delete the property value.
 			//, note this doesn't handle replace for property values yet - might need to adjust bdata objects also
-			if (pobjPropertyValue->m_lngClassID == lngFindID)
+			if (pobjPropertyValue->GetClassID() == lngFindID)
 			{
 				// Bug: Called DeleteProperty on the property value instead of on this bobject!!
 //				pobjPropertyValue->DeleteProperty(lngFindID);
@@ -2724,7 +2724,7 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 				if (pobjPropertyValue->m_pdat->ReplaceReferences(pobjFind, pobjNew))
 				{
 					// Tell views
-					h.m_lngPropertyID = pobjPropertyValue->m_lngClassID;
+					h.m_lngPropertyID = pobjPropertyValue->GetClassID();
 					m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 				}
 			}
@@ -3133,7 +3133,7 @@ BObject::ConvertToSoftLinks(BOOL bRecurse)
 			BData* pdat = pobjProp->m_pdat;
 			if (pdat)
 			{
-				ULONG lngPropertyID = pobjProp->m_lngClassID;
+				ULONG lngPropertyID = pobjProp->GetClassID();
 				TRACE("converting %s.[%d] to soft links\n", (LPCTSTR) this->GetName(TRUE), lngPropertyID);
 				pdat->ConvertToSoftLinks();
 			}
@@ -3178,7 +3178,7 @@ BObject::ConvertToHardLinks(BOOL bRecurse)
 			BData* pdat = pobjProp->m_pdat;
 			if (pdat)
 			{
-				ULONG lngPropertyID = pobjProp->m_lngClassID;
+				ULONG lngPropertyID = pobjProp->GetClassID();
 				yTRACE("converting %s.[%d] to hard links\n", (LPCTSTR) this->GetName(TRUE), lngPropertyID);
 				pdat->ConvertToHardLinks(pDoc);
 			}
@@ -3238,7 +3238,7 @@ BObject::CopyFrom(BObject* pobjSource)
 	this->m_lngFlags = pobjSource->m_lngFlags;
 	this->m_lngIconID = pobjSource->m_lngIconID;
 	this->m_bytViewHeight = pobjSource->m_bytViewHeight;
-	this->m_lngClassID = pobjSource->m_lngClassID;
+	this->m_lngClassID = pobjSource->GetClassID();
 	this->SetObjectID(pobjSource->GetObjectID());
 
 	// Leave this->pDoc as is
@@ -3285,7 +3285,7 @@ BObject::CopyFrom(BObject* pobjSource)
 		{
 			BObject* pobjSourceProp = (BObject*) pobjSourceProps->GetAt(i);
 			ASSERT_VALID(pobjSourceProp);
-			ULONG lngPropertyID = pobjSourceProp->m_lngClassID;
+			ULONG lngPropertyID = pobjSourceProp->GetClassID();
 			BData* pdatSource = pobjSourceProp->m_pdat;
 			if (pdatSource)
 			{

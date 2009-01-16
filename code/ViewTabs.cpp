@@ -323,7 +323,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 //					// Save view arrangement to class or object depending on what kind of object it is.
 					// Always save to object's class, even for folders.
 					//, v2 will save view heights etc to object.
-//					if (pobj->m_lngClassID == classFolder)
+//					if (pobj->GetClassID() == classFolder)
 //					{
 //						// Save view info to the object
 //						pobj->SetPropertyData(propViewArrangement, m_pdatViews, FALSE, FALSE);
@@ -331,7 +331,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 //					else
 //					{
 						// Save view info to the object's class
-						ULONG lngClassID = pobj->m_lngClassID;
+						ULONG lngClassID = pobj->GetClassID();
 						BObject* pobjClass = m_pDoc->GetObject(lngClassID);
 						ASSERT_VALID(pobjClass);
 						pobjClass->SetPropertyData(propObjectViewArrangement, m_pdatViews, FALSE, FALSE);

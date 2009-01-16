@@ -196,7 +196,7 @@ int BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALS
 //		BObject* pobj = (BObject*) GetAt(i);
 		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
-		if (pobj->m_lngClassID == lngClassID)
+		if (pobj->GetClassID() == lngClassID)
 			return i;
 		
 		// If recursive option is on and this object has children, search through them as well
@@ -433,7 +433,7 @@ BOOL BObjects::IsDeleteValid()
 			{
 				// If we're deleting a class, we'll want to replace all references with classPaper.
 				BObject* pobjNew = 0; // default is to just remove all references
-				if (pobj->m_lngClassID == classClass)
+				if (pobj->GetClassID() == classClass)
 					pobjNew = pobj->m_pDoc->GetObject(classPaper);
 				// Remove/replace all references recursively and return true.
 //				pobj->m_pDoc->m_pobjRoot->ReplaceReferences(pobj);
