@@ -20,10 +20,10 @@ static char THIS_FILE[]=__FILE__;
 
 CUndo::CUndo()
 {
-	m_pDoc = 0;
-	m_pobj = 0;
+	m_pDoc = NULL;
+	m_pobj = NULL;
 	m_lngObjectID = 0;
-	m_pdat = 0;
+	m_pdat = NULL;
 	m_lngPropertyID = 0;
 }
 
@@ -93,9 +93,9 @@ BOOL CUndo::Restore()
 		// SetPropertyData returns true if it keeps pdat, or false if it doesn't
 		if (m_pobj->SetPropertyData(m_lngPropertyID, m_pdat))
 //			delete m_pdat; // if returned false, we must delete data
-			m_pdat = 0; // bobject kept bdata, so we don't need to delete it
-//		m_pobj = 0;
-//		m_pdat = 0; // we no longer own it
+			m_pdat = NULL; // bobject kept bdata, so we don't need to delete it
+//		m_pobj = NULL;
+//		m_pdat = NULL; // we no longer own it
 //		m_lngPropertyID = 0;
 		Clear();
 		return TRUE;
@@ -108,13 +108,13 @@ BOOL CUndo::Restore()
 // Clear this undo object, deleting the bdata copy if we still own it
 BOOL CUndo::Clear()
 {
-	m_pDoc = 0;
-	m_pobj = 0;
+	m_pDoc = NULL;
+	m_pobj = NULL;
 	m_lngObjectID = 0;
-//	m_pdat = 0;
+//	m_pdat = NULL;
 	if (m_pdat)
 		delete m_pdat;
-	m_pdat = 0;
+	m_pdat = NULL;
 	m_lngPropertyID = 0;
 	return TRUE;
 }

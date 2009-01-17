@@ -73,9 +73,9 @@ CDialogEditLink::CDialogEditLink(CWnd* pParent /*=NULL*/)
 	m_lngExcludeFlags = 0;
 	m_lngSelectedID = 0;
 	m_lngStartID = 0;
-	m_pdatLink = 0;
-	m_pobjSelected = 0;
-	m_pobjStart = 0;
+	m_pdatLink = NULL;
+	m_pobjSelected = NULL;
+	m_pobjStart = NULL;
 
 	m_bFilterVisible = FALSE;
 	m_bFilterOn = FALSE;
@@ -196,7 +196,7 @@ int CDialogEditLink::DoModalEdit(CString strCaption, CString strInstructions, UL
 	m_bIncludeStart = bIncludeStart;
 //	m_lngButtonFlags = flagShowAdd | flagShowEdit | flagShowDelete | flagShowClose;
 	m_lngButtonFlags = flagShowAdd | flagShowAddChild | flagShowEdit | flagShowDelete | flagShowClose;
-	m_pdatLink = 0; // don't need to select anything
+	m_pdatLink = NULL; // don't need to select anything
 
 	m_bMultiSelectVisible = FALSE;
 	m_bMultiSelectEnabled = FALSE;
@@ -221,7 +221,7 @@ int CDialogEditLink::DoModalSelect(CString strCaption, CString strInstructions, 
 	m_lngExcludeFlags = lngExcludeFlags;
 	m_bIncludeStart = bIncludeStart;
 	m_lngButtonFlags = 0; // don't show any buttons
-	m_pdatLink = 0; // don't need to select anything
+	m_pdatLink = NULL; // don't need to select anything
 
 	m_bMultiSelectVisible = FALSE;
 	m_bMultiSelectEnabled = FALSE;

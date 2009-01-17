@@ -460,7 +460,7 @@ BObject::SetObjectText(const CString& strText)
 	ASSERT_VALID(m_pDoc);
 
 	// If no bdata object exists yet we'll need to create one appropriate for this class.
-	if (m_pdat == 0)
+	if (m_pdat == NULL)
 	{
 		BData* pData = m_pDoc->CreateBData(m_lngClassID);
 		SetData(pData);
@@ -970,7 +970,7 @@ BObject::GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 	case propName: 
 		{
 			// Return the text representation of the object (the name)
-			if (m_pdat == 0)
+			if (m_pdat == NULL)
 			{
 				// No bdata object exists yet - we need to create one appropriate for this class
 				m_pdat = m_pDoc->CreateBData(m_lngClassID);
@@ -1097,13 +1097,13 @@ BObject::GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 				// Rather than calling this routine again, could duplicate the code here.
 				// Also, that way we could pass lngpropid to the bdata gettext, which sometimes needs it.
 				ASSERT_VALID(pobjPropertyValue);
-				if (pobjPropertyValue->m_pdat == 0)
+				if (pobjPropertyValue->GetData() == NULL)
 				{
 					// No bdata object exists yet - we need to create one appropriate for this class
 					pobjPropertyValue->m_pdat = m_pDoc->CreateBData(pobjPropertyValue->GetClassID());
 				}
-				ASSERT_VALID(pobjPropertyValue->m_pdat);
-				return pobjPropertyValue->m_pdat->GetBDataText(m_pDoc, lngPropertyID);
+				ASSERT_VALID(pobjPropertyValue->GetData());
+				return pobjPropertyValue->GetData()->GetBDataText(m_pDoc, lngPropertyID);
 			}
 			else
 				// Property was not found - need to return zero-length string.
@@ -1347,7 +1347,7 @@ BObject::GetPropertyData(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=
 			if (pobjPropertyValue)
 			{
 				ASSERT_VALID(pobjPropertyValue);
-				return pobjPropertyValue->m_pdat;
+				return pobjPropertyValue->GetData();
 			}
 		}
 	}
@@ -1388,7 +1388,7 @@ BObject::SetPropertyLong(ULONG lngPropertyID, ULONG lngValue,
 
 	// Create new data object to hold data and initialize it
 	//, more efficient to use existing bdata object!!!!
-//	if (pobjPropertyValue->m_pdat == 0)
+//	if (pobjPropertyValue->m_pdat == NULL)
 //	{
 //		pobjPropertyValue->m_pdat = new BDataLong;
 //	}
@@ -1437,7 +1437,7 @@ BObject::GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 	if (pobjPropertyValue)
 	{
 		ASSERT_VALID(pobjPropertyValue);
-		BDataLong* pdat = DYNAMIC_DOWNCAST(BDataLong, pobjPropertyValue->m_pdat);
+		BDataLong* pdat = DYNAMIC_DOWNCAST(BDataLong, pobjPropertyValue->GetData());
 		ASSERT_VALID(pdat);
 		return pdat->m_lngValue;
 	}
@@ -1477,7 +1477,7 @@ BObject::SetPropertyLink(ULONG lngPropertyID, BObject* pobj,
 
 		// Create new data object to hold data and initialize it
 		//, more efficient to use existing bdata object!!!!
-//		if (pobjPropertyValue->m_pdat == 0)
+//		if (pobjPropertyValue->m_pdat == NULL)
 //		{
 //			pobjPropertyValue->m_pdat = new BDataLong;
 //		}
@@ -1532,7 +1532,7 @@ BObject::GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 	if (pobjPropertyValue)
 	{
 		ASSERT_VALID(pobjPropertyValue);
-		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->m_pdat);
+		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetData());
 		if (pdat)
 		{
 			ASSERT_VALID(pdat);
@@ -2495,7 +2495,7 @@ BObject::ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPropertyDe
 			ASSERT_VALID(pobj);
 			if (pobj->m_lngClassID == lngPropertyID)
 			{
-				BData* pdatOld = pobj->m_pdat;
+				BData* pdatOld = pobj->GetData();
 
 				// Create the new bdata type object
 				BData* pdatNew = m_pDoc->CreateBDataFromPropertyType(lngNewPropertyTypeID);
@@ -2626,8 +2626,8 @@ BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse)
 				break;
 			}
 			// Check if the property value data references the find object
-			ASSERT_VALID(pobjProp->m_pdat);
-			if (pobjProp->m_pdat->FindReferences(pobjFind))
+			ASSERT_VALID(pobjProp->GetData());
+			if (pobjProp->GetData()->FindReferences(pobjFind))
 			{
 				bReferenced = TRUE;
 				break;
@@ -2744,8 +2744,8 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 			else
 			{
 				// Remove/replace any references contained in the property value's bdata.
-				ASSERT_VALID(pobjPropertyValue->m_pdat);
-				if (pobjPropertyValue->m_pdat->ReplaceReferences(pobjFind, pobjNew))
+				ASSERT_VALID(pobjPropertyValue->GetData());
+				if (pobjPropertyValue->GetData()->ReplaceReferences(pobjFind, pobjNew))
 				{
 					// Tell views
 					h.m_lngPropertyID = pobjPropertyValue->GetClassID();
@@ -3155,7 +3155,7 @@ BObject::ConvertToSoftLinks(BOOL bRecurse)
 		{
 			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjProp);
-			BData* pdat = pobjProp->m_pdat;
+			BData* pdat = pobjProp->GetData();
 			if (pdat)
 			{
 				ULONG lngPropertyID = pobjProp->GetClassID();
@@ -3200,7 +3200,7 @@ BObject::ConvertToHardLinks(BOOL bRecurse)
 		{
 			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjProp);
-			BData* pdat = pobjProp->m_pdat;
+			BData* pdat = pobjProp->GetData();
 			if (pdat)
 			{
 				ULONG lngPropertyID = pobjProp->GetClassID();
@@ -3287,9 +3287,9 @@ BObject::CopyFrom(BObject* pobjSource)
 	this->SetParent(pobjThisParent);
 
 	// Copy BData (usually contains name of this BObject)
-	if (pobjSource->m_pdat)
+	if (pobjSource->GetData())
 	{
-		this->SetData(pobjSource->m_pdat->CreateCopy());
+		this->SetData(pobjSource->GetData()->CreateCopy());
 	}
 
 	// Delete all existing property subobjects in case this object has some that the new object doesn't. 
@@ -3311,7 +3311,7 @@ BObject::CopyFrom(BObject* pobjSource)
 			BObject* pobjSourceProp = (BObject*) pobjSourceProps->GetAt(i);
 			ASSERT_VALID(pobjSourceProp);
 			ULONG lngPropertyID = pobjSourceProp->GetClassID();
-			BData* pdatSource = pobjSourceProp->m_pdat;
+			BData* pdatSource = pobjSourceProp->GetData();
 			if (pdatSource)
 			{
 				ASSERT_VALID(pdatSource);

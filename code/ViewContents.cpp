@@ -445,10 +445,10 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// If we still have a pointer to a BDataColumns object and it was never saved,
 				// we need to delete it, as it's just a copy of one from the document.
 				// The destructor does this same code.
-//				if ((m_pdatCopy != 0) && (m_bColumnsSaved == FALSE))
+//				if ((m_pdatCopy != NULL) && (m_bColumnsSaved == FALSE))
 //				{
 //					delete m_pdatCopy;
-//					m_pdatCopy = 0;
+//					m_pdatCopy = NULL;
 //				}
 
 				// Get column information from object or from object's classdef

@@ -133,12 +133,12 @@ CNeoDoc::CNeoDoc()
 	m_nEncryptionType = encryptNone;
 	m_strSessionKeyHash.Empty();
 
-	m_pobjRoot = 0;
-	m_pobjCurrent = 0;
+	m_pobjRoot = NULL;
+	m_pobjCurrent = NULL;
 	m_lngNextObjectID = 0;
 	m_lngSplitterPos = 0;
-	m_pdatTemp = 0;
-	m_pobjTarget = 0;
+	m_pdatTemp = NULL;
+	m_pobjTarget = NULL;
 	m_lngDefaultFolderLocationID = 0;
 	m_lngStartObjectID = 0;
 
@@ -1978,13 +1978,13 @@ BOOL CNeoDoc::UIEditObject(BObject *pobj)
 {	
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobj);
-	ASSERT_VALID(pobj->m_pdat);
+	ASSERT_VALID(pobj->GetData());
 
 	// Check if object has a person name, in which case, just bring up the edit person name dialog.
 	// If editing an icon, just let user modify name!
 	ULONG lngClassID = pobj->GetClassID();
 	BOOL bIcon = (lngClassID == classIcon);
-	BOOL bPersonName = (pobj->m_pdat->IsKindOf(RUNTIME_CLASS(BDataPersonName)));
+	BOOL bPersonName = (pobj->GetData()->IsKindOf(RUNTIME_CLASS(BDataPersonName)));
 //	ULONG lngClassID = pobj->GetClassID();
 //	BObject* pobjClass = m_pDoc->GetObject(lngClassID);
 //	BObject* pobjNamePropType = pobjClass->GetPropertyLink(propObjectNamePropertyType);
@@ -1992,7 +1992,7 @@ BOOL CNeoDoc::UIEditObject(BObject *pobj)
 //	if (lngNamePropTypeID == proptypePersonName)
 	if (bPersonName || bIcon)
 	{
-		if (pobj->m_pdat->EditValue(pobj, 0))
+		if (pobj->GetData()->EditValue(pobj, 0))
 		{
 			CHint h;
 			h.m_pobjObject = pobj;

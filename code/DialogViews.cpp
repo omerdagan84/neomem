@@ -34,8 +34,8 @@ CDialogViews::CDialogViews(CWnd* pParent /*=NULL*/)
 	//{{AFX_DATA_INIT(CDialogViews)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
-	m_pDoc = 0;
-	m_pdatViews = 0;
+	m_pDoc = NULL;
+	m_pdatViews = NULL;
 	m_nTab = 0;
 }
 

@@ -41,11 +41,11 @@ CPageClassProperties::CPageClassProperties() : CPropertyPage(CPageClassPropertie
 	//{{AFX_DATA_INIT(CPageClassProperties)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
-	m_pDoc = 0;
-	m_psh = 0;
-	m_pobj = 0;
-	m_pobjPropertiesFolder = 0;
-//	m_pdatColumns = 0;
+	m_pDoc = NULL;
+	m_psh = NULL;
+	m_pobj = NULL;
+	m_pobjPropertiesFolder = NULL;
+//	m_pdatColumns = NULL;
 	m_bInitialized = FALSE;
 }
 

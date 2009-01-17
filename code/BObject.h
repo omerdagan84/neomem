@@ -57,6 +57,7 @@ public:
 	BOOL GetClassDefNewName(CString& strName);
 	ULONG GetClassID() { return m_lngClassID; }; // inline
 	BObject* GetClassObject();
+	BData* GetData() { return m_pdat; }; // inline
 	ULONG GetDefaultIconID();
 	BOOL GetFlag(ULONG lngFlag);
 	ULONG GetFlags() { return m_lngFlags; }; // inline
@@ -122,8 +123,8 @@ private:
 	BObjects* m_paChildren; // pointer to list containing pointers to child bobjects. null if has no children.
 	BObjects* m_paProperties; // pointer to list containing pointers to property bobjects. null if has no properties.
 	BObject* m_pobjParent; // pointer to parent BObject
-public:
 	BData* m_pdat; // pointer to data object containing data (name for an object BObject or property value for a property BObject)
+public:
 
 	BYTE m_bytViewHeight; //, height of first pane in view as percent of total (eg 50) (this is temporary for v1.0)
 //	BDataViews* m_pdatViews; // view and height information for this object (may be null)

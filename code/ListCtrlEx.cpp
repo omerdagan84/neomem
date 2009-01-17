@@ -101,7 +101,7 @@ CListCtrlEx::CListCtrlEx()
 	
 	// Columns
 	m_bAutoColumns = FALSE;
-	m_pdatColumns = 0;
+	m_pdatColumns = NULL;
 //	m_bColumnInfoChanged = FALSE;
 //	m_bColumnInfoCopied = FALSE;
 //	m_bColumnInfoSaved = FALSE;
@@ -2837,7 +2837,7 @@ BOOL CListCtrlEx::OnHeaderItemChanged(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
 	if (pitem->mask == HDI_WIDTH)
 	{
 		// Save new width
-		if (m_bSaveChangesAutomatically && m_pdatColumns != 0)
+		if (m_bSaveChangesAutomatically && m_pdatColumns != NULL)
 		{
 			int nNewWidth = pitem->cxy;
 			m_pdatColumns->SetColumnWidth(nItem, nNewWidth);
@@ -2964,7 +2964,7 @@ int CListCtrlEx::InsertColumnAsk(BObject* pobjParent, int nCol /* = -1 */)
 				nCol = OrderToIndex(nCol); // convert from column order to position
 
 			// Insert new column in bdatacolumns object
-			if (m_bSaveChangesAutomatically && m_pdatColumns != 0)
+			if (m_bSaveChangesAutomatically && m_pdatColumns != NULL)
 				m_pdatColumns->InsertColumn(lngPropertyID, m_pDoc, 0, nCol);
 
 			// Set flag so we know to save data
@@ -3174,7 +3174,7 @@ BOOL CListCtrlEx::RemoveColumn(int nCol /* = -1 */)
 		return FALSE;
 
 	// Delete property from array
-	if (m_bSaveChangesAutomatically && m_pdatColumns != 0)
+	if (m_bSaveChangesAutomatically && m_pdatColumns != NULL)
 	{
 		m_pdatColumns->RemoveColumn(nCol);
 	}
@@ -3210,7 +3210,7 @@ int CListCtrlEx::InitializeColumns(BDataColumns* pdatColumns, BOOL bExpandLastCo
 	if (bSaveChangesAutomatically)
 		m_pdatColumns = pdatColumns;
 	else
-		m_pdatColumns = 0;
+		m_pdatColumns = NULL;
 
 	HDITEM hdi;
 	hdi.mask = HDI_LPARAM;

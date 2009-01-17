@@ -72,18 +72,18 @@ CViewTabs::CViewTabs()
 	xTRACE("CViewTabs Constructor\n");
 
 	// Initialize module variables
-//	m_pSplitter = 0;
-//	pviewCurrent = 0;
+//	m_pSplitter = NULL;
+//	pviewCurrent = NULL;
 	m_lngMode = 0;
 	m_lngCurrentViewID = 0;
 	m_bDrag = FALSE;
 	m_nTabRClick = 0;
 
-//	m_pdatTabs = 0;
-	m_pdatViews = 0;
+//	m_pdatTabs = NULL;
+	m_pdatViews = NULL;
 	m_Splitters.SetSize(10);
 //	m_aCurrentViews
-//	m_pCurrentChildWnd = 0;
+//	m_pCurrentChildWnd = NULL;
 	m_nCurrentTab = 0;
 
 	m_bViewsChanged = FALSE;
@@ -91,7 +91,7 @@ CViewTabs::CViewTabs()
 	m_bViewsSaved = FALSE;
 
 	m_bytViewHeight = 0;
-	m_pDoc = 0;
+	m_pDoc = NULL;
 }
 
 
