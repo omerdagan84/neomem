@@ -318,7 +318,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 					
 					// For v1, just store height of first view in the object
 					// (each object gets its own height)
-					pobj->m_bytViewHeight = m_bytViewHeight;
+					pobj->SetViewHeight(m_bytViewHeight);
 
 //					// Save view arrangement to class or object depending on what kind of object it is.
 					// Always save to object's class, even for folders.
@@ -1818,7 +1818,7 @@ BOOL CViewTabs::LoadViews(BObject *pobj)
 	ASSERT_VALID(m_pdatViews);
 
 	//, Get height of first pane (v1 only)
-	m_bytViewHeight = pobj->m_bytViewHeight;
+	m_bytViewHeight = pobj->GetViewHeight();
 
 	// Clear flags
 	m_bViewsCopied = FALSE;

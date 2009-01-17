@@ -78,6 +78,7 @@ public:
 	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	LPCTSTR GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
+	BYTE GetViewHeight() { return m_bytViewHeight; }; // inline
 	int HasChildren() const;
 	void InitToZero();
 	BOOL IsChild(BObject* pobjPossibleParent) const;
@@ -107,6 +108,7 @@ public:
 	void SetPropertyLink(ULONG lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	void SetPropertyLong(ULONG lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyText(ULONG lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);
+	void SetViewHeight(BYTE bytViewHeight) { m_bytViewHeight = bytViewHeight; }; // inline
 	BOOL SortChildren();
 
 
@@ -124,9 +126,8 @@ private:
 	BObjects* m_paProperties; // pointer to list containing pointers to property bobjects. null if has no properties.
 	BObject* m_pobjParent; // pointer to parent BObject
 	BData* m_pdat; // pointer to data object containing data (name for an object BObject or property value for a property BObject)
-public:
-
 	BYTE m_bytViewHeight; //, height of first pane in view as percent of total (eg 50) (this is temporary for v1.0)
+public:
 //	BDataViews* m_pdatViews; // view and height information for this object (may be null)
 
 //	BYTE m_bytDataFlags; // flags indicating which data has values and therefore should be serialized
