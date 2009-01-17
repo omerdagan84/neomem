@@ -194,7 +194,7 @@ void CPageFileGeneral::DisplayInfo()
 	m_txtDataModel.SetWindowText(str);
 
 	// Encryption
-	switch (m_pDoc->m_nEncryptionType)
+	switch (m_pDoc->GetEncryptionType())
 	{
 	case (CNeoDoc::encryptNone):
 		str = "None";
