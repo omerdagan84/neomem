@@ -106,6 +106,7 @@ public:
 	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
 //	BObject* GetRoot(); // get the root object of the document
 	BObject* GetRoot() { return m_pobjRoot; }; // inline - get the root object of the document
+	ULONG GetSplitterPos() { return m_lngSplitterPos; }; // inline
 	BObject* GetTargetObject();
 	BOOL IsBObjectValid(BObject* pobj);
 	BOOL IsTargetSingle();
@@ -156,15 +157,17 @@ private:
 	CString m_strSessionKeyHash; // hash of session key based on password (hexascii string) - used to verify password
 	BObject* m_pobjRoot;			// Pointer to the root object, allocated on the heap
 	BObject* m_pobjCurrent;		// Pointer to currently selected object
-public:
 	ULONG m_lngSplitterPos; // Splitter position
 	CStringList m_lstSearches; // List of recently performed searches
 	ULONG m_lngNextObjectID; // Next available ObjectID
+public: //, make private
 	int m_nVersionFileStructure; // Version of physical file structure - where variables are expected to be, etc.
 	int m_nVersionDataModel; // Version of system data model - which bobjects are expected to exist, etc.
+private:
 	ULONG m_lngDefaultFolderLocationID;			// Default location to add new folders
 	ULONG m_lngStartObjectID; // Object to select on start
 
+public: // leave these public?
 	BDataViews m_datViewsLeft; // Tab/view arrangement for left side
 	BDataColumns m_datColumnsSearchView; // Column arrangement for search view
 	BDataColumns m_datColumnsIndexView; // Column arrangement for index view
@@ -175,7 +178,10 @@ public:
 	BDataColumns m_datColumnsViewFolder; // Column arrangement for views folder
 	BDataColumns m_datColumnsDefault; // Column arrangement (Name, Class) //, not serialized yet
 
+private:
 	CHistory m_objHistory; // History of objects selected
+
+public:
 
 	// These don't get serialized
 	CString m_strPassword; // password for encrypted file

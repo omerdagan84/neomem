@@ -84,7 +84,7 @@ void CNeoDocTemplate::InitialUpdateFrame(CFrameWnd* pFrame, CDocument* pDoc, BOO
 	// NOW WE CAN SET THE DAMN SPLITTER POS!!
 	CNeoDoc* pNeoDoc = (CNeoDoc*) pDoc;
 	ASSERT_VALID(pNeoDoc);
-	ULONG lngSplitterPos = pNeoDoc->m_lngSplitterPos;
+	ULONG lngSplitterPos = pNeoDoc->GetSplitterPos();
 	if (lngSplitterPos)
 		pFrameChild->SetSplitterPos(lngSplitterPos);
 
