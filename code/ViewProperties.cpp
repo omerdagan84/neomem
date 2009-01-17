@@ -66,7 +66,7 @@ END_MESSAGE_MAP()
 
 CViewProperties::CViewProperties()
 {
-	m_pobjCurrent = 0;
+	m_pobjCurrent = NULL;
 }
 
 CViewProperties::~CViewProperties()

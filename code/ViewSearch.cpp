@@ -737,7 +737,7 @@ void CViewSearch::OnBtnGo()
 	// Do search, starting at the root object so that reference folders, etc. get included in search.
 	BObjects aResults;
 	ULONG lngExcludeFlags = theApp.m_lngSearchExcludeFlags; 
-	BObject* pobjStart = m_pDoc->m_pobjRoot;
+	BObject* pobjStart = m_pDoc->GetRoot();
 	ASSERT_VALID(pobjStart);
 	int nItems = m_pDoc->SearchForText(pobjStart, m_lngPropertyID, m_strFindText, aResults, lngExcludeFlags, m_bMatchCase, m_bWholeWord);
 

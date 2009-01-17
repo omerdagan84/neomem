@@ -2023,7 +2023,7 @@ void CNeoMem::UpdateAllDocumentObjects(ULONG lngMsg, BOOL bRecurse /* = TRUE */)
 			CNeoDoc* pDoc = (CNeoDoc*) pDocTemplate->GetNextDoc(posDoc);
 			ASSERT_VALID(pDoc);
 			// Send message to all bobjects
-			BObject* pobj = pDoc->GetRootMain();
+			BObject* pobj = pDoc->GetRoot();
 			ASSERT_VALID(pobj);
 			pobj->SendMessage(lngMsg, bRecurse);
 		}

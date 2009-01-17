@@ -235,7 +235,7 @@ void CViewTabs::OnInitialUpdate()
 //			pobjStart = pDoc->GetRoot();
 //		else
 //			pobjStart = pDoc->GetObject(rootUser);
-		pobjStart = m_pDoc->GetRootMain();
+		pobjStart = m_pDoc->GetRoot();
 		ASSERT_VALID(pobjStart);
 
 		// Load the treeview with the specified root item.

@@ -60,7 +60,7 @@ CViewIndex::CViewIndex()
 {
 	m_bLoaded = FALSE;
 //	m_nPopupItem = -1;
-//	m_pobjPopup = 0;
+//	m_pobjPopup = NULL;
 	m_lngClassID = 0; // all classes, by default
 }
 
@@ -789,7 +789,7 @@ void CViewIndex::ReloadItems()
 	m_lvw.DeleteAllItems();
 
 	// Add root item
-	BObject* pobjRoot = m_pDoc->GetRootMain();
+	BObject* pobjRoot = m_pDoc->GetRoot();
 	ASSERT_VALID(pobjRoot);
 //	if (!(pobjRoot->GetFlag(flagSystem)))
 	if (!(pobjRoot->GetFlag(theApp.m_lngSearchExcludeFlags)))

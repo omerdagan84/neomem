@@ -79,6 +79,10 @@ public:
 	enum EncryptionTypes {encryptNone = 0, encryptRC4 = 1};
 	enum CompressionTypes {compressNone = 0, compressLZH = 1};
 
+// static (class) methods
+public:
+	static CNeoDoc* GetDoc(); // class method used to get pointer to current document object
+
 
 // Operations
 public:
@@ -90,7 +94,6 @@ public:
 	BOOL DoFileAutoRecoverSave();
 	int FindReferences(BObject* pobjFind, CObArray& aRefs, BObject* pobjStart = 0, BOOL bRecurse = TRUE);
 	BObject* GetCurrentObject();
-	static CNeoDoc* GetDoc(); // class method used to get pointer to current document object
 	int GetEncryptionType() { return m_nEncryptionType; }; // inline
 	CString GetFileSizeString();
 	int GetIconIndex(ULONG lngIconID);
@@ -101,7 +104,8 @@ public:
 	CString GetNumberOfObjectsString();
 	BObject* GetObject(ULONG lngObjectID);
 	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
-	BObject* GetRootMain(); // get the main root object of the document
+//	BObject* GetRoot(); // get the root object of the document
+	BObject* GetRoot() { return m_pobjRoot; }; // inline - get the root object of the document
 	BObject* GetTargetObject();
 	BOOL IsBObjectValid(BObject* pobj);
 	BOOL IsTargetSingle();
@@ -111,6 +115,7 @@ public:
 					BOOL bSearchStartObject = FALSE, BOOL bOriginalCall = TRUE);
 	void SetCurrentObject(BObject* pobjCurrent, CView* pSender = 0, BOOL bNavigating = FALSE);
 	virtual void SetModifiedFlag(BOOL bModified = TRUE);
+	void SetRoot(BObject* pobj);
 	void SetTargetObject(BObject* pobj);
 	void UpdateAllViewsEx(CView* pSender, LPARAM lHint = 0L, CObject* pHint = NULL);
 	void UpdateDocument(BObject* pobj);
@@ -149,9 +154,9 @@ private:
 	BOOL m_bUnicode; // If true then document is/was serialized using unicode characters rather than ansi
 	int m_nEncryptionType; // whether file is encrypted, how it's encrypted, etc.
 	CString m_strSessionKeyHash; // hash of session key based on password (hexascii string) - used to verify password
-public:
 	BObject* m_pobjRoot;			// Pointer to the root object, allocated on the heap
 	BObject* m_pobjCurrent;		// Pointer to currently selected object
+public:
 	ULONG m_lngSplitterPos; // Splitter position
 	CStringList m_lstSearches; // List of recently performed searches
 	ULONG m_lngNextObjectID; // Next available ObjectID

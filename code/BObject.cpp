@@ -1875,7 +1875,7 @@ BObject::GetLinks(BObjects &aObjects, BObject* pobjStart)
 	
 	// Start at main root object
 	if (pobjStart == NULL)
-		pobjStart = m_pDoc->GetRootMain();
+		pobjStart = m_pDoc->GetRoot();
 	ASSERT_VALID(pobjStart);
 
 	// See if the start object has any references to this object
@@ -2837,7 +2837,7 @@ BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* =
 			if (m_lngClassID == classClass)
 				pobjNew = m_pDoc->GetObject(classPaper);
 			// Remove/replace all references recursively and return true.
-			m_pDoc->m_pobjRoot->ReplaceReferences(this, pobjNew);
+			m_pDoc->GetRoot()->ReplaceReferences(this, pobjNew);
 		}
 		else
 			// Did not delete object - return False

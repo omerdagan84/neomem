@@ -174,7 +174,7 @@ void CPageFileGeneral::DisplayInfo()
 
 	// Get memory used by all objects, starting at root and recursing downwards
 //	str.Format("%d Bytes", pobjRoot->GetMemoryUsed(TRUE));
-	BObject* pobjRoot = m_pDoc->m_pobjRoot;
+	BObject* pobjRoot = m_pDoc->GetRoot();
 	str.Format("%s Bytes", (LPCTSTR) fc(pobjRoot->GetMemoryUsed(TRUE)));
 	m_txtSize.SetWindowText(str);
 

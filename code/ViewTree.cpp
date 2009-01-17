@@ -254,7 +254,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				xTRACE("  select current item in tree\n");
 				// this should generate the selchanged event
 				// why would this not generate the selchange event if it wasn't on the doc root object?
-				HTREEITEM htiCurrent = m_tvw.FindItemData((DWORD) m_pDoc->m_pobjCurrent, 0);
+				HTREEITEM htiCurrent = m_tvw.FindItemData((DWORD) m_pDoc->GetCurrentObject(), 0);
 				m_tvw.Select(htiCurrent, TVGN_CARET);
 //,				BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 //				m_tvw.SelectItemData((DWORD)pobjCurrent);

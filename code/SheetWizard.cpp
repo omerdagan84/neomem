@@ -245,7 +245,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			{
 				ULONG lngClassID = m_pobjEditOriginal->GetObjectID();
 				ULONG lngNewPropertyTypeID = pobjNewPropType->GetObjectID();
-				m_pDoc->m_pobjRoot->ChangeNamePropertyType(lngClassID, lngNewPropertyTypeID);
+				m_pDoc->GetRoot()->ChangeNamePropertyType(lngClassID, lngNewPropertyTypeID);
 			}
 
 			// Copy property bdata objects, if any

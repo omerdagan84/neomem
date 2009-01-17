@@ -194,7 +194,7 @@ void CListCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 			// Special case for Property View - need to display the value of the property for the
 			// document's current object. The Value column has a dummy property of propValue assigned to it.
 			if (lngPropertyID == propValue)
-				pLVITEM->pszText = const_cast <TCHAR*> (m_pDoc->m_pobjCurrent->GetPropertyText(pobj->GetObjectID()));
+				pLVITEM->pszText = const_cast <TCHAR*> (m_pDoc->GetCurrentObject()->GetPropertyText(pobj->GetObjectID()));
 			else
 				pLVITEM->pszText = const_cast <TCHAR*> (pobj->GetPropertyText(lngPropertyID));
 		}
@@ -2578,7 +2578,7 @@ BData* CListCtrlEx::GetCellBData(int nRow /* = -1 */, int nCol /* = -1 */)
 			// Special case for Property View - need to display the value of the property for the
 			// document's current object. The Value column has a dummy property of propValue assigned to it.
 			if (lngPropertyID == propValue)
-				pdat = m_pDoc->m_pobjCurrent->GetPropertyData(pobj->GetObjectID());
+				pdat = m_pDoc->GetCurrentObject()->GetPropertyData(pobj->GetObjectID());
 			else
 				pdat = pobj->GetPropertyData(lngPropertyID);
 		}
