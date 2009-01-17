@@ -143,12 +143,12 @@ private:
 
 // These are not serialized
 	CNeoDoc* m_pDoc; // pointer to the document which stores this bobject
-public:
 	CStringEx m_strTextCache; // This is a cache for the text-representation for this data object
 //	int m_bStringValid; // Flag indicating if string cache is valid. Set to false when data changes
 
 
 #ifdef _DEBUG
+public:
     virtual void AssertValid() const;
     virtual void Dump( CDumpContext& dc ) const;
 #endif
