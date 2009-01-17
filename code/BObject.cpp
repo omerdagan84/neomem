@@ -791,7 +791,7 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 	{
 		BObject* pobjPropertyValue = new BObject(lngPropertyID);
 		ASSERT_VALID(pobjPropertyValue);
-		pobjPropertyValue->m_pDoc = m_pDoc; // set document pointer
+		pobjPropertyValue->SetDoc(m_pDoc); // set document pointer
 
 		// Create a bdata object as appropriate for this property, if specified
 		// (If you're calling FindProperty in order to Set a value, you don't need this)
@@ -3188,7 +3188,7 @@ BObject::ConvertToHardLinks(BOOL bRecurse)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
-	CNeoDoc* pDoc = this->m_pDoc;
+	CNeoDoc* pDoc = this->GetDoc();
 
 	// Walk through all properties and convert to hard links.
 	// Note: Some properties may already be hard links. 

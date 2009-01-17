@@ -107,7 +107,7 @@ BOOL CPageObjectGeneral::OnInitDialog()
 	// Get flags
 	BDataFlags datFlags;
 	datFlags.m_lngFlags = m_pobj->GetFlags();
-	m_txtFlags.SetWindowText(datFlags.GetBDataText(m_pobj->m_pDoc, propFlags));
+	m_txtFlags.SetWindowText(datFlags.GetBDataText(m_pobj->GetDoc(), propFlags));
 
 	// Get icon?
 //	m_pobj->GetIconID();
@@ -184,7 +184,7 @@ BOOL CPageObjectGeneral::OnApply()
 		CHint h;
 		h.m_pobjObject = m_pobj;
 		h.m_lngPropertyID = propObjectID;
-		m_pobj->m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+		m_pobj->GetDoc()->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 		m_bIDChanged = FALSE;
 	}

@@ -51,7 +51,7 @@ BOOL CUndo::SaveDeleteProperty(BObject *pobj, ULONG lngPropertyID)
 	BData* pdat = pobj->GetPropertyData(lngPropertyID); // get bdata
 	if (pdat)
 	{
-		m_pDoc = pobj->m_pDoc; // save document
+		m_pDoc = pobj->GetDoc(); // save document
 		m_pobj = pobj; // store object to restore property to also
 		m_lngObjectID = pobj->GetObjectID(); // save object id
 		m_lngPropertyID = lngPropertyID; // store property to restore to also

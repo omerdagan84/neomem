@@ -118,7 +118,7 @@ int XComboBoxEx::AddObject(BObject *pobj, BObject *pobjParent /* = 0 */)
 	ASSERT_VALID(pobj);
 
 	// Get document
-	CNeoDoc* pDoc = pobj->m_pDoc;
+	CNeoDoc* pDoc = pobj->GetDoc();
 	ASSERT_VALID(pDoc);
 
 	// If parent specified, find the parent item and get its indent level
@@ -169,7 +169,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 	ASSERT_VALID(pobjStart);
 
 	// Get document
-	CNeoDoc* pDoc = pobjStart->m_pDoc;
+	CNeoDoc* pDoc = pobjStart->GetDoc();
 	ASSERT_VALID(pDoc);
 
 	// Set up structure used to add items

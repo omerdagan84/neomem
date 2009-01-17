@@ -53,7 +53,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	ASSERT(IsHard());
 
 	// Get document
-	CNeoDoc* pDoc = pobjPropertyDef->m_pDoc;
+	CNeoDoc* pDoc = pobjPropertyDef->GetDoc();
 	ASSERT_VALID(pDoc);
 
 	// Get property we're editing
@@ -1045,7 +1045,7 @@ BOOL BDataLink::HandleCommand(UINT nCommandID)
 	if (pobj)
 	{
 		ASSERT_VALID(pobj);
-		pobj->m_pDoc->SetCurrentObject(pobj, NULL);
+		pobj->GetDoc()->SetCurrentObject(pobj, NULL);
 		return TRUE;
 	}
 	return FALSE;

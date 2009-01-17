@@ -59,6 +59,7 @@ public:
 	BObject* GetClassObject();
 	BData* GetData() { return m_pdat; }; // inline
 	ULONG GetDefaultIconID();
+	CNeoDoc* GetDoc() { return m_pDoc; }; // inline
 	BOOL GetFlag(ULONG lngFlag);
 	ULONG GetFlags() { return m_lngFlags; }; // inline
 	ULONG GetIconID();
@@ -98,6 +99,7 @@ public:
 	BOOL SetClassID(ULONG lngNewClassID);
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
 	BOOL SetData(BData* pData);
+	void SetDoc(CNeoDoc* pdoc) { m_pDoc = pdoc; }; // inline
 	BOOL SetFlag(ULONG lngFlag, BOOL bValue, BOOL bRecurse = FALSE);
 	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; }; // inline
 	BOOL SetIconID(ULONG lngIconID);
@@ -127,7 +129,6 @@ private:
 	BObject* m_pobjParent; // pointer to parent BObject
 	BData* m_pdat; // pointer to data object containing data (name for an object BObject or property value for a property BObject)
 	BYTE m_bytViewHeight; //, height of first pane in view as percent of total (eg 50) (this is temporary for v1.0)
-public:
 //	BDataViews* m_pdatViews; // view and height information for this object (may be null)
 
 //	BYTE m_bytDataFlags; // flags indicating which data has values and therefore should be serialized
@@ -142,6 +143,7 @@ public:
 
 // These are not serialized
 	CNeoDoc* m_pDoc; // pointer to the document which stores this bobject
+public:
 	CStringEx m_strTextCache; // This is a cache for the text-representation for this data object
 //	int m_bStringValid; // Flag indicating if string cache is valid. Set to false when data changes
 

@@ -809,7 +809,7 @@ BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint 
 		// Make sure objects are from same document as the target...
 		BObject* pobjFirst = (BObject*) aObjects.GetAt(0);
 		ASSERT_VALID(pobjFirst);
-		if (pobjFirst->m_pDoc != pobjTarget->m_pDoc)
+		if (pobjFirst->GetDoc() != pobjTarget->GetDoc())
 		{
 			AfxMessageBox("Can't move or copy items between documents!", MB_ICONINFORMATION);
 			return FALSE;

@@ -595,7 +595,7 @@ CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText
 	ASSERT_VALID(pobjNew);
 
 	// Store pointer to this document
-	pobjNew->m_pDoc = this;
+	pobjNew->SetDoc(this);
 
 	//, call a Create method now?
 	// Set properties
@@ -3955,7 +3955,7 @@ void CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate)
 	{
 		// Doesn't exist - we need to add it
 		pobjThis = new BObject();
-		pobjThis->m_pDoc = this;
+		pobjThis->SetDoc(this);
 //		pobjThis->CopyFrom(pobjTemplate);
 		this->AddObjectToIndex(nID, pobjThis);
 	}
