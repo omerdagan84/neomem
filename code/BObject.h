@@ -120,7 +120,7 @@ public:
 private:
 	ULONG m_lngObjectID; // Unique ObjectID, or 0 if this is a property BObject.
 	ULONG m_lngClassID;	// ClassID of this BObject, or PropertyID if this is a property BObject.
-public:
+public: // grr, change to private eventually
 	ULONG m_lngIconID;	// IconID of this BObject (0 means it's using the classdef icon)
 private:
 	ULONG m_lngFlags; // 32 bit flags

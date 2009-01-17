@@ -139,10 +139,11 @@ void CPageClassIcon::DoDataExchange(CDataExchange* pDX)
 		ASSERT_VALID(pobjIcon);
 		ULONG lngIconID = pobjIcon->GetObjectID();
 		// If user chose to use the default icon, we should set iconid to zero
-		if (lngIconID == m_lngDefaultIconID)
-			m_pobj->m_lngIconID = 0;
-		else
-			m_pobj->m_lngIconID = pobjIcon->GetObjectID();
+//		if (lngIconID == m_lngDefaultIconID)
+//			m_pobj->m_lngIconID = 0;
+//		else
+//			m_pobj->m_lngIconID = pobjIcon->GetObjectID();
+		m_pobj->SetIconID(lngIconID); // this should be okay, right?
 	}
 }
 

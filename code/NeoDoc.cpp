@@ -600,7 +600,7 @@ CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText
 	//, call a Create method now?
 	// Set properties
 	pobjNew->SetFlags(lngFlags);
-	pobjNew->m_lngIconID = lngIconID; // leave as direct ref
+	pobjNew->m_lngIconID = lngIconID; // leave as direct ref for now
 
 	// Set name
 	pobjNew->SetObjectText(strText);
@@ -624,7 +624,7 @@ CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText
 	AddObjectToIndex(lngObjectID, pobjNew);
 
 	// Add the new object to the specified parent object.
-	// This also sets the m_pParent property.
+	// This also sets the m_pobjParent property.
 	if (pobjParent != NULL)
 		pobjParent->AddChild(pobjNew, FALSE);
 

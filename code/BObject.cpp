@@ -167,8 +167,8 @@ BObject::Serialize(CArchive& ar)
 //		}
 
 		// Make sure we're marked as owning the children and property objects
-		if (m_paChildren) m_paChildren->m_bOwnsItems = TRUE;
-		if (m_paProperties) m_paProperties->m_bOwnsItems = TRUE;
+		if (m_paChildren) m_paChildren->SetOwnership(TRUE);
+		if (m_paProperties) m_paProperties->SetOwnership(TRUE);
 
 		//, Clear rtf position property?
 		// could eventually define this prop to be non-serializable
@@ -516,7 +516,7 @@ BObject::AddChild(BObject *pobjChild, BOOL bCheckForDuplicates)
 	if (m_paChildren == NULL)
 	{
 		m_paChildren = new BObjects;
-		m_paChildren->m_bOwnsItems = TRUE; // this array will own the bobjects it points to
+		m_paChildren->SetOwnership(TRUE); // this array will own the bobjects it points to
 	}
 	ASSERT_VALID(m_paChildren);
 	
@@ -610,7 +610,7 @@ BObject::AddProperty(BObject *pobjProperty)
 	if (m_paProperties == NULL)
 	{
 		m_paProperties = new BObjects;
-		m_paProperties->m_bOwnsItems = TRUE; // this array will own the bobjects it points to
+		m_paProperties->SetOwnership(TRUE); // this array will own the bobjects it points to
 	}
 	ASSERT_VALID(m_paProperties);
 

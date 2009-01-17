@@ -44,16 +44,19 @@ public:
 	HGLOBAL SaveToGlobal();
     virtual void Serialize(CArchive& ar);
 //	void SetParent(BObject* pobjParent);
+	void SetOwnership(BOOL bOwnsItems) { m_bOwnsItems = bOwnsItems; }; // inline
 	void Sort(ULONG lngPropertyID); // Sort contents on a property
 
 
 // Attributes
-public:
+// not serialized
+private:
 	CString m_strTextCache; // A string used to store a text representation of this collection of objects.
 	BOOL m_bOwnsItems; // If True this array owns the BObjects and will delete them in the destructor.
 
 
 #ifdef _DEBUG
+public:
     virtual void AssertValid() const;
     virtual void Dump(CDumpContext& dc) const;
 #endif
