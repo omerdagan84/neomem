@@ -66,6 +66,7 @@ public:
 	ULONG GetMemoryUsed(BOOL bRecurse) const;
 	LPCTSTR GetName(BOOL bIncludeClassName);
 	ULONG GetObjectID() { return m_lngObjectID; }; // inline
+	BObject* GetParent() { return m_pobjParent; }; // inline
 	int GetParents(BObjects& aParents, BObject* pobjStopAt, BOOL bIncludeThisObject = TRUE, BOOL bIncludeStopObject = FALSE);
 	BObjects* GetProperties() { return m_paProperties; }; // inline
 	BData* GetPropertyData(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
@@ -120,8 +121,8 @@ private:
 	ULONG m_lngFlags; // 32 bit flags
 	BObjects* m_paChildren; // pointer to list containing pointers to child bobjects. null if has no children.
 	BObjects* m_paProperties; // pointer to list containing pointers to property bobjects. null if has no properties.
-public:
 	BObject* m_pobjParent; // pointer to parent BObject
+public:
 	BData* m_pdat; // pointer to data object containing data (name for an object BObject or property value for a property BObject)
 
 	BYTE m_bytViewHeight; //, height of first pane in view as percent of total (eg 50) (this is temporary for v1.0)

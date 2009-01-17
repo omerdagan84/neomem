@@ -324,8 +324,22 @@ BObject::Serialize(CArchive& ar)
 			// BUG:: Old version of SetParent just set m_pobjParent, then I changed it for some other
 			// part of the program, and this wound up creating a copy of each object on load.
 			// Problem was semantics - should have created another routine called Move.
-			if (m_paChildren) 
-				m_paChildren->SetParent(this);
+			// Er, this is BObjects.SetParent, not BObject. But ditch that routine,
+			// since this is the only place it's used. 
+			if (m_paChildren) {
+//				m_paChildren->SetParent(this);
+				ASSERT_VALID(m_paChildren);
+				int nItems = m_paChildren->GetSize();
+				for (int i = 0; i < nItems; i++)
+				{
+					BObject* pobj = STATIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
+					ASSERT_VALID(pobj);
+					// Set the object's parent to the new parent
+					pobj->m_pobjParent = this;
+					
+				}
+			}
+
 		}
 
 		if (m_lngObjectID)
@@ -407,8 +421,8 @@ BObject::GetDefaultIconID()
 	// If not there, then walk up through class chain till reach the root class
 	do
 	{
-		pobjClassDef = pobjClassDef->m_pobjParent;
-		if (pobjClassDef == 0) return iconDefault; // just in case
+		pobjClassDef = pobjClassDef->GetParent();
+		if (pobjClassDef == NULL) return iconDefault; // just in case
 		ASSERT_VALID(pobjClassDef);
 		if (pobjClassDef->m_lngIconID)
 			return pobjClassDef->m_lngIconID; // found icon finally, return it
@@ -570,12 +584,12 @@ BObject::InitToZero()
 	m_lngFlags = 0;
 	m_lngIconID = 0;
 	m_lngObjectID = 0;
-	m_paChildren = 0;
-	m_paProperties = 0;
-	m_pdat = 0;
-	m_pDoc = 0;
-	m_pobjParent = 0;
-//	m_pdatViews = 0;
+	m_paChildren = NULL;
+	m_paProperties = NULL;
+	m_pdat = NULL;
+	m_pDoc = NULL;
+	m_pobjParent = NULL;
+//	m_pdatViews = NULL;
 	m_bytViewHeight = 50; // 50% default
 	m_strTextCache.Empty();
 }
@@ -759,13 +773,14 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 			else
 			{
 				// Get the classdef's parent recursively until you reach the end of the line
-				if (m_pobjParent)
+				BObject* pobjParent = this->GetParent();
+				if (pobjParent)
 				{
-					ASSERT_VALID(m_pobjParent);
+					ASSERT_VALID(pobjParent);
 					// Exit if you've reached the system root - property was never found
-					if (m_pobjParent->GetObjectID() == rootSystem)
+					if (pobjParent->GetObjectID() == rootSystem)
 						return NULL;
-					return m_pobjParent->FindProperty(lngPropertyID, bAddIfNotFound);
+					return pobjParent->FindProperty(lngPropertyID, bAddIfNotFound);
 				}
 			}
 		}
@@ -774,9 +789,8 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 	// The property was not found, so add it to this object's property collection, if parameter specifies this.
 	if (bAddIfNotFound)
 	{
-		BObject* pobjPropertyValue = new BObject();
+		BObject* pobjPropertyValue = new BObject(lngPropertyID);
 		ASSERT_VALID(pobjPropertyValue);
-		pobjPropertyValue->SetClassID(lngPropertyID);
 		pobjPropertyValue->m_pDoc = m_pDoc; // set document pointer
 
 		// Create a bdata object as appropriate for this property, if specified
@@ -1006,10 +1020,11 @@ BObject::GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 
 	case propParentID:
 		{
-			if (m_pobjParent)
+			BObject* pobjParent = GetParent();
+			if (pobjParent)
 			{
-				ASSERT_VALID(m_pobjParent);
-				m_strTextCache.Format("%d", m_pobjParent->GetObjectID());
+				ASSERT_VALID(pobjParent);
+				m_strTextCache.Format("%d", pobjParent->GetObjectID());
 			}
 			else
 			{
@@ -1021,11 +1036,12 @@ BObject::GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 
 	case propParentName:
 		{
+			BObject* pobjParent = GetParent();
 			// Return the name of the object's parent (location)
-			if (m_pobjParent)
+			if (pobjParent)
 			{
-				ASSERT_VALID(m_pobjParent);
-				return m_pobjParent->GetPropertyText(propName);
+				ASSERT_VALID(pobjParent);
+				return pobjParent->GetPropertyText(propName);
 			}
 			else
 				// Return reference to an empty string (can't return "" because would 
@@ -1264,9 +1280,10 @@ BObject::GetPropertyData(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=
 			ASSERT_VALID(pdatLink);
 
 			// Set link to point to this object's parent (may be zero if it's the root object!)
-			if (m_pobjParent)
-				ASSERT_VALID(m_pobjParent);
-			pdatLink->SetLink(m_pobjParent); // zero is okay here
+			BObject* pobjParent = GetParent();
+			if (pobjParent)
+				ASSERT_VALID(pobjParent);
+			pdatLink->SetLink(pobjParent); // zero is okay here
 
 			// Store pointer to this bdata object in the document
 			if (m_pDoc->m_pdatTemp)
@@ -1757,7 +1774,7 @@ BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 		apClasses.SetAt(nClasses, pobjClass);
 		nClasses++;
 		// Get the class's parent class
-		pobjClass = pobjClass->m_pobjParent;
+		pobjClass = pobjClass->GetParent();
 	}
 	// Exit when reach the system root
 	// NOTE: This assumes that class root is always located in the system root!!
@@ -1931,10 +1948,11 @@ BOOL
 BObject::IsParentSorted()
 {
 	ASSERT_VALID(this);
-	if (m_pobjParent)
+	BObject* pobjParent = GetParent();
+	if (pobjParent)
 	{
-		ASSERT_VALID(m_pobjParent);
-		return (!(m_pobjParent->GetFlag(flagNoAutosort)));
+		ASSERT_VALID(pobjParent);
+		return (!(pobjParent->GetFlag(flagNoAutosort)));
 	}
 	return FALSE;
 }
@@ -2915,6 +2933,7 @@ BObject::GetClassObject()
 // Move this BObject to a new parent if possible.
 // This will handle removing from old parent list, adding to new parent list. 
 // This will set document modified flag and update all views if specified. 
+// See also SetParent (which should just be for initialization?)
 BOOL 
 BObject::MoveTo(BObject *pobjNewParent, BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */, BOOL bDisplayMessages /* = TRUE */)
 {
@@ -3255,7 +3274,7 @@ BObject::CopyFrom(BObject* pobjSource)
 	// the parent will be set properly.
 	//. Note: Assumes that the parent already exists, ie that synchronization is
 	// done in top down recursive order!!
-	BObject* pobjSourceParent = pobjSource->m_pobjParent;
+	BObject* pobjSourceParent = pobjSource->GetParent();
 	ASSERT_VALID(pobjSourceParent);
 	ULONG nSourceParentID = pobjSourceParent->GetObjectID();
 	
@@ -3306,7 +3325,7 @@ BObject::CopyFrom(BObject* pobjSource)
 
 
 // Set the parent for this object.
-// see MoveTo
+// See also MoveTo
 void 
 BObject::SetParent(BObject *pobjNewParent)
 {
@@ -3334,7 +3353,8 @@ BObject::SetParent(BObject *pobjNewParent)
 	}
 	
 	// Add the object to the new parent's child collection
-	// Note: This will set the object's parent pointer also
+	// Note: This will set this object's parent pointer also
+	//   ie this->m_pobjParent = pobjNewParent;
 	pobjNewParent->AddChild(this, TRUE);
 
 	// Make sure relationship is set correctly (parent is a two-way relationship)

@@ -17,9 +17,9 @@ static char THIS_FILE[] = __FILE__;
 
 CHint::CHint()
 {
-	m_pobjObject = 0;
-	m_pobjParent = 0;
-	m_paObjects = 0;
+	m_pobjObject = NULL;
+	m_pobjParent = NULL;
+	m_paObjects = NULL;
 	m_lngPropertyID = 0;
 }
 

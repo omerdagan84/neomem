@@ -43,7 +43,7 @@ public:
 	BOOL MoveTo(BObject* pobjNewParent);
 	HGLOBAL SaveToGlobal();
     virtual void Serialize(CArchive& ar);
-	void SetParent(BObject* pobjParent);
+//	void SetParent(BObject* pobjParent);
 	void Sort(ULONG lngPropertyID); // Sort contents on a property
 
 

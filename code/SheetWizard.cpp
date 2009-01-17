@@ -47,12 +47,12 @@ END_MESSAGE_MAP()
 
 CSheetWizard::CSheetWizard()
 {
-	m_pDoc = 0;
+	m_pDoc = NULL;
 	m_bAdd = TRUE;
-	m_pobj = 0;
-	m_pobjAdd = 0;
-	m_pobjEdit = 0;
-	m_pobjEditOriginal = 0;
+	m_pobj = NULL;
+	m_pobjAdd = NULL;
+	m_pobjEdit = NULL;
+	m_pobjEditOriginal = NULL;
 //	m_bAddFolder = FALSE;
 	m_nAddEditMode = modeAddOrEdit; // default
 }
@@ -134,8 +134,9 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 	BOOL bSaveDocModified = m_pDoc->IsModified();
 
 	// Create our temporary objects.
-	// Add object will be used if user chooses Add mode, Edit object will be used
-	// if they choose Edit mode. m_pobj will point to the correct object.
+	// Add object will be used if user chooses Add mode, 
+	// Edit object will be used if they choose Edit mode. 
+	// m_pobj will point to the correct object.
 	// Both are added to the Classes folder.
 
 	// Create a new class object
@@ -185,7 +186,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			// If in Add mode, just need to delete the edit object quietly
 			// The add object is fine where it is
 			// First set it back to base class so we don't screw things up!
-			m_pobjEdit->m_pobjParent = pobjBaseClass;
+			m_pobjEdit->SetParent(pobjBaseClass);
 			// Also clear the nodelete flag in case it's still set!
 			m_pobjEdit->SetFlag(flagNoDelete, FALSE, FALSE);
 			m_pDoc->UIDeleteObject(m_pobjEdit, TRUE);
@@ -197,12 +198,12 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			m_pobjAdd->SetFlag(flagTemp, FALSE);
 			
 			// Move object to new parent, if changed, but don't need to notify views cause this is a new object
-			if (m_pobjAdd->m_pobjParent != pobjBaseClass)
+			if (m_pobjAdd->GetParent() != pobjBaseClass)
 			{
 				// first set it back to the base class so we don't screw things up
-				BObject* pobjNewParent = m_pobj->m_pobjParent;
-				m_pobjAdd->m_pobjParent = pobjBaseClass;
-				ASSERT_VALID(m_pobjAdd->m_pobjParent);
+				BObject* pobjNewParent = m_pobj->GetParent();
+				m_pobjAdd->SetParent(pobjBaseClass);
+				ASSERT_VALID(m_pobjAdd->GetParent());
 //				m_pDoc->MoveObject(m_pobjAdd, pobjNewParent, FALSE);
 				m_pobjAdd->MoveTo(pobjNewParent, FALSE, FALSE);
 			}
@@ -281,8 +282,8 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 
 			// Delete the temporary objects
 			// First set them back to base class so we don't screw things up! (in case inheritance was set)
-			m_pobjAdd->m_pobjParent = pobjBaseClass;
-			m_pobjEdit->m_pobjParent = pobjBaseClass;
+			m_pobjAdd->SetParent(pobjBaseClass);
+			m_pobjEdit->SetParent(pobjBaseClass);
 			m_pobjEdit->SetFlag(flagNoDelete, FALSE); // clear no delete flag in case it was set
 			m_pDoc->UIDeleteObject(m_pobjAdd, TRUE);
 			m_pDoc->UIDeleteObject(m_pobjEdit, TRUE);
@@ -345,8 +346,8 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 	{
 		// Delete both temporary objects quietly
 		// First set objects back to the base class so we don't screw things up
-		m_pobjAdd->m_pobjParent = pobjBaseClass;
-		m_pobjEdit->m_pobjParent = pobjBaseClass;
+		m_pobjAdd->SetParent(pobjBaseClass);
+		m_pobjEdit->SetParent(pobjBaseClass);
 		m_pobjEdit->SetFlag(flagNoDelete, FALSE); // clear no delete flag in case it was set 
 		m_pDoc->UIDeleteObject(m_pobjAdd, TRUE);
 		m_pDoc->UIDeleteObject(m_pobjEdit, TRUE);
@@ -388,7 +389,7 @@ void CSheetWizard::SetEditClass(BObject *pobjClass)
 //	m_pobj->m_lngFlags |= (pobjClass->m_lngFlags & flagNoAutosort); // set it if set in orig
 
 	// Set parent - Note: We move the object to the new parent when the wizard is finished
-	m_pobj->m_pobjParent = pobjClass->m_pobjParent;
+	m_pobj->SetParent(pobjClass->GetParent());
 	m_pobj->m_lngIconID = pobjClass->m_lngIconID;
 
 	// Copy property bdata objects, if any

@@ -42,9 +42,9 @@ CDialogEditObject2::CDialogEditObject2(CWnd* pParent /*=NULL*/)
 	//{{AFX_DATA_INIT(CDialogEditObject2)
 	//}}AFX_DATA_INIT
 	m_lngClassID = 0;
-	m_pobjParent = 0;
-	m_pobjClass = 0;
-	m_pobjDefaultClass = 0;
+	m_pobjParent = NULL;
+	m_pobjClass = NULL;
+	m_pobjDefaultClass = NULL;
 	m_bNameChanged = FALSE;
 	m_bLocationComboFilled = FALSE;
 	m_bAdd = FALSE;

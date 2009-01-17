@@ -40,11 +40,11 @@ CDialogSelectProperty::CDialogSelectProperty(CWnd* pParent /*=NULL*/)
 	// Get document (used by domodal methods also)
 	m_pDoc = CNeoDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
-	m_pobjClasses = 0;
-	m_pobjProperties = 0;
+	m_pobjClasses = NULL;
+	m_pobjProperties = NULL;
 	m_lngSelectedID = 0;
-//	m_pobjParent = 0;
-	m_pobjDefaultClass = 0;
+//	m_pobjParent = NULL;
+	m_pobjDefaultClass = NULL;
 //	m_bShowAll = TRUE;
 	m_bShowAll = FALSE;
 	m_nMode = IDD_ADD_PROPERTY;

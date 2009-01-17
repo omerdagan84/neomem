@@ -43,9 +43,9 @@ CDialogEditFolder::CDialogEditFolder(CWnd* pParent /*=NULL*/)
 	m_strDescription = _T("");
 	//}}AFX_DATA_INIT
 //	m_lngClassID = 0;
-//	m_pobjClass = 0;
-	m_pobjParent = 0;
-	m_pobjDefaultClass = 0;
+//	m_pobjClass = NULL;
+	m_pobjParent = NULL;
+	m_pobjDefaultClass = NULL;
 //	m_bNameChanged = FALSE;
 //	m_bDescriptionChanged = FALSE;
 	m_bLocationComboFilled = FALSE;

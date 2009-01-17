@@ -2010,7 +2010,7 @@ BOOL CNeoDoc::UIEditObject(BObject *pobj)
 	CString strName = pobj->GetPropertyText(propName);
 	BObject* pobjClass = GetObject(lngClassID);
 	BObject* pobjDefaultClass = pobj->GetPropertyLink(propDefaultClass);
-	BObject* pobjParent = pobj->m_pobjParent;
+	BObject* pobjParent = pobj->GetParent();
 
 	// Initialize dialog
 	CDialogEditObject dlg;
@@ -2202,7 +2202,7 @@ void CNeoDoc::OnObjPriorityHigh()
 		// Resort views if autosort is on for this item's parent
 		if (m_pobjTarget->IsParentSorted())
 		{
-			BObject* pobjParent = m_pobjTarget->m_pobjParent;
+			BObject* pobjParent = m_pobjTarget->GetParent();
 			UpdateAllViewsEx(NULL, hintResortChildren, pobjParent);
 		}
 	}
@@ -3578,7 +3578,7 @@ BObject* CNeoDoc::UIMoveObjectTo()
 //		ULONG lngOldParentID = pobj->m_pobjParent->GetObjectID();
 //		BObject* pobjTarget = m_pobjTarget; //, must save this to local because of focus changing the value!
 		ASSERT_VALID(m_pobjTarget);
-		BObject* pobjParent = m_pobjTarget->m_pobjParent;
+		BObject* pobjParent = m_pobjTarget->GetParent();
 		ASSERT_VALID(pobjParent);
 //		ULONG lngOldParentID = pobjTarget->m_pobjParent->GetObjectID();
 		ULONG lngOldParentID = pobjParent->GetObjectID();

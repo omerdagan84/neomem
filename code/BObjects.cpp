@@ -82,7 +82,8 @@ BObjects::~BObjects()
 // Serialization
 //----------------------------------------------------------------------------
 
-void BObjects::Serialize(CArchive& ar)
+void 
+BObjects::Serialize(CArchive& ar)
 {
 //	int nFileVersion = ar.GetObjectSchema(); // only on load
 	// Note: This will automatically walk through the members and serialize them
@@ -95,11 +96,15 @@ void BObjects::Serialize(CArchive& ar)
 //----------------------------------------------------------------------------
 
 #ifdef _DEBUG
-void BObjects::AssertValid() const
+
+void 
+BObjects::AssertValid() const
 {
 	CObArray::AssertValid();
 }
-void BObjects::Dump(CDumpContext& dc) const
+
+void 
+BObjects::Dump(CDumpContext& dc) const
 {
 //	CObArray::Dump(dc);
 }
@@ -115,7 +120,8 @@ void BObjects::Dump(CDumpContext& dc) const
 // parse out using commas (and quotes), and assign to new child objects(?)
 // would need to know what class of objects to create.
 // not likely to need this anyway though.
-void BObjects::SetText(CString strText)
+void 
+BObjects::SetText(CString strText)
 {
 	m_strText = strText;
 }
@@ -124,7 +130,8 @@ void BObjects::SetText(CString strText)
 
 
 // Returns the text representation of the bobjects, eg "Boston, Miami, New York, Austin".
-LPCTSTR BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
+LPCTSTR 
+BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
 {
 	ASSERT_VALID(this);
 	m_strTextCache.Empty(); // clear cache first
@@ -154,7 +161,8 @@ LPCTSTR BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
 // To recurse through child objects also, specify bRecursive true.
 //. Note: This is a little flaky because the index returned is meaningless if object was found in
 // one of the children! Just be careful how you use this routine for now!!
-int BObjects::FindObject(const BObject* pobjFindThis, BOOL bRecursive /* = FALSE */)
+int 
+BObjects::FindObject(const BObject* pobjFindThis, BOOL bRecursive /* = FALSE */)
 {
 	ASSERT_VALID(this);
 
@@ -185,7 +193,8 @@ int BObjects::FindObject(const BObject* pobjFindThis, BOOL bRecursive /* = FALSE
 // This is used to find a specific propertyid, for instance (since ClassID and PropertyID are 
 // equivalent in that case).
 // Returns index to item or -1 if not found.
-int BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALSE */)
+int 
+BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALSE */)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngClassID);
@@ -216,7 +225,8 @@ int BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALS
 // Compare objects for use in qsort.
 // Returns negative if 1 < 2, 0 if ==, positive if 1 > 2.
 // for now, just sorts by name property
-static int CompareObjects(BObject** ppobj1, BObject** ppobj2)
+static int 
+CompareObjects(BObject** ppobj1, BObject** ppobj2)
 {
 	// Dereference pointers (ppobj1 and ppobj2 are pointers to pointers)
 	BObject* pobj1 = *ppobj1;
@@ -239,7 +249,8 @@ static int CompareObjects(BObject** ppobj1, BObject** ppobj2)
 // Note: This physically rearranges the BObject* pointers in the array so that they are in sorted order.
 // This is how we'll sort the child objects in the tree.
 // Note: For contents view, if you click on a column, it will perform the sorting in the view, not here.
-void BObjects::Sort(ULONG lngPropertyID)
+void 
+BObjects::Sort(ULONG lngPropertyID)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID == propName); //, for now
@@ -267,7 +278,10 @@ void BObjects::Sort(ULONG lngPropertyID)
 // Set parent for all objects in this collection.
 // Note: This is for initialization purposes only - it does not actually handle moving the items;
 // use MoveTo for that.
-void BObjects::SetParent(BObject* pobjParent)
+// This was only being used in one place (BObject serialize), 
+// and removing the m_pobjParent reference is confusing, so ditching it. 
+/* void 
+BObjects::SetParent(BObject* pobjParent)
 {
 	ASSERT_VALID(this);
 	int nItems = CObArray::GetSize();
@@ -277,8 +291,10 @@ void BObjects::SetParent(BObject* pobjParent)
 		ASSERT_VALID(pobj);
 		// Set the object's parent to the new parent
 		pobj->m_pobjParent = pobjParent;
+		
 	}
 }
+*/
 
 
 // Move the objects in this array to a new parent.
@@ -287,7 +303,8 @@ void BObjects::SetParent(BObject* pobjParent)
 // This will set document modified flag and update all views.
 // See also SetParent.
 // This is called by drag drop routines.
-BOOL BObjects::MoveTo(BObject* pobjNewParent)
+BOOL 
+BObjects::MoveTo(BObject* pobjNewParent)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjNewParent);
@@ -316,7 +333,8 @@ BOOL BObjects::MoveTo(BObject* pobjNewParent)
 // Load a bobjects array from a global memory block.
 // This is used in clipboard transfers.
 // Returns number of items retrieved.
-int BObjects::LoadFromGlobal(HGLOBAL hGlobal)
+int 
+BObjects::LoadFromGlobal(HGLOBAL hGlobal)
 {
 	ASSERT_VALID(this);
 
@@ -341,7 +359,8 @@ int BObjects::LoadFromGlobal(HGLOBAL hGlobal)
 
 // Create a global memory block and write the array of BObject pointers to it.
 // Used by clipboard and drag drop routines.
-HGLOBAL BObjects::SaveToGlobal()
+HGLOBAL 
+BObjects::SaveToGlobal()
 {
 	ASSERT_VALID(this);
 
@@ -358,7 +377,8 @@ HGLOBAL BObjects::SaveToGlobal()
 
 // Check if the objects can be moved to the target object.
 // Displays a message box and returns False if a rule is broken.
-BOOL BObjects::IsMoveValid(BObject* pobjTarget)
+BOOL 
+BObjects::IsMoveValid(BObject* pobjTarget)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjTarget);
@@ -386,7 +406,8 @@ BOOL BObjects::IsMoveValid(BObject* pobjTarget)
 // eg "Object is marked as undeletable", "Object is referenced by ....."
 // Note: We implement this in BObjects instead of BObject because all of the delete handlers
 // package all the objects to be deleted into a BObjects array, even if it's just one item.
-BOOL BObjects::IsDeleteValid()
+BOOL 
+BObjects::IsDeleteValid()
 {
 	ASSERT_VALID(this);
 
@@ -460,7 +481,8 @@ BOOL BObjects::IsDeleteValid()
 
 // Create a copy of this array, and set it so that it's not the owner of the BObjects.
 // Caller is responsible for deleting the copy!
-BObjects* BObjects::CreateCopy()
+BObjects* 
+BObjects::CreateCopy()
 {
 	ASSERT_VALID(this);
 	BObjects* pCopy = new BObjects;

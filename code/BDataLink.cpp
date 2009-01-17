@@ -344,7 +344,7 @@ LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 					ASSERT_VALID(pobjLinkSource);
 
 					// If the link object is a direct child of the link source, then don't bother with getting the parents.
-					if (pobj->m_pobjParent == pobjLinkSource)
+					if (pobj->GetParent() == pobjLinkSource)
 					{
 						// If no more stuff to be added then just exit here with object name.
 						if (pobjAdditionalProp == 0)

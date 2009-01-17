@@ -516,7 +516,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// Add an item to the listview
 				BObject* pobjNew = (BObject*) pHint;
 				ASSERT_VALID(pobjNew);
-				BObject* pobjParent = pobjNew->m_pobjParent;
+				BObject* pobjParent = pobjNew->GetParent();
 				ASSERT_VALID(pobjParent);
 
 				// Only need to handle this if the parent is the document's currently selected item
@@ -641,7 +641,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// If the new parent for the objects is the current object, then objects are being moved here.
 				// Otherwise, they are being moved to another folder.
 				//. have similar code in 3 hint handlers here...
-				BOOL bMoveHere = (pobj->m_pobjParent == m_pDoc->GetCurrentObject());
+				BOOL bMoveHere = (pobj->GetParent() == m_pDoc->GetCurrentObject());
 
 				// Remove dummy new row
 				m_lvw.RemoveDummyRow();

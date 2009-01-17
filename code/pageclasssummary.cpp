@@ -88,7 +88,7 @@ void CPageClassSummary::DoDataExchange(CDataExchange* pDX)
 	// Get temp object we're working with
 	m_pobj = m_psh->m_pobj;
 	ASSERT_VALID(m_pobj);
-	ASSERT_VALID(m_pobj->m_pobjParent);
+	ASSERT_VALID(m_pobj->GetParent());
 	BObject* pobjIcon = m_pDoc->GetObject(m_pobj->GetIconID());
 	ASSERT_VALID(pobjIcon);
 

@@ -321,7 +321,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// Add a node to the treeview at the specified location (parent)				
 				BObject* pobjNew = (BObject*) pHint;
 				ASSERT_VALID(pobjNew);
-				BObject* pobjParent = pobjNew->m_pobjParent;
+				BObject* pobjParent = pobjNew->GetParent();
 				ASSERT_VALID(pobjParent);
 
 				// Only add the item if the parent is in the view (this could happen if you're in user mode
@@ -414,7 +414,8 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				BObject* pobj = (BObject*) pHint;
 				ASSERT_VALID(pobj);
 
-				BObject* pobjNewParent = pobj->m_pobjParent;
+				BObject* pobjNewParent = pobj->GetParent();
+				ASSERT_VALID(pobjNewParent);
 
 				// Note: htiParentNew might be 0 if the new parent object is not in this view
 				HTREEITEM htiNewParent = m_tvw.FindItemData((DWORD) pobjNewParent, 0);

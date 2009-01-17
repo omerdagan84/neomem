@@ -669,7 +669,7 @@ void CDialogEditLink::AddObject(BOOL bAddAsChild)
 		if (bAddAsChild)
 			pobjParent = pobjCurrent;
 		else
-			pobjParent = pobjCurrent->m_pobjParent;
+			pobjParent = pobjCurrent->GetParent();
 	}
 	ASSERT_VALID(pobjParent);
 

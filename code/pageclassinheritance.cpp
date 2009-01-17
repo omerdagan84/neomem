@@ -73,7 +73,8 @@ BOOL CPageClassInheritance::OnInitDialog()
 }
 
 
-void CPageClassInheritance::DoDataExchange(CDataExchange* pDX)
+void 
+CPageClassInheritance::DoDataExchange(CDataExchange* pDX)
 {
 	// Get temp object we're working with
 	m_pobj = m_psh->m_pobj;
@@ -97,7 +98,7 @@ void CPageClassInheritance::DoDataExchange(CDataExchange* pDX)
 //		m_tvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE); //. bug if you don't include start item
 		
 		// Select parent
-		BObject* pobjParent = m_pobj->m_pobjParent;
+		BObject* pobjParent = m_pobj->GetParent();
 		ASSERT_VALID(pobjParent);
 		m_tvw.SelectItemData((DWORD) pobjParent);
 
@@ -132,7 +133,7 @@ void CPageClassInheritance::DoDataExchange(CDataExchange* pDX)
 		else
 			pobjParent = m_pDoc->GetObject(rootClass);
 		ASSERT_VALID(pobjParent);
-		m_pobj->m_pobjParent = pobjParent;
+		m_pobj->SetParent(pobjParent);
 	}
 }
 

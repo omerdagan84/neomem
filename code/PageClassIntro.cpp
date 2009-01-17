@@ -37,9 +37,9 @@ CPageClassIntro::CPageClassIntro() : CPropertyPage(CPageClassIntro::IDD)
 {
 	//{{AFX_DATA_INIT(CPageClassIntro)
 	//}}AFX_DATA_INIT
-	m_pDoc = 0;
-	m_psh = 0;
-	m_pobj = 0;
+	m_pDoc = NULL;
+	m_psh = NULL;
+	m_pobj = NULL;
 }
 
 CPageClassIntro::~CPageClassIntro()
@@ -121,7 +121,7 @@ BOOL CPageClassIntro::OnInitDialog()
 
 void CPageClassIntro::DoDataExchange(CDataExchange* pDX)
 {
-	// Get temp object we're working with
+	// Get temp object we're working with (stored in the sheet)
 	m_pobj = m_psh->m_pobj;
 	ASSERT_VALID(m_pobj);
 
