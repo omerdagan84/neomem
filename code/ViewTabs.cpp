@@ -41,9 +41,9 @@ static char THIS_FILE[] = __FILE__;
 // Macros
 //--------------------------------------------------------------------------------------------------------------------
 
-IMPLEMENT_DYNCREATE(CViewTabs, CView)
+IMPLEMENT_DYNCREATE(CViewTabs, CViewEx)
 
-BEGIN_MESSAGE_MAP(CViewTabs, CView)
+BEGIN_MESSAGE_MAP(CViewTabs, CViewEx)
 	//{{AFX_MSG_MAP(CViewTabs)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
@@ -91,7 +91,7 @@ CViewTabs::CViewTabs()
 	m_bViewsSaved = FALSE;
 
 	m_bytViewHeight = 0;
-	m_pDoc = NULL;
+//	m_pDoc = NULL;
 }
 
 
@@ -111,15 +111,16 @@ CViewTabs::~CViewTabs()
 }
 
 
+/* done by cviewex now
 BOOL CViewTabs::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	// WS_CLIPCHILDREN   Excludes the area occupied by child windows when you draw 
 	// within the parent window. Used when you create the parent window.
 	// Helps with flickering
 	cs.style |= WS_CLIPCHILDREN;
-	return CView::PreCreateWindow(cs);
+	return CViewEx::PreCreateWindow(cs);
 }
-
+*/
 
 
 // Note: The context information is passed on from the framework
@@ -129,7 +130,7 @@ int CViewTabs::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	xTRACE("CViewTabs OnCreate - create tab control\n");
 
 	// Call base class
-	if (CView::OnCreate(lpCreateStruct) == -1)
+	if (CViewEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
 	// Create the tab control
@@ -166,7 +167,7 @@ int CViewTabs::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CViewTabs::OnDraw(CDC* pDC)
 {
 	xTRACE("CViewTabs OnDraw mode %d\n", m_lngMode);
-	CView::OnDraw(pDC);
+	CViewEx::OnDraw(pDC);
 }
 
 
@@ -177,12 +178,12 @@ void CViewTabs::OnDraw(CDC* pDC)
 #ifdef _DEBUG
 void CViewTabs::AssertValid() const
 {
-	CView::AssertValid();
+	CViewEx::AssertValid();
 }
 
 void CViewTabs::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+	CViewEx::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -200,8 +201,8 @@ void CViewTabs::OnInitialUpdate()
 	xTRACE("CViewTabs OnInitialUpdate - add tabs, select current tab, load that view\n");
 
 	// Get document
-	m_pDoc = STATIC_DOWNCAST(CNeoDoc, GetDocument());
-	ASSERT_VALID(m_pDoc);
+//	m_pDoc = STATIC_DOWNCAST(CNeoDoc, GetDocument());
+//	ASSERT_VALID(m_pDoc);
 
 	// If in navigation mode then add tabs and select view
 	if (m_lngMode == modeNavigation) 
@@ -254,7 +255,7 @@ void CViewTabs::OnInitialUpdate()
 
 	// Call base class
 	// all this does is call OnUpdate with 0 0
-//	CView::OnInitialUpdate();
+//	CViewEx::OnInitialUpdate();
 }
 
 
@@ -411,7 +412,7 @@ void CViewTabs::UpdateTabs()
 
 //	CNeoDoc* pDoc = (CNeoDoc*) GetDocument();
 	//, lame!
-	if (m_pDoc == 0)
+	if (m_pDoc == NULL)
 		m_pDoc = (CNeoDoc*) GetDocument();
 
 	// Clear tabs
@@ -446,7 +447,7 @@ void CViewTabs::UpdateTabs()
 void CViewTabs::OnSize(UINT nType, int cx, int cy) 
 {
 	// Call base class
-	CView::OnSize(nType, cx, cy);
+	CViewEx::OnSize(nType, cx, cy);
 
 	// Size the contained controls
 	RecalcLayout(FALSE);
@@ -1036,7 +1037,8 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 		r.SetRectEmpty();
 //		pView = CreateChildView(this, pClass, GetDocument(), r, 0);
 //		pView = STATIC_DOWNCAST(CViewEx, CreateChildView(this, pClass, GetDocument(), r, 0));
-		pView = STATIC_DOWNCAST(CViewEx, CViewEx::CreateChildView(this, pClass, GetDocument(), r, 0));
+//		pView = STATIC_DOWNCAST(CViewEx, CViewEx::CreateChildView(this, pClass, GetDocument(), r, 0));
+		pView = STATIC_DOWNCAST(CViewEx, CreateChildView(pClass, GetDocument(), r, 0));
 		ASSERT_VALID(pView);
 
 		// Set the mode of the new view to match this mode
@@ -1392,7 +1394,7 @@ void CViewTabs::OnSetFocus(CWnd* pOldWnd)
 {
 	xTRACE("CViewTabs::OnSetFocus - activate first view\n");
 
-	CView::OnSetFocus(pOldWnd);
+	CViewEx::OnSetFocus(pOldWnd);
 
 //	if (pviewCurrent)
 //	{
@@ -1408,7 +1410,7 @@ void CViewTabs::OnSetFocus(CWnd* pOldWnd)
 void CViewTabs::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
 //	xTRACE("CViewTabs OnContextMenu %d  %d\n", ptScreen.x, ptScreen.y);
-	CView::OnContextMenu(pWnd, point);	
+	CViewEx::OnContextMenu(pWnd, point);	
 }
 
 

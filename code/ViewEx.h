@@ -28,13 +28,10 @@ protected:
 	CViewEx();           // protected constructor used by dynamic creation
 	virtual ~CViewEx();
 
-// static
-public:
-	static CView* CreateChildView(CWnd* pParent, CRuntimeClass *pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID);
-
 
 // Operations
 public:
+	CView* CreateChildView(CRuntimeClass *pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID);
 	BCMenu* InitPopup(UINT nPopupID, UINT nDefaultID = NULL);
 	BOOL IsActiveView();
 	CView* GetSiblingView(ULONG lngViewID); // get another view 

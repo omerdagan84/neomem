@@ -181,7 +181,8 @@ CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	GetClientRect(r);
 //	m_pViewRtf = (CRichEditView2*) CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, 0);
 //	m_pViewRtf = (CRichEditView2*) CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF);
-	m_pViewRtf = dynamic_cast<CRichEditView2*> (CViewEx::CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
+//	m_pViewRtf = dynamic_cast<CRichEditView2*> (CViewEx::CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
+	m_pViewRtf = dynamic_cast<CRichEditView2*> (CreateChildView(RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
 	if (m_pViewRtf) 
 	{
 		// Subclass the rtf control with our extended class (provides GetRtf and SetRtf methods)

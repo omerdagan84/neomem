@@ -19,7 +19,7 @@ class BDataViews;
 
 
 
-class CViewTabs : public CView
+class CViewTabs : public CViewEx
 {
 	DECLARE_DYNCREATE(CViewTabs)
 
@@ -62,7 +62,7 @@ public:
 public:
 	CObArray m_aCurrentViews; // array of current view objects
 	CTabCtrlEx m_tbc;
-	CNeoDoc* m_pDoc;
+//	CNeoDoc* m_pDoc;
 
 private:
 	ULONG m_lngMode;	// Mode of view (navigation or contents)
@@ -91,9 +91,9 @@ private:
 	protected:
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
 	//}}AFX_VIRTUAL
+//	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
 // Implementation
 protected:

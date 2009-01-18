@@ -77,9 +77,9 @@ CViewTree::CViewTree()
 	m_htiDragOver = 0;
 //	m_htiPopup = 0;
 	m_htiSaveDuringRename = 0;
-//	m_pobjPopup = 0;
-//	m_pDoc = 0;
-	m_pobjDragObject = 0;
+//	m_pobjPopup = NULL;
+//	m_pDoc = NULL;
+	m_pobjDragObject = NULL;
 }
 
 CViewTree::~CViewTree()
@@ -88,7 +88,8 @@ CViewTree::~CViewTree()
 
 
 // Create the child controls.
-int CViewTree::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int 
+CViewTree::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CViewEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -114,7 +115,7 @@ int CViewTree::OnCreate(LPCREATESTRUCT lpCreateStruct)
 				))
 	{
 		// Tell CViewEx about child window
-		CViewEx::SetChildView(&m_tvw);
+		SetChildView(&m_tvw);
 	}
 	else return -1;
 
@@ -147,12 +148,14 @@ int CViewTree::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //---------------------------------------------------------------------------
 
 #ifdef _DEBUG
-void CViewTree::AssertValid() const
+void 
+CViewTree::AssertValid() const
 {
 	CViewEx::AssertValid();
 }
 
-void CViewTree::Dump(CDumpContext& dc) const
+void 
+CViewTree::Dump(CDumpContext& dc) const
 {
 	CViewEx::Dump(dc);
 }
@@ -166,27 +169,31 @@ void CViewTree::Dump(CDumpContext& dc) const
 //---------------------------------------------------------------------------
 
 /*
-void CViewTree::OnFilePrintPreview()
+void 
+CViewTree::OnFilePrintPreview()
 {
 	// call child frame handler, which will pass it on to the rtf view handler
 	CFrameChild* pFrame = (CFrameChild*) GetParentFrame();
 	pFrame->SendMessage(WM_COMMAND, ID_FILE_PRINT_PREVIEW);
 }
 
-BOOL CViewTree::OnPreparePrinting(CPrintInfo* pInfo)
+BOOL 
+CViewTree::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	xTRACE("CViewTree OnPreparePrinting\n");
 	// default preparation
 	return DoPreparePrinting(pInfo);
 }
 
-void CViewTree::OnBeginPrinting(CDC*, CPrintInfo*)
+void 
+CViewTree::OnBeginPrinting(CDC*, CPrintInfo*)
 {
 	xTRACE("CViewTree OnBeginPrinting\n");
 	// TODO: add extra initialization before printing
 }
 
-void CViewTree::OnEndPrinting(CDC*, CPrintInfo*)
+void 
+CViewTree::OnEndPrinting(CDC*, CPrintInfo*)
 {
 	xTRACE("CViewTree OnEndPrinting\n");
 	// TODO: add cleanup after printing
@@ -199,7 +206,8 @@ void CViewTree::OnEndPrinting(CDC*, CPrintInfo*)
 //---------------------------------------------------------------------------
 
 
-void CViewTree::OnInitialUpdate()
+void 
+CViewTree::OnInitialUpdate()
 {
 	// The default implementation of this function calls the OnUpdate member 
 	// function with no hint information (that is, using the default values 
@@ -210,7 +218,8 @@ void CViewTree::OnInitialUpdate()
 
 
 // Document has changed - update the treeview to reflect those changes
-void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void 
+CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
 	TRACE("    CViewTree::OnUpdate %s\n", theApp.GetHintName(lHint));
 //	xTRACE("CViewTree::OnUpdate(lHint=%d, pHint=0x%pL)\n", lHint, pHint);
@@ -530,7 +539,8 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 // Starting with the specified item, recurse downwards through the treeview and
 // walk through all siblings.
-void CViewTree::RefreshIcons(HTREEITEM hti)
+void 
+CViewTree::RefreshIcons(HTREEITEM hti)
 {
 	while (hti)
 	{
@@ -555,7 +565,8 @@ void CViewTree::RefreshIcons(HTREEITEM hti)
 // Resort children of given item recursively
 //, shouldn't use sortchildren because it doesn't use our callback
 //, better to put this in treeview class also - pass bRecurse param
-void CViewTree::ResortChildren(HTREEITEM hti)
+void 
+CViewTree::ResortChildren(HTREEITEM hti)
 {
 	while (hti)
 	{
@@ -579,7 +590,8 @@ void CViewTree::ResortChildren(HTREEITEM hti)
 
 
 // Selection in the treeview changed, so tell Document and other Views
-void CViewTree::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void 
+CViewTree::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NMTREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	*pResult = 0;
@@ -616,7 +628,8 @@ void CViewTree::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 // Rename the selected item
-void CViewTree::OnObjEditInPlace() 
+void 
+CViewTree::OnObjEditInPlace() 
 {
 	xTRACE("CViewTree:OnObjEditInPlace()\n");
 //	ASSERT(m_htiPopup);
@@ -645,7 +658,8 @@ void CViewTree::OnObjEditInPlace()
 // When label editing begins, a tree control sends a TVN_BEGINLABELEDIT notification 
 // message. By processing this notification, you can allow editing of some labels 
 // and prevent editing of others. Returning 0 allows editing, and returning nonzero prevents it. 
-void CViewTree::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
+void 
+CViewTree::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	xTRACE("CViewTree::OnBeginLabelEdit\n");
 	TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
@@ -658,7 +672,8 @@ void CViewTree::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 // Need to update the document, setmodifiedflag, updateallviewsEx
 //. If the pszText member is non-NULL, return TRUE to set the item's label to the 
 // edited text. Return FALSE to reject the edited text and revert to the original label. 
-void CViewTree::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
+void 
+CViewTree::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	xTRACE("CViewTree::OnEndLabelEdit\n");
 	TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
@@ -712,7 +727,8 @@ void CViewTree::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 // the included structure. 
 // Note: Seems that this gets called once for each type of info, ie. once for text and once for children info
 // Therefore, used an else if structure below.
-void CViewTree::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult) 
+void 
+CViewTree::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 
 	TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
@@ -746,7 +762,8 @@ void CViewTree::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 // the tree control sends a TVN_ITEMEXPANDED notification message.
 //, this is where you could dynamically add child items to the tree
 //, also can prevent item from expanding here
-void CViewTree::OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult) 
+void 
+CViewTree::OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	*pResult = 0;
@@ -755,7 +772,8 @@ void CViewTree::OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 // Save expand/collapse state to BObject
-void CViewTree::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult) 
+void 
+CViewTree::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	TVITEM* ptvi = &pNMTreeView->itemNew;
@@ -778,7 +796,8 @@ void CViewTree::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void CViewTree::OnSize(UINT nType, int cx, int cy) 
+void 
+CViewTree::OnSize(UINT nType, int cx, int cy) 
 {
 	CViewEx::OnSize(nType, cx, cy);
 }
@@ -793,7 +812,8 @@ void CViewTree::OnSize(UINT nType, int cx, int cy)
 // OnRClick
 // Handle right click with context menu handler
 //, why did I have this?? it was causing duplicate context menus to popup
-void CViewTree::OnRClick(NMHDR* pNMHDR, LRESULT* pResult) 
+void 
+CViewTree::OnRClick(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 //	xTRACE("CViewTree OnRClick\n");
 //	CPoint point(::GetMessagePos()); // screen coords
@@ -804,7 +824,8 @@ void CViewTree::OnRClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 // Bring up context menu for tree
-void CViewTree::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
+void 
+CViewTree::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 {
 	xTRACE("CViewTree OnContextMenu %d  %d\n", ptScreen.x, ptScreen.y);
 
@@ -889,7 +910,8 @@ void CViewTree::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 // Sort the children of the selected object
 // Note: The object that was right clicked on is stored in the mpobjPopup variable.
 // For now this just sorts the view and leaves the actual child array alone.
-void CViewTree::OnObjSortChildren()
+void 
+CViewTree::OnObjSortChildren()
 {
 	BObject* pobjTarget = m_pDoc->GetTargetObject();
 	HTREEITEM htiTarget = m_tvw.FindItemData((DWORD) pobjTarget);
@@ -917,7 +939,8 @@ void CViewTree::OnObjSortChildren()
 
 //, Toggle show children for the selected item
 // Note: The default is to show children 
-//void CViewTree::OnPopupShowChildren()
+//void 
+//CViewTree::OnPopupShowChildren()
 //{
 //}
 
@@ -927,21 +950,25 @@ void CViewTree::OnObjSortChildren()
 // Clipboard Operations
 //----------------------------------------------------------------------------------------------------
 
-void CViewTree::OnCmdEditCopy() 
+void 
+CViewTree::OnCmdEditCopy() 
 {
 }
 
-void CViewTree::OnCmdEditCut() 
+void 
+CViewTree::OnCmdEditCut() 
 {
 }
 
-void CViewTree::OnCmdEditPastePlain() 
+void 
+CViewTree::OnCmdEditPastePlain() 
 {
 }
 
 
 //. should this be here or in frame??
-void CViewTree::OnUpdateEdit(CCmdUI* pCmdUI) 
+void 
+CViewTree::OnUpdateEdit(CCmdUI* pCmdUI) 
 {
 	pCmdUI->Enable(FALSE);
 /*	switch (pCmdUI->m_nID)
@@ -986,7 +1013,8 @@ void CViewTree::OnUpdateEdit(CCmdUI* pCmdUI)
 // TVN_BEGINDRAG Handler
 // Notifies a tree view control's parent window that a drag-and-drop operation involving 
 // the left mouse button is being initiated. 
-void CViewTree::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
+void 
+CViewTree::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	xTRACE("CViewTree::OnBeginDrag\n");
 
@@ -1024,7 +1052,8 @@ void CViewTree::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 // Override this function to give the user visual feedback during the drag operation. Since 
 // this function is called continuously, any code contained within it should be optimized as much as possible. 
 // If this function returns DROPEFFECT_NONE, then OnDrop will NOT get called on mouseup!
-DROPEFFECT CViewTree::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point) 
+DROPEFFECT 
+CViewTree::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point) 
 {
 	xTRACE("CViewTree::OnDragOver\n");
 
@@ -1076,7 +1105,8 @@ DROPEFFECT CViewTree::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, 
 // return the dummy value ( -1 ) to indicate that OnDrop will handle this drop operation. 
 // Use pDataObject to examine the COleDataObject for Clipboard data format and data dropped 
 // at the specified point.
-DROPEFFECT CViewTree::OnDropEx(COleDataObject* pDataObject, DROPEFFECT dropDefault, DROPEFFECT dropList, CPoint point)
+DROPEFFECT 
+CViewTree::OnDropEx(COleDataObject* pDataObject, DROPEFFECT dropDefault, DROPEFFECT dropList, CPoint point)
 {
 	// Call base class
 	return CViewEx::OnDropEx(pDataObject, dropDefault, dropList, point);
@@ -1116,7 +1146,8 @@ DROPEFFECT CViewTree::OnDropEx(COleDataObject* pDataObject, DROPEFFECT dropDefau
 // Override this function if the current view needs to clean up any actions taken during 
 // OnDragEnter or OnDragOver calls, such as removing any visual user feedback while the 
 // object was dragged and dropped.
-void CViewTree::OnDragLeave() 
+void 
+CViewTree::OnDragLeave() 
 {
 	xTRACE("CViewTree::OnDragLeave\n");
 
@@ -1132,7 +1163,8 @@ void CViewTree::OnDragLeave()
 /*
 // Virtual function called by CViewEx to get objects to drag, if any
 //int CViewTree::DragGetSelectedObjects(NMHDR* pNMHDR, BObjects& aObjects)
-int CViewTree::DragGetSelectedObjects(BObjects& aObjects)
+int 
+CViewTree::DragGetSelectedObjects(BObjects& aObjects)
 {
 	// Gather up selected objects into array, and start drag drop operation
 	// Note: For treeview, we can only drag one item - 
@@ -1159,7 +1191,8 @@ int CViewTree::DragGetSelectedObjects(BObjects& aObjects)
 
 
 // Virtual function called by CViewEx to get object under specified cursor point, if any
-BObject* CViewTree::DragGetDropTarget(CPoint ptClient)
+BObject* 
+CViewTree::DragGetDropTarget(CPoint ptClient)
 {
 	// See which item is the target
 	UINT nFlags = 0;
@@ -1187,7 +1220,8 @@ BObject* CViewTree::DragGetDropTarget(CPoint ptClient)
 // want to provide special visual cues that distinguish the active view from the inactive views, 
 // you would examine the bActivate parameter and update the view’s appearance accordingly.
 //. (could highlight the view border or something)
-void CViewTree::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
+void 
+CViewTree::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	xTRACE("CViewTree OnActivateView %d\n", bActivate);
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
@@ -1198,7 +1232,8 @@ void CViewTree::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDea
 
 
 
-void CViewTree::Navigate(UINT nCommandID)
+void 
+CViewTree::Navigate(UINT nCommandID)
 {
 //	switch (nCommandID)
 //	{
@@ -1211,7 +1246,8 @@ void CViewTree::Navigate(UINT nCommandID)
 // Trap Delete key here.
 // We have to do this because if we just use an accelerator, the command gets
 // triggered even if you're editing a label in the treeview and hit delete!
-void CViewTree::OnNotifyKeyDown(NMHDR* pNMHDR, LRESULT* pResult)
+void 
+CViewTree::OnNotifyKeyDown(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMTVKEYDOWN* pkd = (NMTVKEYDOWN*) pNMHDR;
 	xTRACE("CViewTree OnNotifyKeyDown %d\n", pkd->wVKey);
@@ -1249,7 +1285,8 @@ void CViewTree::OnNotifyKeyDown(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 // Simulate a keypress.
-BOOL CViewTree::PressKey(UINT nVK)
+BOOL 
+CViewTree::PressKey(UINT nVK)
 {
 	m_tvw.SendMessage(WM_KEYDOWN, (WPARAM) nVK, 0);
 	m_tvw.SendMessage(WM_KEYUP, (WPARAM) nVK, 0);
@@ -1259,7 +1296,8 @@ BOOL CViewTree::PressKey(UINT nVK)
 
 
 // Set target object on gaining focus
-void CViewTree::OnSetFocus(CWnd* pOldWnd) 
+void 
+CViewTree::OnSetFocus(CWnd* pOldWnd) 
 {
 	xTRACE("CViewTree::OnSetFocus - set target object\n");
 	CViewEx::OnSetFocus(pOldWnd);
@@ -1272,17 +1310,20 @@ void CViewTree::OnSetFocus(CWnd* pOldWnd)
 
 
 
-void CViewTree::OnObjMoveTo() 
+void 
+CViewTree::OnObjMoveTo() 
 {
 	m_pDoc->UIMoveObjectTo();
 }
 
-void CViewTree::OnUpdateObjMoveTo(CCmdUI* pCmdUI) 
+void 
+CViewTree::OnUpdateObjMoveTo(CCmdUI* pCmdUI) 
 {
 }
 
 // export the selected item to a file
-void CViewTree::OnCmdFileExport() 
+void 
+CViewTree::OnCmdFileExport() 
 {
 	BObject* pobj = m_pDoc->GetTargetObject();
 	if (pobj)
@@ -1295,7 +1336,8 @@ void CViewTree::OnCmdFileExport()
 // 1.1d added this for debugging
 // DON'T DELETE THIS CODE!!! good for debugging
 #ifdef _DEBUG
-BOOL CViewTree::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
+BOOL 
+CViewTree::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
 {
 	NMHDR* pnm = (NMHDR*) lParam;
 	UINT nIDFrom = pnm->idFrom;

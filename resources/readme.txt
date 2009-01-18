@@ -12,7 +12,7 @@ but vs probably wouldn't like that
 
 
 note: to get better control over the version information, i made an .rct file, which is a template file for the actual .rc file. 
-
+the rakefile substitutes in the actual version information to the template .rct file, making the .rc file. 
 
 
 from msdn:

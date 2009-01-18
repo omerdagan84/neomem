@@ -1,6 +1,9 @@
 
 // CViewHeader
 
+//, some of this code could be consolidates with cviewex code, now
+// that it inherits from that, instead of cview. 
+
 
 
 #include "precompiled.h"
@@ -24,7 +27,9 @@ static char THIS_FILE[] = __FILE__;
 
 //-------------------------------------------------------------------------------------------
 
-BEGIN_MESSAGE_MAP(CViewHeader, CView)
+IMPLEMENT_DYNCREATE(CViewHeader, CViewEx)
+
+BEGIN_MESSAGE_MAP(CViewHeader, CViewEx)
 	//{{AFX_MSG_MAP(CViewHeader)
 	ON_WM_SIZE()
 	ON_WM_CREATE()
@@ -35,45 +40,46 @@ BEGIN_MESSAGE_MAP(CViewHeader, CView)
 END_MESSAGE_MAP()
 
 
-IMPLEMENT_DYNCREATE(CViewHeader, CView)
-
 
 // CViewHeader
 //-------------------------------------------------------------------------------------------
 
 CViewHeader::CViewHeader()
 {
-	m_pviewTabs = 0;
+	m_pviewTabs = NULL;
 	m_nHeight = 0;
 }
 
 CViewHeader::~CViewHeader()
 {
-	// Why don't we delete m_pView here??
+	//, Why don't we delete m_pView here??
 	// MFC handles that for you - when Windows destroys a window, MFC will 
 	// delete the attached CWnd object?
 }
 
 
-
-BOOL CViewHeader::PreCreateWindow(CREATESTRUCT& cs) 
+/* this code is in cviewex
+BOOL 
+CViewHeader::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	// WS_CLIPCHILDREN   Excludes the area occupied by child windows when you draw 
 	// within the parent window. Used when you create the parent window.
 	// This helps reduce flickering
 	cs.style |= WS_CLIPCHILDREN;
-	return CView::PreCreateWindow(cs);
+	return CViewEx::PreCreateWindow(cs);
 }
+*/
 
-
-int CViewHeader::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int 
+CViewHeader::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	if (CView::OnCreate(lpCreateStruct) == -1)
+	if (CViewEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	
 	// Create tab view as child and set it to receive Contents
 //	m_pviewTabs = (CViewTabs*) CreateChildView(this, RUNTIME_CLASS(CViewTabs), GetDocument(), CRect(0,0,0,0), IDC_TAB_CONTROL);
-	m_pviewTabs = (CViewTabs*) CViewEx::CreateChildView(this, RUNTIME_CLASS(CViewTabs), GetDocument(), CRect(0,0,0,0), IDC_TAB_CONTROL);
+//	m_pviewTabs = (CViewTabs*) CViewEx::CreateChildView(this, RUNTIME_CLASS(CViewTabs), GetDocument(), CRect(0,0,0,0), IDC_TAB_CONTROL);
+	m_pviewTabs = (CViewTabs*) CreateChildView(RUNTIME_CLASS(CViewTabs), GetDocument(), CRect(0,0,0,0), IDC_TAB_CONTROL);
 	if (m_pviewTabs)
 		m_pviewTabs->SetMode(modeContents);
 
@@ -88,7 +94,8 @@ int CViewHeader::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 // Display icon and name of currently selected object
-void CViewHeader::OnDraw(CDC* pDC)
+void 
+CViewHeader::OnDraw(CDC* pDC)
 {
 	xTRACE("CViewHeader::OnDraw\n");
 
@@ -96,9 +103,8 @@ void CViewHeader::OnDraw(CDC* pDC)
 	if (!theApp.m_bDisplayHeader) 
 		return;
 
-	CNeoDoc* pDoc = (CNeoDoc*) GetDocument();
-	BObject* pobj = pDoc->GetCurrentObject();
-	if (pobj == 0) return; // exit if no current object (eg during delete operation)
+	BObject* pobj = m_pDoc->GetCurrentObject();
+	if (pobj == NULL) return; // exit if no current object (eg during delete operation)
 	
 	// Draw background
 	//. could have pattern wallpaper background instead of just a solid color
@@ -116,7 +122,7 @@ void CViewHeader::OnDraw(CDC* pDC)
 	CFont* pOldFont = pDC->SelectObject(&theApp.m_fontHeader);
 
 	// Draw icon of currently selected item
-	CImageList* piml = pDoc->GetImageList();
+	CImageList* piml = m_pDoc->GetImageList();
 	int intBorder = (m_nHeight - 16) / 2; // 16 is height of icon
 	CPoint ptIcon(intBorder, intBorder);
 	int nImage = pobj->GetIconIndex();
@@ -140,14 +146,16 @@ void CViewHeader::OnDraw(CDC* pDC)
 //-------------------------------------------------------------------------------------------
 
 #ifdef _DEBUG
-void CViewHeader::AssertValid() const
+void 
+CViewHeader::AssertValid() const
 {
-	CView::AssertValid();
+	CViewEx::AssertValid();
 }
 
-void CViewHeader::Dump(CDumpContext& dc) const
+void 
+CViewHeader::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+	CViewEx::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -156,16 +164,18 @@ void CViewHeader::Dump(CDumpContext& dc) const
 // Message Handlers
 //-------------------------------------------------------------------------------------------
 
-void CViewHeader::OnSize(UINT nType, int cx, int cy) 
+void 
+CViewHeader::OnSize(UINT nType, int cx, int cy) 
 {
-	CView::OnSize(nType, cx, cy);
+	CViewEx::OnSize(nType, cx, cy);
 	
 	// Size the contained view, if any
 	RecalcLayout(FALSE);
 }
 
 
-void CViewHeader::RecalcLayout(BOOL bRepaint)
+void 
+CViewHeader::RecalcLayout(BOOL bRepaint)
 {
 	// Size the contained view, if any
 	if (m_pviewTabs)
@@ -185,7 +195,8 @@ void CViewHeader::RecalcLayout(BOOL bRepaint)
 
 // Bring up context menu
 //.. make this a generic menu which comes up on toolbar right click
-void CViewHeader::OnRButtonDown(UINT nFlags, CPoint point) 
+void 
+CViewHeader::OnRButtonDown(UINT nFlags, CPoint point) 
 {
 	ClientToScreen(&point);
 
@@ -206,7 +217,7 @@ void CViewHeader::OnRButtonDown(UINT nFlags, CPoint point)
 		}
 	}
 
-//	CView::OnRButtonDown(nFlags, point);
+//	CViewEx::OnRButtonDown(nFlags, point);
 }
 
 
@@ -216,7 +227,8 @@ void CViewHeader::OnRButtonDown(UINT nFlags, CPoint point)
 // the rectangle describing, in device coordinates, the area that requires updating; pass this 
 // rectangle to CWnd::InvalidateRect. This causes painting to occur the next time a WM_PAINT 
 // message is received. 
-void CViewHeader::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void 
+CViewHeader::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
 	TRACE("    CViewHeader::OnUpdate %s\n", theApp.GetHintName(lHint));
 
@@ -267,21 +279,23 @@ void CViewHeader::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 
 
-void CViewHeader::OnInitialUpdate() 
+void 
+CViewHeader::OnInitialUpdate() 
 {
 	// Call base class
 	// Note: Base class does this:
 	// invalidate the entire pane, erase background too
 //	Invalidate(TRUE);
-	CView::OnInitialUpdate();
+	CViewEx::OnInitialUpdate();
 }
 
 
 
-void CViewHeader::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
+void 
+CViewHeader::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	xTRACE("CViewHeader::OnActivateView bActivate %d - if True, set focus to child view (tabs view)\n", bActivate);
-	CView::OnActivateView(bActivate, pActivateView, pDeactiveView);
+	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	
 	// If this view is being activated, set the focus to the child view
 	if (bActivate && m_pviewTabs) 
@@ -294,11 +308,12 @@ void CViewHeader::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pD
 
 
 
-void CViewHeader::OnSetFocus(CWnd* pOldWnd) 
+void 
+CViewHeader::OnSetFocus(CWnd* pOldWnd) 
 {
 	xTRACE("CViewHeader::OnSetFocus - set focus to child view (tabview)\n");
 
-	CView::OnSetFocus(pOldWnd);
+	CViewEx::OnSetFocus(pOldWnd);
 
 	// Don't want this view to get focus - want to set focus to its child view.
 	if (m_pviewTabs)
@@ -311,7 +326,8 @@ void CViewHeader::OnSetFocus(CWnd* pOldWnd)
 
 
 
-int CViewHeader::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) 
+int 
+CViewHeader::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) 
 {
 	xTRACE("CViewHeader::OnMouseActivate\n");	
 //	return CView::OnMouseActivate(pDesktopWnd, nHitTest, message);
@@ -331,7 +347,7 @@ int CViewHeader::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message)
 	}
 
 	// Otherwise call base class as you normally would
-	return CView::OnMouseActivate(pDesktopWnd, nHitTest, message);
+	return CViewEx::OnMouseActivate(pDesktopWnd, nHitTest, message);
 }
 
 

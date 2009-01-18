@@ -277,6 +277,3 @@ extern CString g_strQuoteSpace;
 
 
 
-// Global functions
-//CView* CreateChildView(CWnd* pParent, CRuntimeClass *pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID);
-
