@@ -55,7 +55,7 @@ public:
 
 public:
 	void RemoveColumns();
-	int GetColumnCount();
+	const int GetColumnCount();
 	int GetColumnIndex(ULONG lngPropertyID);
 	int GetColumnIndex(BObject* pobjPropertyDef);
 	ColumnInfo& GetColumnInfo(int nCol);

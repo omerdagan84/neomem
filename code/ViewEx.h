@@ -28,6 +28,11 @@ protected:
 	CViewEx();           // protected constructor used by dynamic creation
 	virtual ~CViewEx();
 
+// static
+public:
+	static CView* CreateChildView(CWnd* pParent, CRuntimeClass *pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID);
+
+
 // Operations
 public:
 	BCMenu* InitPopup(UINT nPopupID, UINT nDefaultID = NULL);

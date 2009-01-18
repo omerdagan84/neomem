@@ -55,6 +55,84 @@ BEGIN_MESSAGE_MAP(CViewEx, CView)
 END_MESSAGE_MAP()
 
 
+// static
+
+
+// Create a View window as a child window
+// Also attaches the view to the document via a context object
+// Note: Doesn't display the new window
+// Returns a pointer to the created CView object, or NULL if failed
+//. move this to a cwndex class??
+/* static */ CView* 
+CViewEx::CreateChildView(CWnd* pParent, CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID)
+{
+	xTRACE("CView::CreateChildView of Class %s\n", pViewClass->m_lpszClassName);
+
+	// Check assumptions
+	ASSERT_VALID(pParent);
+	ASSERT(pViewClass != NULL);
+	ASSERT(pViewClass->IsDerivedFrom(RUNTIME_CLASS(CWnd)));
+	ASSERT(AfxIsValidAddress(pViewClass, sizeof(CRuntimeClass), FALSE));
+	ASSERT_VALID(pDoc);
+
+	// Create a Context object which will associate the newly created View with the Document
+	CCreateContext cc;
+	cc.m_pCurrentDoc = pDoc;
+	cc.m_pCurrentFrame = 0;
+	cc.m_pNewViewClass = pViewClass;
+	cc.m_pNewDocTemplate = pDoc->GetDocTemplate();
+
+	// Create the specified CView object
+	// (this is why you include the DECLARE_DYNCREATE macro in a class -
+	// it defines the CreateObject function)
+	CWnd* pWnd;
+	TRY
+	{
+		pWnd = (CWnd*) pViewClass->CreateObject();
+		if (pWnd == NULL)
+			AfxThrowMemoryException();
+	}
+	CATCH_ALL(e)
+	{
+		// Note: DELETE_EXCEPTION(e) not required
+		TRACE("! Out of memory creating a tab control child window.\n");
+		return NULL;
+	}
+	END_CATCH_ALL
+	ASSERT_KINDOF(CWnd, pWnd);
+	ASSERT(pWnd->m_hWnd == NULL); // Not yet created
+	
+
+	// Create Windows window associated with the specified CView object
+	//. pass style here?
+	// too bad we don't have more control over the style of the border
+	// Very strange bug - if you create the window without WS_VISIBLE, then
+	// the rtf control will not accept enters!
+//	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_BORDER;
+	DWORD dwStyle = WS_CHILD | WS_VISIBLE;
+	if (!pWnd->Create(
+					NULL,					// classname
+					NULL,					// window name
+					dwStyle,				// style
+					rPos,					// position
+					pParent,				// parent window
+					nControlID,				// Control ID
+					&cc				// Context of window
+					))
+	{
+		// Note: pWnd will be cleaned up by PostNcDestroy
+		TRACE("! Warning: couldn't create Window associated with CView object.\n");
+		return NULL;
+	}
+	
+	// Put the child view at the top of the z-order so that it repaints correctly
+	pWnd->SetWindowPos(&CWnd::wndTop, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOCOPYBITS);
+
+	return (CView*) pWnd;
+}
+
+
+
 
 // Construction/Destruction
 //-----------------------------------------------------------------------------------------------

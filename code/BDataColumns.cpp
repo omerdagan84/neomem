@@ -29,7 +29,7 @@ IMPLEMENT_SERIAL(BDataColumns, BData, VERSIONABLE_SCHEMA | versionFileStructure)
 ColumnInfo::ColumnInfo()
 {
 	m_lngPropertyID = 0;
-	m_pobjPropertyDef = 0; // pointer to a property def bobject - we don't own it
+	m_pobjPropertyDef = NULL; // pointer to a property def bobject - we don't own it
 	m_nColWidth = 120; // pixels
 	m_nColAlignment= LVCFMT_LEFT; // left align
 //	m_nColOrder = 0;
@@ -199,7 +199,7 @@ ColumnInfo& BDataColumns::GetColumnInfo(int nCol)
 
 
 // Get the number of columns in the array
-int BDataColumns::GetColumnCount()
+const int BDataColumns::GetColumnCount()
 {
 	return m_nColumns;
 }

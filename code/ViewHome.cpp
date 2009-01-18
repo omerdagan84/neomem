@@ -119,7 +119,7 @@ int CViewHome::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	theApp.GotoNextTip();
 
 	// Create inner view window
-	m_pview = (CViewHomeInner*) CreateChildView(this, RUNTIME_CLASS(CViewHomeInner), m_pDoc, r, 0);
+	m_pview = (CViewHomeInner*) CViewEx::CreateChildView(this, RUNTIME_CLASS(CViewHomeInner), m_pDoc, r, 0);
 
 /*
 	// Create rtf control, read-only

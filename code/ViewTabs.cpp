@@ -1035,7 +1035,8 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 		CRect r;
 		r.SetRectEmpty();
 //		pView = CreateChildView(this, pClass, GetDocument(), r, 0);
-		pView = STATIC_DOWNCAST(CViewEx, CreateChildView(this, pClass, GetDocument(), r, 0));
+//		pView = STATIC_DOWNCAST(CViewEx, CreateChildView(this, pClass, GetDocument(), r, 0));
+		pView = STATIC_DOWNCAST(CViewEx, CViewEx::CreateChildView(this, pClass, GetDocument(), r, 0));
 		ASSERT_VALID(pView);
 
 		// Set the mode of the new view to match this mode
