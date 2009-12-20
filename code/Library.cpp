@@ -3,6 +3,8 @@
 // Library.cpp
 // General purpose routines
 
+//, move to static class routines
+
 
 #include "precompiled.h"
 #include "Library.h"

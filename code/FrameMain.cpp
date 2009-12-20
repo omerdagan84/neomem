@@ -458,11 +458,16 @@ void CFrameMain::OnHelp()
 }
 
 
+
+// this is called by ctrl+shift+alt+T (hidden command!)
 void CFrameMain::OnCmdViewTest() 
 {
+	//. hijacking this for running the big mambo test, for now. 
+	theApp.DoTests();
+	return;
 
-//	if (IDYES == AfxMessageBox("run tests?", MB_YESNO))
-	if (IDYES == AfxMessageBox("run tests?", MB_YESNO))
+
+	if (IDYES == AfxMessageBox("Run tests?", MB_YESNO))
 	{
 		// this will throw a memory exception
 //		AfxThrowMemoryException();
@@ -474,8 +479,6 @@ void CFrameMain::OnCmdViewTest()
 
 		// Note: This doesn't get called!!!
 //		AfxMessageBox("After exception");
-
-		AfxMessageBox("ok");
 	}
 
 

@@ -204,7 +204,7 @@ private:
 // 1.1	BOOL m_bCrashing; // Set to true if shutting down due to uncaught exception
 
 
-	// debug routines
+// debug routines
 public: 
 	BOOL ShowError(CString strMsg);
 #ifdef _DEBUG
@@ -251,6 +251,10 @@ public:
 	afx_msg void OnHelpWhatsNew();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
+
+public:
+	static CString g_strSpace2;
 };
 
 
