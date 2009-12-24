@@ -1,10 +1,14 @@
 
 // CNeoDoc
-// This class encapsulates all code required to store the actual document information 
-// in memory, and handles reading and writing to/from file, modifying memory 
-// structures based on user interaction, etc.
+// This class encapsulates all code required to store the actual 
+// document information in memory. Handles reading and writing 
+// to/from file, modifying memory structures based on user interaction, etc.
 // Date: November 1999
 //-----------------------------------------------------------------------------------------------------------------
+
+// And if UI doesn't handle a command, MFC will pass it to the document, 
+// right? ugh, that seems kind of weird. 
+
 
 
 #pragma once
@@ -122,7 +126,8 @@ public:
 	void UpdateDocument(BObject* pobj);
 
 
-	// User-interface routines - generally bring up a dialog to get information from user
+	// User-interface routines - generally bring up a dialog to get 
+	// information from user.
 	//, which is not good - ideally would have callbacks to ui layer. 
 	BObject* UIAddNewClass();
 	BObject* UIAddNewFolder(BObject* pobjParent = 0, BOOL bSelectNewObject = TRUE);
@@ -256,7 +261,7 @@ protected:
 	afx_msg void OnUpdateNavigateForward(CCmdUI* pCmdUI);
 	afx_msg void OnObjEditInDialog();
 	afx_msg void OnUpdateObjEditInDialog(CCmdUI* pCmdUI);
-	afx_msg void OnObjAdd();
+//.	afx_msg void OnObjAdd();
 //	afx_msg void OnObjMoveTo();
 //	afx_msg void OnUpdateObjMoveTo(CCmdUI* pCmdUI);
 	afx_msg void OnObjProperties();

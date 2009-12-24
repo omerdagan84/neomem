@@ -1,5 +1,7 @@
 
 // CMDITrayFrame
+// This is a frame window that lets you put an icon in the system tray. 
+
 
 
 #pragma once
@@ -36,10 +38,10 @@ public:
 //	CMDITrayFrame(UINT uIDD,CWnd* pParent = NULL);   // standard constructor
 	CMDITrayFrame();   // standard constructor
 	
-	virtual void OnTrayLButtonDown(UINT uID, CPoint pt);
+	virtual void OnTrayLButtonUp(UINT uID, CPoint pt);
 	virtual void OnTrayLButtonDblClk(UINT uID, CPoint pt);
 	
-	virtual void OnTrayRButtonDown(UINT uID, CPoint pt);
+	virtual void OnTrayRButtonUp(UINT uID, CPoint pt);
 	virtual void OnTrayRButtonDblClk(UINT uID, CPoint pt);
 
 	virtual void OnTrayMouseMove(UINT uID, CPoint pt);
@@ -62,7 +64,7 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);	
 	private:
-	afx_msg void OnTrayNotify(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam); // bug: had void instead of LRESULT! search Q195032
 	//}}AFX_MSG
 
 protected:

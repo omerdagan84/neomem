@@ -2778,10 +2778,12 @@ CNeoMem::DoTests()
 		
 		CNeoMem::CloseAllDocuments(FALSE);
 
-//		CNeoDoc* pdoc = CNeoDoc::GetDoc();
 		CNeoMem::OnFileNew();		
 
+		CNeoDoc* pdoc = CNeoDoc::GetDoc();
+
 		// add a paper
+		
 
 
 

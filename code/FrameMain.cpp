@@ -761,9 +761,9 @@ HMENU CFrameMain::NewMenu() // bcmenu
 
 HMENU CFrameMain::NewDefaultMenu() // bcmenu
 {
-	m_default.LoadMenu(IDR_MAINFRAME);
-	m_default.LoadToolbar(IDR_MAINFRAME);
-	return (m_default.Detach());
+	m_menuDefault.LoadMenu(IDR_MAINFRAME);
+	m_menuDefault.LoadToolbar(IDR_MAINFRAME);
+	return (m_menuDefault.Detach());
 }
 
 
@@ -776,7 +776,7 @@ void CFrameMain::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStru
 		if (IsMenu((HMENU) lpMeasureItemStruct->itemID))
 		{
 			CMenu* cmenu = CMenu::FromHandle((HMENU)lpMeasureItemStruct->itemID);
-			if (m_menu.IsMenu(cmenu) || m_default.IsMenu(cmenu))
+			if (m_menu.IsMenu(cmenu) || m_menuDefault.IsMenu(cmenu))
 			{
 				m_menu.MeasureItem(lpMeasureItemStruct);
 				setflag=TRUE;
@@ -790,7 +790,7 @@ void CFrameMain::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStru
 LRESULT CFrameMain::OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu) 
 {
 	LRESULT lresult;
-	if (m_menu.IsMenu(pMenu) || m_default.IsMenu(pMenu))
+	if (m_menu.IsMenu(pMenu) || m_menuDefault.IsMenu(pMenu))
 		lresult = BCMenu::FindKeyboardShortcut(nChar, nFlags, pMenu);
 	else
 		lresult = BaseClass::OnMenuChar(nChar, nFlags, pMenu);
@@ -819,7 +819,7 @@ void CFrameMain::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 	BaseClass::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 	if (!bSysMenu)
 	{
-		if (m_menu.IsMenu(pPopupMenu) || m_default.IsMenu(pPopupMenu))
+		if (m_menu.IsMenu(pPopupMenu) || m_menuDefault.IsMenu(pPopupMenu))
 			BCMenu::UpdateMenu(pPopupMenu);
 	}
 }

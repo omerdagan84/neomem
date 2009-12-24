@@ -75,14 +75,14 @@ CDocument* CNeoDocTemplate::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bMakeVis
 void CNeoDocTemplate::InitialUpdateFrame(CFrameWnd* pFrame, CDocument* pDoc, BOOL bMakeVisible)
 {
 	// Cast to our class
-	CFrameChild* pFrameChild = (CFrameChild*) pFrame;
+	CFrameChild* pFrameChild = (CFrameChild*) pFrame; //.cast
 	ASSERT_VALID(pFrameChild);
 
 	// Delegate to implementation in CFrameWnd
 	pFrame->InitialUpdateFrame(pDoc, bMakeVisible);
 
 	// NOW WE CAN SET THE DAMN SPLITTER POS!!
-	CNeoDoc* pNeoDoc = (CNeoDoc*) pDoc;
+	CNeoDoc* pNeoDoc = (CNeoDoc*) pDoc; //.cast
 	ASSERT_VALID(pNeoDoc);
 	ULONG lngSplitterPos = pNeoDoc->GetSplitterPos();
 	if (lngSplitterPos)

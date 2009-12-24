@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"precompiled.h" /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /WX /Gm /Gi /GR /GX /ZI /Od /I "..\resources" /I "..\help" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D _WIN32_WINNT=0x0400 /Fr /Yu"precompiled.h" /FD /GZ /GZ /c
+# ADD CPP /nologo /MTd /W3 /WX /Gm /Gi /GR /GX /ZI /Od /I "..\resources" /I "..\help" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D _WIN32_WINNT=0x0400 /FAcs /Fr /Yu"precompiled.h" /FD /GZ /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
@@ -1637,7 +1637,7 @@ SOURCE=..\help\NeoMem.cnt
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Copying contents file...
-OutDir=..\code\builds\release
+OutDir=.\..\code\builds\release
 InputPath=..\help\NeoMem.cnt
 InputName=NeoMem
 
@@ -1650,7 +1650,7 @@ InputName=NeoMem
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Copying contents file...
-OutDir=..\code\builds\debug
+OutDir=.\..\code\builds\debug
 InputPath=..\help\NeoMem.cnt
 InputName=NeoMem
 
@@ -1671,7 +1671,7 @@ SOURCE=..\help\NeoMem.hpj
 # PROP Ignore_Default_Tool 1
 USERDEP__NEOME="..\help\NeoMem.rtf"	"..\help\$(TargetName).hm"	
 # Begin Custom Build - Making help file...
-OutDir=..\code\builds\release
+OutDir=.\..\code\builds\release
 TargetName=NeoMem
 InputPath=..\help\NeoMem.hpj
 InputName=NeoMem
@@ -1694,7 +1694,7 @@ InputName=NeoMem
 # PROP Ignore_Default_Tool 1
 USERDEP__NEOME="..\help\NeoMem.rtf"	"..\help\$(TargetName).hm"	
 # Begin Custom Build - Making help file...
-OutDir=..\code\builds\debug
+OutDir=.\..\code\builds\debug
 TargetName=NeoMem
 InputPath=..\help\NeoMem.hpj
 InputName=NeoMem

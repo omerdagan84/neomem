@@ -56,6 +56,7 @@ BEGIN_MESSAGE_MAP(CFrameChild, CMDIChildWnd)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
 	ON_COMMAND(ID_FILE_PRINT_FROM_PREVIEW, OnFilePrintFromPreview)
 	ON_COMMAND_RANGE(ID_NAVIGATE_START, ID_NAVIGATE_STOP, OnCmdNavigate)
+	ON_COMMAND(ID_OBJ_ADD, OnAddObj) //. test
 END_MESSAGE_MAP()
 
 
@@ -927,4 +928,19 @@ CFrameChild::GetCurrentView()
 	return pview;
 }
 
+
+//.test 
+// Add an object. 
+// This is the default ID_OBJ_ADD handler.
+void 
+CFrameChild::OnAddObj() 
+{
+	CNeoDoc* pdoc = (CNeoDoc*) GetActiveDocument(); //.cast
+	BObject* pobjTarget = pdoc->GetTargetObject();
+
+	if (pobjTarget)
+	{
+		BObject* pobj = pdoc->UIAddNewObject(pobjTarget);
+	}
+}
 

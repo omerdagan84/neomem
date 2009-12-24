@@ -1,8 +1,13 @@
 
 // CFrameMain
-// This class encapsulates all code associated with the main window, which includes 
-// the menu, toolbar, status bar, and child frame.
+// This class encapsulates all code associated with the main window, 
+// which includes the menu, toolbar, status bar, and child frame.
 //-----------------------------------------------------------------------------------------------------------------
+
+// If this window doesn't handle a command, MFC will pass it on to the 
+// child frame, etc. (IIRC)
+
+//, rename to CFrameApp
 
 
 #pragma once
@@ -18,8 +23,8 @@
 
 
 
-// This is nice, but I think the problem is that #defines use a global namespace, so you can only 
-// do this with one file!?
+// This is nice, but I think the problem is that #defines use a global 
+// namespace, so you can only do this with one file!?
 //#define BaseClass CMDIFrameWnd
 #define BaseClass CMDITrayFrame
 
@@ -47,7 +52,8 @@ public:
 // Attributes
 public:
 	CStatusBarEx m_sbr;
-	BCMenu m_menu, m_default; // bcmenu
+	BCMenu m_menu; // bcmenu
+	BCMenu m_menuDefault; // bcmenu
 private:
 	CToolBar m_tbr;
 	CReBar m_wndReBar;

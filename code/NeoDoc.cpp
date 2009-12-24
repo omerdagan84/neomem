@@ -91,7 +91,7 @@ BEGIN_MESSAGE_MAP(CNeoDoc, CDocument)
 	ON_COMMAND(ID_NAVIGATE_BACK, OnNavigateBack)
 	ON_COMMAND(ID_NAVIGATE_FORWARD, OnNavigateForward)
 	ON_COMMAND(ID_NAVIGATE_GOTO, OnNavigateGoto)
-	ON_COMMAND(ID_OBJ_ADD, OnObjAdd)
+//.	ON_COMMAND(ID_OBJ_ADD, OnObjAdd)
 	ON_COMMAND(ID_OBJ_ADD_FOLDER, OnObjAddFolder)
 	ON_COMMAND(ID_OBJ_AUTOSORT, OnObjAutosort)
 	ON_COMMAND(ID_OBJ_CHANGE_CLASS_CONTENTS, OnObjChangeClassContents)
@@ -1937,15 +1937,16 @@ CNeoDoc::UIEditClass(BObject *pobjClass)
 
 // Add a new object, allowing user to select class and name in a dialog
 // Bring up a dialog to enter information about the new item
-// (select class from a combobox, enter in the text representation, select icon, etc.)
-// depending on the class selected, could enter different properties also
+// (select class from a combobox, enter in the text representation, 
+// select icon, etc.).
+// Depending on the class selected, could enter different properties also.
 // If parent is not specified will add to current object.
 // Bug: Had the bool parameters switched around from the definition!! bad!
 BObject* 
 CNeoDoc::UIAddNewObject(
-														BObject* pobjParent /* = 0 */, 
-														BOOL bSelectNewObject /* = TRUE */
-														)
+						BObject* pobjParent /* = 0 */, 
+						BOOL bSelectNewObject /* = TRUE */
+						)
 {
 	ASSERT_VALID(this);
 
@@ -2633,7 +2634,8 @@ CNeoDoc::GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText)
 
 
 
-
+/*
+//. moving this to cframechild
 // Add an object. 
 // This is the default ID_OBJ_ADD handler.
 void 
@@ -2644,6 +2646,7 @@ CNeoDoc::OnObjAdd()
 		BObject* pobj = UIAddNewObject(m_pobjTarget);
 	}
 }
+*/
 
 //-----------------------------------------------------------------------------------------------------------------
 

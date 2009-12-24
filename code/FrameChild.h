@@ -1,9 +1,11 @@
 
 // CFrameChild
-// This class encapsulates all code associated with the main child frame, which contains 
-// both the left and right panes.
+// This class encapsulates all code associated with the main child frame, 
+// which contains both the left and right panes.
 // Date: November 1999
 //-----------------------------------------------------------------------------------------------------------------
+
+//, rename to CFrameDoc
 
 
 #pragma once
@@ -59,13 +61,11 @@ private:
 	//}}AFX_VIRTUAL
 	virtual void OnUpdateFrameTitle(BOOL bAddToTitle); // advanced overridable
 
-
 public:
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-
 
 // Generated message map functions
 protected:
@@ -82,9 +82,12 @@ protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnFilePrint();
 	//}}AFX_MSG
+	
 	afx_msg void OnCmdView(UINT nCommandID);
 	afx_msg void OnUpdateView(CCmdUI* pCmdUI);
 	afx_msg void OnCmdNavigate(UINT nCommandID);
+	afx_msg void OnAddObj(); //.test
+
 public:
 	DECLARE_MESSAGE_MAP()
 };

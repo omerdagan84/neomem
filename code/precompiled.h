@@ -1,10 +1,13 @@
 
-// precompiled.h
-// This is the include file for standard system include files, or project specific 
-// include files that are used frequently but changed infrequently.
-// Note: this file must be included as the first non-comment thing done in each file!
-// precompiled.h was created by AppWizard to keep the list of header files to be precompiled. 
-// Note: Precompiled header (PCH) files speed up build times because they don’t require recompiling.
+// precompiled.h (renamed from stdafx.h)
+// This is the include file for standard system include files, or project 
+// specific include files that are used frequently but changed infrequently.
+// Note: this file must be included as the first non-comment thing done 
+// in each file!
+// precompiled.h was created by AppWizard to keep the list of header files 
+// to be precompiled. 
+// Note: Precompiled header (PCH) files speed up build times because they 
+// don’t require recompiling.
 // see also http://www.cygnus-software.com/papers/precompiledheaders.html
 //-----------------------------------------------------------------------------------------------------
 
@@ -27,7 +30,34 @@
 
 
 // Note: afx was the old name for mfc. 
+
 #include <afxwin.h>     // MFC core and standard components
+
+// Q195032: Incorrect Function Signatures May Cause Problems in Release
+// http://support.microsoft.com/kb/195032
+// To get a compile-time error when using message map macros, you 
+// can re-define the macros after the "#include <afxwin.h>" line in 
+// your Stdafx.h file. The code below uses the static_cast<> operator 
+// to aid the compiler and developer by doing strict type conversion 
+// on the function pointer:
+#undef  ON_MESSAGE
+#define ON_MESSAGE(message, memberFxn) \
+	{ message, 0, 0, 0, AfxSig_lwl, \
+	(AFX_PMSG) (AFX_PMSGW) (static_cast< LRESULT (AFX_MSG_CALL CWnd::*)(WPARAM, LPARAM) > (&memberFxn)) },
+#undef  ON_REGISTERED_MESSAGE
+#define ON_REGISTERED_MESSAGE(nMessageVariable, memberFxn) \
+	{ 0xC000, 0, 0, 0, (UINT)(UINT*)(&nMessageVariable), \
+	(AFX_PMSG)(AFX_PMSGW)(static_cast<LRESULT (AFX_MSG_CALL CWnd::*)(WPARAM, LPARAM)>(&memberFxn)) },
+#undef  ON_THREAD_MESSAGE
+#define ON_THREAD_MESSAGE(message, memberFxn) \
+	{ message, 0, 0, 0, AfxSig_vwl, \
+	(AFX_PMSG)(AFX_PMSGT)(static_cast<void (AFX_MSG_CALL CWinThread::*)(WPARAM, LPARAM)>(&memberFxn)) },
+#undef  ON_REGISTERED_THREAD_MESSAGE
+#define ON_REGISTERED_THREAD_MESSAGE(nMessageVariable, memberFxn) \
+	{ 0xC000, 0, 0, 0, (UINT)(UINT*)(&nMessageVariable), \
+	(AFX_PMSG)(AFX_PMSGT)(static_cast<void (AFX_MSG_CALL WinThread::*)(WPARAM, LPARAM)>(&memberFxn)) },
+
+
 #include <afxext.h>     // MFC extensions
 #include <afxcmn.h>		// MFC support for Windows Common Controls
 #include <afxcview.h>	// MFC support for common control views

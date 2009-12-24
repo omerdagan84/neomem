@@ -1,11 +1,10 @@
 
 // CViewEx
-// This is the base class for all Views that display information about the file. 
-// It extends the CView class by allowing toolbars to dock to it, and provides 
-// an Update method. 
+// This is the base class for all Views that display information about 
+// the file. It extends the CView class by allowing toolbars to dock to it, 
+// and provides an Update method and drag-drop code.  
 // Date: February 2000
 //-----------------------------------------------------------------------------------------------------------------
-
 
 
 

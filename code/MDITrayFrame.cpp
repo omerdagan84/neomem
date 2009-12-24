@@ -266,7 +266,9 @@ BOOL CMDITrayFrame::TraySetMenu(HMENU hMenu,UINT nDefaultPos)
 */
 
 
-void CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam) 
+// bug: had void instead of LRESULT. search Q195032. very nasty. 
+// would cause weird crashes in release version, not debug version. great. 
+LRESULT CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam) 
 { 
     UINT uID; 
     UINT uMsg; 
@@ -276,7 +278,7 @@ void CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam)
  
 //	if (uID != 1)
 //		return;
-	if (uID < 1) return;
+	if (uID < 1) return NULL;
 	
 	CPoint pt;	
 
@@ -287,10 +289,13 @@ void CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 			ClientToScreen(&pt);
 			OnTrayMouseMove(uID, pt);
 			break;
-		case WM_LBUTTONDOWN:
+		// bug: needed to catch up message, not down, 
+		// as next icon might get other half of click!
+//		case WM_LBUTTONDOWN:
+		case WM_LBUTTONUP:
 			GetCursorPos(&pt);
 			ClientToScreen(&pt);
-			OnTrayLButtonDown(uID, pt);
+			OnTrayLButtonUp(uID, pt);
 			break;
 		case WM_LBUTTONDBLCLK:
 			GetCursorPos(&pt);
@@ -298,11 +303,12 @@ void CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 			OnTrayLButtonDblClk(uID, pt);
 			break;
 		
-		case WM_RBUTTONDOWN:
+//		case WM_RBUTTONDOWN:
+		case WM_RBUTTONUP:
 		case WM_CONTEXTMENU:
 			GetCursorPos(&pt);
 //			ClientToScreen(&pt);
-			OnTrayRButtonDown(uID, pt);
+			OnTrayRButtonUp(uID, pt);
 			break;
 		case WM_RBUTTONDBLCLK:
 			GetCursorPos(&pt);
@@ -310,8 +316,8 @@ void CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 			OnTrayRButtonDblClk(uID, pt);
 			break;
 	} 
-	return; 
-} 
+	return NULL; 
+}
 
 
 void CMDITrayFrame::OnSysCommand(UINT nID, LPARAM lParam)
@@ -342,7 +348,7 @@ void CMDITrayFrame::TraySetMinimizeToTray(BOOL bMinimizeToTray)
 
 
 
-void CMDITrayFrame::OnTrayRButtonDown(UINT uID, CPoint pt)
+void CMDITrayFrame::OnTrayRButtonUp(UINT uID, CPoint pt)
 {
 	// Show popup menu, setting default item
 //	m_mnuTrayMenu.GetSubMenu(0)->SetDefaultItem(m_nDefaultMenuItem, TRUE);
@@ -358,7 +364,7 @@ void CMDITrayFrame::OnTrayRButtonDown(UINT uID, CPoint pt)
 }
 
 
-void CMDITrayFrame::OnTrayLButtonDown(UINT uID, CPoint pt)
+void CMDITrayFrame::OnTrayLButtonUp(UINT uID, CPoint pt)
 {
 	if (uID == 1)
 	{
