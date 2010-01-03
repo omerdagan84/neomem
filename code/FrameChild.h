@@ -86,7 +86,7 @@ protected:
 	afx_msg void OnCmdView(UINT nCommandID);
 	afx_msg void OnUpdateView(CCmdUI* pCmdUI);
 	afx_msg void OnCmdNavigate(UINT nCommandID);
-	afx_msg void OnAddObj(); //.test
+//.	afx_msg void OnCmdAddObject();
 
 public:
 	DECLARE_MESSAGE_MAP()

@@ -605,18 +605,27 @@ CViewEx::OnToolTipText(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
 
 
 
-
-// Translate a message using a custom accelerator table (if any) for the view
+// Use this method to interrupt or modify MFC's normal command routing. 
+// Eg normally commands are send to the View and then the Document. 
+// But we want them to go from the View to the Child Frame (ie the
+// Document Frame). 
+// or - do we need to handle each message explicitly in this class? 
+// try that. 
+// um, or use OnCmdMsg instead. 
+// If PreTranslateMessage() returns TRUE, MFC will assume that you have 
+// handled the message. If it returns FALSE, MFC assumes that you have 
+// elected not to handle it and will proceed with its normal dispatch process.
 BOOL 
 CViewEx::PreTranslateMessage(MSG* pMsg) 
 {
+	// Translate a message using a custom accelerator table (if any) for the view.
 	if (m_hAccel && pMsg->message >= WM_KEYFIRST && pMsg->message <= WM_KEYLAST)
 	{
 		// TranslateAccelerator does all the magic to translate WM_KEYUP and WM_KEYDOWN 
 		// messages into WM_COMMAND messages when the keys pressed match commands 
 		// in the accelerator table.
 		return ::TranslateAccelerator(m_hWnd, m_hAccel, pMsg);
-	}	
+	}
 	return CView::PreTranslateMessage(pMsg);
 }
 
@@ -1272,7 +1281,8 @@ CViewEx::OnRButtonDown(UINT nFlags, CPoint point)
 //
 
 	
-//void CMymenuView::OnRButtonDown(UINT /*nFlags*/, CPoint point) //SK: removed warning C4100: 'nFlags' : unreferenced formal parameter
+//void 
+//CMymenuView::OnRButtonDown(UINT /*nFlags*/, CPoint point) //SK: removed warning C4100: 'nFlags' : unreferenced formal parameter
 //{
 
 /*
@@ -1345,5 +1355,78 @@ CViewEx::InitPopup(UINT nPopupID, UINT nDefaultID)
 //	m_popmenu.DestroyMenu();
 	return pPopup;
 }
+
+
+
+
+
+
+//...
+
+/*
+// Add an object. 
+// This is the default ID_OBJ_ADD handler.
+void 
+CViewEx::OnCmdAddObject() 
+{
+	if (m_pobjTarget)
+	{
+		//. pass UI ptr also!
+		BObject* pobj = UIAddNewObject(m_pobjTarget);
+	}
+}
+*/
+
+
+
+//.. goes into endless loop! augh!
+// because the childframe will hand the command to its child view. which is us!
+
+/*
+from mfc:
+
+BOOL CView::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
+{
+	// first pump through pane
+	if (CWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
+		return TRUE;
+
+	// then pump through document
+	if (m_pDocument != NULL)
+	{
+		// special state for saving view before routing to document
+		CPushRoutingView push(this);
+		return m_pDocument->OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
+	}
+
+	return FALSE;
+}
+*/
+
+
+// so it should be okay to have cmd handlers here in cviewex
+// it just seems an odd place for them, eh? 
+// 
+/*
+BOOL 
+CViewEx::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+{
+	// 
+
+	// call base class version - ie let this view have a crack at the cmd. 
+	// i think this will pass it to the document next. 
+	BOOL bHandled = CView::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
+
+	// if the view and the doc didn't handle it, try the child/doc frame. 
+	if (!bHandled) {
+		//. this is bombing because there's no childframe yet! so check. 
+		CFrameChild* pframe = theApp.GetChildFrame();
+		if (pframe)
+			bHandled = pframe->OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
+	}
+
+	return bHandled;
+}
+*/
 
 

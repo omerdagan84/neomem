@@ -266,13 +266,15 @@ BOOL CMDITrayFrame::TraySetMenu(HMENU hMenu,UINT nDefaultPos)
 */
 
 
-// bug: had void instead of LRESULT. search Q195032. very nasty. 
-// would cause weird crashes in release version, not debug version. great. 
+// bug: 2009-12-24 had void instead of LRESULT. search Q195032. very nasty. 
+// would cause weird crashes via stack corruption in release version, 
+// not debug version. great. just moving the mouse over the tray icon 
+// would have been enough to cause problems. sheesh.
 LRESULT CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam) 
 { 
     UINT uID; 
     UINT uMsg; 
- 
+
     uID = (UINT) wParam; 
     uMsg = (UINT) lParam; 
  
@@ -289,8 +291,7 @@ LRESULT CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 			ClientToScreen(&pt);
 			OnTrayMouseMove(uID, pt);
 			break;
-		// bug: needed to catch up message, not down, 
-		// as next icon might get other half of click!
+		// bug: needed to catch up message, not down, as next icon could get other half of click!
 //		case WM_LBUTTONDOWN:
 		case WM_LBUTTONUP:
 			GetCursorPos(&pt);

@@ -1,6 +1,7 @@
 
 // CViewIndex
-// This view displays an alphabetical or categorized index of all objects in file.
+// This view displays an alphabetical or categorized index of all objects 
+// in the file.
 // Date: May 2000
 //-----------------------------------------------------------------------------------------------------------------
 

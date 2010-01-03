@@ -1,7 +1,7 @@
 
 // CViewRtf
-// This is the Text View, and contains a toolbar and a rich edit view derived from 
-// CRichEditView.
+// This is the Text View, and contains a toolbar and a rich edit view 
+// derived from CRichEditView.
 // Date: January 2000
 //-----------------------------------------------------------------------------------------------------------------
 

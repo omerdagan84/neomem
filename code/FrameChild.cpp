@@ -56,7 +56,7 @@ BEGIN_MESSAGE_MAP(CFrameChild, CMDIChildWnd)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
 	ON_COMMAND(ID_FILE_PRINT_FROM_PREVIEW, OnFilePrintFromPreview)
 	ON_COMMAND_RANGE(ID_NAVIGATE_START, ID_NAVIGATE_STOP, OnCmdNavigate)
-	ON_COMMAND(ID_OBJ_ADD, OnAddObj) //. test
+//.	ON_COMMAND(ID_OBJ_ADD, OnCmdAddObject)
 END_MESSAGE_MAP()
 
 
@@ -924,16 +924,18 @@ CFrameChild::GetCurrentView(BOOL bLeftSide)
 CViewEx* 
 CFrameChild::GetCurrentView()
 {
-	CViewEx* pview = DYNAMIC_DOWNCAST(CViewEx, this->GetActiveView()); // null if not a cviewex
+	// null if not a cviewex
+	CViewEx* pview = DYNAMIC_DOWNCAST(CViewEx, this->GetActiveView()); 
 	return pview;
 }
 
 
+/*
 //.test 
 // Add an object. 
 // This is the default ID_OBJ_ADD handler.
 void 
-CFrameChild::OnAddObj() 
+CFrameChild::OnCmdAddObject() 
 {
 	CNeoDoc* pdoc = (CNeoDoc*) GetActiveDocument(); //.cast
 	BObject* pobjTarget = pdoc->GetTargetObject();
@@ -943,4 +945,6 @@ CFrameChild::OnAddObj()
 		BObject* pobj = pdoc->UIAddNewObject(pobjTarget);
 	}
 }
+*/
+
 

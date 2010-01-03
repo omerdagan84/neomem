@@ -90,7 +90,7 @@ public:
 
 // Operations
 public:
-	BObject* AddObject(BObject* pobjParent, ULONG lngClassID, const CString& strText, ULONG lngObjectID = 0, ULONG lngIconID = 0, ULONG lngFlags = 0);
+	BObject* AddObject(BObject* pobjParent, const ULONG lngClassID, const CString& strText, ULONG lngObjectID = 0, ULONG lngIconID = 0, ULONG lngFlags = 0);
 	BOOL AddObjectToIndex(ULONG lngObjectID, BObject* pobj);
 	BData* CreateBData(ULONG lngClassOrPropertyID);
 	BData* CreateBDataFromPropertyType(ULONG lngPropertyTypeID);
@@ -211,8 +211,10 @@ public:
 private:
 	BOOL OnOpenDocumentEx(LPCTSTR lpszPathName);
 	BOOL OnSaveDocumentEx(LPCTSTR lpszPathName);
+
 //	BDataLink m_datTarget; // Object or objects which will be acted on by the object command handlers
 	BObject* m_pobjTarget; // Object which will be acted on by the object command handlers
+
 	void UpgradeFile(CArchive& ar);
 	void Synchronize(CNeoDoc* pdocTemplate);
 	void SynchronizeDelete(BObject* pobjThis, CNeoDoc* pdocTemplate);
@@ -224,13 +226,13 @@ private:
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CNeoDoc)
 	public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
+	virtual BOOL CanCloseFrame(CFrameWnd* pFrame);
 	virtual void DeleteContents();
+	virtual void OnCloseDocument();
+	virtual BOOL OnNewDocument();
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
-	virtual BOOL CanCloseFrame(CFrameWnd* pFrame);
-	virtual void OnCloseDocument();
+	virtual void Serialize(CArchive& ar);
 	protected:
 	virtual BOOL SaveModified();
 	//}}AFX_VIRTUAL
@@ -261,7 +263,7 @@ protected:
 	afx_msg void OnUpdateNavigateForward(CCmdUI* pCmdUI);
 	afx_msg void OnObjEditInDialog();
 	afx_msg void OnUpdateObjEditInDialog(CCmdUI* pCmdUI);
-//.	afx_msg void OnObjAdd();
+	afx_msg void OnObjAdd(); //.
 //	afx_msg void OnObjMoveTo();
 //	afx_msg void OnUpdateObjMoveTo(CCmdUI* pCmdUI);
 	afx_msg void OnObjProperties();

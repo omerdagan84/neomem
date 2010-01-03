@@ -89,12 +89,14 @@ private:
 	virtual DROPEFFECT OnDragScroll(DWORD dwKeyState, CPoint point);
 	virtual BOOL OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint point);
 	virtual void OnDragLeave();
+//	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
 	protected:
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 	//}}AFX_VIRTUAL
+
 
 protected:
 #ifdef _DEBUG
@@ -119,11 +121,13 @@ protected:
 	afx_msg void OnDevModeChange(LPSTR lpDeviceName);
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg LRESULT OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
+//.	afx_msg void OnCmdAddObject();
 	//}}AFX_MSG
 	afx_msg BOOL OnToolTipText(UINT id, NMHDR* pNMHDR, LRESULT* pResult);
 //	afx_msg void OnFilePrint();
 	afx_msg void OnFilePrintPreview();
 	DECLARE_MESSAGE_MAP()
+
 };
 
 

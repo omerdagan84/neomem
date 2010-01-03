@@ -91,7 +91,7 @@ BEGIN_MESSAGE_MAP(CNeoDoc, CDocument)
 	ON_COMMAND(ID_NAVIGATE_BACK, OnNavigateBack)
 	ON_COMMAND(ID_NAVIGATE_FORWARD, OnNavigateForward)
 	ON_COMMAND(ID_NAVIGATE_GOTO, OnNavigateGoto)
-//.	ON_COMMAND(ID_OBJ_ADD, OnObjAdd)
+	ON_COMMAND(ID_OBJ_ADD, OnObjAdd) //.
 	ON_COMMAND(ID_OBJ_ADD_FOLDER, OnObjAddFolder)
 	ON_COMMAND(ID_OBJ_AUTOSORT, OnObjAutosort)
 	ON_COMMAND(ID_OBJ_CHANGE_CLASS_CONTENTS, OnObjChangeClassContents)
@@ -123,8 +123,7 @@ END_MESSAGE_MAP()
 // Construction/Destruction
 //---------------------------------------------------------------------------
 
-CNeoDoc::CNeoDoc()
-{
+CNeoDoc::CNeoDoc() {
 	TRACE("CNeoDoc Constructor\n");
 
 	// Initialize variables
@@ -165,8 +164,7 @@ CNeoDoc::CNeoDoc()
 }
 
 
-CNeoDoc::~CNeoDoc()
-{
+CNeoDoc::~CNeoDoc() {
 	xTRACE("CNeoDoc Destructor\n");
 
 	// The root object should have been deleted and its pointer set to
@@ -198,13 +196,11 @@ CNeoDoc::~CNeoDoc()
 // Used by hash function.
 // Have enough for about 1.4 million objects now (uses 2*nobjects as base)
 ULONG 
-GetNextPrime(ULONG n)
-{
+GetNextPrime(ULONG n) {
 	ULONG anPrimes[] = {257, 521, 1031, 2053, 4201, 8209, 16411, 32369, 66541, 104729, 
 										200003, 400009, 800011, 1600033, 2750159};
 	int nPrimes = sizeof(anPrimes) / sizeof(ULONG);
-	for (int i = 0; i < nPrimes; i++)
-	{
+	for (int i = 0; i < nPrimes; i++) {
 		if (n < anPrimes[i])
 			return anPrimes[i];
 	}
@@ -224,8 +220,7 @@ GetNextPrime(ULONG n)
 // The function then displays a message box containing the error message. Override this function 
 // if you want to provide additional, customized failure messages. This is an advanced overridable.
 void 
-CNeoDoc::ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSaving, UINT nIDPDefault)
-{
+CNeoDoc::ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSaving, UINT nIDPDefault) {
 	TRACE("CNeoDoc::ReportSaveLoadException\n");
 	// check if it's one we want to handle
 /*
@@ -234,14 +229,12 @@ CNeoDoc::ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSavi
 
 	switch (((CArchiveException*)e)->m_cause)
 
-	if (e != NULL)
-	{
+	if (e != NULL) {
 		ASSERT_VALID(e);
 		if (e->IsKindOf(RUNTIME_CLASS(CUserException)))
 			return; // already reported
 
-		if (e->IsKindOf(RUNTIME_CLASS(CArchiveException)))
-		{
+		if (e->IsKindOf(RUNTIME_CLASS(CArchiveException))) {
 			switch (((CArchiveException*)e)->m_cause)
 */
 	// if not, call the default
@@ -252,13 +245,12 @@ CNeoDoc::ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSavi
 
 
 // Get a pointer to the child frame associated with this document
-//. this fails if the frame is not active, which is true in opening a file
+//, this fails if the frame is not active, which is true in opening a file
 CFrameChild* 
-CNeoDoc::GetMDIChildFrame()
-{
-	CFrameMain* pMainFrame = (CFrameMain*) AfxGetApp()->m_pMainWnd;
+CNeoDoc::GetMDIChildFrame() {
+	CFrameMain* pMainFrame = (CFrameMain*) AfxGetApp()->m_pMainWnd; //,cast
 	ASSERT_VALID(pMainFrame);
-	CFrameChild* pChildFrame = (CFrameChild*) pMainFrame->MDIGetActive();
+	CFrameChild* pChildFrame = (CFrameChild*) pMainFrame->MDIGetActive(); //,cast
 	ASSERT_VALID(pChildFrame);
 	return pChildFrame;
 }
@@ -270,17 +262,38 @@ CNeoDoc::GetMDIChildFrame()
 
 #ifdef _DEBUG
 void 
-CNeoDoc::AssertValid() const
-{
+CNeoDoc::AssertValid() const {
 	CDocument::AssertValid();
 }
 
 void 
-CNeoDoc::Dump(CDumpContext& dc) const
-{
+CNeoDoc::Dump(CDumpContext& dc) const {
 	CDocument::Dump(dc);
 }
 #endif //_DEBUG
+
+
+
+// Static (class) methods
+//----------------------------------------------------------------
+
+
+// To get pointer to the current document from anywhere in application 
+// (eg dialog box) say CNeoDoc::GetDoc();
+/* static */ CNeoDoc* 
+CNeoDoc::GetDoc() {
+	CMDIChildWnd* pChild = ((CMDIFrameWnd*)(AfxGetApp()->m_pMainWnd))->MDIGetActive();
+	if (!pChild) return NULL;
+
+	CDocument * pDoc = pChild->GetActiveDocument();
+	if (!pDoc) return NULL;
+	
+	// Fail if doc is of wrong kind
+	if (!pDoc->IsKindOf( RUNTIME_CLASS(CNeoDoc)))
+		return NULL;
+	return (CNeoDoc*) pDoc;
+}
+
 
 
 
@@ -295,8 +308,7 @@ CNeoDoc::Dump(CDumpContext& dc) const
 // Create a new blank document.
 // Returns True if successful.
 BOOL 
-CNeoDoc::OnNewDocument()
-{
+CNeoDoc::OnNewDocument() {
 	TRACE("CNeoDoc::OnNewDocument\n");
 
 	m_bLoadingFile = TRUE;
@@ -355,25 +367,21 @@ CNeoDoc::OnNewDocument()
 // Make any changes to the document's file structure here
 // (ie temporary, admin type stuff)
 void 
-CNeoDoc::UpdateDocument(BObject* pobj)
-{
+CNeoDoc::UpdateDocument(BObject* pobj) {
 	ASSERT_VALID(pobj);
 
 /*
 	// Update the object then call this routine recursively for its properties and its children
 	// Convert from BDataArrayLinks to BDataLinks
-	if (pobj->m_pdat)
-	{
+	if (pobj->m_pdat) {
 		ASSERT_VALID(pobj->m_pdat);
-		if (pobj->m_pdat->IsKindOf(RUNTIME_CLASS(BDataArrayLinks)))
-		{
+		if (pobj->m_pdat->IsKindOf(RUNTIME_CLASS(BDataArrayLinks))) {
 			BDataLinks* pdatNew = new BDataLinks;
 			ASSERT_VALID(pdatNew);
 			BDataArrayLinks* pdatOld = (BDataArrayLinks*) pobj->m_pdat;
 			int nItems = pdatOld->m_apobj.GetSize();
 			pdatNew->m_apobj.SetSize(nItems);
-			for (int i = 0; i < nItems; i++)
-			{
+			for (int i = 0; i < nItems; i++) {
 				BObject* pobj = (BObject*) pdatOld->m_apobj.GetAt(i);
 				ASSERT_VALID(pobj);
 				pdatNew->m_apobj.SetAt(i, pobj);
@@ -385,12 +393,10 @@ CNeoDoc::UpdateDocument(BObject* pobj)
 	}
 
 	// Walk through properties and call this routine recursively
-	if (pobj->m_paProperties)
-	{
+	if (pobj->m_paProperties) {
 		ASSERT_VALID(pobj->m_paProperties);
 		int nProps = pobj->m_paProperties->GetSize();
-		for (int i = 0; i < nProps; i++)
-		{
+		for (int i = 0; i < nProps; i++) {
 			BObject* pobjProp = (BObject*) pobj->m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjProp);
 			UpdateDocument(pobjProp);
@@ -398,12 +404,10 @@ CNeoDoc::UpdateDocument(BObject* pobj)
 	}
 
 	// Walk through children and call this routine recursively
-	if (pobj->GetChildren())
-	{
+	if (pobj->GetChildren()) {
 		ASSERT_VALID(pobj->GetChildren());
 		int nChildren = pobj->GetChildren()->GetSize();
-		for (int i = 0; i < nChildren; i++)
-		{
+		for (int i = 0; i < nChildren; i++) {
 			BObject* pobjChild = (BObject*) pobj->GetChildren()->GetAt(i);
 			ASSERT_VALID(pobjChild);
 			UpdateDocument(pobjChild);
@@ -417,36 +421,15 @@ CNeoDoc::UpdateDocument(BObject* pobj)
 
 
 
-
-
-
-
-
 // Methods
 //---------------------------------------------------------------------------
 
 
-// To get pointer to the current document from anywhere in application (eg dialog box) say CNeoDoc::GetDoc();
-/*static */ CNeoDoc* 
-CNeoDoc::GetDoc()
-{
-	CMDIChildWnd* pChild = ((CMDIFrameWnd*)(AfxGetApp()->m_pMainWnd))->MDIGetActive();
-	if (!pChild) return NULL;
-
-	CDocument * pDoc = pChild->GetActiveDocument();
-	if (!pDoc) return NULL;
-	
-	// Fail if doc is of wrong kind
-	if (!pDoc->IsKindOf( RUNTIME_CLASS(CNeoDoc)))
-		return NULL;
-	return (CNeoDoc*) pDoc;
-}
 
 
 // Get a pointer to the imagelist associated with this document
 CImageList* 
-CNeoDoc::GetImageList()
-{
+CNeoDoc::GetImageList() {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pIconCache);
 	return m_pIconCache->GetImageList();
@@ -456,16 +439,14 @@ CNeoDoc::GetImageList()
 // Returns a pointer to the main root object, which may be NULL if document has not been initialized
 /*
 inline BObject* 
-CNeoDoc::GetRoot()
-{
+CNeoDoc::GetRoot() {
 	ASSERT_VALID(this);
 	return m_pobjRoot;
 }
 */
 
 inline void 
-CNeoDoc::SetRoot(BObject* pobj)
-{
+CNeoDoc::SetRoot(BObject* pobj) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobj);
 	m_pobjRoot = pobj;
@@ -473,8 +454,7 @@ CNeoDoc::SetRoot(BObject* pobj)
 
 // Gets the index of the specified icon in the image list
 int 
-CNeoDoc::GetIconIndex(ULONG lngIconID)
-{
+CNeoDoc::GetIconIndex(ULONG lngIconID) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pIconCache);
 	return m_pIconCache->GetIconIndex(lngIconID);
@@ -484,12 +464,11 @@ CNeoDoc::GetIconIndex(ULONG lngIconID)
 // Set the currently selected object.
 // Will broadcast message to all views that current object has changed.
 // Will also set the target object to the specified object.
-// Pass Navigating True if user is navigating through history list (back or forward), so won't
-// write selection to history list.
+// Pass Navigating True if user is navigating through history list 
+// (back or forward), so won't write selection to history list.
 void 
 CNeoDoc::SetCurrentObject(BObject *pobjCurrent, CView* pSender /* = NULL */, 
-							   BOOL bNavigating /* = FALSE */)
-{
+							   BOOL bNavigating /* = FALSE */) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjCurrent);
 
@@ -499,8 +478,7 @@ CNeoDoc::SetCurrentObject(BObject *pobjCurrent, CView* pSender /* = NULL */,
 	m_bSettingCurrentObject = TRUE;
 
 	// Save current data in all views
-	if (m_pobjCurrent)
-	{
+	if (m_pobjCurrent) {
 		ASSERT_VALID(m_pobjCurrent);
 		UpdateAllViewsEx(pSender, hintSave, m_pobjCurrent);
 	}
@@ -511,8 +489,7 @@ CNeoDoc::SetCurrentObject(BObject *pobjCurrent, CView* pSender /* = NULL */,
 	// Store pointer to current object
 	m_pobjCurrent = pobjCurrent;
 
-	if (pobjCurrent)
-	{
+	if (pobjCurrent) {
 		ASSERT_VALID(pobjCurrent);
 
 		// Notify all views other than the one responsible for calling this method
@@ -555,8 +532,7 @@ CNeoDoc::SetCurrentObject(BObject *pobjCurrent, CView* pSender /* = NULL */,
 
 // Get a pointer to the currently selected object.
 BObject* 
-CNeoDoc::GetCurrentObject()
-{
+CNeoDoc::GetCurrentObject() {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pobjCurrent); 
 	return m_pobjCurrent;
@@ -566,8 +542,7 @@ CNeoDoc::GetCurrentObject()
 // Return a pointer to the specified object, or NULL if not found in index
 // Be sure to check result for NULL
 BObject* 
-CNeoDoc::GetObject(ULONG lngObjectID)
-{
+CNeoDoc::GetObject(ULONG lngObjectID) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(&m_mapObjects);
 	BObject* pobj;
@@ -587,14 +562,22 @@ CNeoDoc::GetObject(ULONG lngObjectID)
 // Assigns a new ObjectID and keeps the index up to date. 
 // Returns a pointer to the new object, or NULL if unsuccessful.
 // Sets document modified flag.
-// Note: This does NOT tell views about new object.
+// Note: This does NOT tell views about new object, because usually we
+// need to set more properties before the new object is finished.
+// THEN we tell the views about it.  //, seems a bit funky
 BObject* 
-CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText, 
-							ULONG lngObjectID, ULONG lngIconID, ULONG lngFlags)
-{
+CNeoDoc::AddObject(
+					BObject *pobjParent, 
+					const ULONG lngClassID, 
+					const CString& strText, 
+					ULONG lngObjectID, 
+					ULONG lngIconID, 
+					ULONG lngFlags
+					) {
 	ASSERT_VALID(this);
 
-	//, better to follow mfc model and call a Create function to which you pass these parameters??
+	//, better to follow mfc model and call a Create function to which 
+	// you pass these parameters??
 	// ie pobj = new BObject;
 	// pobj->Create(....)???
 	// but then you don't have the context of the document!
@@ -605,8 +588,7 @@ CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText
 
 	// Set the default flags for this object if they weren't specified in the parameter.
 	// The default flags come from the classdef - propObjectFlags.
-	if (lngFlags == 0)
-	{
+	if (lngFlags == 0) {
 //,		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
 		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, pobjClassDef->GetPropertyData(propObjectFlags));
 		if (pdatFlags)
@@ -630,13 +612,11 @@ CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText
 
 	// Set the object id
 	// If no object id specified then get next available one
-	if (lngObjectID == 0)
-	{
+	if (lngObjectID == 0) {
 		// Get the next available ObjectID
 		lngObjectID = GetNextObjectID();
 	}
-	else
-	{
+	else {
 		// Keep track of next available object ID
 		if (lngObjectID > m_lngNextObjectID)
 			m_lngNextObjectID = lngObjectID;
@@ -669,8 +649,7 @@ CNeoDoc::AddObject(BObject *pobjParent, ULONG lngClassID, const CString& strText
 // try getting the next valid ID until it finds an empty space.
 // Returns True if successful.
 BOOL 
-CNeoDoc::AddObjectToIndex(ULONG lngObjectID, BObject* pobj)
-{
+CNeoDoc::AddObjectToIndex(ULONG lngObjectID, BObject* pobj) {
 	ASSERT_VALID(this);
 	ASSERT(lngObjectID);
 	ASSERT_VALID(pobj);
@@ -678,14 +657,12 @@ CNeoDoc::AddObjectToIndex(ULONG lngObjectID, BObject* pobj)
 	BObject* pobjTest;
 
 	// Make sure no object is already in the slot
-	if (m_mapObjects.Lookup(lngObjectID, pobjTest))
-	{
+	if (m_mapObjects.Lookup(lngObjectID, pobjTest)) {
 		TRACE("! NeoDoc::AddObjectToIndex ObjectID %d \"%s\" is already in map!\n", lngObjectID, 
 							(LPCTSTR) pobj->GetPropertyText(propName));
 		
 		// Try assigning a new objectid until you find one that's unoccupied
-		while (TRUE)
-		{
+		while (TRUE) {
 			lngObjectID = GetNextObjectID();
 			TRACE("    assigning new objectid of %d\n", lngObjectID);
 			// If found an empty slot, exit
@@ -719,8 +696,7 @@ CNeoDoc::AddObjectToIndex(ULONG lngObjectID, BObject* pobj)
 // This is all part of the base-class functionality of DeleteContents.
 // Need to return document object to initial state.
 void 
-CNeoDoc::DeleteContents() 
-{
+CNeoDoc::DeleteContents() {
 	ASSERT_VALID(this);
 
 	CWaitCursor cw;
@@ -730,8 +706,7 @@ CNeoDoc::DeleteContents()
 	// The base class implementation does nothing.
 //	CDocument::DeleteContents();
 	
-	if (m_pobjRoot)
-	{
+	if (m_pobjRoot) {
 		// Delete the root bobject and all its children and properties recursively
 		delete m_pobjRoot;
 		m_pobjRoot = NULL;
@@ -770,8 +745,7 @@ CNeoDoc::DeleteContents()
 // This sends hintDelete to all views for each collection of objects that it recursively deletes.
 // Note: This is in CNeoDoc because this must modify the index, and check the current object, etc.
 BOOL 
-CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, BOOL bQuiet /* = FALSE */)
-{
+CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, BOOL bQuiet /* = FALSE */) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pobjCurrent);
 	ASSERT_VALID(paObjects);
@@ -785,8 +759,7 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 
 	// First make sure all data for the current object is saved
 //	UpdateAllViewsEx(NULL, hintSave, m_pobjCurrent);
-	if (m_pobjCurrent)
-	{
+	if (m_pobjCurrent) {
 		ASSERT_VALID(m_pobjCurrent);
 		UpdateAllViewsEx(NULL, hintSave, m_pobjCurrent);
 	}
@@ -798,14 +771,12 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 		return FALSE;
 
 	// Ask user if they want to delete the object(s)
-	if (!bQuiet)
-	{
+	if (!bQuiet) {
 		CString strMsg;
 		CString strNames;
 		strNames = paObjects->GetText();
 		BOOL bSingle = (paObjects->GetSize() == 1);
-		if (bSingle)
-		{
+		if (bSingle) {
 			// Get classname
 			BObject* pobj = (BObject*) paObjects->GetAt(0);
 			ASSERT_VALID(pobj);
@@ -828,8 +799,7 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 						(LPCTSTR) strChildren
 						);
 		}
-		else
-		{
+		else {
 //			strMsg.Format(_T("Are you sure you want to delete the objects \"%s\" and any child objects? Warning: This can't be undone!"), 
 			strMsg.Format(_T("Are you sure you want to delete the objects \"%s\" and any child objects? \n\nWarning: This cannot be undone!"), 
 					(LPCTSTR) strNames);
@@ -843,8 +813,7 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 	// deleting the htreeitem will arbitrarily reposition selection to another item and cause error.
 //	// Don't know why I put this in here cause it works fine now without it!
 //	BOOL bDeleteCurrent = (paObjects->FindObject(m_pobjCurrent, TRUE) == -1) ? FALSE : TRUE;
-//	if (bDeleteCurrent)
-//	{
+//	if (bDeleteCurrent) {
 //		// Set document to have no current object - will avoid problems with deleting currently selected item
 		// NEVER set m_pobjCurrent to 0!!
 //		SetCurrentObject(NULL, NULL);
@@ -856,8 +825,7 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 
 	// Walk through objects, calling pobj->DeleteObject for each one.
 	int nObjects = paObjects->GetSize();
-	for (int i = 0; i < nObjects; i++)
-	{
+	for (int i = 0; i < nObjects; i++) {
 		BObject* pobj = (BObject*) paObjects->GetAt(i);
 		// Attempt to delete object and children - if failed, return False.
 		// This also checks for references to the object and asks user if they want to remove them.
@@ -878,8 +846,7 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 // Pass bQuiet True to keep from asking user if they want to delete the object.
 // Note: This notifies all views of deletion.
 BOOL 
-CNeoDoc::UIDeleteObject(BObject *pobj, BOOL bQuiet /* = FALSE */)
-{
+CNeoDoc::UIDeleteObject(BObject *pobj, BOOL bQuiet /* = FALSE */) {
 	ASSERT_VALID(pobj);
 	BObjects aObjects;
 	aObjects.Add(pobj);
@@ -892,8 +859,7 @@ CNeoDoc::UIDeleteObject(BObject *pobj, BOOL bQuiet /* = FALSE */)
 // Let user choose a new icon for the specified object.
 //. don't let user set icon for classIcon objects!!
 BOOL 
-CNeoDoc::UIChangeObjectIcon(BObject* pobj)
-{
+CNeoDoc::UIChangeObjectIcon(BObject* pobj) {
 	ASSERT_VALID(pobj);
 
 	// Get current icon and default icon
@@ -909,12 +875,10 @@ CNeoDoc::UIChangeObjectIcon(BObject* pobj)
 //	dlg.m_lngDefaultID = lngDefaultIconID;
 	dlg.m_nHelpID = IDD_CHANGE_OBJECT_ICON;
 	if (dlg.DoModalLinkSimple("Change Icon", "&Select an icon from the list below, or click on Import to import a new icon.", 
-									folderIcons, lngIconID, lngDefaultIconID, theApp.m_lngExcludeFlags) == IDOK)
-	{
+									folderIcons, lngIconID, lngDefaultIconID, theApp.m_lngExcludeFlags) == IDOK) {
 		// Check if icon changed
 		ULONG lngNewIconID = dlg.m_lngSelectedID;
-		if (lngIconID != lngNewIconID && lngNewIconID != 0)
-		{
+		if (lngIconID != lngNewIconID && lngNewIconID != 0) {
 			// This will set doc modified flag and update views
 			pobj->SetIconID(lngNewIconID);
 			return TRUE;
@@ -928,13 +892,11 @@ CNeoDoc::UIChangeObjectIcon(BObject* pobj)
 
 // Let user change class of object
 BOOL 
-CNeoDoc::UIChangeObjectClass(BObject* pobj)
-{
+CNeoDoc::UIChangeObjectClass(BObject* pobj) {
 	ASSERT_VALID(pobj);
 
 	BOOL bNoModifyClass = pobj->GetFlag(flagNoModifyClass);
-	if (bNoModifyClass)
-	{
+	if (bNoModifyClass) {
 		AfxMessageBox("The class of this object can't be changed.", MB_ICONINFORMATION);
 		return FALSE;
 	}
@@ -944,12 +906,10 @@ CNeoDoc::UIChangeObjectClass(BObject* pobj)
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_CHANGE_OBJECT_CLASS;
 	if (dlg.DoModalLinkSimple("Change Class", "&Select the new class for the object.", 
-					rootClass, lngClassID, lngClassID, theApp.m_lngExcludeFlags, FALSE) == IDOK)
-	{
+					rootClass, lngClassID, lngClassID, theApp.m_lngExcludeFlags, FALSE) == IDOK) {
 		// Check if class changed
 		ULONG lngNewClassID = dlg.m_lngSelectedID;
-		if (lngClassID != lngNewClassID && lngNewClassID != 0)
-		{
+		if (lngClassID != lngNewClassID && lngNewClassID != 0) {
 			// Change the object's class
 			// This will handle converting name data type if necessary, etc.,
 			// and also will set modified flag and tell views of change
@@ -967,14 +927,12 @@ CNeoDoc::UIChangeObjectClass(BObject* pobj)
 // Let user change class of children for the specified object
 //. don't let user change system objects!
 BOOL 
-CNeoDoc::UIChangeObjectContents(BObject* pobj)
-{
+CNeoDoc::UIChangeObjectContents(BObject* pobj) {
 	ASSERT_VALID(pobj);
 	
 	ULONG lngClassID = classPaper; // default is paper
 	BObject* pobjDefaultClass = pobj->GetPropertyLink(propDefaultClass);
-	if (pobjDefaultClass)
-	{
+	if (pobjDefaultClass) {
 		ASSERT_VALID(pobjDefaultClass);
 		lngClassID = pobjDefaultClass->GetObjectID();
 	}
@@ -982,12 +940,10 @@ CNeoDoc::UIChangeObjectContents(BObject* pobj)
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_CHANGE_OBJECT_CONTENTS;
 	if (dlg.DoModalLinkSimple("Change Contents", "&Select the class of object that will be added to this object by default.",
-					rootClass, lngClassID, lngClassID, theApp.m_lngExcludeFlags) == IDOK)
-	{
+					rootClass, lngClassID, lngClassID, theApp.m_lngExcludeFlags) == IDOK) {
 		// Check if class changed
 		ULONG lngNewClassID = dlg.m_lngSelectedID;
-		if (lngClassID != lngNewClassID && lngNewClassID != 0)
-		{
+		if (lngClassID != lngNewClassID && lngNewClassID != 0) {
 			BObject* pobjNewClass = dlg.m_pobjSelected;
 			ASSERT_VALID(pobjNewClass);
 			// This will set document modified flag and update views
@@ -1004,8 +960,7 @@ CNeoDoc::UIChangeObjectContents(BObject* pobj)
 
 // Change the icon for the class of the specified object.
 BOOL 
-CNeoDoc::UIChangeClassIcon(BObject *pobj)
-{
+CNeoDoc::UIChangeClassIcon(BObject *pobj) {
 	ASSERT_VALID(pobj);
 
 	// Get object's class
@@ -1019,12 +974,10 @@ CNeoDoc::UIChangeClassIcon(BObject *pobj)
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_CHANGE_CLASS_ICON;
 	if (dlg.DoModalLinkSimple("Change Class Icon", "&Select an icon from the list below, or click on Import to import a new icon.", 
-									folderIcons, lngIconID, lngDefaultIconID, theApp.m_lngExcludeFlags) == IDOK)
-	{
+									folderIcons, lngIconID, lngDefaultIconID, theApp.m_lngExcludeFlags) == IDOK) {
 		// Check if icon changed
 		ULONG lngNewIconID = dlg.m_lngSelectedID;
-		if (lngIconID != lngNewIconID && lngNewIconID != 0)
-		{
+		if (lngIconID != lngNewIconID && lngNewIconID != 0) {
 			// This will set doc modified flag and update views
 			pobj->SetIconID(lngNewIconID);
 			return TRUE;
@@ -1037,8 +990,7 @@ CNeoDoc::UIChangeClassIcon(BObject *pobj)
 
 // Change the default contents for the class of the specified object.
 BOOL 
-CNeoDoc::UIChangeClassContents(BObject *pobj)
-{
+CNeoDoc::UIChangeClassContents(BObject *pobj) {
 	ASSERT_VALID(pobj);
 
 	// Get object's class
@@ -1047,8 +999,7 @@ CNeoDoc::UIChangeClassContents(BObject *pobj)
 
 	ULONG lngClassID = classPaper; // default is paper
 	BObject* pobjDefaultClass = pobj->GetPropertyLink(propObjectDefaultClass);
-	if (pobjDefaultClass)
-	{
+	if (pobjDefaultClass) {
 		ASSERT_VALID(pobjDefaultClass);
 		lngClassID = pobjDefaultClass->GetObjectID();
 	}
@@ -1059,12 +1010,10 @@ CNeoDoc::UIChangeClassContents(BObject *pobj)
 	strInstructions.Format("&Select the class that will be added to objects of the class '%s' by default.", 
 		(LPCTSTR) pobj->GetPropertyText(propName));
 	if (dlg.DoModalLinkSimple("Change Class Contents", strInstructions,
-					rootClass, lngClassID, lngClassID, theApp.m_lngExcludeFlags) == IDOK)
-	{
+					rootClass, lngClassID, lngClassID, theApp.m_lngExcludeFlags) == IDOK) {
 		// Check if class changed
 		ULONG lngNewClassID = dlg.m_lngSelectedID;
-		if (lngClassID != lngNewClassID && lngNewClassID != 0)
-		{
+		if (lngClassID != lngNewClassID && lngNewClassID != 0) {
 			BObject* pobjNewClass = dlg.m_pobjSelected;
 			ASSERT_VALID(pobjNewClass);
 			// This will set document modified flag and update views
@@ -1084,8 +1033,7 @@ CNeoDoc::UIChangeClassContents(BObject *pobj)
 // Returns True if user hit OK, False if Cancel.
 // This is called by F4 handlers.
 BOOL 
-CNeoDoc::UIRenameObject(BObject* pobj)
-{
+CNeoDoc::UIRenameObject(BObject* pobj) {
 	//, i guess we don't really need this routine...
 	return pobj->EditValue(propName);
 }
@@ -1095,8 +1043,7 @@ CNeoDoc::UIRenameObject(BObject* pobj)
 //void CNeoDoc::Export(BDataLink &datLink)
 //void CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, CString strFormat, CFilename strFilename)
 void 
-CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat, CFilename strFilename)
-{
+CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat, CFilename strFilename) {
 	ASSERT_VALID(pobj);
 
 	//, this shouldn't be part of doc. 
@@ -1116,8 +1063,7 @@ CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat,
 	// single 0x0A byte.
 //	if (file.Open(strFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeText))
 //	if (file.Open(strFilename, CFile::modeCreate | CFile::modeWrite))
-	if (file.Open(strFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeBinary))
-	{
+	if (file.Open(strFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeBinary)) {
 
 		// ideally, just create a different type of archive, then do serialize,
 		// and each archive will write the information in the appropriate format!
@@ -1158,8 +1104,7 @@ CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat,
 //		AfxMessageBox(s, MB_ICONINFORMATION);
 
 	}
-	else
-	{
+	else {
 		CString s = _T("Unable to open file \"") + strFilename + _T("\" for writing.");
 		AfxMessageBox(s, MB_ICONEXCLAMATION);
 	}
@@ -1173,13 +1118,11 @@ CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat,
 	const filetypeRtf = 1;
 	const filetypeText = 2;
 	const filetypeNeoMem = 3;
-	switch (nFileType)
-	{
+	switch (nFileType) {
 	case filetypeRtf:
 		strText = pobjFirst->GetPropertyText(propRtfText);
 		break;
-	case filetypeText:
-		{
+	case filetypeText: {
 			// Get the rtf text and convert it to plain text
 			LPCTSTR pszRtf = pobjFirst->GetPropertyText(propRtfText);
 			theApp.ConvertRtfToPlain(pszRtf, strText);
@@ -1194,18 +1137,15 @@ CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat,
 
 
 
-
 // Add a new property def bobject.
 // Returns a pointer to the new bobject or 0 if user hit cancel.
 BObject* 
-CNeoDoc::UIAddNewPropertyDef()
-{
+CNeoDoc::UIAddNewPropertyDef() {
 	BObject* pobjPropertiesFolder = GetObject(folderProperties);
 	ASSERT_VALID(pobjPropertiesFolder);
 
 	CDialogEditProperty dlg;
-	if (dlg.DoModalAdd())
-	{
+	if (dlg.DoModalAdd()) {
 		// Add the new property and tell views
 
 		// Create the new propertydef
@@ -1255,11 +1195,9 @@ CNeoDoc::UIAddNewPropertyDef()
 // save any changes, and notify all views of any changes.
 // Returns True if user hit OK.
 BOOL 
-CNeoDoc::UIEditPropertyDef(BObject* pobjPropertyDef)
-{
+CNeoDoc::UIEditPropertyDef(BObject* pobjPropertyDef) {
 	// Check if property is marked NoModify
-//	if (pobjPropertyDef->GetFlag(flagNoModify))
-//	{
+//	if (pobjPropertyDef->GetFlag(flagNoModify)) {
 //		AfxMessageBox("This property is a system property and cannot be modified.", MB_ICONINFORMATION);
 //		return FALSE;
 //		AfxMessageBox("Note: This is a system property - you will only be able to modify the name and description.", MB_ICONINFORMATION);
@@ -1296,17 +1234,15 @@ CNeoDoc::UIEditPropertyDef(BObject* pobjPropertyDef)
 	dlg.m_bDisplayHierarchy = bDisplayHierarchy;
 	dlg.m_bLimitLinks = bLimitLinks;
 	dlg.m_bSystemProperty = bSystemProperty; // if True, user can only modify name and desc.
-	if (dlg.DoModal() == IDOK)
+	if (dlg.DoModal() == IDOK) {
 //	if (dlg.DoModalEdit(
-	{
 		CWaitCursor cw;
 
 		// Update this propertydef bobject with changes and notify views also
 
 		// If changed property type, attempt a conversion of all existing property values.
 		//, might want to show progress dialog
-		if (pobjPropertyType != dlg.m_pobjPropertyType)
-		{
+		if (pobjPropertyType != dlg.m_pobjPropertyType) {
 			// Create a temporary propdef object and assign new properties to it.
 			// Some bdata's use propdef on get and some use it on set, so we need a temporary go-between
 			// to store the new propdef properties. LAME!
@@ -1380,16 +1316,14 @@ CNeoDoc::UIEditPropertyDef(BObject* pobjPropertyDef)
 //, might want to leave this in doc, and leave CreateBObject also
 // ie the document is the factory for these objects...
 BData* 
-CNeoDoc::CreateBData(ULONG lngClassOrPropertyID)
-{
+CNeoDoc::CreateBData(ULONG lngClassOrPropertyID) {
 	ASSERT_VALID(this);
 
 	// Get the property type associated with this classdef or propertydef
 	// Note: pobjClassDef is either the classdef or propertydef
 	BObject* pobjClassDef = GetObject(lngClassOrPropertyID);
 	ULONG lngPropertyTypeID = 0;
-	if (pobjClassDef)
-	{
+	if (pobjClassDef) {
 		BObject* pobjPropType = NULL;
 
 		// For classdefs, get from "object name property type" property,
@@ -1399,8 +1333,7 @@ CNeoDoc::CreateBData(ULONG lngClassOrPropertyID)
 			pobjPropType = pobjClassDef->GetPropertyLink(propObjectNamePropertyType);
 		else
 			pobjPropType = pobjClassDef->GetPropertyLink(propPropertyType);
-		if (pobjPropType)
-		{
+		if (pobjPropType) {
 			ASSERT_VALID(pobjPropType);
 			lngPropertyTypeID = pobjPropType->GetObjectID();
 		}
@@ -1418,12 +1351,10 @@ CNeoDoc::CreateBData(ULONG lngClassOrPropertyID)
 // E.g. a number property type gets a BDataNumber object.
 // If prop type is zero, will return a string object.
 BData* 
-CNeoDoc::CreateBDataFromPropertyType(ULONG lngPropertyTypeID)
-{
+CNeoDoc::CreateBDataFromPropertyType(ULONG lngPropertyTypeID) {
 	BData* pdat = 0;
 
-	switch (lngPropertyTypeID)
-	{
+	switch (lngPropertyTypeID) {
 		case 0: // string is the default if no property type specified
 		case proptypeString:
 			pdat = new BDataString;
@@ -1510,15 +1441,13 @@ CNeoDoc::CreateBDataFromPropertyType(ULONG lngPropertyTypeID)
 
 // Return the next available ObjectID
 ULONG 
-CNeoDoc::GetNextObjectID()
-{
+CNeoDoc::GetNextObjectID() {
 	ASSERT_VALID(this);
 	m_lngNextObjectID++;
 	// If in user mode make sure ID is in UserID space
 //	if (!theApp.m_bAdmin && m_lngNextObjectID < lngUserIDStart)
 	// Make sure ID is in UserID space
-	if (m_lngNextObjectID < lngUserIDStart)
-	{
+	if (m_lngNextObjectID < lngUserIDStart) {
 		m_lngNextObjectID = lngUserIDStart;
 	}
 	return m_lngNextObjectID;
@@ -1535,16 +1464,17 @@ CNeoDoc::GetNextObjectID()
 //. try to avoid using cstrings in this code
 int 
 CNeoDoc::SearchForText(
-										BObject* pobjStart, 
-										ULONG lngPropertyID, 
-										CString strFindText, 
-										BObjects& aResults, 
-										ULONG lngExcludeFlags /* = 0 */, 
-										BOOL bMatchCase /* = FALSE */, 
-										BOOL bWholeWord /* = FALSE */, 
-										BOOL bSearchStartObject /* = FALSE */,
-										BOOL bOriginalCall /* = TRUE */)
-{
+						BObject* pobjStart, 
+						ULONG lngPropertyID, 
+						CString strFindText, 
+						BObjects& aResults, 
+						ULONG lngExcludeFlags /* = 0 */, 
+						BOOL bMatchCase /* = FALSE */, 
+						BOOL bWholeWord /* = FALSE */, 
+						BOOL bSearchStartObject /* = FALSE */,
+						BOOL bOriginalCall /* = TRUE */
+						) {
+
 	// Search for the specified text, adding results to collection
 	// search recursively starting at the root object
 	ASSERT_VALID(this);
@@ -1570,20 +1500,17 @@ CNeoDoc::SearchForText(
 		strFindText.MakeLower();
 
 	// Search in start object if specified and it's not excluded
-	if (bSearchStartObject && !bExcludeThisObject)
-	{
+	if (bSearchStartObject && !bExcludeThisObject) {
 		// Search in name first
 		// Since name is not included in the paProperties array, we must handle it as a special case,
 		// since it is the only pseudo property requiring searching through.
-		if ((lngPropertyID == 0) || (lngPropertyID == propName))
-		{
+		if ((lngPropertyID == 0) || (lngPropertyID == propName)) {
 			strPropertyValue = pobjStart->GetPropertyText(propName);
 			if (!bMatchCase)
 				strPropertyValue.MakeLower();
 			xTRACE("  Searching in ObjectID %d's name \"%s\"\n", pobjStart->GetObjectID(), (LPCTSTR) strPropertyValue);
 			int nPos = strPropertyValue.Find(strFindText, 0);
-			if (nPos != -1)
-			{
+			if (nPos != -1) {
 				xTRACE("    Found in name!\n");
 				// Found in object name, so add object to collection
 				aResults.Add(pobjStart);
@@ -1596,18 +1523,15 @@ CNeoDoc::SearchForText(
 		// continue...
 		// The bFoundInObject flag just saves us from searching through other properties when the 
 		// text was already found in the name.
-		if ((!bFoundInObject) && (lngPropertyID != propName))
-		{
+		if ((!bFoundInObject) && (lngPropertyID != propName)) {
 			// Search in classname manually, since it's not included in the m_paProperties collection.
-			if ((lngPropertyID == 0) || (lngPropertyID == propClassName))
-			{
+			if ((lngPropertyID == 0) || (lngPropertyID == propClassName)) {
 				strPropertyValue = pobjStart->GetPropertyText(propClassName);
 				if (!bMatchCase)
 					strPropertyValue.MakeLower();
 				xTRACE("  Searching in classname \"%s\"\n", strPropertyValue);
 				int nPos = strPropertyValue.Find(strFindText, 0);
-				if (nPos != -1)
-				{
+				if (nPos != -1) {
 					xTRACE("      Found in classname!\n");
 					// Found in class name, so add object to collection
 					aResults.Add(pobjStart);
@@ -1617,29 +1541,24 @@ CNeoDoc::SearchForText(
 			}
 
 			// If not found in classname, continue
-			if (!bFoundInObject)
-			{
+			if (!bFoundInObject) {
 				xTRACE("  Searching in property collection\n");
 				BObjects* paProperties = pobjStart->GetProperties();
-				if (paProperties)
-				{
+				if (paProperties) {
 					ASSERT_VALID(paProperties);
 					// Walk through all properties, searching through text of each.
 					int nItems = paProperties->GetSize();
-					for (int i = 0; i < nItems; i++)
-					{
+					for (int i = 0; i < nItems; i++) {
 						// Search through property text
 						BObject* pobjProp = (BObject*) paProperties->GetAt(i);
 						ASSERT_VALID(pobjProp);
 
 						// Exclude property if it's a system prop, etc.
 						// Special case for rtf text - it's a system prop but we still want to search it
-						if ((!(pobjProp->GetFlag(lngExcludeFlags))) || pobjProp->GetClassID() == propRtfText)
-						{
+						if ((!(pobjProp->GetFlag(lngExcludeFlags))) || pobjProp->GetClassID() == propRtfText) {
 							// Search through this property only if we're interested in all properties,
 							// or it's the property we're interested in.
-							if ((lngPropertyID == 0) || (lngPropertyID == pobjProp->GetClassID()))
-							{
+							if ((lngPropertyID == 0) || (lngPropertyID == pobjProp->GetClassID())) {
 								xTRACE("    Searching in property %d\n", pobjProp->GetClassID());
 								strPropertyValue = pobjProp->GetPropertyText(propName);
 								// this trace bombs because of string length!
@@ -1649,19 +1568,16 @@ CNeoDoc::SearchForText(
 								// Bug: Used lngPropertyID instead of pobj->m_lngClassID! wound up
 								// searching rtf text as if it were plain text.
 //								if (lngPropertyID == propRtfText)
-								if (pobjProp->GetClassID() == propRtfText)
-								{
+								if (pobjProp->GetClassID() == propRtfText) {
 									// Assign to invisible rtf control so we can use its searching capabilities.
 									long nPos = theApp.SearchRtfString(strPropertyValue, strFindText, bMatchCase, bWholeWord);
-									if (nPos != -1)
-									{
+									if (nPos != -1) {
 										xTRACE("      Found in rtf string!\n");
 										aResults.Add(pobjStart);
 										break;
 									}
 								}
-								else
-								{
+								else {
 									// This is a plain text property, so search through it using CString method.
 									// No case insensitive option, so must convert to lower case! lame!
 									//, add option to stringex to compare case-insensitive
@@ -1669,8 +1585,7 @@ CNeoDoc::SearchForText(
 									if (!bMatchCase)
 										strPropertyValue.MakeLower();
 									int nPos = strPropertyValue.Find(strFindText, 0);
-									if (nPos != -1)
-									{
+									if (nPos != -1) {
 										xTRACE("      Found in regular string!\n");
 										aResults.Add(pobjStart);
 										break;
@@ -1686,12 +1601,10 @@ CNeoDoc::SearchForText(
 
 	// Now search through children by calling this routine recursively.
 	BObjects* paChildren = pobjStart->GetChildren();
-	if (paChildren)
-	{
+	if (paChildren) {
 		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
-		for (int i = 0; i < nItems; i++)
-		{
+		for (int i = 0; i < nItems; i++) {
 			BObject* pobj = (BObject*) paChildren->GetAt(i);
 			ASSERT_VALID(pobj);
 			// Search recursively through children
@@ -1714,8 +1627,7 @@ CNeoDoc::SearchForText(
 /*
 // either handle this here or in the child frame
 void 
-CNeoDoc::OnCmdFilePrintPreview() 
-{
+CNeoDoc::OnCmdFilePrintPreview() {
 	// here we have access to the current object
 	// pass on to the rtf view?
 	// must ensure that the rtf view is actually loaded?
@@ -1729,11 +1641,9 @@ CNeoDoc::OnCmdFilePrintPreview()
 
 // This is triggered if user clicks on the close button for the child frame.
 BOOL 
-CNeoDoc::CanCloseFrame(CFrameWnd* pFrame) 
-{
+CNeoDoc::CanCloseFrame(CFrameWnd* pFrame) {
 	// Make sure the current object is saved
-	if (m_pobjCurrent)
-	{
+	if (m_pobjCurrent) {
 		ASSERT_VALID(m_pobjCurrent);
 		UpdateAllViewsEx(NULL, hintSave, m_pobjCurrent);
 	}
@@ -1746,8 +1656,7 @@ CNeoDoc::CanCloseFrame(CFrameWnd* pFrame)
 
 // Show properties for document
 void 
-CNeoDoc::OnCmdFileProperties() 
-{
+CNeoDoc::OnCmdFileProperties() {
 	//, ideally this will bring up the standard windows property page showing
 	// the contents of the SummaryInformation and/or DocumentSummaryInformation property set
 	// we'd need to use structured storage
@@ -1760,8 +1669,7 @@ CNeoDoc::OnCmdFileProperties()
 	sheet.AddPage(&page);
 	sheet.SetTitle(_T("Document"), PSH_PROPTITLE);
 	page.m_pDoc = this;
-	if (sheet.DoModal() == IDOK)
-	{
+	if (sheet.DoModal() == IDOK) {
 		// onapply will have already applied changes to the object and notified the views
 	}
 
@@ -1777,8 +1685,7 @@ CNeoDoc::OnCmdFileProperties()
 // Will fill array with objects that reference the Find object, and return the number of references.
 // If no Start object is passed, will start at rootMain
 int 
-CNeoDoc::FindReferences(BObject *pobjFind, CObArray &aRefs, BObject *pobjStart /* = 0 */, BOOL bRecurse /* = TRUE */)
-{
+CNeoDoc::FindReferences(BObject *pobjFind, CObArray &aRefs, BObject *pobjStart /* = 0 */, BOOL bRecurse /* = TRUE */) {
 	ASSERT_VALID(pobjFind);
 	if (pobjStart == 0)
 		pobjStart = GetObject(rootMain);
@@ -1794,11 +1701,9 @@ CNeoDoc::FindReferences(BObject *pobjFind, CObArray &aRefs, BObject *pobjStart /
 
 // Bring up the class wizard to add, edit, or delete a class
 void 
-CNeoDoc::OnCmdEditClasses() 
-{
+CNeoDoc::OnCmdEditClasses() {
 	CSheetWizard sh;
-	if (sh.DoModalParameters(CSheetWizard::modeAddOrEdit) == ID_WIZFINISH)
-	{
+	if (sh.DoModalParameters(CSheetWizard::modeAddOrEdit) == ID_WIZFINISH) {
 		// don't need to do anything
 	}
 }
@@ -1806,8 +1711,7 @@ CNeoDoc::OnCmdEditClasses()
 
 // Bring up the list of properties to add, edit or delete
 void 
-CNeoDoc::OnCmdPropertyWizard() 
-{
+CNeoDoc::OnCmdPropertyWizard() {
 	// Note: We don't care about return value since user always uses Close button in Edit mode
 //	CDialogEditLink	dlg;
 //	dlg.m_nHelpID = IDD_PROPERTY_WIZARD;
@@ -1822,10 +1726,8 @@ CNeoDoc::OnCmdPropertyWizard()
 
 // Create a template file from the current file (delete all user objects)
 void 
-CNeoDoc::OnCmdFileDeleteAll() 
-{
-	if (IDYES == AfxMessageBox("Warning: This will delete all user objects from this file. All classes and properties will be left in the file. This will let you create a new template file. Do you want to continue?", MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-	{
+CNeoDoc::OnCmdFileDeleteAll() {
+	if (IDYES == AfxMessageBox("Warning: This will delete all user objects from this file. All classes and properties will be left in the file. This will let you create a new template file. Do you want to continue?", MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2)) {
 		// get all home child objects and delete them silently,
 		// what about references?
 		// property/classdefs might reference user objects (eg link source property, etc)
@@ -1842,8 +1744,7 @@ CNeoDoc::OnCmdFileDeleteAll()
 // Returns a pointer to the new icon bobject, or 0 if failed.
 //. move most of this to the dialog! or a gui object!
 BObject* 
-CNeoDoc::UIImportIcon()
-{
+CNeoDoc::UIImportIcon() {
 	BObject* pobjIconFolder = GetObject(folderIcons);
 	ASSERT_VALID(pobjIconFolder);
 	BObject* pobjIcon = 0;
@@ -1851,15 +1752,13 @@ CNeoDoc::UIImportIcon()
 	// Bring up file open dialog to choose .ico file
 	CFileDialogEx dlg(TRUE, _T("ico"), _T(""), OFN_HIDEREADONLY, szIconFilter, AfxGetMainWnd());
 	dlg.m_ofn.lpstrTitle = _T("Import Icon");
-	if (dlg.DoModal() == IDOK)
-	{
+	if (dlg.DoModal() == IDOK) {
 		CString strFilename = dlg.GetPathName();
 		CString strFileTitle = dlg.GetFileTitle();
 
 		// Try to import the icon file
 		BDataIcon* pdat = new BDataIcon;
-		if (pdat->LoadFile(strFilename))
-		{
+		if (pdat->LoadFile(strFilename)) {
 			// Create the new icon bobject
 			pobjIcon = AddObject(pobjIconFolder, classIcon, strFileTitle);
 			ASSERT_VALID(pobjIcon);
@@ -1875,16 +1774,14 @@ CNeoDoc::UIImportIcon()
 			dlg.m_strCaption = _T("Import Icon");
 			dlg.m_strInstructions = _T("Enter the name for the new icon:");
 			dlg.m_strName = strFileTitle;
-			if (dlg.DoModal() == IDOK)
-			{
+			if (dlg.DoModal() == IDOK) {
 				CString strIconName = dlg.m_strName;
 				pobjIcon->SetPropertyText(propName, strIconName, FALSE, FALSE);
 
 				// Tell all the views about the new object
 				UpdateAllViewsEx(NULL, hintAdd, pobjIcon);
 			}
-			else
-			{
+			else {
 				// Delete the bobject (and the bdataicon)
 				UIDeleteObject(pobjIcon, TRUE);
 				// Bug: delete the bobject directly - bad no no!
@@ -1892,8 +1789,7 @@ CNeoDoc::UIImportIcon()
 				pobjIcon = 0;
 			}
 		}
-		else
-		{
+		else {
 			AfxMessageBox(_T("Unable to load file as an icon."), MB_ICONEXCLAMATION);
 			// Now delete the bdata since we didn't save it to the bobject
 			delete pdat;
@@ -1907,11 +1803,9 @@ CNeoDoc::UIImportIcon()
 // Add a new class using the class wizard.
 // Returns pointer to new class bobject, or 0 if user hit Cancel.
 BObject* 
-CNeoDoc::UIAddNewClass()
-{
+CNeoDoc::UIAddNewClass() {
 	CSheetWizard sh;
-	if (sh.DoModalParameters(CSheetWizard::modeAddOnly) == ID_WIZFINISH)
-	{
+	if (sh.DoModalParameters(CSheetWizard::modeAddOnly) == ID_WIZFINISH) {
 		return sh.m_pobj;
 	}
 	return 0;
@@ -1921,11 +1815,9 @@ CNeoDoc::UIAddNewClass()
 // Edit the specified class in the class wizard.
 // Returns True if user hit Finish.
 BOOL 
-CNeoDoc::UIEditClass(BObject *pobjClass)
-{
+CNeoDoc::UIEditClass(BObject *pobjClass) {
 	CSheetWizard sh;
-	if (sh.DoModalParameters(CSheetWizard::modeEditOnly, pobjClass) == ID_WIZFINISH)
-	{
+	if (sh.DoModalParameters(CSheetWizard::modeEditOnly, pobjClass) == ID_WIZFINISH) {
 		return TRUE;
 	}
 	return FALSE;
@@ -1946,8 +1838,7 @@ BObject*
 CNeoDoc::UIAddNewObject(
 						BObject* pobjParent /* = 0 */, 
 						BOOL bSelectNewObject /* = TRUE */
-						)
-{
+						) {
 	ASSERT_VALID(this);
 
 	// Use current object as parent as none specified
@@ -1968,12 +1859,10 @@ CNeoDoc::UIAddNewObject(
 
 	// Show dialog
 	CDialogEditObject dlg;
-	if (dlg.DoModalAddObject(strName, pobjParent, pobjClass, 0) == IDOK)
-	{
+	if (dlg.DoModalAddObject(strName, pobjParent, pobjClass, 0) == IDOK) {
 		// Get class, name, and location (parent) that user selected
 		ULONG lngClassID = dlg.m_lngClassID;
-		if (lngClassID) 
-		{
+		if (lngClassID) {
 			// bug 6748 v1.2c: another one of these crashes caused by nothing selected 
 			//   in the dialog (giving lngClassID=0). so just add an if around it. 
 			ASSERT(lngClassID);
@@ -1985,11 +1874,9 @@ CNeoDoc::UIAddNewObject(
 			ASSERT_VALID(pobjNew);
 
 			// Special properties for folder objects
-			if (lngClassID == classFolder) 
-			{
+			if (lngClassID == classFolder) {
 				// Default class
-				if (dlg.m_pobjDefaultClass != 0)
-				{
+				if (dlg.m_pobjDefaultClass != 0) {
 					ASSERT_VALID(dlg.m_pobjDefaultClass);
 					pobjNew->SetPropertyLink(propDefaultClass, dlg.m_pobjDefaultClass, FALSE, FALSE);
 					// Initialize column array based on default class
@@ -2002,8 +1889,7 @@ CNeoDoc::UIAddNewObject(
 
 			// Now select the object as the current object if specified by the parameter bSelectNewObject
 			// Also set focus to viewText
-			if (bSelectNewObject)
-			{
+			if (bSelectNewObject) {
 				SetCurrentObject(pobjNew, NULL);
 				// Now set focus to text view if available
 				CFrameChild* pFrame = GetMDIChildFrame();
@@ -2012,8 +1898,7 @@ CNeoDoc::UIAddNewObject(
 
 			return pobjNew;
 		}
-		else
-		{
+		else {
 			AfxMessageBox("No class selected for new object. No action taken.", MB_ICONINFORMATION);
 		}
 	}
@@ -2027,8 +1912,7 @@ CNeoDoc::UIAddNewObject(
 // Edit the specified object in the edit object dialog.
 // Returns True if user hit OK.
 BOOL 
-CNeoDoc::UIEditObject(BObject *pobj)
-{	
+CNeoDoc::UIEditObject(BObject *pobj) {	
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobj);
 	ASSERT_VALID(pobj->GetData());
@@ -2043,18 +1927,15 @@ CNeoDoc::UIEditObject(BObject *pobj)
 //	BObject* pobjNamePropType = pobjClass->GetPropertyLink(propObjectNamePropertyType);
 //	ULONG lngNamePropTypeID = pobjNamePropType->GetObjectID();
 //	if (lngNamePropTypeID == proptypePersonName)
-	if (bPersonName || bIcon)
-	{
-		if (pobj->GetData()->EditValue(pobj, 0))
-		{
+	if (bPersonName || bIcon) {
+		if (pobj->GetData()->EditValue(pobj, 0)) {
 			CHint h;
 			h.m_pobjObject = pobj;
 			h.m_lngPropertyID = propName;
 			UpdateAllViewsEx(0, hintPropertyChange, &h);
 			return TRUE;
 		}
-		else
-		{
+		else {
 			return FALSE;
 		}
 	}
@@ -2067,8 +1948,7 @@ CNeoDoc::UIEditObject(BObject *pobj)
 
 	// Initialize dialog
 	CDialogEditObject dlg;
-	if (IDOK == dlg.DoModalEditObject(strName, pobjParent, pobjClass, pobjDefaultClass))
-	{
+	if (IDOK == dlg.DoModalEditObject(strName, pobjParent, pobjClass, pobjDefaultClass)) {
 		// Name
 		if (strName != dlg.m_strName)
 			pobj->SetPropertyText(propName, dlg.m_strName);
@@ -2090,12 +1970,10 @@ CNeoDoc::UIEditObject(BObject *pobj)
 
 
 void 
-CNeoDoc::OnCloseDocument() 
-{
+CNeoDoc::OnCloseDocument() {
 	// Delete the AutoRecover file (not needed since we're closing down normally)
 	CString strAutoRecover = GetModifiedName(m_strPathName, _T("_AutoRecover"));
-	if (FileExists(strAutoRecover))
-	{
+	if (FileExists(strAutoRecover)) {
 		TRACE("CNeoDoc::OnCloseDocument - deleting %s\n", (LPCTSTR) strAutoRecover);
 		CFile::Remove(strAutoRecover);
 	}
@@ -2115,13 +1993,11 @@ CNeoDoc::OnCloseDocument()
 
 // Check if the specified bobject address is valid and that the bobject is valid
 BOOL 
-CNeoDoc::IsBObjectValid(BObject *pobj)
-{
+CNeoDoc::IsBObjectValid(BObject *pobj) {
 	ULONG lngTestID;
 	BObject* pobjTest;
 	POSITION pos = m_mapObjects.GetStartPosition();
-	while (pos)
-	{
+	while (pos) {
 		m_mapObjects.GetNextAssoc(pos, lngTestID, pobjTest);
 		if (pobj == pobjTest)
 			return TRUE;
@@ -2134,8 +2010,7 @@ CNeoDoc::IsBObjectValid(BObject *pobj)
 
 // Back
 void 
-CNeoDoc::OnNavigateBack() 
-{
+CNeoDoc::OnNavigateBack() {
 	BObject* pobj = (BObject*) m_objHistory.GoBack();
 	if (pobj && IsBObjectValid(pobj)) // check that bobject is still valid first!
 		SetCurrentObject(pobj, NULL, TRUE);
@@ -2143,8 +2018,7 @@ CNeoDoc::OnNavigateBack()
 
 // Forward
 void 
-CNeoDoc::OnNavigateForward() 
-{
+CNeoDoc::OnNavigateForward() {
 	BObject* pobj = (BObject*) m_objHistory.GoForward();
 	if (pobj && IsBObjectValid(pobj)) // check that bobject is still valid first!
 		SetCurrentObject(pobj, NULL, TRUE);
@@ -2152,14 +2026,12 @@ CNeoDoc::OnNavigateForward()
 
 
 void 
-CNeoDoc::OnUpdateNavigateBack(CCmdUI* pCmdUI) 
-{
+CNeoDoc::OnUpdateNavigateBack(CCmdUI* pCmdUI) {
 	pCmdUI->Enable(m_objHistory.IsBackValid());
 }
 
 void 
-CNeoDoc::OnUpdateNavigateForward(CCmdUI* pCmdUI) 
-{
+CNeoDoc::OnUpdateNavigateForward(CCmdUI* pCmdUI) {
 	pCmdUI->Enable(m_objHistory.IsForwardValid());
 }
 
@@ -2169,8 +2041,7 @@ CNeoDoc::OnUpdateNavigateForward(CCmdUI* pCmdUI)
 // ID_OBJ_xxx command handlers.
 // Pass 0 for new object.(?)
 void 
-CNeoDoc::SetTargetObject(BObject *pobj)
-{
+CNeoDoc::SetTargetObject(BObject *pobj) {
 //	ASSERT(pobj != (BObject*) (CListCtrlEx::keyDummyRow)); // catch this!
 //	m_datTargetObjects.RemoveAll();
 //	m_datTargetObjects.AddLink(pobj);
@@ -2185,8 +2056,7 @@ CNeoDoc::SetTargetObject(BObject *pobj)
 
 // Returns True if there is only one target object.
 BOOL 
-CNeoDoc::IsTargetSingle()
-{
+CNeoDoc::IsTargetSingle() {
 //,	return m_datTarget.IsSingle();
 //	return TRUE;
 	return (m_pobjTarget != NULL);
@@ -2195,27 +2065,23 @@ CNeoDoc::IsTargetSingle()
 
 // Returns pointer to current target object - may be 0!
 BObject* 
-CNeoDoc::GetTargetObject()
-{
+CNeoDoc::GetTargetObject() {
 	return m_pobjTarget;
 }
 
 
 
 void 
-CNeoDoc::OnObjEditInDialog() 
-{
+CNeoDoc::OnObjEditInDialog() {
 	// First make sure there's just one object for the target
-	if (IsTargetSingle())
-	{
+	if (IsTargetSingle()) {
 		UIRenameObject(m_pobjTarget);
 	}	
 }
 
 
 void 
-CNeoDoc::OnUpdateObjEditInDialog(CCmdUI* pCmdUI) 
-{
+CNeoDoc::OnUpdateObjEditInDialog(CCmdUI* pCmdUI) {
 	//, bad behavior - tbr button is disabled, but if you click on it, setfocus selects first cell in 
 	// grid, enabling the button, so it enables it and brings up the dialog! so just set true for now
 //	pCmdUI->Enable(m_pDoc->IsTargetSingle());
@@ -2228,18 +2094,11 @@ CNeoDoc::OnUpdateObjEditInDialog(CCmdUI* pCmdUI)
 
 
 
-
-
-
-
-
 // Display properties for the current target object.
 // Alt+Enter
 void 
-CNeoDoc::OnObjProperties() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjProperties() {
+	if (m_pobjTarget) {
 		// Save the current object, in case it is the target
 		UpdateAllViewsEx(NULL, hintSave, m_pobjCurrent);
 
@@ -2249,8 +2108,7 @@ CNeoDoc::OnObjProperties()
 }
 
 void 
-CNeoDoc::OnUpdateObjProperties(CCmdUI* pCmdUI) 
-{
+CNeoDoc::OnUpdateObjProperties(CCmdUI* pCmdUI) {
 }
 
 
@@ -2258,17 +2116,14 @@ CNeoDoc::OnUpdateObjProperties(CCmdUI* pCmdUI)
 
 // Toggle high priority flag for item
 void 
-CNeoDoc::OnObjPriorityHigh() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjPriorityHigh() {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		BOOL bCurrent = m_pobjTarget->GetFlag(flagHighPriority);
 		m_pobjTarget->SetFlag(flagHighPriority, !bCurrent);
 		
 		// Resort views if autosort is on for this item's parent
-		if (m_pobjTarget->IsParentSorted())
-		{
+		if (m_pobjTarget->IsParentSorted()) {
 			BObject* pobjParent = m_pobjTarget->GetParent();
 			UpdateAllViewsEx(NULL, hintResortChildren, pobjParent);
 		}
@@ -2279,10 +2134,8 @@ CNeoDoc::OnObjPriorityHigh()
 
 // Change the default contents for the target object's class.
 void 
-CNeoDoc::OnObjChangeClassContents() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjChangeClassContents() {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		UIChangeClassContents(m_pobjTarget);
 	}
@@ -2291,10 +2144,8 @@ CNeoDoc::OnObjChangeClassContents()
 
 // Change the default icon for the target object's class.
 void 
-CNeoDoc::OnObjChangeClassIcon() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjChangeClassIcon() {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		UIChangeClassIcon(m_pobjTarget);
 	}
@@ -2303,11 +2154,9 @@ CNeoDoc::OnObjChangeClassIcon()
 
 // Change the class of the target object.
 void 
-CNeoDoc::OnObjChangeObjectClass() 
-{
+CNeoDoc::OnObjChangeObjectClass() {
 	// Bring up dialog with treeview of all classes, let user choose one
-	if (m_pobjTarget)
-	{
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		UIChangeObjectClass(m_pobjTarget);
 	}
@@ -2316,11 +2165,9 @@ CNeoDoc::OnObjChangeObjectClass()
 
 // Change the default class of children for the target object.
 void 
-CNeoDoc::OnObjChangeObjectContents() 
-{
+CNeoDoc::OnObjChangeObjectContents() {
 	// Bring up dialog with treeview of all classes, let user choose one
-	if (m_pobjTarget)
-	{
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		UIChangeObjectContents(m_pobjTarget);
 	}
@@ -2329,11 +2176,9 @@ CNeoDoc::OnObjChangeObjectContents()
 
 // Select the icon to be associated with the target object.
 void 
-CNeoDoc::OnObjChangeObjectIcon() 
-{
+CNeoDoc::OnObjChangeObjectIcon() {
 	// Bring up dialog with list of all icons in file, let user choose one
-	if (m_pobjTarget)
-	{
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		UIChangeObjectIcon(m_pobjTarget);
 	}
@@ -2343,10 +2188,8 @@ CNeoDoc::OnObjChangeObjectIcon()
 // Delete the target object.
 //, Move the target object to the recycle folder.
 void 
-CNeoDoc::OnObjDelete() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjDelete() {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		UIDeleteObject(m_pobjTarget);
 	}
@@ -2356,10 +2199,8 @@ CNeoDoc::OnObjDelete()
 
 // Move the current object down relative to its siblings
 void 
-CNeoDoc::OnObjMoveDown() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjMoveDown() {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		m_pobjTarget->MoveDown();
 	}
@@ -2368,10 +2209,8 @@ CNeoDoc::OnObjMoveDown()
 
 // Move the current object up relative to its siblings
 void 
-CNeoDoc::OnObjMoveUp() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjMoveUp() {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		m_pobjTarget->MoveUp();
 	}
@@ -2379,10 +2218,8 @@ CNeoDoc::OnObjMoveUp()
 
 
 void 
-CNeoDoc::OnObjOpen() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjOpen() {
+	if (m_pobjTarget) {
 		// Select item in treeview
 		// This will broadcast all the update messages necessary (save, select, load)
 		SetCurrentObject(m_pobjTarget);
@@ -2394,20 +2231,16 @@ CNeoDoc::OnObjOpen()
 
 // Toggle autosort setting for the target object.
 void 
-CNeoDoc::OnObjAutosort() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjAutosort() {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		BOOL bAutosort = !m_pobjTarget->IsSorted(); // toggle value
 		m_pobjTarget->SetFlag(flagNoAutosort, !bAutosort); // store opposite since flag is for NoAutosort!
-		if (bAutosort)
-		{
+		if (bAutosort) {
 			// If autosort is being turned on, need to sort the children in the treeview and other views alphabetically.
 			UpdateAllViewsEx(NULL, hintResortChildren, m_pobjTarget);
 		}
-		else
-		{
+		else {
 			// If autosort is being turned off, need to sort the children physically so that they start off sorted.			
 			m_pobjTarget->SortChildren();
 			// Also make sure the children are displayed alphabetically sorted in all views 
@@ -2423,15 +2256,14 @@ CNeoDoc::OnObjAutosort()
 // See if the current object can be moved up or down
 // If the parent object is sorted, then disable move up and down
 void 
-CNeoDoc::OnUpdateObjMoveDown(CCmdUI* pCmdUI) 
-{
+CNeoDoc::OnUpdateObjMoveDown(CCmdUI* pCmdUI) {
 	ASSERT_VALID(m_pobjCurrent);
 	BOOL bEnable = m_pobjCurrent->IsMoveUpDownValid(FALSE);
 	pCmdUI->Enable(bEnable);
 }
+
 void 
-CNeoDoc::OnUpdateObjMoveUp(CCmdUI* pCmdUI) 
-{
+CNeoDoc::OnUpdateObjMoveUp(CCmdUI* pCmdUI) {
 	ASSERT_VALID(m_pobjCurrent);
 	BOOL bEnable = m_pobjCurrent->IsMoveUpDownValid(TRUE);
 	pCmdUI->Enable(bEnable);
@@ -2440,10 +2272,8 @@ CNeoDoc::OnUpdateObjMoveUp(CCmdUI* pCmdUI)
 
 // Set check on or off depending on state of autosort flag for target object
 void 
-CNeoDoc::OnUpdateObjAutosort(CCmdUI* pCmdUI) 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnUpdateObjAutosort(CCmdUI* pCmdUI) {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		pCmdUI->SetCheck(m_pobjTarget->IsSorted() ? 1 : 0);
 	}
@@ -2452,17 +2282,14 @@ CNeoDoc::OnUpdateObjAutosort(CCmdUI* pCmdUI)
 
 // currently this is just handled in data view
 void 
-CNeoDoc::OnObjSortChildren() 
-{
+CNeoDoc::OnObjSortChildren() {
 }
 
 
 // Enable sort children item if this item is NOT autosorted
 void 
-CNeoDoc::OnUpdateObjSortChildren(CCmdUI* pCmdUI) 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnUpdateObjSortChildren(CCmdUI* pCmdUI) {
+	if (m_pobjTarget) {
 		ASSERT_VALID(m_pobjTarget);
 		pCmdUI->Enable(!m_pobjTarget->IsSorted());
 	}
@@ -2471,14 +2298,12 @@ CNeoDoc::OnUpdateObjSortChildren(CCmdUI* pCmdUI)
 
 // Show/hide the contents view for all objects of the current object's class.
 void 
-CNeoDoc::OnViewToggleContents() 
-{
+CNeoDoc::OnViewToggleContents() {
 	ASSERT_VALID(m_pobjCurrent);
 
 	ULONG lngViewID = viewContents;
 	CFrameChild* pframe = GetMDIChildFrame();
-	if (pframe)
-	{
+	if (pframe) {
 		ASSERT_VALID(pframe);
 		BOOL bViewVisible = pframe->IsViewVisible(lngViewID);
 		LPCTSTR pszShowHide = bViewVisible ? "hide" : "show";
@@ -2490,8 +2315,7 @@ CNeoDoc::OnViewToggleContents()
 					pszViewName,
 					pszClassName
 					);
-		if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
-		{
+		if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO)) {
 			BObject* pobjView = GetObject(lngViewID);
 			ULONG lngHint = bViewVisible ? hintRemoveView : hintAddView;
 			UpdateAllViewsEx(NULL, lngHint, pobjView);
@@ -2502,12 +2326,10 @@ CNeoDoc::OnViewToggleContents()
 
 // Update menu text
 void 
-CNeoDoc::OnUpdateViewToggleContents(CCmdUI* pCmdUI) 
-{
+CNeoDoc::OnUpdateViewToggleContents(CCmdUI* pCmdUI) {
 	ULONG lngViewID = viewContents;
 	CFrameChild* pframe = GetMDIChildFrame();
-	if (pframe)
-	{
+	if (pframe) {
 		ASSERT_VALID(pframe);
 		BOOL bViewVisible = pframe->IsViewVisible(lngViewID);
 		LPCTSTR pszMenuText = bViewVisible ? "Hide &Contents View..." : "Show &Contents View...";
@@ -2524,8 +2346,7 @@ CNeoDoc::OnUpdateViewToggleContents(CCmdUI* pCmdUI)
 // program requires a different prompting procedure. This is an advanced overridable.
 //` code copied from MFC
 BOOL 
-CNeoDoc::SaveModified() 
-{
+CNeoDoc::SaveModified() {
 
 	//` If still loading the document don't do the save! (might happen if autosave happens during long file load)
 	if (m_bLoadingFile)
@@ -2535,8 +2356,7 @@ CNeoDoc::SaveModified()
 //	// Actually, we can't do this here because framework won't know data in view has changed.
 //	// So we put the hintSave code in NeoMem::SaveAllModified!
 	// Actually we have to put this here otherwise user can say File/Close and the doc won't be flagged as dirty!
-	if (m_pobjCurrent)
-	{
+	if (m_pobjCurrent) {
 		ASSERT_VALID(m_pobjCurrent);
 		UpdateAllViewsEx(NULL, hintSave, m_pobjCurrent);
 	}
@@ -2555,27 +2375,23 @@ CNeoDoc::SaveModified()
 // Returns False if file save failed. 
 // Note: This code is taken from CDocument::SaveModified() in doccore.cpp.
 BOOL 
-CNeoDoc::SaveModifiedBackup()
-{
+CNeoDoc::SaveModifiedBackup() {
 	if (!IsModified())
 		return TRUE;        // ok to continue
 
 /* // only needed for message box
 	// get name/title of document
 	CString strName;
-	if (m_strPathName.IsEmpty())
-	{
+	if (m_strPathName.IsEmpty()) {
 		// get name based on caption
 		strName = m_strTitle;
 		if (strName.IsEmpty())
 			VERIFY(strName.LoadString(AFX_IDS_UNTITLED));
 	}
-	else
-	{
+	else {
 		// get name based on file title of path name
 		strName = m_strPathName;
-		if (afxData.bMarked4)
-		{
+		if (afxData.bMarked4) {
 			AfxGetFileTitle(m_strPathName, strName.GetBuffer(_MAX_PATH), _MAX_PATH);
 			strName.ReleaseBuffer();
 		}
@@ -2584,8 +2400,7 @@ CNeoDoc::SaveModifiedBackup()
 
 //	CString prompt;
 //	AfxFormatString1(prompt, AFX_IDP_ASK_TO_SAVE, strName);
-//	switch (AfxMessageBox(prompt, MB_YESNOCANCEL, AFX_IDP_ASK_TO_SAVE))
-//	{
+//	switch (AfxMessageBox(prompt, MB_YESNOCANCEL, AFX_IDP_ASK_TO_SAVE)) {
 //	case IDCANCEL:
 //		return FALSE;       // don't continue
 
@@ -2613,8 +2428,8 @@ CNeoDoc::SaveModifiedBackup()
 // Get the document path name with the appended text and .neo extension.
 // Eg call with "_Backup" will return "C:\\...\Stuff_Backup.neo"
 CString 
-CNeoDoc::GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText)
-{
+CNeoDoc::GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText) {
+
 	CString strModifiedName;
 //	CString strOriginalName = m_strPathName;
 	CString strOriginalName = szFileName;
@@ -2634,19 +2449,19 @@ CNeoDoc::GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText)
 
 
 
-/*
-//. moving this to cframechild
+
+//. was moving this to cframechild
+
 // Add an object. 
 // This is the default ID_OBJ_ADD handler.
 void 
-CNeoDoc::OnObjAdd() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjAdd() {
+	if (m_pobjTarget) {
 		BObject* pobj = UIAddNewObject(m_pobjTarget);
 	}
 }
-*/
+
+
 
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -2654,8 +2469,7 @@ CNeoDoc::OnObjAdd()
 
 
 void 
-CNeoDoc::OnNavigateGoto() 
-{
+CNeoDoc::OnNavigateGoto() {
 //	BObject* pobj = (BObject*) m_objHistory.GoBack();
 //	if (pobj && IsBObjectValid(pobj)) // check that bobject is still valid first!
 //		SetCurrentObject(pobj, NULL, TRUE);
@@ -2665,8 +2479,7 @@ CNeoDoc::OnNavigateGoto()
 	dlg.m_strCaption = "Goto Object...";
 	dlg.m_pobj = m_pobjCurrent;
 	dlg.m_nHelpID = IDD_GOTO_OBJECT;
-	if (IDOK == dlg.DoModal())
-	{
+	if (IDOK == dlg.DoModal()) {
 		SetCurrentObject(dlg.m_pobj);
 	}
 }
@@ -2677,8 +2490,7 @@ CNeoDoc::OnNavigateGoto()
 // override of virtual function
 // 1.1 Handles AutoRecover and ErrorBackup
 BOOL 
-CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName) 
-{
+CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 	m_bLoadingFile = TRUE;
 
 	TRACE("CNeoDoc::OnOpenDocument(%s)\n", lpszPathName);
@@ -2697,8 +2509,7 @@ CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 	// Check if there is an _ErrorBackup copy of this file available.
 	// ErrorBackup takes precedence over AutoRecover, because ErrorBackup will be more recent. 
-	if (bErrorBackupAvail)
-	{
+	if (bErrorBackupAvail) {
 		CString strMsg;
 		CString strFileName = GetFileName(lpszPathName);
 		CString strOldVersion = GetModifiedName(strFileName, _T("_ErrorBackupOldVersion"));
@@ -2724,8 +2535,7 @@ CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		_tremove(strAutoRecoverName);
 	}
 	// Check if there is an AutoRecover copy of this file available
-	else if (bAutoRecoverAvail)
-	{
+	else if (bAutoRecoverAvail) {
 		CString strMsg;
 		CString strFileName = GetFileName(lpszPathName);
 		CString strOldVersion = GetModifiedName(strFileName, _T("_AutoRecoverOldVersion"));
@@ -2758,8 +2568,7 @@ CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Give message if no root object (if it's a zero length file, OnOpenDocument skips serialization
 	// so you don't get the archive exception!)
 	BObject* pobj = GetObject(rootMain);
-	if (pobj == 0)
-	{
+	if (pobj == 0) {
 		AfxMessageBox("Invalid file format - no root object found.", MB_ICONEXCLAMATION);
 		return FALSE;
 	}
@@ -2884,23 +2693,20 @@ CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName)
 // overwrite a read-only file!
 // This is called by OnFileSave and OnFileSaveAs!!
 BOOL 
-CNeoDoc::DoSave(LPCTSTR lpszPathName, BOOL bReplace)
+CNeoDoc::DoSave(LPCTSTR lpszPathName, BOOL bReplace) {
 	// Save the document data to a file
 	// lpszPathName = path name where to save document file
 	// if lpszPathName is NULL then the user will be prompted (SaveAs)
 	// note: lpszPathName can be different than 'm_strPathName'
 	// if 'bReplace' is TRUE will change file name if successful (SaveAs)
 	// if 'bReplace' is FALSE will not change path name (SaveCopyAs)
-{
 	CString newName = lpszPathName;
-	if (newName.IsEmpty())
-	{
+	if (newName.IsEmpty()) {
 		CDocTemplate* pTemplate = GetDocTemplate();
 		ASSERT(pTemplate != NULL);
 
 		newName = m_strPathName;
-		if (bReplace && newName.IsEmpty())
-		{
+		if (bReplace && newName.IsEmpty()) {
 			newName = m_strTitle;
 			// check for dubious filename
 			int iBad = newName.FindOneOf(_T(" #%;/\\"));
@@ -2910,8 +2716,7 @@ CNeoDoc::DoSave(LPCTSTR lpszPathName, BOOL bReplace)
 			// append the default suffix if there is one
 			CString strExt;
 			if (pTemplate->GetDocString(strExt, CDocTemplate::filterExt) &&
-			  !strExt.IsEmpty())
-			{
+			  !strExt.IsEmpty()) {
 				ASSERT(strExt[0] == '.');
 				newName += strExt;
 			}
@@ -2934,17 +2739,13 @@ CNeoDoc::DoSave(LPCTSTR lpszPathName, BOOL bReplace)
 	CWaitCursor wait;
 
 	//` this will call OnSaveDocumentEx
-	if (!OnSaveDocument(newName))
-	{
-		if (lpszPathName == NULL)
-		{
+	if (!OnSaveDocument(newName)) {
+		if (lpszPathName == NULL) {
 			// be sure to delete the file
-			TRY
-			{
+			TRY {
 				CFile::Remove(newName);
 			}
-			CATCH_ALL(e)
-			{
+			CATCH_ALL(e) {
 				TRACE0("Warning: failed to delete file after failed SaveAs.\n");
 				DELETE_EXCEPTION(e);
 			}
@@ -2969,10 +2770,8 @@ CNeoDoc::DoSave(LPCTSTR lpszPathName, BOOL bReplace)
 // Add a folder. 
 // This is the default ID_OBJ_ADD_FOLDER handler.
 void 
-CNeoDoc::OnObjAddFolder() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::OnObjAddFolder() {
+	if (m_pobjTarget) {
 		BObject* pobj = UIAddNewFolder(m_pobjTarget);
 	}	
 }
@@ -2981,11 +2780,9 @@ CNeoDoc::OnObjAddFolder()
 
 // Add a new folder to the default location
 BObject* 
-CNeoDoc::UIAddNewFolder(
-															BObject* pobjParent /* = 0 */, 
-															BOOL bSelectNewObject /* = TRUE */
-															)
-{
+CNeoDoc::UIAddNewFolder(BObject* pobjParent /* = 0 */, 
+						BOOL bSelectNewObject /* = TRUE */
+						) {
 	ASSERT_VALID(this);
 
 	CString strName;
@@ -2993,16 +2790,13 @@ CNeoDoc::UIAddNewFolder(
 	BObject* pobjDefaultClass = 0;
 
 	// Get location for new folder if not specified
-	if (pobjParent == 0)
-	{
+	if (pobjParent == 0) {
 		// Doc remembers the last location for adding a folder
-		if (m_lngDefaultFolderLocationID != 0)
-		{
+		if (m_lngDefaultFolderLocationID != 0) {
 			pobjParent = GetObject(m_lngDefaultFolderLocationID);
 		}
 		// If location is unspecified or no longer valid, use the root object as add location
-		if (pobjParent == 0)
-		{
+		if (pobjParent == 0) {
 			ASSERT_VALID(m_pobjRoot);
 			pobjParent = m_pobjRoot;
 			m_lngDefaultFolderLocationID = m_pobjRoot->GetObjectID(); // remember this in document
@@ -3019,8 +2813,7 @@ CNeoDoc::UIAddNewFolder(
 
 	// Show dialog
 	CDialogEditFolder dlg;
-	if (dlg.DoModalAddFolder(strName, strDescription, pobjParent, pobjDefaultClass) == IDOK)
-	{
+	if (dlg.DoModalAddFolder(strName, strDescription, pobjParent, pobjDefaultClass) == IDOK) {
 		// Get class, name, and location (parent) that user selected
 //		ULONG lngClassID = dlg.m_lngClassID;
 //		ASSERT(lngClassID);
@@ -3037,8 +2830,7 @@ CNeoDoc::UIAddNewFolder(
 		pobjNew->SetPropertyText(propDescription, strDescription, FALSE, FALSE);
 
 		// Set default class and default columns
-		if (dlg.m_pobjDefaultClass != 0)
-		{
+		if (dlg.m_pobjDefaultClass != 0) {
 			ASSERT_VALID(dlg.m_pobjDefaultClass);
 			pobjNew->SetPropertyLink(propDefaultClass, dlg.m_pobjDefaultClass, FALSE, FALSE);
 			// Initialize column array based on default class
@@ -3050,8 +2842,7 @@ CNeoDoc::UIAddNewFolder(
 
 		// Now select the object as the current object if specified by the parameter bSelectNewObject
 		// Also set focus to viewText
-		if (bSelectNewObject)
-		{
+		if (bSelectNewObject) {
 			SetCurrentObject(pobjNew, NULL);
 			// Now set focus to text view if available
 			CFrameChild* pFrame = GetMDIChildFrame();
@@ -3068,15 +2859,13 @@ CNeoDoc::UIAddNewFolder(
 
 // Import a file
 void 
-CNeoDoc::Import()
-{
+CNeoDoc::Import() {
 	// used to have try/catch around this, but the framework will catch it and throw it
 	// to our error dialog anyway...
 
 	//,
 //	CDialogImport dlgImport;
-//	if (dlgImport.DoModal())
-//	{
+//	if (dlgImport.DoModal()) {
 //	}
 //	return;
 
@@ -3085,8 +2874,7 @@ CNeoDoc::Import()
 //	CFileDialogEx dlg(TRUE, _T("rtf"), strFilename, OFN_HIDEREADONLY, theApp.m_strImportFilter);
 	CFileDialogEx dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, theApp.m_strImportFilter, AfxGetMainWnd());
 	dlg.m_ofn.lpstrTitle = _T("Import File");
-	if (dlg.DoModal() == IDOK)
-	{
+	if (dlg.DoModal() == IDOK) {
 		CString strFilename = dlg.GetPathName();
 		CString strFileTitle = dlg.GetFileTitle();
 
@@ -3098,8 +2886,7 @@ CNeoDoc::Import()
 		const int nBufferSize = 4096;
 		TCHAR szBuffer[nBufferSize + 1]; // add one for nullchar
 		szBuffer[nBufferSize] = '\0';
-		while (TRUE)
-		{
+		while (TRUE) {
 			int nChars = f.Read(szBuffer, nBufferSize);
 			if (nChars < nBufferSize)
 				szBuffer[nChars] = '\0'; // make sure buffer terminates with nullchar
@@ -3111,8 +2898,7 @@ CNeoDoc::Import()
 
 		// Convert plaintext to rtf
 //		BOOL bPlaintext = (strText.Left(4) != "{\\rt");
-//		if (bPlaintext)
-//		{
+//		if (bPlaintext) {
 //			CString strRtf;
 //			theApp.ConvertPlainToRtf(strText, strRtf);
 //			strText = strRtf;
@@ -3138,20 +2924,17 @@ CNeoDoc::Import()
 
 /*	// Open the datafile
 	CFile file;
-	try 
-	{
+	try {
 		file.Open(strFilename, CFile::modeReadWrite | CFile::shareExclusive);
 	}
 
 	// hook up to archive
 	bool bReading = true;
 	UINT uMode = (bReading ? CArchive::load : CArchive::store);
-	try
-	{
+	try {
 		CArchive ar(&file, uMode);
 	}
-	catch (CException* pException)
-	{
+	catch (CException* pException) {
 		// handle error
 		return;
 	}
@@ -3170,8 +2953,7 @@ CNeoDoc::Import()
 
 // Set security options for current file
 void 
-CNeoDoc::OnFileSecurity() 
-{
+CNeoDoc::OnFileSecurity() {
 	UISetEncryption();
 }
 
@@ -3183,14 +2965,12 @@ CNeoDoc::OnFileSecurity()
 // Override so we can call OnSaveDocumentEx instead of the base 
 // class's OnSaveDocument. And to do some other stuff.
 BOOL 
-CNeoDoc::OnSaveDocument(LPCTSTR lpszPathName) 
-{
+CNeoDoc::OnSaveDocument(LPCTSTR lpszPathName) {
 	CWaitCursor cw;
 
 	// Make sure current object is saved
 //	UpdateAllViewsEx(NULL, hintSave, m_pobjCurrent);
-	if (m_pobjCurrent)
-	{
+	if (m_pobjCurrent) {
 		ASSERT_VALID(m_pobjCurrent);
 		UpdateAllViewsEx(NULL, hintSave, m_pobjCurrent);
 	}
@@ -3211,8 +2991,7 @@ CNeoDoc::OnSaveDocument(LPCTSTR lpszPathName)
 // to use our own CCryptoFile instead of CFile, to allow for encryption.
 // Have to call base class function versions explicitly. 
 BOOL 
-CNeoDoc::OnSaveDocumentEx(LPCTSTR lpszPathName)
-{
+CNeoDoc::OnSaveDocumentEx(LPCTSTR lpszPathName) {
 	CFileException fe;
 
 	CFile* pFile = NULL;
@@ -3220,8 +2999,7 @@ CNeoDoc::OnSaveDocumentEx(LPCTSTR lpszPathName)
 //	CCryptoFile* pFile = NULL;
 //	pFile = (CCryptoFile*) GetFile(lpszPathName, CFile::modeCreate | CFile::modeReadWrite | CFile::shareExclusive, &fe);
 
-	if (pFile == NULL)
-	{
+	if (pFile == NULL) {
 		ReportSaveLoadException(lpszPathName, &fe, TRUE, AFX_IDP_INVALID_FILENAME); 
 		return FALSE;
 	}
@@ -3230,19 +3008,16 @@ CNeoDoc::OnSaveDocumentEx(LPCTSTR lpszPathName)
 	CArchive saveArchive(pFile, CArchive::store | CArchive::bNoFlushOnDelete);
 	saveArchive.m_pDocument = this;
 	saveArchive.m_bForceFlat = FALSE;
-	TRY
-	{
+	TRY {
 		CWaitCursor wait;
 		Serialize(saveArchive);     // save me 
 		saveArchive.Close();
 		ReleaseFile(pFile, FALSE); 
 	}
-	CATCH_ALL(e)
-	{
+	CATCH_ALL(e) {
 		ReleaseFile(pFile, TRUE); 
 
-		TRY
-		{
+		TRY {
 			ReportSaveLoadException(lpszPathName, e, TRUE, AFX_IDP_FAILED_TO_SAVE_DOC); 
 		}
 		END_TRY
@@ -3265,13 +3040,11 @@ CNeoDoc::OnSaveDocumentEx(LPCTSTR lpszPathName)
 // A virtual member function
 // Override to use CCryptoFile instead of CFile
 CFile* 
-CNeoDoc::GetFile(LPCTSTR lpszFileName, UINT nOpenFlags, CFileException* pError)
-{
+CNeoDoc::GetFile(LPCTSTR lpszFileName, UINT nOpenFlags, CFileException* pError) {
 //	CMirrorFile* pFile = new CMirrorFile;
 	CMirrorFileEx* pFile = new CMirrorFileEx;
 	ASSERT(pFile != NULL);
-	if (!pFile->Open(lpszFileName, nOpenFlags, pError))
-	{
+	if (!pFile->Open(lpszFileName, nOpenFlags, pError)) {
 		delete pFile;
 		pFile = NULL;
 	}
@@ -3289,8 +3062,7 @@ CNeoDoc::GetFile(LPCTSTR lpszFileName, UINT nOpenFlags, CFileException* pError)
 // We'll always have access to the password, even though we never store it in the file, because the 
 // user must enter the correct password to open the file!
 void 
-CNeoDoc::Serialize(CArchive& ar)
-{
+CNeoDoc::Serialize(CArchive& ar) {
 	xTRACE("CNeoDoc::Serialize\n");
 
 	ASSERT_VALID(this);
@@ -3308,8 +3080,7 @@ CNeoDoc::Serialize(CArchive& ar)
 	// Call base class first (does nothing)
 	CDocument::Serialize(ar);
 
-	if (ar.IsStoring())
-	{
+	if (ar.IsStoring()) {
 		if (theApp.m_bDoingAutoRecover)
 			theApp.SetStatusBarText(_T("Saving AutoRecover information..."));
 		else
@@ -3323,8 +3094,7 @@ CNeoDoc::Serialize(CArchive& ar)
 		ar << m_strSessionKeyHash; // save hash of session key based on user's password (this was m_strPassword in v1)
 
 		// Turn encryption on at this point
-		if (m_nEncryptionType)
-		{
+		if (m_nEncryptionType) {
 			objCrypto.Init();
 			objCrypto.MakeKey(m_strPassword);
 			parex->SetCryptoOn(&objCrypto);
@@ -3407,8 +3177,7 @@ CNeoDoc::Serialize(CArchive& ar)
 
 		ULONG lngMagicTest;
 		ar >> lngMagicTest;
-		if (lngMagicTest != lngMagic) // magic number to identify a NeoMem file
-		{
+		if (lngMagicTest != lngMagic) { // magic number to identify a NeoMem file
 			AfxMessageBox(_T("This file does not appear to be a NeoMem file."), MB_ICONINFORMATION);
 			AfxThrowUserException();
 		}
@@ -3425,8 +3194,7 @@ CNeoDoc::Serialize(CArchive& ar)
 		// v1.1 for example. 
 		// If you tried to go ahead with the file you'd run into problems with things like views which have
 		// no code associated with them - would crash the program. 
-		if (m_nVersionDataModel > versionDataModel || m_nVersionFileStructure > versionFileStructure)
-		{
+		if (m_nVersionDataModel > versionDataModel || m_nVersionFileStructure > versionFileStructure) {
 			AfxMessageBox(_T("Can't read this file - it was created by a more recent version of NeoMem. You will need to upgrade to a newer version of NeoMem in order to read this file. Visit www.neomem.org to download the latest version. "), MB_ICONINFORMATION);
 			AfxThrowUserException();
 		}
@@ -3440,16 +3208,14 @@ CNeoDoc::Serialize(CArchive& ar)
 		TRACE("  Encryption type %d\n", m_nEncryptionType);
 
 		// If this file is encrypted, ask user for password
-		if (m_nEncryptionType > 0)
-		{
+		if (m_nEncryptionType > 0) {
 			CDialogEditName dlg;
 			CString str;
 			dlg.m_strCaption = "Enter Password";
 			str.Format("Enter the password for the file \"%s\":", (LPCTSTR) ar.GetFile()->GetFileName());
 			dlg.m_strInstructions = str;
 			dlg.m_bPassword = TRUE;
-			if (dlg.DoModal() == IDCANCEL)
-			{
+			if (dlg.DoModal() == IDCANCEL) {
 				// User hit cancel so exit
 				AfxThrowUserException();
 			}
@@ -3458,8 +3224,7 @@ CNeoDoc::Serialize(CArchive& ar)
 			// Test hash of session key based on entered string with hash of session key based on true password.
 			objCrypto.Init();
 			CString strNewHash = objCrypto.GetSessionKeyHash(m_strPassword);
-			if (strNewHash != m_strSessionKeyHash)
-			{
+			if (strNewHash != m_strSessionKeyHash) {
 				AfxMessageBox("Invalid password entered.", MB_ICONINFORMATION);
 				AfxThrowUserException();
 			}
@@ -3477,8 +3242,7 @@ CNeoDoc::Serialize(CArchive& ar)
 //		m_nVersionDataModel = 0;
 		m_bUpgradeFileStructure = (m_nVersionFileStructure < versionFileStructure);
 		m_bUpgradeDataModel = (m_nVersionDataModel < versionDataModel);
-		if (m_bUpgradeFileStructure || m_bUpgradeDataModel)
-		{
+		if (m_bUpgradeFileStructure || m_bUpgradeDataModel) {
 			// File being read is older than currently expected file structure or data model,
 			// so ask user if they want to upgrade file.
 			UpgradeFile(ar);
@@ -3559,12 +3323,10 @@ CNeoDoc::Serialize(CArchive& ar)
 		theApp.UpdateProgressBar(m_nObject, m_nObjects);
 
 		// This is what reads all the objects into memory, recursing from the root object!
-		TRY
-		{
+		TRY {
 			ar >> m_pobjRoot; 
 		}
-		CATCH_ALL(e)
-		{
+		CATCH_ALL(e) {
 			TRACE0("Error in serializing file.\n");
 			DELETE_EXCEPTION(e);
 		}
@@ -3640,13 +3402,12 @@ CNeoDoc::Serialize(CArchive& ar)
 
 // Let user set security options for this file in a dialog
 void 
-CNeoDoc::UISetEncryption()
-{
+CNeoDoc::UISetEncryption() {
+
 	CDialogSaveOptions dlg;
 	dlg.m_nEncryptionType = m_nEncryptionType;
 	dlg.m_strPassword = m_strPassword; // we'll always have this because user had to enter it to open the file!
-	if (dlg.DoModal() == IDOK)
-	{
+	if (dlg.DoModal() == IDOK) {
 		// Set modified flag if changed encryption type or password
 		if (m_nEncryptionType != dlg.m_nEncryptionType)
 			SetModifiedFlag();
@@ -3670,10 +3431,9 @@ CNeoDoc::UISetEncryption()
 // Bring up dialog with treeview of entire file, let user choose new location.
 // Returns new location of target.
 BObject* 
-CNeoDoc::UIMoveObjectTo() 
-{
-	if (m_pobjTarget)
-	{
+CNeoDoc::UIMoveObjectTo() {
+
+	if (m_pobjTarget) {
 		// Get parent of first object in array (kind of arbitrary as they could all have different parents)
 //		BObject* pobj = (BObject*) m_aObjects.GetAt(0);
 //		ASSERT_VALID(pobj);
@@ -3695,11 +3455,9 @@ CNeoDoc::UIMoveObjectTo()
 		dlg.m_strCaption = "Move Object To...";
 		dlg.m_pobj = pobjParent;
 		dlg.m_nHelpID = IDD_MOVE_OBJECT_TO;
-		if (IDOK == dlg.DoModal())
-		{
+		if (IDOK == dlg.DoModal()) {
 			BObject* pobjNewParent = dlg.m_pobj;
-			if (pobjNewParent)
-			{
+			if (pobjNewParent) {
 				// Move objects to new parent, set doc modified flag and notify views
 				ASSERT_VALID(pobjNewParent);
 				xTRACE("Move %s to %s\n", m_pobjTarget->GetName(TRUE), pobjNewParent->GetName(TRUE));
@@ -3719,8 +3477,8 @@ CNeoDoc::UIMoveObjectTo()
 // 1.0 Added read-only message.
 // 1.1 Added AutoBackup and AutoRecover handling.
 BOOL 
-CNeoDoc::DoFileSave()
-{
+CNeoDoc::DoFileSave() {
+
 	// Handle AutoRecover save separately
 	if (theApp.m_bDoingAutoRecover)
 		return DoFileAutoRecoverSave();
@@ -3731,41 +3489,34 @@ CNeoDoc::DoFileSave()
 	BOOL bFileReadOnly = dwAttrib & FILE_ATTRIBUTE_READONLY;
 
 	// If file exists and it is read-only give user a message
-	if (bFileExists && bFileReadOnly) // file is marked read-only
-	{
+	if (bFileExists && bFileReadOnly) { // file is marked read-only
 		CString str;
 		CString strFileTitle = GetTitle();
 		str.Format("The file \"%s\" is marked read-only, which means that in order to save\n"
 						  "your changes you will need to give it a new filename.", (LPCTSTR) strFileTitle);
 		AfxMessageBox(str, MB_ICONINFORMATION);
-		if (!DoSave(NULL)) // NULL = get new filename
-		{
+		if (!DoSave(NULL)) { // NULL = get new filename
 			TRACE0("Warning: File save with new name failed.\n");
 			return FALSE;
 		}
 	}
-	else if (bFileExists == FALSE) // file does not exist
-	{
+	else if (bFileExists == FALSE) { // file does not exist
 		// If file does not exist save it with a new name
-		if (!DoSave(NULL))
-		{
+		if (!DoSave(NULL)) {
 			TRACE0("Warning: File save with new name failed.\n");
 			return FALSE;
 		}
 	}
-	else // file already exists - can do autobackup 
-	{
+	else { // file already exists - can do autobackup 
 		// AutoBackup
 		CString strBackup;
 		CString strBackup2;
-		if (theApp.m_bAutoBackup)
-		{
+		if (theApp.m_bAutoBackup) {
 			// Get filenames
 			strBackup = GetModifiedName(m_strPathName, _T("_Backup"));
 			strBackup2 = GetModifiedName(m_strPathName, _T("_Backup__Old"));
 			// If there's already a _Backup file, remove it
-			if (FileExists(strBackup))
-			{
+			if (FileExists(strBackup)) {
 				_tremove(strBackup2); // delete this in case it was left behind somehow
 				_trename(strBackup, strBackup2); // keep temporarily in case save fails
 			}
@@ -3775,15 +3526,13 @@ CNeoDoc::DoFileSave()
 		}
 
 		// Save file
-		if (!DoSave(m_strPathName))
-		{
+		if (!DoSave(m_strPathName)) {
 			TRACE0("Warning: File save failed.\n");
 			return FALSE;
 		}
 
 		// Finish AutoBackup
-		if (theApp.m_bAutoBackup)
-		{
+		if (theApp.m_bAutoBackup) {
 			// Delete last _Backup file 
 			//. could save some of these occasionally, like once a week or once a month...
 			_tremove(strBackup2);
@@ -3793,8 +3542,7 @@ CNeoDoc::DoFileSave()
 	// AutoRecover 
 	// Delete the last AutoRecover file because it's not needed anymore (just saved the file normally).
 	// Also reset the timer so won't immediately do AutoRecover after this normal file save.
-	if (theApp.m_bAutoRecover)
-	{
+	if (theApp.m_bAutoRecover) {
 		CString strAutoRecoverName = GetModifiedName(m_strPathName, _T("_AutoRecover"));
 		TRACE("Deleting %s\n", (LPCTSTR) strAutoRecoverName);
 		_tremove(strAutoRecoverName);
@@ -3810,15 +3558,13 @@ CNeoDoc::DoFileSave()
 
 // Save AutoRecover copy of file
 BOOL 
-CNeoDoc::DoFileAutoRecoverSave()
-{
+CNeoDoc::DoFileAutoRecoverSave() {
 	// Update flag if user has made changes to file
 //	if (IsModified()) 
 //		m_bAutoRecoverDirty = TRUE; 
 
 	// Exit if the file has not changed since last the AutoRecover or normal save.
-	if (m_bAutoRecoverDirty == FALSE)
-	{
+	if (m_bAutoRecoverDirty == FALSE) {
 		TRACE("No changes made since last AutoRecover save\n");
 		return TRUE;
 	}
@@ -3827,8 +3573,7 @@ CNeoDoc::DoFileAutoRecoverSave()
 	CString strAutoRecoverName = GetModifiedName(m_strPathName, _T("_AutoRecover"));
 
 	// Save file as copy
-	if (!DoSave(strAutoRecoverName, FALSE)) // FALSE = save as copy!
-	{
+	if (!DoSave(strAutoRecoverName, FALSE)) { // FALSE = save as copy!
 		TRACE0("Warning: File save failed.\n");
 		return FALSE;
 	}
@@ -3843,8 +3588,7 @@ CNeoDoc::DoFileAutoRecoverSave()
 
 // Override of virtual method so we can keep track of AutoRecover saves also.
 void 
-CNeoDoc::SetModifiedFlag(BOOL bModified /* = TRUE */)
-{
+CNeoDoc::SetModifiedFlag(BOOL bModified /* = TRUE */) {
 	m_bModified = bModified;
 	m_bAutoRecoverDirty = bModified;
 }
@@ -3853,22 +3597,19 @@ CNeoDoc::SetModifiedFlag(BOOL bModified /* = TRUE */)
 
 // Get size of file as a string
 CString 
-CNeoDoc::GetFileSizeString()
-{
+CNeoDoc::GetFileSizeString() {
 	CString str;
 	LPCTSTR pszFile = GetPathName();
 	CFileException e;
 	CFile* f = GetFile(pszFile, CFile::shareDenyNone | CFile::modeRead, &e);
-	if (f)
-	{
+	if (f) {
 		DWORD dwLength = f->GetLength();
 //		str.Format("%d Bytes", dwLength);
 		str.Format("%s Bytes", (LPCTSTR) fc(dwLength)); // format thousands
 		f->Close();
 		delete f;
 	}
-	else
-	{
+	else {
 		str = _T("(File has not been saved yet)");
 	}
 	return str;
@@ -3878,8 +3619,7 @@ CNeoDoc::GetFileSizeString()
 
 // Get number of objects in this document, as a string.
 CString 
-CNeoDoc::GetNumberOfObjectsString()
-{
+CNeoDoc::GetNumberOfObjectsString() {
 	CString str;
 	BObject* pobjRoot = m_pobjRoot;
 	BObject* pobjSystem = GetObject(rootSystem);
@@ -3902,16 +3642,14 @@ CNeoDoc::GetNumberOfObjectsString()
 // This is a copy of CDocument's version of OnOpenDocument, modified to use our own 
 // CCryptoFile instead of CFile, to allow for encryption.
 BOOL 
-CNeoDoc::OnOpenDocumentEx(LPCTSTR lpszPathName)
-{
+CNeoDoc::OnOpenDocumentEx(LPCTSTR lpszPathName) {
 	if (IsModified())
 		TRACE0("Warning: OnOpenDocument replaces an unsaved document.\n");
 
 	CFileException fe;
 	//` We overrode GetFile so it returns a CCryptoFile (can treat as a CFile though)
 	CFile* pFile = GetFile(lpszPathName, CFile::modeRead|CFile::shareDenyWrite, &fe);
-	if (pFile == NULL)
-	{
+	if (pFile == NULL) {
 		ReportSaveLoadException(lpszPathName, &fe, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
 		return FALSE;
 	}
@@ -3923,21 +3661,18 @@ CNeoDoc::OnOpenDocumentEx(LPCTSTR lpszPathName)
 	CArchive loadArchive(pFile, CArchive::load | CArchive::bNoFlushOnDelete);
 	loadArchive.m_pDocument = this;
 	loadArchive.m_bForceFlat = FALSE;
-	TRY
-	{
+	TRY {
 		CWaitCursor wait;
 		if (pFile->GetLength() != 0)
 			Serialize(loadArchive);     // load me
 		loadArchive.Close();
 		ReleaseFile(pFile, FALSE);
 	}
-	CATCH_ALL(e)
-	{
+	CATCH_ALL(e) {
 		ReleaseFile(pFile, TRUE); 
 		DeleteContents();   // remove failed contents  
 
-		TRY
-		{
+		TRY {
 			ReportSaveLoadException(lpszPathName, e, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC); 
 		}
 		END_TRY
@@ -3948,19 +3683,15 @@ CNeoDoc::OnOpenDocumentEx(LPCTSTR lpszPathName)
 
 
 	// After serializing data, finish handling upgrade of file structure and/or data model.
-	if (m_bUpgradeFileStructure || m_bUpgradeDataModel)
-	{
+	if (m_bUpgradeFileStructure || m_bUpgradeDataModel) {
 		// But don't if we're in the process of upgrading the template file itself (strictly admin stuff here)
-		if (theApp.m_strTemplatePath != lpszPathName)
-		{
+		if (theApp.m_strTemplatePath != lpszPathName) {
 			// Synchronize file with Template.neo if data model needs to be upgraded
-			if (m_bUpgradeDataModel)
-			{
+			if (m_bUpgradeDataModel) {
 				// Open the template file and load all its data
 				CNeoDoc* pdocTemplate = new CNeoDoc();
 //				if (!pdocTemplate->OnOpenDocumentEx(theApp.m_strTemplatePath))
-				if (!pdocTemplate->CreateTemplate()) // will throw exception if fails
-				{
+				if (!pdocTemplate->CreateTemplate()) { // will throw exception if fails
 //					CString s;
 //					s.Format("Unable to open template file. The file '%s' should be in the NeoMem application folder.", (LPCTSTR) theApp.m_strTemplateFileName);
 //					AfxMessageBox(s, MB_ICONEXCLAMATION);
@@ -3982,8 +3713,7 @@ CNeoDoc::OnOpenDocumentEx(LPCTSTR lpszPathName)
 			// Save new version of file under old name (overwriting the existing file).
 			//. gives a confusing message if it fails
 			// fixed? bomb here - some links still soft
-			if (!this->OnSaveDocumentEx(lpszPathName))
-			{
+			if (!this->OnSaveDocumentEx(lpszPathName)) {
 				//. trigger an error in error dialog instead
 				AfxMessageBox("Unable to save new version of file. Internal problem encountered in conversion to new format. ", MB_ICONEXCLAMATION); 
 				return FALSE;
@@ -4007,8 +3737,7 @@ CNeoDoc::OnOpenDocumentEx(LPCTSTR lpszPathName)
 // After copying over, convert back to hard links. 
 // sheesh...
 void 
-CNeoDoc::Synchronize(CNeoDoc* pdocTemplate)
-{
+CNeoDoc::Synchronize(CNeoDoc* pdocTemplate) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pdocTemplate);
 
@@ -4049,8 +3778,7 @@ CNeoDoc::Synchronize(CNeoDoc* pdocTemplate)
 
 // Synchronize 
 void 
-CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate)
-{
+CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate) {
 	// note: doing this object then children so that if a new folder has been added 
 	// the parent will be added first. if this creates problems may need to convert parent link
 	// to a soft link also. 
@@ -4062,16 +3790,14 @@ CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate)
 	ULONG nID = pobjTemplate->GetObjectID();
 	ASSERT(nID < lngUserIDStart); // should be a system object
 	BObject* pobjThis = this->GetObject(nID);
-	if (pobjThis == 0)
-	{
+	if (pobjThis == 0) {
 		// Doesn't exist - we need to add it
 		pobjThis = new BObject();
 		pobjThis->SetDoc(this);
 //		pobjThis->CopyFrom(pobjTemplate);
 		this->AddObjectToIndex(nID, pobjThis);
 	}
-	else
-	{
+	else {
 		// Exists - update it
 		// prob: if this object links to an object that has not been synchronized yet, this will bomb.
 		// ie need to add objects before synchronizing their properties...
@@ -4080,12 +3806,10 @@ CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate)
 
 	// Walk through any child objects and recurse
 	BObjects* paChildren = pobjTemplate->GetChildren();
-	if (paChildren)
-	{
+	if (paChildren) {
 		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
-		for (int i = 0; i < nItems; i++)
-		{
+		for (int i = 0; i < nItems; i++) {
 			BObject* pobjChild = (BObject*) paChildren->GetAt(i);
 			ASSERT_VALID(pobjChild);
 			SynchronizeRecurse(pobjChild);
@@ -4101,8 +3825,7 @@ CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate)
 
 // Synchronize all properties in this file to those in the specified object.
 void 
-CNeoDoc::SynchronizeRecurseProps(BObject* pobjTemplate)
-{
+CNeoDoc::SynchronizeRecurseProps(BObject* pobjTemplate) {
 	// Find object in this document
 	ULONG nID = pobjTemplate->GetObjectID();
 	ASSERT(nID < lngUserIDStart); // should be a system object
@@ -4114,12 +3837,10 @@ CNeoDoc::SynchronizeRecurseProps(BObject* pobjTemplate)
 
 	// Walk through any child objects and recurse
 	BObjects* paChildren = pobjTemplate->GetChildren();
-	if (paChildren)
-	{
+	if (paChildren) {
 		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
-		for (int i = 0; i < nItems; i++)
-		{
+		for (int i = 0; i < nItems; i++) {
 			BObject* pobjChild = (BObject*) paChildren->GetAt(i);
 			ASSERT_VALID(pobjChild);
 			SynchronizeRecurseProps(pobjChild);
@@ -4133,16 +3854,14 @@ CNeoDoc::SynchronizeRecurseProps(BObject* pobjTemplate)
 // walk through system objects and see if they are in the template document also - 
 // if not, delete them. 
 void 
-CNeoDoc::SynchronizeDelete(BObject *pobjThis, CNeoDoc* pdocTemplate)
-{
+CNeoDoc::SynchronizeDelete(BObject *pobjThis, CNeoDoc* pdocTemplate) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjThis);
 	ASSERT_VALID(pdocTemplate);
 
 	ULONG nID = pobjThis->GetObjectID();
 	BObject* pobjTemplate = pdocTemplate->GetObject(nID);
-	if (pobjTemplate == NULL)
-	{
+	if (pobjTemplate == NULL) {
 		// This object is no longer in the template file, so we need to delete it!
 		TRACE("Deleting system object that is no longer in template file: %s\n", pobjThis->GetName(TRUE));
 		//, if this object is referenced in the file, will bring up a messagebox! not good here!
@@ -4152,12 +3871,10 @@ CNeoDoc::SynchronizeDelete(BObject *pobjThis, CNeoDoc* pdocTemplate)
 	// Recurse through children
 	// Walk through any child objects and recurse
 	BObjects* paChildren = pobjThis->GetChildren();
-	if (paChildren)
-	{
+	if (paChildren) {
 		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
-		for (int i = 0; i < nItems; i++)
-		{
+		for (int i = 0; i < nItems; i++) {
 			BObject* pobjChild = (BObject*) paChildren->GetAt(i);
 			ASSERT_VALID(pobjChild);
 			SynchronizeDelete(pobjChild, pdocTemplate);
@@ -4170,8 +3887,7 @@ CNeoDoc::SynchronizeDelete(BObject *pobjThis, CNeoDoc* pdocTemplate)
 
 
 void 
-CNeoDoc::UpdateAllViewsEx(CView *pSender, LPARAM lHint /*= 0L*/, CObject* pHint /*= NULL*/)
-{
+CNeoDoc::UpdateAllViewsEx(CView *pSender, LPARAM lHint /*= 0L*/, CObject* pHint /*= NULL*/) {
 	TRACE("UpdateAllViewsEx - %s\n", theApp.GetHintName(lHint)); 
 	UpdateAllViews(pSender, lHint, pHint);
 }
@@ -4179,8 +3895,7 @@ CNeoDoc::UpdateAllViewsEx(CView *pSender, LPARAM lHint /*= 0L*/, CObject* pHint 
 
 // Handle upgrading the current file (after asking user)
 void 
-CNeoDoc::UpgradeFile(CArchive& ar)
-{
+CNeoDoc::UpgradeFile(CArchive& ar) {
 	// Show file upgrade message
 	CString strBackupName = GetModifiedName(ar.GetFile()->GetFileName(), "_BeforeUpgrade");
 	CString str;
@@ -4197,8 +3912,7 @@ CNeoDoc::UpgradeFile(CArchive& ar)
 //							(LPCTSTR) ar.GetFile()->GetFileName(),
 					(LPCTSTR) strBackupName
 					);
-	if (IDCANCEL == AfxMessageBox(str, MB_ICONQUESTION + MB_OKCANCEL))
-	{
+	if (IDCANCEL == AfxMessageBox(str, MB_ICONQUESTION + MB_OKCANCEL)) {
 		// User hit cancel so exit without message
 		AfxThrowUserException();
 	}
@@ -4224,8 +3938,7 @@ CNeoDoc::UpgradeFile(CArchive& ar)
 	// with default values.
 	// So we just need to update the file structure version variable here.
 	// On file save, all Serialize code will write the new file structure.
-	if (m_bUpgradeFileStructure)
-	{
+	if (m_bUpgradeFileStructure) {
 		m_nVersionFileStructure = versionFileStructure;
 	}
 
@@ -4240,8 +3953,7 @@ CNeoDoc::UpgradeFile(CArchive& ar)
 	// walk recursively through all objects in userfile
 	// if system object, make sure it's in the template file
 	//		if it isn't, delete it from the userfile (what if cascade delete though?)
-	if (m_bUpgradeDataModel)
-	{
+	if (m_bUpgradeDataModel) {
 		// Update data model variable now
 		m_nVersionDataModel = versionDataModel;
 	}
@@ -4256,11 +3968,8 @@ CNeoDoc::UpgradeFile(CArchive& ar)
 
 
 void 
-CNeoDoc::UITest()
-{
+CNeoDoc::UITest() {
 	// Test this document and the UI
-
-
 }
 
 
@@ -4270,8 +3979,7 @@ CNeoDoc::UITest()
 // actually, you want to recurse through the specified objects, 
 // gather the props to include,
 int 
-CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/)
-{
+CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(&datProps);
 
@@ -4290,17 +3998,14 @@ CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/)
 	ASSERT_VALID(pobjProps);
 	ASSERT_VALID(pobjProps->GetChildren());
 	int nProps = pobjProps->GetChildren()->GetSize();
-	for (int i = 0; i < nProps; i++)
-	{
+	for (int i = 0; i < nProps; i++) {
 		BObject* pobjProp = (BObject*) pobjProps->GetChildren()->GetAt(i);
 		ASSERT_VALID(pobjProp);
 		// just user properties
-		if (!(pobjProp->GetFlag(flagAdminOnly)))
-		{
+		if (!(pobjProp->GetFlag(flagAdminOnly))) {
 			ULONG lngPropID = pobjProp->GetObjectID();
 			// and not propRtfText (yet)
-			if ((lngPropID != propRtfText) && (lngPropID != propPlainText))
-			{
+			if ((lngPropID != propRtfText) && (lngPropID != propPlainText)) {
 				datProps.AddLink(pobjProp);
 			}
 		}
@@ -4312,8 +4017,7 @@ CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/)
 
 	//. if pobj specified, recurse downwards from there and gather props actually used.
 	// then use this list to remove unused properties from datProps. 
-	if (pobj)
-	{
+	if (pobj) {
 
 	}
 
@@ -4326,8 +4030,7 @@ CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/)
 
 // 1.3 use this instead of opendocumentex on template file
 BOOL 
-CNeoDoc::CreateTemplate()
-{
+CNeoDoc::CreateTemplate() {
 	//. should throw exception if fails
 
 	// wrap this for now
