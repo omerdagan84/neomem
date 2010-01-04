@@ -32,20 +32,18 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-
-IMPLEMENT_SERIAL(BObject, CObject, VERSIONABLE_SCHEMA | versionFileStructure) // last parameter is version number
+// last parameter is version number
+IMPLEMENT_SERIAL(BObject, CObject, VERSIONABLE_SCHEMA | versionFileStructure)
 
 
 // Construction/Destruction
 //--------------------------------------------------------------------------
 
-BObject::BObject()
-{
+BObject::BObject() {
 	InitToZero();
 }
 
-BObject::BObject(ULONG lngClassID)
-{
+BObject::BObject(ULONG lngClassID) {
 	InitToZero();
 	m_lngClassID = lngClassID;
 }
@@ -318,7 +316,7 @@ BObject::Serialize(CArchive& ar)
 			// Add the object to the index
 			// Note: If for some reason the ObjectID is already occupied, this routine will
 			// try getting the next valid ID until it finds an empty space
-			m_pDoc->AddObjectToIndex(m_lngObjectID, this);
+			m_pDoc->AddObjectToIndex(this);
 
 			// Also walk through the children and set their parent property to point to this object
 			// BUG:: Old version of SetParent just set m_pobjParent, then I changed it for some other
@@ -506,15 +504,14 @@ BObject::SetData(BData* pdat)
 //, might want to insert alphabetically - pass param
 //, or could set a flag indicating that the list is unsorted
 BOOL 
-BObject::AddChild(BObject *pobjChild, BOOL bCheckForDuplicates)
-{
+BObject::AddChild(BObject *pobjChild, BOOL bCheckForDuplicates) {
+
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjChild);
 	ASSERT(pobjChild->m_pobjParent == NULL);
 
 	// Create new child list if not already there
-	if (m_paChildren == NULL)
-	{
+	if (m_paChildren == NULL) {
 		m_paChildren = new BObjects;
 		m_paChildren->SetOwnership(TRUE); // this array will own the bobjects it points to
 	}
@@ -523,8 +520,7 @@ BObject::AddChild(BObject *pobjChild, BOOL bCheckForDuplicates)
 	// Make sure the child is not already in the array.
 	// Optional because it's slow - currently only needed with synchronize routines. 
 	BOOL bAlreadyThere = FALSE;
-	if (bCheckForDuplicates)
-	{
+	if (bCheckForDuplicates) {
 		bAlreadyThere = (m_paChildren->FindObject(pobjChild, FALSE) != -1);
 	}
 
@@ -1461,14 +1457,15 @@ BObject::GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 // Set object that the specified property links to.
 // Note: If pobj is zero, will delete the property bobject.
 void 
-BObject::SetPropertyLink(ULONG lngPropertyID, BObject* pobj, 
-								BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
-{
+BObject::SetPropertyLink(ULONG lngPropertyID, 
+						 BObject* pobj, 
+						 BOOL bSetModifiedFlag /* = TRUE */, 
+						 BOOL bUpdateViews /* = TRUE */
+						 ) {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
 
-	if (pobj)
-	{
+	if (pobj) {
 		ASSERT_VALID(pobj);
 
 		// Find/create property value bobject
@@ -1477,8 +1474,7 @@ BObject::SetPropertyLink(ULONG lngPropertyID, BObject* pobj,
 
 		// Create new data object to hold data and initialize it
 		//, more efficient to use existing bdata object!!!!
-//		if (pobjPropertyValue->m_pdat == NULL)
-//		{
+//		if (pobjPropertyValue->m_pdat == NULL) {
 //			pobjPropertyValue->m_pdat = new BDataLong;
 //		}
 		BDataLink* pdat = new BDataLink;
@@ -1488,8 +1484,7 @@ BObject::SetPropertyLink(ULONG lngPropertyID, BObject* pobj,
 		// Store the data in the property object
 		pobjPropertyValue->SetData(pdat);
 	}
-	else
-	{
+	else {
 		// Link object is zero, so delete the property bobject.
 		DeleteProperty(lngPropertyID, FALSE, FALSE);
 	}
@@ -1499,8 +1494,7 @@ BObject::SetPropertyLink(ULONG lngPropertyID, BObject* pobj,
 		m_pDoc->SetModifiedFlag(TRUE);
 
 	// Update all views if specified
-	if (bUpdateViews)
-	{
+	if (bUpdateViews) {
 		CHint h;
 		h.m_pobjObject = this;
 		h.m_lngPropertyID = lngPropertyID;
@@ -2320,9 +2314,9 @@ BObject::GetParents(BObjects &aParents, BObject *pobjStopAt, BOOL bIncludeThisOb
 // Set or clear a flag for this object, recursing through children if specified.
 // Possible flags are flagExpanded, flagNoDelete, flagTemp, flagFilter, flagDisabled, etc.
 // This will set document modified flag if it's an important flag.
-BOOL 
-BObject::SetFlag(ULONG lngFlag, BOOL bValue, BOOL bRecurse /* = FALSE */)
-{
+void 
+BObject::SetFlag(ULONG lngFlag, BOOL bValue /*=TRUE*/, BOOL bRecurse /* = FALSE */) {
+
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
 
@@ -2331,12 +2325,10 @@ BObject::SetFlag(ULONG lngFlag, BOOL bValue, BOOL bRecurse /* = FALSE */)
 	else
 		m_lngFlags &= ~lngFlag;
 
-	if (bRecurse)
-	{
+	if (bRecurse) {
 		// Walk through children and call this routine recursively
 		int nChildren = GetChildCount(FALSE);
-		for (int i = 0; i < nChildren; i++)
-		{
+		for (int i = 0; i < nChildren; i++) {
 			BObject* pobj = (BObject*) m_paChildren->GetAt(i);
 			ASSERT_VALID(pobj);
 			pobj->SetFlag(lngFlag, bValue, bRecurse);
@@ -2350,8 +2342,12 @@ BObject::SetFlag(ULONG lngFlag, BOOL bValue, BOOL bRecurse /* = FALSE */)
 //	if (lngFlag != flagExpanded && lngFlag != flagTemp && lngFlag != flagFilter)
 	if (lngFlag & lngImportantFlags)
 		m_pDoc->SetModifiedFlag();
+}
 
-	return TRUE;
+
+void
+BObject::ClearFlag(ULONG lngFlag) {
+	SetFlag(lngFlag, FALSE);
 }
 
 
@@ -2440,22 +2436,19 @@ BObject::SetIconID(ULONG lngIconID)
 
 
 
-// For this folder object, initialize the column array to reflect the properties
-// used by the default class.
+// For this folder object, initialize the column array (propColumnInfoArray) 
+// to reflect the properties used by the default class.
 void 
-BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass)
-{
+BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass) {
+	
 	BDataColumns* pdatCols = new BDataColumns;
 	ULONG lngExcludeFlags = flagAdminOnly; // always exclude admin only props (eg ObjectID)
 	BObjects aProps;
-//	int nProps = pobjDefaultClass->GetPropertyDefs(aProps, FALSE); // get props associated with class
 	int nProps = pobjDefaultClass->GetPropertyDefs(aProps, FALSE, TRUE); // get props associated with class
-	for (int i = 0; i < nProps; i++)
-	{
+	for (int i = 0; i < nProps; i++) {
 		BObject* pobjProp = (BObject*) aProps.GetAt(i);
 		ASSERT_VALID(pobjProp);
-		if (!(pobjProp->GetFlag(lngExcludeFlags)))
-		{
+		if (!(pobjProp->GetFlag(lngExcludeFlags))) {
 			ULONG lngPropertyID = pobjProp->GetObjectID();
 			//. kludgy: don't add the Size property by default, though it's available to all objects. 
 			if (lngPropertyID != propSize)
@@ -2585,14 +2578,18 @@ BObject::ChangeNamePropertyType(ULONG lngClassID, ULONG lngNewPropertyTypeID)
 // If recurse is specified, will search recursively through any child objects also.
 //. eventually add an object that includes the pobj referencing it and the propid.
 int 
-BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse)
-{
+BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
+
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjFind);
 	ASSERT_VALID(&aRefs);
 
 	BOOL bReferenced = FALSE;
 	ULONG lngFindID = pobjFind->GetObjectID();
+
+	// Exit if objectid is zero (can happen if it's a temporary object, not in the db)
+	if (lngFindID == 0)
+		return aRefs.GetSize();
 
 	// Search in attributes
 	if (m_lngClassID == lngFindID)
@@ -2601,8 +2598,7 @@ BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse)
 		bReferenced = TRUE;
 
 	// Search in this object's bdata
-	if (m_pdat)
-	{
+	if (m_pdat) {
 		ASSERT_VALID(m_pdat);
 		if (m_pdat->FindReferences(pobjFind))
 			bReferenced = TRUE;
@@ -2611,43 +2607,36 @@ BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse)
 	// If we haven't found a reference yet, search through this object's properties' bdata objects 
 	// until you find a reference.
 	// Also check each propertyid.
-	if (!bReferenced && m_paProperties)
-	{
+	if (!bReferenced && m_paProperties) {
 		ASSERT_VALID(m_paProperties);
 		int nProps = m_paProperties->GetSize();
-		for (int i = 0; i < nProps; i++)
-		{
+		for (int i = 0; i < nProps; i++) {
 			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjProp);
 			// Check if this property value is using the find object as its propertydef
-			if (pobjProp->GetClassID() == lngFindID)
-			{
+			if (pobjProp->GetClassID() == lngFindID) {
 				bReferenced = TRUE;
 				break;
 			}
 			// Check if the property value data references the find object
 			ASSERT_VALID(pobjProp->GetData());
-			if (pobjProp->GetData()->FindReferences(pobjFind))
-			{
+			if (pobjProp->GetData()->FindReferences(pobjFind)) {
 				bReferenced = TRUE;
 				break;
 			}
 		}
 	}
 
-	// If there was a reference to the Find object in this object, add this object to the list of references
+	// If there was a reference to the Find object in this object, 
+	// add this object to the list of references
 	if (bReferenced)
-	{
 		aRefs.Add(this);
-	}
 
 	// Search through children (if recurse specified)
-	if (bRecurse && m_paChildren)
-	{
+	if (bRecurse && m_paChildren) {
 		ASSERT_VALID(m_paChildren);
 		int nChildren = m_paChildren->GetSize();
-		for (int i = 0; i < nChildren; i++)
-		{
+		for (int i = 0; i < nChildren; i++) {
 			BObject* pobjChild = (BObject*) m_paChildren->GetAt(i);
 			ASSERT_VALID(pobjChild);
 			pobjChild->FindReferences(pobjFind, aRefs, bRecurse);
@@ -2790,34 +2779,32 @@ BObject::SortChildren()
 // Delete this object and any children recursively. 
 // Will ask to remove references if any exist, and if user says No, will return False. 
 // If object (and descendents) is deleted successfully, will return True.
-// This will tell all views about deletion, remove object from doc's index, remove object
-// from parent's child list, and set document modified flag.
+// This will tell all views about deletion, remove object from doc's index, 
+// remove object from parent's child list, and set document modified flag.
 // You can tell it to not set document modified flag, and to not update views.
 BOOL 
-BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
-{
+BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */) {
+
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
 
 	// Check children recursively also
 	// Note: We do this first so that children are deleted before their parents (important!)
-	if (m_paChildren)
-	{
+	if (m_paChildren) {
 		ASSERT_VALID(m_paChildren);
-		while (m_paChildren->GetSize() > 0)
-		{
-			BObject* pobjChild = (BObject*) m_paChildren->GetAt(0);
+		while (m_paChildren->GetSize() > 0) {
+			BObject* pobjChild = (BObject*) m_paChildren->GetAt(0); //,cast
 			// Attempt to delete child - if failed, return False
 			if (!pobjChild->DeleteObject())
 				return FALSE;
 		}
 	}
 
-	// Check for links to <this> bobject recursively through the entire document
+	// Check for links to <this> bobject recursively through entire document
 	BObjects aReferences;
 	int nLinks = m_pDoc->FindReferences(this, aReferences);
-	if (nLinks)
-	{
+	if (nLinks) {
+
 		// Get object's class name (lowercase)
 		CString strClassName = GetPropertyText(propClassName);
 		strClassName.MakeLower();
@@ -2825,13 +2812,13 @@ BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* =
 		// Ask the user if they want to remove all references to the object and delete it
 		CString strMsg;
 		strMsg.Format(_T("The %s \"%s\" is referenced by the following object(s): %s. "
-									"Do you want to remove all references to the object and then delete it?"), 
-								(LPCTSTR) strClassName, 
-								(LPCTSTR) GetPropertyText(propName), 
-								(LPCTSTR) aReferences.GetText()
-								);
-		if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION | MB_YESNO))
-		{
+						"Do you want to remove all references to the object and then delete it?"), 
+						(LPCTSTR) strClassName, 
+						(LPCTSTR) GetPropertyText(propName), 
+						(LPCTSTR) aReferences.GetText()
+						);
+		if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION | MB_YESNO)) {
+
 			// If we're deleting a class, we'll want to replace all references with classPaper.
 			BObject* pobjNew = 0; // default is to just remove all references
 			if (m_lngClassID == classClass)
@@ -2849,8 +2836,7 @@ BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* =
 	// Tell all views about deletion.
 	// Note: Need to do this BEFORE actually deleting the objects so view code can utilize object props, etc.
 	// Note: If we deleted the current object, this is where treeview will remove item and select the next item.
-//	if (bUpdateViews)
-//	{
+//	if (bUpdateViews) {
 //		CHint objHint;
 //		BObjects aObjects;
 //		aObjects.Add(this);
@@ -2859,13 +2845,13 @@ BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* =
 //	}
 
 	// Remove the object from the Index
-	m_pDoc->m_mapObjects.RemoveKey(m_lngObjectID);
+	m_pDoc->RemoveObjectFromIndex(m_lngObjectID);
 
 	// Remove the object from its parent's children collection and set parent to NULL.
 	// Note: We only need to do this for the top level objects we are deleting - 
 	// we don't care about any children or grandchildren lists of those objects.
-	// Also, it screws things up because you wind up removing items from the array that
-	// you are currently walking through.
+	// Also, it screws things up because you wind up removing items from the array 
+	// that you are currently walking through.
 	ASSERT_VALID(m_pobjParent);
 	m_pobjParent->RemoveChild(this);
 
@@ -2874,8 +2860,7 @@ BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* =
 		m_pDoc->SetModifiedFlag();
 
 	// Tell all views about deletion.
-	if (bUpdateViews)
-	{
+	if (bUpdateViews) {
 		CHint objHint;
 		BObjects aObjects;
 		aObjects.Add(this);
@@ -2885,7 +2870,7 @@ BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* =
 
 	// Now delete the actual BObject
 	// Note: Destructor recursively deletes children and properties and bdata.
-	// Note: We only need to do this for the top level objects since this is recursive
+	// Note: We only need to do this for the top level objects since this is recursive.
 	delete this;
 
 	return TRUE;

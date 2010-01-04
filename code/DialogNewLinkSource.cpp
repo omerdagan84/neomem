@@ -119,14 +119,16 @@ void CDialogNewLinkSource::OnBtnNewClass()
 		CString strClassName = dlg.m_strName;
 		BObject* pobjClassFolder = m_pDoc->GetObject(rootClass);
 		ASSERT_VALID(pobjClassFolder);
-		BObject* pobjNewClass = m_pDoc->AddObject(pobjClassFolder, classClass, strClassName);
-		ASSERT_VALID(pobjNewClass);
+		HObject hobjNewClass = m_pDoc->CreateObject(classClass, strClassName, pobjClassFolder);
 		
 		// Tell views about new class
-		m_pDoc->UpdateAllViewsEx(NULL, hintAdd, pobjNewClass);
+//		m_pDoc->UpdateAllViewsEx(NULL, hintAdd, pobjNewClass);
+
+		// Add object to database and tell views
+		m_pDoc->AddObject(hobjNewClass);
 
 		// Add to combo and select it
-		int nItem = m_cboClass.AddObject(pobjNewClass, pobjClassFolder);
+		int nItem = m_cboClass.AddObject(hobjNewClass, pobjClassFolder);
 		m_cboClass.SetCurSel(nItem);
 	}
 

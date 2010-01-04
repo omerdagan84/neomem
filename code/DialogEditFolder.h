@@ -40,7 +40,7 @@ public:
 	BObject* m_pobjParent; // parent of new object - used for display, and to get default class
 	BObject* m_pobjDefaultClass;  // ie contents of folder
 	CNeoDoc* m_pDoc;
-	BOOL m_bAdd; // Add mode or edit mode
+	BOOL m_bAddMode; // Add mode or edit mode
 	BOOL m_bLocationComboFilled;
 //	BOOL m_bNameChanged;
 //	BOOL m_bDescriptionChanged;

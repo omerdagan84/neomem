@@ -1,8 +1,3 @@
-// Filename.cpp: implementation of the CFilename class.
-//
-//////////////////////////////////////////////////////////////////////
-
-// just add some extensions to cstring to handle filenames
 
 
 
@@ -16,43 +11,45 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
-CFilename::CFilename()
-{
-
+CFilename::CFilename() {
 }
 
 CFilename::CFilename(CString str)
-:CString(str) // call the superclass constructor
+:CString(str) // call the superclass constructor 
 {
 }
 
-CFilename::~CFilename()
-{
-
+CFilename::~CFilename() {
 }
 
 
-void CFilename::RemoveBadChars()
-{
+void CFilename::RemoveBadChars() {
+
 	// Check for illegal characters
-	//, make lib func
-	CString strBadChars = "\\/:*?\"<>|";
+	CString strBadChars = "\\/:*?\"<>|"; //, _T
 	int nBadChar = this->FindOneOf(strBadChars);
-	if (nBadChar != -1)
-	{
+	if (nBadChar != -1) {
 //		CString strMsg;
 //		strMsg.Format("File names cannot contain the characters '%s' - occurrences of these characters will be removed.", (LPCTSTR) strBadChars);
 //		AfxMessageBox(strMsg, MB_ICONINFORMATION);
 		int nChars = strBadChars.GetLength();
-		for (int i = 0; i < nChars; i++)
-		{
+		for (int i = 0; i < nChars; i++) {
 			TCHAR ch = strBadChars.GetAt(i);
 			this->Remove(ch);
 		}
 	}
 }
+
+
+/*
+void CFilename::RemoveExtension() {
+
+	int nPos = this->ReverseFind('.');
+	if (nPos != -1)
+//		strModifiedName = strOriginalName.Left(nPos) + szAppendText + theApp.m_strFileExtension;
+		this->Delete(nPos, -1);
+		this->
+}
+*/
 

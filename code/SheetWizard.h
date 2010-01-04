@@ -4,44 +4,51 @@
 // Derived from our class CPropertySheetEx2.
 //--------------------------------------------------------------------------------
 
+/*
+	called by 
+
+	OnCmdEditClasses - called by ID_EDIT_CLASS_WIZ command
+	UIEditClass - called by edit link dialog. 
+	UIAddNewClass - called by various dialogs. 
+
+*/
+
+//, rename to CSheetClassWizard
 
 
 #pragma once
 
 
+#include "BObject.h"
 #include "PropertySheetEx2.h"
 
-#include "BObject.h"
 
+class CSheetWizard : public CPropertySheetEx2 {
 
-class CSheetWizard : public CPropertySheetEx2
-{
 	DECLARE_DYNAMIC(CSheetWizard)
 
-// Construction
 public:
+
+	// Construction
 	CSheetWizard();
 	CSheetWizard(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 	CSheetWizard(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 	virtual ~CSheetWizard();
 
-// enums
-public:
+	// Enums
 	enum eAddEditMode {modeAddOrEdit = 1, modeAddOnly = 2, modeEditOnly = 3};
 //	enum eWizardMode {modeAddClass = 1, modeEditClass = 2};
 //	enum eWizardMode {modeClass = 1, modeProperty = 2};
 
-// Operations
-public:
+	// Operations
 	void SetClassWizardTitle();
 	void SetEditClass(BObject* pobjClass);
 //	int DoModalParameters(eWizardMode nMode, BObject* pobj = 0);
 	int DoModalParameters(int nAddEditMode, BObject* pobjClass = 0);
 
-// Attributes
-public:
-	CNeoDoc* m_pDoc;
-	BOOL m_bAdd; // True if user picked Add option in first page
+	// Attributes
+	CNeoDoc* m_pdoc;
+	BOOL m_bAddMode; // True if user picked Add option in first page
 
 	BObject* m_pobj; // Pointer to the object we're editing (add or edit)
 	BObject* m_pobjAdd; // New object used in Add mode
@@ -54,14 +61,13 @@ public:
 
 	int m_nAddEditMode;
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSheetWizard)
 	//}}AFX_VIRTUAL
 
-// Implementation
-	// Generated message map functions
-protected:
+	// Message Map
+	protected:
 	//{{AFX_MSG(CSheetWizard)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnHelp();

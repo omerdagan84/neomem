@@ -29,6 +29,9 @@ class CIconCache;
 class CFrameChild;
 
 
+// Define the object handle type (keep it a pointer for now)
+typedef BObject* HObject;
+
 // Map from ULONG to BObject*
 typedef CMap<ULONG, ULONG, BObject*, BObject*> CMapObjects;
 
@@ -72,28 +75,25 @@ class CNeoDoc : public CDocument
 {
 	DECLARE_DYNCREATE(CNeoDoc)
 
-// Construction
 public:
+
+	// Construction
 	CNeoDoc();
 	virtual ~CNeoDoc();
 
-
-// enums
-public:
+	// Enums
 	enum EncryptionTypes {encryptNone = 0, encryptRC4 = 1};
 	enum CompressionTypes {compressNone = 0, compressLZH = 1};
 
-// static (class) methods
-public:
+	// Static (class) methods
 	static CNeoDoc* GetDoc(); // class method used to get pointer to current document object
 
-
-// Operations
-public:
-	BObject* AddObject(BObject* pobjParent, const ULONG lngClassID, const CString& strText, ULONG lngObjectID = 0, ULONG lngIconID = 0, ULONG lngFlags = 0);
-	BOOL AddObjectToIndex(ULONG lngObjectID, BObject* pobj);
+	// Operations
+	void AddObject(HObject hobj);
+	BOOL AddObjectToIndex(HObject hobj);
 	BData* CreateBData(ULONG lngClassOrPropertyID);
 	BData* CreateBDataFromPropertyType(ULONG lngPropertyTypeID);
+	HObject CreateObject(const ULONG lngClassID, const CString& strText, BObject* pobjParent = NULL, ULONG lngObjectID = 0, ULONG lngIconID = 0, ULONG lngFlags = 0);
 	BOOL CreateTemplate();
 	BOOL DoFileAutoRecoverSave();
 	int FindReferences(BObject* pobjFind, CObArray& aRefs, BObject* pobjStart = 0, BOOL bRecurse = TRUE);
@@ -114,6 +114,7 @@ public:
 	BObject* GetTargetObject();
 	BOOL IsBObjectValid(BObject* pobj);
 	BOOL IsTargetSingle();
+	void RemoveObjectFromIndex(ULONG lngObjectID);
 	BOOL SaveModifiedBackup();
 	int SearchForText(BObject* pobjStart, ULONG lngPropertyID, CString strFindText, BObjects& aResults, 
 					ULONG lngExcludeFlags = 0, BOOL bMatchCase = FALSE, BOOL bWholeWord = FALSE,
@@ -147,7 +148,7 @@ public:
 //	void Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, CString strFormat, CFilename strFilename);
 	void Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat, CFilename strFilename);
 	void Import();
-	BObject* UIImportIcon();
+	BObject* UIImportIcon(CString strFilename = "", CString strIconname = "");
 	BObject* UIMoveObjectTo();
 	BOOL UIRenameObject(BObject* pobj);
 	void UISetEncryption();
@@ -190,7 +191,6 @@ public:
 
 	// These don't get serialized
 	CString m_strPassword; // password for encrypted file
-	CMapObjects m_mapObjects;  // Map from ObjectID to BObject pointer
 	CIconCache* m_pIconCache;	// Icon cache (encapsulates an image list)
 	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties
 	CString m_strEmpty;		// An empty string used to return ""
@@ -205,6 +205,11 @@ public:
 	// Used to update progress bar during serialization
 	ULONG m_nObject;
 	ULONG m_nObjects; 
+
+private:
+	// not serialized
+	CMapObjects m_mapObjects;  // Map from ObjectID to BObject pointer
+
 
 
 // Implementation
@@ -238,9 +243,10 @@ private:
 	//}}AFX_VIRTUAL
 
 	// Advanced Overridables
-	virtual void ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSaving, UINT nIDPDefault);
+	protected:
 	virtual BOOL DoFileSave();
 	virtual BOOL DoSave(LPCTSTR lpszPathName, BOOL bReplace = TRUE);
+	virtual void ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSaving, UINT nIDPDefault);
 	public:
 	virtual CFile* GetFile(LPCTSTR lpszFileName, UINT nOpenFlags, CFileException* pError);
 

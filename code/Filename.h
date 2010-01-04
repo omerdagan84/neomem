@@ -1,6 +1,9 @@
-// Filename.h: interface for the CFilename class.
-//
-//////////////////////////////////////////////////////////////////////
+
+// CFilename
+// just add some extensions to cstring to handle filenames
+
+//, oh, merge with CPath though
+
 
 #pragma once
 
@@ -14,6 +17,7 @@ public:
 	virtual ~CFilename();
 
 	void RemoveBadChars();
+//	void RemoveExtension();
 
 };
 

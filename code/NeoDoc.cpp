@@ -57,6 +57,9 @@
 #include "ViewRtf.h"
 
 
+#include "Path.h"
+using namespace nsPath;
+
 
 
 #ifdef _DEBUG
@@ -197,6 +200,7 @@ CNeoDoc::~CNeoDoc() {
 // Have enough for about 1.4 million objects now (uses 2*nobjects as base)
 ULONG 
 GetNextPrime(ULONG n) {
+
 	ULONG anPrimes[] = {257, 521, 1031, 2053, 4201, 8209, 16411, 32369, 66541, 104729, 
 										200003, 400009, 800011, 1600033, 2750159};
 	int nPrimes = sizeof(anPrimes) / sizeof(ULONG);
@@ -221,6 +225,7 @@ GetNextPrime(ULONG n) {
 // if you want to provide additional, customized failure messages. This is an advanced overridable.
 void 
 CNeoDoc::ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSaving, UINT nIDPDefault) {
+	
 	TRACE("CNeoDoc::ReportSaveLoadException\n");
 	// check if it's one we want to handle
 /*
@@ -282,6 +287,8 @@ CNeoDoc::Dump(CDumpContext& dc) const {
 // (eg dialog box) say CNeoDoc::GetDoc();
 /* static */ CNeoDoc* 
 CNeoDoc::GetDoc() {
+
+	//, cast
 	CMDIChildWnd* pChild = ((CMDIFrameWnd*)(AfxGetApp()->m_pMainWnd))->MDIGetActive();
 	if (!pChild) return NULL;
 
@@ -368,6 +375,7 @@ CNeoDoc::OnNewDocument() {
 // (ie temporary, admin type stuff)
 void 
 CNeoDoc::UpdateDocument(BObject* pobj) {
+
 	ASSERT_VALID(pobj);
 
 /*
@@ -558,43 +566,35 @@ CNeoDoc::GetObject(ULONG lngObjectID) {
 }
 
 
-// Add a new object as a child of the specified object. 
-// Assigns a new ObjectID and keeps the index up to date. 
-// Returns a pointer to the new object, or NULL if unsuccessful.
-// Sets document modified flag.
-// Note: This does NOT tell views about new object, because usually we
-// need to set more properties before the new object is finished.
-// THEN we tell the views about it.  //, seems a bit funky
-BObject* 
-CNeoDoc::AddObject(
-					BObject *pobjParent, 
-					const ULONG lngClassID, 
-					const CString& strText, 
-					ULONG lngObjectID, 
-					ULONG lngIconID, 
-					ULONG lngFlags
-					) {
+
+// Create a new object, but don't add it to the database index yet, 
+// and don't notify views.
+// Typically you'd set more properties after this, then call  
+// AddObject to insert it into the database. 
+// Don't pass a parent if you don't want to add it as a child (eg for a temp object).
+HObject CNeoDoc::CreateObject(
+								const ULONG lngClassID, 
+								const CString& strText, 
+								BObject* pobjParent /*=NULL*/, 
+								ULONG lngObjectID /*=0*/, 
+								ULONG lngIconID /*=0*/, 
+								ULONG lngFlags /*=0*/
+								) {
 	ASSERT_VALID(this);
 
-	//, better to follow mfc model and call a Create function to which 
-	// you pass these parameters??
-	// ie pobj = new BObject;
-	// pobj->Create(....)???
-	// but then you don't have the context of the document!
-
-	// Get classdef
-	BObject* pobjClassDef = GetObject(lngClassID);
-	ASSERT_VALID(pobjClassDef);
-
-	// Set the default flags for this object if they weren't specified in the parameter.
-	// The default flags come from the classdef - propObjectFlags.
+	// Set the default flags for this object if they weren't specified 
+	// in the parameter.
+	// The default flags come from the classdef.
+//	ULONG lngFlags = GetObjectPropLong(lngClassID, propObjectFlags); 
+	HObject hobjClassDef = GetObject(lngClassID);
 	if (lngFlags == 0) {
 //,		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
-		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, pobjClassDef->GetPropertyData(propObjectFlags));
+		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, hobjClassDef->GetPropertyData(propObjectFlags));
 		if (pdatFlags)
 			lngFlags = pdatFlags->m_lngFlags;
 	}
-	
+
+
 	// Create the new object
 	BObject* pobjNew = new BObject(lngClassID);
 	ASSERT_VALID(pobjNew);
@@ -602,15 +602,37 @@ CNeoDoc::AddObject(
 	// Store pointer to this document
 	pobjNew->SetDoc(this);
 
-	//, call a Create method now?
 	// Set properties
 	pobjNew->SetFlags(lngFlags);
-	pobjNew->m_lngIconID = lngIconID; // leave as direct ref for now
+	pobjNew->m_lngIconID = lngIconID; //, leave as direct ref for now
+	pobjNew->SetObjectText(strText); // ie the object name
 
-	// Set name
-	pobjNew->SetObjectText(strText);
+	// Add the new object to the specified parent object.
+	// This also sets the m_pobjParent property.
+	if (pobjParent != NULL)
+		pobjParent->AddChild(pobjNew, FALSE);
+
+	// Validate object again
+	ASSERT_VALID(pobjNew);
+
+	// Return a handle for the new object
+	return pobjNew; //, implicit cast
+}
+
+
+// Add an object to the database. 
+// Assigns a new ObjectID and keeps the index up to date. 
+// Sets document modified flag.
+// Tells views about new object
+void
+CNeoDoc::AddObject(HObject hobj) {
+	
+	ASSERT_VALID(this);
+	BObject* pobj = hobj;
+	ASSERT_VALID(pobj);
 
 	// Set the object id
+	ULONG lngObjectID = pobj->GetObjectID();
 	// If no object id specified then get next available one
 	if (lngObjectID == 0) {
 		// Get the next available ObjectID
@@ -621,25 +643,20 @@ CNeoDoc::AddObject(
 		if (lngObjectID > m_lngNextObjectID)
 			m_lngNextObjectID = lngObjectID;
 	}
-	pobjNew->SetObjectID(lngObjectID);
+	pobj->SetObjectID(lngObjectID);
 
 	// Add the new object to the document's Index
-	AddObjectToIndex(lngObjectID, pobjNew);
-
-	// Add the new object to the specified parent object.
-	// This also sets the m_pobjParent property.
-	if (pobjParent != NULL)
-		pobjParent->AddChild(pobjNew, FALSE);
+	AddObjectToIndex(pobj);
 
 	// Mark document as modified
 	//, check if temp object first?
 	SetModifiedFlag(TRUE);
 	
 	// Validate object again
-	ASSERT_VALID(pobjNew);
+	ASSERT_VALID(pobj);
 
-	// Return a pointer to the new object
-	return pobjNew;
+	// Tell views about new object
+	this->UpdateAllViewsEx(NULL, hintAdd, pobj);
 }
 
 
@@ -649,39 +666,41 @@ CNeoDoc::AddObject(
 // try getting the next valid ID until it finds an empty space.
 // Returns True if successful.
 BOOL 
-CNeoDoc::AddObjectToIndex(ULONG lngObjectID, BObject* pobj) {
-	ASSERT_VALID(this);
-	ASSERT(lngObjectID);
-	ASSERT_VALID(pobj);
+CNeoDoc::AddObjectToIndex(HObject hobj) {
 
-	BObject* pobjTest;
+	ASSERT_VALID(this);
+	ASSERT_VALID(hobj);
+
+	ULONG lngObjectID = hobj->GetObjectID();
+	ASSERT(lngObjectID);
+
+	HObject hobjTest = NULL; // a dummy object
 
 	// Make sure no object is already in the slot
-	if (m_mapObjects.Lookup(lngObjectID, pobjTest)) {
+	if (m_mapObjects.Lookup(lngObjectID, hobjTest)) {
 		TRACE("! NeoDoc::AddObjectToIndex ObjectID %d \"%s\" is already in map!\n", lngObjectID, 
-							(LPCTSTR) pobj->GetPropertyText(propName));
+				(LPCTSTR) hobj->GetPropertyText(propName));
 		
 		// Try assigning a new objectid until you find one that's unoccupied
 		while (TRUE) {
 			lngObjectID = GetNextObjectID();
 			TRACE("    assigning new objectid of %d\n", lngObjectID);
 			// If found an empty slot, exit
-			if (!m_mapObjects.Lookup(lngObjectID, pobjTest))
+			if (!m_mapObjects.Lookup(lngObjectID, hobjTest))
 				break;
 		}
 		
 		// Assign new objectid to the object
-		pobj->SetObjectID(lngObjectID);
-
+		hobj->SetObjectID(lngObjectID);
 	}
 
 	// Add the object to the index at the object id
 	//. catch memory exception here
 	// Note: SetAt returns void
-	m_mapObjects.SetAt(lngObjectID, pobj);
+	m_mapObjects.SetAt(lngObjectID, hobj);
 
 	// Make sure object was added correctly
-	ASSERT(m_mapObjects.Lookup(lngObjectID, pobjTest));
+	ASSERT(m_mapObjects.Lookup(lngObjectID, hobjTest));
 	return TRUE;
 }
 
@@ -746,6 +765,7 @@ CNeoDoc::DeleteContents() {
 // Note: This is in CNeoDoc because this must modify the index, and check the current object, etc.
 BOOL 
 CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, BOOL bQuiet /* = FALSE */) {
+
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pobjCurrent);
 	ASSERT_VALID(paObjects);
@@ -773,12 +793,11 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 	// Ask user if they want to delete the object(s)
 	if (!bQuiet) {
 		CString strMsg;
-		CString strNames;
-		strNames = paObjects->GetText();
+		CString strNames = paObjects->GetText();
 		BOOL bSingle = (paObjects->GetSize() == 1);
 		if (bSingle) {
 			// Get classname
-			BObject* pobj = (BObject*) paObjects->GetAt(0);
+			BObject* pobj = (BObject*) paObjects->GetAt(0); //,cast
 			ASSERT_VALID(pobj);
 			CString strClassName = pobj->GetPropertyText(propClassName);
 			strClassName.MakeLower();
@@ -790,9 +809,6 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 				strChildren = _T(" and any child objects?");
 			else
 				strChildren = _T("?");
-
-//			strMsg.Format(_T("Are you sure you want to delete the %s \"%s\"%s Warning: This can't be undone!"),
-//			strMsg.Format(_T("Are you sure you want to delete the %s \"%s\"%s"),
 			strMsg.Format(_T("Are you sure you want to delete the %s \"%s\"%s \n\nWarning: This cannot be undone!"),
 						(LPCTSTR) strClassName, 
 						(LPCTSTR) strNames, 
@@ -800,17 +816,16 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 						);
 		}
 		else {
-//			strMsg.Format(_T("Are you sure you want to delete the objects \"%s\" and any child objects? Warning: This can't be undone!"), 
 			strMsg.Format(_T("Are you sure you want to delete the objects \"%s\" and any child objects? \n\nWarning: This cannot be undone!"), 
 					(LPCTSTR) strNames);
 		}
 		if (IDNO == AfxMessageBox(strMsg, MB_YESNO + MB_ICONQUESTION))
 			return FALSE;
-
 	}
 
-	// If deleting the currently selected item, move to another item now, otherwise
-	// deleting the htreeitem will arbitrarily reposition selection to another item and cause error.
+	// If deleting the currently selected item, move to another item now, 
+	// otherwise deleting the htreeitem will arbitrarily reposition selection 
+	// to another item and cause error.
 //	// Don't know why I put this in here cause it works fine now without it!
 //	BOOL bDeleteCurrent = (paObjects->FindObject(m_pobjCurrent, TRUE) == -1) ? FALSE : TRUE;
 //	if (bDeleteCurrent) {
@@ -826,9 +841,10 @@ CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE */, B
 	// Walk through objects, calling pobj->DeleteObject for each one.
 	int nObjects = paObjects->GetSize();
 	for (int i = 0; i < nObjects; i++) {
-		BObject* pobj = (BObject*) paObjects->GetAt(i);
+		BObject* pobj = (BObject*) paObjects->GetAt(i); //,cast
 		// Attempt to delete object and children - if failed, return False.
-		// This also checks for references to the object and asks user if they want to remove them.
+		// This also checks for references to the object and asks user if they 
+		// want to remove them.
 		// This set modified flag and notifies views.
 		if (!pobj->DeleteObject())
 			return FALSE;
@@ -1150,38 +1166,41 @@ CNeoDoc::UIAddNewPropertyDef() {
 
 		// Create the new propertydef
 		CString strName = dlg.m_strName;
-		BObject* pobjProperty = AddObject(pobjPropertiesFolder, classProperty, strName);
+		HObject hobjProperty = CreateObject(classProperty, strName, pobjPropertiesFolder);
 
 		// Set description and property type
-		pobjProperty->SetPropertyText(propDescription, dlg.m_strDescription, FALSE, FALSE);
-		pobjProperty->SetPropertyLink(propPropertyType, dlg.m_pobjPropertyType, FALSE, FALSE);
+		hobjProperty->SetPropertyText(propDescription, dlg.m_strDescription, FALSE, FALSE);
+		hobjProperty->SetPropertyLink(propPropertyType, dlg.m_pobjPropertyType, FALSE, FALSE);
 		
 		// Link source
 		if (dlg.m_pobjLinkSource)
-			pobjProperty->SetPropertyLink(propLinkSource, dlg.m_pobjLinkSource, FALSE, FALSE);
+			hobjProperty->SetPropertyLink(propLinkSource, dlg.m_pobjLinkSource, FALSE, FALSE);
 
 		// Additional display property
 		if (dlg.m_bAdditionalProperty && dlg.m_pobjAdditionalProperty != 0)
-			pobjProperty->SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty, FALSE, FALSE);
+			hobjProperty->SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty, FALSE, FALSE);
 
 		// Display link hierarchy
 		if (dlg.m_bDisplayHierarchy)
-			pobjProperty->SetPropertyLong(propDisplayLinkHierarchy, 1, FALSE, FALSE);
+			hobjProperty->SetPropertyLong(propDisplayLinkHierarchy, 1, FALSE, FALSE);
 
 		// Limit links
 		if (dlg.m_bLimitLinks)
-			pobjProperty->SetPropertyLong(propLimitNumberOfLinks, 1, FALSE, FALSE);
+			hobjProperty->SetPropertyLong(propLimitNumberOfLinks, 1, FALSE, FALSE);
 
 		// Units
 //		if (dlg.m_pobjUnits)
-//			pobjProperty->SetPropertyLink(propDefaultUnits, dlg.m_pobjUnits, FALSE, FALSE);
+//			hobjProperty->SetPropertyLink(propDefaultUnits, dlg.m_pobjUnits, FALSE, FALSE);
 
 		//, number format
 
 		// Tell all the views about the new object
-		UpdateAllViewsEx(NULL, hintAdd, pobjProperty);
+//		UpdateAllViewsEx(NULL, hintAdd, pobjProperty);
 
-		return pobjProperty;
+		// Add object to database (and tell views)
+		AddObject(hobjProperty);
+
+		return hobjProperty;
 	}
 
 	return 0;
@@ -1250,19 +1269,20 @@ CNeoDoc::UIEditPropertyDef(BObject* pobjPropertyDef) {
 			//, this is somewhat bad as doc needs to know all the properties of a property def!
 			// ie if you add a new one, you need to remember to add it here also!!
 			BObject* pobjParent = GetObject(folderProperties);
-			BObject* pobjTemp = AddObject(pobjParent, classProperty, "Temp", 0, 0, flagTemp);
-			pobjTemp->SetPropertyLink(propPropertyType, dlg.m_pobjPropertyType, FALSE, FALSE);
-			pobjTemp->SetPropertyLink(propLinkSource, dlg.m_pobjLinkSource, FALSE, FALSE);
-			pobjTemp->SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty, FALSE, FALSE);
-			if (dlg.m_bLimitLinks) pobjTemp->SetPropertyLong(propLimitNumberOfLinks, 1, FALSE, FALSE);
-			if (dlg.m_bDisplayHierarchy) pobjTemp->SetPropertyLong(propDisplayLinkHierarchy, 1, FALSE, FALSE);
+			HObject hobjTemp = CreateObject(classProperty, "Temp", pobjParent, 0, 0, flagTemp);
+			hobjTemp->SetPropertyLink(propPropertyType, dlg.m_pobjPropertyType, FALSE, FALSE);
+			hobjTemp->SetPropertyLink(propLinkSource, dlg.m_pobjLinkSource, FALSE, FALSE);
+			hobjTemp->SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty, FALSE, FALSE);
+			if (dlg.m_bLimitLinks) hobjTemp->SetPropertyLong(propLimitNumberOfLinks, 1, FALSE, FALSE);
+			if (dlg.m_bDisplayHierarchy) hobjTemp->SetPropertyLong(propDisplayLinkHierarchy, 1, FALSE, FALSE);
 			ULONG lngNewPropertyTypeID = dlg.m_pobjPropertyType->GetObjectID();
 
 			// Start at the top object and work down
-			m_pobjRoot->ChangePropertyType(pobjPropertyDef, pobjTemp, lngNewPropertyTypeID);
+			m_pobjRoot->ChangePropertyType(pobjPropertyDef, hobjTemp, lngNewPropertyTypeID);
 
 			// Now delete our temporary object
-			pobjTemp->DeleteObject(FALSE, FALSE);
+			//, (not in the db so don't need to delete it)
+//,			hobjTemp->DeleteObject(FALSE, FALSE);
 		}
 
 		// Name
@@ -1442,6 +1462,7 @@ CNeoDoc::CreateBDataFromPropertyType(ULONG lngPropertyTypeID) {
 // Return the next available ObjectID
 ULONG 
 CNeoDoc::GetNextObjectID() {
+
 	ASSERT_VALID(this);
 	m_lngNextObjectID++;
 	// If in user mode make sure ID is in UserID space
@@ -1744,59 +1765,57 @@ CNeoDoc::OnCmdFileDeleteAll() {
 // Returns a pointer to the new icon bobject, or 0 if failed.
 //. move most of this to the dialog! or a gui object!
 BObject* 
-CNeoDoc::UIImportIcon() {
-	BObject* pobjIconFolder = GetObject(folderIcons);
-	ASSERT_VALID(pobjIconFolder);
-	BObject* pobjIcon = 0;
+CNeoDoc::UIImportIcon(CString strFilename /* ="" */, CString strIconname /* ="" */) {
 
-	// Bring up file open dialog to choose .ico file
-	CFileDialogEx dlg(TRUE, _T("ico"), _T(""), OFN_HIDEREADONLY, szIconFilter, AfxGetMainWnd());
-	dlg.m_ofn.lpstrTitle = _T("Import Icon");
-	if (dlg.DoModal() == IDOK) {
-		CString strFilename = dlg.GetPathName();
-		CString strFileTitle = dlg.GetFileTitle();
+	HObject hobjIcon = NULL;
 
-		// Try to import the icon file
-		BDataIcon* pdat = new BDataIcon;
-		if (pdat->LoadFile(strFilename)) {
-			// Create the new icon bobject
-			pobjIcon = AddObject(pobjIconFolder, classIcon, strFileTitle);
-			ASSERT_VALID(pobjIcon);
-
-			// Set its icon property
-			pobjIcon->SetPropertyData(propIconData, pdat, FALSE, FALSE);
-
-			//, Set its file source property?
-//			pobjIcon->SetPropertyText(propSourceFile, strFilename, FALSE, FALSE);
-
-			// Get the name for the icon from the user
-			CDialogEditName dlg;
-			dlg.m_strCaption = _T("Import Icon");
-			dlg.m_strInstructions = _T("Enter the name for the new icon:");
-			dlg.m_strName = strFileTitle;
-			if (dlg.DoModal() == IDOK) {
-				CString strIconName = dlg.m_strName;
-				pobjIcon->SetPropertyText(propName, strIconName, FALSE, FALSE);
-
-				// Tell all the views about the new object
-				UpdateAllViewsEx(NULL, hintAdd, pobjIcon);
-			}
-			else {
-				// Delete the bobject (and the bdataicon)
-				UIDeleteObject(pobjIcon, TRUE);
-				// Bug: delete the bobject directly - bad no no!
-//				delete pobjIcon;
-				pobjIcon = 0;
-			}
-		}
-		else {
-			AfxMessageBox(_T("Unable to load file as an icon."), MB_ICONEXCLAMATION);
-			// Now delete the bdata since we didn't save it to the bobject
-			delete pdat;
-		}
+	// Get filename if not specified
+	if (strFilename.IsEmpty()) {
+		// Bring up file open dialog to choose .ico file
+		CFileDialogEx dlg(TRUE, _T("ico"), _T(""), OFN_HIDEREADONLY, szIconFilter, AfxGetMainWnd());
+		dlg.m_ofn.lpstrTitle = _T("Import Icon");
+		if (dlg.DoModal() == IDCANCEL)
+			return NULL;
+		strFilename = dlg.GetPathName();
 	}
 
-	return pobjIcon;
+	// Try to import the icon file
+	BDataIcon* pdat = new BDataIcon;
+	if (!pdat->LoadFile(strFilename)) {
+		AfxMessageBox(_T("Unable to load file as an icon."), MB_ICONEXCLAMATION);
+		delete pdat;
+		return NULL;
+	}
+
+	// Get iconname if not specified
+	if (strIconname.IsEmpty()) {
+		strIconname = CPath(strFilename).GetTitle();
+
+		CDialogEditName dlg;
+		dlg.m_strCaption = _T("Import Icon");
+		dlg.m_strInstructions = _T("Enter the name for the new icon:");
+		dlg.m_strName = strIconname;
+		if (dlg.DoModal() == IDCANCEL) {
+			delete pdat;
+			return NULL;
+		}
+		strIconname = dlg.m_strName;
+	}
+
+	// Create the new icon bobject
+	HObject hobjIconFolder = GetObject(folderIcons);
+	hobjIcon = CreateObject(classIcon, strIconname, hobjIconFolder);
+
+	// Set its icon property
+	hobjIcon->SetPropertyData(propIconData, pdat, FALSE, FALSE);
+
+	//, Set its file source property
+//	hobjIcon->SetPropertyText(propSourceFile, strFilename, FALSE, FALSE);
+
+	// Add object to database and tell views. 
+	AddObject(hobjIcon);
+
+	return hobjIcon;
 }
 
 
@@ -1870,33 +1889,37 @@ CNeoDoc::UIAddNewObject(
 			pobjParent = dlg.m_pobjParent;
 
 			// Add a new object to the document
-			BObject* pobjNew = AddObject(pobjParent, lngClassID, strName);
-			ASSERT_VALID(pobjNew);
+			HObject hobjNew = CreateObject(lngClassID, strName, pobjParent);
 
 			// Special properties for folder objects
 			if (lngClassID == classFolder) {
 				// Default class
-				if (dlg.m_pobjDefaultClass != 0) {
-					ASSERT_VALID(dlg.m_pobjDefaultClass);
-					pobjNew->SetPropertyLink(propDefaultClass, dlg.m_pobjDefaultClass, FALSE, FALSE);
+				BObject* pobjDefaultClass = dlg.m_pobjDefaultClass;
+				if (pobjDefaultClass != 0) {
+					ASSERT_VALID(pobjDefaultClass);
+					hobjNew->SetPropertyLink(propDefaultClass, pobjDefaultClass, FALSE, FALSE);
 					// Initialize column array based on default class
-					pobjNew->SetColumnsBasedOnClass(dlg.m_pobjDefaultClass);
+					hobjNew->SetColumnsBasedOnClass(pobjDefaultClass);
 				}
 			}
 			
 			// Tell all views about the new object via hintAdd
-			UpdateAllViewsEx(NULL, hintAdd, pobjNew);
+//			UpdateAllViewsEx(NULL, hintAdd, pobjNew);
 
-			// Now select the object as the current object if specified by the parameter bSelectNewObject
-			// Also set focus to viewText
+			// Add the object to the database and tell the views. 
+			AddObject(hobjNew);
+
+			// Now select the object as the current object if specified by the 
+			// parameter bSelectNewObject.
+			// Also set focus to viewText.
 			if (bSelectNewObject) {
-				SetCurrentObject(pobjNew, NULL);
+				SetCurrentObject(hobjNew, NULL);
 				// Now set focus to text view if available
 				CFrameChild* pFrame = GetMDIChildFrame();
 				pFrame->ShowView(viewText, TRUE);
 			}
 
-			return pobjNew;
+			return hobjNew;
 		}
 		else {
 			AfxMessageBox("No class selected for new object. No action taken.", MB_ICONINFORMATION);
@@ -2438,6 +2461,7 @@ CNeoDoc::GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText) {
 	if (strOriginalName.IsEmpty())
 		strOriginalName = theApp.m_strDocumentFolder + "\\" + GetTitle();
 
+	//, use CPath stuff?
 	int nPos = strOriginalName.ReverseFind('.');
 	if (nPos != -1)
 		strModifiedName = strOriginalName.Left(nPos) + szAppendText + theApp.m_strFileExtension;
@@ -2594,16 +2618,13 @@ CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 	// proptypeArray to proptypeColumns
 	// Add the new proptype first
 	BObject* pobj = GetObject(folderPropertyTypes);
-	ASSERT_VALID(pobj);
-	AddObject(pobj, classPropertyType, "Columns", proptypeColumns, 0, flagSystem | flagNoDelete | flagAdminOnly);
-	
+	HObject* hobjPropType = CreateObject(classPropertyType, "Columns", pobj, proptypeColumns, 0, flagSystem | flagNoDelete | flagAdminOnly);
+	AddObject(hobjPropType);
+
 	pobj = GetObject(propColumnInfoArray);
-	ASSERT_VALID(pobj);
 	BObject* pobjPropTypeColumns = GetObject(proptypeColumns);
-	ASSERT_VALID(pobjPropTypeColumns);
 	pobj->SetPropertyLink(propPropertyType, pobjPropTypeColumns);
 	pobj = GetObject(propObjectColumnInfoArray);
-	ASSERT_VALID(pobj);
 	pobj->SetPropertyLink(propPropertyType, pobjPropTypeColumns);
 */
 
@@ -2645,8 +2666,9 @@ CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 //	BObject* pobjClassPaper = GetObject(classPaper);
 //	pobjClassPaper->DeleteProperty(propObjectColumnInfoArray);
 
-//	pobjItem = AddObject(pobj, classProperty, "Property Type", propPropertyType, 0, flagSystem | flagNoDelete);
+//	pobjItem = CreateObject(classProperty, "Property Type", pobj, propPropertyType, 0, flagSystem | flagNoDelete);
 //	pobjItem->SetPropertyLink(propPropertyType, GetObject(proptypeLong));
+//  AddObject(pobjItem);
 
 //	BObject* pobj = GetObject(propPropertyType);
 //	pobj->SetPropertyLink(propPropertyType, GetObject(proptypeLink));
@@ -2823,33 +2845,33 @@ CNeoDoc::UIAddNewFolder(BObject* pobjParent /* = 0 */,
 		ULONG lngClassID = classFolder;
 	
 		// Add a new folder to the document
-		BObject* pobjNew = AddObject(pobjParent, lngClassID, strName);
-		ASSERT_VALID(pobjNew);
+		HObject hobjNew = CreateObject(lngClassID, strName, pobjParent);
 
 		// Set description
-		pobjNew->SetPropertyText(propDescription, strDescription, FALSE, FALSE);
+		hobjNew->SetPropertyText(propDescription, strDescription, FALSE, FALSE);
 
 		// Set default class and default columns
-		if (dlg.m_pobjDefaultClass != 0) {
-			ASSERT_VALID(dlg.m_pobjDefaultClass);
-			pobjNew->SetPropertyLink(propDefaultClass, dlg.m_pobjDefaultClass, FALSE, FALSE);
+		BObject* pobjDefaultClass = dlg.m_pobjDefaultClass;
+		if (pobjDefaultClass != 0) {
+			ASSERT_VALID(pobjDefaultClass);
+			hobjNew->SetPropertyLink(propDefaultClass, pobjDefaultClass, FALSE, FALSE);
 			// Initialize column array based on default class
-			pobjNew->SetColumnsBasedOnClass(dlg.m_pobjDefaultClass);
+			hobjNew->SetColumnsBasedOnClass(pobjDefaultClass);
 		}
 		
-		// Tell all views about the new object via hintAdd
-		UpdateAllViewsEx(NULL, hintAdd, pobjNew);
+		// Add object to database and tell views
+		AddObject(hobjNew);
 
 		// Now select the object as the current object if specified by the parameter bSelectNewObject
 		// Also set focus to viewText
 		if (bSelectNewObject) {
-			SetCurrentObject(pobjNew, NULL);
+			SetCurrentObject(hobjNew, NULL);
 			// Now set focus to text view if available
 			CFrameChild* pFrame = GetMDIChildFrame();
 			pFrame->ShowView(viewText, TRUE);
 		}
 
-		return pobjNew;
+		return hobjNew;
 	}
 	else
 		return NULL;
@@ -2907,18 +2929,20 @@ CNeoDoc::Import() {
 		BObject* pobjCurrent = GetCurrentObject();
 
 		// Create the new object as child of the current one
-		BObject* pobjNew = AddObject(pobjCurrent, classPaper, strFileTitle);
+		HObject hobjNew = CreateObject(classPaper, strFileTitle, pobjCurrent);
 
 		// Set its rtf property
-		pobjNew->SetPropertyText(propRtfText, strText, FALSE, FALSE);
+		hobjNew->SetPropertyText(propRtfText, strText, FALSE, FALSE);
 
-//LPCTSTR t = pobjNew->GetPropertyText(propRtfText);//!
+//LPCTSTR t = hobjNew->GetPropertyText(propRtfText);//!
 
 		// Tell all the views about the new object
-		UpdateAllViewsEx(NULL, hintAdd, pobjNew);
+//		UpdateAllViewsEx(NULL, hintAdd, pobjNew);
+
+		AddObject(hobjNew);
 
 		// Select the new object
-		SetCurrentObject(pobjNew, NULL);
+		SetCurrentObject(hobjNew, NULL);
 	}
 
 
@@ -3790,12 +3814,13 @@ CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate) {
 	ULONG nID = pobjTemplate->GetObjectID();
 	ASSERT(nID < lngUserIDStart); // should be a system object
 	BObject* pobjThis = this->GetObject(nID);
-	if (pobjThis == 0) {
+	if (pobjThis == NULL) {
 		// Doesn't exist - we need to add it
 		pobjThis = new BObject();
 		pobjThis->SetDoc(this);
 //		pobjThis->CopyFrom(pobjTemplate);
-		this->AddObjectToIndex(nID, pobjThis);
+		pobjThis->SetObjectID(nID);
+		this->AddObjectToIndex(pobjThis);
 	}
 	else {
 		// Exists - update it
@@ -4038,4 +4063,11 @@ CNeoDoc::CreateTemplate() {
 	//
 	return OnOpenDocument(theApp.m_strTemplatePath);
 
+}
+
+
+
+void CNeoDoc::RemoveObjectFromIndex(ULONG lngObjectID)
+{
+	m_mapObjects.RemoveKey(lngObjectID);
 }

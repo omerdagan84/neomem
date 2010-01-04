@@ -62,8 +62,7 @@ BOOL CPageClassIcon::OnInitDialog()
 {
 	// Get document and parent sheet
 	m_pDoc = CNeoDoc::GetDoc();
-	ASSERT_VALID(m_pDoc);
-	m_psh = (CSheetWizard*) GetParent();
+	m_psh = (CSheetWizard*) GetParent(); //,cast
 	ASSERT_VALID(m_psh);
 
 	// Call base class (calls DoDataExchange)

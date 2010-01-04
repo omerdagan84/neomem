@@ -1077,7 +1077,7 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 			ULONG lngClassID = pobjClass->GetObjectID();
 			CString strName;
 			pobjClass->GetClassDefNewName(strName);
-			BObject* pobjNew = m_pDoc->AddObject(pobjParent, lngClassID, strName);
+			BObject* pobjNew = m_pDoc->CreateObject(lngClassID, strName, pobjParent);
 			
 			// Set the property that the user was editing
 			ULONG lngPropertyID = m_lvw.GetColumnPropertyID(pLVITEM->iSubItem);
@@ -1088,7 +1088,10 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 			m_lvw.SetItem(nItem, 0, LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM, LPSTR_TEXTCALLBACK, nImage, 0, 0, (LPARAM) pobjNew);
 
 			// Tell all other views about new object also
-			m_pDoc->UpdateAllViewsEx(this, hintAdd, pobjNew);
+//			m_pDoc->UpdateAllViewsEx(this, hintAdd, pobjNew);
+
+			// Add object to database and tell views
+			m_pDoc->AddObject(pobjNew);
 
 			// Now re-add the dummy row
 			m_lvw.AddDummyRow();
@@ -1719,7 +1722,7 @@ void CViewContents::OnObjEditInDialog()
 		ULONG lngClassID = pobjClass->GetObjectID();
 		CString strName;
 		pobjClass->GetClassDefNewName(strName);
-		pobj = m_pDoc->AddObject(pobjParent, lngClassID, strName);
+		pobj = m_pDoc->CreateObject(lngClassID, strName, pobjParent);
 
 		// Add new object to listview
 		//. lvw should handle removing and adding the dummy row
@@ -1728,7 +1731,11 @@ void CViewContents::OnObjEditInDialog()
 		m_lvw.AddDummyRow();
 
 		// Tell all views about new object
-		m_pDoc->UpdateAllViewsEx(this, hintAdd, pobj);
+//		m_pDoc->UpdateAllViewsEx(this, hintAdd, pobj);
+
+		// Add object to database and tell views
+		m_pDoc->AddObject(pobj);
+
 	}
 	ASSERT_VALID(pobj);
 

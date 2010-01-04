@@ -2620,34 +2620,47 @@ CNeoMem::DoTests() {
 		// throw ALL commands at it (esp flaky/suspicious ones), 
 		// then check that it's in proper state.
 		
+
 		CNeoMem::CloseAllDocuments(FALSE);
-
 		CNeoMem::OnFileNew();		
-
 		CNeoDoc* pdoc = CNeoDoc::GetDoc();
 
 //		CUI* pui = this;
 //		CNeoMem* pui = this;
 
-		// add a folder for fish
 		//, should take and return handles, not pointers. 
 		//, all props should be optional. have a default location, class, name. 
-//		BObject* pobj = pdoc->AddObject(this, classFolder, "fish");
-//		HObject hobj = pui->
-		// should document really know about current object? NO! that's a ui thing. 
+
+		//, should document really know about current object? NO! that's a ui thing. 
 		// there could be multiple ui's looking at the db. duh. 
 		// it's pretty entwined in cneodoc though. 
 
-		typedef BObject* HObject;
-
-
+		// add folder for fish
 		HObject hobjParent = pdoc->GetCurrentObject();
-		HObject hobj = pdoc->AddObject(hobjParent, classFolder, "fish");
-		ASSERT_VALID(hobj);
-		pdoc->UpdateAllViewsEx(NULL, hintAdd, hobj);
+		HObject hobj = pdoc->CreateObject(classFolder, "Fish", hobjParent);
+		pdoc->AddObject(hobj);
+
+		// should just be
+//		HObject hobj = pdoc->AddObject(classFolder, "fish");
 
 
-		pdoc->UIAddNewObject();
+		// add a fish class
+		hobjParent = pdoc->GetObject(rootClass);
+		hobj = pdoc->CreateObject(classClass, "Fish", hobjParent);
+		//, templates are easier to use than classes. and make more sense anyway. meh. 
+
+		
+		// import a new icon
+		HObject hobjIcon;
+//		hobjIcon = pdoc->UIImportIcon("foo.ico"); // nonexistent file
+//		hobjIcon = pdoc->UIImportIcon("neomem.cnt"); // bad file
+		hobjIcon = pdoc->UIImportIcon("..\\..\\..\\test\\Fish.ico");
+//		hobjIcon = pdoc->UIImportIcon();
+
+		// set folder default to fish class
+//		pdoc->UIChangeObjectContents(hobjFishClass);
+
+//		pdoc->UIAddNewObject();
 
 
 

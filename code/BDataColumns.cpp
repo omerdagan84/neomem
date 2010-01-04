@@ -347,13 +347,15 @@ BOOL BDataColumns::FindReferences(BObject* pobjFind)
 	ASSERT_VALID(pobjFind);
 
 	ULONG lngPropertyID = pobjFind->GetObjectID();
-	ASSERT(lngPropertyID);
-	ASSERT(m_aci.GetSize() >= m_nColumns);
-	// Walk through columninfo objects and look for references
-	for (int i = 0; i < m_nColumns; i++)
-	{
-		if (lngPropertyID == m_aci[i].m_lngPropertyID)
-			return TRUE;
+	if (lngPropertyID) { // could be zero, eg if it's a temporary object
+		ASSERT(lngPropertyID); //. bombing on canceling from import icon
+		ASSERT(m_aci.GetSize() >= m_nColumns);
+		// Walk through columninfo objects and look for references
+		for (int i = 0; i < m_nColumns; i++)
+		{
+			if (lngPropertyID == m_aci[i].m_lngPropertyID)
+				return TRUE;
+		}
 	}
 	return FALSE;
 }

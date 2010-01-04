@@ -45,7 +45,7 @@ private:
 	void OnClassChanged();
 
 	CNeoDoc* m_pDoc;
-	BOOL m_bAdd; // Add mode or edit mode
+	BOOL m_bAddMode; // Add mode or edit mode
 	BOOL m_bLocationComboFilled;
 	BOOL m_bNameChanged;
 

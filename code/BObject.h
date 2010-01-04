@@ -19,12 +19,13 @@
 #include "FileText.h"
 
 
-class BObject : public CObject
-{
+class BObject : public CObject {
+
     DECLARE_SERIAL(BObject)
 
-// Construction
 public:
+
+	// Construction
 	BObject(); // create from serialization only // huh?
 	BObject(ULONG lngClassID); // so can set class id from neodoc. 
 	virtual ~BObject();
@@ -32,14 +33,14 @@ public:
 //	const BObject& operator=( const BObject& a ); // Assignment operator
 //	BOOL operator==(BObject a); // Equivalence operator
 
-// Operations
-public:
+	// Operations
 	BOOL AddChild(BObject* pobjChild, BOOL bCheckForDuplicates);
 	BOOL AddProperty(BObject* pobjProperty);
 	BOOL AddRtf(ULONG lngPropertyID, CString& strRtf); // Add the specified rtf text to the specified property
 	void ChangeNamePropertyType(ULONG lngClassID, ULONG lngNewPropertyTypeID);
 	void ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPropertyDef, ULONG lngNewPropertyTypeID);
 	BOOL ClassDefAddProperty(ULONG lngPropertyID);
+	void ClearFlag(ULONG lngFlag);
 	void ConvertToHardLinks(BOOL bRecurse);
 	void ConvertToSoftLinks(BOOL bRecurse);
 	void CopyFrom(BObject* pobj);
@@ -100,7 +101,7 @@ public:
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
 	BOOL SetData(BData* pData);
 	void SetDoc(CNeoDoc* pdoc) { m_pDoc = pdoc; }; // inline
-	BOOL SetFlag(ULONG lngFlag, BOOL bValue, BOOL bRecurse = FALSE);
+	void SetFlag(ULONG lngFlag, BOOL bValue = TRUE, BOOL bRecurse = FALSE);
 	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; }; // inline
 	BOOL SetIconID(ULONG lngIconID);
 	void SetObjectID(ULONG lngObjectID) { m_lngObjectID = lngObjectID; }; // inline
@@ -115,14 +116,14 @@ public:
 
 
 
-// Attributes
-// These are serialized
-private:
+	// Attributes
+	// These are serialized
+	private:
 	ULONG m_lngObjectID; // Unique ObjectID, or 0 if this is a property BObject.
 	ULONG m_lngClassID;	// ClassID of this BObject, or PropertyID if this is a property BObject.
-public: // grr, change to private eventually
+	public: // grr, change to private eventually
 	ULONG m_lngIconID;	// IconID of this BObject (0 means it's using the classdef icon)
-private:
+	private:
 	ULONG m_lngFlags; // 32 bit flags
 	BObjects* m_paChildren; // pointer to list containing pointers to child bobjects. null if has no children.
 	BObjects* m_paProperties; // pointer to list containing pointers to property bobjects. null if has no properties.
@@ -141,16 +142,16 @@ private:
 //,	COleDateTime m_dateModified;
 
 
-// These are not serialized
+	// These are not serialized
 	CNeoDoc* m_pDoc; // pointer to the document which stores this bobject
 	CStringEx m_strTextCache; // This is a cache for the text-representation for this data object
 //	int m_bStringValid; // Flag indicating if string cache is valid. Set to false when data changes
 
 
 #ifdef _DEBUG
-public:
+	public:
     virtual void AssertValid() const;
-    virtual void Dump( CDumpContext& dc ) const;
+    virtual void Dump(CDumpContext& dc) const;
 #endif
 
 };

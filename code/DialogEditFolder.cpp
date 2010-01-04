@@ -49,7 +49,7 @@ CDialogEditFolder::CDialogEditFolder(CWnd* pParent /*=NULL*/)
 //	m_bNameChanged = FALSE;
 //	m_bDescriptionChanged = FALSE;
 	m_bLocationComboFilled = FALSE;
-	m_bAdd = FALSE;
+	m_bAddMode = FALSE;
 }
 
 
@@ -109,14 +109,14 @@ BOOL CDialogEditFolder::OnInitDialog()
 	m_cboLocation.SetCurSel(0);
 
 	// Disable location combo if in edit mode (don't let user change location that way for now)
-	if (m_bAdd == FALSE)
+	if (m_bAddMode == FALSE)
 		m_cboLocation.EnableWindow(FALSE);
 
 	// Select text in name textbox
 	m_txtName.SetSel(0, -1);
 
 	// Change labels based on add/edit mode
-//	if (m_bAdd == FALSE)
+//	if (m_bAddMode == FALSE)
 //	{
 //		m_lblClass.SetWindowText("&Class of object");
 //		m_lblLocation.SetWindowText("&Location of object");
@@ -191,7 +191,7 @@ int CDialogEditFolder::DoModalAddFolder(CString &strName, CString &strDescriptio
 	m_strDescription = strDescription;
 	m_pobjParent = pobjParent;
 	m_pobjDefaultClass = pobjDefaultClass;
-	m_bAdd = TRUE;
+	m_bAddMode = TRUE;
 	return DoModal();
 }
 
@@ -206,7 +206,7 @@ int CDialogEditFolder::DoModalEditFolder(CString &strName, CString &strDescripti
 	m_pobjDefaultClass = pobjDefaultClass;
 //	m_bNameChanged = TRUE; // prevent "New <classname>"
 //	m_bDescriptionChanged = TRUE; // prevent "New <classname>"
-	m_bAdd= FALSE;
+	m_bAddMode = FALSE;
 	return DoModal();
 }
 

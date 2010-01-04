@@ -33,8 +33,7 @@ END_MESSAGE_MAP()
 
 
 
-CPageClassIntro::CPageClassIntro() : CPropertyPage(CPageClassIntro::IDD)
-{
+CPageClassIntro::CPageClassIntro() : CPropertyPage(CPageClassIntro::IDD) {
 	//{{AFX_DATA_INIT(CPageClassIntro)
 	//}}AFX_DATA_INIT
 	m_pDoc = NULL;
@@ -42,18 +41,16 @@ CPageClassIntro::CPageClassIntro() : CPropertyPage(CPageClassIntro::IDD)
 	m_pobj = NULL;
 }
 
-CPageClassIntro::~CPageClassIntro()
-{
+CPageClassIntro::~CPageClassIntro() {
 }
 
 
 // Note: This only gets called once!!
-BOOL CPageClassIntro::OnInitDialog() 
-{
+BOOL CPageClassIntro::OnInitDialog() {
+
 	// Get document and parent sheet
 	m_pDoc = CNeoDoc::GetDoc();
-	ASSERT_VALID(m_pDoc);
-	m_psh = (CSheetWizard*) GetParent();
+	m_psh = (CSheetWizard*) GetParent(); //,cast
 	ASSERT_VALID(m_psh);
 
 	// Call base class
@@ -78,35 +75,31 @@ BOOL CPageClassIntro::OnInitDialog()
 	m_lvw.DeleteItemData((LPARAM) m_psh->m_pobjAdd);
 
 	// Select the object to edit
-//	if (!m_psh->m_bAdd && m_pobj == 0)
+//	if (!m_psh->m_bAddMode && m_pobj == 0)
 //		// If we're in add mode and no valid object, select first one
 //		m_lvw.SelectItem(0);
 //	else
 //		m_lvw.SelectItemData((DWORD) m_pobj);
 
-	if (m_psh->m_bAdd)
-	{
+	if (m_psh->m_bAddMode) {
 		m_lvw.SelectItem(0); // select first class
 		m_optAdd.SetCheck(1); // select add
 		OnOptAdd(); // enable/disable controls
 	}
-	else
-	{
+	else {
 		m_lvw.SelectItemData((DWORD) m_pobj); // select specified class
 		m_optEdit.SetCheck(1); // select edit
 		OnOptEdit(); // enable/disable controls
 	}
 
 	// If in add only or edit only mode, disable appropriate option
-	if (m_psh->m_nAddEditMode == CSheetWizard::modeAddOnly)
-	{
+	if (m_psh->m_nAddEditMode == CSheetWizard::modeAddOnly) {
 		m_optEdit.EnableWindow(FALSE);
 		m_lvw.EnableWindow(FALSE);
 //		m_lblClass.EnableWindow(FALSE);
 		m_btnDelete.EnableWindow(FALSE);
 	}
-	else if (m_psh->m_nAddEditMode == CSheetWizard::modeEditOnly)
-	{
+	else if (m_psh->m_nAddEditMode == CSheetWizard::modeEditOnly) {
 		m_optAdd.EnableWindow(FALSE);
 	}
 	
@@ -119,8 +112,8 @@ BOOL CPageClassIntro::OnInitDialog()
 
 
 
-void CPageClassIntro::DoDataExchange(CDataExchange* pDX)
-{
+void CPageClassIntro::DoDataExchange(CDataExchange* pDX) {
+
 	// Get temp object we're working with (stored in the sheet)
 	m_pobj = m_psh->m_pobj;
 	ASSERT_VALID(m_pobj);
@@ -133,30 +126,31 @@ void CPageClassIntro::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_OPT_EDIT, m_optEdit);
 	//}}AFX_DATA_MAP
 
-	if (!pDX->m_bSaveAndValidate) // Load
-	{
+	if (!pDX->m_bSaveAndValidate) { // Load
 	}
-	else // Save
-	{
-		// Set a variable in the wizard sheet so other sheets can have access to it
-		m_psh->m_bAdd = m_optAdd.GetCheck();
+	else { // Save
 
-		if (m_psh->m_bAdd) // Add mode
-		{
+		// Set a variable in the wizard sheet so other sheets can have access to it
+		m_psh->m_bAddMode = m_optAdd.GetCheck();
+
+		if (m_psh->m_bAddMode) { // Add mode
+
 			// Use the add object
 			m_psh->m_pobj = m_psh->m_pobjAdd;
 //			m_psh->m_bAddFolder = FALSE;
 
-			// Make sure the Temp flag is cleared so the new class will show up in the contents step!
+			// Make sure the Temp flag is cleared so the new class will 
+			// show up in the contents step!
 			m_psh->m_pobjAdd->SetFlag(flagTemp, FALSE, FALSE);
 
 			// Make sure controls are enabled properly
 			OnOptAdd();
 
 		}
-		else // Edit mode
-		{
-			// Make sure the Temp flag is set on the new class so it won't show up in the contents step!
+		else { // Edit mode
+			
+			// Make sure the Temp flag is set on the new class so it 
+			// won't show up in the contents step!
 			m_psh->m_pobjAdd->SetFlag(flagTemp, TRUE, FALSE);
 
 			// Save the item the user chose to edit to the sheet
@@ -173,8 +167,7 @@ void CPageClassIntro::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BOOL CPageClassIntro::OnSetActive() 
-{
+BOOL CPageClassIntro::OnSetActive() {
 //	CPropertySheet* psheet = (CPropertySheet*) GetParent();
 	CSheetWizard* psheet = (CSheetWizard*) GetParent();
 	psheet->SetWizardButtons(PSWIZB_NEXT);
@@ -185,8 +178,8 @@ BOOL CPageClassIntro::OnSetActive()
 
 
 
-void CPageClassIntro::OnOptAdd() 
-{
+void CPageClassIntro::OnOptAdd() {
+
 	// Disable list of avail classes
 //	m_lvw.ShowWindow(SW_HIDE);
 //	m_lblClass.ShowWindow(SW_HIDE);
@@ -203,8 +196,8 @@ void CPageClassIntro::OnOptAdd()
 	m_lvw.SelectNone();
 }
 
-void CPageClassIntro::OnOptEdit() 
-{
+void CPageClassIntro::OnOptEdit() {
+
 	// Enable list of classes
 //	m_lvw.ShowWindow(SW_SHOW);
 //	m_lblClass.ShowWindow(SW_SHOW);
@@ -227,15 +220,13 @@ void CPageClassIntro::OnOptEdit()
 }
 
 
-void CPageClassIntro::OnBtnDelete() 
-{
+void CPageClassIntro::OnBtnDelete() {
+
 	// Delete the selected class
 	BObject* pobjClass = (BObject*) m_lvw.GetSelectedItemData();
-	if (pobjClass)
-	{
+	if (pobjClass) {
 		ASSERT_VALID(pobjClass);
-		if (m_pDoc->UIDeleteObject(pobjClass))
-		{
+		if (m_pDoc->UIDeleteObject(pobjClass)) {
 			// Remove class from list
 			m_lvw.DeleteSelectedItem();
 			// bug: and select something!
@@ -245,10 +236,7 @@ void CPageClassIntro::OnBtnDelete()
 }
 
 
-
-
-void CPageClassIntro::OnNotifyDblClkLvw(NMHDR* pNMHDR, LRESULT* pResult) 
-{
+void CPageClassIntro::OnNotifyDblClkLvw(NMHDR* pNMHDR, LRESULT* pResult) {
 	// Goto next page in wizard
 	m_psh->PressButton(PSBTN_NEXT);
 	*pResult = 0;
@@ -256,9 +244,7 @@ void CPageClassIntro::OnNotifyDblClkLvw(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 
-
-void CPageClassIntro::OnSetFocusLvwClass(NMHDR* pNMHDR, LRESULT* pResult) 
-{
+void CPageClassIntro::OnSetFocusLvwClass(NMHDR* pNMHDR, LRESULT* pResult) {
 	// Select edit radio button and turn off add
 //	m_optAdd.SetCheck(0);
 //	m_optEdit.SetCheck(1);
@@ -276,13 +262,13 @@ void CPageClassIntro::OnSetFocusLvwClass(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 
-void CPageClassIntro::OnItemChangedLvw(NMHDR* pNMHDR, LRESULT* pResult) 
-{
+void CPageClassIntro::OnItemChangedLvw(NMHDR* pNMHDR, LRESULT* pResult) {
+
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 
 	// If item selected, switch to add mode
-	if (m_lvw.GetSelectedItem() != -1)
-	{
+	if (m_lvw.GetSelectedItem() != -1) {
+
 		// Select edit radio button and turn off add
 		m_optAdd.SetCheck(0);
 		m_optEdit.SetCheck(1);

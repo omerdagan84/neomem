@@ -1,5 +1,8 @@
 
 // CDialogEditLink
+// This dialog lets the user edit a Link property - they can choose 
+// object(s) to link to. 
+// Also lets them add and edit objects in place, to a degree. 
 // Date: February 2000
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -17,20 +20,21 @@ class BObject;
 class BDataLink;
 
 
-class CDialogEditLink : public CDialog
-{
-// Construction
+class CDialogEditLink : public CDialog {
+
 public:
+
+	// Construction
 	CDialogEditLink(CWnd* pParent = NULL);   // standard constructor
 
-// enum
-public:
-	enum eButtonFlags {flagShowNone = 0, flagShowAdd = 1, flagShowImport = 2, 
-						flagShowDefault = 4, flagShowEdit = 8, flagShowDelete = 16, 
-						flagShowClose = 32,	flagShowAddChild = 64};
+	// Enums
+	enum eButtonFlags {
+		flagShowNone = 0, flagShowAdd = 1, flagShowImport = 2, 
+		flagShowDefault = 4, flagShowEdit = 8, flagShowDelete = 16, 
+		flagShowClose = 32,	flagShowAddChild = 64
+	};
 
-// Operations
-public:
+	// Operations
 	void AddObject(BOOL bAddAsChild);
 	void AddObjects();
 	int DoModalEdit(CString strCaption, CString strInstructions, ULONG lngStartID, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
@@ -40,12 +44,10 @@ public:
 	void ShowFilterCheckbox(BOOL bFilterOn, ULONG lngFilterExcludeFlags);
 	void UpdateControls();
 
-// Attributes
-public:
-//	UINT m_nMode; // determines which mode will be shown
-	// IDD_EDIT_LINK
-	// IDD_MOVE_TO
-	// etc
+	// Attributes
+
+	// determines which mode will be shown - IDD_EDIT_LINK, IDD_MOVE_TO, etc
+	// UINT m_nMode; 
 
 	// Fill these in before calling DoModal, will contain results on exit
 	CString m_strCaption; // [in]
@@ -80,7 +82,7 @@ private:
 	CBitmap m_bmpUp;
 	CBitmap m_bmpDown;
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CDialogEditLink)
 	enum { IDD = IDD_EDIT_LINK };
 	CButton	m_chkFilter;
@@ -102,7 +104,7 @@ private:
 	//}}AFX_DATA
 
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CDialogEditLink)
 	public:
@@ -111,9 +113,8 @@ private:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	// Generated message map functions
+	// Message Map
+	protected:
 	//{{AFX_MSG(CDialogEditLink)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBtnAdd();

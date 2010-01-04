@@ -45,10 +45,9 @@ END_MESSAGE_MAP()
 
 
 
-CSheetWizard::CSheetWizard()
-{
-	m_pDoc = NULL;
-	m_bAdd = TRUE;
+CSheetWizard::CSheetWizard() {
+	m_pdoc = NULL;
+	m_bAddMode = TRUE;
 	m_pobj = NULL;
 	m_pobjAdd = NULL;
 	m_pobjEdit = NULL;
@@ -58,22 +57,18 @@ CSheetWizard::CSheetWizard()
 }
 
 CSheetWizard::CSheetWizard(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-	:CPropertySheetEx2(nIDCaption, pParentWnd, iSelectPage)
-{
+	:CPropertySheetEx2(nIDCaption, pParentWnd, iSelectPage) {
 }
 
 CSheetWizard::CSheetWizard(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-	:CPropertySheetEx2(pszCaption, pParentWnd, iSelectPage)
-{
+	:CPropertySheetEx2(pszCaption, pParentWnd, iSelectPage) {
 }
 
-CSheetWizard::~CSheetWizard()
-{
+CSheetWizard::~CSheetWizard() {
 }
 
 
-int CSheetWizard::OnCreate(LPCREATESTRUCT lpCreateStruct) 
-{
+int CSheetWizard::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 	if (CPropertySheetEx2::OnCreate(lpCreateStruct) == -1)
 		return -1;	
 	return 0;
@@ -81,19 +76,25 @@ int CSheetWizard::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 
-//, ugh this code is not very clean
+// Run the dialog
 // Basically, you have two dummy bobjects m_pobjAdd and m_pobjEdit.
-// If user chooses Add the wizard will use the former, if they choose Edit, the
-// class will be copied to m_pobjEdit, so that the user can cancel out of the wizard. 
-// m_pobj points to one or the other of these bobjects, and is what the pages in the wizard refer to.
-// Parameters
+// If user chooses Add the wizard will use m_pobjAdd, if they choose Edit, 
+// the class will be copied to m_pobjEdit, so that the user can cancel out 
+// of the wizard. 
+// m_pobj points to one or the other of these bobjects, and is what the 
+// pages in the wizard refer to.
+//
+// Parameters:
 //	nAddEditMode - set to modeAddOrEdit to start the wizard with the intro screen
 //	pobjClass - for modeEdit, pass the class to edit
+//
 // Returns
 //	wizard answer (ID_WIZFINISH or IDCANCEL)
+//
+//, ugh this code sucks.
 //int CSheetWizard::DoModalParameters(eWizardMode nMode, BObject* pobj /* = 0 */)
-int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 */)
-{
+int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 */) {
+
 	m_nAddEditMode = nAddEditMode;
 
 	// Create the page objects
@@ -124,46 +125,43 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 	AddPage(&pgSummary);
 
 	// Get document 
-	m_pDoc = CNeoDoc::GetDoc();
-	ASSERT_VALID(m_pDoc);
-
-	BObject* pobjBaseClass = m_pDoc->GetObject(rootClass);
-	ASSERT_VALID(pobjBaseClass);
+	m_pdoc = CNeoDoc::GetDoc();
+	BObject* pobjBaseClass = m_pdoc->GetObject(rootClass);
 
 	// Save document modified flag so can restore if user hits cancel in wizard.
-	BOOL bSaveDocModified = m_pDoc->IsModified();
+	BOOL bSaveDocModified = m_pdoc->IsModified();
 
 	// Create our temporary objects.
 	// Add object will be used if user chooses Add mode, 
 	// Edit object will be used if they choose Edit mode. 
 	// m_pobj will point to the correct object.
-	// Both are added to the Classes folder.
+	// Both are added to the Classes folder. 
 
 	// Create a new class object
-	// Note: We create this with flagTemp, but remove this flag if user opts to create a new class,
-	// then set it back if they choose to edit an existing one.
-	m_pobjAdd = m_pDoc->AddObject(pobjBaseClass, classClass, _T("New Class"), 0, 0, flagSystem | flagTemp);
-	ASSERT_VALID(m_pobjAdd);
+	// Note: We create this with flagTemp, but remove this flag if user 
+	// opts to create a new class, then set it back if they choose to 
+	// edit an existing one.
+	m_pobjAdd = m_pdoc->CreateObject(classClass, 
+		_T("New Class"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
 	
 	// Create a class object that will be a copy of an existing class object.
 	// Note: if we pick a class that's a child of another class we have to use move.
-	m_pobjEdit = m_pDoc->AddObject(pobjBaseClass, classClass, _T("@dummy edit class!"), 0, 0, flagSystem | flagTemp);
-	ASSERT_VALID(m_pobjEdit);
+	m_pobjEdit = m_pdoc->CreateObject(classClass, 
+		_T("@dummy edit class!"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
 	
-	m_bAdd = TRUE; // Default is to add a new class
+	m_bAddMode = TRUE; // Default is to add a new class
 	m_pobj = m_pobjAdd;
 //	m_bAddFolder = FALSE;
 
-	if (m_nAddEditMode == modeEditOnly)
-	{
-		m_bAdd = FALSE;
+	if (m_nAddEditMode == modeEditOnly) {
+		m_bAddMode = FALSE;
 //		m_pobj = pobj; // have it select this class in intro page
 		SetEditClass(pobjClass); // copy the specified class to our edit bobject
 	}
 
 //	m_strFolderName = _T("New Folder");
 //	m_strFolderName.Empty();
-//	BObject* pobjUserRoot = m_pDoc->GetObject(rootUser);
+//	BObject* pobjUserRoot = m_pdoc->GetObject(rootUser);
 //	ASSERT_VALID(pobjUserRoot);
 //	m_pobjFolderLocation = pobjUserRoot;
 //	m_bAutosort = TRUE;
@@ -176,51 +174,50 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 //	m_psh.dwFlags |= PSH_WIZARDHASFINISH;
 
 	// Show the wizard
-	if (DoModal() == ID_WIZFINISH)
-	{
+	if (DoModal() == ID_WIZFINISH) { // user clicked Finish
+
 		BObject* pobjClass = 0; // the class the user was adding or editing, for add folder later
 
 		// Delete temporary objects if necessary
-		if (m_bAdd) // Add mode
-		{
-			// If in Add mode, just need to delete the edit object quietly
-			// The add object is fine where it is
+		if (m_bAddMode) { // Add mode
+
+			// If in Add mode, just need to delete the Edit object quietly.
+			// The add object is fine where it is.
 			// First set it back to base class so we don't screw things up!
 			m_pobjEdit->SetParent(pobjBaseClass);
 			// Also clear the nodelete flag in case it's still set!
-			m_pobjEdit->SetFlag(flagNoDelete, FALSE, FALSE);
-			m_pDoc->UIDeleteObject(m_pobjEdit, TRUE);
+			m_pobjEdit->ClearFlag(flagNoDelete);
+//			m_pdoc->UIDeleteObject(m_pobjEdit, TRUE);
+			m_pobjEdit->DeleteObject(FALSE, FALSE);
 
 			// Modify flag for new object (remove flagTemp so it will show up)
 //			// Note: User might have set the flagObjectHasChildren flag so we need to preserve that.
 //			m_pobjAdd->m_lngFlags = flagSystem;
 //			m_pobjAdd->m_lngFlags |= m_bAutosort ? 0 : flagNoAutosort; // Turn autosort off if user chose it
-			m_pobjAdd->SetFlag(flagTemp, FALSE);
+			m_pobjAdd->ClearFlag(flagTemp);
 			
-			// Move object to new parent, if changed, but don't need to notify views cause this is a new object
-			if (m_pobjAdd->GetParent() != pobjBaseClass)
-			{
+			// Move object to new parent, if changed, 
+			// but don't need to notify views because this is a new object
+			if (m_pobjAdd->GetParent() != pobjBaseClass) {
 				// first set it back to the base class so we don't screw things up
 				BObject* pobjNewParent = m_pobj->GetParent();
 				m_pobjAdd->SetParent(pobjBaseClass);
 				ASSERT_VALID(m_pobjAdd->GetParent());
-//				m_pDoc->MoveObject(m_pobjAdd, pobjNewParent, FALSE);
+//				m_pdoc->MoveObject(m_pobjAdd, pobjNewParent, FALSE);
 				m_pobjAdd->MoveTo(pobjNewParent, FALSE, FALSE);
 			}
 
-			// Tell views about new object
-			m_pDoc->UpdateAllViewsEx(NULL, hintAdd, m_pobjAdd);
-
-			// Set document modified flag
-			m_pDoc->SetModifiedFlag();
+			// Add the object to the database index and tell views
+			m_pdoc->AddObject(m_pobjAdd);
 
 			pobjClass = m_pobjAdd;
 		}
 
-		else // Edit mode
-		{
-			// In Edit mode, we need to delete the add object, and copy the edit object properties
-			// to the original object, then delete the edit copy
+		else { // Edit mode
+			
+			// In Edit mode, we need to delete the add object, and copy the 
+			// edit object properties to the original object, then delete 
+			// the edit copy.
 
 			// Copy edit object properties
 			m_pobjEditOriginal->SetPropertyText(propName, m_pobj->GetPropertyText(propName), FALSE, FALSE);
@@ -235,17 +232,17 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			m_pobjEditOriginal->SetFlags(m_pobj->GetFlags());
 
 			// Remove the temp flag so it will show up
-//			m_pobjEditOriginal->m_lngFlags = m_pobj->m_lngFlags & ~flagTemp;
-			m_pobjEditOriginal->SetFlag(flagTemp, FALSE);
+			m_pobjEditOriginal->ClearFlag(flagTemp);
 
-			// If the name property type changes, we need to tell all objects to change their bdata's!
+			// If the name property type changes, we need to tell all 
+			// objects to change their bdata's!
 			BObject* pobjNewPropType = m_pobj->GetPropertyLink(propObjectNamePropertyType);
 			BObject* pobjOldPropType = m_pobjEditOriginal->GetPropertyLink(propObjectNamePropertyType);
 			if (pobjNewPropType != pobjOldPropType)
 			{
 				ULONG lngClassID = m_pobjEditOriginal->GetObjectID();
 				ULONG lngNewPropertyTypeID = pobjNewPropType->GetObjectID();
-				m_pDoc->GetRoot()->ChangeNamePropertyType(lngClassID, lngNewPropertyTypeID);
+				m_pdoc->GetRoot()->ChangeNamePropertyType(lngClassID, lngNewPropertyTypeID);
 			}
 
 			// Copy property bdata objects, if any
@@ -258,13 +255,13 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			// Note: Let's just assume that all properties changed - makes the code simpler
 			CHint h;
 			h.m_pobjObject = m_pobjEditOriginal;
-			h.m_lngPropertyID = propName; m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propDescription; m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propIconID; m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propObjectProperties; m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propObjectFlags; m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propObjectNamePropertyType; m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-//.			h.m_lngPropertyID = propObjectViewArrangement; m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_lngPropertyID = propName; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_lngPropertyID = propDescription; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_lngPropertyID = propIconID; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_lngPropertyID = propObjectProperties; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_lngPropertyID = propObjectFlags; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_lngPropertyID = propObjectNamePropertyType; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+//.			h.m_lngPropertyID = propObjectViewArrangement; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 			// Move object to new parent, if changed, and notify views
 			// don't do if on base class cause step 20 is screwy
@@ -275,7 +272,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 //				{
 //					BObject* pobjNewParent = m_pobj->m_pobjParent;
 //					ASSERT_VALID(m_pobj->m_pobjParent);
-////					m_pDoc->MoveObject(m_pobjEditOriginal, pobjNewParent, TRUE);
+////					m_pdoc->MoveObject(m_pobjEditOriginal, pobjNewParent, TRUE);
 //					m_pobjEditOriginal->MoveTo(pobjNewParent, FALSE, TRUE);
 //				}
 //			}
@@ -285,11 +282,13 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			m_pobjAdd->SetParent(pobjBaseClass);
 			m_pobjEdit->SetParent(pobjBaseClass);
 			m_pobjEdit->SetFlag(flagNoDelete, FALSE); // clear no delete flag in case it was set
-			m_pDoc->UIDeleteObject(m_pobjAdd, TRUE);
-			m_pDoc->UIDeleteObject(m_pobjEdit, TRUE);
+//			m_pdoc->UIDeleteObject(m_pobjAdd, TRUE);
+//			m_pdoc->UIDeleteObject(m_pobjEdit, TRUE);
+			m_pobjAdd->DeleteObject(FALSE, FALSE);
+			m_pobjEdit->DeleteObject(FALSE, FALSE);
 
 			// Set document modified flag
-			m_pDoc->SetModifiedFlag();
+			m_pdoc->SetModifiedFlag();
 
 			pobjClass = m_pobjEditOriginal;
 
@@ -302,13 +301,13 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			// so we'll need to walk through all items in each view,checking if
 			// it's a member of the class
 			// special hint message?
-//			m_pDoc->UpdateAllViewsEx(NULL, hintRefresh);
+//			m_pdoc->UpdateAllViewsEx(NULL, hintRefresh);
 //			h.m_lngClassID = pobjClass->GetObjectID();
-//			m_pDoc->UpdateAllViewsEx(NULL, hintClassIconChange, &h);
+//			m_pdoc->UpdateAllViewsEx(NULL, hintClassIconChange, &h);
 
 			// this is now done in seticonid
 //			if (bIconChanged)
-//				m_pDoc->UpdateAllViewsEx(NULL, hintRefreshAllIcons);
+//				m_pdoc->UpdateAllViewsEx(NULL, hintRefreshAllIcons);
 
 			// walk through all objects
 			// look up their class chain to see if classid is in it
@@ -320,10 +319,9 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 
 /*
 		// Add or Edit mode can let user add a folder, do that here
-		if (m_bAddFolder)
-		{
+		if (m_bAddFolder) {
 			ASSERT_VALID(m_pobjFolderLocation);
-			BObject* pobjFolder = m_pDoc->AddObject(m_pobjFolderLocation, classFolder, m_strFolderName);
+			BObject* pobjFolder = m_pdoc->AddObject(m_pobjFolderLocation, classFolder, m_strFolderName);
 			ASSERT_VALID(pobjFolder);
 
 			// Set the default object for this folder to be the class the user was editing
@@ -333,27 +331,29 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			pobjFolder->SetColumnsBasedOnClass(pobjClass);
 
 			// Tell views about new folder
-			m_pDoc->UpdateAllViewsEx(NULL, hintAdd, pobjFolder);
+			m_pdoc->UpdateAllViewsEx(NULL, hintAdd, pobjFolder);
 
 			// Now select it
-			m_pDoc->SetCurrentObject(pobjFolder, NULL);
+			m_pdoc->SetCurrentObject(pobjFolder, NULL);
 		}
 */
 
 		return ID_WIZFINISH;
 	}
-	else // User hit Cancel
-	{
+	else { // User hit Cancel
+
 		// Delete both temporary objects quietly
 		// First set objects back to the base class so we don't screw things up
 		m_pobjAdd->SetParent(pobjBaseClass);
 		m_pobjEdit->SetParent(pobjBaseClass);
 		m_pobjEdit->SetFlag(flagNoDelete, FALSE); // clear no delete flag in case it was set 
-		m_pDoc->UIDeleteObject(m_pobjAdd, TRUE);
-		m_pDoc->UIDeleteObject(m_pobjEdit, TRUE);
+//		m_pdoc->UIDeleteObject(m_pobjAdd, TRUE);
+//		m_pdoc->UIDeleteObject(m_pobjEdit, TRUE);
+		m_pobjAdd->DeleteObject(FALSE, FALSE);
+		m_pobjEdit->DeleteObject(FALSE, FALSE);
 
 		// Restore doc modified flag (adding and deleting temporary objects sets it to true)
-		m_pDoc->SetModifiedFlag(bSaveDocModified);
+		m_pdoc->SetModifiedFlag(bSaveDocModified);
 
 		return IDCANCEL;
 	}

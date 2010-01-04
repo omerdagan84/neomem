@@ -63,7 +63,7 @@ BOOL CPageClassSummary::OnInitDialog()
 	m_lblTitle.SetFont(&theApp.m_fontControlsBold);
 
 	// Set instructions if in edit mode
-	if (!m_psh->m_bAdd)
+	if (!m_psh->m_bAddMode)
 	{
 		m_lblInstructions.SetWindowText(_T("That's all the information NeoMem needs to modify the class."));
 	}
