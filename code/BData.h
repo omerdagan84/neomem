@@ -13,16 +13,16 @@ class BObject;
 class CNeoDoc;
 
 
-class BData : public CObject  
-{
+class BData : public CObject {
+
 	DECLARE_SERIAL(BData)
 
-// Construction
+	// Construction
 public:
 	BData();
 	~BData();
 
-// Operations
+	// Operations
 public:
 	virtual BOOL AddMenuItems(CMenu* pMenu, int nPos);
 	virtual void ConvertToSoftLinks();
@@ -40,7 +40,7 @@ public:
 	virtual void ResetData(); // use this to reset bdata's m_bCacheValid flag
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
-// Attributes
+	// Attributes
 protected:
 	CString m_strText; // This is a cache for the text-representation for this data object
 	// This is moved to the individual bdata's that need it in order to save memory

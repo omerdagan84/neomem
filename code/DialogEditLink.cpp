@@ -688,7 +688,7 @@ void CDialogEditLink::AddObject(BOOL bAddAsChild)
 		break;
 	case classIcon:
 		// Import new icon from .ico file
-		pobjNew = m_pDoc->UIImportIcon();
+		pobjNew = m_pDoc->UIImportIcon(gpgui);
 		break;
 	default:
 		{

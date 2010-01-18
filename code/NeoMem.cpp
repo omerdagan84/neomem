@@ -2348,6 +2348,9 @@ static BOOL AFXAPI AllocHook(size_t nSize, BOOL bObject, LONG lRequestNumber) {
 // The one and only CNeoMem object
 CNeoMem theApp;
 
+CGUI* gpgui = &theApp.m_gui;
+
+
 // Globally available cstring objects
 // When modifying a variable or function at file scope, the static keyword specifies 
 // that the variable or function has internal linkage (its name is not visible 
@@ -2673,11 +2676,11 @@ CNeoMem::DoTests() {
 		CStringEx strTestFolder = m_strApplicationFolder + "\\..\\..\\..\\Test\\";
 
 		HOBJECT hobjIcon = NULL;
-//		hobjIcon = pdoc->UIImportIcon("foo.ico"); // nonexistent file
-//		hobjIcon = pdoc->UIImportIcon("neomem.cnt"); // bad file
-//		hobjIcon = pdoc->UIImportIcon(strTestFolder + "Fish.ico");
-		hobjIcon = pdoc->UIImportIcon(strTestFolder + "Fish.ico", "Fish");
-//		hobjIcon = pdoc->UIImportIcon();
+//		hobjIcon = pdoc->UIImportIcon(gpgui, "foo.ico"); // nonexistent file
+//		hobjIcon = pdoc->UIImportIcon(gpgui, "neomem.cnt"); // bad file
+//		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico");
+		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico", "Fish");
+//		hobjIcon = pdoc->UIImportIcon(gpgui);
 
 		// attach the icon to fish class
 //		hobjFishClass->SetPropertyLink(propClassDefIcon
@@ -2694,6 +2697,16 @@ CNeoMem::DoTests() {
 
 		//. should just be
 //		HOBJECT hobjPlecy = pdoc->AddObject(classFish, "Plecy");
+
+		// pass it the ui, which is like the callback object. 
+		// it'll call the ui to get info from the user. 
+		// the ui interface will be defined in the database module.
+		// the ui will need to implement that interface. 
+		// ie derive a class from it, and pass an object of that class to the db fns. 
+		// like this one!
+//		pdoc->UIAddNewObject2(gpgui); 
+
+
 
 
 		// set folder default to fish class
@@ -2734,6 +2747,14 @@ CNeoMem::DoTests() {
 		// add another fish
 		HOBJECT hobjGlassfish = pdoc->CreateObject(classFish, "glassfish", hobjFishFolder);
 		pdoc->AddObject(hobjGlassfish);
+
+
+
+		// convert the prop to a string
+//		hobjPrice->SetPropertyData(propPropType, proptypeString);
+
+
+
 
 
 	}

@@ -25,6 +25,8 @@
 #include "FileFormats.h"
 #include "History.h"
 
+#include "UI.h"
+
 class CIconCache;
 class CFrameChild;
 
@@ -92,7 +94,7 @@ public:
 	BOOL AddObjectToIndex(HOBJECT hobj);
 	BData* CreateBData(OBJID idClassOrProperty);
 	BData* CreateBDataFromPropertyType(OBJID idPropertyType);
-	HOBJECT CreateObject(const OBJID idClass, const CString& strText, BObject* pobjParent = NULL, OBJID idObject = 0, OBJID idIcon = 0, ULONG lngFlags = 0);
+	HOBJECT CreateObject(const OBJID idClass, const CString& strName, BObject* pobjParent = NULL, OBJID idObject = 0, OBJID idIcon = 0, ULONG lngFlags = 0);
 	HOBJECT CreateProperty(const CString& strName, const OBJID idPropType, const CString& strDescription);
 	HOBJECT CreateClass(const CString& strName, const CString& strDescription = "", ULONG lngFlags = 0);
 	BOOL CreateTemplate();
@@ -149,7 +151,7 @@ public:
 //	void Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, CString strFormat, CFilename strFilename);
 	void Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat, CFilename strFilename);
 	void Import();
-	BObject* UIImportIcon(CString strFilename = "", CString strIconname = "");
+	BObject* UIImportIcon(CUI* pui, CString strFilename = "", CString strIconname = "");
 	BObject* UIMoveObjectTo();
 	BOOL UIRenameObject(BObject* pobj);
 	void UISetEncryption();

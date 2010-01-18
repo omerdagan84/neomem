@@ -30,6 +30,8 @@
 #include "StringEx.h"
 #include "Test.h"
 
+#include "GUI.h"
+
 
 class CFrameChild;
 class CFrameMain;
@@ -158,6 +160,8 @@ public:
 	BOOL m_bIgnoreLoadHint; // set to true during setcurrentobject hintselect so hintLoad will be ignored during tab select
 //	CLogFile* m_plogfile; // for debugging to logfile
 
+	CGUI m_gui; // the ui interface used by the database for callbacks
+
 	// File formats, initialized in InitInstance
 	CFileFormat m_ffCsv;
 	CFileFormat m_ffTab;
@@ -261,17 +265,20 @@ public:
 
 
 
-
-
-
-
-
 // Globals
 //----------------------------------------------------------------------------------------------------------
 //, yeesh, fix this
 
+// these are just declarations. see elsewhere for definitions. 
+
 // This lets other modules access the global application object
-extern CNeoMem theApp;
+extern CNeoMem theApp; //, rename to app or gapp
+
+
+//extern CGUI& gui; // reference to the gui object? can't do that. 
+//extern CGUI gui; 
+extern CGUI* gpgui; 
+
 
 // Let other modules access the global strings
 extern CString g_strSpace;

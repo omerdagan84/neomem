@@ -576,7 +576,7 @@ CNeoDoc::GetObject(OBJID idObject) {
 HOBJECT 
 CNeoDoc::CreateObject(
 					const OBJID idClass, 
-					const CString& strText, 
+					const CString& strName, 
 					BObject* pobjParent /*=NULL*/, 
 					OBJID idObject /*=0*/, 
 					OBJID idIcon /*=0*/, 
@@ -605,8 +605,8 @@ CNeoDoc::CreateObject(
 
 	// Set properties
 	pobjNew->SetFlags(lngFlags);
-	pobjNew->m_lngIconID = idIcon; //, leave as direct ref for now
-	pobjNew->SetObjectText(strText); // ie the object name
+	pobjNew->m_lngIconID = idIcon; //, leave as direct ref for now (too confusing yet!)
+	pobjNew->SetObjectText(strName); // ie the object name
 
 	// Add the new object to the specified parent object.
 	// This also sets the m_pobjParent property.
@@ -621,6 +621,66 @@ CNeoDoc::CreateObject(
 }
 
 
+
+
+/*
+// create and add object to database
+HOBJECT 
+CNeoDoc::AddyObject(
+					const CString& strName, 
+					const OBJID idClass, 
+					const BObject* pobjParent,
+					const ULONG lngAddFlags,
+					props
+					OBJID idObject, 
+					OBJID idIcon, 
+					ULONG lngFlags,
+					CView* pviewIgnore
+					) {
+
+	ASSERT_VALID(this);
+
+	// Create the new object
+	HOBJECT hobj = new BObject(this, idClass);
+
+	// get default flags if not specified
+//	HOBJECT hobjClassDef = GetObject(idClass);
+//	if (lngFlags == 0)
+//		lngFlags = hobjClassDef->GetPropertyFlags(propObjectFlags);
+
+	// Set properties
+	hobj->SetName(strName);
+	hobj->SetIcon(idIcon);
+	hobj->SetFlags(lngFlags);
+
+	// Add the new object to the specified parent object.
+	// This also sets the m_pobjParent property.
+//	if (hobjParent != NULL)
+//		hobjParent->AddChild(hobj, FALSE);
+	//, better - 
+	// hobj->SetParent(hobjParent); // will add to child list also
+
+	// Validate object again
+	ASSERT_VALID(hobj);
+
+
+	// Add the new object to the document's Index
+	this->AddObjectToIndex(hobj, idObject);
+
+	// Mark document as modified
+	this->SetModifiedFlag(TRUE);
+	
+	// Validate object again
+	ASSERT_VALID(hobj);
+
+	// Tell views about new object
+	this->UpdateAllViewsEx(pviewIgnore, hintAdd, hobj);
+
+	// Return a handle for the new object
+	return hobj;
+}
+
+*/
 
 
 
@@ -730,6 +790,22 @@ CNeoDoc::AddObjectToIndex(HOBJECT hobj) {
 
 	ASSERT_VALID(this);
 	ASSERT_VALID(hobj);
+
+/*
+//, better to put this stuff here - ie pass in an objectid to use. 
+	// Set the object id
+	// If no object id specified then get next available one
+	if (idObject == 0) {
+		// Get the next available ObjectID
+		idObject = GetNextObjectID();
+	}
+	else {
+		// Keep track of next available object ID
+		if (idObject > m_idNextObject)
+			m_idNextObject = idObject;
+	}
+	hobj->SetObjectID(idObject);
+*/
 
 	OBJID idObject = hobj->GetObjectID();
 	ASSERT(idObject);
@@ -1795,6 +1871,7 @@ CNeoDoc::FindReferences(BObject *pobjFind, CObArray &aRefs, BObject *pobjStart /
 
 
 // Bring up the class wizard to add, edit, or delete a class
+//, this belongs in the ui layer. child frame? 
 void 
 CNeoDoc::OnCmdEditClasses() {
 	CSheetWizard sh;
@@ -1837,20 +1914,23 @@ CNeoDoc::OnCmdFileDeleteAll() {
 
 // Import an .ico file and create a new icon bobject to store it.
 // Returns a pointer to the new icon bobject, or 0 if failed.
-//. move most of this to the dialog! or a gui object!
+//. move most of this to the dialog! or the ui object!
 BObject* 
-CNeoDoc::UIImportIcon(CString strFilename /* ="" */, CString strIconname /* ="" */) {
+CNeoDoc::UIImportIcon(CUI* pui, CString strFilename /* ="" */, CString strIconname /* ="" */) {
 
 	HOBJECT hobjIcon = NULL;
 
 	// Get filename if not specified
 	if (strFilename.IsEmpty()) {
-		// Bring up file open dialog to choose .ico file
-		CFileDialogEx dlg(TRUE, _T("ico"), _T(""), OFN_HIDEREADONLY, szIconFilter, AfxGetMainWnd());
-		dlg.m_ofn.lpstrTitle = _T("Import Icon");
-		if (dlg.DoModal() == IDCANCEL)
+		// Ask user for icon file
+		if (!pui->GetFileName("Import Icon", "ico", szIconFilter, strFilename))
 			return NULL;
-		strFilename = dlg.GetPathName();
+		// Bring up file open dialog to choose .ico file
+//		CFileDialogEx dlg(TRUE, _T("ico"), _T(""), OFN_HIDEREADONLY, szIconFilter, AfxGetMainWnd());
+//		dlg.m_ofn.lpstrTitle = _T("Import Icon");
+//		if (dlg.DoModal() == IDCANCEL)
+//			return NULL;
+//		strFilename = dlg.GetPathName();
 	}
 
 	// Try to import the icon file
@@ -1865,15 +1945,20 @@ CNeoDoc::UIImportIcon(CString strFilename /* ="" */, CString strIconname /* ="" 
 	if (strIconname.IsEmpty()) {
 		strIconname = CPath(strFilename).GetTitle();
 
-		CDialogEditName dlg;
-		dlg.m_strCaption = _T("Import Icon");
-		dlg.m_strInstructions = _T("Enter the name for the new icon:");
-		dlg.m_strName = strIconname;
-		if (dlg.DoModal() == IDCANCEL) {
+		// Ask user for icon name
+		if (!pui->GetString("Import Icon", "Enter the name for the new icon:", strIconname)) {
 			delete pdat;
 			return NULL;
 		}
-		strIconname = dlg.m_strName;
+//		CDialogEditName dlg;
+//		dlg.m_strCaption = _T("Import Icon");
+//		dlg.m_strInstructions = _T("Enter the name for the new icon:");
+//		dlg.m_strName = strIconname;
+//		if (dlg.DoModal() == IDCANCEL) {
+//			delete pdat;
+//			return NULL;
+//		}
+//		strIconname = dlg.m_strName;
 	}
 
 	// Create the new icon bobject
