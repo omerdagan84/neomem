@@ -44,6 +44,8 @@ using namespace nsPath;
 #include "ConstantsDatabase.h"
 
 
+#include "ViewContents.h" // for testing
+
 
 
 
@@ -2616,13 +2618,18 @@ CNeoMem::DoTests() {
 //		BObject::Test(pdoc);
 //		CRichEditCtrlEx::Test();
 
+
 		// maybe simplest to create a new document, 
 		// throw ALL commands at it (esp flaky/suspicious ones), 
 		// then check that it's in proper state.
-		
 
 		CNeoMem::CloseAllDocuments(FALSE);
-		CNeoMem::OnFileNew();		
+
+		//, mfc weird doctemplate stuff in filenew handler? override it and simplify? 
+		// but also ties in with mru files etc. 
+		// pdoc = new CNeoDoc(); //?
+		// pdoc = CNeoDoc::Create(); //?
+		CNeoMem::OnFileNew();
 		CNeoDoc* pdoc = CNeoDoc::GetDoc();
 
 //		CUI* pui = this;
@@ -2636,32 +2643,97 @@ CNeoMem::DoTests() {
 		// it's pretty entwined in cneodoc though. 
 
 		// add folder for fish
-		HObject hobjParent = pdoc->GetCurrentObject();
-		HObject hobj = pdoc->CreateObject(classFolder, "Fish", hobjParent);
-		pdoc->AddObject(hobj);
+		HOBJECT hobjParent = pdoc->GetCurrentObject();
+		HOBJECT hobjFishFolder = pdoc->CreateObject(classFolder, "Fish", hobjParent);
+		pdoc->AddObject(hobjFishFolder); // Add object to database (and tell views)
 
-		// should just be
-//		HObject hobj = pdoc->AddObject(classFolder, "fish");
+//		HOBJECT hobjFishFolder = pdoc->CreateFolder("Fish", hobjParent);
+
+		// should just be one of these? 
+//		HOBJECT hobjFishFolder = pdoc->AddObject(classFolder, "fish");
+//		HOBJECT hobjFishFolder = pdoc->AddFolder("Fish");
+//		HOBJECT hobjFishFolder = pdoc->CreateFolder("Fish");
+//		HOBJECT hobjFishFolder = BObject::CreateFolder("Fish");
 
 
 		// add a fish class
-		hobjParent = pdoc->GetObject(rootClass);
-		hobj = pdoc->CreateObject(classClass, "Fish", hobjParent);
-		//, templates are easier to use than classes. and make more sense anyway. meh. 
+//		hobjParent = pdoc->GetObject(rootClass);
+//		HOBJECT hobjFishClass = pdoc->CreateObject(classClass, "Fish", hobjParent);
+//		pdoc->AddObject(hobjFishClass); // ugh, have to add it also!
+//		OBJID classFish = hobjFishClass->GetObjectID();
+		
+		HOBJECT hobjFishClass = pdoc->CreateClass("Fish");
+		pdoc->AddObject(hobjFishClass); // ugh, have to add it also!
+		OBJID classFish = hobjFishClass->GetObjectID(); // ugh
 
 		
 		// import a new icon
-		HObject hobjIcon;
+
+		// get Test folder with .ico files
+		CStringEx strTestFolder = m_strApplicationFolder + "\\..\\..\\..\\Test\\";
+
+		HOBJECT hobjIcon = NULL;
 //		hobjIcon = pdoc->UIImportIcon("foo.ico"); // nonexistent file
 //		hobjIcon = pdoc->UIImportIcon("neomem.cnt"); // bad file
-		hobjIcon = pdoc->UIImportIcon("..\\..\\..\\test\\Fish.ico");
+//		hobjIcon = pdoc->UIImportIcon(strTestFolder + "Fish.ico");
+		hobjIcon = pdoc->UIImportIcon(strTestFolder + "Fish.ico", "Fish");
 //		hobjIcon = pdoc->UIImportIcon();
+
+		// attach the icon to fish class
+//		hobjFishClass->SetPropertyLink(propClassDefIcon
+		hobjFishClass->SetIconID(hobjIcon->GetObjectID()); // is this right? 
+		// apparently. but maybe a command would be better. 
+		// eg hobjFishClass->SetObjectIcon or something. 
+		// ie something to mimic the user command. 
+
+
+		// add a fish to the fish folder
+//		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
+		HOBJECT hobjPlecy = pdoc->CreateObject(classFish, "Plecy", hobjFishFolder);
+		pdoc->AddObject(hobjPlecy); // ugh
+
+		//. should just be
+//		HOBJECT hobjPlecy = pdoc->AddObject(classFish, "Plecy");
+
 
 		// set folder default to fish class
 //		pdoc->UIChangeObjectContents(hobjFishClass);
+		// This will set document modified flag and update views
+		hobjFishFolder->SetPropertyLink(propDefaultClass, hobjFishClass);
 
-//		pdoc->UIAddNewObject();
 
+		// add a new property 'price'
+//		pdoc->UIAddNewPropertyDef(); //, adapt this
+		HOBJECT hobjPrice = pdoc->CreateProperty("Price", proptypeCurrency, "how much it costs to buy");
+		pdoc->AddObject(hobjPrice); // Add object to database (and tell views)
+		OBJID propPrice = hobjPrice->GetObjectID();
+
+		// set plecy's price
+		hobjPlecy->SetPropertyText(propPrice, "$1.34");
+
+
+		// select the fish folder
+		pdoc->SetCurrentObject(hobjFishFolder);
+
+
+		// add price to the contents view
+//		nCol = GetColumnCount();
+//		m_pdatColumns->InsertColumn(lngPropertyID, m_pDoc, 0, nCol);
+		// remove a column
+//		BObject* pobjProp = m_pDoc->GetObject(lngPropID);
+//		m_pdatColumns->RemoveColumn(nCol);
+		CFrameChild* pui = theApp.GetChildFrame();
+		CViewContents* pview = STATIC_DOWNCAST(CViewContents, pui->GetView(viewContents)); // in debug will assert if wrong type
+		pview->m_lvw.InsertColumnAsk(propPrice, 2);
+
+		// set plecy desc
+		hobjPlecy->SetPropertyText(propDescription, "plecostomus catfish");
+//		hobjPlecy->SetDescription("plecostomus catfish");
+
+
+		// add another fish
+		HOBJECT hobjGlassfish = pdoc->CreateObject(classFish, "glassfish", hobjFishFolder);
+		pdoc->AddObject(hobjGlassfish);
 
 
 	}

@@ -43,7 +43,7 @@ BObject::BObject() {
 	InitToZero();
 }
 
-BObject::BObject(ULONG lngClassID) {
+BObject::BObject(OBJID lngClassID) {
 	InitToZero();
 	m_lngClassID = lngClassID;
 }
@@ -201,7 +201,7 @@ BObject::Serialize(CArchive& ar)
 			{
 				BDataColumnInfo* pc = DYNAMIC_DOWNCAST(BDataColumnInfo, pdatArray->m_apdat.GetAt(i));
 				ASSERT_VALID(pc);
-				ULONG lngPropertyID = pc->m_lngPropertyID;
+				OBJID lngPropertyID = pc->m_idProperty;
 				int nWidth = pc->m_nColWidth;
 //				int nAlignment = pc->m_nColAlignment;
 				pdatCols->InsertColumn(lngPropertyID, m_pDoc);
@@ -380,7 +380,7 @@ BObject::Dump(CDumpContext& dc) const
 
 // Get the icon used to represent this object, looking up the class chain if necessary
 //, could store the looked up nIndex also for speed - just don't serialize it
-ULONG 
+OBJID 
 BObject::GetIconID()
 {
 	ASSERT_VALID(this);
@@ -394,7 +394,7 @@ BObject::GetIconID()
 
 
 // Get the default icon for this object, looking up the class chain if necessary
-ULONG 
+OBJID 
 BObject::GetDefaultIconID()
 {
 	ASSERT_VALID(this);
@@ -439,7 +439,7 @@ BObject::GetIconIndex()
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
-	ULONG lngIconID = GetIconID();
+	OBJID lngIconID = GetIconID();
 	// Return the index of the IconID in the image list
 	return m_pDoc->GetIconIndex(lngIconID);
 }
@@ -626,7 +626,7 @@ BObject::AddProperty(BObject *pobjProperty)
 // Note: This will not let pseudo properties be deleted (eg classname, classid, objectid, etc)
 // Returns True if successful.
 BOOL 
-BObject::DeleteProperty(ULONG lngPropertyID, BOOL bSetModifiedFlag /* = TRUE */, 
+BObject::DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag /* = TRUE */, 
 											BOOL bUpdateViews /* = TRUE */, BOOL bAskUser /* = FALSE */)
 {
 	ASSERT_VALID(this);
@@ -675,7 +675,7 @@ BObject::DeleteProperty(ULONG lngPropertyID, BOOL bSetModifiedFlag /* = TRUE */,
 			{
 				CHint h;
 				h.m_pobjObject = this;
-				h.m_lngPropertyID = lngPropertyID;
+				h.m_idProperty = lngPropertyID;
 				m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 			}
 
@@ -698,7 +698,7 @@ BObject::DeleteProperty(ULONG lngPropertyID, BOOL bSetModifiedFlag /* = TRUE */,
 // Also if the property is not already in this object's classdef's associated properties, then 
 // it will add it there also.
 BObject* 
-BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
+BObject::FindProperty(OBJID lngPropertyID, BOOL bAddIfNotFound)
 {
 	ASSERT_VALID(this);
 
@@ -782,9 +782,10 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 		}
 	}
 
-	// The property was not found, so add it to this object's property collection, if parameter specifies this.
-	if (bAddIfNotFound)
-	{
+	// The property was not found, so add it to this object's property collection, 
+	// if parameter specifies this.
+	if (bAddIfNotFound) {
+
 		BObject* pobjPropertyValue = new BObject(lngPropertyID);
 		ASSERT_VALID(pobjPropertyValue);
 		pobjPropertyValue->SetDoc(m_pDoc); // set document pointer
@@ -792,8 +793,7 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 		// Create a bdata object as appropriate for this property, if specified
 		// (If you're calling FindProperty in order to Set a value, you don't need this)
 		// don't need this as we now create a copy of the bdata found wherever it's from
-//		if (bCreateBData)
-//		{
+//		if (bCreateBData) {
 //			BData* pdat = m_pDoc->CreateBData(lngPropertyID);
 //			ASSERT_VALID(pdat);
 //			pobjPropertyValue->m_pdat = pdat; // store it in the property object we just created
@@ -824,7 +824,7 @@ BObject::FindProperty(ULONG lngPropertyID, BOOL bAddIfNotFound)
 // (Eg might be parsing something and format is invalid, so returns False).
 // Return False for read-only properties. 
 BOOL 
-BObject::SetPropertyText(ULONG lngPropertyID, LPCTSTR pszText, 
+BObject::SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText, 
 					BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
 {
 	ASSERT_VALID(this);
@@ -851,7 +851,7 @@ BObject::SetPropertyText(ULONG lngPropertyID, LPCTSTR pszText,
 		case propObjectID:
 			{
 				// Parse string into long integer
-				ULONG lngNewObjectID = atol(pszText);
+				OBJID lngNewObjectID = atol(pszText);
 				//, we'll need some special handling to make sure we don't overwrite an existing objectid!!
 				// eg say bValid = SetObjectID(pdat->m_lng);
 				m_lngObjectID = lngNewObjectID;
@@ -886,7 +886,7 @@ BObject::SetPropertyText(ULONG lngPropertyID, LPCTSTR pszText,
 				{
 					// Bug: Was setting m_lngClassID instead of calling SetClassID!
 //					m_lngClassID = pdatLink->GetLinkObjectID();
-					ULONG lngNewClassID = pdatLink->GetLinkObjectID();
+					OBJID lngNewClassID = pdatLink->GetLinkObjectID();
 					SetClassID(lngNewClassID);
 					delete pdatLink;
 				}
@@ -940,12 +940,21 @@ BObject::SetPropertyText(ULONG lngPropertyID, LPCTSTR pszText,
 	{
 		CHint h;
 		h.m_pobjObject = this;
-		h.m_lngPropertyID = lngPropertyID;
+		h.m_idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 
 	return TRUE;
 }
+
+
+
+/*
+BOOL BObject::SetDescription(LPCTSTR pszText) {
+	return this->SetPropertyText(propDescription, pszText);
+}
+*/
+
 
 
 // Get text property value.
@@ -954,7 +963,7 @@ BObject::SetPropertyText(ULONG lngPropertyID, LPCTSTR pszText,
 // on one line, eg in a CString Format call!
 //, Note: bCreateTempBDataIfNotFound is not handled here
 LPCTSTR 
-BObject::GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -1119,7 +1128,7 @@ BObject::GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 // IMPORTANT: Returns True if pdat was saved to object or FALSE if not!
 // DO NOT DELETE THE DATA if this function returns TRUE - the bobject will take over ownership of it!
 BOOL 
-BObject::SetPropertyData(ULONG lngPropertyID, BData *pdat, 
+BObject::SetPropertyData(OBJID lngPropertyID, BData *pdat, 
 										BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
 {
 	ASSERT_VALID(this);
@@ -1148,7 +1157,7 @@ BObject::SetPropertyData(ULONG lngPropertyID, BData *pdat,
 			ASSERT_VALID(pdatLink);
 			// Bug: Was setting m_lngClassID directly instead of calling SetClassID, so name type wasn't being changed!
 //			m_lngClassID = pdatLink->GetLinkObjectID();
-			ULONG lngNewClassID = pdatLink->GetLinkObjectID();
+			OBJID lngNewClassID = pdatLink->GetLinkObjectID();
 			SetClassID(lngNewClassID);
 			bSavedBData = FALSE; // pdat not saved to bobject!
 			break;
@@ -1173,7 +1182,7 @@ BObject::SetPropertyData(ULONG lngPropertyID, BData *pdat,
 	{
 		CHint h;
 		h.m_pobjObject = this;
-		h.m_lngPropertyID = lngPropertyID;
+		h.m_idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 
@@ -1190,7 +1199,7 @@ BObject::SetPropertyData(ULONG lngPropertyID, BData *pdat,
 // the bdata object directly - you must create a copy of it, then write the copy back to the classdef.
 // See BObject::EditValue for an example.
 BData* 
-BObject::GetPropertyData(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=FALSE*/)
+BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=FALSE*/)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -1371,7 +1380,7 @@ BObject::GetPropertyData(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=
 
 // Set long property value.
 void 
-BObject::SetPropertyLong(ULONG lngPropertyID, ULONG lngValue, 
+BObject::SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, 
 										BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
 {
 	ASSERT_VALID(this);
@@ -1404,7 +1413,7 @@ BObject::SetPropertyLong(ULONG lngPropertyID, ULONG lngValue,
 	{
 		CHint h;
 		h.m_pobjObject = this;
-		h.m_lngPropertyID = lngPropertyID;
+		h.m_idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 }
@@ -1414,7 +1423,7 @@ BObject::SetPropertyLong(ULONG lngPropertyID, ULONG lngValue,
 //, how do we return NULL??? need a variant type????
 // Note: bCreateTempBDataIfNotFound is not handled.
 ULONG 
-BObject::GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+BObject::GetPropertyLong(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
@@ -1457,7 +1466,7 @@ BObject::GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 // Set object that the specified property links to.
 // Note: If pobj is zero, will delete the property bobject.
 void 
-BObject::SetPropertyLink(ULONG lngPropertyID, 
+BObject::SetPropertyLink(OBJID lngPropertyID, 
 						 BObject* pobj, 
 						 BOOL bSetModifiedFlag /* = TRUE */, 
 						 BOOL bUpdateViews /* = TRUE */
@@ -1497,7 +1506,7 @@ BObject::SetPropertyLink(ULONG lngPropertyID,
 	if (bUpdateViews) {
 		CHint h;
 		h.m_pobjObject = this;
-		h.m_lngPropertyID = lngPropertyID;
+		h.m_idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 }
@@ -1509,7 +1518,7 @@ BObject::SetPropertyLink(ULONG lngPropertyID,
 //, how do we return NULL??? need a variant type i guess????
 //, Note: bCreateTempBDataIfNotFound is not handled
 BObject* 
-BObject::GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
@@ -1818,7 +1827,7 @@ BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 			// Get property value, then property def from it
 			BObject* pobjPropValue = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjPropValue);
-			ULONG lngPropertyID = pobjPropValue->GetClassID();
+			OBJID lngPropertyID = pobjPropValue->GetClassID();
 			BObject* pobjPropDef = m_pDoc->GetObject(lngPropertyID);
 			if (!pobjPropDef)
 			{
@@ -1920,7 +1929,7 @@ BObject::GetPropertyDefAlignment()
 	if (pobjPropType)
 	{
 		ASSERT_VALID(pobjPropType);
-		ULONG lngPropTypeID = pobjPropType->GetObjectID();
+		OBJID lngPropTypeID = pobjPropType->GetObjectID();
 		switch (lngPropTypeID)
 		{
 			case proptypeNumber:
@@ -2057,7 +2066,7 @@ BObject::MoveDown()
 // Returns True if user hit OK.
 // Note: This will set document modified flag and tell all views about any property change also.
 BOOL 
-BObject::EditValue(ULONG lngPropertyID)
+BObject::EditValue(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
@@ -2213,7 +2222,7 @@ BObject::IsMoveUpDownValid(BOOL bMoveUp)
 // Change this object's class, handling name data type change, also updating views.
 // This should always be used rather than setting m_lngClassID directly.
 BOOL 
-BObject::SetClassID(ULONG lngNewClassID)
+BObject::SetClassID(OBJID lngNewClassID)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pdat);
@@ -2258,15 +2267,15 @@ BObject::SetClassID(ULONG lngNewClassID)
 	// Inform views of change
 	CHint h;
 	h.m_pobjObject = this;
-	h.m_lngPropertyID = propClassID;
+	h.m_idProperty = propClassID;
 	m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 	// Also broadcast hints for all dependent properties
 	//, need generic way of handling this
-	h.m_lngPropertyID = propClassName;
+	h.m_idProperty = propClassName;
 	m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
-	h.m_lngPropertyID = propIconID;
+	h.m_idProperty = propIconID;
 	m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 	return TRUE;
@@ -2404,7 +2413,7 @@ BObject::SendMessage(ULONG lngMsg, BOOL bRecurse)
 // Set icon and document modified flag, and update views
 //, validate iconid
 BOOL 
-BObject::SetIconID(ULONG lngIconID)
+BObject::SetIconID(OBJID lngIconID)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -2421,7 +2430,7 @@ BObject::SetIconID(ULONG lngIconID)
 	// Inform views of change
 	CHint h;
 	h.m_pobjObject = this;
-	h.m_lngPropertyID = propIconID;
+	h.m_idProperty = propIconID;
 	m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 	// If this is a classdef object, refresh all visible icons
@@ -2449,7 +2458,7 @@ BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass) {
 		BObject* pobjProp = (BObject*) aProps.GetAt(i);
 		ASSERT_VALID(pobjProp);
 		if (!(pobjProp->GetFlag(lngExcludeFlags))) {
-			ULONG lngPropertyID = pobjProp->GetObjectID();
+			OBJID lngPropertyID = pobjProp->GetObjectID();
 			//. kludgy: don't add the Size property by default, though it's available to all objects. 
 			if (lngPropertyID != propSize)
 				pdatCols->InsertColumn(lngPropertyID, m_pDoc);
@@ -2469,13 +2478,14 @@ BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass) {
 //, pobjPropertyDef is required for some SetBDataText's, unfortunately!
 void 
 //BObject::ChangePropertyType(BObject* pobjPropertyDef, ULONG lngPropertyID, ULONG lngNewPropertyTypeID)
-BObject::ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPropertyDef, ULONG lngNewPropertyTypeID)
+BObject::ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPropertyDef, 
+							OBJID lngNewPropertyTypeID)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjPropertyDef);
 	ASSERT_VALID(pobjNewPropertyDef);
 
-	ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
+	OBJID lngPropertyID = pobjPropertyDef->GetObjectID();
 
 	// Walk through properties looking for property in question
 	if (m_paProperties)
@@ -2532,7 +2542,7 @@ BObject::ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPropertyDe
 // objects of the specified class.
 // See also ChangePropertyType
 void 
-BObject::ChangeNamePropertyType(ULONG lngClassID, ULONG lngNewPropertyTypeID)
+BObject::ChangeNamePropertyType(OBJID lngClassID, OBJID lngNewPropertyTypeID)
 {
 	ASSERT_VALID(this);
 
@@ -2585,7 +2595,7 @@ BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
 	ASSERT_VALID(&aRefs);
 
 	BOOL bReferenced = FALSE;
-	ULONG lngFindID = pobjFind->GetObjectID();
+	OBJID lngFindID = pobjFind->GetObjectID();
 
 	// Exit if objectid is zero (can happen if it's a temporary object, not in the db)
 	if (lngFindID == 0)
@@ -2661,8 +2671,8 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 	CHint h;
 	h.m_pobjObject = this;
 
-	ULONG lngFindID = pobjFind->GetObjectID();
-	ULONG lngNewID = 0;
+	OBJID lngFindID = pobjFind->GetObjectID();
+	OBJID lngNewID = 0;
 	if (pobjNew) 
 	{
 		ASSERT_VALID(pobjNew);
@@ -2682,9 +2692,9 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 //		{
 			SetClassID(lngNewID);
 			// Tell views
-//			h.m_lngPropertyID = propClass;
+//			h.m_idProperty = propClass;
 //			m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
-			h.m_lngPropertyID = propClassName;
+			h.m_idProperty = propClassName;
 			m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 //		}
 	}
@@ -2694,7 +2704,7 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 	{
 		m_lngIconID = lngNewID;
 		// Tell views
-//		h.m_lngPropertyID = propIconID;
+//		h.m_idProperty = propIconID;
 //		m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 	}
 
@@ -2705,7 +2715,7 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 		if (m_pdat->ReplaceReferences(pobjFind, pobjNew))
 		{
 			// Tell views
-			h.m_lngPropertyID = m_lngClassID;
+			h.m_idProperty = m_lngClassID;
 			m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 		}
 	}
@@ -2737,7 +2747,7 @@ BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL b
 				if (pobjPropertyValue->GetData()->ReplaceReferences(pobjFind, pobjNew))
 				{
 					// Tell views
-					h.m_lngPropertyID = pobjPropertyValue->GetClassID();
+					h.m_idProperty = pobjPropertyValue->GetClassID();
 					m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 				}
 			}
@@ -3008,7 +3018,7 @@ BObject::IsMoveValid(BObject *pobjTarget, BOOL bDisplayMessages)
 // first if the property is already included in the class chain.
 // Returns True if successful.
 BOOL 
-BObject::ClassDefAddProperty(ULONG lngPropertyID)
+BObject::ClassDefAddProperty(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
 	// First see if the property is associated with any parent classes - if so we don't need to add it to
@@ -3084,7 +3094,7 @@ BObject::GetName(BOOL bIncludeClassName)
 // visible in the main rtf control.
 //, could pass a param for position to insert at (beginning, end, stored insertion point)
 BOOL 
-BObject::AddRtf(ULONG lngPropertyID, CString& strRtf)
+BObject::AddRtf(OBJID lngPropertyID, CString& strRtf)
 {
 	ASSERT_VALID(this);
 
@@ -3143,7 +3153,7 @@ BObject::ConvertToSoftLinks(BOOL bRecurse)
 			BData* pdat = pobjProp->GetData();
 			if (pdat)
 			{
-				ULONG lngPropertyID = pobjProp->GetClassID();
+				OBJID lngPropertyID = pobjProp->GetClassID();
 				TRACE("converting %s.[%d] to soft links\n", (LPCTSTR) this->GetName(TRUE), lngPropertyID);
 				pdat->ConvertToSoftLinks();
 			}
@@ -3188,7 +3198,7 @@ BObject::ConvertToHardLinks(BOOL bRecurse)
 			BData* pdat = pobjProp->GetData();
 			if (pdat)
 			{
-				ULONG lngPropertyID = pobjProp->GetClassID();
+				OBJID lngPropertyID = pobjProp->GetClassID();
 				yTRACE("converting %s.[%d] to hard links\n", (LPCTSTR) this->GetName(TRUE), lngPropertyID);
 				pdat->ConvertToHardLinks(pDoc);
 			}
@@ -3216,7 +3226,7 @@ BObject::ConvertToHardLinks(BOOL bRecurse)
 // Copy the bdata object associated with the specified BObject and property value, if there.
 // Also returns a pointer to the new bdata object, or 0 if none.
 BData* 
-BObject::CopyPropertyDataFrom(BObject *pobjSource, ULONG lngPropertyID)
+BObject::CopyPropertyDataFrom(BObject *pobjSource, OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
 	BData* pdat = pobjSource->GetPropertyData(lngPropertyID);
@@ -3261,7 +3271,7 @@ BObject::CopyFrom(BObject* pobjSource)
 	// done in top down recursive order!!
 	BObject* pobjSourceParent = pobjSource->GetParent();
 	ASSERT_VALID(pobjSourceParent);
-	ULONG nSourceParentID = pobjSourceParent->GetObjectID();
+	OBJID nSourceParentID = pobjSourceParent->GetObjectID();
 	
 	// Lookup the parent object in THIS document, and make this bobject a child. 
 	// This will handle moving the object if its parent has changed for some reason
@@ -3295,7 +3305,7 @@ BObject::CopyFrom(BObject* pobjSource)
 		{
 			BObject* pobjSourceProp = (BObject*) pobjSourceProps->GetAt(i);
 			ASSERT_VALID(pobjSourceProp);
-			ULONG lngPropertyID = pobjSourceProp->GetClassID();
+			OBJID lngPropertyID = pobjSourceProp->GetClassID();
 			BData* pdatSource = pobjSourceProp->GetData();
 			if (pdatSource)
 			{
@@ -3373,7 +3383,7 @@ BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			{
 				BObject* pobjProp = datProps.GetLinkAt(i);
 				ASSERT_VALID(pobjProp);
-				ULONG lngPropertyID = pobjProp->GetObjectID();
+				OBJID lngPropertyID = pobjProp->GetObjectID();
 		//		LPCTSTR psz = this->GetPropertyText(lngPropertyID);
 		//		file.WriteValue(psz); // will add quotes, etc
 				BData* pdat = this->GetPropertyData(lngPropertyID);
@@ -3514,7 +3524,7 @@ BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 				BObject* pobjProp = datProps.GetLinkAt(i);
 				ASSERT_VALID(pobjProp);
 				strPropName = pobjProp->GetName(FALSE);
-				ULONG lngPropertyID = pobjProp->GetObjectID();
+				OBJID lngPropertyID = pobjProp->GetObjectID();
 				BData* pdat = this->GetPropertyData(lngPropertyID);
 				if (pdat)
 				{
@@ -3609,7 +3619,7 @@ BObject::PropertyDefHasMachineVersion()
 	if (pobjPropType)
 	{
 		ASSERT_VALID(pobjPropType);
-		ULONG lngPropTypeID = pobjPropType->GetObjectID();
+		OBJID lngPropTypeID = pobjPropType->GetObjectID();
 		switch (lngPropTypeID)
 		{
 		case proptypeLink:

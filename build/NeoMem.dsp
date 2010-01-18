@@ -410,6 +410,10 @@ SOURCE=..\code\FrameMain.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GUI.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\code\Hint.cpp
 # End Source File
 # Begin Source File
@@ -599,6 +603,10 @@ SOURCE=..\code\ToolbarRtf.cpp
 # Begin Source File
 
 SOURCE=..\code\TreeCtrlEx.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\UI.cpp
 # End Source File
 # Begin Source File
 
@@ -999,6 +1007,10 @@ SOURCE=..\code\FrameMain.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GUI.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\code\Hint.h
 # End Source File
 # Begin Source File
@@ -1188,6 +1200,10 @@ SOURCE=..\code\ToolbarRtf.h
 # Begin Source File
 
 SOURCE=..\code\TreeCtrlEx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UI.h
 # End Source File
 # Begin Source File
 

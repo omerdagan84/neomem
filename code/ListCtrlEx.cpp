@@ -2895,8 +2895,8 @@ void CListCtrlEx::CopyColumnInfo()
 // Pass the position to insert the new column at, otherwise will insert at the current
 // location or at the end of the columns.
 // Returns the index of the new column, or -1 if none added.
-int CListCtrlEx::InsertColumnAsk(BObject* pobjParent, int nCol /* = -1 */)
-{
+int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObject* pobjParent /*=NULL*/) {
+
 	ASSERT_VALID(m_pDoc);
 
 //	CString strCaption = _T("Insert Column");
@@ -2915,16 +2915,13 @@ int CListCtrlEx::InsertColumnAsk(BObject* pobjParent, int nCol /* = -1 */)
 	// need the parent object, then get its default class, then get the props associated with that class,
 	// then walk through and clear the temp flag for all those objects.
 	// OR could let the calling routine deal with this shit
-	if (pobjParent)
-	{
+	if (pobjParent) {
 		pobjProperties->SetFlag(flagFilter, TRUE, TRUE);
 		BObject* pobjClass = pobjParent->GetPropertyLink(propDefaultClass);
-		if (pobjClass)
-		{
+		if (pobjClass) {
 			CObArray aPropertyDefs;
 			int nProps = pobjClass->GetPropertyDefs(aPropertyDefs, FALSE, TRUE);
-			for (int i = 0; i < nProps; i++)
-			{
+			for (int i = 0; i < nProps; i++) {
 				BObject* pobjPropDef = (BObject*) aPropertyDefs.GetAt(i);
 				ASSERT_VALID(pobjPropDef);
 				// Clear this property's filter flag!
@@ -2940,87 +2937,91 @@ int CListCtrlEx::InsertColumnAsk(BObject* pobjParent, int nCol /* = -1 */)
 //		dlg.ShowFilterCheckbox(TRUE, theApp.m_lngExcludeFlags | flagFilter);
 //	if (dlg.DoModalLinkSimple(strCaption, strInstructions, lngStartID, 0, 0, theApp.m_lngExcludeFlags) == IDOK)
 */
+
 //		m_pobjDefaultClass = m_pobjParent->GetPropertyLink(propDefaultClass);
 
-	// Get default class
-	BObject* pobjDefaultClass = pobjParent->GetPropertyLink(propDefaultClass);
-	if (pobjDefaultClass == 0)
+	// Get default class (eg if we're on a folder, it can have a default class associated with it)
+	BObject* pobjDefaultClass = NULL;
+	if (pobjParent)
+		pobjDefaultClass = pobjParent->GetPropertyLink(propDefaultClass);
+	if (pobjDefaultClass == NULL)
 		pobjDefaultClass = m_pDoc->GetObject(classPaper);
 
-	CDialogSelectProperty dlg;
-//	dlg.m_pobjParent = pobjParent;
-	dlg.m_pobjDefaultClass = pobjDefaultClass;
-	if (dlg.DoModal() == IDOK)
-	{
-		// Check if property is already in header
-		ULONG lngPropertyID = dlg.m_lngSelectedID;
-		int i = FindColumn(lngPropertyID);
-		if (i == -1)
-		{
-			// Add to end of columns if none specified
-			if (nCol == -1)
-				nCol = GetColumnCount();
-			else
-				nCol = OrderToIndex(nCol); // convert from column order to position
+	
+	// Let user pick a property if not specified
+	if (idProperty == 0) {
+		CDialogSelectProperty dlg;
+//		dlg.m_pobjParent = pobjParent;
+		dlg.m_pobjDefaultClass = pobjDefaultClass;
+		if (dlg.DoModal() == IDCANCEL)
+			return -1;
+		idProperty = dlg.m_lngSelectedID;
+	}
 
-			// Insert new column in bdatacolumns object
-			if (m_bSaveChangesAutomatically && m_pdatColumns != NULL)
-				m_pdatColumns->InsertColumn(lngPropertyID, m_pDoc, 0, nCol);
+	// Check if property is already in header
+	int i = FindColumn(idProperty);
+	if (i == -1) {
 
-			// Set flag so we know to save data
-			m_bColumnsChanged = TRUE;
-
-			// Add column to header/listview control
-//			int nItem = InsertColumn(nCol, m_pdatColumns->GetColumnName(nCol, m_pDoc), rci.m_nColAlignment, rci.m_nColWidth);
-			BObject* pobjPropDef = m_pDoc->GetObject(lngPropertyID);
-			// 1.1d make sure we actually have an object!
-			if (pobjPropDef) 
-			{
-				LPCTSTR pszColumnName = pobjPropDef->GetPropertyText(propName);
-				int nColAlignment = pobjPropDef->GetPropertyDefAlignment();
-				int nColWidth = pobjPropDef->GetPropertyDefWidth();
-				int nItem = InsertColumn(nCol, pszColumnName, nColAlignment, nColWidth);
-
-				// Set column item data
-				CHeaderCtrl* phdr = GetHeaderCtrl();
-				ASSERT_VALID(phdr);
-				HDITEM hdi;
-				hdi.mask = HDI_LPARAM;
-				hdi.lParam = lngPropertyID;
-				phdr->SetItem(nItem, &hdi);
-
-				// Notify parent window
-				NotifyParentOfChanges();
-
-				// Ask user if they want to add this property to the default class also
-	//			BObject* pobjCurrent = m_pDoc->GetCurrentObject();
-	//			BObject* pobjDefaultClass = pobjCurrent->GetPropertyLink(propDefaultClass);
-	//			ASSERT_VALID(pobjDefaultClass);
-				// maybe this should be automatic?
-				// only prob is if they add a folder and don't set up the class,
-				// they just add properties, then later they set up the class
-				// might wind up adding all these props to the paper class, for instance
-	//			LPCTSTR szClassName = pobjDefaultClass->GetPropertyText(propName);
-	//			CString strMsg;
-	//			strMsg.Format("Do you want to add this property to the %s definition class also?", szClassName);
-	//			if (AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO) == IDYES)
-	//			{
-	//				pobjDefaultClass->GetPropertyData(propColumn
-	//			}
-
-				// Return the new column index
-				nNewCol = nCol;
-			}
-		}
+		// Add to end of columns if none specified
+		if (nCol == -1)
+			nCol = GetColumnCount();
 		else
-		{
-			AfxMessageBox(_T("That property is already in the view."), MB_ICONINFORMATION);
+			nCol = OrderToIndex(nCol); // convert from column order to position
+
+		// Insert new column in bdatacolumns object
+		if (m_bSaveChangesAutomatically && m_pdatColumns != NULL)
+			m_pdatColumns->InsertColumn(idProperty, m_pDoc, 0, nCol);
+
+		// Set flag so we know to save data
+		m_bColumnsChanged = TRUE;
+
+		// Add column to header/listview control
+//			int nItem = InsertColumn(nCol, m_pdatColumns->GetColumnName(nCol, m_pDoc), rci.m_nColAlignment, rci.m_nColWidth);
+		BObject* pobjPropDef = m_pDoc->GetObject(idProperty);
+		// 1.1d make sure we actually have an object!
+		if (pobjPropDef)  {
+
+			LPCTSTR pszColumnName = pobjPropDef->GetPropertyText(propName);
+			int nColAlignment = pobjPropDef->GetPropertyDefAlignment();
+			int nColWidth = pobjPropDef->GetPropertyDefWidth();
+			int nItem = InsertColumn(nCol, pszColumnName, nColAlignment, nColWidth);
+
+			// Set column item data
+			CHeaderCtrl* phdr = GetHeaderCtrl();
+			ASSERT_VALID(phdr);
+			HDITEM hdi;
+			hdi.mask = HDI_LPARAM;
+			hdi.lParam = idProperty;
+			phdr->SetItem(nItem, &hdi);
+
+			// Notify parent window
+			NotifyParentOfChanges();
+
+			// Ask user if they want to add this property to the default class also
+//			BObject* pobjCurrent = m_pDoc->GetCurrentObject();
+//			BObject* pobjDefaultClass = pobjCurrent->GetPropertyLink(propDefaultClass);
+//			ASSERT_VALID(pobjDefaultClass);
+			// maybe this should be automatic?
+			// only prob is if they add a folder and don't set up the class,
+			// they just add properties, then later they set up the class
+			// might wind up adding all these props to the paper class, for instance
+//			LPCTSTR szClassName = pobjDefaultClass->GetPropertyText(propName);
+//			CString strMsg;
+//			strMsg.Format("Do you want to add this property to the %s definition class also?", szClassName);
+//			if (AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO) == IDYES) {
+//				pobjDefaultClass->GetPropertyData(propColumn
+//			}
+
+			// Return the new column index
+			nNewCol = nCol;
 		}
-	}	
+	}
+	else { // already there
+		AfxMessageBox(_T("That property is already in the view."), MB_ICONINFORMATION);
+	}
 
 	// Clear the temporary flag from all the property bobjects
-//	if (pobjParent)
-//	{
+//	if (pobjParent) {
 //		pobjProperties->SetFlag(flagFilter, FALSE, TRUE);
 //	}
 
@@ -3121,8 +3122,8 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 
 
 // Returns zero-based index of column that displays the specified property, or -1 if couldn't be found.
-int CListCtrlEx::FindColumn(ULONG lngPropertyID)
-{
+int CListCtrlEx::FindColumn(ULONG lngPropertyID) {
+
 //	ASSERT_VALID(m_pdatColumns);
 //	return m_pdatColumns->GetColumnIndex(lngPropertyID);
 	CHeaderCtrl* phdr = GetHeaderCtrl();
@@ -3131,8 +3132,7 @@ int CListCtrlEx::FindColumn(ULONG lngPropertyID)
 	HDITEM hdi;
 	hdi.mask = HDI_LPARAM;
 	int nCols = phdr->GetItemCount();
-	for (int i = 0; i < nCols; i++)
-	{
+	for (int i = 0; i < nCols; i++) {
 		phdr->GetItem(i, &hdi);
 		if (lngPropertyID == (ULONG) hdi.lParam)
 			return i;
@@ -3146,8 +3146,8 @@ int CListCtrlEx::FindColumn(ULONG lngPropertyID)
 // Remove the specified column from the listview.
 // Don't let user remove Name column because it screws up icon handling.
 // Default column of -1 means to remove the column with the current cell.
-BOOL CListCtrlEx::RemoveColumn(int nCol /* = -1 */)
-{
+BOOL CListCtrlEx::RemoveColumn(int nCol /* = -1 */) {
+
 	if (nCol == -1) nCol = m_nCol; // Use current column if none specified
 	if (nCol == -1) return FALSE; // Exit if no column
 	if (nCol >= GetColumnCount()) return FALSE; // Exit if invalid column
@@ -3157,9 +3157,8 @@ BOOL CListCtrlEx::RemoveColumn(int nCol /* = -1 */)
 	// Don't let user remove name property.
 	ULONG lngPropID = GetColumnPropertyID(nCol);
 	ASSERT(lngPropID);
-	if (lngPropID == propName)
-	{
-		AfxMessageBox("The Name property cannot be removed from the view.", MB_ICONINFORMATION);
+	if (lngPropID == propName) {
+		AfxMessageBox(_T("The Name property cannot be removed from the view."), MB_ICONINFORMATION);
 		return FALSE;
 	}
 
@@ -3174,8 +3173,7 @@ BOOL CListCtrlEx::RemoveColumn(int nCol /* = -1 */)
 		return FALSE;
 
 	// Delete property from array
-	if (m_bSaveChangesAutomatically && m_pdatColumns != NULL)
-	{
+	if (m_bSaveChangesAutomatically && m_pdatColumns != NULL) {
 		m_pdatColumns->RemoveColumn(nCol);
 	}
 
@@ -3538,8 +3536,8 @@ void CListCtrlEx::ClearSortMemory()
 
 
 
-void CListCtrlEx::OnColumnRClick(NMHDR * pNMHDR, LRESULT * pResult)
-{
+void CListCtrlEx::OnColumnRClick(NMHDR * pNMHDR, LRESULT * pResult) {
+
 	NMHEADER* phdr = (NMHEADER*) pNMHDR;
 	*pResult = 0;
 
@@ -3560,11 +3558,9 @@ void CListCtrlEx::OnColumnRClick(NMHDR * pNMHDR, LRESULT * pResult)
 
 	// Show popup menu
 //	CMenu menu;
-//	if (menu.LoadMenu(IDR_POPUP_CONTENTS_HEADER))
-//	{
+//	if (menu.LoadMenu(IDR_POPUP_CONTENTS_HEADER)) {
 //		CMenu* pPopup = menu.GetSubMenu(0);
-//		if (pPopup)
-//		{
+//		if (pPopup) {
 //			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
 //		}
 //	}
@@ -3574,8 +3570,7 @@ void CListCtrlEx::OnColumnRClick(NMHDR * pNMHDR, LRESULT * pResult)
 	menu.LoadToolbar(IDR_TOOLBAR_CONTENTS);
 	// load any other toolbars here for more images
 	BCMenu* pPopup = (BCMenu*) menu.GetSubMenu(0);
-	if (pPopup)
-	{			
+	if (pPopup) {
 		pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
 	}
 
@@ -3606,9 +3601,10 @@ void CListCtrlEx::OnColumnEditProperty()
 
 
 
-// Insert a new column
-void CListCtrlEx::OnColumnInsert() 
-{
+// Insert a new column.
+// m_nTargetColumn has been set. 
+void CListCtrlEx::OnColumnInsert() {
+
 	xTRACE("CListCtrlEx OnColumnInsert\n");
 	BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 	// First we want to disable all the currently visible properties
@@ -3619,7 +3615,8 @@ void CListCtrlEx::OnColumnInsert()
 //		m_nTargetColumn = 1;
 	if (IndexToOrder(m_nTargetColumn) == 0)
 		m_nTargetColumn = OrderToIndex(1);
-	int nCol = InsertColumnAsk(pobjCurrent, m_nTargetColumn);
+	OBJID idProperty = 0; // pass 0 to make it ask user 
+	int nCol = InsertColumnAsk(idProperty, m_nTargetColumn, pobjCurrent); 
 	EnableAllProperties();
 }
 
@@ -3637,21 +3634,22 @@ void CListCtrlEx::OnColumnDelete()
 
 
 // Enable all properties in the Properties system folder by clearing the flagDisabled flag.
-void CListCtrlEx::EnableAllProperties()
-{
+void CListCtrlEx::EnableAllProperties() {
+
 	ASSERT_VALID(m_pDoc);
 
 	// Clear all properties' flags
 	BObject* pobjProperties = m_pDoc->GetObject(folderProperties);
 	ASSERT_VALID(pobjProperties);
 	pobjProperties->SetFlag(flagDisabled, FALSE, TRUE);
+//	pobjProperties->ClearFlag(flagDisabled, TRUE);
 }
 
 
 
 // Disable the currently visible properties by setting their flagDisabled flag.
-void CListCtrlEx::DisableVisibleProperties()
-{
+void CListCtrlEx::DisableVisibleProperties() {
+
 	ASSERT_VALID(m_pDoc);
 
 	// Clear all properties' flags
@@ -3659,8 +3657,7 @@ void CListCtrlEx::DisableVisibleProperties()
 
 	// Disable the currently visible properties
 	int nColumns = GetColumnCount();
-	for (int i = 0; i < nColumns; i++)
-	{
+	for (int i = 0; i < nColumns; i++) {
 		ULONG lngPropertyID = GetColumnPropertyID(i);
 		BObject* pobjProp = m_pDoc->GetObject(lngPropertyID);
 		ASSERT_VALID(pobjProp);

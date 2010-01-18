@@ -391,7 +391,7 @@ CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				if (hti)
 				{
 					// Handle different property changes differently
-					ULONG lngPropertyID = pobjHint->m_lngPropertyID;
+					ULONG lngPropertyID = pobjHint->m_idProperty;
 					if (lngPropertyID == propIconID || lngPropertyID == propClassID || lngPropertyID == propClassName)
 					{
 						// Get the new index of the icon in the image list

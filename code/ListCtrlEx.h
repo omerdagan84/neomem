@@ -1,6 +1,7 @@
 
 // CListCtrlEx
 // This class extends the CListCtrl class.
+// a bit rummy though, because it knows about bobjects etc.
 // Date: February 2000
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -26,10 +27,11 @@
 
 class BDataColumns;
 class BDataLink;
-class BObject;
+//class BObject;
 class BObjects;
 class CNeoDoc;
 #include "BData.h"
+#include "BObject.h"
 
 
 // Custom Messages
@@ -41,21 +43,20 @@ class CNeoDoc;
 // The window’s handler for the message responds to the notification message in some 
 // appropriate way, such as retrieving the text in the control.
 #define CM_COLUMNS_CHANGED		WM_APP + 0
-#define CM_ITEM_SELECTED			 WM_APP + 1
+#define CM_ITEM_SELECTED		WM_APP + 1
 
 
 
 
+class CListCtrlEx : public CListCtrl {
 
-class CListCtrlEx : public CListCtrl
-{
-// Construction
 public:
+
+	// Construction
 	CListCtrlEx();
 	virtual ~CListCtrlEx();
 
-
-// enums
+	// Enums
 	enum eRowConstants {keyDummyRow = 0}; // -3}; // 0};
 
 	// these must be shifted 8 bits to the left to fit in the LVIS_OVERLAYMASK bits
@@ -69,8 +70,7 @@ public:
 	// ExpandLastColumn will expand the last column on resize to fill the listview.
 	// ExpandAllColumns will keep columns proportionally sized on resize.
 	// DisableFirstColumn prevents user from editing first column (eg in properties view).
-	enum eMode 
-	{
+	enum eMode {
 		modeNormalListView = 1, 
 		modeSelectCell = 2, // mode used by contents view - allows for multiselect
 		modeFullRowSelect = 4, // 
@@ -82,8 +82,7 @@ public:
 	enum eFocusStates {fsNone = 0, fsFocus = 1, fsHighlight = 2, fsInactive = 3};
 
 
-// Operations
-public:
+	// Operations
 	void AddDummyRow();
 	void AddObjects(BObject* pobjStart, ULONG lngExcludeFlags, BOOL bIncludeStart = FALSE, 
 								BOOL bRecurse = FALSE, int nIndent = 0, BOOL bClearFirst = FALSE, 
@@ -119,7 +118,8 @@ public:
 	ULONG GetSelectedObjectID();
 	int HitTestEx(CPoint &pt, int* pnCol) const;
 	int IndexToOrder(int nColIndex);
-	int InsertColumnAsk(BObject* pobjParent, int nCol = -1);
+//	int InsertColumnAsk(BObject* pobjParent, int nCol = -1);
+	int InsertColumnAsk(OBJID idProperty = 0, int nCol = -1, BObject* pobjParent = NULL);
 	int InitializeColumns(BDataColumns* pdatColumns, BOOL bExpandLastColumn = FALSE, BOOL bSaveChangesAutomatically = FALSE);
 	void InvalidateCurrentCell();
 	int MoveItemToSibling(int nSource, int nTarget, BOOL bAfter);
@@ -150,7 +150,8 @@ public:
 	void UpdateEdit(CCmdUI* pCmdUI);
 
 
-// Attributes
+
+	// Attributes
 public:
 	CNeoDoc* m_pDoc;
 	
@@ -207,13 +208,13 @@ private:
 //	UINT m_nPrintLineHeight;
 
 
-// Implementation
+	// Implementation
 private: 
 	void EnableAllProperties(); // clear flagDisabled for all properties
 	void DisableVisibleProperties(); // set flagDisabled for properties that are already visible in this view
 
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CListCtrlEx)
 	protected:
@@ -222,8 +223,8 @@ private:
 	//}}AFX_VIRTUAL
 
 
-	// Generated message map functions
-protected:
+	// Message map functions
+	protected:
 	//{{AFX_MSG(CListCtrlEx)
 	afx_msg void OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);

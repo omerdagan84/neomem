@@ -272,7 +272,7 @@ void CDialogEditProperty::OnBtnNewLinkSource()
 		// Add the new folder and set its properties
 //		BObject* pobjParent = m_pDoc->GetObject(folderLookup); // add to lookup folder
 		BObject* pobjParent = m_pDoc->GetObject(rootUser); // add to home folder
-		HObject hobjNewFolder = m_pDoc->CreateObject(classFolder, strFolderName, pobjParent);
+		HOBJECT hobjNewFolder = m_pDoc->CreateObject(classFolder, strFolderName, pobjParent);
 		BObject* pobjClass = m_pDoc->GetObject(lngClassID);
 		hobjNewFolder->SetPropertyLink(propDefaultClass, pobjClass, FALSE, FALSE);
 

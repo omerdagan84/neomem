@@ -457,7 +457,7 @@ void CViewSearch::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			ASSERT_VALID(ph);
 			BObject* pobj = ph->m_pobjObject;
 			ASSERT_VALID(pobj);
-			ULONG lngPropertyID = ph->m_lngPropertyID;
+			ULONG lngPropertyID = ph->m_idProperty;
 			// check the main list
 			int nItem = m_lvw.FindItemData((LPARAM) pobj);
 			if (nItem != -1)

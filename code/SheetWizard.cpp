@@ -126,6 +126,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 
 	// Get document 
 	m_pdoc = CNeoDoc::GetDoc();
+
 	BObject* pobjBaseClass = m_pdoc->GetObject(rootClass);
 
 	// Save document modified flag so can restore if user hits cancel in wizard.
@@ -141,13 +142,15 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 	// Note: We create this with flagTemp, but remove this flag if user 
 	// opts to create a new class, then set it back if they choose to 
 	// edit an existing one.
-	m_pobjAdd = m_pdoc->CreateObject(classClass, 
-		_T("New Class"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
-	
+//	m_pobjAdd = m_pdoc->CreateObject(classClass, 
+//		_T("New Class"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
+	m_pobjAdd = m_pdoc->CreateClass(_T("New Class"), "", flagSystem | flagTemp);
+
 	// Create a class object that will be a copy of an existing class object.
 	// Note: if we pick a class that's a child of another class we have to use move.
-	m_pobjEdit = m_pdoc->CreateObject(classClass, 
-		_T("@dummy edit class!"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
+//	m_pobjEdit = m_pdoc->CreateObject(classClass, 
+//		_T("@dummy edit class!"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
+	m_pobjEdit = m_pdoc->CreateClass(_T("@dummy edit class"), "", flagSystem | flagTemp);
 	
 	m_bAddMode = TRUE; // Default is to add a new class
 	m_pobj = m_pobjAdd;
@@ -255,13 +258,13 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			// Note: Let's just assume that all properties changed - makes the code simpler
 			CHint h;
 			h.m_pobjObject = m_pobjEditOriginal;
-			h.m_lngPropertyID = propName; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propDescription; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propIconID; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propObjectProperties; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propObjectFlags; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_lngPropertyID = propObjectNamePropertyType; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-//.			h.m_lngPropertyID = propObjectViewArrangement; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_idProperty = propName; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_idProperty = propDescription; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_idProperty = propIconID; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_idProperty = propObjectProperties; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_idProperty = propObjectFlags; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.m_idProperty = propObjectNamePropertyType; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+//.			h.m_idProperty = propObjectViewArrangement; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 			// Move object to new parent, if changed, and notify views
 			// don't do if on base class cause step 20 is screwy

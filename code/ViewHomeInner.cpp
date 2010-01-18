@@ -284,7 +284,7 @@ void CViewHomeInner::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				ASSERT_VALID(pobjHint);
 				
 				BObject* pobj = pobjHint->m_pobjObject;
-				ULONG lngPropertyID = pobjHint->m_lngPropertyID;
+				ULONG lngPropertyID = pobjHint->m_idProperty;
 				BObject* pobjHome = m_pDoc->GetObject(rootUser);
 				if ((lngPropertyID == propDescription) && (pobj == pobjHome))
 				{

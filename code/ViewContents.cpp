@@ -99,15 +99,14 @@ END_MESSAGE_MAP()
 // Construction/Destruction
 //---------------------------------------------------------------------------
 
-CViewContents::CViewContents()
-{
+CViewContents::CViewContents() {
 //	m_nTargetColumn = -1;
 	m_nDragOver = 0;
 }
 
-CViewContents::~CViewContents()
-{
+CViewContents::~CViewContents() {
 }
+
 
 
 // Create child windows
@@ -223,13 +222,11 @@ int CViewContents::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //---------------------------------------------------------------------------
 
 #ifdef _DEBUG
-void CViewContents::AssertValid() const
-{
+void CViewContents::AssertValid() const {
 	CViewEx::AssertValid();
 }
 
-void CViewContents::Dump(CDumpContext& dc) const
-{
+void CViewContents::Dump(CDumpContext& dc) const {
 	CViewEx::Dump(dc);
 }
 
@@ -242,8 +239,7 @@ void CViewContents::Dump(CDumpContext& dc) const
 // Printing
 //---------------------------------------------------------------------------
 
-BOOL CViewContents::DoPrint(BOOL bPreview)
-{
+BOOL CViewContents::DoPrint(BOOL bPreview) {
 	if (bPreview)
 		CViewEx::OnFilePrintPreview(); // in cviewex
 	else
@@ -253,8 +249,8 @@ BOOL CViewContents::DoPrint(BOOL bPreview)
 
 
 
-BOOL CViewContents::OnPreparePrinting(CPrintInfo* pInfo)
-{
+BOOL CViewContents::OnPreparePrinting(CPrintInfo* pInfo) {
+
 	xTRACE("CViewContents::OnPreparePrinting\n");
 	
 	// If your application knows how many pages the document contains when OnPreparePrinting
@@ -275,8 +271,8 @@ BOOL CViewContents::OnPreparePrinting(CPrintInfo* pInfo)
 // Consider printing a spreadsheet. When overriding OnPreparePrinting, you must calculate 
 // how many sheets of paper will be required to print the entire spreadsheet and then 
 // use that value when calling the SetMaxPage member function of CPrintInfo. 
-void CViewContents::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
-{
+void CViewContents::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) {
+
 	// Initialize fonts margins etc
 	CViewEx::OnBeginPrinting(pDC, pInfo);
 
@@ -303,8 +299,7 @@ void CViewContents::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 // assumes the document is one page long. One consequence of this is that you must be careful if you 
 // call the base class version of OnPrepareDC. Do not assume that m_bContinuePrinting will be TRUE 
 // after calling the base class version. 
-void CViewContents::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) 
-{
+void CViewContents::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)  {
 	// TODO: Add your specialized code here and/or call the base class	
 	CViewEx::OnPrepareDC(pDC, pInfo);
 }
@@ -323,8 +318,8 @@ void CViewContents::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
 // is called for each page, and because it is called only for printing, not for screen display. You 
 // can define a separate function to print a header or footer, and pass it the printer device 
 // context from OnPrint. 
-void CViewContents::OnPrint(CDC* pDC, CPrintInfo* pInfo) 
-{
+void CViewContents::OnPrint(CDC* pDC, CPrintInfo* pInfo) {
+
 	CPrintInfoMore& rpim = theApp.m_printinfo;
 
 	rpim.PrintHeader(pDC, pInfo);
@@ -338,16 +333,14 @@ void CViewContents::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 // When the user closes the print preview window, the framework calls OnEndPrintPreview
 // to notify the application that print preview is about to end. The default implementation
 // calls OnEndPrinting, reactivates the original view, and destroys the print preview window. 
-void CViewContents::OnEndPrintPreview(CDC* pDC, CPrintInfo* pInfo, POINT point, CPreviewView* pView) 
-{
+void CViewContents::OnEndPrintPreview(CDC* pDC, CPrintInfo* pInfo, POINT point, CPreviewView* pView) {
 	// TODO: Add your specialized code here and/or call the base class	
 	CViewEx::OnEndPrintPreview(pDC, pInfo, point, pView);
 }
 */
 
 // Free any fonts and other resources allocated in OnBeginPrinting.
-void CViewContents::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
-{
+void CViewContents::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) {
 	xTRACE("CViewContents::OnEndPrinting\n");
 	// call base class to delete gdi objects
 	CViewEx::OnEndPrinting(pDC, pInfo);
@@ -371,8 +364,8 @@ void CViewContents::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 // fixed-sized documents, you can use this function to initialize a view’s scrolling 
 // limits based on the document size. If your application supports variable-sized 
 // documents, use OnUpdate to update the scrolling limits every time the document changes.
-void CViewContents::OnInitialUpdate()
-{
+void CViewContents::OnInitialUpdate() {
+
 	xTRACE("CViewContents::OnInitialUpdate\n");
 
 	// Store pointer to document
@@ -405,18 +398,17 @@ void CViewContents::OnInitialUpdate()
 
 
 // Update the view
-void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
-{
+void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
+
 	TRACE("    CViewContents::OnUpdate %s\n", theApp.GetHintName(lHint));
 //	TRACE("CViewContents::OnUpdate(lHint=%d, pHint=0x%pL)\n", lHint, pHint);
 //	CWaitCursor cw;
 
-	switch (lHint)
-	{
+	switch (lHint) {
 //		case hintReload:
 //		case hintSelect:
-		case hintLoad:
-			{
+		case hintLoad: {
+
 				// Load the view for an object - set up columns and fill listview with contents
 				BObject* pobjStart = (BObject*) pHint;
 				ASSERT_VALID(pobjStart);
@@ -487,8 +479,8 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				break;
 			}
 
-		case hintSave:
-			{
+		case hintSave: {
+
 				// Bug: hintLoad was being called twice, while hintSave was called once, causing
 				// one of the bdata copies to be a memory leak!
 				// Note: m_pdatCopy might be zero, which is the case when we're closing a document
@@ -511,8 +503,8 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				break;
 			}
 
-		case hintAdd:			
-			{
+		case hintAdd: {
+
 				// Add an item to the listview
 				BObject* pobjNew = (BObject*) pHint;
 				ASSERT_VALID(pobjNew);
@@ -521,8 +513,8 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 				// Only need to handle this if the parent is the document's currently selected item
 				// (otherwise the new object is not visible in contents)
-				if (pobjParent == m_pDoc->GetCurrentObject())
-				{
+				if (pobjParent == m_pDoc->GetCurrentObject()) {
+
 					// Remove dummy new row
 					m_lvw.RemoveDummyRow();
 
@@ -535,22 +527,20 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				break;
 			}
 
-		case hintDelete:			
-			{
+		case hintDelete: {
+
 				// Delete items from the listview and/or the column bdata (might be deleting a propertydef!)
 				CHint* pobjHint = (CHint*) pHint;
 				BObjects* paObjects = pobjHint->m_paObjects;
 				ASSERT_VALID(paObjects);
 				int nItems = paObjects->GetSize();
-				for (int i = 0; i < nItems; i++)
-				{
+				for (int i = 0; i < nItems; i++) {
 					BObject* pobj = (BObject*) paObjects->GetAt(i);
 					// Note: pobj may be invalid by this point because it's already been deleted,
 					// but we still need to remove it from the list, so DON'T ASSERT_VALID!
 //					ASSERT_VALID(pobj);
 					int nItem = m_lvw.FindItemData((LPARAM) pobj);
-					if (nItem != -1)
-					{
+					if (nItem != -1) {
 						m_lvw.DeleteItem(nItem);
 					}
 					// Now check column bdata
@@ -567,8 +557,8 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				break;
 			}
 		
-		case hintPropertyChange:
-			{
+		case hintPropertyChange: {
+
 				//... need to update any dependent properties also
 				// eg if classid changes, then classname changes also!
 				// parent -> location, etc.
@@ -584,24 +574,23 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				
 				BObject* pobj = pobjHint->m_pobjObject;
 				ASSERT_VALID(pobj);
-				ULONG lngPropertyID = pobjHint->m_lngPropertyID;
+				OBJID idProperty = pobjHint->m_idProperty;
 
 				// Look for object in list
 				int nItem = m_lvw.FindItemData((LPARAM) pobj);
-				if (nItem != -1)
-				{
+				if (nItem != -1) {
+
 					// Get new icon if icon or class changed
-					if (lngPropertyID == propIconID || lngPropertyID == propClassID || lngPropertyID == propClassName)
-					{
+					if (idProperty == propIconID || idProperty == propClassID 
+							|| idProperty == propClassName) {
 						// Get the new index of the icon in the image list
 						int nImage = pobj->GetIconIndex();
 						m_lvw.SetItem(nItem, 0, LVIF_IMAGE, 0, nImage, 0, 0, 0);
 					}
 
 					// Look for property in columns
-					int nCol = m_lvw.FindColumn(pobjHint->m_lngPropertyID);
-					if (nCol != -1)
-					{
+					int nCol = m_lvw.FindColumn(pobjHint->m_idProperty);
+					if (nCol != -1) {
 						// Update the item's row
 						m_lvw.Update(nItem);
 					}
@@ -610,15 +599,12 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// If the object that is changing is a property, see if it's in the columns.
 				// Note: When you edit a property, several properties get changed so this might get
 				// called several times.
-				if (pobj->GetClassID() == classProperty)
-				{
+				if (pobj->GetClassID() == classProperty) {
 					// Only concerned with name and property type right now
-					if ((lngPropertyID == propName) || (lngPropertyID == propPropertyType))
-					{
-						ULONG lngObjectID = pobj->GetObjectID();
-						int nCol = m_lvw.FindColumn(lngObjectID);
-						if (nCol != -1)
-						{
+					if ((idProperty == propName) || (idProperty == propPropertyType)) {
+						OBJID idObject = pobj->GetObjectID();
+						int nCol = m_lvw.FindColumn(idObject);
+						if (nCol != -1) {
 							// Found it, so update the column info now
 							m_lvw.UpdateColumn(nCol, pobj);
 						}
@@ -629,8 +615,8 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			}
 
 
-		case hintMoveObject:
-			{
+		case hintMoveObject: {
+
 				// Move object into or out of the listview
 				// 1. if object is in this view, check the new parent. if new parent != current object, remove item
 				// 2. if object is not in this view, check the new parent. if new parent == current object, add item
@@ -663,8 +649,8 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				break;
 			}
 
-		case hintReposition:
-			{
+		case hintReposition: {
+
 				// Move item up or down
 				// Move pobjObject before or after pobjTarget, depending on bAfter flag.
 				CHint* ph = (CHint*) pHint;
@@ -684,8 +670,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				int nTarget = m_lvw.FindItemData((LPARAM) pobjTarget);
 				
 				// bug:: instead of != -1 had && -1 for target!!
-				if ((nSource != -1) && (nTarget != -1))
-				{
+				if ((nSource != -1) && (nTarget != -1)) {
 					// Move the source before or after the target
 					int nSourceNew = m_lvw.MoveItemToSibling(nSource, nTarget, bAfter);
 
@@ -697,20 +682,17 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				break;
 			}
 
-		case hintRefresh:
-			{
+		case hintRefresh: {
 				// Redisplay all objects
 				m_lvw.RedrawWindow();
 				break;
 			}
 
-		case hintResortChildren:
-			{
+		case hintResortChildren: {
 				BObject* pobjParent = (BObject*) pHint;
 				ASSERT_VALID(pobjParent);
 				// Resort this view if the parent object is the currently displayed object
-				if (pobjParent == m_pDoc->GetCurrentObject())
-				{
+				if (pobjParent == m_pDoc->GetCurrentObject()) {
 //					m_lvw.SortByProperty(); //, flips sort order right?
 					m_lvw.SortByProperty(propName, 1);
 					m_lvw.ClearSortMemory();
@@ -718,15 +700,13 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				break;
 			}
 
-		case hintRefreshAllIcons:
-			{
+		case hintRefreshAllIcons: {
+
 				// Walk through all items, reobtaining their icons
 				int nItems = m_lvw.GetItemCount();
-				for (int i = 0; i < nItems; i++)
-				{
+				for (int i = 0; i < nItems; i++) {
 					BObject* pobj = (BObject*) m_lvw.GetItemData(i);
-					if (pobj)
-					{
+					if (pobj) {
 						ASSERT_VALID(pobj);
 						int nIcon = pobj->GetIconIndex();
 						m_lvw.SetItem(i, 0, LVIF_IMAGE, 0, nIcon, 0, 0, 0);
@@ -735,8 +715,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				break;
 			}
 /*
-		case hintReloadChildren:
-			{
+		case hintReloadChildren: {
 				// Reload the children of the specified object
 				//. this is called by obsolete sort code...
 				BObject* pobjStart = (BObject*) pHint;
@@ -779,16 +758,16 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 // should really only do no items selected if clicked outside of a valid cell!
 //, if drag select multiple items, then right click drag, then show multiple menu.
 // Note: See OnHeaderRClick for header popup menu.
-void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen) 
-{
+void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen) {
+
 	xTRACE("CViewContents::OnContextMenu(ptscreen.x,y=%d,%d)\n", ptScreen.x, ptScreen.y);
 
 	// Set flag if user pressed context key (x and y will be -1)
 	BOOL bContextKey = ((ptScreen.x == -1) && (ptScreen.y == -1));
 
 	// Check if user right clicked in the header control
-	if (!bContextKey)
-	{
+	if (!bContextKey) {
+
 		// Exit if right click was in header control
 		//, move onheaderrclick code here, then move it down below!
 		CRect r;
@@ -819,13 +798,12 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 	BOOL bOnFirstItem = (m_lvw.m_nCol == 0);
 
 	// If no cell selected, user must have clicked on background
-	if (m_lvw.m_nRow == -1 || m_lvw.m_nCol == -1)
-	{
+	if (m_lvw.m_nRow == -1 || m_lvw.m_nCol == -1) {
+
 		// Show popup menu for background
 
 		// If user pressed context menu key use center of window
-		if (bContextKey)
-		{
+		if (bContextKey) {
 			CRect r;
 			m_lvw.GetClientRect(&r);
 			m_lvw.ClientToScreen(&r);
@@ -836,19 +814,16 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 		m_pDoc->SetTargetObject(m_pDoc->GetCurrentObject());
 
 //		CMenu menu;
-//		if (menu.LoadMenu(IDR_POPUP_CONTENTS_EMPTY))
-//		{
+//		if (menu.LoadMenu(IDR_POPUP_CONTENTS_EMPTY)) {
 //			CMenu* pPopup = menu.GetSubMenu(0);
-//			if (pPopup)
-//			{
+//			if (pPopup) {
 ////				BOOL bNoModifyClass = m_pobjPopup->GetFlag(flagNoModifyClass);
 ////				pPopup->EnableMenuItem(ID_OBJ_CHANGE_OBJECT_CLASS, bNoModifyClass ? MF_GRAYED : MF_ENABLED);
 //				pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
 //			}
 //		}
 		BCMenu* pPopup = InitPopup(IDR_POPUP_CONTENTS_EMPTY);
-		if (pPopup)
-		{
+		if (pPopup) {
 //			BOOL bNoModifyClass = m_pobjPopup->GetFlag(flagNoModifyClass);
 //			pPopup->EnableMenuItem(ID_OBJ_CHANGE_OBJECT_CLASS, bNoModifyClass ? MF_GRAYED : MF_ENABLED);
 			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
@@ -859,14 +834,11 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 
 	// Bring up object menu if user rclicked on the first column (and not on new row)
 //	else if (bOnFirstItem)
-	else if (bOnFirstItem && !bOnNewRow)
-	{
+	else if (bOnFirstItem && !bOnNewRow) {
 		// If user pressed context menu key use center of item
-		if (bContextKey)
-		{
+		if (bContextKey) {
 			CRect r;
-			if (m_lvw.GetItemRect(nItem, &r, LVIR_ICON))
-			{
+			if (m_lvw.GetItemRect(nItem, &r, LVIR_ICON)) {
 				m_lvw.ClientToScreen(&r);
 				ptScreen = r.CenterPoint();
 			}
@@ -882,12 +854,10 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 
 		// Display pop up menu
 //		CMenu menu;
-//		if (menu.LoadMenu(IDR_POPUP_CONTENTS))
-//		{
+//		if (menu.LoadMenu(IDR_POPUP_CONTENTS)) {
 //			CMenu* pPopup = menu.GetSubMenu(0);
 			BCMenu* pPopup = InitPopup(IDR_POPUP_CONTENTS, ID_OBJ_OPEN);
-			if (pPopup)
-			{
+			if (pPopup) {
 //				pPopup->SetDefaultItem(ID_OBJ_OPEN); // default is same as double clicking
 //				pPopup->SetDefaultItem(ID_OBJ_EDIT_IN_DIALOG); // default is same as double clicking
 
@@ -904,11 +874,9 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 	}
 
 	// Bring up value menu if user rclicked on a cell value
-	else
-	{
+	else {
 		// If user pressed context menu key use cell position
-		if (bContextKey)
-		{
+		if (bContextKey) {
 			CRect r;
 			m_lvw.GetCellRect(m_lvw.m_nRow, m_lvw.m_nCol, r);
 			m_lvw.ClientToScreen(&r);
@@ -923,16 +891,13 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 		m_pDoc->SetTargetObject(pobj);
 
 //		CMenu menu;
-//		if (menu.LoadMenu(IDR_POPUP_EDIT_VALUE))
-//		{
+//		if (menu.LoadMenu(IDR_POPUP_EDIT_VALUE)) {
 //			CMenu* pPopup = menu.GetSubMenu(0);
 			BCMenu* pPopup = InitPopup(IDR_POPUP_EDIT_VALUE, ID_OBJ_EDIT_IN_DIALOG);
-			if (pPopup)
-			{
+			if (pPopup) {
 				// Add bdata menu items, if any
 				BData* pdat = m_lvw.GetCellBData();
-				if (pdat)
-				{
+				if (pdat) {
 					ASSERT_VALID(pdat);
 					int nPos = pPopup->GetMenuItemCount() - 1; // insert before "Cancel"
 					pdat->AddMenuItems(pPopup, nPos);
@@ -952,11 +917,9 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 
 //, multiple selection not implemented yet
 /*
-	else if (nItems > 1)
-	{
+	else if (nItems > 1) {
 		// If user pressed context menu key use center of window
-		if (bContextKey)
-		{
+		if (bContextKey) {
 			CRect r;
 			m_lvw.GetClientRect(&r);
 			ClientToScreen(&r);
@@ -970,12 +933,10 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 		
 		// Display pop up menu
 //		CMenu menu;
-//		if (menu.LoadMenu(IDR_POPUP_CONTENTS_MULTI))
-//		{
+//		if (menu.LoadMenu(IDR_POPUP_CONTENTS_MULTI)) {
 //			CMenu* pPopup = menu.GetSubMenu(0);
 			BCMenu* pPopup = InitPopup(IDR_POPUP_CONTENTS_MULTI);
-			if (pPopup)
-			{
+			if (pPopup) {
 				pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
 			}
 //		}
@@ -987,11 +948,9 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 
 
 // Pass the specified BDataCommand onto the right clicked BData value
-void CViewContents::OnPopupBDataCommand(UINT nCommandID)
-{
+void CViewContents::OnPopupBDataCommand(UINT nCommandID) {
 	BData* pdat = m_lvw.GetCellBData();
-	if (pdat)
-	{
+	if (pdat) {
 		ASSERT_VALID(pdat);
 		pdat->HandleCommand(nCommandID);
 	}	
@@ -1000,8 +959,7 @@ void CViewContents::OnPopupBDataCommand(UINT nCommandID)
 
 
 
-void CViewContents::OnCmdViewGridlines() 
-{
+void CViewContents::OnCmdViewGridlines() {
 	// Toggle gridlines on/off
 	DWORD dwStyle = m_lvw.GetExtendedStyle();
 	dwStyle ^= LVS_EX_GRIDLINES;
@@ -1011,8 +969,7 @@ void CViewContents::OnCmdViewGridlines()
 }
 
 
-void CViewContents::OnUpdateViewGridlines(CCmdUI* pCmdUI) 
-{
+void CViewContents::OnUpdateViewGridlines(CCmdUI* pCmdUI) {
 	// Indent button if gridlines are on
 	DWORD dwStyle = m_lvw.GetExtendedStyle();
 	int nCheck = (dwStyle & LVS_EX_GRIDLINES) ? 1 : 0;
@@ -1024,15 +981,13 @@ void CViewContents::OnUpdateViewGridlines(CCmdUI* pCmdUI)
 // Edit the currently selected cell.
 // This is the F2 handler.
 // CListCtrlEx handles selecting a cell, moving around the grid, etc.
-void CViewContents::OnObjEditInPlace() 
-{
+void CViewContents::OnObjEditInPlace() {
 	// This will create an edit box on current cell and send OnEndLabelEdit message when done.
 	m_lvw.EditCurrentCell();
 }
 
 
-void CViewContents::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
-{
+void CViewContents::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
 	//. Check if item is read-only (eg location)
 	// To prevent the user from editing the label, return TRUE.
@@ -1052,21 +1007,22 @@ void CViewContents::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 // User finished editing the text of a cell.
 // Do data validation, return FALSE if you don't like it.
 //, move this to clistctrlex also!?
-void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
-{
+void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
+
 	xTRACE("CViewContents::OnEndLabelEdit\n");
+	
 	// Update CDocument and other views
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
 	LVITEM* pLVITEM = &(pDispInfo->item);
-	if (pLVITEM->pszText)
-	{
+	if (pLVITEM->pszText) {
+
 		// Get object edited from iItem
 		int nItem = pLVITEM->iItem;
 		BObject* pobj = (BObject*) m_lvw.GetItemData(nItem);
 
 		// Check if we're on the new row (pobj will be magic value of 0)
-		if ((DWORD) pobj == CListCtrlEx::keyDummyRow)
-		{
+		if ((DWORD) pobj == CListCtrlEx::keyDummyRow) {
+
 			// We're on the new row, so we'll want to add a new object, modify the dummy row, tell all views,
 			// then re-add a new dummy row
 
@@ -1087,11 +1043,12 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 			int nImage = pobjNew->GetIconIndex();
 			m_lvw.SetItem(nItem, 0, LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM, LPSTR_TEXTCALLBACK, nImage, 0, 0, (LPARAM) pobjNew);
 
-			// Tell all other views about new object also
+			// Tell all _other_ views about new object also
 //			m_pDoc->UpdateAllViewsEx(this, hintAdd, pobjNew);
 
-			// Add object to database and tell views
-			m_pDoc->AddObject(pobjNew);
+			// Add object to database and tell _other_ views
+//			m_pDoc->AddObject(pobjNew);
+			m_pDoc->AddObject(pobjNew, this);
 
 			// Now re-add the dummy row
 			m_lvw.AddDummyRow();
@@ -1101,8 +1058,8 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 			// if tab, should select next column
 
 		}
-		else
-		{
+		else {
+
 			// We're on a regular object row
 			ASSERT_VALID(pobj);
 
@@ -1119,8 +1076,7 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		// Text is okay, we accept it
 		*pResult = TRUE;
 	}
-	else
-	{
+	else {
 		*pResult = 0;
 	}
 }
@@ -1132,8 +1088,8 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 //----------------------------------------------------------------------------------------------------
 
 // Copy the selected items to the clipboard
-void CViewContents::OnCmdEditCopy() 
-{
+void CViewContents::OnCmdEditCopy() {
+
 	xTRACE("CViewContents::OnCmdEditCopy\n");
 	
 	// Exit if on new row (nothing there)
@@ -1941,16 +1897,16 @@ LRESULT CViewContents::OnLvwColumnsChanged(WPARAM wParam, LPARAM lParam)
 // in the contents view, we want to add the new object as a child of the doc's current object.
 void CViewContents::OnObjAdd() 
 {
-	BObject* pobjParent = m_pDoc->GetCurrentObject();
-	ASSERT_VALID(pobjParent);
+	HOBJECT hobjParent = m_pDoc->GetCurrentObject();
+	ASSERT_VALID(hobjParent);
 	// Bring up add new dialog
 	// Add object but don't select it as the current object in the data view
-	BObject* pobjNew = m_pDoc->UIAddNewObject(pobjParent, FALSE);
-	if (pobjNew)
+	HOBJECT hobjNew = m_pDoc->UIAddNewObject(hobjParent, FALSE);
+	if (hobjNew)
 	{
 		// Select the new object in this view
-		ASSERT_VALID(pobjNew);
-		int nNewItem = m_lvw.FindItemData((LPARAM) pobjNew);
+		ASSERT_VALID(hobjNew);
+		int nNewItem = m_lvw.FindItemData((LPARAM) hobjNew);
 		if (nNewItem != -1)
 			m_lvw.SelectItem(nNewItem);
 	}

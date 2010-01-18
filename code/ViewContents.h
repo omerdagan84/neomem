@@ -20,21 +20,21 @@
 
 
 
-class CViewContents : public CViewEx
-{
+class CViewContents : public CViewEx {
+
 	DECLARE_DYNCREATE(CViewContents)
 
-// Construction
 public:
+
+	// Construction
 	CViewContents();
 	virtual ~CViewContents();
 
-// Operations
-public:
+	// Operations
 	virtual BOOL DoPrint(BOOL bPreview);
 
 
-// Implementation
+	// Implementation
 private:
 	BObject* DragGetDropTarget(CPoint ptClient); // get drop target for given point
 //	void DisableVisibleProperties(); // set flagDisabled for properties that are already visible in this view
@@ -42,9 +42,11 @@ private:
 	BObject* GetSelectedObject(); // get currently selected object
 	void SetTargetObject();
 
-// Attributes
-private: 
+	// Attributes
+//private: 
+public: // so can test drive its functions!
 	CListCtrlEx m_lvw; // list view control
+private: 
 	CToolBarCtrlEx m_tbr; // toolbar control
 //	CUndo m_objUndo; // undo object
 //	int m_nTargetColumn; // selected column for header popup menu
@@ -52,7 +54,7 @@ private:
 
 
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CViewContents)
 	public:
@@ -73,15 +75,14 @@ private:
 #endif
 
 
-// Implementation
+	// Implementation
 protected:
-
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-// Generated message map functions
+	// Message map functions
 protected:
 	//{{AFX_MSG(CViewContents)
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);

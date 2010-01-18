@@ -13,22 +13,21 @@
 
 
 
-class CHint : public CObject
-{
-// Construction
+class CHint : public CObject {
+
 public:
+
+	// Construction
 	CHint();
 	virtual ~CHint();
 
-// Operations
-public:
+	// Operations
 
-// Attributes
-public:
+	// Attributes
 	BObject* m_pobjObject;
 	BObject* m_pobjParent;
 	BObjects* m_paObjects;
-	ULONG m_lngPropertyID; // for property change notifications
+	ULONG m_idProperty; // for property change notifications
 	BObject* m_pobjTarget; // for move up and move down
 	BOOL m_bAfter; // for move up and move down - true if move after target, false if move before
 

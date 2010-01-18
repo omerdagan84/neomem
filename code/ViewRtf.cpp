@@ -541,7 +541,7 @@ if (strlen(pszRtf) > 0)
 				ASSERT_VALID(pobj);
 				BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 				// Check if this event refers to the current object and rtf text property
-				if ((ph->m_lngPropertyID == propRtfText) && (pobj == pobjCurrent))
+				if ((ph->m_idProperty == propRtfText) && (pobj == pobjCurrent))
 				{
 					LPCTSTR pszRtf = pobj->GetPropertyText(propRtfText);
 					m_prtf->SetRtf(pszRtf, FALSE);

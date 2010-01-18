@@ -29,8 +29,7 @@ class CIconCache;
 class CFrameChild;
 
 
-// Define the object handle type (keep it a pointer for now)
-typedef BObject* HObject;
+
 
 // Map from ULONG to BObject*
 typedef CMap<ULONG, ULONG, BObject*, BObject*> CMapObjects;
@@ -71,8 +70,8 @@ const ULONG versionDataModel = 120102; // version 1.2a subversion 2
 
 
 
-class CNeoDoc : public CDocument
-{
+class CNeoDoc : public CDocument {
+
 	DECLARE_DYNCREATE(CNeoDoc)
 
 public:
@@ -89,24 +88,26 @@ public:
 	static CNeoDoc* GetDoc(); // class method used to get pointer to current document object
 
 	// Operations
-	void AddObject(HObject hobj);
-	BOOL AddObjectToIndex(HObject hobj);
-	BData* CreateBData(ULONG lngClassOrPropertyID);
-	BData* CreateBDataFromPropertyType(ULONG lngPropertyTypeID);
-	HObject CreateObject(const ULONG lngClassID, const CString& strText, BObject* pobjParent = NULL, ULONG lngObjectID = 0, ULONG lngIconID = 0, ULONG lngFlags = 0);
+	void AddObject(HOBJECT hobj, CView* pviewIgnore = NULL);
+	BOOL AddObjectToIndex(HOBJECT hobj);
+	BData* CreateBData(OBJID idClassOrProperty);
+	BData* CreateBDataFromPropertyType(OBJID idPropertyType);
+	HOBJECT CreateObject(const OBJID idClass, const CString& strText, BObject* pobjParent = NULL, OBJID idObject = 0, OBJID idIcon = 0, ULONG lngFlags = 0);
+	HOBJECT CreateProperty(const CString& strName, const OBJID idPropType, const CString& strDescription);
+	HOBJECT CreateClass(const CString& strName, const CString& strDescription = "", ULONG lngFlags = 0);
 	BOOL CreateTemplate();
 	BOOL DoFileAutoRecoverSave();
 	int FindReferences(BObject* pobjFind, CObArray& aRefs, BObject* pobjStart = 0, BOOL bRecurse = TRUE);
 	BObject* GetCurrentObject();
 	int GetEncryptionType() { return m_nEncryptionType; }; // inline
 	CString GetFileSizeString();
-	int GetIconIndex(ULONG lngIconID);
+	int GetIconIndex(OBJID idIcon);
 	CImageList* GetImageList();
 	CFrameChild* GetMDIChildFrame();
 	CString GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText);
 	ULONG GetNextObjectID(); // get next available objectid
 	CString GetNumberOfObjectsString();
-	BObject* GetObject(ULONG lngObjectID);
+	BObject* GetObject(OBJID idObject);
 	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
 //	BObject* GetRoot(); // get the root object of the document
 	BObject* GetRoot() { return m_pobjRoot; }; // inline - get the root object of the document
@@ -114,9 +115,9 @@ public:
 	BObject* GetTargetObject();
 	BOOL IsBObjectValid(BObject* pobj);
 	BOOL IsTargetSingle();
-	void RemoveObjectFromIndex(ULONG lngObjectID);
+	void RemoveObjectFromIndex(OBJID idObject);
 	BOOL SaveModifiedBackup();
-	int SearchForText(BObject* pobjStart, ULONG lngPropertyID, CString strFindText, BObjects& aResults, 
+	int SearchForText(BObject* pobjStart, OBJID idProperty, CString strFindText, BObjects& aResults, 
 					ULONG lngExcludeFlags = 0, BOOL bMatchCase = FALSE, BOOL bWholeWord = FALSE,
 					BOOL bSearchStartObject = FALSE, BOOL bOriginalCall = TRUE);
 	void SetCurrentObject(BObject* pobjCurrent, CView* pSender = 0, BOOL bNavigating = FALSE);
@@ -155,7 +156,7 @@ public:
 	void UITest();
 
 
-// Attributes
+	// Attributes
 private:
 	// These get serialized
 	BOOL m_bUnicode; // If true then document is/was serialized using unicode characters rather than ansi
@@ -165,13 +166,13 @@ private:
 	BObject* m_pobjCurrent;		// Pointer to currently selected object
 	ULONG m_lngSplitterPos; // Splitter position
 	CStringList m_lstSearches; // List of recently performed searches
-	ULONG m_lngNextObjectID; // Next available ObjectID
+	OBJID m_idNextObject; // Next available ObjectID
 public: //, make private
 	int m_nVersionFileStructure; // Version of physical file structure - where variables are expected to be, etc.
 	int m_nVersionDataModel; // Version of system data model - which bobjects are expected to exist, etc.
 private:
-	ULONG m_lngDefaultFolderLocationID;			// Default location to add new folders
-	ULONG m_lngStartObjectID; // Object to select on start
+	OBJID m_idDefaultFolderLocation; // Default location to add new folders
+	OBJID m_idStartObject; // Object to select on start
 
 public: // leave these public?
 	BDataViews m_datViewsLeft; // Tab/view arrangement for left side
@@ -212,7 +213,7 @@ private:
 
 
 
-// Implementation
+	// Implementation
 private:
 	BOOL OnOpenDocumentEx(LPCTSTR lpszPathName);
 	BOOL OnSaveDocumentEx(LPCTSTR lpszPathName);
@@ -227,7 +228,7 @@ private:
 	void SynchronizeRecurseProps(BObject* pobjTemplate);
 
 	
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CNeoDoc)
 	public:
@@ -256,7 +257,8 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-// Generated message map functions
+
+	// Message map functions
 protected:
 	//{{AFX_MSG(CNeoDoc)
 	afx_msg void OnCmdFileProperties();

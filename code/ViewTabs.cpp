@@ -388,7 +388,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				// If current object's class changed, reload view arrangement in case it's different
 				CHint* ph = (CHint*) pHint;
-				if (ph->m_lngPropertyID == propClassID)
+				if (ph->m_idProperty == propClassID)
 				{
 					BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 					if (ph->m_pobjObject == pobjCurrent)

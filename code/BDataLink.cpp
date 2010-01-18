@@ -155,7 +155,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			{
 				// Add the new object
 				ULONG lngClassID = pobjClass->GetObjectID();
-				HObject hobjNew = pDoc->CreateObject(lngClassID, strCopy, pobjLinkSource);
+				HOBJECT hobjNew = pDoc->CreateObject(lngClassID, strCopy, pobjLinkSource);
 				pDoc->AddObject(hobjNew);
 
 				// Link to it
