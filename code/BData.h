@@ -6,6 +6,13 @@
 //-----------------------------------------------------------------------------------------------------------------
 
 
+//, don't like how all these ui things wound up getting into this class. 
+// addmenuitems, handlecommand, onclick, onmousemove, editvalue...
+// rename with UI prefix for now. 
+// eventually handle with a ui callback object. 
+
+
+
 #pragma once
 
 
@@ -24,21 +31,22 @@ public:
 
 	// Operations
 public:
-	virtual BOOL AddMenuItems(CMenu* pMenu, int nPos);
 	virtual void ConvertToSoftLinks();
 	virtual void ConvertToHardLinks(CNeoDoc* pDoc);
 	virtual BData* CreateCopy();
-	virtual BOOL EditValue(BObject* pobj, BObject* pobjPropertyDef);
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
 	virtual LPCTSTR GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
-	virtual BOOL HandleCommand(UINT nCommandID);
 	virtual BOOL IsValid(CNeoDoc* pDoc);
-	virtual void OnClick();
-	virtual void OnMouseMove();
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);
 	virtual void ResetData(); // use this to reset bdata's m_bCacheValid flag
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
+
+	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
+	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
+	virtual BOOL UIHandleCommand(UINT nCommandID);
+	virtual void UIOnClick();
+	virtual void UIOnMouseMove();
 
 	// Attributes
 protected:

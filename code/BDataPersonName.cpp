@@ -217,7 +217,7 @@ LPCTSTR BDataPersonName::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL b
 
 // Edit the name in a dialog.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataPersonName::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataPersonName::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
 //	ASSERT_VALID(pobj);

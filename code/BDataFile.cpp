@@ -89,7 +89,7 @@ void BDataFile::Serialize(CArchive &ar)
 
 // Bring up dialog to select a file
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataFile::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataFile::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
 
@@ -143,7 +143,7 @@ BOOL BDataFile::FindReferences(BObject* pobjFind)
 
 
 
-void BDataFile::OnClick()
+void BDataFile::UIOnClick()
 {
 	CString strMsg;
 	strMsg.Format("Open the file %s?", (LPCTSTR) m_strText);
@@ -164,7 +164,7 @@ void BDataFile::OnClick()
 
 
 
-void BDataFile::OnMouseMove()
+void BDataFile::UIOnMouseMove()
 {
 	// Windows 95: The width and height of the cursor must be the values returned by the 
 	// GetSystemMetrics function for SM_CXCURSOR and SM_CYCURSOR. In addition, either the 
@@ -179,7 +179,7 @@ void BDataFile::OnMouseMove()
 
 
 // Add menu items for bdata value popup
-BOOL BDataFile::AddMenuItems(CMenu* pMenu, int nPos)
+BOOL BDataFile::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
 	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Open File...");
 	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
@@ -188,11 +188,11 @@ BOOL BDataFile::AddMenuItems(CMenu* pMenu, int nPos)
 
 
 
-BOOL BDataFile::HandleCommand(UINT nCommandID)
+BOOL BDataFile::UIHandleCommand(UINT nCommandID)
 {
 	if (nCommandID == ID_POPUP_BDATA_START)
 	{
-		OnClick();
+		UIOnClick();
 		return TRUE;
 	}
 	return FALSE;

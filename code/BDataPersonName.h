@@ -24,17 +24,18 @@ public:
 
 public:
 	virtual BData* CreateCopy();
-	virtual BOOL EditValue(BObject* pobj, BObject* pobjPropertyDef);
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
 	virtual LPCTSTR GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	virtual void ResetData(); // use this to reset m_bCacheValid flag
 	virtual void Serialize(CArchive& ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
+	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
 	// These are selected in global options combo
 	enum eNameFormats {nfNone = 0, nfFirstLast = 1, nfLastFirst = 2, nfFirstLAST = 3, nfLASTFirst = 4};
 
+//,make private
 public:
 	CString m_strTitle;
 	CString m_strFirst;

@@ -88,7 +88,7 @@ void BDataWebsite::Serialize(CArchive &ar)
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataWebsite::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataWebsite::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
 
@@ -126,7 +126,7 @@ BOOL BDataWebsite::FindReferences(BObject* pobjFind)
 
 
 
-void BDataWebsite::OnClick()
+void BDataWebsite::UIOnClick()
 {
 	CString strMsg;
 	strMsg.Format("Open the website %s?", (LPCTSTR) m_strText);
@@ -146,7 +146,7 @@ void BDataWebsite::OnClick()
 
 
 
-void BDataWebsite::OnMouseMove()
+void BDataWebsite::UIOnMouseMove()
 {
 	// Windows 95: The width and height of the cursor must be the values returned by the 
 	// GetSystemMetrics function for SM_CXCURSOR and SM_CYCURSOR. In addition, either the 
@@ -161,7 +161,7 @@ void BDataWebsite::OnMouseMove()
 
 
 // Add menu items for bdata value popup
-BOOL BDataWebsite::AddMenuItems(CMenu* pMenu, int nPos)
+BOOL BDataWebsite::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
 	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Open Website...");
 	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
@@ -170,11 +170,11 @@ BOOL BDataWebsite::AddMenuItems(CMenu* pMenu, int nPos)
 
 
 
-BOOL BDataWebsite::HandleCommand(UINT nCommandID)
+BOOL BDataWebsite::UIHandleCommand(UINT nCommandID)
 {
 	if (nCommandID == ID_POPUP_BDATA_START)
 	{
-		OnClick();
+		UIOnClick();
 		return TRUE;
 	}
 	return FALSE;

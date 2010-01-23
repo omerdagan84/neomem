@@ -410,7 +410,7 @@ SOURCE=..\code\FrameMain.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GUI.cpp
+SOURCE=..\code\GUI.cpp
 # End Source File
 # Begin Source File
 
@@ -606,7 +606,7 @@ SOURCE=..\code\TreeCtrlEx.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\UI.cpp
+SOURCE=..\code\UI.cpp
 # End Source File
 # Begin Source File
 
@@ -1007,7 +1007,7 @@ SOURCE=..\code\FrameMain.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GUI.h
+SOURCE=..\code\GUI.h
 # End Source File
 # Begin Source File
 
@@ -1203,7 +1203,7 @@ SOURCE=..\code\TreeCtrlEx.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\UI.h
+SOURCE=..\code\UI.h
 # End Source File
 # Begin Source File
 

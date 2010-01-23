@@ -147,7 +147,7 @@ void BDataFlags::Serialize(CArchive &ar)
 // eg Author propertydef could point to the People folder, or Authors folder
 // eg Class propertydef should point to the Classes folder
 // Links will be similar, but will have multiselect
-BOOL BDataFlags::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataFlags::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 /*
 	ASSERT_VALID(this);
@@ -175,7 +175,7 @@ BOOL BDataFlags::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 			pDoc->SetModifiedFlag(TRUE);
 
 		// but how would that change get written back to the actual m_lngClassID variable?
-		// the EditValue could handle that - ie check to see if the propertydef is a pseudo property
+		// the UIEditValue could handle that - ie check to see if the propertydef is a pseudo property
 		// if so, do any special handling required
 
 		// Handle pseudo properties here

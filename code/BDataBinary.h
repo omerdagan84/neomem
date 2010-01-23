@@ -10,8 +10,8 @@
 
 #include "BData.h"
 
-class BDataBinary : public BData  
-{
+class BDataBinary : public BData {
+
 	DECLARE_SERIAL(BDataBinary)
 
 public:

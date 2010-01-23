@@ -58,7 +58,6 @@ public:
 	BOOL DeleteObject(BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE, BOOL bAskUser = FALSE);
 	void DisplayProperties(); // const
-	BOOL EditValue(OBJID lngPropertyID);
 	void Export(CFileText& file, BOOL bRecurse, BDataLink& datProps);
 	BObject* FindProperty(OBJID lngPropertyID, BOOL bAddIfNotFound);
 	int FindReferences(BObject* pobjFind, CObArray& aRefs, BOOL bRecurse);
@@ -124,6 +123,7 @@ public:
 	void SetViewHeight(BYTE bytViewHeight) { m_bytViewHeight = bytViewHeight; }; // inline
 	BOOL SortChildren();
 
+	BOOL UIEditValue(OBJID lngPropertyID);
 
 
 	// Attributes

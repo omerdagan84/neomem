@@ -450,7 +450,7 @@ void CViewIndex::OnObjEditInDialog()
 	if (pobj)
 	{
 		ASSERT_VALID(pobj);
-		pobj->EditValue(propName);
+		pobj->UIEditValue(propName);
 	}		
 }
 */

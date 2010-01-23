@@ -87,7 +87,7 @@ void BDataHyperlink::Serialize(CArchive &ar)
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataHyperlink::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataHyperlink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
 	//, will want to say the object we're editing and the property name
@@ -176,7 +176,7 @@ BOOL BDataHyperlink::IsWebsite()
 
 
 
-void BDataHyperlink::OnClick()
+void BDataHyperlink::UIOnClick()
 {
 	// See if we have an email address or website address
 	// Send email to someone@somewhere.org? yes/no
@@ -218,7 +218,7 @@ void BDataHyperlink::OnClick()
 
 
 
-void BDataHyperlink::OnMouseMove()
+void BDataHyperlink::UIOnMouseMove()
 {
 	// Windows 95: The width and height of the cursor must be the values returned by the 
 	// GetSystemMetrics function for SM_CXCURSOR and SM_CYCURSOR. In addition, either the 
@@ -233,7 +233,7 @@ void BDataHyperlink::OnMouseMove()
 
 
 // Add menu items for bdata value popup
-BOOL BDataHyperlink::AddMenuItems(CMenu* pMenu, int nPos)
+BOOL BDataHyperlink::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
 	if (IsEmail())
 		pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Send Email...");
@@ -245,11 +245,11 @@ BOOL BDataHyperlink::AddMenuItems(CMenu* pMenu, int nPos)
 
 
 
-BOOL BDataHyperlink::HandleCommand(UINT nCommandID)
+BOOL BDataHyperlink::UIHandleCommand(UINT nCommandID)
 {
 	if (nCommandID == ID_POPUP_BDATA_START)
 	{
-		OnClick();
+		UIOnClick();
 		return TRUE;
 	}
 	return FALSE;

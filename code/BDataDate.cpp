@@ -31,20 +31,27 @@ IMPLEMENT_SERIAL(BDataDate, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-BDataDate::BDataDate()
+BDataDate::BDataDate() 
+//mil 
+//:
+//	m_bitsFlags (0) // won't work
+//	m_bitsFlags.Type (0) // won't work
+//, need a constructor for that struct? 
 {
-//	m_odt.SetStatus(COleDateTime::null);
+	m_bitsFlags.Type = 0;
+	m_bitsFlags.Relationship = 0;
+	m_bitsFlags.Modifiers = 0;
+	m_bitsFlags.Season = 0;
 
-	m_lngFlags.Type = 0;
-	m_lngFlags.Relationship = 0;
-	m_lngFlags.Modifiers = 0;
-	m_lngFlags.Season = 0;
-
+	//, this is wasteful - eg on loading file - has to call this for
+	// each date object, even though it will then get wiped out!
 	m_odt = COleDateTime::GetCurrentTime();
+
+	//, better to do this? or set a flag in m_bits to say it's invalid?
+//	m_odt.SetStatus(COleDateTime::null);
 }
 
-BDataDate::~BDataDate()
-{
+BDataDate::~BDataDate() {
 }
 
 
@@ -54,8 +61,8 @@ BDataDate::~BDataDate()
 // Then check for month year - otherwise date parsing will just convert "aug 2000" to 8/1/2000
 // Tokens must be stored in order longest to shortest for parsing to work right
 // First token will be the output format - not used for input!
-// Bug: Modified m_lngFlags directly even though date in string might have been invalid. Caught in code.
-BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0 */, BOOL bShowErrorMessage /* = TRUE */)
+// Bug: Modified m_bitsFlags directly even though date in string might have been invalid. Caught in code.
+BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0 */, BOOL bShowErrorMessage /* = TRUE */) 
 {
 	// Copy the string so we can modify it
 	CStringEx strCopy = str;
@@ -68,24 +75,24 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	//, ideally delete this property value but for now just set blank
 	if (strCopy.IsEmpty())
 	{
-		m_lngFlags.Type = flagBlank;
+		m_bitsFlags.Type = flagBlank;
 		m_strText.Empty();
 		return TRUE;
 	}
 
 	// Initialize new flags struct
-	sDateFlags lngNewFlags;
-	lngNewFlags.Type = 0;
-	lngNewFlags.Relationship = 0;
-	lngNewFlags.Modifiers = 0;
-	lngNewFlags.Season = 0;
+	sDateFlags bitsNewFlags;
+	bitsNewFlags.Type = 0;
+	bitsNewFlags.Relationship = 0;
+	bitsNewFlags.Modifiers = 0;
+	bitsNewFlags.Season = 0;
 
 	// Check for modifiers (after, before, circa)
 	UINT nModifierID = strCopy.GetNextTokenID(IDS_DATE_AFTER, IDS_DATE_CIRCA, TRUE);
 	if (nModifierID)
 	{
 		ULONG nModifiers[] = {flagAfter, flagBefore, flagCirca};
-		lngNewFlags.Modifiers = nModifiers[nModifierID - IDS_DATE_AFTER];
+		bitsNewFlags.Modifiers = nModifiers[nModifierID - IDS_DATE_AFTER];
 	}
 
 	// Check for question mark at end (uncertain)
@@ -93,7 +100,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	{
 		// Remove question mark and set modifier flag
 		strCopy = strCopy.Left(strCopy.GetLength() - 1);
-		lngNewFlags.Modifiers |= flagUncertain;
+		bitsNewFlags.Modifiers |= flagUncertain;
 	}
 
 	// Check for 's at end (plural), e.g. "1800's", "1970s"
@@ -101,7 +108,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 //	{
 //		// Remove 's and set modifier flag
 //		strCopy = strCopy.Left(strCopy.GetLength() - 2);
-//		lngNewFlags.Modifiers |= flagPlural;
+//		bitsNewFlags.Modifiers |= flagPlural;
 //	}
 
 	// Middle of year
@@ -112,9 +119,9 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	UINT nSeasonID = strCopy.GetNextTokenID(IDS_DATE_SPRINGBREAK, IDS_DATE_HALLOWEEN, TRUE);
 	if (nSeasonID)
 	{
-		lngNewFlags.Type = flagSeasonYear;
+		bitsNewFlags.Type = flagSeasonYear;
 		int nSeason = nSeasonID - IDS_DATE_SPRINGBREAK + 1;
-		lngNewFlags.Season = nSeason;
+		bitsNewFlags.Season = nSeason;
 		// set date here! this is why would be better to store holidays as bobjects (eventually)
 		// ie could have date properties with them!
 //		enum eDateSeasons {flagSpringBreak = 1, flagSummer, flagAutumn, flagWinter, flagNewYearsEve,
@@ -134,7 +141,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 		UINT nMonthID = strCopy.GetNextTokenID(IDS_DATE_JANUARY, IDS_DATE_DECEMBER, TRUE);
 		if (nMonthID)
 		{
-			lngNewFlags.Type = flagMonthYear;
+			bitsNewFlags.Type = flagMonthYear;
 			nMonth = nMonthID - IDS_DATE_JANUARY + 1;
 			nDay = 15;
 		}
@@ -155,9 +162,9 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 		if (strCopy == strYear)
 		{		
 			// Set flags, but don't overwrite type if set to flagSeasonYear or flagMonthYear, for instance.
-			if (lngNewFlags.Type == 0)
-				lngNewFlags.Type = flagYear;
-			m_lngFlags = lngNewFlags;
+			if (bitsNewFlags.Type == 0)
+				bitsNewFlags.Type = flagYear;
+			m_bitsFlags = bitsNewFlags;
 
 			// Set date - if flagYear will be middle of year
 			m_odt.SetDateTime(lngYear, nMonth, nDay, 0, 0, 0);
@@ -166,14 +173,14 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	}
 
 	// Restore string to state before removing the month
-	if (lngNewFlags.Type == flagMonthYear)
+	if (bitsNewFlags.Type == flagMonthYear)
 	{
-		lngNewFlags.Type = 0; // also clear flag since monthyear format test failed
+		bitsNewFlags.Type = 0; // also clear flag since monthyear format test failed
 		strCopy = strCopyBackup;
 	}
 
 	// Check if it's a normal date
-	if (lngNewFlags.Type != flagSeasonYear)
+	if (bitsNewFlags.Type != flagSeasonYear)
 	{
 		// Use COleDateTime's parser to convert string to date.
 		// Use a temporary object to avoid overwriting our good data in case it fails.
@@ -182,7 +189,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 		if (dt.ParseDateTime(strCopy, LOCALE_NOUSEROVERRIDE))
 		{
 			// Set flags and save new date
-			lngNewFlags.Type = 0; // normal date
+			bitsNewFlags.Type = 0; // normal date
 			if (dt.GetHour() == 0 && dt.GetMinute() == 0 && dt.GetSecond() == 0)
 			{
 				// Just set date
@@ -191,10 +198,10 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			else
 			{
 				// Since time is != midnight, user speficied a time, so set flag and save time also
-				lngNewFlags.Modifiers = flagUseTime;
+				bitsNewFlags.Modifiers = flagUseTime;
 				m_odt = dt;
 			}
-			m_lngFlags = lngNewFlags;
+			m_bitsFlags = bitsNewFlags;
 			return TRUE;
 		}
 	}
@@ -212,8 +219,8 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	}
 
 	// Set flags
-	lngNewFlags.Type = flagString;
-	m_lngFlags = lngNewFlags;
+	bitsNewFlags.Type = flagString;
+	m_bitsFlags = bitsNewFlags;
 
 	// Store 'date' as string
 	m_strText = str;
@@ -227,13 +234,13 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	// Return string if string flag is set
-	if (m_lngFlags.Type == flagString)
+	if (m_bitsFlags.Type == flagString)
 	{
 		return m_strText;
 	}
 
 	// Return blank string if date is blank (null)
-	if (m_lngFlags.Type == flagBlank)
+	if (m_bitsFlags.Type == flagBlank)
 	{
 		return m_strText; // ""
 	}
@@ -258,7 +265,7 @@ LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 	else
 	{
 		// Handle our custom formats, like year only, approximate dates, etc.
-		switch (m_lngFlags.Type)
+		switch (m_bitsFlags.Type)
 		{
 			case flagYear:
 				m_strText.Format("%d", m_odt.GetYear());
@@ -272,7 +279,7 @@ LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 				{
 					//, make method in cstringex
 					CStringEx strTokens;
-					strTokens.LoadString(IDS_DATE_SPRINGBREAK + m_lngFlags.Season - 1);
+					strTokens.LoadString(IDS_DATE_SPRINGBREAK + m_bitsFlags.Season - 1);
 					TCHAR pszDelimiters[] = _T(",");
 					LPTSTR pszTokens = strTokens.GetBuffer(0);
 					TCHAR* pszToken = _tcstok(pszTokens, pszDelimiters); 
@@ -299,7 +306,7 @@ LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 	//				m_strText.ReleaseBuffer();
 	//			}
 	//			else
-				if (m_lngFlags.Modifiers && flagUseTime)
+				if (m_bitsFlags.Modifiers && flagUseTime)
 				{
 					// Want to display time portion, so format the whole date/time object.
 					// Oddly enough, this seems to actually use the Windows system settings for the short date format. 
@@ -317,7 +324,7 @@ LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 		}
 
 		// Add modifiers
-		UINT nModifiers = m_lngFlags.Modifiers;
+		UINT nModifiers = m_bitsFlags.Modifiers;
 		if (nModifiers & flagAfter)
 			m_strText = _T("After ") + m_strText;
 		else if (nModifiers & flagBefore)
@@ -328,7 +335,7 @@ LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 		if (nModifiers & flagUncertain)
 			m_strText = m_strText + _T("?");
 		
-	//	ULONG lngRelationship = m_lngFlags & flagsRelationship;
+	//	ULONG lngRelationship = m_bitsFlags & flagsRelationship;
 	//	switch (lngRelationship)
 	//	{
 	//	}
@@ -347,10 +354,10 @@ void BDataDate::Serialize(CArchive &ar)
 	if (ar.IsStoring())
 	{
 		// Cast our flags struct to a long and write it
-		ULONG lng = *((ULONG*) (&m_lngFlags));
+		ULONG lng = *((ULONG*) (&m_bitsFlags));
 		ar << lng;
 
-		if (m_lngFlags.Type == flagString)
+		if (m_bitsFlags.Type == flagString)
 			ar << m_strText;
 		else
 			ar << m_odt;		
@@ -362,8 +369,8 @@ void BDataDate::Serialize(CArchive &ar)
 		// Read in a long then cast it into our struct
 		ULONG lng;
 		ar >> lng;
-		*((ULONG*) (&m_lngFlags)) = lng;
-		if (m_lngFlags.Type == flagString)
+		*((ULONG*) (&m_bitsFlags)) = lng;
+		if (m_bitsFlags.Type == flagString)
 			ar >> m_strText;
 		else
 			ar >> m_odt;
@@ -374,7 +381,7 @@ void BDataDate::Serialize(CArchive &ar)
 
 // Bring up dialog to enter date/time
 // Updates value and returns TRUE if user hit OK in dialog
-BOOL BDataDate::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	// Check assumptions
 	ASSERT_VALID(this);
@@ -383,7 +390,7 @@ BOOL BDataDate::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 //	ASSERT_VALID(m_pobj); // not always true
 
 	// If storing a string bring up edit string dialog
-	if (m_lngFlags.Type == flagString)
+	if (m_bitsFlags.Type == flagString)
 	{
 		CDialogEditString dlg;
 		dlg.m_strValue = m_strText;
@@ -414,8 +421,8 @@ BOOL BDataDate::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 	}
 	// Check if any flags are set
 	else if (
-		(m_lngFlags.Modifiers != 0 && m_lngFlags.Modifiers != flagUseTime) || 
-		((m_lngFlags.Type != 0) && (m_lngFlags.Type != flagBlank))
+		(m_bitsFlags.Modifiers != 0 && m_bitsFlags.Modifiers != flagUseTime) || 
+		((m_bitsFlags.Type != 0) && (m_bitsFlags.Type != flagBlank))
 		)
 	{
 		if (IDNO == AfxMessageBox("Warning: By selecting a new value with the Edit Date dialog you will lose \n"
@@ -427,7 +434,7 @@ BOOL BDataDate::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 	dlg.m_dtDate = m_odt;
 	dlg.m_dtTime = m_odt;
 //	dlg.m_bUseTime = FALSE; // default is to just enter date
-	dlg.m_bUseTime = m_lngFlags.Modifiers && flagUseTime;
+	dlg.m_bUseTime = m_bitsFlags.Modifiers && flagUseTime;
 	if (dlg.DoModal() == IDOK)
 	{
 		// Save new date and time
@@ -439,13 +446,13 @@ BOOL BDataDate::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 		if (nRet == 0) 
 		{
 			// Set flags?
-			m_lngFlags.Type = 0;
-			m_lngFlags.Relationship = 0;
-//			m_lngFlags.Modifiers = 0;
-			m_lngFlags.Modifiers = dlg.m_bUseTime ? flagUseTime : 0;
-			m_lngFlags.Season = 0;
+			m_bitsFlags.Type = 0;
+			m_bitsFlags.Relationship = 0;
+//			m_bitsFlags.Modifiers = 0;
+			m_bitsFlags.Modifiers = dlg.m_bUseTime ? flagUseTime : 0;
+			m_bitsFlags.Season = 0;
 
-			// Note: BObject's EditValue will set document modified flag and update all views
+			// Note: BObject's UIEditValue will set document modified flag and update all views
 			return TRUE;
 		}
 		AfxMessageBox("Error in setting date. Please try again.", MB_ICONINFORMATION);
@@ -456,11 +463,12 @@ BOOL BDataDate::EditValue(BObject* pobj, BObject* pobjPropertyDef)
 
 
 // Create a copy of this object
+//, make copy constructor and assignment operators
 BData* BDataDate::CreateCopy()
 {
 	BDataDate* pdatCopy = new BDataDate();
 	pdatCopy->m_odt = m_odt;
-	pdatCopy->m_lngFlags = m_lngFlags; // bug: forgot this!
+	pdatCopy->m_bitsFlags = m_bitsFlags; // bug: forgot this!
 	pdatCopy->m_strText = m_strText;
 	return (BData*) pdatCopy;
 }

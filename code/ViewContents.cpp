@@ -900,7 +900,7 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen) {
 				if (pdat) {
 					ASSERT_VALID(pdat);
 					int nPos = pPopup->GetMenuItemCount() - 1; // insert before "Cancel"
-					pdat->AddMenuItems(pPopup, nPos);
+					pdat->UIAddMenuItems(pPopup, nPos);
 				}
 				
 				// Enable/disable undo menu
@@ -952,7 +952,7 @@ void CViewContents::OnPopupBDataCommand(UINT nCommandID) {
 	BData* pdat = m_lvw.GetCellBData();
 	if (pdat) {
 		ASSERT_VALID(pdat);
-		pdat->HandleCommand(nCommandID);
+		pdat->UIHandleCommand(nCommandID);
 	}	
 }
 
@@ -1698,8 +1698,8 @@ void CViewContents::OnObjEditInDialog()
 	// Get property to edit
 	ULONG lngPropertyID = m_lvw.GetColumnPropertyID();
 
-	// Edit the property value in an appropriate dialog. See BObject::EditValue
-	pobj->EditValue(lngPropertyID);
+	// Edit the property value in an appropriate dialog. See BObject::UIEditValue
+	pobj->UIEditValue(lngPropertyID);
 
 }
 

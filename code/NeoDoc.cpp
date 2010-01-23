@@ -1188,7 +1188,7 @@ CNeoDoc::UIChangeClassContents(BObject *pobj) {
 BOOL 
 CNeoDoc::UIRenameObject(BObject* pobj) {
 	//, i guess we don't really need this routine...
-	return pobj->EditValue(propName);
+	return pobj->UIEditValue(propName);
 }
 
 
@@ -2110,7 +2110,7 @@ CNeoDoc::UIEditObject(BObject *pobj) {
 //	OBJID idNamePropType = pobjNamePropType->GetObjectID();
 //	if (lngNamePropTypeID == proptypePersonName)
 	if (bPersonName || bIcon) {
-		if (pobj->GetData()->EditValue(pobj, 0)) {
+		if (pobj->GetData()->UIEditValue(pobj, 0)) {
 			CHint h;
 			h.m_pobjObject = pobj;
 			h.m_idProperty = propName;

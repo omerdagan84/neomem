@@ -14,18 +14,17 @@
 /*
 // Unfortunately, can't do this because these classes have constructors.
 // C++ will not let you put classes with constructors in a struct or union.
-union uDateString
-{
+union uDateString {
 	COleDateTime dt;
 	CString str;
 };
 */
 
 
-// Structure for m_lngFlags2 variable
+// Structure for m_bitsFlags variable.
+// we use this to cram a lot of information about the date into 32 bits.
 //, why can't you make this private?
-struct sDateFlags
-{
+struct sDateFlags {
 	UINT Type : 4;
 	UINT Relationship : 3;
 	UINT Modifiers : 10;
@@ -33,8 +32,9 @@ struct sDateFlags
 };
 
 
-class BDataDate : public BData  
-{
+
+class BDataDate : public BData {
+
 	DECLARE_SERIAL(BDataDate)
 
 public:
@@ -43,13 +43,15 @@ public:
 
 public:
 	virtual BData* CreateCopy();
-	virtual BOOL EditValue(BObject* pobj, BObject* pobjPropertyDef);
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
 	virtual LPCTSTR GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
+	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
+
+//, make private
 public:
 	// COleDateTime objects can be used to represent dates between January 1, 100, and 
 	// December 31, 9999. COleDateTime objects are floating point values, with an approximate 
@@ -61,7 +63,7 @@ public:
 
 	// Bug: Assumed that ^ was the power operator... it's xor!!!
 
-	sDateFlags m_lngFlags;
+	sDateFlags m_bitsFlags;
 
 	// Only one type allowed. 4 bits = 16 values
 	enum eDateTypes {flagYear = 1, flagMonthYear, flagSeasonYear, flagString, flagUnknown, flagBlank};

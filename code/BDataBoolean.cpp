@@ -24,9 +24,9 @@ IMPLEMENT_SERIAL(BDataBoolean, BData, VERSIONABLE_SCHEMA | versionFileStructure)
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-BDataBoolean::BDataBoolean()
+BDataBoolean::BDataBoolean() :
+	m_nValue (0)
 {
-	m_nValue = 0;
 }
 
 BDataBoolean::~BDataBoolean()
@@ -97,7 +97,7 @@ BData* BDataBoolean::CreateCopy()
 }
 
 
-BOOL BDataBoolean::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataBoolean::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	return FALSE;
 }

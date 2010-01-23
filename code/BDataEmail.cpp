@@ -88,7 +88,7 @@ void BDataEmail::Serialize(CArchive &ar)
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataEmail::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataEmail::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
 
@@ -124,7 +124,7 @@ BOOL BDataEmail::FindReferences(BObject* pobjFind)
 
 
 
-void BDataEmail::OnClick()
+void BDataEmail::UIOnClick()
 {
 	CString strMsg;
 	strMsg.Format("Send email to %s?", (LPCTSTR) m_strText);
@@ -145,7 +145,7 @@ void BDataEmail::OnClick()
 
 
 
-void BDataEmail::OnMouseMove()
+void BDataEmail::UIOnMouseMove()
 {
 	// Windows 95: The width and height of the cursor must be the values returned by the 
 	// GetSystemMetrics function for SM_CXCURSOR and SM_CYCURSOR. In addition, either the 
@@ -160,7 +160,7 @@ void BDataEmail::OnMouseMove()
 
 
 // Add menu items for bdata value popup
-BOOL BDataEmail::AddMenuItems(CMenu* pMenu, int nPos)
+BOOL BDataEmail::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
 	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Send Email...");
 	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
@@ -169,11 +169,11 @@ BOOL BDataEmail::AddMenuItems(CMenu* pMenu, int nPos)
 
 
 
-BOOL BDataEmail::HandleCommand(UINT nCommandID)
+BOOL BDataEmail::UIHandleCommand(UINT nCommandID)
 {
 	if (nCommandID == ID_POPUP_BDATA_START)
 	{
-		OnClick();
+		UIOnClick();
 		return TRUE;
 	}
 	return FALSE;

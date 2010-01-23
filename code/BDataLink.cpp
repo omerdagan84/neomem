@@ -183,13 +183,13 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 //	{
 		// need to pass the default here 
 		// if user enters items separated by commas, might be more than one
-		// need to create a new bdatalink object, set its link values, and call editvalue on it
+		// need to create a new bdatalink object, set its link values, and call uieditvalue on it
 		// if returns true, then copy results to this bdatalink object.
 //		BObject* pobjMatch = DYNAMIC_DOWNCAST(BObject, aResults.GetAt(0));
 //		ASSERT_VALID(pobjMatch);
 //		BDataLink datLink;
 //		datLink.SetLink(pobjMatch);
-//		if (datLink.EditValue(0, pobjPropertyDef))
+//		if (datLink.UIEditValue(0, pobjPropertyDef))
 //		{
 //			// Copy results to this bdatalink object
 //			CreateCopyFrom(&datLink);
@@ -238,7 +238,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 // Bring up dialog to select object(s) to refer to for this link.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataLink::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	// Check assumptions
 	ASSERT_VALID(this);
@@ -979,7 +979,7 @@ BOOL BDataLink::CreateCopyFrom(BDataLink *pdatSource)
 
 
 // Add menu items for bdata value popup
-BOOL BDataLink::AddMenuItems(CMenu* pMenu, int nPos)
+BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
 	ASSERT_VALID(this);
 	ASSERT(IsHard());
@@ -1027,7 +1027,7 @@ BOOL BDataLink::AddMenuItems(CMenu* pMenu, int nPos)
 
 
 // Goto object
-BOOL BDataLink::HandleCommand(UINT nCommandID)
+BOOL BDataLink::UIHandleCommand(UINT nCommandID)
 {
 	ASSERT_VALID(this);
 	ASSERT(IsHard());
@@ -1285,8 +1285,8 @@ bool BDataLink::Test(CNeoDoc* pdoc)
 	// Get property to edit
 	ULONG lngPropertyID = idAuthor;
 
-	// Edit the property value in an appropriate dialog. See BObject::EditValue
-	if (pobj->EditValue(lngPropertyID))
+	// Edit the property value in an appropriate dialog. See BObject::UIEditValue
+	if (pobj->UIEditValue(lngPropertyID))
 	{
 		// verify object
 		BDataLink* pdat = (BDataLink*) pobj->GetPropertyData(lngPropertyID);
@@ -1294,7 +1294,7 @@ bool BDataLink::Test(CNeoDoc* pdoc)
 		pdat->IsValid(pdoc);
 	}
 
-//	if (dat.EditValue(pobj, pobjPropdef))
+//	if (dat.UIEditValue(pobj, pobjPropdef))
 	{
 		// would do notifies here
 

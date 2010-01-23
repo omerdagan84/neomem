@@ -341,7 +341,7 @@ void CViewProperties::OnObjEditInDialog()
 
 		// Edit the property value in an appropriate dialog
 		ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
-		m_pobjCurrent->EditValue(lngPropertyID);
+		m_pobjCurrent->UIEditValue(lngPropertyID);
 	}
 }
 
@@ -425,7 +425,7 @@ void CViewProperties::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 			{
 				ASSERT_VALID(pdat);
 				int nPos = pPopup->GetMenuItemCount() - 1; // insert before "Cancel"
-				pdat->AddMenuItems(pPopup, nPos);
+				pdat->UIAddMenuItems(pPopup, nPos);
 			}
 			// Enable/disable undo menu
 //			pPopup->EnableMenuItem(ID_EDIT_UNDO, MF_BYCOMMAND | (m_objUndo.IsValid() ? MF_ENABLED : MF_GRAYED));
@@ -592,7 +592,7 @@ void CViewProperties::OnPopupBDataCommand(UINT nBDataCommandID)
 	if (pdat)
 	{
 		ASSERT_VALID(pdat);
-		pdat->HandleCommand(nBDataCommandID);
+		pdat->UIHandleCommand(nBDataCommandID);
 	}	
 }
 

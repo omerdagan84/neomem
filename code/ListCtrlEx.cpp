@@ -1309,7 +1309,7 @@ void CListCtrlEx::OnNotifyRClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 /*
 // See individual CView classes for double click handling.
-// Also see BObject::EditValue, pobj->EditValue(lngPropertyID);
+// Also see BObject::UIEditValue, pobj->UIEditValue(lngPropertyID);
 void CListCtrlEx::OnNotifyDblClk(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	AfxMessageBox("clce dblclick!");	
@@ -2355,7 +2355,7 @@ void CListCtrlEx::OnLButtonDown(UINT nFlags, CPoint ptClient)
 		if (pdat)
 		{
 			ASSERT_VALID(pdat);
-			pdat->OnClick();
+			pdat->UIOnClick();
 		}
 
 	}
@@ -2411,7 +2411,7 @@ void CListCtrlEx::OnMouseMove(UINT nFlags, CPoint ptClient)
 		if (pdat)
 		{
 			ASSERT_VALID(pdat);
-			pdat->OnMouseMove();
+			pdat->UIOnMouseMove();
 		}
 	}
 
@@ -3391,8 +3391,8 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 				if (pdat1 == 0) return iDir;
 				BDataDate* pdat2 = (BDataDate*) pobj2->GetPropertyData(lngPropertyID);
 				if (pdat2 == 0) return -iDir;
-				if (pdat1->m_lngFlags.Type == BDataDate::flagString) return iDir;
-				if (pdat2->m_lngFlags.Type == BDataDate::flagString) return -iDir;
+				if (pdat1->m_bitsFlags.Type == BDataDate::flagString) return iDir;
+				if (pdat2->m_bitsFlags.Type == BDataDate::flagString) return -iDir;
 				if (pdat1->m_odt < pdat2->m_odt)
 					iResult = -1;
 				else if (pdat1->m_odt > pdat2->m_odt)

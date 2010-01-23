@@ -87,7 +87,7 @@ void BDataString::Serialize(CArchive &ar)
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataString::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataString::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
 	//, will want to say the object we're editing and the property name

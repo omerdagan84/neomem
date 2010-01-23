@@ -1197,7 +1197,7 @@ BObject::SetPropertyData(OBJID lngPropertyID, BData *pdat,
 // IMPORTANT: For some properties this may return the classdef's parent's value (e.g.
 // propObjectProperties, propObjectViewArrangement, etc.), so you shouldn't just modify
 // the bdata object directly - you must create a copy of it, then write the copy back to the classdef.
-// See BObject::EditValue for an example.
+// See BObject::UIEditValue for an example.
 BData* 
 BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=FALSE*/)
 {
@@ -1235,11 +1235,11 @@ BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=
 			// the value of the link is the object's classdef
 			// so would need to initialize the bdatalink object to point to the m_lngClassID object
 			// user selects a different class
-			// editvalue would change the bdatalink's m_pobj pointer to point to the new class object
+			// uieditvalue would change the bdatalink's m_pobj pointer to point to the new class object
 			// and would broadcast the hintPropertyChange to all views
 
 			// but how would that change get written back to the actual m_lngClassID variable?
-			// the EditValue could handle that - ie check to see if the propertydef is a pseudo property
+			// the UIEditValue could handle that - ie check to see if the propertydef is a pseudo property
 			// if so, do any special handling required
 
 			// now what about F2 handler?
@@ -1275,7 +1275,7 @@ BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=
 	case propParentName:
 		{
 			// but how would that change get written back to the actual m_lngParentID variable?
-			// the EditValue could handle that - ie check to see if the propertydef is a pseudo property
+			// the UIEditValue could handle that - ie check to see if the propertydef is a pseudo property
 			// if so, do any special handling required
 
 			// Create a temporary BData object appropriate for the propertydef (based on its property type)
@@ -2066,7 +2066,7 @@ BObject::MoveDown()
 // Returns True if user hit OK.
 // Note: This will set document modified flag and tell all views about any property change also.
 BOOL 
-BObject::EditValue(OBJID lngPropertyID)
+BObject::UIEditValue(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
@@ -2086,7 +2086,7 @@ BObject::EditValue(OBJID lngPropertyID)
 
 	// Get BData associated with object's property.
 	// We'll ALWAYS create a copy of the BData that we get, whether it's from the
-	// object or up the class chain, and EditValue off of that.
+	// object or up the class chain, and UIEditValue off of that.
 	// If user says OK, then we write the edited bdata object back to the object, which will
 	// always write it to the bobject, not up the class chain.
 	// If they say Cancel, we just delete the BData copy.
@@ -2103,10 +2103,10 @@ BObject::EditValue(OBJID lngPropertyID)
 		BData* pdatCopy = pdat->CreateCopy();
 		ASSERT_VALID(pdatCopy);
 
-		// EditValue will bring up a dialog box that lets user modify the value stored in the BData object.
+		// UIEditValue will bring up a dialog box that lets user modify the value stored in the BData object.
 		// Need to pass object and property so it knows the context.
 		// It will return True if user said OK in dialog.
-		if (pdatCopy->EditValue(this, pobjPropertyDef))
+		if (pdatCopy->UIEditValue(this, pobjPropertyDef))
 		{
 			// User said OK, so let's set the BData copy with the new value to the object.
 			// This also sets the document modified flag and updates views.

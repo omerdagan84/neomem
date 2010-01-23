@@ -58,13 +58,14 @@ ColumnInfo::ColumnInfo()
 //const int m_nGrowBy = 4;
 const int m_nGrowBy = 8;
 
-BDataColumns::BDataColumns()
+BDataColumns::BDataColumns() :
+	m_nColumns (0),
+	m_bModified (FALSE)
+	// the arrays just have plain constructors, so no need to initialize here
 {
-	m_nColumns = 0;
 //	m_aci.SetSize(8, m_nGrowBy);
 	m_aci.SetSize(0, m_nGrowBy);
 	m_anOrder.SetSize(0, m_nGrowBy);
-	m_bModified = FALSE;
 }
 
 

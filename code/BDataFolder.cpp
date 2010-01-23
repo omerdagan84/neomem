@@ -88,7 +88,7 @@ void BDataFolder::Serialize(CArchive &ar)
 
 // Bring up dialog to select a Folder
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataFolder::EditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataFolder::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
 
@@ -142,7 +142,7 @@ BOOL BDataFolder::FindReferences(BObject* pobjFind)
 
 
 
-void BDataFolder::OnClick()
+void BDataFolder::UIOnClick()
 {
 	CString strMsg;
 	strMsg.Format("Open the folder %s?", (LPCTSTR) m_strText);
@@ -163,7 +163,7 @@ void BDataFolder::OnClick()
 
 
 
-void BDataFolder::OnMouseMove()
+void BDataFolder::UIOnMouseMove()
 {
 	// Windows 95: The width and height of the cursor must be the values returned by the 
 	// GetSystemMetrics function for SM_CXCURSOR and SM_CYCURSOR. In addition, either the 
@@ -178,7 +178,7 @@ void BDataFolder::OnMouseMove()
 
 
 // Add menu items for bdata value popup
-BOOL BDataFolder::AddMenuItems(CMenu* pMenu, int nPos)
+BOOL BDataFolder::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
 	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Open Folder...");
 	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
@@ -187,11 +187,11 @@ BOOL BDataFolder::AddMenuItems(CMenu* pMenu, int nPos)
 
 
 
-BOOL BDataFolder::HandleCommand(UINT nCommandID)
+BOOL BDataFolder::UIHandleCommand(UINT nCommandID)
 {
 	if (nCommandID == ID_POPUP_BDATA_START)
 	{
-		OnClick();
+		UIOnClick();
 		return TRUE;
 	}
 	return FALSE;

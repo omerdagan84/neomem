@@ -1597,7 +1597,7 @@ void CViewTabs::OnViewEdit()
 	// Bring up dialog with available views for this tab, let user modify and reorder.
 	
 	// maybe the dialog should let them arrange the entire view arrangement, i.e.,
-	// this would be the BDataViews->EditValue method!?
+	// this would be the BDataViews->UIEditValue method!?
 	// dialog would be more complicated though and might be confusing.
 
 	PrepareToModifyViews();
