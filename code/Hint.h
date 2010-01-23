@@ -16,14 +16,10 @@
 class CHint : public CObject {
 
 public:
-
-	// Construction
 	CHint();
 	virtual ~CHint();
 
-	// Operations
 
-	// Attributes
 	BObject* m_pobjObject;
 	BObject* m_pobjParent;
 	BObjects* m_paObjects;

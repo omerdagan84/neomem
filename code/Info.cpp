@@ -78,14 +78,21 @@ public:
 
 //------------------------------------------------------------------------------------------------------------
 
-CInfo::CInfo()
+CInfo::CInfo() :
+	m_bLoadedProcessorInfo (FALSE),
+	m_bLoadedProgramInfo (FALSE),
+	m_bLoadedWindowsInfo (FALSE),
+	m_bUnicode (FALSE),
+	m_fCommonControlsVersionNumber (0),
+	m_fRichEditVersionNumber (0),
+//	m_i64DiskFreeSpace (0),
+	m_lngProcessorSpeed (0),
+//	m_ms (0),
+	m_nMajor (0),
+	m_nMinor (0),
+	m_nRevision (0)
+//	m_tProgramDate (0)
 {
-	m_bLoadedWindowsInfo = FALSE;
-	m_bLoadedProgramInfo = FALSE;
-	m_nMajor = 0;
-	m_nMinor = 0;
-	m_nRevision = 0;
-	m_bUnicode = FALSE;
 }
 
 CInfo::~CInfo()

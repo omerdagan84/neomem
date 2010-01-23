@@ -126,6 +126,7 @@ END_MESSAGE_MAP()
 // Construction/Destruction
 //---------------------------------------------------------------------------
 
+//,mil
 CNeoDoc::CNeoDoc() {
 	TRACE("CNeoDoc Constructor\n");
 

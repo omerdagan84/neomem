@@ -30,13 +30,13 @@ END_MESSAGE_MAP()
 
 
 
-CEditInPlace::CEditInPlace(CListCtrlEx* plvw, int iItem, int iSubItem, CString sInitText)
-	: m_sInitText(sInitText)
+CEditInPlace::CEditInPlace(CListCtrlEx* plvw, int iItem, int iSubItem, CString sInitText) :
+	m_sInitText(sInitText),
+	m_bEscape (FALSE),
+	m_iItem (iItem),
+	m_iSubItem (iSubItem),
+	m_plvw (plvw)
 {
-	m_plvw = plvw;
-	m_iItem = iItem;
-	m_iSubItem = iSubItem;
-	m_bEscape = FALSE;
 }
 
 CEditInPlace::~CEditInPlace()

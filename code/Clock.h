@@ -1,6 +1,6 @@
 
 // CClock
-// This static control will display date, time, etc.
+// This static GUI control will display date, time, etc.
 //-----------------------------------------------------------------------------------------------------------------
 
 

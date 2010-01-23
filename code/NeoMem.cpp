@@ -128,6 +128,7 @@ END_MESSAGE_MAP()
 
 
 // Constructor
+//mil
 CNeoMem::CNeoMem() {
 
 	m_pMainWnd = 0; // just in case base doesn't do this!

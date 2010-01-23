@@ -29,9 +29,9 @@ IMPLEMENT_SERIAL(BDataFlags, BData, VERSIONABLE_SCHEMA | versionFileStructure) /
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-BDataFlags::BDataFlags()
+BDataFlags::BDataFlags() :
+	m_lngFlags (0)
 {
-	m_lngFlags = 0;
 }
 
 BDataFlags::~BDataFlags()

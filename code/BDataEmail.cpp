@@ -30,6 +30,7 @@ IMPLEMENT_SERIAL(BDataEmail, BData, VERSIONABLE_SCHEMA | versionFileStructure) /
 //------------------------------------------------------------------------------------------------------
 
 BDataEmail::BDataEmail()
+	// no members to initialize
 {
 }
 

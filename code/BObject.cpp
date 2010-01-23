@@ -39,13 +39,40 @@ IMPLEMENT_SERIAL(BObject, CObject, VERSIONABLE_SCHEMA | versionFileStructure)
 // Construction/Destruction
 //--------------------------------------------------------------------------
 
-BObject::BObject() {
-	InitToZero();
+// better to use member initialization lists - copy and paste,
+// because calling another routine and assigning values would be so much slower!!
+
+BObject::BObject() :
+	m_bytViewHeight (50), // 50% default
+	m_lngClassID (0),
+	m_lngFlags (0),
+	m_lngIconID (0),
+	m_lngObjectID (0),
+	m_paChildren (NULL),
+	m_paProperties (NULL),
+	m_pdat (NULL),
+	m_pDoc (NULL),
+	m_pobjParent (NULL)
+{
+//	InitToZero();
 }
 
-BObject::BObject(OBJID lngClassID) {
-	InitToZero();
-	m_lngClassID = lngClassID;
+
+
+BObject::BObject(OBJID lngClassID) :
+	m_bytViewHeight (50), // 50% default
+	m_lngClassID (lngClassID),
+	m_lngFlags (0),
+	m_lngIconID (0),
+	m_lngObjectID (0),
+	m_paChildren (NULL),
+	m_paProperties (NULL),
+	m_pdat (NULL),
+	m_pDoc (NULL),
+	m_pobjParent (NULL)
+{
+//	InitToZero();
+//	m_lngClassID = lngClassID;
 }
 
 BObject::~BObject()
@@ -572,6 +599,7 @@ BObject::RemoveChild(BObject* pobjChild)
 // Routines
 //-----------------------------------------------------------------------------------
 
+/*
 // Initialize object attributes to zero
 void 
 BObject::InitToZero()
@@ -589,6 +617,7 @@ BObject::InitToZero()
 	m_bytViewHeight = 50; // 50% default
 	m_strTextCache.Empty();
 }
+*/
 
 
 // Add a property to the list of properties for this BObject.

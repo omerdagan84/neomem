@@ -20,24 +20,24 @@ IMPLEMENT_DYNAMIC(CCryptoFile, CFile)
 
 
 // Constructor
-CCryptoFile::CCryptoFile(int nBufSize /* = 4096 */) 
-	: CFile()
+CCryptoFile::CCryptoFile(int nBufSize /* = 4096 */) : 
+	CFile(),
+	m_bCryptoOn (FALSE),
+	m_pBufEncryptStart (0),
+	m_pBufEncryptStop (0),
+	m_pCrypto (0)
 {
-	m_pCrypto = 0;
-	m_bCryptoOn = FALSE;
-	m_pBufEncryptStart = 0;
-	m_pBufEncryptStop = 0;
 }
 
 
 // Constructor
-CCryptoFile::CCryptoFile(LPCTSTR lpszFileName, UINT nOpenFlags, int nBufSize) 
-	: CFile(lpszFileName, nOpenFlags)
+CCryptoFile::CCryptoFile(LPCTSTR lpszFileName, UINT nOpenFlags, int nBufSize) :
+	CFile(lpszFileName, nOpenFlags),
+	m_bCryptoOn (FALSE),
+	m_pBufEncryptStart (0),
+	m_pBufEncryptStop (0),
+	m_pCrypto (0)
 {
-	m_pCrypto = 0;
-	m_bCryptoOn = FALSE;
-	m_pBufEncryptStart = 0;
-	m_pBufEncryptStop = 0;
 }
 
 

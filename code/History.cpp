@@ -13,12 +13,12 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 
-CHistory::CHistory()
+CHistory::CHistory() :
+	m_nStart (0),
+	m_nStop (-1),
+	m_nPos (-1),
+	m_nPositions (0)
 {
-	m_nStart = 0;
-	m_nStop = -1;
-	m_nPos = -1;
-	m_nPositions = 0;
 }
 
 CHistory::~CHistory()

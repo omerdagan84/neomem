@@ -29,10 +29,9 @@ IMPLEMENT_SERIAL(BObjects, CObArray, VERSIONABLE_SCHEMA | versionFileStructure) 
 // Construction/Destruction
 //----------------------------------------------------------------------------
 
-BObjects::BObjects()
+BObjects::BObjects() :
+	m_bOwnsItems (FALSE) // We don't own items in this array, so not responsible for deleting them in destructor.
 {
-//	m_bOwnsItems = TRUE; // We own the items in this array, so can delete them in destructor
-	m_bOwnsItems = FALSE; // We don't own items in this array, so not responsible for deleting them in destructor.
 }
 
 

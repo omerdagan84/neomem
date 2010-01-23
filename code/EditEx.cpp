@@ -19,11 +19,11 @@ static char THIS_FILE[] = __FILE__;
 
 
 
-CEditEx::CEditEx()
+CEditEx::CEditEx() :
+	m_bHighlightOnEntry (FALSE),
+	m_bReadOnly (FALSE),
+	m_bWantReturn (FALSE)
 {
-	m_bWantReturn = FALSE;
-	m_bHighlightOnEntry = FALSE;
-	m_bReadOnly = FALSE;
 }
 
 CEditEx::~CEditEx()

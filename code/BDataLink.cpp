@@ -30,9 +30,10 @@ IMPLEMENT_SERIAL(BDataLink, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-BDataLink::BDataLink()
+BDataLink::BDataLink() :
+	m_p (0)
+//mil - another bits thing to initialize - need constructor?
 {
-	m_p = 0;
 	m_bits.nFlags = flagSingle;
 	m_bits.nCurrentItem = 0;
 }

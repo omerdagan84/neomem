@@ -30,9 +30,9 @@ IMPLEMENT_SERIAL(BDataPersonName, BData, VERSIONABLE_SCHEMA | versionFileStructu
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-BDataPersonName::BDataPersonName()
+BDataPersonName::BDataPersonName() :
+	m_bCacheValid (FALSE)
 {
-	m_bCacheValid = FALSE;
 }
 
 BDataPersonName::~BDataPersonName()

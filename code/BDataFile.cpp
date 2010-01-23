@@ -31,6 +31,7 @@ IMPLEMENT_SERIAL(BDataFile, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 //------------------------------------------------------------------------------------------------------
 
 BDataFile::BDataFile()
+	// no members to initialize
 {
 }
 

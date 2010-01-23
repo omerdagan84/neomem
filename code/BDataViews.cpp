@@ -22,10 +22,10 @@ static char THIS_FILE[]=__FILE__;
 
 // ViewInfo helper class
 //------------------------------------------------------------------------------------------------------
-ViewInfo::ViewInfo()
+ViewInfo::ViewInfo() :
+	m_lngViewHeight (0),
+	m_lngViewID (0)
 {
-	m_lngViewID = 0;
-	m_lngViewHeight = 0;
 }
 
 

@@ -26,12 +26,12 @@ IMPLEMENT_SERIAL(BDataColumns, BData, VERSIONABLE_SCHEMA | versionFileStructure)
 // ColumnInfo class
 //------------------------------------------------------------------------------------------------------
 
-ColumnInfo::ColumnInfo()
+ColumnInfo::ColumnInfo() :
+	m_lngPropertyID (0),
+	m_nColAlignment (LVCFMT_LEFT), // left align
+	m_nColWidth (120), // pixels
+	m_pobjPropertyDef (NULL) // pointer to a property def bobject - we don't own it
 {
-	m_lngPropertyID = 0;
-	m_pobjPropertyDef = NULL; // pointer to a property def bobject - we don't own it
-	m_nColWidth = 120; // pixels
-	m_nColAlignment= LVCFMT_LEFT; // left align
 //	m_nColOrder = 0;
 //	m_nColFormat = 0;
 //	m_nColGroup = 0;

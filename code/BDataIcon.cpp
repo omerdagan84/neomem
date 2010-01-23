@@ -58,10 +58,10 @@ IMPLEMENT_SERIAL(BDataIcon, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-BDataIcon::BDataIcon()
+BDataIcon::BDataIcon() :
+	m_pData (0),
+	m_nBytes (0)
 {
-	m_pData = 0;
-	m_nBytes = 0;
 }
 
 // Delete any memory allocated on the heap that we own.

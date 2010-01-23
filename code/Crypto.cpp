@@ -20,13 +20,13 @@ static char THIS_FILE[]=__FILE__;
 
 
 
-CCrypto::CCrypto()
+CCrypto::CCrypto() :
+	m_dwProviderType (0),
+	m_hProvider (0),
+	m_hSessionKey (0),
+	m_nEncryptionID (0),
+	m_nHashID (0)
 {
-	m_hProvider = 0;
-	m_hSessionKey = 0;
-	m_dwProviderType = 0;
-	m_nHashID = 0;
-	m_nEncryptionID = 0;
 }
 
 CCrypto::~CCrypto()

@@ -27,12 +27,10 @@ static char THIS_FILE[] = __FILE__;
 // Construction/Destruction
 //-----------------------------------------------------------------------------
 
-CIconCache::CIconCache(CDocument* pDoc)
+CIconCache::CIconCache(CDocument* pDoc) :
+	m_pDocument (pDoc)
 {
 	ASSERT_VALID(pDoc);
-
-	// Store a pointer to the document this cache is associated with
-	m_pDocument = pDoc;
 
 	// Create an image list to store icons in
 	if (!m_iml.Create(16, 16, ILC_MASK | ILC_COLOR16, 10, 10))

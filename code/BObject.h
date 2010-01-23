@@ -91,7 +91,7 @@ public:
 	LPCTSTR GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
 	BYTE GetViewHeight() { return m_bytViewHeight; }; // inline
 	int HasChildren() const;
-	void InitToZero();
+//	void InitToZero();
 	BOOL IsChild(BObject* pobjPossibleParent) const;
 	BOOL IsChildOf(BObject* pobjPossibleParent, BOOL bRecurse) const;
 	BOOL IsMoveUpDownValid(BOOL bMoveUp);

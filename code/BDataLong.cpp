@@ -25,9 +25,9 @@ IMPLEMENT_SERIAL(BDataLong, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-BDataLong::BDataLong()
+BDataLong::BDataLong() :
+	m_lngValue (0)
 {
-	m_lngValue = 0;
 }
 
 BDataLong::~BDataLong()

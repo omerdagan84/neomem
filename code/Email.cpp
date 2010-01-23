@@ -35,12 +35,12 @@ CEmail::~CEmail()
 }
 
 
-CEmail::CEmail(CString strToName, CString strToAddress, CString strSubject, CString strMessage)
+CEmail::CEmail(CString strToName, CString strToAddress, CString strSubject, CString strMessage) :
+	m_strToName (strToName),
+	m_strToAddress (strToAddress),
+	m_strSubject (strSubject),
+	m_strMessage (strMessage)
 {
-	m_strToName = strToName;
-	m_strToAddress = strToAddress;
-	m_strSubject = strSubject;
-	m_strMessage = strMessage;
 }
 
 

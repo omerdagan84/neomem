@@ -15,11 +15,14 @@ static char THIS_FILE[] = __FILE__;
 
 
 
-CHint::CHint() {
-	m_pobjObject = NULL;
-	m_pobjParent = NULL;
-	m_paObjects = NULL;
-	m_idProperty = 0;
+CHint::CHint() :
+	m_bAfter (FALSE),
+	m_idProperty (0),
+	m_paObjects (NULL),
+	m_pobjObject (NULL),
+	m_pobjParent (NULL),
+	m_pobjTarget (NULL)
+{
 }
 
 CHint::~CHint() {

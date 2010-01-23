@@ -25,10 +25,10 @@ IMPLEMENT_SERIAL(BDataNumber, BData, VERSIONABLE_SCHEMA | versionFileStructure) 
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-BDataNumber::BDataNumber()
+BDataNumber::BDataNumber() :
+	m_dblValue (0),
+	m_lngUnitID (0)
 {
-	m_dblValue = 0;
-	m_lngUnitID = 0;
 }
 
 BDataNumber::~BDataNumber()

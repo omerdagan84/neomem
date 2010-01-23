@@ -1,6 +1,9 @@
 
+// CWinMsg
+// This class wraps a Windows MSG structure, so we can
+// get a text version of it, etc.
+//-------------------------------------------------------------------
 
-// this class wraps a Windows MSG structure
 
 
 #pragma once
