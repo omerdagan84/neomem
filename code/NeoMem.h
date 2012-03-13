@@ -16,6 +16,7 @@
 
 
 #include "resource.h"       // main symbols
+
 #include "Error.h"
 #include "FileFormat.h"
 #include "FileFormats.h"

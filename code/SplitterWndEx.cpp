@@ -79,31 +79,43 @@ void CSplitterWndEx::OnDrawSplitter(CDC* pDC, ESplitType nType,	const CRect& rec
 	{
 
 	// bpb Draw thin border
-	case splitBorder:
-		ASSERT(afxData.bWin4);
-		pDC->Draw3dRect(rect, afxData.clrBtnShadow, afxData.clrBtnHilite);
+	case splitBorder: {
+//		ASSERT(afxData.bWin4);
+//		pDC->Draw3dRect(rect, afxData.clrBtnShadow, afxData.clrBtnHilite);
+		DWORD clrBtnShadow = GetSysColor(COLOR_BTNSHADOW);
+		DWORD clrBtnHilite = GetSysColor(COLOR_BTNHILIGHT);
+		pDC->Draw3dRect(rect, clrBtnShadow, clrBtnHilite);
+
 //		rect.InflateRect(-CX_BORDER, -CY_BORDER);
 //		pDC->Draw3dRect(rect, afxData.clrWindowFrame, afxData.clrBtnFace);
+					  
 		return;
+	}
 
-	case splitIntersection:
-		ASSERT(!afxData.bWin4);
-		break;
+//	case splitIntersection:
+//		ASSERT(!afxData.bWin4);
+//		break;
 
 	case splitBox:
-		if (afxData.bWin4)
+//		if (afxData.bWin4)	
 		{
-			pDC->Draw3dRect(rect, afxData.clrBtnFace, afxData.clrWindowFrame);
-			rect.InflateRect(-CX_BORDER, -CY_BORDER);
-			pDC->Draw3dRect(rect, afxData.clrBtnHilite, afxData.clrBtnShadow);
-			rect.InflateRect(-CX_BORDER, -CY_BORDER);
-			break;
-		}
-		// fall through...
+		DWORD clrBtnFace = GetSysColor(COLOR_BTNFACE);
+		DWORD clrWindowFrame = GetSysColor(COLOR_WINDOWFRAME);
+		DWORD clrBtnShadow = GetSysColor(COLOR_BTNSHADOW);
+		DWORD clrBtnHilite = GetSysColor(COLOR_BTNHILIGHT);
+		pDC->Draw3dRect(rect, clrBtnFace, clrWindowFrame);
+		rect.InflateRect(-CX_BORDER, -CY_BORDER);
+		pDC->Draw3dRect(rect, clrBtnHilite, clrBtnShadow);
+		rect.InflateRect(-CX_BORDER, -CY_BORDER);
+		break;
+	}
+//		// fall through...
 	case splitBar:
-		if (!afxData.bWin4)
+//		if (!afxData.bWin4)
 		{
-			pDC->Draw3dRect(rect, afxData.clrBtnHilite, afxData.clrBtnShadow);
+			DWORD clrBtnShadow = GetSysColor(COLOR_BTNSHADOW);
+			DWORD clrBtnHilite = GetSysColor(COLOR_BTNHILIGHT);
+			pDC->Draw3dRect(rect, clrBtnHilite, clrBtnShadow);
 			rect.InflateRect(-CX_BORDER, -CY_BORDER);
 		}
 		break;
@@ -113,8 +125,9 @@ void CSplitterWndEx::OnDrawSplitter(CDC* pDC, ESplitType nType,	const CRect& rec
 	}
 
 	// fill the middle
-	COLORREF clr = afxData.clrBtnFace;
-	pDC->FillSolidRect(rect, clr);
+//	COLORREF clr = afxData.clrBtnFace;
+	DWORD clrBtnFace = GetSysColor(COLOR_BTNFACE);
+	pDC->FillSolidRect(rect, clrBtnFace);
 
 }
 
@@ -133,7 +146,7 @@ BOOL CSplitterWndEx::SetPane(int row, int col, CView *pView)
 	// Assign control id to view
 	pView->SetDlgCtrlID(IdFromRowCol(row, col));
 
-	ASSERT((int)_AfxGetDlgCtrlID(pView->m_hWnd) == IdFromRowCol(row, col));
+//	ASSERT((int)_AfxGetDlgCtrlID(pView->m_hWnd) == IdFromRowCol(row, col));
 
 	return TRUE;
 }
