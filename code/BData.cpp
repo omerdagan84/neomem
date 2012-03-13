@@ -64,18 +64,13 @@ BData::~BData() {
 
 // Create a copy of this BData object.
 // Caller will own the new BData object.
+// (I prefer making this method explicit, instead of using C++'s
+// copy constructor or assignment operator)
 BData* BData::CreateCopy() {
 	AfxMessageBox("Need to implement CreateCopy for this BData class");
 	return NULL;
 }
 
-
-// The EditValue routine should set the document modified flag
-// and return TRUE if value was changed!
-BOOL BData::UIEditValue(BObject* pobj, BObject* pobjPropertyDef) {
-	AfxMessageBox("Need EditValue handler for this property type");
-	return FALSE;
-}
 
 
 // Returns True if can find any references to the specified object in this bdata
@@ -119,29 +114,6 @@ BOOL BData::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */) {
 
 
 
-void BData::UIOnClick() {
-	// default: do nothing
-}
-
-
-void BData::UIOnMouseMove() {
-	// default: do nothing
-}
-
-
-
-BOOL BData::UIAddMenuItems(CMenu* pMenu, int nPos) {
-	// default: do nothing
-	return FALSE;
-}
-
-
-BOOL BData::UIHandleCommand(UINT nCommandID) {
-	// default: do nothing
-	return FALSE;
-}
-
-
 BOOL BData::IsValid(CNeoDoc* pDoc) {
 	// default: is valid
 	return TRUE;
@@ -153,3 +125,35 @@ void BData::ConvertToSoftLinks() {
 
 void BData::ConvertToHardLinks(CNeoDoc* pDoc) {
 }
+
+
+
+BOOL BData::UIAddMenuItems(CMenu* pMenu, int nPos) {
+	// default: do nothing
+	return FALSE;
+}
+
+
+// The UIEditValue routine should set the document modified flag
+// and return TRUE if value was changed!
+BOOL BData::UIEditValue(BObject* pobj, BObject* pobjPropertyDef) {
+	AfxMessageBox("Need EditValue handler for this property type");
+	return FALSE;
+}
+
+
+BOOL BData::UIHandleCommand(UINT nCommandID) {
+	// default: do nothing
+	return FALSE;
+}
+
+
+void BData::UIOnClick() {
+	// default: do nothing
+}
+
+
+void BData::UIOnMouseMove() {
+	// default: do nothing
+}
+

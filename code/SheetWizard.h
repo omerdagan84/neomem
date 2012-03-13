@@ -28,8 +28,6 @@ class CSheetWizard : public CPropertySheetEx2 {
 	DECLARE_DYNAMIC(CSheetWizard)
 
 public:
-
-	// Construction
 	CSheetWizard();
 	CSheetWizard(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 	CSheetWizard(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
@@ -40,18 +38,24 @@ public:
 //	enum eWizardMode {modeAddClass = 1, modeEditClass = 2};
 //	enum eWizardMode {modeClass = 1, modeProperty = 2};
 
+
 	// Operations
 	void SetClassWizardTitle();
 	void SetEditClass(BObject* pobjClass);
 //	int DoModalParameters(eWizardMode nMode, BObject* pobj = 0);
 	int DoModalParameters(int nAddEditMode, BObject* pobjClass = 0);
 
+
 	// Attributes
 	CNeoDoc* m_pdoc;
 	BOOL m_bAddMode; // True if user picked Add option in first page
 
+public:
 	BObject* m_pobj; // Pointer to the object we're editing (add or edit)
 	BObject* m_pobjAdd; // New object used in Add mode
+	int m_nAddEditMode;
+
+private:
 	BObject* m_pobjEdit; // New object used in Edit mode (copy of original item user picked)
 	BObject* m_pobjEditOriginal; // Item user picked to Edit in first page, if any
 //	BOOL m_bAddFolder; // True if user chose to add a folder in page 60
@@ -59,7 +63,6 @@ public:
 //	BObject* m_pobjFolderLocation; // Location of folder to add
 //	BOOL m_bAutosort; // True if user chose autosort in page 50
 
-	int m_nAddEditMode;
 
 	// Overrides
 	// ClassWizard generated virtual function overrides

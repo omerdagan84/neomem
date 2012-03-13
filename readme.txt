@@ -20,5 +20,21 @@ I'm using Rake to build the project. Except for the actual compilation,
 because calling msdev from the cmdline seems to leave out the version info. 
 So install Rake [1], and say rake -T to see the list of tasks it can do. 
 
+eg
+
+>rake -T
+(in C:/Projects/neomem/neomemC/work)
+rake build     # build the exe (broken!)
+rake compress  # Compress the executable
+rake help      # Update the help file
+rake install   # Update the nsi setup script
+rake intro     # gives an overview of this rakefile
+rake readme    # Update the readme file
+rake setup     # make setup files and zips etc
+rake version   # Update the project's version information
+rake website   # Update the website
+
+
+
 [1] http://rake.rubyforge.org/
 

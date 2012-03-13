@@ -3390,6 +3390,7 @@ CNeoDoc::Serialize(CArchive& ar) {
 		ar >> m_nEncryptionType; // type of encryption used on file
 		ar >> m_strSessionKeyHash; // hash of session key based on password (hexascii) - used to verify password
 		TRACE("  Encryption type %d\n", m_nEncryptionType);
+		TRACE("  SessionKeyHash: %s\n", m_strSessionKeyHash);
 
 		// If this file is encrypted, ask user for password
 		if (m_nEncryptionType > 0) {
@@ -3408,6 +3409,7 @@ CNeoDoc::Serialize(CArchive& ar) {
 			// Test hash of session key based on entered string with hash of session key based on true password.
 			objCrypto.Init();
 			CString strNewHash = objCrypto.GetSessionKeyHash(m_strPassword);
+			TRACE("  NewHash: %s\n", strNewHash);
 			if (strNewHash != m_strSessionKeyHash) {
 				AfxMessageBox("Invalid password entered.", MB_ICONINFORMATION);
 				AfxThrowUserException();

@@ -128,7 +128,6 @@ END_MESSAGE_MAP()
 
 
 // Constructor
-//mil
 CNeoMem::CNeoMem() {
 
 	m_pMainWnd = 0; // just in case base doesn't do this!
@@ -2705,7 +2704,7 @@ CNeoMem::DoTests() {
 		// the ui will need to implement that interface. 
 		// ie derive a class from it, and pass an object of that class to the db fns. 
 		// like this one!
-//,		pdoc->UIAddNewObject2(gpgui); 
+//,		pdoc->UIAddNewObject2(gpgui);
 
 
 

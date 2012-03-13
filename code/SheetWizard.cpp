@@ -222,6 +222,8 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			// edit object properties to the original object, then delete 
 			// the edit copy.
 
+			//, use a CreateCopy or CopyFrom method
+
 			// Copy edit object properties
 			m_pobjEditOriginal->SetPropertyText(propName, m_pobj->GetPropertyText(propName), FALSE, FALSE);
 			m_pobjEditOriginal->SetPropertyText(propDescription, m_pobj->GetPropertyText(propDescription), FALSE, FALSE);
