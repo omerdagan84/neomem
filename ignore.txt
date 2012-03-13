@@ -1,5 +1,0 @@
-*.dblite
-*.clw
-*.obj
-*.mak
-*.dep
