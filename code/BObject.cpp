@@ -1777,7 +1777,7 @@ BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 	ASSERT_VALID(m_pDoc);
 
 	//, make global const, enforce this
-	const nMaxClassDepth = 10; // Maximum depth of class hierarchy
+	const int nMaxClassDepth = 10; // Maximum depth of class hierarchy
 
 	// Initialize array
 	CObArray apClasses;
@@ -1851,7 +1851,7 @@ BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 		ASSERT_VALID(m_paProperties);
 		int nProps = m_paProperties->GetSize();
 		int nPropsTotal = aPropertyDefs.GetSize();
-		for (i = 0; i < nProps; i++)
+		for (int i = 0; i < nProps; i++)
 		{
 			// Get property value, then property def from it
 			BObject* pobjPropValue = (BObject*) m_paProperties->GetAt(i);

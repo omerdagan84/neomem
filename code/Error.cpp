@@ -30,7 +30,7 @@ IMPLEMENT_DYNAMIC(CError, CException)
 
 CError::CError(BOOL bAutoDelete)
 {
-	CException::CException(bAutoDelete);
+//	CException::CException(bAutoDelete); // worked before vs2010, now says can't call abstract class
 	m_bSevere = TRUE; 
 }
 

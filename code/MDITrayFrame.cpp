@@ -99,7 +99,8 @@ BOOL CMDITrayFrame::AddIcon(UINT uID, UINT uIconID, LPCTSTR szTooltip, UINT uMen
 		m_nidIconData.uFlags |= NIF_ICON;
 	}
 
-	strcpy(m_nidIconData.szTip, szTooltip);
+//	strcpy(m_nidIconData.szTip, szTooltip);
+	strcpy_s(m_nidIconData.szTip, szTooltip);
 	m_nidIconData.uFlags |= NIF_TIP;
 
 	m_auMenuIDs.SetAtGrow(uID, uMenuID);

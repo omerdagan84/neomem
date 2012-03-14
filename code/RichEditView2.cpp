@@ -286,9 +286,9 @@ DWORD CALLBACK CRichEditView2::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff,
 	TRY
 	{
 		if (ar.IsStoring())
-			ar.GetFile()->WriteHuge(pbBuff, cb);
+			ar.GetFile()->Write(pbBuff, cb);
 		else
-			*pcb = ar.GetFile()->ReadHuge(pbBuff, cb);
+			*pcb = ar.GetFile()->Read(pbBuff, cb);
 	}
 	CATCH(CFileException, e)
 	{
@@ -300,7 +300,7 @@ DWORD CALLBACK CRichEditView2::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff,
 	AND_CATCH_ALL(e)
 	{
 		*pcb = 0;
-		pCookie->m_dwError = (DWORD)CFileException::generic;
+		pCookie->m_dwError = (DWORD)CFileException::genericException;
 		dw = 1;
 		DELETE_EXCEPTION(e);
 	}

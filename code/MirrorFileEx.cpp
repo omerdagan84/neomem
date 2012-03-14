@@ -20,7 +20,7 @@ extern void AFX_CDECL AfxTimeToFileTime(const CTime& time, LPFILETIME pFileTime)
 // WARNING: AfxImpl.h is subject to change in later
 // versions of MFC and, as such, may break a project in the future.
 // It includes the afxData structure with system colors etc.
-#include <..\src\afximpl.h> 
+// #include <..\src\afximpl.h> 
 
 
 
@@ -156,6 +156,7 @@ void CMirrorFileEx::Close()
         ReplaceAPIPtr pfn = NULL;
 		CString strBackupName;
 
+		/*` win95 is always true now
 		if (!afxData.bWin95)
 		{
 			HMODULE hModule = GetModuleHandleA("KERNEL32");
@@ -180,6 +181,7 @@ void CMirrorFileEx::Close()
 				   dwResult = GetLastError();
 			}
 		}
+		*/
 
 		if (!bWorked)
 		{

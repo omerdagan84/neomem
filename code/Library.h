@@ -10,7 +10,7 @@
 
 BOOL FileExists(LPCTSTR pszFileName);
 CString GetFileName(LPCTSTR szPath);
-CString fc(long n);
+CString fc(ULONGLONG n);
 void GetColors();
 BOOL IsEdit(CWnd* pWnd); 
 

@@ -434,7 +434,7 @@ void CViewTabs::UpdateTabs()
 	}
 
 	// Delete any leftover tabs that we don't need
-	for (nTab = nTabs; nTab < m_tbc.GetItemCount(); nTab++)
+	for (int nTab = nTabs; nTab < m_tbc.GetItemCount(); nTab++)
 		VERIFY(m_tbc.DeleteItem(nTab));
 
 	// Bug: Had to add this to fix a refresh problem - tabs weren't being updated when they changed.

@@ -67,13 +67,15 @@ UINT CStringEx::GetNextTokenID(UINT nStartID, UINT nStopID, BOOL bSwallowToken)
 		CString strTokens;
 		strTokens.LoadString(nID);
 		LPTSTR pszTokens = strTokens.GetBuffer(0);
+		char* pos = 0;
 
 		// Skip first token, as it's used for output, not input
-		TCHAR* pszToken = _tcstok(pszTokens, pszDelimiters); 
+//		TCHAR* pszToken = _tcstok(pszTokens, pszDelimiters); 
+		TCHAR* pszToken = _tcstok_s(pszTokens, pszDelimiters, &pos); 
 		ASSERT(pszToken); // there should always be at least one token
 
 		// Get next token
-		pszToken = _tcstok(NULL, pszDelimiters);
+		pszToken = _tcstok_s(NULL, pszDelimiters, &pos);
 		while ((pszToken != 0) && (nFoundID == 0))
 		{
 			// Check if string matches the token
@@ -92,7 +94,7 @@ UINT CStringEx::GetNextTokenID(UINT nStartID, UINT nStopID, BOOL bSwallowToken)
 			else
 			{
 				// Get next token
-				pszToken = _tcstok(NULL, pszDelimiters);
+				pszToken = _tcstok_s(NULL, pszDelimiters, &pos);
 			}
 		}
 		strTokens.ReleaseBuffer();

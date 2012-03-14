@@ -1,5 +1,5 @@
 
-// CRegKey
+// CRegKeyX
 // Taken from ATL source code, downloaded from CodeGuru
 
 
@@ -18,14 +18,14 @@ static char THIS_FILE[] = __FILE__;
 // Opens the specified key and sets m_hKey to the handle of this key. 
 // If the lpszKeyName parameter is NULL or points to an empty string, Open opens a new 
 // handle of the key identified by hKeyParent, but does not close any previously opened handle.
-// Unlike CRegKey::Create, Open will not create the specified key if it does not exist.
+// Unlike CRegKeyX::Create, Open will not create the specified key if it does not exist.
 // Possible values for hKeyParent:
 //		HKEY_CLASSES_ROOT
 //		HKEY_CURRENT_CONFIG
 //		HKEY_CURRENT_USER
 //		HKEY_LOCAL_MACHINE
 //		HKEY_USERS
-LONG CRegKey::Open(HKEY hKeyParent, LPCTSTR lpszKeyName, REGSAM samDesired /* = KEY_ALL_ACCESS */)
+LONG CRegKeyX::Open(HKEY hKeyParent, LPCTSTR lpszKeyName, REGSAM samDesired /* = KEY_ALL_ACCESS */)
 {
 	_ASSERTE(hKeyParent != NULL);
 	HKEY hKey = NULL;
@@ -41,7 +41,7 @@ LONG CRegKey::Open(HKEY hKeyParent, LPCTSTR lpszKeyName, REGSAM samDesired /* = 
 
 
 // Close the currently open key
-LONG CRegKey::Close()
+LONG CRegKeyX::Close()
 {
 	LONG lRes = ERROR_SUCCESS;
 	if (m_hKey != NULL)
@@ -55,7 +55,7 @@ LONG CRegKey::Close()
 
 
 // Create a registry key - if it already exists, the key is opened.
-LONG CRegKey::Create(HKEY hKeyParent, LPCTSTR lpszKeyName,
+LONG CRegKeyX::Create(HKEY hKeyParent, LPCTSTR lpszKeyName,
 		LPTSTR lpszClass /* = REG_NONE */, 
 		DWORD dwOptions /* = REG_OPTION_NON_VOLATILE */,
 		REGSAM samDesired /* = KEY_ALL_ACCESS */, 
@@ -82,7 +82,7 @@ LONG CRegKey::Create(HKEY hKeyParent, LPCTSTR lpszKeyName,
 
 
 // Use lpszValueName = NULL to get the default value.
-LONG CRegKey::QueryValue(DWORD& dwValue, LPCTSTR lpszValueName)
+LONG CRegKeyX::QueryValue(DWORD& dwValue, LPCTSTR lpszValueName)
 {
 	DWORD dwType = NULL;
 	DWORD dwCount = sizeof(DWORD);
@@ -99,7 +99,7 @@ LONG CRegKey::QueryValue(DWORD& dwValue, LPCTSTR lpszValueName)
 // lpszValueName specifies the value field to be queried.
 // szValue is the value field's string data (writes string to this buffer).
 // Use lpszValueName = NULL to get the default value.
-LONG CRegKey::QueryValue(LPTSTR szValue, LPCTSTR lpszValueName, DWORD* pdwCount)
+LONG CRegKeyX::QueryValue(LPTSTR szValue, LPCTSTR lpszValueName, DWORD* pdwCount)
 {
 	_ASSERTE(pdwCount != NULL);
 	DWORD dwType = NULL;
@@ -113,10 +113,10 @@ LONG CRegKey::QueryValue(LPTSTR szValue, LPCTSTR lpszValueName, DWORD* pdwCount)
 
 // Set a string value under the specified key, which is created if necessary.
 // Use lpszValueName = NULL to set the default value.
-LONG WINAPI CRegKey::SetValue(HKEY hKeyParent, LPCTSTR lpszKeyName, LPCTSTR lpszValue, LPCTSTR lpszValueName)
+LONG WINAPI CRegKeyX::SetValue(HKEY hKeyParent, LPCTSTR lpszKeyName, LPCTSTR lpszValue, LPCTSTR lpszValueName)
 {
 	_ASSERTE(lpszValue != NULL);
-	CRegKey key;
+	CRegKeyX key;
 	LONG lRes = key.Create(hKeyParent, lpszKeyName);
 	if (lRes == ERROR_SUCCESS)
 		lRes = key.SetValue(lpszValue, lpszValueName);
@@ -126,10 +126,10 @@ LONG WINAPI CRegKey::SetValue(HKEY hKeyParent, LPCTSTR lpszKeyName, LPCTSTR lpsz
 
 
 // Set a string value under the specified key, under the current key. 
-LONG CRegKey::SetKeyValue(LPCTSTR lpszKeyName, LPCTSTR lpszValue, LPCTSTR lpszValueName)
+LONG CRegKeyX::SetKeyValue(LPCTSTR lpszKeyName, LPCTSTR lpszValue, LPCTSTR lpszValueName)
 {
 	_ASSERTE(lpszValue != NULL);
-	CRegKey key;
+	CRegKeyX key;
 	LONG lRes = key.Create(m_hKey, lpszKeyName);
 	if (lRes == ERROR_SUCCESS)
 		lRes = key.SetValue(lpszValue, lpszValueName);
@@ -140,7 +140,7 @@ LONG CRegKey::SetKeyValue(LPCTSTR lpszKeyName, LPCTSTR lpszValue, LPCTSTR lpszVa
 
 // Set a DWORD value under the currently open key.
 // Use lpszValueName = NULL to set the default value.
-LONG CRegKey::SetValue(DWORD dwValue, LPCTSTR lpszValueName)
+LONG CRegKeyX::SetValue(DWORD dwValue, LPCTSTR lpszValueName)
 {
 	_ASSERTE(m_hKey != NULL);
 	return RegSetValueEx(m_hKey, lpszValueName, NULL, REG_DWORD,
@@ -151,7 +151,7 @@ LONG CRegKey::SetValue(DWORD dwValue, LPCTSTR lpszValueName)
 
 // Set a string value under the currently open key.
 // Use lpszValueName = NULL to set the default value for the key.
-HRESULT CRegKey::SetValue(LPCTSTR lpszValue, LPCTSTR lpszValueName)
+HRESULT CRegKeyX::SetValue(LPCTSTR lpszValue, LPCTSTR lpszValueName)
 {
 	_ASSERTE(lpszValue != NULL);
 	_ASSERTE(m_hKey != NULL);
@@ -168,9 +168,9 @@ HRESULT CRegKey::SetValue(LPCTSTR lpszValue, LPCTSTR lpszValueName)
 
 // RecurseDeleteKey is necessary because on NT RegDeleteKey doesn't work if the
 // specified key has subkeys.
-LONG CRegKey::RecurseDeleteKey(LPCTSTR lpszKey)
+LONG CRegKeyX::RecurseDeleteKey(LPCTSTR lpszKey)
 {
-	CRegKey key;
+	CRegKeyX key;
 	LONG lRes = key.Open(m_hKey, lpszKey);
 	if (lRes != ERROR_SUCCESS)
 		return lRes;
@@ -190,7 +190,7 @@ LONG CRegKey::RecurseDeleteKey(LPCTSTR lpszKey)
 
 
 //` added this
-void CRegKey::GetString(LPCTSTR lpszValueName, CString& strValue)
+void CRegKeyX::GetString(LPCTSTR lpszValueName, CString& strValue)
 {
 	DWORD dwCount = 255;
 	LPTSTR szValue = strValue.GetBuffer(dwCount);
@@ -203,16 +203,16 @@ void CRegKey::GetString(LPCTSTR lpszValueName, CString& strValue)
 /*
 // Search through the entire registry, replacing the old text with the new text
 // Usage:
-//		CRegKey r;
+//		CRegKeyX r;
 //		r.Replace("D:\\Development\\Micro", "C:\\Program Files\\Micro");
-LONG CRegKey::Replace(LPCTSTR lpszOld, LPCTSTR lpszNew)
+LONG CRegKeyX::Replace(LPCTSTR lpszOld, LPCTSTR lpszNew)
 {
 	// The following predefined keys are always open: HKEY_LOCAL_MACHINE, HKEY_CLASSES_ROOT, 
 	// HKEY_USERS, and HKEY_CURRENT_USER. 
 	// An application can use the RegCloseKey function to close a key and write the data it contains 
 	// into the registry. 
 
-	CRegKey r;
+	CRegKeyX r;
 	HKEY hKeys[] = {HKEY_LOCAL_MACHINE, HKEY_USERS}; // these are the only two - all others are just subkeys
 	UINT nhKeys = sizeof(hKeys) / sizeof(HKEY);
 
@@ -239,7 +239,7 @@ LONG CRegKey::Replace(LPCTSTR lpszOld, LPCTSTR lpszNew)
 
 // Search through all values for the specified key, then loop through all subkeys and recurse.
 // hKey must be an open key.
-LONG CRegKey::ReplaceRecurse(HKEY hKey, LPCTSTR lpszOld, LPCTSTR lpszNew, int nIndent)
+LONG CRegKeyX::ReplaceRecurse(HKEY hKey, LPCTSTR lpszOld, LPCTSTR lpszNew, int nIndent)
 {
 	DWORD nSubkeys;
 	DWORD nValues;
@@ -309,7 +309,7 @@ LONG CRegKey::ReplaceRecurse(HKEY hKey, LPCTSTR lpszOld, LPCTSTR lpszNew, int nI
 	TCHAR szKeyName[255]; 
 	while ((lRes = ::RegEnumKeyEx(hKey, nKey, szKeyName, &dwNameSize, NULL, NULL, NULL, &time))==ERROR_SUCCESS)
 	{
-		CRegKey r;
+		CRegKeyX r;
 		CString strSpaces = "                                                                                                     ";
 		TRACE("%s%s\n", (LPCTSTR) strSpaces.Left(nIndent*4), szKeyName);
 		lRes = r.Open(hKey, szKeyName); // open a subkey
@@ -333,7 +333,7 @@ LONG CRegKey::ReplaceRecurse(HKEY hKey, LPCTSTR lpszOld, LPCTSTR lpszNew, int nI
 
 
 // Copy a registry key to a new location
-BOOL CRegKey::CopyKey()
+BOOL CRegKeyX::CopyKey()
 {
 
 	return FALSE;

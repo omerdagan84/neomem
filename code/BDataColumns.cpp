@@ -154,7 +154,7 @@ void BDataColumns::Serialize(CArchive &ar)
 //		m_anOrder.Serialize(ar);
 		int nCols = m_anOrder.GetSize();
 		ar << nCols;
-		for (i = 0; i < nCols; i++)
+		for (int i = 0; i < nCols; i++)
 		{
 			ar << m_anOrder[i];
 		}
@@ -180,7 +180,7 @@ void BDataColumns::Serialize(CArchive &ar)
 		int nCols = 0;
 		ar >> nCols;
 		m_anOrder.SetSize(nCols);
-		for (i = 0; i < nCols; i++)
+		for (int i = 0; i < nCols; i++)
 		{
 			ar >> m_anOrder[i];
 		}

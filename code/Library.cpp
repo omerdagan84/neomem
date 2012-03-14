@@ -78,15 +78,18 @@ GetFileName(LPCTSTR pszPathName)
 // Format the given number with proper thousand formatting and return as a new CString object.
 // To use in a printf, be sure to cast the result to LPCTSTR!!
 //. use FormatThousands in CStringEx instead!
+//. why is this called fc?? give it a better name so can search on it
 CString 
-fc(long n)
+//fc(long n)
+fc(ULONGLONG n)
 {
 	const int nChars = 50;
 	TCHAR szPlain[nChars];
 	TCHAR szFormatted[nChars];
 
 //	_stprintf(szPlain, "%d", n);
-	wsprintf(szPlain, "%d", n);
+//	wsprintf(szPlain, "%d", n);
+	wsprintf(szPlain, "%llu", n); // long long unsigned
 
 	// this always prints 2 decimal places - lame!
 //	::GetNumberFormat(LOCALE_USER_DEFAULT, 0, szPlain, NULL, szFormatted, nChars);
@@ -150,8 +153,10 @@ IsEdit(CWnd *pWnd)
 
 
 
+//, there's nothing in the libraries that will do this stuff? 
 
-// Function to convert unsigned char to string of length 2, eg 0xAE -> "AE"
+
+// Function to convert unsigned char (byte) to string of length 2, eg 0xAE -> "AE"
 void 
 Char2Hex(const unsigned char ch, char* szHex)
 {
@@ -196,7 +201,7 @@ CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iSize)
 	for(i=0; i<iSize; i++)
 	{
 		Char2Hex(pucCharStr[i], szHex);
-		strcat(pszHexStr, szHex);
+		strcat_s(pszHexStr, 2, szHex);
 	}
 }
 

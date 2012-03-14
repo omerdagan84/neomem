@@ -1,12 +1,12 @@
 
-// CRegKey
+// CRegKeyX
 // The class encapsulates the Registry.
-// Taken from ATL source code. 
+// Taken from ATL source code (CRegKey)
 //-----------------------------------------------------------------------------------------------------------------
 
-// To open a particular registry key, call CRegKey::Open. To retrieve or modify a 
-// data value, call CRegKey::QueryValue or CRegKey::SetValue. To close a key, 
-// call CRegKey::Close.
+// To open a particular registry key, call CRegKeyX::Open. To retrieve or modify a 
+// data value, call CRegKeyX::QueryValue or CRegKeyX::SetValue. To close a key, 
+// call CRegKeyX::Close.
 
 // When you close a key, its registry data is written (flushed) to the hard disk. 
 // This process may take several seconds. If your application must explicitly write registry data 
@@ -23,11 +23,11 @@
 #pragma once
 
 
-class CRegKey
+class CRegKeyX
 {
 public:
-	CRegKey();
-	~CRegKey();
+	CRegKeyX();
+	~CRegKeyX();
 
 // Attributes
 public:
@@ -56,35 +56,35 @@ public:
 //	LONG ReplaceRecurse(HKEY hKey, LPCTSTR lpszOld, LPCTSTR lpszNew, int nIndent = 0); //` added this
 };
 
-inline CRegKey::CRegKey()
+inline CRegKeyX::CRegKeyX()
 {m_hKey = NULL;}
 
-inline CRegKey::~CRegKey()
+inline CRegKeyX::~CRegKeyX()
 {Close();}
 
-inline CRegKey::operator HKEY() const
+inline CRegKeyX::operator HKEY() const
 {return m_hKey;}
 
-inline HKEY CRegKey::Detach()
+inline HKEY CRegKeyX::Detach()
 {
 	HKEY hKey = m_hKey;
 	m_hKey = NULL;
 	return hKey;
 }
 
-inline void CRegKey::Attach(HKEY hKey)
+inline void CRegKeyX::Attach(HKEY hKey)
 {
 	_ASSERTE(m_hKey == NULL);
 	m_hKey = hKey;
 }
 
-inline LONG CRegKey::DeleteSubKey(LPCTSTR lpszSubKey)
+inline LONG CRegKeyX::DeleteSubKey(LPCTSTR lpszSubKey)
 {
 	_ASSERTE(m_hKey != NULL);
 	return RegDeleteKey(m_hKey, lpszSubKey);
 }
 
-inline LONG CRegKey::DeleteValue(LPCTSTR lpszValue)
+inline LONG CRegKeyX::DeleteValue(LPCTSTR lpszValue)
 {
 	_ASSERTE(m_hKey != NULL);
 	return RegDeleteValue(m_hKey, (LPTSTR)lpszValue);

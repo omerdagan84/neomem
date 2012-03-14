@@ -3789,9 +3789,10 @@ CNeoDoc::GetFileSizeString() {
 	CFileException e;
 	CFile* f = GetFile(pszFile, CFile::shareDenyNone | CFile::modeRead, &e);
 	if (f) {
-		DWORD dwLength = f->GetLength();
+//		DWORD dwLength = f->GetLength();
+		ULONGLONG ullLength = f->GetLength();
 //		str.Format("%d Bytes", dwLength);
-		str.Format("%s Bytes", (LPCTSTR) fc(dwLength)); // format thousands
+		str.Format("%s Bytes", (LPCTSTR) fc(ullLength)); // format thousands
 		f->Close();
 		delete f;
 	}

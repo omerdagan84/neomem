@@ -28,7 +28,7 @@
 #include "PageOptionsDisplay.h"
 #include "PageOptionsFile.h"
 #include "PropertySheetEx2.h"
-#include "RegKey.h"
+//#include "RegKey.h"
 #include "Strings.h"
 #include "ViewRtf.h"
 #include "ViewTabs.h"
@@ -434,12 +434,13 @@ CNeoMem::InitInstance() {
 	// If you are not using these features and wish to reduce the size
 	// of your final executable, you should remove from the following
 	// the specific initialization routines you do not need.
-	TRACE("enable 3d controls\n");
-	#ifdef _AFXDLL
-		Enable3dControls();			// Call this when using MFC in a shared DLL
-	#else
-		Enable3dControlsStatic();	// Call this when linking to MFC statically
-	#endif
+	// no longer needed for vs2010
+//	TRACE("enable 3d controls\n");
+//	#ifdef _AFXDLL
+//		Enable3dControls();			// Call this when using MFC in a shared DLL
+//	#else
+//		Enable3dControlsStatic();	// Call this when linking to MFC statically
+//	#endif
 
 
 	// 1.2 use ini file instead of registry (feature 394)
@@ -943,7 +944,7 @@ CNeoMem::LoadOptions() {
 		r.Open(HKEY_CURRENT_USER, szShellFolders);
 		DWORD dwCount = MAX_PATH;
 		LPTSTR szPath = m_strDocumentFolder.GetBuffer(dwCount);
-		r.QueryValue(szPath, _T("Personal"), &dwCount);
+		r.QueryStringValue(szPath, _T("Personal"), &dwCount); // was QueryValue
 		r.Close();
 		m_strDocumentFolder.ReleaseBuffer();
 		// To find shell folders such as My Documents, use SHGetFolderPath to get the path. 
@@ -1262,7 +1263,7 @@ CNeoMem::OnCmdViewOptions() {
 				CRegKey r;
 				if (ERROR_SUCCESS == r.Open(HKEY_CURRENT_USER, szWindowsRun)) {
 					if (m_bAutoStart)
-						r.SetValue(szExeName, m_pszAppName);
+						r.SetStringValue(szExeName, m_pszAppName); // was SetValue
 					else
 						r.DeleteValue(m_pszAppName);
 				}

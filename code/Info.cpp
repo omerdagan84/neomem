@@ -7,7 +7,7 @@
 #include "Info.h"
 
 #include "FileVersion.h"
-#include "RegKey.h"
+//#include "RegKey.h"
 #include "ModuleVersion.h"
 
 
@@ -703,7 +703,7 @@ void CInfo::LoadProcessorInfo()
 	r.Open(HKEY_LOCAL_MACHINE, szCentralProcessor);
 	
 	psz = m_strProcessorIdentifier.GetBuffer(dwChars);
-	r.QueryValue(psz, "ProcessorNameString", &dwChars); // eg "Pentium(r) II Processor"
+	r.QueryStringValue(psz, "ProcessorNameString", &dwChars); // eg "Pentium(r) II Processor"
 	m_strProcessorIdentifier.ReleaseBuffer();
 	m_strProcessorIdentifier.TrimLeft();
 	m_strProcessorIdentifier.TrimRight();
@@ -711,12 +711,12 @@ void CInfo::LoadProcessorInfo()
 	if (m_strProcessorIdentifier.IsEmpty())
 	{
 		psz = m_strProcessorIdentifier.GetBuffer(dwChars);
-		r.QueryValue(psz, "Identifier", &dwChars); // eg "Pentium(r) II Processor"
+		r.QueryStringValue(psz, "Identifier", &dwChars); // eg "Pentium(r) II Processor"
 		m_strProcessorIdentifier.ReleaseBuffer();
 	}
 
 	psz = m_strProcessorVendor.GetBuffer(dwChars);
-	r.QueryValue(psz, "VendorIdentifier", &dwChars); // eg "GenuineIntel"
+	r.QueryStringValue(psz, "VendorIdentifier", &dwChars); // eg "GenuineIntel"
 	m_strProcessorVendor.ReleaseBuffer();
 	
 	r.Close();

@@ -276,7 +276,7 @@ void CPageClassProperties::LoadData()
 	// Now we have a sorted array of all properties
 	// walk through them and add to the list if not already there
 	nPropDefs = paCopy->GetSize();
-	for (i = 0; i < nPropDefs; i++)
+	for (int i = 0; i < nPropDefs; i++)
 	{
 		BObject* pobjPropDef = (BObject*) paCopy->GetAt(i);
 		ASSERT_VALID(pobjPropDef);
