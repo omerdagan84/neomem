@@ -24,7 +24,8 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CDialogMessage)
 	enum { IDD = IDD_MESSAGE };
-	CRichEditCtrlEx	m_rtf;
+//	CRichEditCtrlEx	m_rtf;
+	CRichEditCtrl	m_rtf;
 	CStatic	m_picHeader;
 	CButton	m_chkOption;
 	CButton	m_btnClose;

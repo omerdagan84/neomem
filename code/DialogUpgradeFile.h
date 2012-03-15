@@ -22,6 +22,7 @@ public:
 	enum { IDD = IDD_UPGRADE_FILE };
 		// NOTE: the ClassWizard will add data members here
 	CRichEditCtrlEx	m_rtf;
+//	CRichEditCtrl	m_rtf;
 	//}}AFX_DATA
 
 // Overrides

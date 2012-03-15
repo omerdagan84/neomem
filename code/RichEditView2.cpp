@@ -98,12 +98,13 @@ AFX_DATADEF ULONG CRichEditView2::lMaxSize = 0xffffff;
 //--------------------------------------------------------------------------------------------------
 
 //`CRichEditView2::CRichEditView2() : CCtrlView(_T("RICHEDIT"), AFX_WS_DEFAULT_VIEW |
-CRichEditView2::CRichEditView2() : CCtrlView(_T("RichEdit20A"), AFX_WS_DEFAULT_VIEW |
+//CRichEditView2::CRichEditView2() : CCtrlView(_T("RichEdit20A"), AFX_WS_DEFAULT_VIEW |
+CRichEditView2::CRichEditView2() : CCtrlView(RICHEDIT_CLASS, AFX_WS_DEFAULT_VIEW |
 	WS_HSCROLL | WS_VSCROLL | ES_AUTOHSCROLL | ES_AUTOVSCROLL |
 	ES_MULTILINE | ES_NOHIDESEL | ES_SAVESEL | ES_SELECTIONBAR)
 {
-	_afxRichEditState = new _AFX_RICHEDIT_STATE; //` added this
-	_afxRichEditState->pFindReplaceDlg = 0; //` added this
+//	_afxRichEditState = new _AFX_RICHEDIT_STATE; //` added this
+//	_afxRichEditState->pFindReplaceDlg = 0; //` added this
 	m_bSyncCharFormat = m_bSyncParaFormat = TRUE;
 	m_lpRichEditOle = NULL;
 //	m_nBulletIndent = 720; // twips (1/2 inch)
@@ -133,15 +134,16 @@ CRichEditView2::~CRichEditView2()
 {
 	xTRACE("CRichEditView2::Destructor\n");
 	//` added this
-	if (_afxRichEditState)
-		delete _afxRichEditState;
+//	if (_afxRichEditState)
+//		delete _afxRichEditState;
 }
 
 
 BOOL CRichEditView2::PreCreateWindow(CREATESTRUCT& cs)
 {
 //`	if (!AfxInitRichEdit())
-	if (!AfxInitRichEditEx())
+//	if (!AfxInitRichEditEx())
+	if (!AfxInitRichEdit2())
 		return FALSE;
 
 	CCtrlView::PreCreateWindow(cs);
@@ -211,7 +213,7 @@ void CRichEditView2::DeleteContents()
 void CRichEditView2::WrapChanged()
 {
 	CWaitCursor wait;
-//`	CRichEditCtrl& ctrl = GetRichEditCtrlEx();
+//`	CRichEditCtrl& ctrl = GetRichEditCtrl();
 	CRichEditCtrlEx& ctrl = GetRichEditCtrlEx();
 	if (m_nWordWrap == WrapNone)
 		ctrl.SetTargetDevice(NULL, 1);
@@ -306,7 +308,6 @@ DWORD CALLBACK CRichEditView2::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff,
 	}
 	END_CATCH_ALL
 	return dw;
-//	return 0;
 }
 
 

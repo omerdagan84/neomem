@@ -19,7 +19,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 // Helpers
-
+/*
 _AFX_RICHEDITEX_STATE::_AFX_RICHEDITEX_STATE()
 {
 	m_hInstRichEdit20 = NULL ;
@@ -34,9 +34,10 @@ _AFX_RICHEDITEX_STATE::~_AFX_RICHEDITEX_STATE()
 }
 
 _AFX_RICHEDITEX_STATE _afxRichEditStateEx;
+*/
 
 
-
+/*
 // Initialize richedit control library
 //* This function must be called prior to creating any dialog which uses the version 
 // 2.0 rich edit control.  For created classes, this is called automatically.
@@ -61,7 +62,7 @@ AfxInitRichEditEx()
 	
 	return pState->m_hInstRichEdit20 != NULL;
 }
-
+*/
 
 
 
@@ -121,9 +122,13 @@ CRichEditCtrlEx::Create(
 	// This is almost exactly what is in CRichEditCtrl::Create(), except the different window class 
 	// name, and the call to AfxInitRichEdit() has been changed to AfxInitRichEditEx() which first 
 	// calls AfxInitRichEdit (we do not want to break the normal CRichEditCtrl).   
-	if (!::AfxInitRichEditEx())
+//	if (!::AfxInitRichEditEx())
+//		return FALSE;
+
+	if (!::AfxInitRichEdit())
 		return FALSE;
 
+	/*
 	// Requires 2.0 - if not available this will fail and return FALSE
 	CWnd* pWnd = this;
 	BOOL bRet = pWnd->Create(_T("RichEdit20A"), NULL, dwStyle, rcRect, pParentWnd, nID);
@@ -134,6 +139,7 @@ CRichEditCtrlEx::Create(
 			"", MB_ICONINFORMATION);
 		return FALSE;
 	}
+	*/
 
 		// Check if we're using the Unicode version of the rtf control or the Ansi version?
 	// Use different str routines based on this value?

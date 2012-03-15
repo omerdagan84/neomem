@@ -24,6 +24,7 @@ public:
 	CButton	m_btnExistingFile;
 	CButton	m_btnExample;
 	CRichEditCtrlEx	m_rtf;
+//	CRichEditCtrl	m_rtf;
 	CButton	m_chkShowDialog;
 	//}}AFX_DATA
 

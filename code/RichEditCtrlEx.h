@@ -1,6 +1,7 @@
 
 // CRichEditCtrlEx
 // Extension of the CRichEditCtrl class, so we can use the richedit 2.0 dll. 
+// Also added methods like GetRtf, AutoURLDetect, FindNext, etc. 
 // Date: February 2000
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -18,16 +19,17 @@
 // In the RichEditCtrlEx.h file, you need to add the DLL holder class and 
 // function prototype:
 
+/*
 class _AFX_RICHEDITEX_STATE
 {
 public:
     _AFX_RICHEDITEX_STATE();
     virtual ~_AFX_RICHEDITEX_STATE();
-
     HINSTANCE m_hInstRichEdit20 ;
 };
+*/
 
-BOOL PASCAL AfxInitRichEditEx();
+//BOOL PASCAL AfxInitRichEditEx();
 
 
 class CRichEditCtrlEx : public CRichEditCtrl

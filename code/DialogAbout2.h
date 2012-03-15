@@ -25,6 +25,7 @@ public:
 // Attributes
 protected:
 	CRichEditCtrlEx m_rtf;
+//	CRichEditCtrl m_rtf;
 //	CWnd m_wnd;
 	CString m_strAbout;
 	CString m_strCredits;

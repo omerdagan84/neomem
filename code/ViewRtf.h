@@ -1,7 +1,7 @@
 
 // CViewRtf
 // This is the Text View, and contains a toolbar and a rich edit view 
-// derived from CRichEditView.
+// derived from CRichEditView2.
 // Date: January 2000
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -13,7 +13,9 @@
 #include "ToolBarRtf.h"
 
 class CRichEditView2;
+//class CRichEditView;
 class CRichEditCtrlEx;
+//class CRichEditCtrl;
 class CFontEx;
 
 
@@ -57,9 +59,11 @@ public:
 	// Pointer to CRichEditView2 object, which contains the actual Richedit control.
 	// Public so framechild can access it to get plain text for export.
 	CRichEditView2* m_pViewRtf; 
+//	CRichEditView* m_pViewRtf; 
 
 	// Pointer to the actual Richedit control
 	CRichEditCtrlEx* m_prtf; 
+//	CRichEditCtrl* m_prtf; 
 protected:
 	CToolBarRtf m_tbrRtf;
 	CString m_strFindText;

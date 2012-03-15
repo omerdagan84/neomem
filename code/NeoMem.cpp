@@ -394,10 +394,10 @@ CNeoMem::InitInstance() {
 	AfxEnableControlContainer();
 
 	// Enable use of rich edit control
-//	AfxInitRichEdit();
 	//* Note: This must be called before any richedit 2.0 dialog is loaded!!!
 	TRACE("initialize rich edit control\n");
-	AfxInitRichEditEx(); // Loads 2.0/3.0
+	AfxInitRichEdit();
+//	AfxInitRichEditEx(); // Loads 2.0/3.0
 	// no message needed here - already have above
 //	{
 //		AfxMessageBox("Unable to load Rich Edit 2.0", MB_OK | MB_ICONEXCLAMATION);

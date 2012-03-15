@@ -149,6 +149,7 @@ public:
 	CFontEx m_fontControls; // default font to use for controls (MS Sans Serif 8pt)
 	CFontEx m_fontControlsBold; // bold font to use for controls
 	CRichEditCtrlEx m_rtf; // Invisible rtf control used by various routines (drag drop, search)
+//	CRichEditCtrl m_rtf; // Invisible rtf control used by various routines (drag drop, search)
 	CInfo m_objInfo; // program version, windows version, memory etc info object
 	UINT m_cfObjects; // Clipboard format for collection of objects
 	UINT m_cfRtf; // Clipboard format for rich text

@@ -2,7 +2,8 @@
 // CRichEditView2
 // This is basically MFC's CRichEditView with OLE object handling disabled,
 // and some additional functions added for NeoMem.
-// Also uses CRichEditCtrlEx, which allows us to use RichEdit 2.0+.
+// Also uses CRichEditCtrlEx, which allows us to use RichEdit 2.0+, 
+// and adds some other methods.
 //-----------------------------------------------------------------------------------------------------------------
 
 
@@ -337,7 +338,7 @@ _AFXRICH_INLINE CRichEditDoc* CRichEditView2::GetDocument() const
 
 /////////////////////////////////////////////////////////////////////////////
 // _AFX_EDIT_STATE
-/*
+
 class _AFX_EDIT_STATE : public CNoTrackObject
 {
 public:
@@ -362,7 +363,7 @@ public:
 	HINSTANCE m_hInstRichEdit;      // handle to RICHED32.DLL
 	virtual ~_AFX_RICHEDIT_STATE();
 };
-*/
+
 
 
 

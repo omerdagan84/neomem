@@ -183,6 +183,7 @@ CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //	m_pViewRtf = (CRichEditView2*) CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF);
 //	m_pViewRtf = dynamic_cast<CRichEditView2*> (CViewEx::CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
 	m_pViewRtf = dynamic_cast<CRichEditView2*> (CreateChildView(RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
+//	m_pViewRtf = dynamic_cast<CRichEditView*> (CreateChildView(RUNTIME_CLASS(CRichEditView), m_pDoc, r, ID_RTF));
 	if (m_pViewRtf) 
 	{
 		// Subclass the rtf control with our extended class (provides GetRtf and SetRtf methods)
@@ -193,6 +194,7 @@ CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //		m_prtf = STATIC_DOWNCAST(CRichEditCtrlEx, &(m_pViewRtf->GetRichEditCtrl())); // asserts if invalid
 //		m_prtf = dynamic_cast<CRichEditCtrlEx*> (&(m_pViewRtf->GetRichEditCtrl())); 
 		m_prtf = &(m_pViewRtf->GetRichEditCtrlEx());  //. now the cast is inside this call.... why is it valid though?
+//		m_prtf = &(m_pViewRtf->GetRichEditCtrl());  //. now the cast is inside this call.... why is it valid though?
 		ASSERT_VALID(m_prtf);
 
 		// Tell CViewEx about child view
@@ -2018,8 +2020,6 @@ CViewRtf::OnCmdEditShiftRight()
 {
 	// walk through selected text, inserting \\tabs after \\pars
 	// getrtf text, walk through it and change it, then write it back
-	//.. encapsulate this routine in some rtf handling class? put in ctrlex class?
-//	CRichEditCtrlEx* prtf = (CRichEditCtrlEx*) &(m_pViewRtf->GetRichEditCtrl());
 
 	CString strNew;
 	CString strSelection = m_prtf->GetRtf(TRUE);
@@ -2268,8 +2268,6 @@ CViewRtf::OnEditSortSelectedText()
 	// walk through text, adding each paragraph to a list
 	// then sort the list, spit it all out to a string, 
 	// then replace the selection with the new string
-	//.. encapsulate this routine in some rtf handling class? put in ctrlex class?
-//	CRichEditCtrlEx* prtf = (CRichEditCtrlEx*) &(m_pViewRtf->GetRichEditCtrl());
 
 	CString strNew;
 	CStringEx strSelection = m_prtf->GetRtf(TRUE);
