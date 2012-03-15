@@ -13,6 +13,13 @@
 # $Revision$
 #------------------------------------------------------------------
 
+# requires TortoiseSVN (SubWCRev.exe) to do string substitution
+# http://tortoisesvn.net/
+# install it with command line tools, then add dir to path
+# there must be a better way of doing this. 
+
+
+
 # set neomem version information for current release here
 # give it a name like "1.2d prerelease" while you're still working on it
 version_name = "1.2d prerelease"
@@ -121,8 +128,10 @@ task :version do
     
     # now update version number and name
     s = File.read("resources\\version.rct2")
-    s.gsub!("$version_number$",version_number)
-    s.gsub!("$version_name$",version_name)
+#    s.gsub!("$version_number$",version_number)
+#    s.gsub!("$version_name$",version_name)
+    s.gsub!("$VERSION_NUMBER$",version_number)
+    s.gsub!("$VERSION_NAME$",version_name)
   
     # also replace dates like 2006/01/21 with 2006-01-21, because we can...
     re = /(\d\d\d\d)\/(\d\d)\/(\d\d)/ # regular expression, matching a date

@@ -9,7 +9,7 @@
 // subversion repository revision number (replacing the $WCREV$ and $WCDATE$ 's).
 //
 // the rakefile will do this, and also substitute appropriate values
-// for $VERSIONNUMBER$ and $VERSIONNAME$.
+// for $VERSION_NUMBER$ and $VERSION_NAME$.
 //
 // The resulting version.rc file is included in the project's resource file (neomem.rc).
 // That was done by going to Vis C++'s View/Resource Includes... menu
@@ -29,8 +29,8 @@
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION $VERSIONNUMBER$,$WCREV$
- PRODUCTVERSION $VERSIONNUMBER$,$WCREV$
+ FILEVERSION $VERSION_NUMBER$,$WCREV$
+ PRODUCTVERSION $VERSION_NUMBER$,$WCREV$
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -48,14 +48,14 @@ BEGIN
             VALUE "Comments", "www.neomem.org\0"
             VALUE "CompanyName", "NeoMem.org\0"
             VALUE "FileDescription", "NeoMem Executable File\0"
-            VALUE "FileVersion", "$VERSIONNAME$, Build $WCREV$ ($WCDATE$)\0"
+            VALUE "FileVersion", "$VERSION_NAME$, Build $WCREV$ ($WCDATE$)\0"
             VALUE "InternalName", "NeoMem\0"
             VALUE "LegalCopyright", "Copyright (c) 2001-2007 NeoMem.org. All Rights Reserved.\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "NeoMem.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "NeoMem\0"
-            VALUE "ProductVersion", "$VERSIONNAME$, Build $WCREV$ ($WCDATE$)\0"
+            VALUE "ProductVersion", "$VERSION_NAME$, Build $WCREV$ ($WCDATE$)\0"
             VALUE "SpecialBuild", "\0"
         END
     END

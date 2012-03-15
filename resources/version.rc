@@ -6,10 +6,10 @@
 // subwcrev . res\version.rct res\version.rct2
 //
 // This will update the versioninfo structure below with the current 
-// subversion repository revision number (replacing the 308 and 2010-01-23 15:17:55 's).
+// subversion repository revision number (replacing the 315 and 2012-03-15 13:42:07 's).
 //
 // the rakefile will do this, and also substitute appropriate values
-// for $VERSIONNUMBER$ and $VERSIONNAME$.
+// for 1,2,4 and 1.2d prerelease.
 //
 // The resulting version.rc file is included in the project's resource file (neomem.rc).
 // That was done by going to Vis C++'s View/Resource Includes... menu
@@ -29,8 +29,8 @@
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION $VERSIONNUMBER$,308
- PRODUCTVERSION $VERSIONNUMBER$,308
+ FILEVERSION 1,2,4,315
+ PRODUCTVERSION 1,2,4,315
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -48,14 +48,14 @@ BEGIN
             VALUE "Comments", "www.neomem.org\0"
             VALUE "CompanyName", "NeoMem.org\0"
             VALUE "FileDescription", "NeoMem Executable File\0"
-            VALUE "FileVersion", "$VERSIONNAME$, Build 308 (2010-01-23 15:17:55)\0"
+            VALUE "FileVersion", "1.2d prerelease, Build 315 (2012-03-15 13:42:07)\0"
             VALUE "InternalName", "NeoMem\0"
             VALUE "LegalCopyright", "Copyright (c) 2001-2007 NeoMem.org. All Rights Reserved.\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "NeoMem.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "NeoMem\0"
-            VALUE "ProductVersion", "$VERSIONNAME$, Build 308 (2010-01-23 15:17:55)\0"
+            VALUE "ProductVersion", "1.2d prerelease, Build 315 (2012-03-15 13:42:07)\0"
             VALUE "SpecialBuild", "\0"
         END
     END
