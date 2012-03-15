@@ -14,7 +14,8 @@
 #------------------------------------------------------------------
 
 # set neomem version information for current release here
-version_name = "1.2d"
+# give it a name like "1.2d prerelease" while you're still working on it
+version_name = "1.2d prerelease"
 version_number = "1,2,4" # last number is alpha order of the letter
 version_name_nospace = version_name.tr(' ','') # translate spaces to nothing
 
@@ -100,7 +101,7 @@ task :intro do
     this will update version info, etc, to neomem version #{version_name}.
     first you should exit visual studio, and make sure
     you've checked in all the latest changes.
-    ie do >svn status, >svn update, >svn commit -m "latest changes", etc.
+    ie do >svn status, >svn commit -m "latest changes", >svn update, etc.
     }
 end
 
@@ -110,7 +111,7 @@ desc "Update the project's version information"
 task :version do
 
   puts "about to update the version.rc file, so CLEAR OUT OF MSDEV (ie close project)!!"
-  puts "also, good to do a svn status, svn update, and svn checkin"
+  puts "also, good to do a svn status, svn commit, and svn update"
 #  if ask("update version.rc?") then
   if true then
     
