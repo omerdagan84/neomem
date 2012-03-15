@@ -14,8 +14,8 @@
 #------------------------------------------------------------------
 
 # set neomem version information for current release here
-version_name = "1.2c Prerelease"
-version_number = "1,2,3" # last number is alpha order of the letter
+version_name = "1.2d"
+version_number = "1,2,4" # last number is alpha order of the letter
 version_name_nospace = version_name.tr(' ','') # translate spaces to nothing
 
 # define programs
@@ -54,6 +54,7 @@ sourcefile = "NeoMemSource#{version_name_nospace}.zip"
 # entering rake with no options will run the default task,
 # which does everything listed here. 
 #. any way to put these in this order for -T listing?
+#. make a rake help task that puts them in order and explains a bit
 task :default => [:intro, :version, :readme, :help, 
     :build, :compress, :install, :setup, :website]
 
@@ -99,7 +100,7 @@ task :intro do
     this will update version info, etc, to neomem version #{version_name}.
     first you should exit visual studio, and make sure
     you've checked in all the latest changes.
-    ie do >svn status, >svn update, >svn checkin -m 'latest changes', etc.
+    ie do >svn status, >svn update, >svn commit -m "latest changes", etc.
     }
 end
 
