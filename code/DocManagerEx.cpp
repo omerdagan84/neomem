@@ -21,6 +21,8 @@
 #include "DocManagerEx.h"
 #include "FileDialogEx.h"
 
+
+
 #include "NeoDoc.h" //`
 
 
@@ -31,7 +33,71 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-extern void AFXAPI _AfxAppendFilterSuffix(CString& filter, OPENFILENAME& ofn, CDocTemplate* pTemplate, CString* pstrDefaultExt);
+// this used to link fine, but in vs2010 it wouldn't. so copied the function from docmgr.cpp.
+// as inspired by this codeproject - 
+// "Unfortunately, this code uses the internal MFC function _AfxAppendFilterSuffix. 
+// To make the code compile, the only solution I found was to copy the code verbatim from MFC source files. "
+// http://www.codeproject.com/Articles/7054/Opening-multipe-documents-of-several-types-at-once
+
+//extern void AFXAPI _AfxAppendFilterSuffix(CString& filter, OPENFILENAME& ofn, CDocTemplate* pTemplate, CString* pstrDefaultExt);
+AFX_STATIC void AFXAPI _AfxAppendFilterSuffix(CString& filter, OPENFILENAME& ofn,
+	CDocTemplate* pTemplate, CString* pstrDefaultExt)
+{
+	ENSURE_VALID(pTemplate);
+	ASSERT_KINDOF(CDocTemplate, pTemplate);
+
+	CString strFilterExt, strFilterName;
+	if (pTemplate->GetDocString(strFilterExt, CDocTemplate::filterExt) &&
+		!strFilterExt.IsEmpty() &&
+		pTemplate->GetDocString(strFilterName, CDocTemplate::filterName) &&
+		!strFilterName.IsEmpty())
+	{
+		if (pstrDefaultExt != NULL)
+			pstrDefaultExt->Empty();
+
+		// add to filter
+		filter += strFilterName;
+		ASSERT(!filter.IsEmpty());  // must have a file type name
+		filter += (TCHAR)'\0';  // next string please
+
+		int iStart = 0;
+		do
+		{
+			CString strExtension = strFilterExt.Tokenize( _T( ";" ), iStart );
+
+			if (iStart != -1)
+			{
+				// a file based document template - add to filter list
+
+				// If you hit the following ASSERT, your document template 
+				// string is formatted incorrectly.  The section of your 
+				// document template string that specifies the allowable file
+				// extensions should be formatted as follows:
+				//    .<ext1>;.<ext2>;.<ext3>
+				// Extensions may contain wildcards (e.g. '?', '*'), but must
+				// begin with a '.' and be separated from one another by a ';'.
+				// Example:
+				//    .jpg;.jpeg
+				ASSERT(strExtension[0] == '.');
+				if ((pstrDefaultExt != NULL) && pstrDefaultExt->IsEmpty())
+				{
+					// set the default extension
+					*pstrDefaultExt = strExtension.Mid( 1 );  // skip the '.'
+					ofn.lpstrDefExt = const_cast< LPTSTR >((LPCTSTR)(*pstrDefaultExt));
+					ofn.nFilterIndex = ofn.nMaxCustFilter + 1;  // 1 based number
+				}
+
+				filter += (TCHAR)'*';
+				filter += strExtension;
+				filter += (TCHAR)';';  // Always append a ';'.  The last ';' will get replaced with a '\0' later.
+			}
+		} while (iStart != -1);
+
+		filter.SetAt( filter.GetLength()-1, '\0' );;  // Replace the last ';' with a '\0'
+		ofn.nMaxCustFilter++;
+	}
+}
+
 
 
 IMPLEMENT_DYNAMIC(CDocManagerEx, CDocManagerEx)

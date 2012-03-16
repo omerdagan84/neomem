@@ -15,940 +15,940 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="code\BCMenu.cpp">
+    <ClCompile Include="..\code\BCMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BData.cpp">
+    <ClCompile Include="..\code\BData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataBinary.cpp">
+    <ClCompile Include="..\code\BDataBinary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataBoolean.cpp">
+    <ClCompile Include="..\code\BDataBoolean.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataColumns.cpp">
+    <ClCompile Include="..\code\BDataColumns.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataDate.cpp">
+    <ClCompile Include="..\code\BDataDate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataEmail.cpp">
+    <ClCompile Include="..\code\BDataEmail.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataFile.cpp">
+    <ClCompile Include="..\code\BDataFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataFlags.cpp">
+    <ClCompile Include="..\code\BDataFlags.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataFolder.cpp">
+    <ClCompile Include="..\code\BDataFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataHyperlink.cpp">
+    <ClCompile Include="..\code\BDataHyperlink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataIcon.cpp">
+    <ClCompile Include="..\code\BDataIcon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataLink.cpp">
+    <ClCompile Include="..\code\BDataLink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataLong.cpp">
+    <ClCompile Include="..\code\BDataLong.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataNumber.cpp">
+    <ClCompile Include="..\code\BDataNumber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataPersonName.cpp">
+    <ClCompile Include="..\code\BDataPersonName.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataString.cpp">
+    <ClCompile Include="..\code\BDataString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataViews.cpp">
+    <ClCompile Include="..\code\BDataViews.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BDataWebsite.cpp">
+    <ClCompile Include="..\code\BDataWebsite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BObject.cpp">
+    <ClCompile Include="..\code\BObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\BObjects.cpp">
+    <ClCompile Include="..\code\BObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Clock.cpp">
+    <ClCompile Include="..\code\Clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Color.cpp">
+    <ClCompile Include="..\code\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ColorButton.cpp">
+    <ClCompile Include="..\code\ColorButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ColourPopup.cpp">
+    <ClCompile Include="..\code\ColourPopup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Command.cpp">
+    <ClCompile Include="..\code\Command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\CommandHistory.cpp">
+    <ClCompile Include="..\code\CommandHistory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\CommandLineInfoEx.cpp">
+    <ClCompile Include="..\code\CommandLineInfoEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Crypto.cpp">
+    <ClCompile Include="..\code\Crypto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\CryptoArchive.cpp">
+    <ClCompile Include="..\code\CryptoArchive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\CryptoFile.cpp">
+    <ClCompile Include="..\code\CryptoFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogAbout.cpp">
+    <ClCompile Include="..\code\DialogAbout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogAbout2.cpp">
+    <ClCompile Include="..\code\DialogAbout2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditDate.cpp">
+    <ClCompile Include="..\code\DialogEditDate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditFolder.cpp">
+    <ClCompile Include="..\code\DialogEditFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditLink.cpp">
+    <ClCompile Include="..\code\DialogEditLink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditName.cpp">
+    <ClCompile Include="..\code\DialogEditName.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditObject.cpp">
+    <ClCompile Include="..\code\DialogEditObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditObject2.cpp">
+    <ClCompile Include="..\code\DialogEditObject2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditPersonName.cpp">
+    <ClCompile Include="..\code\DialogEditPersonName.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditProperty.cpp">
+    <ClCompile Include="..\code\DialogEditProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditRichText.cpp">
+    <ClCompile Include="..\code\DialogEditRichText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEditString.cpp">
+    <ClCompile Include="..\code\DialogEditString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogError.cpp">
+    <ClCompile Include="..\code\DialogError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogEx.cpp">
+    <ClCompile Include="..\code\DialogEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogException.cpp">
+    <ClCompile Include="..\code\DialogException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogExport.cpp">
+    <ClCompile Include="..\code\DialogExport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogGetLocation.cpp">
+    <ClCompile Include="..\code\DialogGetLocation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogImport.cpp">
+    <ClCompile Include="..\code\DialogImport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogInsertLink.cpp">
+    <ClCompile Include="..\code\DialogInsertLink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogMessage.cpp">
+    <ClCompile Include="..\code\DialogMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogMessage2.cpp">
+    <ClCompile Include="..\code\DialogMessage2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogNewFile.cpp">
+    <ClCompile Include="..\code\DialogNewFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogNewLinkSource.cpp">
+    <ClCompile Include="..\code\DialogNewLinkSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogNotice.cpp">
+    <ClCompile Include="..\code\DialogNotice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogPassword.cpp">
+    <ClCompile Include="..\code\DialogPassword.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogPrint.cpp">
+    <ClCompile Include="..\code\DialogPrint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogProperties.cpp">
+    <ClCompile Include="..\code\DialogProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogSaveOptions.cpp">
+    <ClCompile Include="..\code\DialogSaveOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogSelectProperty.cpp">
+    <ClCompile Include="..\code\DialogSelectProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogTimer.cpp">
+    <ClCompile Include="..\code\DialogTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogTip.cpp">
+    <ClCompile Include="..\code\DialogTip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogUpgradeFile.cpp">
+    <ClCompile Include="..\code\DialogUpgradeFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogViews.cpp">
+    <ClCompile Include="..\code\DialogViews.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DialogWelcome.cpp">
+    <ClCompile Include="..\code\DialogWelcome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DocManagerEx.cpp">
+    <ClCompile Include="..\code\DocManagerEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\EditEx.cpp">
+    <ClCompile Include="..\code\EditEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\EditInPlace.cpp">
+    <ClCompile Include="..\code\EditInPlace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Email.cpp">
+    <ClCompile Include="..\code\Email.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Error.cpp">
+    <ClCompile Include="..\code\Error.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\FileDialogEx.cpp">
+    <ClCompile Include="..\code\FileDialogEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\FileFormat.cpp">
+    <ClCompile Include="..\code\FileFormat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\FileFormats.cpp">
+    <ClCompile Include="..\code\FileFormats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Filename.cpp">
+    <ClCompile Include="..\code\Filename.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\FileText.cpp">
+    <ClCompile Include="..\code\FileText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\FileVersion.cpp">
+    <ClCompile Include="..\code\FileVersion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\FontEx.cpp">
+    <ClCompile Include="..\code\FontEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\FrameChild.cpp">
+    <ClCompile Include="..\code\FrameChild.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\FrameMain.cpp">
+    <ClCompile Include="..\code\FrameMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\GUI.cpp">
+    <ClCompile Include="..\code\GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Hint.cpp">
+    <ClCompile Include="..\code\Hint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\History.cpp">
+    <ClCompile Include="..\code\History.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\IconCache.cpp">
+    <ClCompile Include="..\code\IconCache.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Info.cpp">
+    <ClCompile Include="..\code\Info.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Library.cpp">
+    <ClCompile Include="..\code\Library.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ListCtrlEx.cpp">
+    <ClCompile Include="..\code\ListCtrlEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\MDITrayFrame.cpp">
+    <ClCompile Include="..\code\MDITrayFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\MirrorFileEx.cpp">
+    <ClCompile Include="..\code\MirrorFileEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ModuleVersion.cpp">
+    <ClCompile Include="..\code\ModuleVersion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\NeoDoc.cpp">
+    <ClCompile Include="..\code\NeoDoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\NeoDocTemplate.cpp">
+    <ClCompile Include="..\code\NeoDocTemplate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\NeoMem.cpp">
+    <ClCompile Include="..\code\NeoMem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageClassAdvanced.cpp">
+    <ClCompile Include="..\code\PageClassAdvanced.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\pageclasscontents.cpp">
+    <ClCompile Include="..\code\pageclasscontents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageClassIcon.cpp">
+    <ClCompile Include="..\code\PageClassIcon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\pageclassinheritance.cpp">
+    <ClCompile Include="..\code\pageclassinheritance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageClassIntro.cpp">
+    <ClCompile Include="..\code\PageClassIntro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageClassName.cpp">
+    <ClCompile Include="..\code\PageClassName.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageClassProperties.cpp">
+    <ClCompile Include="..\code\PageClassProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\pageclasssummary.cpp">
+    <ClCompile Include="..\code\pageclasssummary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageClassType.cpp">
+    <ClCompile Include="..\code\PageClassType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageClassViews.cpp">
+    <ClCompile Include="..\code\PageClassViews.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageFileGeneral.cpp">
+    <ClCompile Include="..\code\PageFileGeneral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\pageobjectgeneral.cpp">
+    <ClCompile Include="..\code\pageobjectgeneral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageOptionsDisplay.cpp">
+    <ClCompile Include="..\code\PageOptionsDisplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PageOptionsFile.cpp">
+    <ClCompile Include="..\code\PageOptionsFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Path.cpp">
+    <ClCompile Include="..\code\Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\precompiled.cpp">
+    <ClCompile Include="..\code\precompiled.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PreviewViewEx.cpp">
+    <ClCompile Include="..\code\PreviewViewEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PrintInfoMore.cpp">
+    <ClCompile Include="..\code\PrintInfoMore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PropertyPageEx2.cpp">
+    <ClCompile Include="..\code\PropertyPageEx2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\PropertySheetEx2.cpp">
+    <ClCompile Include="..\code\PropertySheetEx2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\RegKey.cpp">
+    <ClCompile Include="..\code\RegKey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\RichEditCtrlEx.cpp">
+    <ClCompile Include="..\code\RichEditCtrlEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\RichEditDocEx.cpp">
+    <ClCompile Include="..\code\RichEditDocEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\RichEditStuff.cpp">
+    <ClCompile Include="..\code\RichEditStuff.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\RichEditView2.cpp">
+    <ClCompile Include="..\code\RichEditView2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\SheetOptions.cpp">
+    <ClCompile Include="..\code\SheetOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\SheetWizard.cpp">
+    <ClCompile Include="..\code\SheetWizard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\SplitterWndEx.cpp">
+    <ClCompile Include="..\code\SplitterWndEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\StaticEx.cpp">
+    <ClCompile Include="..\code\StaticEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\StatusBarEx.cpp">
+    <ClCompile Include="..\code\StatusBarEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\StringEx.cpp">
+    <ClCompile Include="..\code\StringEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Strings.cpp">
+    <ClCompile Include="..\code\Strings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\SystemTray.cpp">
+    <ClCompile Include="..\code\SystemTray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\TabCtrlEx.cpp">
+    <ClCompile Include="..\code\TabCtrlEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\TabOrder.cpp">
+    <ClCompile Include="..\code\TabOrder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Test.cpp">
+    <ClCompile Include="..\code\Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ToolBarCtrlEx.cpp">
+    <ClCompile Include="..\code\ToolBarCtrlEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ToolBarRtf.cpp">
+    <ClCompile Include="..\code\ToolBarRtf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\TreeCtrlEx.cpp">
+    <ClCompile Include="..\code\TreeCtrlEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\UI.cpp">
+    <ClCompile Include="..\code\UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Undo.cpp">
+    <ClCompile Include="..\code\Undo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewBookmarks.cpp">
+    <ClCompile Include="..\code\ViewBookmarks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewContents.cpp">
+    <ClCompile Include="..\code\ViewContents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewEx.cpp">
+    <ClCompile Include="..\code\ViewEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewGrid.cpp">
+    <ClCompile Include="..\code\ViewGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewHeader.cpp">
+    <ClCompile Include="..\code\ViewHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewHint.cpp">
+    <ClCompile Include="..\code\ViewHint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewHome.cpp">
+    <ClCompile Include="..\code\ViewHome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewHomeInner.cpp">
+    <ClCompile Include="..\code\ViewHomeInner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewIndex.cpp">
+    <ClCompile Include="..\code\ViewIndex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewPictures.cpp">
+    <ClCompile Include="..\code\ViewPictures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewProperties.cpp">
+    <ClCompile Include="..\code\ViewProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewRtf.cpp">
+    <ClCompile Include="..\code\ViewRtf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewSearch.cpp">
+    <ClCompile Include="..\code\ViewSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewTabs.cpp">
+    <ClCompile Include="..\code\ViewTabs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\ViewTree.cpp">
+    <ClCompile Include="..\code\ViewTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\WinMsg.cpp">
+    <ClCompile Include="..\code\WinMsg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\XComboBoxEx.cpp">
+    <ClCompile Include="..\code\XComboBoxEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="code\BCMenu.h">
+    <ClInclude Include="..\code\BCMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BData.h">
+    <ClInclude Include="..\code\BData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataBinary.h">
+    <ClInclude Include="..\code\BDataBinary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataBoolean.h">
+    <ClInclude Include="..\code\BDataBoolean.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataColumns.h">
+    <ClInclude Include="..\code\BDataColumns.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataDate.h">
+    <ClInclude Include="..\code\BDataDate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataEmail.h">
+    <ClInclude Include="..\code\BDataEmail.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataFile.h">
+    <ClInclude Include="..\code\BDataFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataFlags.h">
+    <ClInclude Include="..\code\BDataFlags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataFolder.h">
+    <ClInclude Include="..\code\BDataFolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataHyperlink.h">
+    <ClInclude Include="..\code\BDataHyperlink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataIcon.h">
+    <ClInclude Include="..\code\BDataIcon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataLink.h">
+    <ClInclude Include="..\code\BDataLink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataLong.h">
+    <ClInclude Include="..\code\BDataLong.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataNumber.h">
+    <ClInclude Include="..\code\BDataNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataPersonName.h">
+    <ClInclude Include="..\code\BDataPersonName.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataString.h">
+    <ClInclude Include="..\code\BDataString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataViews.h">
+    <ClInclude Include="..\code\BDataViews.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BDataWebsite.h">
+    <ClInclude Include="..\code\BDataWebsite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BObject.h">
+    <ClInclude Include="..\code\BObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\BObjects.h">
+    <ClInclude Include="..\code\BObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Clock.h">
+    <ClInclude Include="..\code\Clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Color.h">
+    <ClInclude Include="..\code\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ColorButton.h">
+    <ClInclude Include="..\code\ColorButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ColourPopup.h">
+    <ClInclude Include="..\code\ColourPopup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Command.h">
+    <ClInclude Include="..\code\Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\CommandHistory.h">
+    <ClInclude Include="..\code\CommandHistory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\CommandLineInfoEx.h">
+    <ClInclude Include="..\code\CommandLineInfoEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Constants.h">
+    <ClInclude Include="..\code\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ConstantsDatabase.h">
+    <ClInclude Include="..\code\ConstantsDatabase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Crypto.h">
+    <ClInclude Include="..\code\Crypto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\CryptoArchive.h">
+    <ClInclude Include="..\code\CryptoArchive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\CryptoFile.h">
+    <ClInclude Include="..\code\CryptoFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogAbout.h">
+    <ClInclude Include="..\code\DialogAbout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogAbout2.h">
+    <ClInclude Include="..\code\DialogAbout2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditDate.h">
+    <ClInclude Include="..\code\DialogEditDate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditFolder.h">
+    <ClInclude Include="..\code\DialogEditFolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditLink.h">
+    <ClInclude Include="..\code\DialogEditLink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditName.h">
+    <ClInclude Include="..\code\DialogEditName.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditObject.h">
+    <ClInclude Include="..\code\DialogEditObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditObject2.h">
+    <ClInclude Include="..\code\DialogEditObject2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditPersonName.h">
+    <ClInclude Include="..\code\DialogEditPersonName.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\dialogeditproperty.h">
+    <ClInclude Include="..\code\dialogeditproperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditRichText.h">
+    <ClInclude Include="..\code\DialogEditRichText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEditString.h">
+    <ClInclude Include="..\code\DialogEditString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogError.h">
+    <ClInclude Include="..\code\DialogError.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogEx.h">
+    <ClInclude Include="..\code\DialogEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogException.h">
+    <ClInclude Include="..\code\DialogException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogExport.h">
+    <ClInclude Include="..\code\DialogExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogGetLocation.h">
+    <ClInclude Include="..\code\DialogGetLocation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogImport.h">
+    <ClInclude Include="..\code\DialogImport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogInsertLink.h">
+    <ClInclude Include="..\code\DialogInsertLink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogMessage.h">
+    <ClInclude Include="..\code\DialogMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogMessage2.h">
+    <ClInclude Include="..\code\DialogMessage2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogNewFile.h">
+    <ClInclude Include="..\code\DialogNewFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogNewLinkSource.h">
+    <ClInclude Include="..\code\DialogNewLinkSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogNotice.h">
+    <ClInclude Include="..\code\DialogNotice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogPassword.h">
+    <ClInclude Include="..\code\DialogPassword.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogPrint.h">
+    <ClInclude Include="..\code\DialogPrint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogProperties.h">
+    <ClInclude Include="..\code\DialogProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogSaveOptions.h">
+    <ClInclude Include="..\code\DialogSaveOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogSelectProperty.h">
+    <ClInclude Include="..\code\DialogSelectProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogTimer.h">
+    <ClInclude Include="..\code\DialogTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogTip.h">
+    <ClInclude Include="..\code\DialogTip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogUpgradeFile.h">
+    <ClInclude Include="..\code\DialogUpgradeFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogViews.h">
+    <ClInclude Include="..\code\DialogViews.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DialogWelcome.h">
+    <ClInclude Include="..\code\DialogWelcome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\DocManagerEx.h">
+    <ClInclude Include="..\code\DocManagerEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\EditEx.h">
+    <ClInclude Include="..\code\EditEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\EditInPlace.h">
+    <ClInclude Include="..\code\EditInPlace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Email.h">
+    <ClInclude Include="..\code\Email.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Error.h">
+    <ClInclude Include="..\code\Error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\FileDialogEx.h">
+    <ClInclude Include="..\code\FileDialogEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\FileFormat.h">
+    <ClInclude Include="..\code\FileFormat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\FileFormats.h">
+    <ClInclude Include="..\code\FileFormats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Filename.h">
+    <ClInclude Include="..\code\Filename.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\FileText.h">
+    <ClInclude Include="..\code\FileText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\FileVersion.h">
+    <ClInclude Include="..\code\FileVersion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\FontEx.h">
+    <ClInclude Include="..\code\FontEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\FrameChild.h">
+    <ClInclude Include="..\code\FrameChild.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\FrameMain.h">
+    <ClInclude Include="..\code\FrameMain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\GUI.h">
+    <ClInclude Include="..\code\GUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Hint.h">
+    <ClInclude Include="..\code\Hint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\History.h">
+    <ClInclude Include="..\code\History.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\IconCache.h">
+    <ClInclude Include="..\code\IconCache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Info.h">
+    <ClInclude Include="..\code\Info.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Library.h">
+    <ClInclude Include="..\code\Library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ListCtrlEx.h">
+    <ClInclude Include="..\code\ListCtrlEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\LogFile.h">
+    <ClInclude Include="..\code\LogFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\macros.h">
+    <ClInclude Include="..\code\macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\MDITrayFrame.h">
+    <ClInclude Include="..\code\MDITrayFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\MirrorFileEx.h">
+    <ClInclude Include="..\code\MirrorFileEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ModuleVersion.h">
+    <ClInclude Include="..\code\ModuleVersion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\NeoDoc.h">
+    <ClInclude Include="..\code\NeoDoc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\NeoDocTemplate.h">
+    <ClInclude Include="..\code\NeoDocTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\NeoMem.h">
+    <ClInclude Include="..\code\NeoMem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageClassAdvanced.h">
+    <ClInclude Include="..\code\PageClassAdvanced.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\pageclasscontents.h">
+    <ClInclude Include="..\code\pageclasscontents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageClassIcon.h">
+    <ClInclude Include="..\code\PageClassIcon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\pageclassinheritance.h">
+    <ClInclude Include="..\code\pageclassinheritance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageClassIntro.h">
+    <ClInclude Include="..\code\PageClassIntro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageClassName.h">
+    <ClInclude Include="..\code\PageClassName.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageClassProperties.h">
+    <ClInclude Include="..\code\PageClassProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\pageclasssummary.h">
+    <ClInclude Include="..\code\pageclasssummary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageClassType.h">
+    <ClInclude Include="..\code\PageClassType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageClassViews.h">
+    <ClInclude Include="..\code\PageClassViews.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageFileGeneral.h">
+    <ClInclude Include="..\code\PageFileGeneral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\pageobjectgeneral.h">
+    <ClInclude Include="..\code\pageobjectgeneral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageOptionsDisplay.h">
+    <ClInclude Include="..\code\PageOptionsDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PageOptionsFile.h">
+    <ClInclude Include="..\code\PageOptionsFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Path.h">
+    <ClInclude Include="..\code\Path.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\precompiled.h">
+    <ClInclude Include="..\code\precompiled.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PreviewViewEx.h">
+    <ClInclude Include="..\code\PreviewViewEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PrintInfoMore.h">
+    <ClInclude Include="..\code\PrintInfoMore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PropertyPageEx2.h">
+    <ClInclude Include="..\code\PropertyPageEx2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\PropertySheetEx2.h">
+    <ClInclude Include="..\code\PropertySheetEx2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\RegKey.h">
+    <ClInclude Include="..\code\RegKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\RichEditCtrlEx.h">
+    <ClInclude Include="..\code\RichEditCtrlEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\RichEditDocEx.h">
+    <ClInclude Include="..\code\RichEditDocEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\RichEditStuff.h">
+    <ClInclude Include="..\code\RichEditStuff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\RichEditView2.h">
+    <ClInclude Include="..\code\RichEditView2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\SheetOptions.h">
+    <ClInclude Include="..\code\SheetOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\SheetWizard.h">
+    <ClInclude Include="..\code\SheetWizard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\SplitterWndEx.h">
+    <ClInclude Include="..\code\SplitterWndEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\StaticEx.h">
+    <ClInclude Include="..\code\StaticEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\StatusBarEx.h">
+    <ClInclude Include="..\code\StatusBarEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\StringEx.h">
+    <ClInclude Include="..\code\StringEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Strings.h">
+    <ClInclude Include="..\code\Strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\SystemTray.h">
+    <ClInclude Include="..\code\SystemTray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\TabCtrlEx.h">
+    <ClInclude Include="..\code\TabCtrlEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\TabOrder.h">
+    <ClInclude Include="..\code\TabOrder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Test.h">
+    <ClInclude Include="..\code\Test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ToolBarCtrlEx.h">
+    <ClInclude Include="..\code\ToolBarCtrlEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ToolBarRtf.h">
+    <ClInclude Include="..\code\ToolBarRtf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\TreeCtrlEx.h">
+    <ClInclude Include="..\code\TreeCtrlEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\UI.h">
+    <ClInclude Include="..\code\UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Undo.h">
+    <ClInclude Include="..\code\Undo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewBookmarks.h">
+    <ClInclude Include="..\code\ViewBookmarks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewContents.h">
+    <ClInclude Include="..\code\ViewContents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewEx.h">
+    <ClInclude Include="..\code\ViewEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewGrid.h">
+    <ClInclude Include="..\code\ViewGrid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewHeader.h">
+    <ClInclude Include="..\code\ViewHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewHint.h">
+    <ClInclude Include="..\code\ViewHint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewHome.h">
+    <ClInclude Include="..\code\ViewHome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewHomeInner.h">
+    <ClInclude Include="..\code\ViewHomeInner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewIndex.h">
+    <ClInclude Include="..\code\ViewIndex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewPictures.h">
+    <ClInclude Include="..\code\ViewPictures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewProperties.h">
+    <ClInclude Include="..\code\ViewProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewRtf.h">
+    <ClInclude Include="..\code\ViewRtf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewSearch.h">
+    <ClInclude Include="..\code\ViewSearch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewTabs.h">
+    <ClInclude Include="..\code\ViewTabs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\ViewTree.h">
+    <ClInclude Include="..\code\ViewTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\WinMsg.h">
+    <ClInclude Include="..\code\WinMsg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\XComboBoxEx.h">
+    <ClInclude Include="..\code\XComboBoxEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="help\HelpIDs.h">
+    <ClInclude Include="..\help\HelpIDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resources\resource.h">
+    <ClInclude Include="..\resources\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="help\NeoMem.hm">
+    <None Include="..\help\NeoMem.hm">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="resources\Resource.hm">
+    <None Include="..\resources\Resource.hm">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="resources\NeoMem.rc">
+    <ResourceCompile Include="..\resources\NeoMem.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-    <ResourceCompile Include="resources\version.rc">
+    <ResourceCompile Include="..\resources\version.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

@@ -7,6 +7,9 @@
 #include "NeoMem.h"
 #include "FileVersion.h"
 
+// libraries: version.lib
+
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

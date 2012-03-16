@@ -23,10 +23,12 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-
-//AFX_STATIC const UINT _afxMsgFindReplace2 = ::RegisterWindowMessage(FINDMSGSTRING);
+// in vs6 could just say extern etc, but in vs2010 it gave link error. 
+// so uncommented the afx_static line below, which was taken from the mfc source file viewrich.cpp. 
+// don't know what the _t line is for. 
+AFX_STATIC const UINT _afxMsgFindReplace2 = ::RegisterWindowMessage(FINDMSGSTRING);
 // _T("commdlg_FindReplace");
-extern const UINT _afxMsgFindReplace2;
+//extern const UINT _afxMsgFindReplace2;
 
 
 

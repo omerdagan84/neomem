@@ -13,6 +13,9 @@
 #include "library.h"
 
 
+// libraries: version.lib
+
+
 CModuleVersion::CModuleVersion()
 {
 	m_pVersionInfo = NULL;           // raw version info data 
