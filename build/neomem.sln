@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "neomem", "neomem.vcxproj", "{F0BF8766-20A7-5AA1-4D0F-44A6C90C95E4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NeoMem", "NeoMem.vcxproj", "{F0BF8766-20A7-5AA1-4D0F-44A6C90C95E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

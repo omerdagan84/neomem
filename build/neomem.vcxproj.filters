@@ -2,16 +2,20 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <UniqueIdentifier>{fd48538a-e6f3-4a6b-bb35-2eccd18cbb3f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <UniqueIdentifier>{58f4e610-0420-4c16-8665-3a25d74ddbdb}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
     </Filter>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+      <UniqueIdentifier>{8adf42eb-aedb-4ea8-b524-51d88dd26cf4}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Help Files">
+      <UniqueIdentifier>{da97117e-e432-47d3-a24a-2b87db6d7e2c}</UniqueIdentifier>
+      <Extensions>cnt;rtf</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -267,9 +271,6 @@
     <ClCompile Include="..\code\Info.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\Library.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\code\ListCtrlEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -294,13 +295,13 @@
     <ClCompile Include="..\code\PageClassAdvanced.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\pageclasscontents.cpp">
+    <ClCompile Include="..\code\PageClassContents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\PageClassIcon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\pageclassinheritance.cpp">
+    <ClCompile Include="..\code\PageClassInheritance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\PageClassIntro.cpp">
@@ -312,7 +313,7 @@
     <ClCompile Include="..\code\PageClassProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\pageclasssummary.cpp">
+    <ClCompile Include="..\code\PageClassSummary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\PageClassType.cpp">
@@ -324,7 +325,7 @@
     <ClCompile Include="..\code\PageFileGeneral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\pageobjectgeneral.cpp">
+    <ClCompile Include="..\code\PageObjectGeneral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\PageOptionsDisplay.cpp">
@@ -334,9 +335,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\Path.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\code\precompiled.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\PreviewViewEx.cpp">
@@ -384,9 +382,6 @@
     <ClCompile Include="..\code\StringEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\Strings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\code\SystemTray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -402,7 +397,7 @@
     <ClCompile Include="..\code\ToolBarCtrlEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\ToolBarRtf.cpp">
+    <ClCompile Include="..\code\ToolbarRtf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\TreeCtrlEx.cpp">
@@ -427,9 +422,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\ViewHeader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\code\ViewHint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\ViewHome.cpp">
@@ -465,6 +457,23 @@
     <ClCompile Include="..\code\XComboBoxEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\code\Library.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\precompiled.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\Strings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\code\version.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\resources\NeoMem.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\code\BCMenu.h">
@@ -551,9 +560,6 @@
     <ClInclude Include="..\code\CommandLineInfoEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\Constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\ConstantsDatabase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -593,7 +599,7 @@
     <ClInclude Include="..\code\DialogEditPersonName.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\dialogeditproperty.h">
+    <ClInclude Include="..\code\DialogEditProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\DialogEditRichText.h">
@@ -725,16 +731,10 @@
     <ClInclude Include="..\code\Info.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\Library.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\ListCtrlEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\LogFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\code\macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\MDITrayFrame.h">
@@ -752,19 +752,16 @@
     <ClInclude Include="..\code\NeoDocTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\NeoMem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\PageClassAdvanced.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\pageclasscontents.h">
+    <ClInclude Include="..\code\PageClassContents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\PageClassIcon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\pageclassinheritance.h">
+    <ClInclude Include="..\code\PageClassInheritance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\PageClassIntro.h">
@@ -776,7 +773,7 @@
     <ClInclude Include="..\code\PageClassProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\pageclasssummary.h">
+    <ClInclude Include="..\code\PageClassSummary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\PageClassType.h">
@@ -788,7 +785,7 @@
     <ClInclude Include="..\code\PageFileGeneral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\pageobjectgeneral.h">
+    <ClInclude Include="..\code\PageObjectGeneral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\PageOptionsDisplay.h">
@@ -798,9 +795,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\Path.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\code\precompiled.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\PreviewViewEx.h">
@@ -848,9 +842,6 @@
     <ClInclude Include="..\code\StringEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\Strings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\SystemTray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -866,7 +857,7 @@
     <ClInclude Include="..\code\ToolBarCtrlEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\ToolBarRtf.h">
+    <ClInclude Include="..\code\ToolbarRtf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\TreeCtrlEx.h">
@@ -891,9 +882,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\ViewHeader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\code\ViewHint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\ViewHome.h">
@@ -929,27 +917,310 @@
     <ClInclude Include="..\code\XComboBoxEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\help\HelpIDs.h">
+    <ClInclude Include="..\help\helpIDs.h">
+      <Filter>Help Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\resources\resource.h">
+    <ClInclude Include="..\code\Library.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\NeoMem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\precompiled.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\Strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\help\NeoMem.hm">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="..\resources\Resource.hm">
-      <Filter>Header Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\resources\NeoMem.rc">
+    <CustomBuild Include="..\resources\icons\_Nebula.ico">
       <Filter>Resource Files</Filter>
-    </ResourceCompile>
-    <ResourceCompile Include="..\resources\version.rc">
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\_NeoMem Document.ico">
       <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\_NeoMem.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Apple.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\ArrowDown.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\ArrowUp.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Art Medium.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Art.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Art2.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Backcolor.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Bike.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Bird.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\bluesphere3.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Book.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Bookcase.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Box2.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Building.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\BulletBlue.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\bulletGreen.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Camera.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Cd.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Cellphone.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Chalkboard.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Chemicals.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Chip.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\circle_blue.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\City.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Clip03.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Clippers.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Clock.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Clock2.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Coffee.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Coin.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Computer Equipment.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Computer.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\CreditCard.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\diamondBlue.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\diamondBlue2.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\diamondBlueGreen.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\diamondGreen.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\diamondGreenDk.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\diamondPurple.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Doc.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\DriversLicense.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Envelope.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\FlowerRose.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Folder4.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Forecolor.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Forest.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Galaxy.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Guitar.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\cursors\Hand.cur">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\House.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Icon.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Intaglio green on black (256 color only).ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Label.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Land.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Leaf.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Man andy.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Medicine.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Money 1.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Movie Film.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Movie2.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Museum.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\New.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\newspaper.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Night.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Note.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Ocean.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Park.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Person.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Piano.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Present.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Printer.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Quote.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Record8aa.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\RedCross.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Room.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Salad.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Scanner.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Soccer ball.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\sphereWhite.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Systray.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Tape.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\TR2.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\trianglesBlue.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Videotape.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Wallet.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\woman jjl.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\icons\Wrench.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\help\NeoMem.cnt">
+      <Filter>Help Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\help\NeoMem.hpj">
+      <Filter>Help Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\help\NeoMem.rtf">
+      <Filter>Help Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\resources\Resource.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>
