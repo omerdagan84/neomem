@@ -700,26 +700,27 @@ void CInfo::LoadProcessorInfo()
 	LPTSTR psz;
 	DWORD dwChars = 256;
 
-	r.Open(HKEY_LOCAL_MACHINE, szCentralProcessor);
+	if (ERROR_SUCCESS == r.Open(HKEY_LOCAL_MACHINE, szCentralProcessor)) {
 	
-	psz = m_strProcessorIdentifier.GetBuffer(dwChars);
-	r.QueryStringValue(psz, "ProcessorNameString", &dwChars); // eg "Pentium(r) II Processor"
-	m_strProcessorIdentifier.ReleaseBuffer();
-	m_strProcessorIdentifier.TrimLeft();
-	m_strProcessorIdentifier.TrimRight();
-
-	if (m_strProcessorIdentifier.IsEmpty())
-	{
 		psz = m_strProcessorIdentifier.GetBuffer(dwChars);
-		r.QueryStringValue(psz, "Identifier", &dwChars); // eg "Pentium(r) II Processor"
+		r.QueryStringValue(psz, "ProcessorNameString", &dwChars); // eg "Pentium(r) II Processor"
 		m_strProcessorIdentifier.ReleaseBuffer();
-	}
+		m_strProcessorIdentifier.TrimLeft();
+		m_strProcessorIdentifier.TrimRight();
 
-	psz = m_strProcessorVendor.GetBuffer(dwChars);
-	r.QueryStringValue(psz, "VendorIdentifier", &dwChars); // eg "GenuineIntel"
-	m_strProcessorVendor.ReleaseBuffer();
+		if (m_strProcessorIdentifier.IsEmpty())
+		{
+			psz = m_strProcessorIdentifier.GetBuffer(dwChars);
+			r.QueryStringValue(psz, "Identifier", &dwChars); // eg "Pentium(r) II Processor"
+			m_strProcessorIdentifier.ReleaseBuffer();
+		}
+
+		psz = m_strProcessorVendor.GetBuffer(dwChars);
+		r.QueryStringValue(psz, "VendorIdentifier", &dwChars); // eg "GenuineIntel"
+		m_strProcessorVendor.ReleaseBuffer();
 	
-	r.Close();
+		r.Close();
+	}
 
 	// Set flag
 	m_bLoadedProcessorInfo = TRUE;

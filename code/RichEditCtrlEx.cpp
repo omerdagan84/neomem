@@ -122,13 +122,12 @@ CRichEditCtrlEx::Create(
 	// This is almost exactly what is in CRichEditCtrl::Create(), except the different window class 
 	// name, and the call to AfxInitRichEdit() has been changed to AfxInitRichEditEx() which first 
 	// calls AfxInitRichEdit (we do not want to break the normal CRichEditCtrl).   
+//	if (!::AfxInitRichEdit())
 //	if (!::AfxInitRichEditEx())
-//		return FALSE;
-
-	if (!::AfxInitRichEdit())
+	if (!::AfxInitRichEdit2())
 		return FALSE;
 
-	/*
+	
 	// Requires 2.0 - if not available this will fail and return FALSE
 	CWnd* pWnd = this;
 	BOOL bRet = pWnd->Create(_T("RichEdit20A"), NULL, dwStyle, rcRect, pParentWnd, nID);
@@ -139,7 +138,7 @@ CRichEditCtrlEx::Create(
 			"", MB_ICONINFORMATION);
 		return FALSE;
 	}
-	*/
+	
 
 		// Check if we're using the Unicode version of the rtf control or the Ansi version?
 	// Use different str routines based on this value?
