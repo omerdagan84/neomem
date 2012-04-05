@@ -2483,6 +2483,7 @@ CNeoMem::IsMaximized() {
 // Overriding the base class version
 void 
 CNeoMem::OnFileOpen() {
+	TRACE("CNeoMem::OnFileOpen\n");
 //	ASSERT(m_pDocManager != NULL);
 //	m_pDocManager->OnFileOpen();
 	CDocManagerEx* pDocMgr = STATIC_DOWNCAST(CDocManagerEx, m_pDocManager);

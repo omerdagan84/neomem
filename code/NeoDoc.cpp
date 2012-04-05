@@ -3830,6 +3830,9 @@ CNeoDoc::GetNumberOfObjectsString() {
 // CCryptoFile instead of CFile, to allow for encryption.
 BOOL 
 CNeoDoc::OnOpenDocumentEx(LPCTSTR lpszPathName) {
+
+	TRACE("CNeoDoc::OnOpenDocumentEx(%s)\n", lpszPathName);
+
 	if (IsModified())
 		TRACE0("Warning: OnOpenDocument replaces an unsaved document.\n");
 

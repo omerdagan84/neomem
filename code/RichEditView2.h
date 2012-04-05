@@ -275,21 +275,16 @@ inline CNeoDoc* CRichEditView2::GetDocument()
 #define _AFXRICH_INLINE inline
 #endif
 
-// CRichEditView
-//. huh?? how is this object also a crichedit ctrl object?????
-//`_AFXRICH_INLINE CRichEditCtrl& CRichEditView2::GetRichEditCtrl() const
-//`	{ return *(CRichEditCtrl*)this; }
 
-//`added this
-//. why is it valid to cast THIS to a rich edit ctrl??? 
-// The view window itself really IS the control. The view class creates an instance of the control and
-// manages that window as the view. a view really is just a child window that interacts with the user,
-// and therefore shares a lot in common with a control. the extras that make the control into a usable
-// view are simply c++ functions added to the class. it's just that the underlying Window is an
-// instance of a different Windows Window class than for a "plain" view. 
+// CRichEditView
+//, This is MFC code, but how can they cast from CRichEditView to CRichEditCtrl??
+// I don't understand it, but it works. 
+//`_AFXRICH_INLINE CRichEditCtrl& CRichEditView::GetRichEditCtrl() const
+//`	{ return *(CRichEditCtrl*)this; }
 _AFXRICH_INLINE CRichEditCtrlEx& CRichEditView2::GetRichEditCtrlEx() const
 { return *(CRichEditCtrlEx*)this; } 
-//	{ return * dynamic_cast<CRichEditCtrlEx*> (this); } // doesn't work of course
+
+
 
 /*int _AFXRICH_INLINE CRichEditView2::GetPrintWidth() const
 	{ return m_sizePaper.cx - m_rectMargin.left - m_rectMargin.right;}

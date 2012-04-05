@@ -1,5 +1,5 @@
- 
-// Commands (ID_* and IDM_*) 
+  
+// Commands (ID_* and IDM_*)  
 HID_BTN_WEBSITE                         0x10002
 HID_BTN_EMAIL                           0x10003
 HID_INDICATOR_DATE                      0x10323
@@ -191,11 +191,11 @@ HID_ACCEL50200                          0x1C418
 HID_EDIT_SPIKE                          0x1C419
 HID_PREVIEW_HELP                        0x1E304
 HID_STATIC                              0x1FFFF
- 
-// Prompts (IDP_*) 
+  
+// Prompts (IDP_*)  
 HIDP_AFXOLEINIT_FAILED                  0x313EF
- 
-// Resources (IDR_*) 
+  
+// Resources (IDR_*)  
 HIDR_MAINFRAME                          0x200C8
 HIDR_NEOMEM_TYPE                        0x200C9
 HIDR_COMPANY                            0x200CA
@@ -242,8 +242,8 @@ HIDR_SYSTRAY                            0x203B3
 HIDR_FORV2                              0x203B4
 HIDR_DIALOG_ABOUT2                      0x203BF
 HIDR_OPTIONS                            0x203C0
- 
-// Dialogs (IDD_*) 
+  
+// Dialogs (IDD_*)  
 HIDD_ABOUT                              0x20064
 HIDD_ABOUT_OLD                          0x20064
 HIDD_EDIT_LINK                          0x20065
@@ -314,5 +314,5 @@ HIDD_MOVE_TO                            0x21776
 HIDD_GOTO_OBJECT                        0x2177A
 HIDD_MOVE_OBJECT_TO                     0x2177B
 HIDD_MOVE_TEXT_TO                       0x2177C
- 
-// Frame Controls (IDW_*) 
+  
+// Frame Controls (IDW_*)  

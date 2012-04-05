@@ -172,29 +172,25 @@ CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	// Create rtf view as child window
+
 	//. maybe would be better to create the view with Create, then call some function to add it
 	// to the document's list of views. it would be clearer code, anyway
-	//... i think we can skip the richeditview thing and just create a control here
-	// that way can use v2.0 also
-	//, is it okay to subclass like this?? (using cast?)
+
+	// is it okay to cast like this? yes, and it'll return 0 if not. 
+	// it's okay because we know what the type of the object is - cricheditview2, so we can
+	// safely cast to it, even though it's returned as a cview pointer. 
+	// dynamic cast will make sure it's valid to do so. 
+	// see http://www.cplusplus.com/doc/tutorial/typecasting/
+
 	CRect r;
 	GetClientRect(r);
-//	m_pViewRtf = (CRichEditView2*) CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, 0);
-//	m_pViewRtf = (CRichEditView2*) CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF);
-//	m_pViewRtf = dynamic_cast<CRichEditView2*> (CViewEx::CreateChildView(this, RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
 	m_pViewRtf = dynamic_cast<CRichEditView2*> (CreateChildView(RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
-//	m_pViewRtf = dynamic_cast<CRichEditView*> (CreateChildView(RUNTIME_CLASS(CRichEditView), m_pDoc, r, ID_RTF));
 	if (m_pViewRtf) 
 	{
 		// Subclass the rtf control with our extended class (provides GetRtf and SetRtf methods)
-		//. Okay to cast if don't have any extra variables in it?????
-		// NO!! not ok to cast down the class chain!!??
+		//, Not sure why this cast is valid - see definition of GetRichEditCtrlEx
 //		m_prtf = (CRichEditCtrlEx*) &(m_pViewRtf->GetRichEditCtrl());
-//		m_prtf = DYNAMIC_DOWNCAST(CRichEditCtrlEx, &(m_pViewRtf->GetRichEditCtrl())); // zero if invalid
-//		m_prtf = STATIC_DOWNCAST(CRichEditCtrlEx, &(m_pViewRtf->GetRichEditCtrl())); // asserts if invalid
-//		m_prtf = dynamic_cast<CRichEditCtrlEx*> (&(m_pViewRtf->GetRichEditCtrl())); 
-		m_prtf = &(m_pViewRtf->GetRichEditCtrlEx());  //. now the cast is inside this call.... why is it valid though?
-//		m_prtf = &(m_pViewRtf->GetRichEditCtrl());  //. now the cast is inside this call.... why is it valid though?
+		m_prtf = &(m_pViewRtf->GetRichEditCtrlEx());
 		ASSERT_VALID(m_prtf);
 
 		// Tell CViewEx about child view

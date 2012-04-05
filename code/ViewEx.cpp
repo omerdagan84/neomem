@@ -133,7 +133,7 @@ CViewEx::SetToolBar(CToolBarCtrl* pWnd)
 // Also attaches the view to the document via a context object
 // Note: Doesn't display the new window
 // Returns a pointer to the created CView object, or NULL if failed
-// Adapted from MFC?
+// Adapted from MFC
 // okay to cast the resulting cview ptr to whatever class you passed it. 
 //. make this a method?
 ///* static */ CView* 

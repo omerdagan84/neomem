@@ -37,12 +37,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <IntDir>..\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
     <IntDir>..\$(Configuration)\</IntDir>
     <OutDir>..\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -63,12 +61,6 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>version.lib</AdditionalDependencies>
     </Link>
-    <Manifest>
-      <OutputManifestFile>$(IntDir)$(TargetName)$(TargetExt).embed.manifest</OutputManifestFile>
-    </Manifest>
-    <ManifestResourceCompile>
-      <ResourceOutputFileName>$(IntDir)$(TargetName)$(TargetExt).embed.manifest.res</ResourceOutputFileName>
-    </ManifestResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -88,12 +80,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>version.lib</AdditionalDependencies>
     </Link>
-    <Manifest>
-      <OutputManifestFile>$(IntDir)$(TargetName)$(TargetExt).embed.manifest</OutputManifestFile>
-    </Manifest>
-    <ManifestResourceCompile>
-      <ResourceOutputFileName>$(IntDir)$(TargetName)$(TargetExt).embed.manifest.res</ResourceOutputFileName>
-    </ManifestResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\code\BCMenu.cpp" />
@@ -412,6 +398,15 @@
   <ItemGroup>
     <ResourceCompile Include="..\resources\NeoMem.rc" />
     <ResourceCompile Include="..\resources\version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\help\NeoMem.cnt" />
+    <None Include="..\help\NeoMem.hm" />
+    <None Include="..\help\NeoMem.hpj" />
+    <None Include="..\help\NeoMem.rtf" />
+    <None Include="..\help\readme.txt" />
+    <None Include="..\resources\Resource.hm" />
+    <None Include="..\resources\version.rct" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
