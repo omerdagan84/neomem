@@ -997,7 +997,7 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 		{
 			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
 			{
-				_sntprintf(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
+				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
 				pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, szBuffer);
 				pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
 			}
@@ -1015,7 +1015,7 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 			BObject* pobj = (BObject*) pa->GetAt(i);
 			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
 			{
-				_sntprintf(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
+				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
 				pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, szBuffer);
 				nAdded++;
 			}

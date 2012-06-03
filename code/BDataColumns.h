@@ -17,18 +17,11 @@ class ColumnInfo
 {
 public:
 	ColumnInfo();
-//	LPCTSTR GetName(CNeoDoc* pDoc);
 public:
 	ULONG m_lngPropertyID;
 	BObject* m_pobjPropertyDef; // Note: This is not serialized, just the ID is!
 	int m_nColWidth;
 	int m_nColAlignment;
-//	int m_nColOrder;
-//	int m_nColFormat;
-//	int m_nColGroup;
-//	int m_nColSort;
-//	CString m_strColHeader;
-//	CString m_strColFilter;
 };
 
 

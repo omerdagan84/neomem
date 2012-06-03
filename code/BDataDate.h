@@ -11,19 +11,10 @@
 #include "BData.h"
 
 
-/*
-// Unfortunately, can't do this because these classes have constructors.
-// C++ will not let you put classes with constructors in a struct or union.
-union uDateString {
-	COleDateTime dt;
-	CString str;
-};
-*/
-
 
 // Structure for m_bitsFlags variable.
 // we use this to cram a lot of information about the date into 32 bits.
-//, why can't you make this private?
+//, make private
 struct sDateFlags {
 	UINT Type : 4;
 	UINT Relationship : 3;
@@ -61,8 +52,6 @@ public:
 	// was in use prior to 1753. 
 	COleDateTime m_odt; // January 1, 100 to December 31, 9999
 
-	// Bug: Assumed that ^ was the power operator... it's xor!!!
-
 	sDateFlags m_bitsFlags;
 
 	// Only one type allowed. 4 bits = 16 values
@@ -84,7 +73,7 @@ public:
 										flagNewYearsDay, flagEaster, flagChristmas, flagThanksgiving,
 										flagSpring, flagHalloween};
 	
-	//, Version 2.0 could use our own format like this...
+	//, we could use our own format like this...
 	// Note: Float stores 3.4E–38 to 3.4E+38, 6 – 7 significant digits
 //	float m_sngYear; // Offset from fictional year 0 A.D., truncate to integer portion
 //	long m_lngSeconds; // Number of seconds into the year (0 to 31,536,000)

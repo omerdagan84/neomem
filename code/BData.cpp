@@ -56,7 +56,7 @@ IMPLEMENT_SERIAL_ABC(BData, CObject, VERSIONABLE_SCHEMA | versionFileStructure) 
 BData::BData() {
 }
 
-// IMPORTANT: Delete any memory created on heap in destructor!
+// IMPORTANT: Delete any memory created on heap in destructor
 BData::~BData() {
 }
 
@@ -135,7 +135,7 @@ BOOL BData::UIAddMenuItems(CMenu* pMenu, int nPos) {
 
 
 // The UIEditValue routine should set the document modified flag
-// and return TRUE if value was changed!
+// and return TRUE if value was changed
 BOOL BData::UIEditValue(BObject* pobj, BObject* pobjPropertyDef) {
 	AfxMessageBox("Need EditValue handler for this property type");
 	return FALSE;

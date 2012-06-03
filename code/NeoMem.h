@@ -207,7 +207,6 @@ public:
 
 private:
 	CImageList m_imlApp; // application image list
-// 1.1	BOOL m_bCrashing; // Set to true if shutting down due to uncaught exception
 
 
 // debug routines

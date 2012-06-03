@@ -32,30 +32,13 @@ ColumnInfo::ColumnInfo() :
 	m_nColWidth (120), // pixels
 	m_pobjPropertyDef (NULL) // pointer to a property def bobject - we don't own it
 {
-//	m_nColOrder = 0;
-//	m_nColFormat = 0;
-//	m_nColGroup = 0;
-//	m_nColSort= 0;
-//	m_strColHeader.Empty();
-//	m_strColFilter.Empty();
 }
-
-
-//LPCTSTR 
-//ColumnInfo::GetColumnName()
-//{
-//	m_pobjPropertyDef
-//}
-
-
-
 
 
 
 // Construction/Destruction
 //------------------------------------------------------------------------------------------------------
 
-//const int m_nGrowBy = 4;
 const int m_nGrowBy = 8;
 
 BDataColumns::BDataColumns() :
@@ -63,7 +46,6 @@ BDataColumns::BDataColumns() :
 	m_bModified (FALSE)
 	// the arrays just have plain constructors, so no need to initialize here
 {
-//	m_aci.SetSize(8, m_nGrowBy);
 	m_aci.SetSize(0, m_nGrowBy);
 	m_anOrder.SetSize(0, m_nGrowBy);
 }
@@ -98,7 +80,7 @@ BData* BDataColumns::CreateCopy()
 
 
 // Set data via text parser
-//, this will be a read only property value
+// This will be a read only property value
 BOOL BDataColumns::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0 */, BOOL bShowErrorMessage /* = TRUE */)
 {
 	return FALSE;
@@ -108,19 +90,11 @@ BOOL BDataColumns::SetBDataText(const CString& str, BObject* pobjPropertyDef /* 
 // Get text representation of data into string
 LPCTSTR BDataColumns::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
-//	return m_pobjPropertyDef->GetPropertyText(propName);
-//	m_strText.Format("PropertyID %d", m_lngPropertyID);
-//	BObject* pobjPropDef = m_pDoc->GetObject(m_lngPropertyID);
-//	if (pobjPropDef)
-//		m_strText = pobjPropDef->GetPropertyText(propName);
-//	else
-//		m_strText.Format(_T("PropertyDef %d Undefined"), m_lngPropertyID);
 	m_strText = "PropertyIDs: ";
 	CString str;
 	for (int i = 0; i < m_nColumns; i++)
 	{
 		ColumnInfo& rci = m_aci[i];
-//		rci.GetName();
 		str.Format("%d ", rci.m_lngPropertyID);
 		m_strText += str;
 	}
@@ -150,8 +124,8 @@ void BDataColumns::Serialize(CArchive &ar)
 		}
 		
 		// Save the order array also
-		// Note: CUintArray doesn't serialize its members like this!
-//		m_anOrder.Serialize(ar);
+		// Note: CUintArray doesn't serialize its members like this
+//		m_anOrder.Serialize(ar); // why not this?
 		int nCols = m_anOrder.GetSize();
 		ar << nCols;
 		for (int i = 0; i < nCols; i++)
@@ -162,8 +136,6 @@ void BDataColumns::Serialize(CArchive &ar)
 
 	else // Loading
 	{
-//		int nFileVersion = ar.GetObjectSchema();
-
 		// Get number of columns
 		ar >> m_nColumns;
 		
@@ -302,7 +274,7 @@ LPINT BDataColumns::GetColumnOrder()
 			m_anOrder[i] = i;
 	}
 	pdata = m_anOrder.GetData();
-//	ASSERT(pdata); // might be zero if there are no columns!
+//	ASSERT(pdata); // might be zero if there are no columns
 	return (LPINT) pdata;
 }
 
@@ -438,7 +410,6 @@ ULONG BDataColumns::GetPropertyID(int nCol)
 {
 	if (nCol >= 0 && nCol < m_nColumns)
 	{
-//		ASSERT(m_nColumns >= m_aci.GetSize());
 		ASSERT(m_aci.GetSize() >= m_nColumns); // might be bigger
 		return m_aci[nCol].m_lngPropertyID;
 	}
@@ -486,8 +457,8 @@ BObject* BDataColumns::GetPropertyDef(int nCol, CNeoDoc* pDoc)
 
 BOOL BDataColumns::IsValid(CNeoDoc* pDoc)
 {
-	//, not likely to want to undo deletion of column bdata!
-	// fill in code later though
+	//, not likely to want to undo deletion of column bdata
+	// could fill in code later though
 	return FALSE; 
 }
 

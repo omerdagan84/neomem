@@ -128,44 +128,43 @@ END_MESSAGE_MAP()
 
 
 // Constructor
-CNeoMem::CNeoMem() {
+CNeoMem::CNeoMem() : 
 
-	m_pMainWnd = 0; // just in case base doesn't do this!
+//	m_pMainWnd(0),
+	m_bAdmin(FALSE),
+	m_bAutoStart(FALSE),
+	m_bDisplayGridlines(FALSE),
+	m_bDisplayHeader(FALSE),
+	m_bOptionsLoaded(FALSE),
+	m_bShowWelcome(FALSE),
+	m_bAppShuttingDown(FALSE),
+	m_bWindowsShuttingDown(FALSE),
+	m_bAutoLoad(FALSE),
+	m_cfObjects(0),
+	m_cfRtf(0),
+	m_hCursorHand(0),
+	m_lngExcludeFlags(0),
+	m_lngSearchExcludeFlags(0),
+	m_nNameFormat(0),
+	m_nTip(0),
+	m_nUnits(0),
+	m_bAutoBackup(FALSE),
+	m_bAutoRecover(FALSE), 
+	m_nAutoRecoverMinutes(5),
+	m_bDoingAutoRecover(FALSE),
+	m_bPrintHeaderFooter(TRUE),
+	m_bIgnoreLoadHint(FALSE),
+	m_bRegisterFileType(TRUE),
+	m_lngPrintViewID(0)
 
-	m_bAdmin = FALSE;
-	m_bAutoStart = FALSE;
-// 1.1	m_bCrashing = FALSE;
-	m_bDisplayGridlines = FALSE;
-	m_bDisplayHeader = FALSE;
-	m_bOptionsLoaded = FALSE;
-	m_bShowWelcome = FALSE;
-	m_bAppShuttingDown = FALSE;
-	m_bWindowsShuttingDown = FALSE;
-	m_bAutoLoad = FALSE;
-	m_cfObjects = 0;
-	m_cfRtf = 0;
-	m_hCursorHand = 0;
-	m_lngExcludeFlags = 0;
-	m_lngSearchExcludeFlags = 0;
-// 1.1	m_nDaysUsed = 0;
-// 1.1	m_nDaysMax = 60; // days in trial
-// 1.1	m_nInstallDate = 0;
-	m_nNameFormat = 0;
-	m_nTip = 0;
-	m_nUnits = 0;
-	m_bAutoBackup = FALSE; 
-	m_bAutoRecover = FALSE; 
-	m_nAutoRecoverMinutes = 5;
-	m_bDoingAutoRecover = FALSE;
-	m_bPrintHeaderFooter = TRUE;
-	m_bIgnoreLoadHint = FALSE;
-	m_bRegisterFileType = TRUE;
+{
 
-//	SetPaperSize(CSize(8*1440+720, 11*1440)); // default size 8.5x11" 
-//	SetMargins(CRect(0,0,0,0)); // no margins
 	m_sizePaper = CSize(8*1440 + 720, 11*1440); // default size 8.5x11"
-	m_lngPrintViewID = 0;
 //. ole  	m_pRedoc = 0; // created/destroyed in framemain
+
+	// in vs10, some errors get caught at the wrong location, so add this
+	// see http://connect.microsoft.com/VisualStudio/feedback/details/563622/mfc-default-exception-handling-causes-problems-with-activation-context
+	AfxSetAmbientActCtx(FALSE);
 }
 
 
@@ -2343,34 +2342,6 @@ static BOOL AFXAPI AllocHook(size_t nSize, BOOL bObject, LONG lRequestNumber) {
 
 
 
-// Global objects
-//-----------------------------------------------------------------------------------------------------------------
-
-// The one and only CNeoMem object
-CNeoMem theApp;
-
-CGUI* gpgui = &theApp.m_gui;
-
-
-// Globally available cstring objects
-// When modifying a variable or function at file scope, the static keyword specifies 
-// that the variable or function has internal linkage (its name is not visible 
-// from outside the file in which it is declared). 
-//, um
-// Each static data member must be initialized once (and only once) 
-// at file scope (i.e., not in the body of the class definition).
-// define and initialize static data member at file scope 
-// [so even if moved these into app class as static members, this code
-// would still be here. eg CString CNeoMem::g_strSpace = _T(" ");
-// bleh. 
-// maybe #define is the way to go after all. shite.]
-CString g_strSpace = _T(" ");
-CString g_strCommaSpace = _T(", ");
-CString g_strQuote = _T("\"");
-CString g_strQuoteSpace = _T("\" ");
-
-
-
 
 // This is called when a crash happens - all dirty files are saved to copies.
 BOOL 
@@ -3161,5 +3132,33 @@ CNeoMem::ShowError(CString strMsg) {
 */
 	return TRUE;
 }
+
+
+
+// Global objects
+//-----------------------------------------------------------------------------------------------------------------
+
+// The one and only CNeoMem object
+CNeoMem theApp;
+
+CGUI* gpgui = &theApp.m_gui;
+
+
+// Globally available cstring objects
+// When modifying a variable or function at file scope, the static keyword specifies 
+// that the variable or function has internal linkage (its name is not visible 
+// from outside the file in which it is declared). 
+//, um
+// Each static data member must be initialized once (and only once) 
+// at file scope (i.e., not in the body of the class definition).
+// define and initialize static data member at file scope 
+// [so even if moved these into app class as static members, this code
+// would still be here. eg CString CNeoMem::g_strSpace = _T(" ");
+// bleh. 
+// maybe #define is the way to go after all. shite.]
+CString g_strSpace = _T(" ");
+CString g_strCommaSpace = _T(", ");
+CString g_strQuote = _T("\"");
+CString g_strQuoteSpace = _T("\" ");
 
 

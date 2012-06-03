@@ -109,11 +109,11 @@ void CPageFileGeneral::OnBtnDataModel()
 {
 	CDialogEditName dlg;
 	CString str;
-	str.Format("%d", m_pDoc->m_nVersionDataModel);
+	str.Format("%d", m_pDoc->GetVersionDataModel());
 	dlg.m_strName = str;
 	if (IDOK == dlg.DoModal())
 	{
-		m_pDoc->m_nVersionDataModel = atol(dlg.m_strName);
+		m_pDoc->SetVersionDataModel(atol(dlg.m_strName));
 		DisplayInfo();
 		AfxMessageBox("now close neomem, search on 'const ULONG version' and set to new version or subversion.");
 	}
@@ -173,19 +173,18 @@ void CPageFileGeneral::DisplayInfo()
 	m_txtFileSize.SetWindowText(str);
 
 	// Get memory used by all objects, starting at root and recursing downwards
-//	str.Format("%d Bytes", pobjRoot->GetMemoryUsed(TRUE));
 	BObject* pobjRoot = m_pDoc->GetRoot();
 	str.Format("%s Bytes", (LPCTSTR) fc(pobjRoot->GetMemoryUsed(TRUE)));
 	m_txtSize.SetWindowText(str);
 
 	// File Version (eg 1.0) actually an integer but display as a float
-	str.Format("Version %.1f", (float) m_pDoc->m_nVersionFileStructure);
+	str.Format("Version %.1f", (float) m_pDoc->GetVersionFileStructure());
 	m_txtFileStructure.SetWindowText(str);
 
 	// Data Model Version (eg 0.9a)
 	// eg versionDataModel 110103 -> version 1.1 release a (01) subversion 03
-	float sngDataModel = (float) m_pDoc->m_nVersionDataModel / (float) 100000.0;
-	int nRelease = m_pDoc->m_nVersionDataModel - (m_pDoc->m_nVersionDataModel / 10000) * 10000;
+	float sngDataModel = (float) m_pDoc->GetVersionDataModel() / (float) 100000.0;
+	int nRelease = m_pDoc->GetVersionDataModel() - (m_pDoc->GetVersionDataModel() / 10000) * 10000;
 	int nSubversion = nRelease - (nRelease / 100) * 100; 
 	nRelease /= 100; // get rid of build number
 	TCHAR cRelease = nRelease > 0 ? 'a' + nRelease - 1 : ' ';

@@ -27,8 +27,6 @@ BDataBinary::BDataBinary() :
 	m_pData (0),
 	m_nBytes (0)
 {
-//	m_pData = 0;
-//	m_nBytes = 0;
 }
 
 // Delete any memory allocated on heap
@@ -42,10 +40,10 @@ BDataBinary::~BDataBinary() {
 
 // Set data via text parser
 BOOL BDataBinary::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0 */, BOOL bShowErrorMessage /* = TRUE */) {
-	// if this was a file name then we could read the file name!!
-	// otherwise, don't have much use for SetText with binary data,
-	// unless it were mime format or something
-	// Note: CString includes a special method which will provide an LPCTSTR to the string data
+	// Don't have much need for this. 
+  // If this was a file name then we could read the file name.
+	// Otherwise, don't have much use for SetText with binary data,
+	// unless it were mime format or something.
 //	m_lngValue = atol( (LPCTSTR) str);
 	return FALSE;
 }
@@ -59,7 +57,7 @@ LPCTSTR BDataBinary::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMach
 
 
 
-//,
+//, when start using this class will need to implement this method
 void BDataBinary::Serialize(CArchive &ar) {
 
 	// Call base class first

@@ -277,8 +277,7 @@ inline CNeoDoc* CRichEditView2::GetDocument()
 
 
 // CRichEditView
-//, This is MFC code, but how can they cast from CRichEditView to CRichEditCtrl??
-// I don't understand it, but it works. 
+//, This is MFC code, but how can you cast from CRichEditView to CRichEditCtrl??
 //`_AFXRICH_INLINE CRichEditCtrl& CRichEditView::GetRichEditCtrl() const
 //`	{ return *(CRichEditCtrl*)this; }
 _AFXRICH_INLINE CRichEditCtrlEx& CRichEditView2::GetRichEditCtrlEx() const

@@ -6,8 +6,7 @@
 // Date: November 1999
 //-----------------------------------------------------------------------------------------------------------------
 
-// And if UI doesn't handle a command, MFC will pass it to the document, 
-// right? ugh, that seems kind of weird. 
+// If UI doesn't handle a command, MFC will pass it to the document.
 
 
 
@@ -111,10 +110,11 @@ public:
 	CString GetNumberOfObjectsString();
 	BObject* GetObject(OBJID idObject);
 	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
-//	BObject* GetRoot(); // get the root object of the document
 	BObject* GetRoot() { return m_pobjRoot; }; // inline - get the root object of the document
 	ULONG GetSplitterPos() { return m_lngSplitterPos; }; // inline
 	BObject* GetTargetObject();
+	int GetVersionFileStructure() { return m_nVersionFileStructure; };
+	int GetVersionDataModel() { return m_nVersionDataModel; };
 	BOOL IsBObjectValid(BObject* pobj);
 	BOOL IsTargetSingle();
 	void RemoveObjectFromIndex(OBJID idObject);
@@ -126,6 +126,7 @@ public:
 	virtual void SetModifiedFlag(BOOL bModified = TRUE);
 	void SetRoot(BObject* pobj);
 	void SetTargetObject(BObject* pobj);
+	void SetVersionDataModel(int n) { m_nVersionDataModel = n; };
 	void UpdateAllViewsEx(CView* pSender, LPARAM lHint = 0L, CObject* pHint = NULL);
 	void UpdateDocument(BObject* pobj);
 
@@ -147,8 +148,6 @@ public:
 	BOOL UIEditClass(BObject* pobjClass);
 	BOOL UIEditObject(BObject* pobj);
 	BOOL UIEditPropertyDef(BObject* pobjPropertyDef);
-//	void Export(BDataLink& datLink);
-//	void Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, CString strFormat, CFilename strFilename);
 	void Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat, CFilename strFilename);
 	void Import();
 	BObject* UIImportIcon(CUI* pui, CString strFilename = "", CString strIconname = "");
@@ -169,10 +168,8 @@ private:
 	ULONG m_lngSplitterPos; // Splitter position
 	CStringList m_lstSearches; // List of recently performed searches
 	OBJID m_idNextObject; // Next available ObjectID
-public: //, make private
 	int m_nVersionFileStructure; // Version of physical file structure - where variables are expected to be, etc.
 	int m_nVersionDataModel; // Version of system data model - which bobjects are expected to exist, etc.
-private:
 	OBJID m_idDefaultFolderLocation; // Default location to add new folders
 	OBJID m_idStartObject; // Object to select on start
 

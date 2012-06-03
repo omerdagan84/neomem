@@ -105,8 +105,9 @@ CRichEditView2::CRichEditView2() : CCtrlView(RICHEDIT_CLASS, AFX_WS_DEFAULT_VIEW
 	WS_HSCROLL | WS_VSCROLL | ES_AUTOHSCROLL | ES_AUTOVSCROLL |
 	ES_MULTILINE | ES_NOHIDESEL | ES_SAVESEL | ES_SELECTIONBAR)
 {
-//	_afxRichEditState = new _AFX_RICHEDIT_STATE; //` added this
-//	_afxRichEditState->pFindReplaceDlg = 0; //` added this
+	_afxRichEditState = new _AFX_RICHEDIT_STATE; //` added this
+	_afxRichEditState->pFindReplaceDlg = 0; //` added this
+
 	m_bSyncCharFormat = m_bSyncParaFormat = TRUE;
 	m_lpRichEditOle = NULL;
 //	m_nBulletIndent = 720; // twips (1/2 inch)
@@ -115,18 +116,20 @@ CRichEditView2::CRichEditView2() : CCtrlView(RICHEDIT_CLASS, AFX_WS_DEFAULT_VIEW
 	m_nPasteType = 0;
 	SetPaperSize(CSize(8*1440+720, 11*1440)); // twips //, change for english A4 etc?
 	SetMargins(CRect(0,0,0,0));
+
 //	m_nHeaderHeightTwips = 720; // twips
 //	m_nFooterHeightTwips = 720; // twips
 	m_nHeaderHeightTwips = 0;
 	m_nFooterHeightTwips = 0;
 
 //	::ZeroMemory(&m_charformat, sizeof(CHARFORMAT));//`
-	::ZeroMemory(&m_charformat2, sizeof(CHARFORMAT2));//`
-	::ZeroMemory(&m_paraformat, sizeof(PARAFORMAT));//`
+	::ZeroMemory(&m_charformat2, sizeof(CHARFORMAT2));
+	::ZeroMemory(&m_paraformat, sizeof(PARAFORMAT));
 
-//	m_charformat.cbSize = sizeof(CHARFORMAT);
-	m_charformat2.cbSize = sizeof(CHARFORMAT2); //`
+//	m_charformat.cbSize = sizeof(CHARFORMAT);//`
+	m_charformat2.cbSize = sizeof(CHARFORMAT2);
 	m_paraformat.cbSize = sizeof(PARAFORMAT);
+
 //	m_fScale = 1.0f; // delete
 //	m_pwndOldParent = 0; //delete
 }
@@ -136,12 +139,14 @@ CRichEditView2::~CRichEditView2()
 {
 	xTRACE("CRichEditView2::Destructor\n");
 	//` added this
+	//, why comment this out?
 //	if (_afxRichEditState)
 //		delete _afxRichEditState;
 }
 
 
-BOOL CRichEditView2::PreCreateWindow(CREATESTRUCT& cs)
+BOOL 
+CRichEditView2::PreCreateWindow(CREATESTRUCT& cs)
 {
 //`	if (!AfxInitRichEdit())
 //	if (!AfxInitRichEditEx())
@@ -160,14 +165,15 @@ BOOL CRichEditView2::PreCreateWindow(CREATESTRUCT& cs)
 
 
 
-int CRichEditView2::OnCreate(LPCREATESTRUCT lpcs)
+int 
+CRichEditView2::OnCreate(LPCREATESTRUCT lpcs)
 {
 	if (CCtrlView::OnCreate(lpcs) != 0)
 		return -1;
 
 	GetRichEditCtrlEx().LimitText(lMaxSize);
+	// added notification for trying to modify protected text and click on link text
 //`	GetRichEditCtrlEx().SetEventMask(ENM_SELCHANGE | ENM_CHANGE | ENM_SCROLL);
-	//` added notification for trying to modify protected text and click on link text
 	GetRichEditCtrlEx().SetEventMask(ENM_SELCHANGE | ENM_CHANGE | ENM_SCROLL | 
 						EN_PROTECTED | ENM_LINK);
 	VERIFY(GetRichEditCtrlEx().SetOLECallback(&m_xRichEditOleCallback));
@@ -179,7 +185,8 @@ int CRichEditView2::OnCreate(LPCREATESTRUCT lpcs)
 	return 0;
 }
 
-void CRichEditView2::OnInitialUpdate()
+void 
+CRichEditView2::OnInitialUpdate()
 {
 	CCtrlView::OnInitialUpdate();
 	m_bSyncCharFormat = m_bSyncParaFormat = TRUE;
@@ -190,7 +197,8 @@ void CRichEditView2::OnInitialUpdate()
 // Document like functions
 //--------------------------------------------------------------------------------------------------
 
-void CRichEditView2::OnDestroy()
+void 
+CRichEditView2::OnDestroy()
 {
 	xTRACE("CRichEditView2::OnDestroy\n");
 	if (m_lpRichEditOle != NULL)
@@ -200,7 +208,8 @@ void CRichEditView2::OnDestroy()
 
 
 // Clear all contents
-void CRichEditView2::DeleteContents()
+void 
+CRichEditView2::DeleteContents()
 {
 	ASSERT_VALID(this);
 	ASSERT(m_hWnd != NULL);
@@ -212,7 +221,8 @@ void CRichEditView2::DeleteContents()
 
 
 // This should be called when printing characteristics have changed (SetMargins or SetPaperSize).
-void CRichEditView2::WrapChanged()
+void 
+CRichEditView2::WrapChanged()
 {
 	CWaitCursor wait;
 //`	CRichEditCtrl& ctrl = GetRichEditCtrl();
@@ -247,7 +257,8 @@ public:
 
 
 // Read and write CRichEditView2 object to archive, with length prefix.
-void CRichEditView2::Serialize(CArchive& ar)
+void 
+CRichEditView2::Serialize(CArchive& ar)
 {
 	ASSERT_VALID(this);
 	ASSERT(m_hWnd != NULL);
@@ -256,7 +267,8 @@ void CRichEditView2::Serialize(CArchive& ar)
 }
 
 
-void CRichEditView2::Stream(CArchive& ar, BOOL bSelection)
+void 
+CRichEditView2::Stream(CArchive& ar, BOOL bSelection)
 {
 	EDITSTREAM es = {0, 0, EditStreamCallBack};
 //`	_afxRichEditCookie cookie(ar);
@@ -279,7 +291,8 @@ void CRichEditView2::Stream(CArchive& ar, BOOL bSelection)
 
 
 // return 0 for no error, otherwise return error code
-DWORD CALLBACK CRichEditView2::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
+DWORD CALLBACK 
+CRichEditView2::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
 {
 //`	_afxRichEditCookie* pCookie = (_afxRichEditCookie*)dwCookie;
 	RichEditCookie* pCookie = (RichEditCookie*)dwCookie;
@@ -515,7 +528,8 @@ STDMETHODIMP CRichEditView2::XRichEditOleCallback::GetContextMenu(
 
 
 // called by cviewrtf
-void CRichEditView2::OnUpdateCharEffect(CCmdUI* pCmdUI, DWORD dwMask, DWORD dwEffect)
+void 
+CRichEditView2::OnUpdateCharEffect(CCmdUI* pCmdUI, DWORD dwMask, DWORD dwEffect)
 {
 //	GetCharFormatSelection();
 //	pCmdUI->SetCheck((m_charformat.dwMask & dwMask) ?
@@ -527,7 +541,8 @@ void CRichEditView2::OnUpdateCharEffect(CCmdUI* pCmdUI, DWORD dwMask, DWORD dwEf
 
 
 // called by cviewrtf
-void CRichEditView2::OnParaAlign(WORD wAlign)
+void 
+CRichEditView2::OnParaAlign(WORD wAlign)
 {
 	GetParaFormatSelection();
 	m_paraformat.dwMask = PFM_ALIGNMENT;
@@ -537,7 +552,8 @@ void CRichEditView2::OnParaAlign(WORD wAlign)
 
 
 // called by cviewrtf
-void CRichEditView2::OnUpdateParaAlign(CCmdUI* pCmdUI, WORD wAlign)
+void 
+CRichEditView2::OnUpdateParaAlign(CCmdUI* pCmdUI, WORD wAlign)
 {
 	GetParaFormatSelection();
 	// disable if no word wrap since alignment is meaningless

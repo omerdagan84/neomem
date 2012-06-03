@@ -259,7 +259,7 @@ void CFileDialogEx::OnTypeChange()
 		CString sName = GetFileName();
 		CString sExt;
 		
-		_splitpath(sName, NULL, NULL, NULL, sExt.GetBuffer(_MAX_EXT));
+		_splitpath_s(sName, NULL, 0, NULL, 0, NULL, 0, sExt.GetBuffer(_MAX_EXT), _MAX_EXT);
 		sExt.ReleaseBuffer();
 		sName.TrimRight();
 		sExt.TrimRight();

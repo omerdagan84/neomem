@@ -22,7 +22,7 @@ static char THIS_FILE[]=__FILE__;
 
 // BUG:: If you put the wrong base class here, then serialization will fail with badClass exception,
 // because it tries to create a BData object, and checks to see if the object it creates (ex BDataEmail)
-// is derived from BData. If you have CObject here for the base class, then it says NO!
+// is derived from BData. If you have CObject here for the base class, then it says NO.
 IMPLEMENT_SERIAL(BDataEmail, BData, VERSIONABLE_SCHEMA | versionFileStructure) // last parameter is version number
 
 
@@ -79,7 +79,6 @@ void BDataEmail::Serialize(CArchive &ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 		ar >> m_strText;
 	}
 }
@@ -132,7 +131,6 @@ void BDataEmail::UIOnClick()
 	if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
 	{
 		CString strURL;
-//		if (m_strText.Left(7) == "mailto:")
 		if (_tcsncmp((LPCTSTR) m_strText, _T("mailto:"), 7) == 0)
 			strURL = m_strText;
 		else
@@ -154,7 +152,6 @@ void BDataEmail::UIOnMouseMove()
 	// If your application must set the cursor while it is in a window, make sure the class cursor 
 	// for the specified window's class is set to NULL. If the class cursor is not NULL, the system 
 	// restores the class cursor each time the mouse is moved. 
-//	::SetCursor(hCursor);
 	::SetCursor(theApp.m_hCursorHand);
 }
 

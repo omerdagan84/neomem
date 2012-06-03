@@ -32,19 +32,16 @@ IMPLEMENT_SERIAL(BDataDate, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 //------------------------------------------------------------------------------------------------------
 
 BDataDate::BDataDate() 
-//mil 
 //:
-//	m_bitsFlags (0) // won't work
-//	m_bitsFlags.Type (0) // won't work
-//, need a constructor for that struct? 
 {
+	//, move into initializer - give the struct a constructor? 
 	m_bitsFlags.Type = 0;
 	m_bitsFlags.Relationship = 0;
 	m_bitsFlags.Modifiers = 0;
 	m_bitsFlags.Season = 0;
 
 	//, this is wasteful - eg on loading file - has to call this for
-	// each date object, even though it will then get wiped out!
+	// each date object, even though it will then get wiped out
 	m_odt = COleDateTime::GetCurrentTime();
 
 	//, better to do this? or set a flag in m_bits to say it's invalid?
@@ -122,8 +119,8 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 		bitsNewFlags.Type = flagSeasonYear;
 		int nSeason = nSeasonID - IDS_DATE_SPRINGBREAK + 1;
 		bitsNewFlags.Season = nSeason;
-		// set date here! this is why would be better to store holidays as bobjects (eventually)
-		// ie could have date properties with them!
+		// Set date here - this is why would be better to store holidays as bobjects (eventually)
+		// ie could have date properties with them
 //		enum eDateSeasons {flagSpringBreak = 1, flagSummer, flagAutumn, flagWinter, flagNewYearsEve,
 //										flagNewYearsDay, flagEaster, flagChristmas, flagThanksgiving,
 //										flagSpring, flagHalloween};
@@ -185,7 +182,6 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 		// Use COleDateTime's parser to convert string to date.
 		// Use a temporary object to avoid overwriting our good data in case it fails.
 		COleDateTime dt; 
-//		if (dt.ParseDateTime(strCopy, VAR_DATEVALUEONLY))
 		if (dt.ParseDateTime(strCopy, LOCALE_NOUSEROVERRIDE))
 		{
 			// Set flags and save new date
@@ -209,7 +205,6 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	// See if user wants to store the 'date' as a string
 	if (bShowErrorMessage)
 	{
-//		AfxMessageBox("Invalid date. Please try again.");
 		CString strMsg;
 		strMsg.Format(_T("The text you entered '%s' could not be parsed as a date. Do you want to store it as a string?"), (LPCTSTR) str); 
 		if (IDNO == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
@@ -246,15 +241,12 @@ LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 	}
 
 	// Get date, ignoring time portion
-//	m_strText = m_odt.Format(VAR_DATEVALUEONLY);
 	//. use global format specified in options dialog
 	//, could have propdef override the format? eg to store time instead of date?
+//	m_strText = m_odt.Format(VAR_DATEVALUEONLY);
+
 	if (m_odt.GetStatus() != COleDateTime::valid)
 	{
-		// BUG:: Used GetCurrentTime incorrectly here - assumed that it was a method used
-		// to fill the object with current time. Instead, it's a static function, kinda bizarre.
-		// As a result, m_odt remained invalid. 
-//		m_odt.GetCurrentTime();
 		m_odt = COleDateTime::GetCurrentTime();
 	}
 
@@ -282,7 +274,8 @@ LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 					strTokens.LoadString(IDS_DATE_SPRINGBREAK + m_bitsFlags.Season - 1);
 					TCHAR pszDelimiters[] = _T(",");
 					LPTSTR pszTokens = strTokens.GetBuffer(0);
-					TCHAR* pszToken = _tcstok(pszTokens, pszDelimiters); 
+					TCHAR* nextToken = NULL;
+					TCHAR* pszToken = _tcstok_s(pszTokens, pszDelimiters, &nextToken); 
 					ASSERT(pszToken); // there should always be at least one token
 					m_strText.Format("%s %d", pszToken, m_odt.GetYear());
 					strTokens.ReleaseBuffer();
@@ -364,8 +357,6 @@ void BDataDate::Serialize(CArchive &ar)
 	}
 	else // loading
 	{
-//		int nFileVersion = ar.GetObjectSchema();
-
 		// Read in a long then cast it into our struct
 		ULONG lng;
 		ar >> lng;
@@ -412,11 +403,10 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	// Check if year is before 1753
 	if (m_odt.GetYear() < 1753)
 	{
-//		AfxMessageBox("Note: The calendar control does not handle dates before September 1, 1752, due to the change from the Julian to the Gregorian calendar. You can still use the date dialog, but you won't be able to select dates prior to the changeover.");
 		if (IDNO == AfxMessageBox("Warning: The calendar control does not handle dates before \n"
-													"September 1, 1752 due to the change from the Julian to the Gregorian \n"
-													"calendar. You can still use the date dialog but you won't be able to select \n"
-													"dates prior to this date. Continue?", MB_YESNO + MB_ICONQUESTION))
+									"September 1, 1752 due to the change from the Julian to the Gregorian \n"
+									"calendar. You can still use the date dialog but you won't be able to select \n"
+									"dates prior to this date. Continue?", MB_YESNO + MB_ICONQUESTION))
 			return FALSE;
 	}
 	// Check if any flags are set
@@ -426,7 +416,7 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 		)
 	{
 		if (IDNO == AfxMessageBox("Warning: By selecting a new value with the Edit Date dialog you will lose \n"
-													"any current modifiers (e.g. After, Before, Year Only, Year Month, etc.). Continue?", MB_YESNO + MB_ICONQUESTION))
+								"any current modifiers (e.g. After, Before, Year Only, Year Month, etc.). Continue?", MB_YESNO + MB_ICONQUESTION))
 			return FALSE;
 	}
 
@@ -440,7 +430,6 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 		// Save new date and time
 		COleDateTime& dtDate = dlg.m_dtDate;
 		COleDateTime& dtTime = dlg.m_dtTime;
-//		m_odt.SetTime(dtTime.GetHour(), dtTime.GetMinute(), dtTime.GetSecond());
 		int nRet = m_odt.SetDateTime(dtDate.GetYear(), dtDate.GetMonth(), dtDate.GetDay(),
 									dtTime.GetHour(), dtTime.GetMinute(), dtTime.GetSecond());
 		if (nRet == 0) 
@@ -448,7 +437,6 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 			// Set flags?
 			m_bitsFlags.Type = 0;
 			m_bitsFlags.Relationship = 0;
-//			m_bitsFlags.Modifiers = 0;
 			m_bitsFlags.Modifiers = dlg.m_bUseTime ? flagUseTime : 0;
 			m_bitsFlags.Season = 0;
 
@@ -463,7 +451,6 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 
 
 // Create a copy of this object
-//, make copy constructor and assignment operators
 BData* BDataDate::CreateCopy()
 {
 	BDataDate* pdatCopy = new BDataDate();

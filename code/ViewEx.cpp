@@ -183,6 +183,7 @@ CViewEx::CreateChildView(CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos,
 	// too bad we don't have more control over the style of the border
 	// bug: Very strange - if you create the window without WS_VISIBLE, then
 	// the rtf control will not accept enters!
+	//, why is it okay to pass null for classname here? 
 //	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_BORDER;
 	DWORD dwStyle = WS_CHILD | WS_VISIBLE;
 	if (!pWnd->Create(
