@@ -35,7 +35,7 @@ public:
 	double m_dblValue; // numerical value
 	ULONG m_lngUnitID; // units associated with the value 
 
-	//, store date here also?? then wouldn't need bdatadatedmeasurement
+	//, store date here also? then wouldn't need bdatadatedmeasurement
 	//, store a display format here?
 	// global settings will determine display format, like " or in. or inches,
 	// or ' or ft or feet

@@ -139,12 +139,12 @@ LPCTSTR BDataNumber::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMach
 		{
 			case unitCurrency:
 				// Convert floating point number to a plain string, eg "1313.4291"
-				//, set format/number of digits here from propertydef!
-				// Bug: Used wsprintf here but it doesn't handle reals (though you would assume it would)!
+				//, set format/number of digits here from propertydef
+				// Bug: Used wsprintf here but it doesn't handle reals
 	//			_stprintf(szPlain, "%f");
 	//			_stprintf(szPlain, "%10.2f", m_dblValue);
 				_stprintf(szPlain, "%.2f", m_dblValue); 
-	//			wsprintf(szPlain, "%.2f", m_dblValue); // doesn't handle reals!!
+	//			wsprintf(szPlain, "%.2f", m_dblValue); // doesn't handle reals!
 				// Convert plain string to formatted string, eg "$1,313.43"
 				::GetCurrencyFormat(LOCALE_USER_DEFAULT, 0, szPlain, NULL, szFormatted, nChars);
 				// Now convert formatted string to a CString
@@ -177,10 +177,10 @@ LPCTSTR BDataNumber::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMach
 
 			default:
 				// Convert floating point number to a plain string, eg "1,313.4291"
-				//, set format/number of digits here from propertydef!
+				//, set format/number of digits here from propertydef
 	//			_stprintf(szPlain, "%f", m_dblValue);
-				//, I'm sure this function is nice, but it uses fixed decimals!! lame!
-				// with g_nf, it works well for integers, but not decimals!!! lame!!
+				//, I'm sure this function is nice, but it uses fixed decimals
+				// with g_nf, it works well for integers, but not decimals
 	//			::GetNumberFormat(LOCALE_USER_DEFAULT, 0, szPlain, NULL, szFormatted, nChars);
 	//			::GetNumberFormat(0, 0, szPlain, &g_nf, szFormatted, nChars);
 
@@ -211,7 +211,6 @@ void BDataNumber::Serialize(CArchive &ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 		ar >> m_dblValue;
 		ar >> m_lngUnitID;
 	}
@@ -232,8 +231,8 @@ BData* BDataNumber::CreateCopy()
 }
 
 
-//, edit value will bring up a calculator dialog to let them
-// enter amount and select units from combo
+//, this will bring up a calculator dialog to let them
+// enter amount and select units from combo.
 // could have date also?
 // for now bring up windows calculator
 // (same as bdatalong)

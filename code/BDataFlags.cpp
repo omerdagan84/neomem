@@ -42,47 +42,7 @@ BDataFlags::~BDataFlags()
 // Set data via text parser
 BOOL BDataFlags::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0 */, BOOL bShowErrorMessage /* = TRUE */)
 {
-/*
-	//, look up object and set to closest match
-	// search through objects, starting at pobjStart and recursing downwards
-	// could do a fuzzy search
-	// if more than one match found, bring up a dialog letting user choose one
-	// if no match found, show message box saying that, return false
-	//, exclude system objects?
-	BObjects aResults;
-	int nObjects = pobjStart->m_pDoc->Search(pobjStart, propName, str, aResults);
-	if (nObjects == 0)
-	{
-		CString strMsg;
-		strMsg.Format("No objects found to match %s.", (LPCTSTR) str);
-		AfxMessageBox(strMsg);
-		return FALSE;
-	}
-	else if (nObjects > 1)
-	{
-		//, bring up dialog to let user choose one of the found objects
-		AfxMessageBox("more than one found - bring up dialog");
-		return FALSE;
-//		return TRUE;
-	}
-	else // nObjects == 1
-	{
-		m_pobj = (BObject*) aResults.GetAt(0);
-		ASSERT_VALID(m_pobj);
-//		BObject* pobj = (BObject*) aResults.GetAt(0);
-//		ASSERT_VALID(pobj);
-//		m_lngID = pobj->GetObjectID();
-		return TRUE;
-	}
-*/
-
 	// For now, just convert text to integer.
-	// If the first character is '0' and the second character is 'x' or 'X', the string is 
-	// interpreted as a hexadecimal integer. If the first character is '1' through '9', 
-	// the string is interpreted as a decimal integer. 
-//	m_lngFlags = atol(str);
-//	TCHAR* pStopChar;
-//	m_lngFlags = wcstoul(str, &pStopChar, 10);
 	char* pStopChar;
 	m_lngFlags = strtoul(str, &pStopChar, 10);
 	return TRUE;
@@ -92,10 +52,9 @@ BOOL BDataFlags::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 
 
 // Get text representation of data into string
 //, this could look for values in a system folder containing flag value objects
-//LPCTSTR BDataFlags::GetText()
 LPCTSTR BDataFlags::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
-	//, Show numbers if in admin, for now
+	// Show numbers if in admin, for now
 	if (theApp.m_bAdmin)
 //		m_strText.Format("%u (%x): ", m_lngFlags, m_lngFlags);
 //		m_strText.Format("0x%x: ", m_lngFlags);
@@ -132,7 +91,6 @@ void BDataFlags::Serialize(CArchive &ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 		ar >> m_lngFlags;
 	}
 
@@ -142,57 +100,8 @@ void BDataFlags::Serialize(CArchive &ar)
 
 
 
-// Bring up dialog to select a new object to refer to for this link
-// root of dialog is based on property def
-// eg Author propertydef could point to the People folder, or Authors folder
-// eg Class propertydef should point to the Classes folder
-// Links will be similar, but will have multiselect
 BOOL BDataFlags::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
-/*
-	ASSERT_VALID(this);
-	ASSERT_VALID(pobj);
-	ASSERT_VALID(pobjPropertyDef);
-	ASSERT_VALID(m_pobj);
-
-//	AfxMessageBox("bdata link edit value (bring up dialog here)");
-//	return FALSE;
-
-	CDialogEditLink dlg;
-	dlg.m_nHelpID = IDD_EDIT_FLAG;
-//	dlg.m_pobjStart = ...
-//	dlg.m_pobjSelected = m_pobj;
-//	if (dlg.DoModal() == IDOK)
-	ULONG lngClassID = m_pobj->GetObjectID();
-	if (dlg.DoModalParameters(folderClasses, lngClassID, 0, 0, TRUE) == IDOK)
-	{
-		// Save new link
-		m_pobj = dlg.m_pobjSelected;
-
-		// Set document modified flag
-		CNeoDoc* pDoc = pobj->m_pDoc;
-		if (pDoc)
-			pDoc->SetModifiedFlag(TRUE);
-
-		// but how would that change get written back to the actual m_lngClassID variable?
-		// the UIEditValue could handle that - ie check to see if the propertydef is a pseudo property
-		// if so, do any special handling required
-
-		// Handle pseudo properties here
-		ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
-		switch (lngPropertyID)
-		{
-			case propClassName:
-				// pobj->m_lngClassID = m_pobj->GetObjectID();
-				pobj->SetClassID(m_pobj->GetObjectID());
-				break;
-			// really shouldn't let user modify this like this...
-//			case propLocation:
-		}
-
-		return TRUE;
-	}
-*/
 	return FALSE;
 }
 

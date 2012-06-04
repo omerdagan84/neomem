@@ -19,9 +19,6 @@ static char THIS_FILE[]=__FILE__;
 
 
 
-// BUG:: If you put the wrong base class here, then serialization will fail with badClass exception,
-// because it tries to create a BData object, and checks to see if the object it creates (ex BDataHyperlink)
-// is derived from BData. If you have CObject here for the base class, then it says NO!
 IMPLEMENT_SERIAL(BDataHyperlink, BData, VERSIONABLE_SCHEMA | versionFileStructure) // last parameter is version number
 
 
@@ -77,7 +74,6 @@ void BDataHyperlink::Serialize(CArchive &ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 		ar >> m_strText;
 	}
 }
@@ -90,16 +86,18 @@ void BDataHyperlink::Serialize(CArchive &ar)
 BOOL BDataHyperlink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
+	
 	//, will want to say the object we're editing and the property name
 	// Object: System
 	// Property: Description
 	// eg Enter the new value for the "Description" property of the object "System".
+	
 	//, for most string properties, we should use cdialogeditname
 	// for description, etc. use the bigger one.
 	// for now leave like this
 
 	//, need different types of hyperlinks - websites, emails, files, folders
-	// have proptype=hyperlink but need propsubtype=website,email,file,fodler, etc!!!
+	// have proptype=hyperlink but need propsubtype=website,email,file,folder, etc
 	// (add as another property of propertydefs?)
 	//		websites - edit string
 	//		emails - edit string
@@ -188,7 +186,6 @@ void BDataHyperlink::UIOnClick()
 		if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
 		{
 			CString strURL;
-//			if (m_strText.Left(7) == "mailto:")
 			if (_tcsncmp((LPCTSTR) m_strText, _T("mailto:"), 7) == 0)
 				strURL = m_strText;
 			else
@@ -220,13 +217,6 @@ void BDataHyperlink::UIOnClick()
 
 void BDataHyperlink::UIOnMouseMove()
 {
-	// Windows 95: The width and height of the cursor must be the values returned by the 
-	// GetSystemMetrics function for SM_CXCURSOR and SM_CYCURSOR. In addition, either the 
-	// cursor bit depth must match the bit depth of the display or the cursor must be monochrome. 
-	// If your application must set the cursor while it is in a window, make sure the class cursor 
-	// for the specified window's class is set to NULL. If the class cursor is not NULL, the system 
-	// restores the class cursor each time the mouse is moved. 
-//	::SetCursor(hCursor);
 	::SetCursor(theApp.m_hCursorHand);
 }
 

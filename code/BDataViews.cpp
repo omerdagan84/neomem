@@ -29,9 +29,6 @@ ViewInfo::ViewInfo() :
 }
 
 
-// Note: If you put the wrong base class here, then serialization will fail with badClass exception,
-// because it tries to create a BData object, and checks to see if the object it creates (ex BDataViews)
-// is derived from BData. If you have CObject here for the base class, then it says NO!
 IMPLEMENT_SERIAL(BDataViews, BData, VERSIONABLE_SCHEMA | versionFileStructure) // last parameter is version number
 
 
@@ -119,8 +116,6 @@ void BDataViews::Serialize(CArchive &ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
-
 		// Get number of elements
 		int nItems;
 		ar >> nItems;
@@ -220,7 +215,6 @@ BOOL BDataViews::GetTabName(int nTab, CString& strName, CNeoDoc* pDoc)
 
 		if (nViews > 0)
 		{
-//			CString strView = pobjView->GetPropertyText(propName);
 			// Remove any ampersand so only first view name will get underline character.
 			// (otherwise Windows will just underline the last &'d character in the string).
 			strView.Remove(_T('&'));
@@ -229,7 +223,6 @@ BOOL BDataViews::GetTabName(int nTab, CString& strName, CNeoDoc* pDoc)
 		}
 		else
 		{			
-//			strName += pobjView->GetPropertyText(propName);
 			strName += strView;
 		}
 
@@ -296,10 +289,6 @@ int BDataViews::InsertView(int nTab, int nView, ULONG lngViewID, ULONG lngViewHe
 
 	if (nIndex != -1)
 	{
-		// Look up the property def object
-//		BObject* pobjPropDef = pDoc->GetObject(lngPropertyID);
-//		ASSERT_VALID(pobjPropDef);
-
 		// Create a new ViewInfo object
 		ViewInfo vi;
 		vi.m_lngViewID = lngViewID;
@@ -471,7 +460,7 @@ BOOL BDataViews::RemoveView(ULONG lngViewID)
 		{
 			// Remove the view
 			m_avi.RemoveAt(i);
-			//, what about the 0's? will they be alright??
+			//, what about the 0's? will they be alright?
 			return TRUE;
 		}
 	}

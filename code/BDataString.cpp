@@ -77,7 +77,6 @@ void BDataString::Serialize(CArchive &ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 		ar >> m_strText;
 	}
 }

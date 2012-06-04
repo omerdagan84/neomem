@@ -28,10 +28,6 @@ public:
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
 //, make private
-//protected:
-//	BObject* m_pobj;
-//	ULONG m_lngID;
-//	CString m_strLinkName;
 	ULONG m_lngFlags;
 
 };

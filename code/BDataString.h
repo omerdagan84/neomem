@@ -32,9 +32,8 @@ public:
 
 
 protected:
-	// Note: Don't need this here because the base class defines m_strText!
+	// Note: Don't need this here because the base class defines m_strText
 //	CString m_strText;
-//	TCHAR* m_pszText;
 };
 
 

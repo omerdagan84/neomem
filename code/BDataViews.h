@@ -52,7 +52,6 @@ public:
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
-//	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
 public:
 	int GetViewHeight(int nTab, int nView);
@@ -68,7 +67,7 @@ public:
 	int GetViewTab(ULONG lngViewID);
 	int InsertView(int nTab, int nView, ULONG lngViewID, ULONG lngViewHeight);
 
-//private:
+//,private:
 	CViewInfoArray m_avi; // Array of ViewInfo structures
 
 };

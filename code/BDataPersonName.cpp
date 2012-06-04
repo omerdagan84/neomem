@@ -72,7 +72,6 @@ BOOL BDataPersonName::SetBDataText(const CString& str, BObject* pobjPropertyDef 
 	else
 	{
 		// No comma, so search for space
-//		int n = str.Find(' ');
 		int n = str.ReverseFind(' ');
 		if (n == -1)
 		{
@@ -116,13 +115,6 @@ LPCTSTR BDataPersonName::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL b
 		case nfLastFirst:
 			{
 				// eg Hughes, Sir Ted F. "Crow" Jr.
-//				if (!m_strLast.IsEmpty()) m_strText = m_strLast + g_strCommaSpace;
-//				if (!m_strTitle.IsEmpty()) m_strText += m_strTitle + g_strSpace;
-//				if (!m_strFirst.IsEmpty()) m_strText += m_strFirst + g_strSpace;
-//				if (!m_strMiddle.IsEmpty()) m_strText += m_strMiddle + g_strSpace;
-//				if (!m_strNickname.IsEmpty()) m_strText += g_strQuote + m_strNickname + g_strQuoteSpace;
-//				if (!m_strSuffix.IsEmpty()) m_strText += m_strSuffix;
-//				LPCTSTR pszGap = g_strCommaSpace;
 				LPCTSTR pszGap = "";
 				if (!m_strLast.IsEmpty()) { m_strText = m_strLast; pszGap = g_strCommaSpace; }
 				if (!m_strTitle.IsEmpty()) { m_strText += pszGap + m_strTitle + g_strSpace; pszGap = "";}
@@ -195,7 +187,7 @@ LPCTSTR BDataPersonName::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL b
 	lpPos = lpBuffer;
 
 	// Last, First
-	//, make sure it doesn't overwrite buffer!
+	//, make sure it doesn't overwrite buffer
 	nChars = m_strLast.GetLength();
 	nCharsTotal += nChars;
 	if (nCharsTotal > nCharsMax)
@@ -270,7 +262,6 @@ void BDataPersonName::Serialize(CArchive& ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 		ar >> m_strTitle;
 		ar >> m_strFirst;
 		ar >> m_strMiddle;

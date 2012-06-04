@@ -236,7 +236,6 @@ void BDataIcon::Serialize(CArchive &ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 		ar >> m_nBytes;
 		// allocate m_nBytes bytes at m_pData
 		m_pData = new unsigned char [m_nBytes];

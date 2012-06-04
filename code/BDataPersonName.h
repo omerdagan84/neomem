@@ -7,12 +7,6 @@
 #include "BData.h"
 
 
-// These are visible to this file only - initialized on program start
-//static CString m_strSpace = _T(" ");
-//static CString m_strCommaSpace = _T(", ");
-//static CString m_strQuote = _T("\"");
-//static CString m_strQuoteSpace = _T("\" ");
-
 
 class BDataPersonName : public BData  
 {
@@ -55,7 +49,7 @@ public:
 //	int m_nNickname;
 //	int m_nSuffix;
 
-	// what if instead of all this crap, we just calculate the new name any time one of the components
+	// what if instead of all this, we just calculate the new name any time one of the components
 	// changes, and store the result in m_strText?
 	// just need a flag indicating it's current
 	// then when name format changes, we walk through all objects, resetting the flag for any name

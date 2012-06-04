@@ -45,7 +45,6 @@ BOOL BDataLong::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 
 // Get text representation of data into string
-//LPCTSTR BDataLong::GetText()
 LPCTSTR BDataLong::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	m_strText.Format("%d", m_lngValue);
@@ -65,7 +64,6 @@ void BDataLong::Serialize(CArchive &ar)
 	}
 	else
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 		ar >> m_lngValue;
 	}
 }
@@ -100,8 +98,8 @@ ULONG BDataLong::GetMemoryUsed(BOOL bRecursive)
 
 
 
-//, edit value will bring up a calculator dialog to let them
-// enter amount and select units from combo
+//, this will bring up a calculator dialog to let them
+// enter amount and select units from combo.
 // for now bring up windows calculator
 // (same as bdatanumber)
 BOOL BDataLong::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)

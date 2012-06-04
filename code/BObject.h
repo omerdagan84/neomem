@@ -19,13 +19,13 @@
 #include "FileText.h"
 
 
-// Define the object handle type (keep it a pointer for now)
+//. Define the object handle type (keep it a pointer for now)
 typedef BObject* HOBJECT; 
 //DECLARE_HANDLE(HOBJECT); //. this works! for strong typing. see http://stackoverflow.com/questions/376452/enforce-strong-type-checking-in-c-type-strictness-for-typedefs
 
 
 // Define the objectID type
-// Windows uses OBJECTID also for OLE. UGH!
+// Windows uses OBJECTID for OLE
 typedef ULONG OBJID;
 
 
@@ -36,7 +36,7 @@ class BObject : public CObject {
 public:
 
 	// Construction
-	BObject(); // create from serialization only // huh?
+	BObject(); // create from serialization only
 	BObject(OBJID lngClassID); // so can set class id from neodoc. 
 	virtual ~BObject();
 //	BObject( const BObject& a ); // Copy constructor

@@ -55,7 +55,6 @@ public:
 	BOOL IsSoft();
 	BOOL IsHard();
 	BOOL RemoveAll();
-//	BOOL SetLinks();
 	BOOL SetLink(BObject* pobj);
 	void SetSingle();
 	void SetMultiple();
@@ -64,7 +63,7 @@ public:
 
 private:
 	// This will either store a pointer to a pobj, or a pointer to an array of pobjs.
-	//, use a union!? can't use with cobject because of constructor?
+	//, use a union? can't use with cobject because of constructor?
 	// or a pointer to an array of soft links - ie objectIDs that will be converted to hard links
 	CObject* m_p;
 

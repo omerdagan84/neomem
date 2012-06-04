@@ -32,8 +32,8 @@ IMPLEMENT_SERIAL(BDataLink, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 
 BDataLink::BDataLink() :
 	m_p (0)
-//mil - another bits thing to initialize - need constructor?
 {
+	//, need initializer
 	m_bits.nFlags = flagSingle;
 	m_bits.nCurrentItem = 0;
 }
@@ -123,8 +123,6 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 		datPerson.SetBDataText(str, 0, FALSE);
 		CString strPerson = datPerson.GetBDataText(pDoc, 0);
 		nObjects = pDoc->SearchForText(pobjLinkSource, propName, strPerson, aResults, theApp.m_lngExcludeFlags);
-//		strCopy = datPerson.GetBDataText(pDoc, 0);
-//		nObjects = pDoc->SearchForText(pobjLinkSource, propName, strCopy, aResults, theApp.m_lngExcludeFlags);
 
 		// Still no matches found, so ask user if they want to add a new object of the default class to the 
 		// link source.
@@ -144,7 +142,6 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			//, bring up class wizard if user says yes
 			if (lngClassID == classClass)
 			{
-//				strMsg.Format("No match was found for \"%s\" in the %s %s. You can use the Edit Value in Dialog command (F4) to see a list of objects to link to.",
 				strMsg.Format("No match was found for \"%s\" in the %s %s. Hit F4 to see a list of possible values.",
 					(LPCTSTR) strCopy, (LPCTSTR) strLinkSourceClass, (LPCTSTR) strLinkSourceName);
 				AfxMessageBox(strMsg, MB_ICONINFORMATION);
@@ -170,7 +167,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			}
 		}
 	}
-	// probably best for now to always bring up dialog, unless only one match and it's exact?
+	// probably best for now to always bring up dialog, unless only one match and it's exact
 //	else if (nObjects > 1)
 //	{
 //		//, bring up link dialog to let user choose one of the found objects or add a new one
@@ -226,7 +223,6 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			}			
 		}
 
-//		BObject* pobj = DYNAMIC_DOWNCAST(BObject, aResults.GetAt(0));
 		BObject* pobj = DYNAMIC_DOWNCAST(BObject, aResults.GetAt(nBestMatch));
 		ASSERT_VALID(pobj);
 		SetLink(pobj);
@@ -264,7 +260,6 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	}
 
 	TCHAR* pszCaption = _T("Edit Link");
-//	CString strName = pobj->GetPropertyText(propName);
 	CString strPropName = pobjPropertyDef->GetPropertyText(propName);
 	CString strInstructions;
 	if (bMultiSelectEnabled)
@@ -279,7 +274,7 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 									lngStartID, this, theApp.m_lngExcludeFlags) == IDOK)
 	{
 		// Note: Link(s) has already been saved to this bdata object by the dialog
-		// bad! don't want UI to have code like that? 
+		//, don't want UI to have code like that
 //		SetLink(dlg.m_pobjSelected);
 		return TRUE;
 	}
@@ -331,7 +326,6 @@ LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 				// then we'll want to get the names of its parents, and add them to the string!
 				// e.g. "Houston, Texas, United States"
 				// Most properties won't have this set (default is false).
-	//			if (pobjPropertyDef->GetPropertyLong(propDisplayLinkHierarchy))
 				if (bDisplayLinkHierarchy)
 				{
 					// Get the Link Source, which is where the GetParents method will stop.
@@ -361,13 +355,11 @@ LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 						BObjects aParents;
 						int nParents = pobj->GetParents(aParents, pobjLinkSource);
 						m_strText = aParents.GetText();
-	//					return m_strText;
 					}
 				}
 
 				// Additional Display Property
 				// See if there's an additional property to display to make name unique
-	//			BObject* pobjAdditionalProp = pobjPropertyDef->GetPropertyLink(propAdditionalDisplayProperty);
 				if (pobjAdditionalProp)
 				{
 					ULONG lngAdditionalPropID = pobjAdditionalProp->GetObjectID();
@@ -378,16 +370,10 @@ LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 					LPCTSTR szAdditional = pobj->GetPropertyText(lngAdditionalPropID); 
 					if (*szAdditional != 0)
 						m_strText += g_strCommaSpace + szAdditional; // eg ", Canberra"
-	//				return m_strText;
 				}
 
 				return m_strText;
 
-	//			else
-	//			{
-	//				// Just display the name of the link object
-	//				return pobj->GetPropertyText(propName);
-	//			}
 			}
 		}
 	}
@@ -461,7 +447,6 @@ void BDataLink::Serialize(CArchive &ar)
 	}
 	else // Loading
 	{
-//		int nFileVersion = ar.GetObjectSchema();
 
 		// Temporary variables to read data into, since CArchive won't let you read directly into a bit field.
 		unsigned int nFlags;
@@ -588,15 +573,6 @@ BOOL BDataLink::SetLink(BObject *pobj)
 	return TRUE;
 }
 
-
-/*
-// Set links to more than one bobject
-BOOL BDataLink::SetLinks()
-{
-	SetMultiple();
-	return TRUE;
-}
-*/
 
 
 // Get single bobject linked to, or NULL if none.
@@ -850,7 +826,7 @@ BOOL BDataLink::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */)
 	if (IsSingle())
 	{
 		// If points to object, set pointer to zero.
-		//, ideally, delete this bdata object afterwards also?
+		//, ideally, delete this bdata object afterwards also
 		if (m_p == pobjFind)
 		{
 			if (pobjNew)
@@ -992,7 +968,7 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 	if (IsSingle())
 	{
 		BObject* pobj = (BObject*) m_p;
-		// bug: didn't check for 0 case! could have been bad!!
+		// bug: didn't check for 0 case!
 		if (pobj)
 		{
 			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
