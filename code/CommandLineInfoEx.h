@@ -1,10 +1,8 @@
-
-
+// Extend MFC class to handle /test and /admin
 
 #pragma once
 
 #include "neomem.h"
-
 
 
 class CCommandLineInfoEx : public CCommandLineInfo  

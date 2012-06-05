@@ -46,7 +46,7 @@ BObjects::~BObjects()
 	// This is usually the case, unless we create a copy of a BObjects array for UI purposes.
 	// Note: BDataLink also points to BObject objects but does not own them, so it doesn't delete them.
 
-	// Only delete the BObjects if we own them!!
+	// Only delete the BObjects if we own them
 	if (m_bOwnsItems)
 	{
 		int nItems = CObArray::GetSize();
@@ -81,10 +81,8 @@ BObjects::~BObjects()
 // Serialization
 //----------------------------------------------------------------------------
 
-void 
-BObjects::Serialize(CArchive& ar)
+void BObjects::Serialize(CArchive& ar)
 {
-//	int nFileVersion = ar.GetObjectSchema(); // only on load
 	// Note: This will automatically walk through the members and serialize them
 	CObArray::Serialize(ar);
 	ASSERT_VALID(this);
@@ -96,14 +94,12 @@ BObjects::Serialize(CArchive& ar)
 
 #ifdef _DEBUG
 
-void 
-BObjects::AssertValid() const
+void BObjects::AssertValid() const
 {
 	CObArray::AssertValid();
 }
 
-void 
-BObjects::Dump(CDumpContext& dc) const
+void BObjects::Dump(CDumpContext& dc) const
 {
 //	CObArray::Dump(dc);
 }
@@ -119,8 +115,7 @@ BObjects::Dump(CDumpContext& dc) const
 // parse out using commas (and quotes), and assign to new child objects(?)
 // would need to know what class of objects to create.
 // not likely to need this anyway though.
-void 
-BObjects::SetText(CString strText)
+void BObjects::SetText(CString strText)
 {
 	m_strText = strText;
 }
@@ -129,8 +124,7 @@ BObjects::SetText(CString strText)
 
 
 // Returns the text representation of the bobjects, eg "Boston, Miami, New York, Austin".
-LPCTSTR 
-BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
+LPCTSTR BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
 {
 	ASSERT_VALID(this);
 	m_strTextCache.Empty(); // clear cache first
@@ -138,8 +132,6 @@ BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
 	int iIndex = 0;
 	for (int i = 0; i < nItems; i++)
 	{
-//		BObject* pobj = (BObject*) GetAt(i);
-//		BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
 		if (!(pobj->GetFlag(lngExcludeFlags)))
@@ -159,9 +151,8 @@ BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
 // Find the specified object's index in the array, or -1 if not found.
 // To recurse through child objects also, specify bRecursive true.
 //. Note: This is a little flaky because the index returned is meaningless if object was found in
-// one of the children! Just be careful how you use this routine for now!!
-int 
-BObjects::FindObject(const BObject* pobjFindThis, BOOL bRecursive /* = FALSE */)
+// one of the children! Just be careful how you use this routine for now!
+int BObjects::FindObject(const BObject* pobjFindThis, BOOL bRecursive /* = FALSE */)
 {
 	ASSERT_VALID(this);
 
@@ -192,8 +183,7 @@ BObjects::FindObject(const BObject* pobjFindThis, BOOL bRecursive /* = FALSE */)
 // This is used to find a specific propertyid, for instance (since ClassID and PropertyID are 
 // equivalent in that case).
 // Returns index to item or -1 if not found.
-int 
-BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALSE */)
+int BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALSE */)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngClassID);
@@ -201,7 +191,6 @@ BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALSE */
 	int nItems = GetSize();
 	for (int i = 0; i < nItems; i++)
 	{
-//		BObject* pobj = (BObject*) GetAt(i);
 		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
 		if (pobj->GetClassID() == lngClassID)
@@ -224,13 +213,12 @@ BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALSE */
 // Compare objects for use in qsort.
 // Returns negative if 1 < 2, 0 if ==, positive if 1 > 2.
 // for now, just sorts by name property
-static int 
-CompareObjects(BObject** ppobj1, BObject** ppobj2)
+static int CompareObjects(BObject** ppobj1, BObject** ppobj2)
 {
 	// Dereference pointers (ppobj1 and ppobj2 are pointers to pointers)
 	BObject* pobj1 = *ppobj1;
 	BObject* pobj2 = *ppobj2;
-	//. get sort property from static member var?
+	// get sort property from static member var?
 	// we don't have control over what qsort passes to this routine, so can't wrap a structure in a param...
 	ULONG lngPropertyID = propName;
 	int iResult = 0;
@@ -248,8 +236,7 @@ CompareObjects(BObject** ppobj1, BObject** ppobj2)
 // Note: This physically rearranges the BObject* pointers in the array so that they are in sorted order.
 // This is how we'll sort the child objects in the tree.
 // Note: For contents view, if you click on a column, it will perform the sorting in the view, not here.
-void 
-BObjects::Sort(ULONG lngPropertyID)
+void BObjects::Sort(ULONG lngPropertyID)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID == propName); //, for now
@@ -264,8 +251,8 @@ BObjects::Sort(ULONG lngPropertyID)
 	{
 		int nBytes = nItems * sizeof(BObject*);
 		void* pData = CObArray::GetData();
-		//. pass property to compare function somehow
-//?		m_lngSortPropertyID = lngPropertyID;
+		//, pass property to compare function
+//		m_lngSortPropertyID = lngPropertyID; // like this ?
 		// Pass to qsort: addr of array, size of array, size of elements, comparison function.
 		qsort(pData, (size_t) nItems, (size_t) sizeof(BObject*), (int (__cdecl*)(const void*, const void*)) CompareObjects);
 	}
@@ -279,8 +266,7 @@ BObjects::Sort(ULONG lngPropertyID)
 // use MoveTo for that.
 // This was only being used in one place (BObject serialize), 
 // and removing the m_pobjParent reference is confusing, so ditching it. 
-/* void 
-BObjects::SetParent(BObject* pobjParent)
+/* void BObjects::SetParent(BObject* pobjParent)
 {
 	ASSERT_VALID(this);
 	int nItems = CObArray::GetSize();
@@ -302,8 +288,7 @@ BObjects::SetParent(BObject* pobjParent)
 // This will set document modified flag and update all views.
 // See also SetParent.
 // This is called by drag drop routines.
-BOOL 
-BObjects::MoveTo(BObject* pobjNewParent)
+BOOL BObjects::MoveTo(BObject* pobjNewParent)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjNewParent);
@@ -332,8 +317,7 @@ BObjects::MoveTo(BObject* pobjNewParent)
 // Load a bobjects array from a global memory block.
 // This is used in clipboard transfers.
 // Returns number of items retrieved.
-int 
-BObjects::LoadFromGlobal(HGLOBAL hGlobal)
+int BObjects::LoadFromGlobal(HGLOBAL hGlobal)
 {
 	ASSERT_VALID(this);
 
@@ -358,8 +342,7 @@ BObjects::LoadFromGlobal(HGLOBAL hGlobal)
 
 // Create a global memory block and write the array of BObject pointers to it.
 // Used by clipboard and drag drop routines.
-HGLOBAL 
-BObjects::SaveToGlobal()
+HGLOBAL BObjects::SaveToGlobal()
 {
 	ASSERT_VALID(this);
 
@@ -376,8 +359,7 @@ BObjects::SaveToGlobal()
 
 // Check if the objects can be moved to the target object.
 // Displays a message box and returns False if a rule is broken.
-BOOL 
-BObjects::IsMoveValid(BObject* pobjTarget)
+BOOL BObjects::IsMoveValid(BObject* pobjTarget)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjTarget);
@@ -405,8 +387,7 @@ BObjects::IsMoveValid(BObject* pobjTarget)
 // eg "Object is marked as undeletable", "Object is referenced by ....."
 // Note: We implement this in BObjects instead of BObject because all of the delete handlers
 // package all the objects to be deleted into a BObjects array, even if it's just one item.
-BOOL 
-BObjects::IsDeleteValid()
+BOOL BObjects::IsDeleteValid()
 {
 	ASSERT_VALID(this);
 
@@ -431,39 +412,6 @@ BObjects::IsDeleteValid()
 			return FALSE;
 		}
 
-/*
-// this was moved to pobj->DeleteObject()
-
-		// Check for links to the object recursively through the entire document
-		BObjects aReferences;
-		ASSERT_VALID(pobj->m_pDoc);
-		int nLinks = pobj->m_pDoc->FindReferences(pobj, aReferences);
-		if (nLinks)
-		{
-//			strMsg.Format(_T("The %s \"%s\" cannot be deleted because it is referenced by the following object(s): %s."), 
-//									(LPCTSTR) strClassName, 
-//									(LPCTSTR) pobj->GetPropertyText(propName), (LPCTSTR) aReferences.GetText());
-//			AfxMessageBox(strMsg);
-//			return FALSE;
-			// Ask the user if they want to remove all references to the object and delete it
-			strMsg.Format(_T("The %s \"%s\" is referenced by the following object(s): %s. Do you want to remove all references to the object and then delete it?"), 
-									(LPCTSTR) strClassName, 
-									(LPCTSTR) pobj->GetPropertyText(propName), (LPCTSTR) aReferences.GetText());
-			if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION | MB_YESNO))
-			{
-				// If we're deleting a class, we'll want to replace all references with classPaper.
-				BObject* pobjNew = 0; // default is to just remove all references
-				if (pobj->GetClassID() == classClass)
-					pobjNew = pobj->m_pDoc->GetObject(classPaper);
-				// Remove/replace all references recursively and return true.
-//				pobj->m_pDoc->m_pobjRoot->ReplaceReferences(pobj);
-				pobj->m_pDoc->m_pobjRoot->ReplaceReferences(pobj, pobjNew);
-				return TRUE;
-			}
-			return FALSE;
-		}
-*/
-
 		// Check children recursively also
 		if (pobj->GetChildren())
 		{
@@ -480,8 +428,7 @@ BObjects::IsDeleteValid()
 
 // Create a copy of this array, and set it so that it's not the owner of the BObjects.
 // Caller is responsible for deleting the copy!
-BObjects* 
-BObjects::CreateCopy()
+BObjects* BObjects::CreateCopy()
 {
 	ASSERT_VALID(this);
 	BObjects* pCopy = new BObjects;

@@ -3,9 +3,6 @@
 #include "CommandLineInfoEx.h"
 
 
-
-
-
 CCommandLineInfoEx::CCommandLineInfoEx()
 {
 	// set defaults

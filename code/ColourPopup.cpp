@@ -1,5 +1,7 @@
 
 // CColourPopup
+// AUTHOR:  James White (feel free to remove or otherwise mangle any part)
+//` indicates modifications - bpb
 
 
 #include "precompiled.h"

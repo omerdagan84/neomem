@@ -49,32 +49,15 @@ END_MESSAGE_MAP()
 
 
 
-CClock::CClock()
+CClock::CClock() :
+	m_nTimerID(0),
+	m_nTimerMode(tmNormal),
+	m_bPauseTimer(FALSE),
+	m_clrBackground(0x00888888),
+	m_clrForeground(0x00ffffff),
+	m_clrBackHighlight(m_clrBackground + 0x00202020),
+	m_clrBackShadow(m_clrBackground + 0x00202020)
 {
-	m_nTimerID = 0;
-	m_nTimerMode = tmNormal;
-	m_bPauseTimer = FALSE;
-
-//	m_clrBackground = 0;
-//	m_clrForeground = RGB(0, 255, 0);
-//	m_clrForeground = RGB(0, 0, 255);
-//	m_clrBackground = RGB(120, 100, 220);
-//	m_clrForeground = RGB(255, 255, 255);
-
-//	m_clrBackground = RGB(128, 128, 192);
-//	m_clrForeground = RGB(230, 230, 250);
-
-//	m_clrBackShadow = RGB(60, 60, 200);
-//	m_clrBackHighlight = RGB(200, 200, 240);
-//	m_clrBackHighlight = RGB(64, 64, 96);
-//	m_clrBackHighlight = RGB(74,74,106);
-//	m_clrBackShadow = RGB(192,192,255);
-	
-	m_clrBackground = 0x00888888;
-	m_clrForeground = 0x00ffffff;
-
-	m_clrBackHighlight = m_clrBackground + 0x00202020; // RGB(32, 32, 32);
-	m_clrBackShadow = m_clrBackground - 0x00202020; // RGB(32, 32, 32);
 }
 
 
@@ -82,7 +65,7 @@ CClock::~CClock()
 {
 	xTRACE("cclock destructor\n");
 	// Bug: Don't put this here because by the time it gets called the window is gone, 
-	// and it will screw up MFC - wound up not calling ExitInstance!
+	// and it will screw up MFC - wound up not calling ExitInstance
 //	if (m_nTimerID) 
 //		KillTimer(m_nTimerID);
 }
@@ -92,12 +75,10 @@ CClock::~CClock()
 BOOL CClock::Create(CRect& r, CWnd* pParentWnd)
 {
 	// Call base class to create window
-//	if (!CStatic::Create("", WS_CHILD | WS_VISIBLE | SS_NOTIFY, r, pParentWnd))
 	if (!CWnd::Create(NULL, "", WS_CHILD | WS_VISIBLE, r, pParentWnd, -1))
 		return FALSE;
 
 	// Create font
-//	m_font.CreatePointFont(80, "Arial");
 	m_font.CreatePointFont(85, "Tahoma");
 
 	// Initialize rectangles
@@ -136,8 +117,8 @@ void CClock::OnSize(UINT nType, int cx, int cy)
 	CWnd::OnSize(nType, cx, cy);
 	
 	// Save width and height of control
-	// Note: If the main window is maximized the control goes all the way to the edge of the screen (yuk)
-	//		so shrink it a bit on the right side
+	// Note: If the main window is maximized the control goes all the way to the edge of the screen,
+	// so shrink it a bit on the right side
 	m_rControlSize.SetRect(0, 0, cx, cy);
 //	if (theApp.IsMaximized())
 //		m_rControlSize.right -= 2; 
@@ -159,7 +140,7 @@ void CClock::OnPaint()
 	
 	CFont* poldfont = dc.SelectObject(&m_font);
 
-	//, could draw to memory dc, then blit it to stop flickering
+	// could draw to memory dc, then blit it to stop flickering
 	// or just be careful with order of these statements...
 	dc.SetTextColor(m_clrForeground);
 	dc.SetBkColor(m_clrBackground);
@@ -170,12 +151,12 @@ void CClock::OnPaint()
 	dc.Draw3dRect(m_rControlSize, m_clrBackShadow, m_clrBackHighlight);
 
 	// Draw text
-	//. use winapi for speed
+	//, use winapi for speed
 	dc.DrawText(m_strClockDisplay, m_rDraw, m_nDrawTextFormat);
 
-	//. draw little buttons
-	//. draw any little icons - like alarm light, etc
-	//. draw countdown/stopwatch separately?
+	//, draw little buttons
+	//, draw any little icons - like alarm light, etc
+	//, draw countdown/stopwatch separately?
 	dc.SelectObject(poldfont);
 
 	// Note: Do not call CWnd::OnPaint() for painting messages
@@ -192,14 +173,12 @@ void CClock::OnPaint()
 void CClock::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	ShowPopup();
-//	CStatic::OnLButtonDown(nFlags, point);
 	CWnd::OnLButtonDown(nFlags, point);
 }
 
 void CClock::OnRButtonDown(UINT nFlags, CPoint point) 
 {
 	ShowPopup();	
-//	CStatic::OnRButtonDown(nFlags, point);
 	CWnd::OnRButtonDown(nFlags, point);
 }
 
@@ -222,7 +201,6 @@ void CClock::ShowPopup()
 		{
 //			BOOL bNoModifyClass = m_pobjPopup->GetFlag(flagNoModifyClass);
 //			pPopup->EnableMenuItem(ID_OBJ_CHANGE_OBJECT_CLASS, bNoModifyClass ? MF_GRAYED : MF_ENABLED);
-//			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
 			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, xScreen, yScreen, this);
 		}
 	}	
@@ -323,15 +301,15 @@ BOOL CClock::StartTimer(eTimerModes nTimerMode, UINT nMilliseconds)
 // Note: This might be called by this code with eventid 0 
 void CClock::OnTimer(UINT nIDEvent) 
 {
-	//. Check for alarms/reminders
+	//, Check for alarms/reminders
 	switch (m_nTimerMode)
 	{
 		case tmNormal:
 			{
 				// Get date/time into a string
-				//. use crt routines for speed
-				//. option - might just want date, not time also
-				//. use smart code to prevent doing this when not needed!
+				//, use crt routines for speed
+				//, option - might just want date, not time also
+				//, use smart code to prevent doing this when not needed!
 //				m_time = CTime::GetCurrentTime();
 //				CString str = m_time.Format(" %A, %B %#d, %Y"); // eg "Friday, March 5, 1999" 
 //				CString str = m_time.Format(" %A, %B %#d, %Y  %I:%M:%S %p"); // eg "Friday, March 5, 1999  9:54:32 PM" 
@@ -395,7 +373,6 @@ void CClock::OnTimer(UINT nIDEvent)
 	// Call base class if this was received from Windows
 	if (nIDEvent)
 	{
-//		CStatic::OnTimer(nIDEvent);
 		CWnd::OnTimer(nIDEvent);
 	}
 }
@@ -476,10 +453,8 @@ void CClock::OnDestroy()
 // Get size of clock needed
 int CClock::GetWidth()
 {
-	// should use long date format? yes!
-	//. update on sys change also
-//	CTime t = CTime::GetCurrentTime();
-//	CString strDate = t.Format("%A, %B %#d, %Y"); // eg "Friday, March 5, 1999"
+	// should use long date format? yes
+	//, update on sys change also
 	COleDateTime odt;
 	odt.SetDate(2000, 9, 30); // Wednesday, September 30, 2000 (a pretty long date)
 //	CString strDate = odt.Format(VAR_DATEVALUEONLY);

@@ -117,7 +117,7 @@ void CCrypto::MakeKey(CString& strPassword)
 	ASSERT(m_hProvider);
 
 	DWORD dwLength = strPassword.GetLength(); // number of characters. 
-// 1.1	ASSERT(dwLength);  // bug - shouldn't have had this!
+// 1.1	ASSERT(dwLength);  // bug - shouldn't have had this
 
 	// Make sure the password has only Ascii characters (ensures one byte per character).
 	// (Other code pages might use two bytes per character for weird characters, so limit to standard Ascii).
@@ -135,7 +135,7 @@ void CCrypto::MakeKey(CString& strPassword)
 		Error();
 
 	// Hash the password string.
-	// is this where things are going wrong? hmm, i don't think so. it looks okay...
+	// is this where things are going wrong? i don't think so. it looks okay...
 	const BYTE* pbBuffer = (const BYTE*) (LPCTSTR) strPassword;
 	// The CryptHashData function adds data to the specified hash object. 
 //	if (!::CryptHashData(hHash, (BYTE*) pszPassword, dwLength, 0)) 
@@ -374,11 +374,11 @@ void CCrypto::Error()
 		"If possible, try turning off encryption for this file (select File Security "
 		"from the File menu).", 
 		dwError);
-//	theApp.ThrowException(str); // ie make error object and throw it. 
 	CError e(FALSE);
 	e.SetName(str);
 	throw &e;
-//	theApp.HandleError(e);
 }
+
+
 
 
