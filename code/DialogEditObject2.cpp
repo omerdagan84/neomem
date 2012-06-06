@@ -37,17 +37,17 @@ END_MESSAGE_MAP()
 
 
 CDialogEditObject2::CDialogEditObject2(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogEditObject2::IDD, pParent)
+	: CDialog(CDialogEditObject2::IDD, pParent),
+	m_lngClassID(0),
+	m_pobjParent(NULL),
+	m_pobjClass(NULL),
+	m_pobjDefaultClass(NULL),
+	m_bNameChanged(FALSE),
+	m_bLocationComboFilled(FALSE),
+	m_bAddMode(FALSE)
 {
 	//{{AFX_DATA_INIT(CDialogEditObject2)
 	//}}AFX_DATA_INIT
-	m_lngClassID = 0;
-	m_pobjParent = NULL;
-	m_pobjClass = NULL;
-	m_pobjDefaultClass = NULL;
-	m_bNameChanged = FALSE;
-	m_bLocationComboFilled = FALSE;
-	m_bAddMode = FALSE;
 }
 
 
@@ -272,7 +272,7 @@ void CDialogEditObject2::OnClassChanged()
 		{
 			FillDefaultClassCombo();
 			// By default, folders will always contain paper objects.
-			//.... this is a 'business' rule and should not be in the ui!!
+			//.... this is a 'business' rule and should not be in the ui
 //			// Get default class from parent folder (if parent is a folder).
 //			// This way, if you're adding a subfolder to a Book folder, the new folder
 //			// would also store Books by default.

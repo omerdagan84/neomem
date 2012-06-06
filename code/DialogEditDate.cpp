@@ -46,12 +46,6 @@ BOOL CDialogEditDate::OnInitDialog()
 	// Enable or disable time entry based on check box state
 	OnChkTime();
 
-//	COLORREF crHeaderBackground = 0x0090a8b8;
-//	COLORREF crHeaderBackground2 = 0x0098c8e0;
-//	COLORREF crHeaderBackground = 0x0068ffd0;
-//	COLORREF crHeaderBackground2 = 0x0040e078;
-//	COLORREF crTitleBackground = 0x0068ffd0;
-//	COLORREF crTitleBackground = 0x0040e078;
 	COLORREF crTitleBackground = 0x0050f088;
 	m_wndDate.SetColor(MCSC_TITLEBK, crTitleBackground);
 
@@ -93,10 +87,9 @@ void CDialogEditDate::DoDataExchange(CDataExchange* pDX)
 		m_wndDate.GetCurSel(&sysTime);
 		sysTime.wHour = sysTime.wMinute = sysTime.wSecond = sysTime.wMilliseconds = 0;
 		m_dtDate = COleDateTime(sysTime);
-		// Clear time if not checked
-		//,?
 		m_bUseTime = m_chkTime.GetCheck();
-//		if (!m_chkTime.GetCheck())
+		//, Clear time if not checked
+//		if (!m_bUseTime)
 //		{
 //			m_dtTime.SetTime(0, 0, 0);
 //		}

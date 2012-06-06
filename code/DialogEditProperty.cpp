@@ -36,25 +36,26 @@ END_MESSAGE_MAP()
 
 
 CDialogEditProperty::CDialogEditProperty(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogEditProperty::IDD, pParent)
+	: CDialog(CDialogEditProperty::IDD, pParent),
+	
+	m_nMode(modeNone),
+	m_pDoc(0),
+	m_pobjPropertyDef(0),
+	m_pobjPropertyType(0),
+	m_pobjLinkSource(0),
+	m_pobjAdditionalProperty(0),
+	m_pobjUnits(0),
+
+	m_bAdditionalProperty(FALSE),
+	m_bDisplayHierarchy(FALSE),
+	m_bLimitLinks(FALSE),
+	m_bSystemProperty(FALSE)
+	
 {
 	//{{AFX_DATA_INIT(CDialogEditProperty)
 	m_strName = _T("");
 	m_strDescription = _T("");
 	//}}AFX_DATA_INIT
-	m_nMode = modeNone;
-	m_pDoc = 0;
-	
-	m_pobjPropertyDef = 0;
-	m_pobjPropertyType = 0;
-	m_pobjLinkSource = 0;
-	m_pobjAdditionalProperty = 0;
-	m_pobjUnits = 0;
-
-	m_bAdditionalProperty = FALSE;
-	m_bDisplayHierarchy = FALSE;
-	m_bLimitLinks = FALSE;
-	m_bSystemProperty = FALSE;
 }
 
 
@@ -86,12 +87,11 @@ BOOL CDialogEditProperty::OnInitDialog()
 	m_cboType.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, FALSE);
 
 	// Modify caption and instructions depending on Edit/Add mode
-	// BUG:: Had = instead of ==
+	// bug:: Had = instead of ==
 	CString strInstructions;
 	if (m_nMode == modeAddProperty)
 	{
 		SetWindowText(_T("Add New Property"));
-//		m_lblInstructions.SetWindowText(_T("Enter the name and description and select the type for the new property."));
 		strInstructions = "Enter the name and description and select the type for the new property.";
 		// Select default property type (string)
 		BObject* pobjDefault = m_pDoc->GetObject(proptypeString);
@@ -102,7 +102,6 @@ BOOL CDialogEditProperty::OnInitDialog()
 	else // edit property
 	{
 		SetWindowText(_T("Edit Property"));
-//		m_lblInstructions.SetWindowText(_T("Enter the name, description and select the type for the property."));
 		if (m_bSystemProperty)
 			strInstructions = "Edit the name and description for this property. Other values cannot be changed because this is a system property.";
 		else
@@ -459,4 +458,6 @@ void CDialogEditProperty::OnChkAdditionalProperty()
 {
 	OnSelChangeCboType();
 }
+
+
 

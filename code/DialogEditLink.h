@@ -38,9 +38,12 @@ public:
 	void AddObject(BOOL bAddAsChild);
 	void AddObjects();
 	int DoModalEdit(CString strCaption, CString strInstructions, ULONG lngStartID, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
-	int DoModalLink(CString strCaption, CString strInstructions, BOOL bMultiSelectVisible, BOOL bMultiSelectEnabled, BOOL bMultiSelectOn, ULONG lngStartID, BDataLink* pdatLink, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
-	int DoModalLinkSimple(CString strCaption, CString strInstructions, ULONG lngStartID, ULONG lngSelectedID = 0, ULONG lngDefaultID = 0, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
-	int DoModalSelect(CString strCaption, CString strInstructions, ULONG lngStartID, ULONG lngSelectedID = 0, ULONG lngDefaultID = 0, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
+	int DoModalLink(CString strCaption, CString strInstructions, BOOL bMultiSelectVisible, BOOL bMultiSelectEnabled, 
+			BOOL bMultiSelectOn, ULONG lngStartID, BDataLink* pdatLink, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
+	int DoModalLinkSimple(CString strCaption, CString strInstructions, ULONG lngStartID, ULONG lngSelectedID = 0, 
+			ULONG lngDefaultID = 0, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
+	int DoModalSelect(CString strCaption, CString strInstructions, ULONG lngStartID, ULONG lngSelectedID = 0, 
+			ULONG lngDefaultID = 0, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
 	void ShowFilterCheckbox(BOOL bFilterOn, ULONG lngFilterExcludeFlags);
 	void UpdateControls();
 

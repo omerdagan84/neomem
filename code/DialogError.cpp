@@ -33,12 +33,12 @@ END_MESSAGE_MAP()
 
 
 CDialogError::CDialogError(CWnd* pParent /*=NULL*/)
-		: CDialog(CDialogError::IDD, pParent)
+		: CDialog(CDialogError::IDD, pParent),
+	m_bEnableSendButton(TRUE)
 {
 	//{{AFX_DATA_INIT(CDialogError)
 //	m_strErrorMessage = _T("");
 	//}}AFX_DATA_INIT
-	m_bEnableSendButton = TRUE;
 }
 
 
@@ -78,6 +78,7 @@ BOOL CDialogError::OnInitDialog()
 	// Return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 //	return	TRUE;  
+	
 	m_txtDescription.SetFocus();
 	return FALSE;
 }

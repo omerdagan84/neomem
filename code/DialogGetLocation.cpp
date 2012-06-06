@@ -22,11 +22,11 @@ static char THIS_FILE[] = __FILE__;
 
 
 CDialogGetLocation::CDialogGetLocation(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogGetLocation::IDD, pParent)
+	: CDialog(CDialogGetLocation::IDD, pParent),
+	m_pDoc(0),
+	m_bAllowSelectHome(FALSE),
+	m_nHelpID(0)
 {
-	m_pDoc = 0;
-	m_bAllowSelectHome = FALSE;
-	m_nHelpID = 0;
 	//{{AFX_DATA_INIT(CDialogGetLocation)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
@@ -97,6 +97,7 @@ BOOL CDialogGetLocation::OnInitDialog()
 	
 //	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+	
 	m_tvw.SetFocus();
 	return FALSE;
 }
@@ -114,7 +115,7 @@ void CDialogGetLocation::OnSelchangedTvw(NMHDR* pNMHDR, LRESULT* pResult)
 	ASSERT_VALID(pobj);
 
 	// Enable/disable OK button 
-	//, do this based on if object has Text View or not (or whatever)
+	//, do this based on if object has Text View or not
 	BOOL bHome = (pobj->GetObjectID() == rootUser);
 	m_btnOK.EnableWindow(!(bHome && !m_bAllowSelectHome));
 

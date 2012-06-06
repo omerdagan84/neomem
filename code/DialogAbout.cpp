@@ -65,7 +65,7 @@ BOOL CDialogAbout::OnInitDialog()
 //	m_linkWebsite.SubclassDlgItem(IDC_WEBSITE, this);
 //	m_linkWebsite.m_strURL = theApp.m_strWebsite;
 //	m_linkEmail.SubclassDlgItem(IDC_EMAIL, this);
-//	m_linkEmail.m_strURL = _T("mailto:someone@somewhere.org"); //, use string resource?
+//	m_linkEmail.m_strURL = _T("mailto:someone@somewhere.org"); //, use string resource
 
 	// Set caption to "About <application name>"
 	CString strCaption = _T("About ") + CString(theApp.m_pszAppName);
@@ -98,9 +98,6 @@ void CDialogAbout::GetVersionInfo()
 	// Windows 95: The GetModuleFilename function will return long filenames when an 
 	// application's version number is greater than or equal to 4.00 and the long filename is 
 	// available. Otherwise, it returns only 8.3 format filenames.
-//	// szFilename is an array of 255 TCHARs
-//	TCHAR szFilename[255];
-//	if (!::GetModuleFileName(NULL, szFilename, 255))
 	TCHAR szExeName[MAX_PATH];
 	if (!::GetModuleFileName(NULL, szExeName, MAX_PATH))
 		return;
@@ -108,9 +105,7 @@ void CDialogAbout::GetVersionInfo()
 	// Open the NeoMem.exe file to get version info
 	CFileVersion f;
 	CFileException e;
-//	CString strFilename = szFilename;
 	UINT nOpenFlags = CFile::modeRead | CFile::shareDenyNone;
-//	if (!f.Open(strFilename, nOpenFlags, &e))
 	if (!f.Open(szExeName, nOpenFlags, &e))
 	{
 		e.ReportError();
@@ -156,32 +151,6 @@ void CDialogAbout::OnMouseMove(UINT nFlags, CPoint point)
 
 
 
-
-HBRUSH CDialogAbout::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
-{
-/*
-	switch (nCtlColor)
-	{
-	case CTLCOLOR_BTN:
-	case CTLCOLOR_STATIC:
-		if (!pWnd->IsKindOf(RUNTIME_CLASS(CStaticLink)))
-//		if ((pWnd->GetDlgCtrlID() != IDC_WEBSITE) && (pWnd->GetDlgCtrlID() != IDC_EMAIL));
-		{
-			pDC->SetTextColor(m_colorForeground);
-			pDC->SetBkColor(m_colorBackground);
-		}
-		return (HBRUSH) (m_brush.GetSafeHandle());
-		// Drop through to return the background brush.
-//	case CTLCOLOR_DLG:
-//		return (HBRUSH) (m_brush.GetSafeHandle());
-	}
-*/
-	return (CDialog::OnCtlColor(pDC, pWnd, nCtlColor));
-}
-
-
-
-
 void CDialogAbout::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
@@ -194,9 +163,6 @@ void CDialogAbout::OnPaint()
 
 	dc.FillSolidRect(&r, m_colorBackground);
 
-//	COLORREF clrShadow = ::GetSysColor(COLOR_3DSHADOW);
-//	COLORREF clrHighlight = ::GetSysColor(COLOR_3DHILIGHT);
-//	dc.Draw3dRect(&r, clrShadow, clrHighlight);
 	dc.Draw3dRect(&r, g_clr3dShadow, g_clr3dHighlight);
 
 	// Do not call CDialog::OnPaint() for painting messages

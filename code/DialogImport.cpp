@@ -179,7 +179,7 @@ void CDialogImport::OnOK()
 
 
 /*
-// is it even legal to use the office converters??
+// is it even legal to use the office converters?
 //			For what it is worth, the sample application offers to import the following formats on my PC:
 //			· Word 6.0/95 for Windows & Macintosh
 //			· Word 97

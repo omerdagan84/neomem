@@ -54,34 +54,35 @@ END_MESSAGE_MAP()
 //---------------------------------------------------------------------------
 
 CDialogEditLink::CDialogEditLink(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogEditLink::IDD, pParent)
+	: CDialog(CDialogEditLink::IDD, pParent),
+	
+	// Initialize all values so we'll be able to see if user forgot to supply one.
+//	m_nMode(-1),
+	m_bHierarchy(TRUE),
+	m_bIncludeStart(FALSE),
+	m_bMultiSelectEnabled(FALSE),
+	m_bMultiSelectOn(FALSE),
+	m_bMultiSelectVisible(FALSE),
+	m_lngButtonFlags(flagShowNone), // show none by default
+	m_lngDefaultClassID(0),
+	m_lngDefaultID(0),
+	m_lngExcludeFlags(0),
+	m_lngSelectedID(0),
+	m_lngStartID(0),
+	m_pdatLink(NULL),
+	m_pobjSelected(NULL),
+	m_pobjStart(NULL),
+
+	m_bFilterVisible(FALSE),
+	m_bFilterOn(FALSE),
+	m_lngFilterExcludeFlags(0),
+
+	m_nHelpID(IDD_EDIT_LINK) // default
+
 {
 	// Get document (used by domodal methods also)
 	m_pDoc = CNeoDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
-
-	// Initialize all values so we'll be able to see if user forgot to supply one.
-//	m_nMode = -1;
-	m_bHierarchy = TRUE;
-	m_bIncludeStart = FALSE;
-	m_bMultiSelectEnabled = FALSE;
-	m_bMultiSelectOn = FALSE;
-	m_bMultiSelectVisible = FALSE;
-	m_lngButtonFlags = flagShowNone; // show none by default
-	m_lngDefaultClassID = 0;
-	m_lngDefaultID = 0;
-	m_lngExcludeFlags = 0;
-	m_lngSelectedID = 0;
-	m_lngStartID = 0;
-	m_pdatLink = NULL;
-	m_pobjSelected = NULL;
-	m_pobjStart = NULL;
-
-	m_bFilterVisible = FALSE;
-	m_bFilterOn = FALSE;
-	m_lngFilterExcludeFlags = 0;
-
-	m_nHelpID = IDD_EDIT_LINK; // default
 
 	//{{AFX_DATA_INIT(CDialogEditLink)
 	//}}AFX_DATA_INIT
@@ -266,7 +267,7 @@ BOOL CDialogEditLink::OnInitDialog()
 	ASSERT_VALID(m_pobjStart);
 
 	// Initialize listview
-	// BUG:: Copied from treeview so had TVSIL_NORMAL instead of LVSIL_SMALL so no icons would show up!
+	// bug:: Copied from treeview so had TVSIL_NORMAL instead of LVSIL_SMALL so no icons would show up
 	m_lvw.SetImageList(m_pDoc->GetImageList(), LVSIL_SMALL);
 	m_lvw.m_pDoc = m_pDoc;
 	m_lvw.SetFullRowSelect(TRUE);
@@ -386,7 +387,7 @@ void CDialogEditLink::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LBL_INSTRUCTIONS, m_lblInstructions);
 	//}}AFX_DATA_MAP
 
-	// This is where we save the data to our BDataLink object!
+	// This is where we save the data to our BDataLink object
 	if (pDX->m_bSaveAndValidate) // Save
 	{
 		if (m_pdatLink)
@@ -594,10 +595,9 @@ void CDialogEditLink::UpdateControls()
 
 /*
 	// Reposition listview to cover buttons if no buttons shown
-	//, i don't think this is needed
 	if (m_lngButtonFlags == 0)
 	{
-		//, this is insane - such a crappy API!
+		//, bad api
 		CRect rTree;
 		CRect rButton;
 		m_lvw.GetWindowRect(rTree);
@@ -826,4 +826,6 @@ void CDialogEditLink::OnBtnDown()
 	// Set focus back to list
 	m_lvw.SetFocus();
 }
+
+
 

@@ -92,9 +92,9 @@ void CDialogException::OnOK()
 		break;
 	case 7:
 		{
-			//! in release mode, this is NOT CAUGHT by unhandled exception handler!
+			//.. in release mode, this is NOT CAUGHT by unhandled exception handler!
 			BObject* pobj = 0;
-			ULONG n = pobj->GetObjectID(); // error: using 0 as address!
+			ULONG n = pobj->GetObjectID(); // error: using 0 as address
 			CString str;
 			str.Format("%d", n);
 			AfxMessageBox(str);
@@ -102,7 +102,7 @@ void CDialogException::OnOK()
 		break;
 	}	
 
-	// This doesn't show up!
+	// This doesn't show up
 	AfxMessageBox("After throwing exception - does this show up?");
 
 	CDialog::OnOK();

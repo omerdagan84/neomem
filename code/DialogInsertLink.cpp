@@ -54,10 +54,9 @@ BOOL CDialogInsertLink::OnInitDialog()
 	m_lvw.InsertColumn(1, "Description", LVCFMT_LEFT, 200);
 
 
-	//. could have a system folder to hold these types - use also with bdatahyperlink???!!
+	//. could have a system folder to hold these types - use also with bdatahyperlink?
 	//. each would have a description that would show up, and use a cool icon
 	//. could also have prefix chars - http:, mailto:, file:, file:, ftp:, news:, object:
-
 
 //	BObject* pobj = 
 //	m_lvw.AddObject(pobj);

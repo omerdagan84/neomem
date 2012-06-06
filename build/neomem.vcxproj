@@ -107,8 +107,6 @@
     <ClCompile Include="..\code\Color.cpp" />
     <ClCompile Include="..\code\ColorButton.cpp" />
     <ClCompile Include="..\code\ColourPopup.cpp" />
-    <ClCompile Include="..\code\Command.cpp" />
-    <ClCompile Include="..\code\CommandHistory.cpp" />
     <ClCompile Include="..\code\CommandLineInfoEx.cpp" />
     <ClCompile Include="..\code\Crypto.cpp" />
     <ClCompile Include="..\code\CryptoArchive.cpp" />
@@ -259,8 +257,6 @@
     <ClInclude Include="..\code\Color.h" />
     <ClInclude Include="..\code\ColorButton.h" />
     <ClInclude Include="..\code\ColourPopup.h" />
-    <ClInclude Include="..\code\Command.h" />
-    <ClInclude Include="..\code\CommandHistory.h" />
     <ClInclude Include="..\code\CommandLineInfoEx.h" />
     <ClInclude Include="..\code\Constants.h" />
     <ClInclude Include="..\code\ConstantsDatabase.h" />

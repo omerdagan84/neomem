@@ -74,7 +74,6 @@ BOOL CDialogAbout2::OnInitDialog()
 		szEnhancedFeatures = "{\\b (Enhanced features not available) }";
 
 	// Build string
-	//, include something about future versions?
 	// these work!
 //	"{3.1x10\\super 18\\par}"
 //	"{Say f\\sub x = 312.3y\\par}"
@@ -89,7 +88,7 @@ BOOL CDialogAbout2::OnInitDialog()
 					"{\\f1\\froman\\fcharset2 Symbol;}{\\f2\\fswiss\\fprq2 Arial;}"
 				    "{\\f3\\fswiss\\fcharset1 Arial;}{\\f4\\fswiss\\fprq2 System;}}"
 					"{\\colortbl\\red0\\green0\\blue0;\\red0\\green128\\blue0;\\red128\\green128\\blue0;\\red160\\green160\\blue160;}"
-					"\\pard\\plain \\li60 \\f2\\fs32\\cf1 " // li = left indent!
+					"\\pard\\plain \\li60 \\f2\\fs32\\cf1 " // li = left indent
 					"NeoMem Version %s \\par" // version 
 					"\\plain\\f2\\fs16\\cf3 %s" // build
 					"\\par %s " // copyright
@@ -97,7 +96,7 @@ BOOL CDialogAbout2::OnInitDialog()
 					"\\par An information database. "
 					"\\par NeoMem is free software, released under the MIT X11 license. "
 					"\\par "
-					//, must include "mailto:" to get email to work - looks bad
+					//, must include "mailto:" to get email to work
 //					"\\par Visit our web site at: \\plain\\f2\\fs16\\cf2\\ul %s\\plain\\f3\\fs16 " // website
 					"\\par For the latest updates and information visit \\plain\\f2\\fs16\\cf2\\ul %s\\plain\\f3\\fs16 " // website
 					"\\par Send any comments and suggestions to \\plain\\f2\\fs16\\cf2\\ul %s\\plain\\f2\\fs16 " // email
@@ -137,7 +136,7 @@ BOOL CDialogAbout2::OnInitDialog()
 					"{\\rtf1\\ansi\\deff0\\deftab720\\deflang1033"
 					"{\\fonttbl{\\f0\\fswiss\\fprq2 Arial;}}"
 					"{\\colortbl\\red0\\green0\\blue0;\\red160\\green160\\blue160;\\red172\\green160\\blue140;}"
-					"\\pard\\plain \\li60 " // li = left indent!
+					"\\pard\\plain \\li60 " // li = left indent
 					"\\plain\\fs32\\cf2 Credits \\par "
 					"\\plain\\fs16 "
 //					"\\par NeoMem was developed with the following tools: "
@@ -189,18 +188,6 @@ void CDialogAbout2::DoDataExchange(CDataExchange* pDX)
 
 
 
-/*
-void CDialogAbout2::OnBtnWebsite() 
-{
-	theApp.GotoWebsite();
-}
-
-void CDialogAbout2::OnBtnEmail() 
-{
-	theApp.SendEmail();
-}
-*/
-
 
 void CDialogAbout2::OnBtnClose() 
 {
@@ -208,7 +195,7 @@ void CDialogAbout2::OnBtnClose()
 	//		sends WM_DESTROY message, received here alright (OnDestroy),
 	//		but then after return, some windows code beeps on an int 2bh instruction, which
 	//		apparently is called on return from a callback function, which should be a normal
-	//		occurrence within mfc, but why the beep?? tried disabling various features in the dialog but
+	//		occurrence within mfc, but why the beep? tried disabling various features in the dialog but
 	//		to no avail. 
 //	m_rtf.SetParent(this);
 //	CDialog::EndDialog(IDOK);

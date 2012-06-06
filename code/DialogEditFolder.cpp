@@ -37,19 +37,19 @@ END_MESSAGE_MAP()
 
 
 CDialogEditFolder::CDialogEditFolder(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogEditFolder::IDD, pParent)
+	: CDialog(CDialogEditFolder::IDD, pParent),
+	m_pobjParent(NULL),
+	m_pobjDefaultClass(NULL),
+	m_bLocationComboFilled(FALSE),
+	m_bAddMode(FALSE)
 {
 	//{{AFX_DATA_INIT(CDialogEditFolder)
 	m_strDescription = _T("");
 	//}}AFX_DATA_INIT
 //	m_lngClassID = 0;
 //	m_pobjClass = NULL;
-	m_pobjParent = NULL;
-	m_pobjDefaultClass = NULL;
 //	m_bNameChanged = FALSE;
 //	m_bDescriptionChanged = FALSE;
-	m_bLocationComboFilled = FALSE;
-	m_bAddMode = FALSE;
 }
 
 
@@ -104,7 +104,7 @@ BOOL CDialogEditFolder::OnInitDialog()
 	// Display location in combobox 
 	m_cboLocation.SetImageList(m_pDoc->GetImageList());
 	ASSERT_VALID(m_pobjParent);
-	// Note: Just add the parent object for now (will fill all other items on dropdown event!)
+	// Note: Just add the parent object for now (will fill all other items on dropdown event)
 	m_cboLocation.AddObject(m_pobjParent);
 	m_cboLocation.SetCurSel(0);
 
@@ -160,15 +160,7 @@ void CDialogEditFolder::DoDataExchange(CDataExchange* pDX)
 		if (m_pobjDefaultClass)
 		{
 			ASSERT_VALID(m_pobjDefaultClass);
-//			m_lngClassID = m_pobjClass->GetObjectID();
 		}
-
-		// Get default class
-//		m_pobjDefaultClass = (BObject*) m_cboDefaultClass.GetSelectedItemData();
-//		if (m_pobjDefaultClass)
-//		{
-//			ASSERT_VALID(m_pobjDefaultClass);
-//		}
 
 		// Get location (parent)
 		m_pobjParent  = (BObject*) m_cboLocation.GetSelectedItemData();
@@ -220,10 +212,8 @@ void CDialogEditFolder::OnChangeEditName()
 	// Set flag
 	m_bNameChanged = TRUE;
 }
-*/
 
 
-/*
 // Class selection changed
 void CDialogEditFolder::OnNotifyItemChanged(NMHDR* pNMHDR, LRESULT* pResult) 
 {
@@ -233,11 +223,8 @@ void CDialogEditFolder::OnNotifyItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
 		OnClassChanged();
 	*pResult = 0;
 }
-*/
 
 
-
-/*
 // Fill default class combo with list of classes
 void CDialogEditFolder::FillDefaultClassCombo()
 {
@@ -248,10 +235,8 @@ void CDialogEditFolder::FillDefaultClassCombo()
 		m_cboDefaultClass.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE);
 	}
 }
-*/
 
 
-/*
 // Class selection changed
 void CDialogEditFolder::OnClassChanged()
 {
@@ -282,7 +267,7 @@ void CDialogEditFolder::OnClassChanged()
 		{
 			FillDefaultClassCombo();
 			// By default, folders will always contain paper objects.
-			//.... this is a 'business' rule and should not be in the ui!!
+			//.... this is a 'business' rule and should not be in the ui
 //			// Get default class from parent folder (if parent is a folder).
 //			// This way, if you're adding a subfolder to a Book folder, the new folder
 //			// would also store Books by default.
@@ -326,7 +311,7 @@ void CDialogEditFolder::OnDropdownCboLocation()
 //		if (m_pobjParent)
 //			m_cboLocation.SelectItemData((DWORD) m_pobjParent);
 
-		// Only include home and folder objects!
+		// Only include home and folder objects
 		BDataLink datValidClasses;
 		datValidClasses.SetMultiple();
 		datValidClasses.AddLinkID(classFolder, m_pDoc);

@@ -18,12 +18,12 @@ static char THIS_FILE[] = __FILE__;
 
 
 CDialogEditName::CDialogEditName(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogEditName::IDD, pParent)
+	: CDialog(CDialogEditName::IDD, pParent),
+	m_bPassword(FALSE)
 {
 	//{{AFX_DATA_INIT(CDialogEditName)
 	m_strName = _T("");
 	//}}AFX_DATA_INIT
-	m_bPassword = FALSE;
 }
 
 
@@ -37,6 +37,7 @@ void CDialogEditName::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
 /*
+	// Handle passwords
 	if (pDX->m_bSaveAndValidate)
 	{
 		if (m_bPassword)
