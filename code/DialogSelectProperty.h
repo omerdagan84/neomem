@@ -7,17 +7,11 @@
 #pragma once
 
 
-//#include "ViewTabs.h"
 #include "ListCtrlEx.h"
 #include "XComboBoxEx.h"
-//#include "Resource.h"
 
 #include "NeoDoc.h"
 #include "BObject.h"
-//class CNeoDoc;
-//class BObject;
-//class BDataLink;
-
 
 
 class CDialogSelectProperty : public CDialog
@@ -34,7 +28,6 @@ public:
 // Attributes
 public:
 	ULONG m_lngSelectedID;
-//	BObject* m_pobjParent;
 	BObject* m_pobjDefaultClass;
 	BOOL m_bShowAll;
 	UINT m_nMode; // 0 for default or IDD_PROPERTY_WIZARD

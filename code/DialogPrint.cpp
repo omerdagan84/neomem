@@ -53,7 +53,6 @@ BOOL CDialogPrint::OnInitDialog()
 
 	m_lvw.SetFullRowSelect(TRUE);
 //	m_lvw.SetCheckboxes(TRUE);
-//	m_lvw.InitializeColumns(&(m_pDoc->m_datColumnsViewFolder), FALSE, TRUE);
 	m_lvw.InitializeColumns(&(m_pDoc->m_datColumnsViewFolder), TRUE, TRUE);
 
 	// Fill listview with available views
@@ -108,8 +107,6 @@ void CDialogPrint::DoDataExchange(CDataExchange* pDX)
 
 	if (pDX->m_bSaveAndValidate) // Save
 	{
-//		if (m_pdatLink)
-//			m_lvw.GetSelectedItems(m_pdatLink);
 		m_lngSelectedViewID = m_lvw.GetSelectedObjectID();
 	}
 }

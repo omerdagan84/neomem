@@ -1,7 +1,7 @@
 
 // DialogSaveOptions.h : header file
 
-//. rename to dialogfilesecurity
+//. rename to DialogFileSecurity
 
 
 #pragma once

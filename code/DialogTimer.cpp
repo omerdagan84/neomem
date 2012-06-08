@@ -44,8 +44,6 @@ BOOL CDialogTimer::OnInitDialog()
 	m_spinMin.SetRange32(0, 1000);
 	m_spinSec.SetRange32(0, 1000);
 
-//	m_wndTime
-
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }

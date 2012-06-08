@@ -50,7 +50,7 @@ BOOL CDialogUpgradeFile::OnInitDialog()
 	// Call base class
 	CDialog::OnInitDialog();
 
-	// Note: You can't put this in a string resource because VC++ has 256 char limit, though Win32 has 4k limit.
+	// vc: You can't put this in a string resource because VC++ has 256 char limit, though Win32 has 4k limit.
 	CString strText;
 	strText.Format(
 					"{\\rtf1\\ansi\\deff0\\deftab720"
@@ -73,23 +73,14 @@ BOOL CDialogUpgradeFile::OnInitDialog()
 	m_rtf.SetRtf((LPCTSTR) strText);
 
 	// Reduce the formatting rect of the rich edit control
-	//, why doesn't this work??
+	//, why doesn't this work?
 //	CRect r;
 //	m_rtf.GetRect(&r);
 //	r.DeflateRect(8, 4, 8, 4);
 //	m_rtf.SetRect(&r);
 
-//	m_picHeader.SetBitmap
-
-	// Set checkbox
-//	m_chkShowDialog.SetCheck(theApp.m_bShowWelcome ? 1 : 0);
-
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
-
-//	m_btnNewFile.SetFocus();
-//	m_btnExample.SetFocus();
-//	return FALSE;
 }
 
 

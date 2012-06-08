@@ -126,7 +126,8 @@ void CDialogSaveOptions::OnCloseupCboEncryption()
 	}
 }
 
-// Bug: have to handle this event in addition to closeup because only this one 
+
+// bug: have to handle this event in addition to closeup because only this one 
 // gets fired if you just use down arrow to change selection!
 void CDialogSaveOptions::OnSelchangeCboEncryption() 
 {
@@ -137,8 +138,6 @@ void CDialogSaveOptions::OnSelchangeCboEncryption()
 	m_lblPassword2.EnableWindow(bEncrypt);
 	m_txtPassword2.EnableWindow(bEncrypt);
 }
-
-
 
 
 BOOL CDialogSaveOptions::Validate()
@@ -205,5 +204,6 @@ void CDialogSaveOptions::OnOK()
 */	
 	CDialog::OnOK();
 }
+
 
 

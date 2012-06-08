@@ -54,14 +54,11 @@ BOOL CDialogWelcome::OnInitDialog()
 					"\\pard\\plain \\li60 \\f2\\fs24\\cf1\\b " // li = indent left!
 					"Welcome to NeoMem"
 					"\\plain\\f2\\fs16\\cf0 "
-//					"\\plain\\f2\\fs18\\cf0 "
 					"\\par \\par "
 					"If you are just getting started you might want to take a look at the example file - "
 					"it includes several objects and classes already set up, and a tutorial on various "
 					"aspects of the program. To open it, click on the {\\b Open Example File} button below. \\par "
 					"\\par "
-//					"To view the help file, click on the Help button. \\par "
-//					"\\par "
 					"To create a new NeoMem file, click on the {\\b Create New File} button below. "
 					"To open an existing NeoMem file, click on the {\\b Open Existing File} button below. \\par "
 					"\\par "
@@ -71,22 +68,12 @@ BOOL CDialogWelcome::OnInitDialog()
 	// Add text to control
 	m_rtf.SetRtf((LPCTSTR) strText);
 
-	// Reduce the formatting rect of the rich edit control
-	//, why doesn't this work??
-//	CRect r;
-//	m_rtf.GetRect(&r);
-//	r.DeflateRect(8, 4, 8, 4);
-//	m_rtf.SetRect(&r);
-
-//	m_picHeader.SetBitmap
-
 	// Set checkbox
 	m_chkShowDialog.SetCheck(theApp.m_bShowWelcome ? 1 : 0);
 
 //	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 
-//	m_btnNewFile.SetFocus();
 	m_btnExample.SetFocus();
 	return FALSE;
 }
@@ -115,11 +102,11 @@ void CDialogWelcome::DoDataExchange(CDataExchange* pDX)
 
 
 /*
-// this window doesn't seem to get the dde message!! so where does it go???
+// this window doesn't seem to get the dde message! so where does it go?
 LRESULT CDialogWelcome::OnDDEExecute(WPARAM wParam, LPARAM lParam)
 {
 //	AfxMessageBox("CDialogWelcome::OnDDEExecute - passing message on to main frame window!");
-	// Pass the message on to the main frame window, where it belongs!
+	// Pass the message on to the main frame window, where it belongs
 	return AfxGetMainWnd()->SendMessage(WM_DDE_EXECUTE, wParam, lParam);
 }
 */
@@ -147,7 +134,6 @@ void CDialogWelcome::OnBtnExample()
 	if (theApp.OpenDocumentFile(strFilePath))
 	{
 		// Close the dialog
-//		CDialog::EndDialog(0);
 		CDialog::OnOK();
 	}
 }
@@ -163,7 +149,6 @@ void CDialogWelcome::OnBtnExistingFile()
 		// Close this welcome dialog if the user actually opened a file
 		if (theApp.GetDocCount() > 0)
 		{
-//			CDialog::EndDialog(0);
 			CDialog::OnOK();
 		}
 	}
@@ -178,7 +163,6 @@ void CDialogWelcome::OnBtnNewFile()
 	if (theApp.m_pMainWnd->SendMessage(WM_COMMAND, ID_FILE_NEW, 0))
 	{
 		// Close this welcome dialog
-//		CDialog::EndDialog(0);
 		CDialog::OnOK();
 	}
 }
@@ -196,7 +180,8 @@ void CDialogWelcome::OnPaint()
 
 
 
-/*void CDialogWelcome::OnBtnHelp() 
+/*
+void CDialogWelcome::OnBtnHelp() 
 {
 //	theApp.WinHelp(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)	
 }
@@ -209,3 +194,4 @@ void CDialogWelcome::OnBtnClose()
 //	CDialog::EndDialog(0);	
 	CDialog::OnOK();
 }
+

@@ -35,19 +35,17 @@ END_MESSAGE_MAP()
 
 
 CDialogSelectProperty::CDialogSelectProperty(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogSelectProperty::IDD, pParent)
+	: CDialog(CDialogSelectProperty::IDD, pParent),
+	m_pobjClasses(NULL),
+	m_pobjProperties(NULL),
+	m_pobjDefaultClass(NULL),
+	m_lngSelectedID(0),
+	m_bShowAll(FALSE),
+	m_nMode(IDD_ADD_PROPERTY)
 {
 	// Get document (used by domodal methods also)
 	m_pDoc = CNeoDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
-	m_pobjClasses = NULL;
-	m_pobjProperties = NULL;
-	m_lngSelectedID = 0;
-//	m_pobjParent = NULL;
-	m_pobjDefaultClass = NULL;
-//	m_bShowAll = TRUE;
-	m_bShowAll = FALSE;
-	m_nMode = IDD_ADD_PROPERTY;
 	//{{AFX_DATA_INIT(CDialogSelectProperty)
 	//}}AFX_DATA_INIT
 }
@@ -63,19 +61,16 @@ BOOL CDialogSelectProperty::OnInitDialog()
 	switch (m_nMode)
 	{
 		case IDD_PROPERTY_WIZARD:
-			m_lblInstructions.SetWindowText("You can create new properties, or edit or delete existing properties here. All actions apply to the current file only.");
+			m_lblInstructions.SetWindowText(
+        "You can create new properties, or edit or delete existing properties here. All actions apply to the current file only.");
 			m_bShowAll = TRUE;
 //			m_btnOK.ShowWindow(SW_HIDE);
-//			m_btnCancel.ShowWindow(SW_HIDE);
-//			m_btnClose.ShowWindow(SW_SHOW);
 			m_btnOK.SetWindowText("&Close");
 			m_btnCancel.EnableWindow(FALSE);
 			break;
 		case IDD_ADD_PROPERTY:
 		default:
 //			m_btnOK.ShowWindow(SW_SHOW);
-//			m_btnCancel.ShowWindow(SW_SHOW);
-//			m_btnClose.ShowWindow(SW_HIDE);
 			break;
 	}
 
@@ -96,7 +91,7 @@ BOOL CDialogSelectProperty::OnInitDialog()
 	m_lvw.InitializeColumns(&(m_pDoc->m_datColumnsPropertyFolder), TRUE, TRUE);
 	m_lvw.m_bDisabledItems = TRUE; // Special disabled items mode (draws some items in gray and won't let user change their checkbox)
 
-	// Get default class
+	//, Get default class
 //	if (m_pobjParent)
 //	{
 //		m_pobjDefaultClass = m_pobjParent->GetPropertyLink(propDefaultClass);
@@ -132,6 +127,7 @@ BOOL CDialogSelectProperty::OnInitDialog()
 
 //	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+  
 	m_lvw.SelectItem(0); // select first item
 	m_lvw.SetFocus();
 	return FALSE;
@@ -158,8 +154,6 @@ void CDialogSelectProperty::DoDataExchange(CDataExchange* pDX)
 
 	if (pDX->m_bSaveAndValidate) // Save
 	{
-//		if (m_pdatLink)
-//			m_lvw.GetSelectedItems(m_pdatLink);
 		BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();
 		if (pobj)
 			m_lngSelectedID = pobj->GetObjectID();
@@ -172,9 +166,6 @@ void CDialogSelectProperty::DoDataExchange(CDataExchange* pDX)
 
 void CDialogSelectProperty::OnBtnHelp() 
 {
-//	theApp.WinHelp(HID_BASE_RESOURCE + IDD_INSERT_COLUMN);
-//	theApp.WinHelp(HID_BASE_RESOURCE + IDD_ADD_PROPERTY);
-//	theApp.WinHelp(HID_BASE_RESOURCE + m_nHelpID);
 	theApp.WinHelp(HID_BASE_RESOURCE + m_nMode); // IDD_ADD_PROPERTY or IDD_PROPERTY_WIZARD
 }
 
@@ -206,7 +197,7 @@ void CDialogSelectProperty::OnBtnAdd()
 			if (pobjClass)
 			{
 				// this will assert if not bdatalink
-				//, duplicate code in 3 places!!
+				//, duplicate code in 3 places!
 				BDataLink* pdatLinks = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 				if (pdatLinks)
 				{

@@ -1,5 +1,3 @@
-// DialogPassword.cpp : implementation file
-//
 
 #include "precompiled.h"
 #include "neomem.h"
@@ -11,7 +9,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CDialogPassword dialog
 
 
@@ -31,21 +28,19 @@ BEGIN_MESSAGE_MAP(CDialogPassword, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CDialogPassword message handlers
 
 BOOL CDialogPassword::OnInitDialog() 
 {
 	CDialog::OnInitDialog();
 	
-//	m_lblFilename.SetWindowText(m_strFilename);
 	m_txtFilename.SetWindowText(m_strFilename);
 	m_txtPassword.SetFocus();
 	
 //	return TRUE;  // return TRUE unless you set the focus to a control
 //	              // EXCEPTION: OCX Property Pages should return FALSE
+  
 	return FALSE;
-
 }
 
 

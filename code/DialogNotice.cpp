@@ -53,6 +53,7 @@ BOOL CDialogNotice::OnInitDialog()
 	
 //	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+  
 	m_btnDownload.SetFocus();
 	return FALSE;
 }
@@ -69,16 +70,10 @@ void CDialogNotice::OnBtnClose()
 
 void CDialogNotice::OnBtnDownload() 
 {
-//	if (IDYES == AfxMessageBox("This will attempt to open the NeoMem website. Continue?", MB_ICONQUESTION + MB_YESNO))
-//	if (IDOK == AfxMessageBox("From the download This will attempt to open the NeoMem website. Continue?", MB_ICONQUESTION + MB_YESNO))
-//	{
-//		CString strURL;
-//		strURL.Format("http://%s", (LPCTSTR) theApp.m_strWebsite); // www.neomem.org
 		LPCTSTR pszURL = "http://www.microsoft.com/msdownload/ieplatform/ie/comctrlx86.asp";
 		CWaitCursor wc;
 		HINSTANCE h = ::ShellExecute(NULL, "open", pszURL, NULL, NULL, SW_SHOWNORMAL);	
 		HandleShellExecuteError(h);
-//	}
 }
 
 

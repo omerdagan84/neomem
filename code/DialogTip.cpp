@@ -48,11 +48,8 @@ BEGIN_MESSAGE_MAP(CDialogTip, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
+
 // CDialogTip message handlers
-
-
-
 
 BOOL CDialogTip::OnInitDialog() 
 {
@@ -73,17 +70,13 @@ void CDialogTip::GetNextTip()
 	if (m_nLastTip == 0)
 		m_nLastTip = IDS_TIP1;
 
-	//. catch memory exception
 	// If can't find tip, then reached the end of the list, so start over at the beginning
+	//. catch memory exception
 	if (!m_strTip.LoadString(m_nLastTip))
 	{
 		m_nLastTip = IDS_TIP1;
 		m_strTip.LoadString(m_nLastTip);
 	}
-
-//	m_rtf.SetRtf(str);
-//	m_rtf.SetWindowText(str);
-//	m_lblTip.SetWindowText(str);
 
 	m_nLastTip++;
 //	if (m_nLastTip > IDS_TIPLAST)
@@ -133,14 +126,10 @@ void CDialogTip::OnPaint()
 	dc.FillSolidRect(r, 0x00ffffff);
 
 	// Draw 3d borders
-//	COLORREF clrShadow = ::GetSysColor(COLOR_3DSHADOW);
-//	COLORREF clrHighlight = ::GetSysColor(COLOR_3DHILIGHT);
-//	dc.Draw3dRect(r, clrShadow, clrHighlight);
 	dc.Draw3dRect(r, g_clr3dShadow, g_clr3dHighlight);
 
 	// Write tip
 	CGdiObject* pgdiobj = dc.SelectStockObject(ANSI_VAR_FONT);
-//	r.DeflateRect(40, 5, 5, 5);
 	r.DeflateRect(40, 25, 5, 5);
 	dc.SetBkColor(0x00ffffff);
 	dc.DrawText(m_strTip, r, DT_LEFT | DT_NOPREFIX | DT_WORDBREAK);
@@ -149,10 +138,9 @@ void CDialogTip::OnPaint()
 	// Draw lightbulb
 	CBitmap bmp;
 	if (bmp.LoadBitmap(IDB_LIGHTBULB))
-//	if (bmp.LoadBitmap(IDB_APPLE))
 	{
-		//. move this to CBitmapEx
 		// Get the size of the bitmap
+		//, move this to CBitmapEx
 		BITMAP bmpInfo;
 		bmp.GetBitmap(&bmpInfo);
 

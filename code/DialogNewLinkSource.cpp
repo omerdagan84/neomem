@@ -116,10 +116,8 @@ void CDialogNewLinkSource::OnBtnNewClass()
 	if (dlg.DoModal() == IDOK)
 	{
 		// Create the new class
-//		CString strClassName = dlg.m_strName;
-//		BObject* pobjClassFolder = m_pDoc->GetObject(rootClass);
-//		HOBJECT hobjNewClass = m_pDoc->CreateObject(classClass, strClassName, pobjClassFolder);
-		HOBJECT hobjNewClass = m_pDoc->CreateClass(dlg.m_strName);
+		CString strClassName = dlg.m_strName;
+		HOBJECT hobjNewClass = m_pDoc->CreateClass(strClassName);
 
 		// Tell views about new class
 //		m_pDoc->UpdateAllViewsEx(NULL, hintAdd, pobjNewClass);
@@ -128,8 +126,7 @@ void CDialogNewLinkSource::OnBtnNewClass()
 		m_pDoc->AddObject(hobjNewClass);
 
 		// Add to combo and select it
-//		int nItem = m_cboClass.AddObject(hobjNewClass, pobjClassFolder);
-		//test
+		//. test
 		BObject* pobjParent = hobjNewClass->GetParent();
 		int nItem = m_cboClass.AddObject(hobjNewClass, pobjParent);
 		m_cboClass.SetCurSel(nItem);

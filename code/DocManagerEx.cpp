@@ -11,7 +11,7 @@
 // to your app's InitInstance function, before you add any document
 // templates.
 
-// Modified by bpb (made simpler)
+//` Modified by bpb
 
 
 

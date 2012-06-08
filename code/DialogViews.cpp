@@ -49,12 +49,8 @@ BOOL CDialogViews::OnInitDialog()
 	
 	// Fill listview with all available views
 	
-	// i knew your feelings were a lie
-	// but i needed to go to the dark side
-
-	// simplest for now is just list all available views and check off for this tab
+	//, simplest for now is just list all available views and check off for this tab
 	// later could have more sophisticated dialog
-
 
 	// Get document and parent sheet
 	m_pDoc = CNeoDoc::GetDoc();
@@ -72,7 +68,6 @@ BOOL CDialogViews::OnInitDialog()
 	BObject* pobjStart = m_pDoc->GetObject(folderViews);
 	ASSERT_VALID(pobjStart);
 	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags);
-
 
 	// Check off views that are visible in this tab
 	//, get an array of views for a tab? then just walk through the array
@@ -112,7 +107,6 @@ void CDialogViews::DoDataExchange(CDataExchange* pDX)
 
 	if (pDX->m_bSaveAndValidate) // Save
 	{
-
 	}
 
 }
@@ -133,3 +127,5 @@ void CDialogViews::OnBtnUp()
 void CDialogViews::OnBtnDown() 
 {
 }
+
+
