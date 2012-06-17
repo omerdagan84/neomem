@@ -1,11 +1,11 @@
 // CFileDialogEx: Encapsulate Windows-2000 style open dialog, 
 // and allow customization of File Save dialog.
 //-------------------------------------------------------------------------------------------------------
-
 // MSDN — August 2000
 // If this code works, it was written by Paul DiLascia. If not, I don't
 // know who wrote it. Compiles with Visual C++ 6.0, runs on Windows 98 
 // and probably Windows NT too.
+//-------------------------------------------------------------------------------------------------------
 
 
 #pragma once
@@ -65,4 +65,5 @@ protected:
 	afx_msg void OnOptions();
 	//}}AFX_MSG
 };
+
 

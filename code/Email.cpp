@@ -1,6 +1,4 @@
-// Email.cpp: implementation of the CEmail class.
-//
-//////////////////////////////////////////////////////////////////////
+
 
 #include "precompiled.h"
 #include "neomem.h"
@@ -22,9 +20,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-//////////////////////////////////////////////////////////////////////
+
 // Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 CEmail::CEmail()
 {
@@ -192,4 +189,6 @@ void CEmail::Send()
 		AfxMessageBox(IDS_ERROR_MAPI_NOT_AVAILABLE, MB_ICONEXCLAMATION);
 	}
 }
+
+
 

@@ -101,9 +101,9 @@ static UINT indicators[] =
 // Construction/Destruction
 //---------------------------------------------------------------------------
 
-CFrameMain::CFrameMain()
+CFrameMain::CFrameMain() :
+	m_uAutoRecoverTimerID(0)
 {
-	m_uAutoRecoverTimerID = 0;
 }
 
 CFrameMain::~CFrameMain()
@@ -306,7 +306,7 @@ void CFrameMain::SaveWindowPlacement(LPCTSTR szSection, LPCTSTR szEntry)
 
 
 /*
-// well, we could copy the accelerator table, and then add the view & letters to it,
+// we could copy the accelerator table, and then add the view & letters to it,
 // translating them to commands
 // would need a map from the command id to a pView
 // would need to reserve space in resource.h for the command ids
@@ -316,8 +316,7 @@ void CFrameMain::SaveWindowPlacement(LPCTSTR szSection, LPCTSTR szEntry)
 // this could tie in with the view menu as well -
 // eg View/Data would have the same command id, and would be handled in the same way by the
 // child frame
-// cool!
-//** so childframe would handle creating the accel table, a map from cmdid to pview, and the dynamic menu
+//* so childframe would handle creating the accel table, a map from cmdid to pview, and the dynamic menu
 BOOL CFrameMain::PreTranslateMessage(MSG* pMsg) 
 {
 //	if (pMsg->message = WM_SYSCHAR)
@@ -459,68 +458,7 @@ void CFrameMain::OnHelp()
 
 
 
-// this is called by ctrl+shift+alt+T (hidden command!)
-void CFrameMain::OnCmdViewTest() 
-{
-	//. hijacking this for running the big mambo test, for now. 
-	theApp.DoTests();
-	return;
-
-
-	if (IDYES == AfxMessageBox("Run tests?", MB_YESNO))
-	{
-		// this will throw a memory exception
-//		AfxThrowMemoryException();
-
-		BObject* pobj = 0;
-//		pobj->GetName(FALSE); // just does ASSERT_VALID(pobj) in here
-		ASSERT_VALID(pobj);
-		ULONG lngX = pobj->GetObjectID(); // will throw an unhandled exception. 
-
-		// Note: This doesn't get called!!!
-//		AfxMessageBox("After exception");
-	}
-
-
-//	AfxMessageBox("save autorecover info");
-//	OnTimer(m_uAutoRecoverTimerID);
-//	return;
-
-//	CDialogException dlg;
-//	dlg.DoModal();
-//	AfxMessageBox("After exception");
-
-//	CDialogNewFile dlg;
-//	dlg.DoModal();
-//	theApp.m_strRegistrationKey = "";
-//	AfxMessageBox("registration key reset to ''");
-
-/*
-	// Show list of views attached to the current document
-	CDocument* pDoc = GetActiveDocument();
-	POSITION pos = pDoc->GetFirstViewPosition();
-	CRuntimeClass* pClass;
-	CString str = "Views attached to current document:\n";
-	while (pos != NULL)
-	{
-		CView* pView = pDoc->GetNextView(pos);
-		pClass = pView->GetRuntimeClass();
-		str += CString(pClass->m_lpszClassName) + "\n";
-	}   
-	CWnd* pWnd = AfxGetMainWnd()->GetActiveWindow();
-	CString strActive;
-	pClass = pWnd->GetRuntimeClass();
-	strActive.Format("\n\nActive window class: %s\n", (LPCTSTR) CString(pClass->m_lpszClassName));
-	str += strActive;
-	AfxMessageBox(str);
-*/
-
-}
-
-
-
-
-// Note: This gets called when time changes, not when date/time format changes (bogus)
+// Note: This gets called when time changes, not when date/time format changes
 void CFrameMain::OnTimeChange() 
 {
 	BaseClass::OnTimeChange();
@@ -531,7 +469,7 @@ void CFrameMain::OnTimeChange()
 
 
 // This is broadcast to all top level windows when a system setting changes,
-// such as date/time format!
+// such as date/time format
 void CFrameMain::OnSettingChange(UINT uFlags, LPCTSTR lpszSection) 
 {
 	BaseClass::OnSettingChange(uFlags, lpszSection);
@@ -546,7 +484,7 @@ void CFrameMain::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 void CFrameMain::OnFontChange() 
 {
 	BaseClass::OnFontChange();
-	//, reload list of available fonts in rtf view toolbar!
+	//, reload list of available fonts in rtf view toolbar
 }
 
 
@@ -715,7 +653,8 @@ void CFrameMain::OnTimer(UINT nIDEvent)
 {
 	// AutoRecover timer
 	// Bug: This was firing during debugging and walking through load code - 
-	// could also possibly fire during loading of a large file! So added flag.
+	// could also possibly fire during loading of a large file. So added flag.
+  //, removed it
 //	if (!theApp.m_bDoingFileLoad)
 //	{
 		if (nIDEvent == m_uAutoRecoverTimerID)
@@ -739,7 +678,7 @@ HMENU CFrameMain::NewMenu() // bcmenu
 //				};
 
 	// Load the menu from the resources
-	// ****replace IDR_MENUTYPE with your menu ID****
+	// *replace IDR_MENUTYPE with your menu ID*
 	m_menu.LoadMenu(IDR_NEOMEM_TYPE);
 
 	// One method for adding bitmaps to menu options is through the LoadToolbars member function. 
@@ -828,8 +767,8 @@ void CFrameMain::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 
 
 
-// Bug: GetActiveDocument function doesn't work for MDI frames! stupid mfc!!!
-//* Use this instead of GetActiveDocument!!
+// Bug: GetActiveDocument function doesn't work for MDI frames
+//* Use this instead of GetActiveDocument
 // GetActiveDocument calls GetActiveView, which returns NULL when called for an MDI main 
 // frame window. In an MDI application, the MDI main frame window does not have a view 
 // associated with it. Instead, each individual child window (CMDIChildWnd) has one or more 
@@ -860,7 +799,7 @@ void CFrameMain::OnClose()
 	// Save active document as the auto reload file
 	if (theApp.m_bAutoLoad)
 	{
-		// Bug: Used GetActiveDocument which doesn't work for MDI!
+		// Bug: Used GetActiveDocument which doesn't work for MDI
 		CDocument* pDoc = GetActiveDocumentMDI(); 
 		if (pDoc)
 		{
@@ -957,10 +896,73 @@ void CFrameMain::OnClose()
 	}
 
 	// destroy the window
-	//.? this is where the program stops    (?)
+	//.? this is where the program stops
 	DestroyWindow();
 
 	//.........................
 
 }
+
+
+
+
+// this is called by ctrl+shift+alt+T (hidden command)
+void CFrameMain::OnCmdViewTest() 
+{
+	//. hijacking this for running the big test, for now. 
+	theApp.DoTests();
+	return;
+
+
+	if (IDYES == AfxMessageBox("Run tests?", MB_YESNO))
+	{
+		// this will throw a memory exception
+//		AfxThrowMemoryException();
+
+		BObject* pobj = 0;
+//		pobj->GetName(FALSE); // just does ASSERT_VALID(pobj) in here
+		ASSERT_VALID(pobj);
+		ULONG lngX = pobj->GetObjectID(); // will throw an unhandled exception. 
+
+		// Note: This doesn't get called!
+//		AfxMessageBox("After exception");
+	}
+
+
+//	AfxMessageBox("save autorecover info");
+//	OnTimer(m_uAutoRecoverTimerID);
+//	return;
+
+//	CDialogException dlg;
+//	dlg.DoModal();
+//	AfxMessageBox("After exception");
+
+//	CDialogNewFile dlg;
+//	dlg.DoModal();
+//	theApp.m_strRegistrationKey = "";
+//	AfxMessageBox("registration key reset to ''");
+
+/*
+	// Show list of views attached to the current document
+	CDocument* pDoc = GetActiveDocument();
+	POSITION pos = pDoc->GetFirstViewPosition();
+	CRuntimeClass* pClass;
+	CString str = "Views attached to current document:\n";
+	while (pos != NULL)
+	{
+		CView* pView = pDoc->GetNextView(pos);
+		pClass = pView->GetRuntimeClass();
+		str += CString(pClass->m_lpszClassName) + "\n";
+	}   
+	CWnd* pWnd = AfxGetMainWnd()->GetActiveWindow();
+	CString strActive;
+	pClass = pWnd->GetRuntimeClass();
+	strActive.Format("\n\nActive window class: %s\n", (LPCTSTR) CString(pClass->m_lpszClassName));
+	str += strActive;
+	AfxMessageBox(str);
+*/
+
+}
+
+
 

@@ -1,16 +1,14 @@
 
 
 // FileText.h
-// just extends CStdioFile
+// extends CStdioFile
 // used for export to csv, tab delim, xml, etc
 
 
 
 
-//#include "NeoMem.h"
 #include "FileFormats.h"
 
-//#include "BDataLink.h"
 class BDataLink;
 
 
@@ -41,4 +39,6 @@ public:
 	CString m_strNewline;
 	eFileFormat m_nFormat;
 };
+
+
 

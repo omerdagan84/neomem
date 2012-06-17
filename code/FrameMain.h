@@ -15,16 +15,14 @@
 
 #include "StatusBarEx.h"
 #include "RichEditCtrlEx.h"
-//class CRichEditCtrlEx;
-//class CStatusBarEx;
 #include "MDITrayFrame.h"
 
 #include "BCMenu.h" // bcmenu
 
 
 
-// This is nice, but I think the problem is that #defines use a global 
-// namespace, so you can only do this with one file!?
+//, This is nice, but I think the problem is that #defines use a global 
+// namespace, so you can only do this with one file?
 //#define BaseClass CMDIFrameWnd
 #define BaseClass CMDITrayFrame
 

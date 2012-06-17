@@ -1,12 +1,10 @@
 
 // CFilename
-// just add some extensions to cstring to handle filenames
-
-//, oh, merge with CPath though
+//, just add some extensions to cstring to handle filenames
+//, merge with CPath
 
 
 #pragma once
-
 
 
 class CFilename : public CString  

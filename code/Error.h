@@ -1,16 +1,12 @@
 
 
-
-
 #pragma once
 
 
 #include "winmsg.h"
 
 
-//. derive from CException? any benefit? i guess just being able to throw it like
-// other exceptions. 
-//class CError : public CObject  
+// derive from CException - then can throw it like other exceptions. 
 class CError : public CException  
 {
 	DECLARE_DYNAMIC(CError)
@@ -44,4 +40,6 @@ public:
 	int m_nLine;
 	CWinMsg m_winmsg;
 };
+
+
 

@@ -113,10 +113,10 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 		{
 			UINT nResourceID = pobjIcon->GetPropertyLong(propIconResourceID);
 			if (nResourceID)
-				hIcon = theApp.LoadIcon(nResourceID); //. this has bombed in release mode (mfc bug??)
+				hIcon = theApp.LoadIcon(nResourceID); //. bug: this has bombed in release mode (why?)
 			else
 			{
-				//..
+				//.
 //				strFile = pobjIcon->GetPropertyText(propFileSource);
 //				hIcon = (HICON) LoadImage(0, strFile, IMAGE_ICON, 16, 16, 
 //									LR_LOADFROMFILE | LR_CREATEDIBSECTION);

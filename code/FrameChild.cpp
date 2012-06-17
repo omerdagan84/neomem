@@ -64,10 +64,10 @@ END_MESSAGE_MAP()
 // Construction/Destruction
 //----------------------------------------------------------------------------
 
-CFrameChild::CFrameChild()
+CFrameChild::CFrameChild() :
+  m_pviewNavigation(0),
+  m_pviewHeader(0)
 {
-	m_pviewNavigation = 0;
-	m_pviewHeader = 0;
 }
 
 CFrameChild::~CFrameChild()
@@ -203,8 +203,7 @@ CFrameChild::GetRightPane()
 // This handles the Alt+T, Alt+S, Alt+C type commands that switch between available views.
 // Commands handled are from ID_VIEW_FIRST through ID_VIEW_LAST, and include
 // ID_VIEW_DATA, ID_VIEW_RTF, etc.
-void 
-CFrameChild::OnCmdView(UINT nCommandID)
+void CFrameChild::OnCmdView(UINT nCommandID)
 {
 	// Convert from CommandID to ViewID
 	// Note: For this to work, command id's and view constants must be in same order
@@ -215,8 +214,7 @@ CFrameChild::OnCmdView(UINT nCommandID)
 
 
 // Load, enable, disable, check View menu items here
-void 
-CFrameChild::OnUpdateView(CCmdUI* pCmdUI)
+void CFrameChild::OnUpdateView(CCmdUI* pCmdUI)
 {
 	// Enable views based on class of current object
 	pCmdUI->Enable(TRUE);
@@ -233,15 +231,14 @@ CFrameChild::OnUpdateView(CCmdUI* pCmdUI)
 
 
 // Returns the position of the splitter bar
-//, return percentage of total splitter control width, eg 10000 = 100%
-ULONG 
-CFrameChild::GetSplitterPos()
+ULONG CFrameChild::GetSplitterPos()
 {
 	int cxCur;
 	int cxMin;
 	m_wndSplitter.GetColumnInfo(0, cxCur, cxMin);
 	ULONG lngSplitterPos = (ULONG) cxCur;
 	return lngSplitterPos;
+//, return percentage of total splitter control width, eg 10000 = 100%
 //	CRect r;
 //	m_wndSplitter.GetClientRect(&r);
 //	ULONG lngPosPct = lngSplitterPos * 10000 / r.right;
@@ -252,8 +249,7 @@ CFrameChild::GetSplitterPos()
 
 // Set the position of the splitter bar
 //, set percentage not twips
-void 
-CFrameChild::SetSplitterPos(ULONG lngSplitterPos) //lngPosPct) //lngSplitterPos)
+void CFrameChild::SetSplitterPos(ULONG lngSplitterPos)
 {
 	// set default here for now
 	if (lngSplitterPos == 0)
@@ -278,8 +274,7 @@ CFrameChild::SetSplitterPos(ULONG lngSplitterPos) //lngPosPct) //lngSplitterPos)
 
 
 // Export the entire document or selected item(s) to a rtf, plain text, or NeoMem file
-void 
-CFrameChild::OnCmdFileExport()
+void CFrameChild::OnCmdFileExport()
 {
 	CNeoDoc* pdoc = (CNeoDoc*) GetActiveDocument();
 	BObject* pobj = pdoc->GetObject(rootUser);
@@ -290,8 +285,7 @@ CFrameChild::OnCmdFileExport()
 
 
 // Import a file
-void 
-CFrameChild::OnCmdFileImport() 
+void CFrameChild::OnCmdFileImport() 
 {
 	// Document handles importing
 	CNeoDoc* pDoc = (CNeoDoc*) GetActiveDocument();
@@ -302,8 +296,7 @@ CFrameChild::OnCmdFileImport()
 
 
 // Advance to next visible input view
-void 
-CFrameChild::OnCmdViewNext() 
+void CFrameChild::OnCmdViewNext() 
 {
 	xTRACE("CFrameChild OnCmdViewNext\n");
 
@@ -351,8 +344,7 @@ CFrameChild::OnCmdViewNext()
 
 
 // Advance to previous visible input view
-void 
-CFrameChild::OnCmdViewPrevious() 
+void CFrameChild::OnCmdViewPrevious() 
 {
 	xTRACE("CFrameChild OnCmdViewPrevious\n");
 
@@ -405,8 +397,7 @@ CFrameChild::OnCmdViewPrevious()
 // to a command (id_edit_delete)
 // therefore, probably better to let the views handle the delete key themselves,
 // and send a id_edit_delete command to the frame if they're not editing something
-void 
-CFrameChild::OnCmdEditDelete() 
+void CFrameChild::OnCmdEditDelete() 
 {
 	// assume user wants to delete current item
 	CNeoDoc* pDoc = (CNeoDoc*) GetActiveDocument();
@@ -420,8 +411,7 @@ CFrameChild::OnCmdEditDelete()
 
 
 
-void 
-CFrameChild::OnUpdateFrameTitle(BOOL bAddToTitle)
+void CFrameChild::OnUpdateFrameTitle(BOOL bAddToTitle)
 {
 	CMDIChildWnd::OnUpdateFrameTitle(bAddToTitle);
 /*
@@ -449,8 +439,7 @@ CFrameChild::OnUpdateFrameTitle(BOOL bAddToTitle)
 
 
 
-void 
-CFrameChild::OnSize(UINT nType, int cx, int cy) 
+void CFrameChild::OnSize(UINT nType, int cx, int cy) 
 {
 	CMDIChildWnd::OnSize(nType, cx, cy);
 	// update our parent frame - in case we are now maximized or not
@@ -467,8 +456,7 @@ CFrameChild::OnSize(UINT nType, int cx, int cy)
 // Translate commands to key presses and send to the current left-side view.
 // This handles things like Alt+Up.
 // Commands handled are ID_NAVIGATE_START through ID_NAVIGATE_STOP.
-void 
-CFrameChild::OnCmdNavigate(UINT nCommandID) 
+void CFrameChild::OnCmdNavigate(UINT nCommandID) 
 {
 	xTRACE("CFrameChild OnCmdNavigate\n");
 
@@ -521,8 +509,7 @@ CFrameChild::OnCmdNavigate(UINT nCommandID)
 
 
 // This is overridden in order to make the child frame maximized
-void 
-CFrameChild::ActivateFrame(int nCmdShow) 
+void CFrameChild::ActivateFrame(int nCmdShow) 
 {
 	// Create the child frame window maximized
 //	nCmdShow = SW_MAXIMIZE;
@@ -544,8 +531,7 @@ CFrameChild::ActivateFrame(int nCmdShow)
 
 // Find and show the specified view, setting it to be the active view if specified.
 // Returns a pointer to the view if found, or 0 otherwise.
-CView* 
-CFrameChild::ShowView(ULONG lngViewID, BOOL bSetActive)
+CView* CFrameChild::ShowView(ULONG lngViewID, BOOL bSetActive)
 {	
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pviewNavigation);
@@ -553,7 +539,7 @@ CFrameChild::ShowView(ULONG lngViewID, BOOL bSetActive)
 	ASSERT_VALID(m_pviewHeader->m_pviewTabs); // this is the cviewtabs on the right side
 
 	CView* pview = 0;
-	//, if view is 0 then it hasn't been loaded yet - load it!
+	//, if view is 0 then it hasn't been loaded yet - load it
 	// how do we know which side it's on?
 	// hardcode it for now
 //	CView* pView = GetView(lngViewID);
@@ -592,8 +578,7 @@ CFrameChild::ShowView(ULONG lngViewID, BOOL bSetActive)
 
 // Get the specified view window, looking in both the right and left tab views.
 // This will load the view if not found without displaying it.
-CView* 
-CFrameChild::GetView(ULONG lngViewID)
+CView* CFrameChild::GetView(ULONG lngViewID)
 {
 	CView* pview = NULL;
 	if (m_pviewHeader)
@@ -615,8 +600,7 @@ CFrameChild::GetView(ULONG lngViewID)
 
 
 // See if the specified view is visible anywhere
-BOOL 
-CFrameChild::IsViewVisible(ULONG lngViewID)
+BOOL CFrameChild::IsViewVisible(ULONG lngViewID)
 {
 	CView* pview = NULL;
 	if (m_pviewHeader)
@@ -638,28 +622,24 @@ CFrameChild::IsViewVisible(ULONG lngViewID)
 //-------------------------------------------------------------------------------------------------------------
 
 
-void 
-CFrameChild::OnFilePrint() 
+void CFrameChild::OnFilePrint() 
 {
 	DoFilePrint(FALSE, TRUE);
 }
 
-void 
-CFrameChild::OnFilePrintPreview() 
+void CFrameChild::OnFilePrintPreview() 
 {
 	DoFilePrint(TRUE, TRUE);
 }
 
-void 
-CFrameChild::OnFilePrintFromPreview() 
+void CFrameChild::OnFilePrintFromPreview() 
 {
 	// print without asking user which view they want to print (already been chosen)
 	DoFilePrint(FALSE, FALSE);
 }
 
 
-BOOL 
-CFrameChild::DoFilePrint(BOOL bPrintPreview, BOOL bAskForView)
+BOOL CFrameChild::DoFilePrint(BOOL bPrintPreview, BOOL bAskForView)
 {
 	//, will want to handle print preview from here - ie initiate and terminate here,
 	// call views as appropriate
@@ -709,8 +689,7 @@ CFrameChild::DoFilePrint(BOOL bPrintPreview, BOOL bAskForView)
 }
 
 
-void 
-CFrameChild::OnUpdateFilePrint(CCmdUI* pCmdUI) 
+void CFrameChild::OnUpdateFilePrint(CCmdUI* pCmdUI) 
 {
 //	BOOL bDoc = (MDIGetActive() != NULL);
 //	pCmdUI->Enable(bDoc);
@@ -719,8 +698,7 @@ CFrameChild::OnUpdateFilePrint(CCmdUI* pCmdUI)
 }
 
 
-void 
-CFrameChild::OnUpdateFilePrintPreview(CCmdUI* pCmdUI) 
+void CFrameChild::OnUpdateFilePrintPreview(CCmdUI* pCmdUI) 
 {
 //	BOOL bDoc = (MDIGetActive() != NULL);
 //	pCmdUI->Enable(bDoc);	
@@ -732,8 +710,7 @@ CFrameChild::OnUpdateFilePrintPreview(CCmdUI* pCmdUI)
 /*
 // this code adapted from mfc viewprev.cpp
 // Note: CPreviewView :: CScrollView :: CView
-BOOL 
-CFrameChild::DoPrintPreview(UINT nIDResource, CView* pPrintView, 
+BOOL CFrameChild::DoPrintPreview(UINT nIDResource, CView* pPrintView, 
 								 CRuntimeClass* pPreviewViewClass, CPrintPreviewState* pState)
 {
 	// Check assumptions
@@ -825,8 +802,7 @@ CFrameChild::DoPrintPreview(UINT nIDResource, CView* pPrintView,
 }
 
 
-BOOL 
-CALLBACK _AfxPreviewCloseProc(CFrameWnd* pFrameWnd)
+BOOL CALLBACK _AfxPreviewCloseProc(CFrameWnd* pFrameWnd)
 {
 	ASSERT_VALID(pFrameWnd);
 
@@ -845,8 +821,7 @@ CALLBACK _AfxPreviewCloseProc(CFrameWnd* pFrameWnd)
 
 
 
-BOOL 
-CFrameChild::PreTranslateMessage(MSG* pMsg) 
+BOOL CFrameChild::PreTranslateMessage(MSG* pMsg) 
 {
 	return CMDIChildWnd::PreTranslateMessage(pMsg);
 }
@@ -858,8 +833,7 @@ CFrameChild::PreTranslateMessage(MSG* pMsg)
 // For instance, user might be in rtf view, and hit F2 to rename current item.
 // Should be handled by the current navigation pane.
 // Assume user wants to rename current item.
-void 
-CFrameChild::OnObjEditInPlace() 
+void CFrameChild::OnObjEditInPlace() 
 {
 	CView* pView = STATIC_DOWNCAST(CView, m_pviewNavigation->m_aCurrentViews.GetAt(0));
 	ASSERT_VALID(pView);
@@ -871,8 +845,7 @@ CFrameChild::OnObjEditInPlace()
 
 
 /*
-void 
-CFrameChild::OnObjEditInDialog() 
+void CFrameChild::OnObjEditInDialog() 
 {
 	CView* pView = STATIC_DOWNCAST(CView, m_pviewNavigation->m_aCurrentViews.GetAt(0));
 	ASSERT_VALID(pView);
@@ -883,8 +856,7 @@ CFrameChild::OnObjEditInDialog()
 
 
 /*
-void 
-CFrameChild::OnPopupCancel() 
+void CFrameChild::OnPopupCancel() 
 {
 	// do nothing
 }
@@ -896,8 +868,7 @@ CFrameChild::OnPopupCancel()
 
 // Get a pointer to the current view on the left or right side
 //, why not determine the active side also?
-CViewEx* 
-CFrameChild::GetCurrentView(BOOL bLeftSide)
+CViewEx* CFrameChild::GetCurrentView(BOOL bLeftSide)
 {
 	ASSERT(bLeftSide == TRUE); //, for now
 	
@@ -921,8 +892,7 @@ CFrameChild::GetCurrentView(BOOL bLeftSide)
 
 
 // Returns a pointer to the current view (left or right side)
-CViewEx* 
-CFrameChild::GetCurrentView()
+CViewEx* CFrameChild::GetCurrentView()
 {
 	// null if not a cviewex
 	CViewEx* pview = DYNAMIC_DOWNCAST(CViewEx, this->GetActiveView()); 
@@ -934,8 +904,7 @@ CFrameChild::GetCurrentView()
 //.test 
 // Add an object. 
 // This is the default ID_OBJ_ADD handler.
-void 
-CFrameChild::OnCmdAddObject() 
+void CFrameChild::OnCmdAddObject() 
 {
 	CNeoDoc* pdoc = (CNeoDoc*) GetActiveDocument(); //.cast
 	BObject* pobjTarget = pdoc->GetTargetObject();

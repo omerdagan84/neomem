@@ -81,7 +81,6 @@ CString CError::GetDialogText()
 					"%s" // file saved information
 					"\r\n",
 					(LPCTSTR) m_strError,
-//					(LPCTSTR) m_strFilename,
 					(LPCTSTR) m_strFiletitle,
 					m_nLine,
 					(LPCTSTR) m_strExpression,
@@ -95,11 +94,9 @@ CString CError::GetDialogText()
 CString CError::GetReportSubject()
 {
 	CString str;
-//	str.Format("NeoMem Error - %s, %s", (LPCTSTR) m_strError, (LPCTSTR) m_strLocation);
 	str.Format(
 		_T("NeoMem Error - %s in %s, line %i, %s"), 
 		(LPCTSTR) m_strError, 
-//		(LPCTSTR) m_strFilename, 
 		(LPCTSTR) m_strFiletitle,
 		m_nLine,
 		(LPCTSTR) m_strExpression
@@ -112,16 +109,6 @@ CString CError::GetReportText()
 {
 	// this text is used for the email
 
-	// Get language and locale information
-//	LANGID nLanguage = ::GetUserDefaultLangID();
-//	LCID nLocale = ::GetUserDefaultLCID();
-
-	//. also include stack dump!
-	// need to include imagehlp.dll??
-//	CString strStack;
-//	AfxDumpStack(AFX_STACK_DUMP_TARGET_CLIPBOARD);
-//	theApp.GetTextFromClipboard(strStack);
-
 	// Create the text for the email message
 	CString str;
 
@@ -130,7 +117,6 @@ CString CError::GetReportText()
 					"\r\n"
 					"Name: %s\r\n" // error message & location
 					"Description: %s\r\n" // user description
-//					"Stack: %s\r\n" // stack
 					"Project: neomemLite \r\n"
 					"Found in version: %s %s \r\n" // version and build
 					"Filename: %s \r\n"
@@ -146,18 +132,13 @@ CString CError::GetReportText()
 					"Virtual Memory: %s \r\n" // memory info
 					"Physical Memory: %s \r\n" // memory info
 					"Screen: %s \r\n" // screen info
-//					"LocaleID - %x \r\n" // localeID
-//					"LanguageID - %x \r\n" // languageID
 					"Locale: %s \r\n" // locale info
-//					"Disk Space Available: %s \r\n " // disk free info 
 					"\r\n\r\n\r\n\r\n"
 					,
 					(LPCTSTR) m_strError,
 					(LPCTSTR) m_strDescription,
-//					(LPCTSTR) strStack,
 					(LPCTSTR) theApp.m_objInfo.GetProgramVersion(),
 					(LPCTSTR) theApp.m_objInfo.GetProgramBuild(),
-//					(LPCTSTR) m_strFilename,
 					(LPCTSTR) m_strFiletitle,
 					m_nLine,
 					(LPCTSTR) m_strExpression,
@@ -166,14 +147,10 @@ CString CError::GetReportText()
 					(LPCTSTR) theApp.m_objInfo.GetWindowsVersion(),
 					theApp.m_objInfo.GetCommonControlsVersionNumber(),
 					(LPCTSTR) theApp.m_objInfo.GetRichEditVersionString(),
-//					(LPCTSTR) theApp.m_objInfo.GetMemoryAvailable(),
 					(LPCTSTR) theApp.m_objInfo.GetVirtualMemory(),
 					(LPCTSTR) theApp.m_objInfo.GetPhysicalMemory(),
 					(LPCTSTR) theApp.m_objInfo.GetScreenInfo(),
-//					nLocale,
-//					nLanguage
 					(LPCTSTR) theApp.m_objInfo.GetLocaleInfo()
-//					(LPCTSTR) theApp.m_objInfo.GetDiskSpaceAvailable()
 					);
 	return str;
 }
@@ -205,3 +182,5 @@ void CError::SetDescription(CString str)
 {
 	m_strDescription = str;
 }
+
+

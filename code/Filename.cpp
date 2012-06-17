@@ -30,9 +30,6 @@ void CFilename::RemoveBadChars() {
 	CString strBadChars = "\\/:*?\"<>|"; //, _T
 	int nBadChar = this->FindOneOf(strBadChars);
 	if (nBadChar != -1) {
-//		CString strMsg;
-//		strMsg.Format("File names cannot contain the characters '%s' - occurrences of these characters will be removed.", (LPCTSTR) strBadChars);
-//		AfxMessageBox(strMsg, MB_ICONINFORMATION);
 		int nChars = strBadChars.GetLength();
 		for (int i = 0; i < nChars; i++) {
 			TCHAR ch = strBadChars.GetAt(i);

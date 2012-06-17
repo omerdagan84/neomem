@@ -17,14 +17,11 @@ public:
 
 // Operations
 public:
-//	void GetCharFormat2(CHARFORMAT2 &cf2, CDC* pDC);
 	void GetCharFormat2(CHARFORMAT2 &cf2);
 	BOOL CreatePointFont2(CHARFORMAT& cf);
 	BOOL CreatePointFont2(int nPointSizeTimes10, LPCTSTR lpszFaceName, BOOL bBold, BOOL bItalic, CDC* pDC = NULL);
 	CString GetAsText();
-//	int GetPointSize(int lfHeight, CDC* pDC);
 	int GetPointSize();
-//	void GetCharFormat(CHARFORMAT& cf, CDC* pDC);
 	void GetCharFormat(CHARFORMAT& cf);
 	CString GetFontName();
 };

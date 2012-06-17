@@ -21,9 +21,9 @@ static char THIS_FILE[] = __FILE__;
 
 //---------------------------------------------------------------------------------------------------
 
-CFileVersion::CFileVersion()
+CFileVersion::CFileVersion() :
+	m_pVerInfo(0)
 {
-	m_pVerInfo = 0;
 }
 
 CFileVersion::~CFileVersion()
@@ -63,16 +63,15 @@ BOOL CFileVersion::GetVersionValue(LPCTSTR pszVariable, CString& strValue)
 	char szQueryStr[0x100];
 	char szQueryStr2[0x100];
 
-	// bug: silly - by getting the user's default language id here, of course
-	// the value wasn't being found! just specify what it was written with!
+	// bug: by getting the user's default language id here,
+	// the value wasn't being found! just specify what it was written with
 	LANGID nLanguage = 0x0409; // ::GetUserDefaultLangID();
 	LCID nLocale = 1200; // ::GetUserDefaultLCID();
 	
 	// Format the string with the 1200 codepage (Unicode)
 	wsprintf(szQueryStr, "\\StringFileInfo\\%04X%04X\\%s", nLanguage, nLocale, (LPCTSTR) pszVariable);
 
-	// We may want to format a string with the "0000" codepage
-	//. huh?
+	// We may want to format a string with the "0000" codepage //, what?
 	PSTR pszValue = 0;
 	UINT uValueSize = 0;
 	BOOL bFound = FALSE;
@@ -96,40 +95,6 @@ BOOL CFileVersion::GetVersionValue(LPCTSTR pszVariable, CString& strValue)
 	return bFound;
 }
 
-
-
-//. translation info:
-
-/*
-   // Get the translation information.
-   bResult = 
-     ::VerQueryValue( pbData,
-                      "\\VarFileInfo\\Translation",
-                      (void**)&lpBuffer,
-                      &uiVerSize);
-   if (!bResult) goto NastyGoto ;
-
-   bResult = uiVerSize ;
-   if (!bResult) goto NastyGoto ;
-
-   // Build the path to the OLESelfRegister key
-   // using the translation information.
-   wsprintf( szName,
-             "\\StringFileInfo\\%04hX%04hX\\OLESelfRegister",
-             LOWORD(*lpBuffer),
-             HIWORD(*lpBuffer)) ;
-
-   // Search for the key.
-   bResult = ::VerQueryValue( pbData, 
-                              szName, 
-                              (void**)&lpBuffer, 
-                              &uiSize);
-
-NastyGoto:
-   delete [] pbData ;
-   return bResult ;
-}
-*/
 
 
 
@@ -164,3 +129,6 @@ BYTE* CFileVersion::GetVersionInfo()
 	strFile.ReleaseBuffer();
 	return pVerInfo;
 }
+
+
+
