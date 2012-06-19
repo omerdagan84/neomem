@@ -33,8 +33,7 @@ COLORREF g_clrHyperlinkText;
 
 
 // Returns True if the given file exists.
-BOOL 
-FileExists(LPCTSTR pszFileName)
+BOOL FileExists(LPCTSTR pszFileName)
 {
 	CFile f;
 	CFileException fe;
@@ -49,15 +48,10 @@ FileExists(LPCTSTR pszFileName)
 
 // Get file name with extension from the given path.
 // Eg returns "Stuff.neo" from "C:\Documents\Stuff.neo"
-// Code from mfc routine.
-CString 
-GetFileName(LPCTSTR pszPathName)
+// Code from MFC routine.
+CString GetFileName(LPCTSTR pszPathName)
 {
-//	CFile f(szPath, CFile::modeRead);
-//	CString s = f.GetFileName();
-//	f.Close();
-//	AfxGetFileName(status.m_szFullName, strResult.GetBuffer(_MAX_FNAME), _MAX_FNAME);
-
+  
 	CString s;
 
 	// Always capture the complete file name including extension (if present)
@@ -76,22 +70,18 @@ GetFileName(LPCTSTR pszPathName)
 
 
 // Format the given number with proper thousand formatting and return as a new CString object.
-// To use in a printf, be sure to cast the result to LPCTSTR!!
+// To use in a printf, be sure to cast the result to LPCTSTR!
 //. use FormatThousands in CStringEx instead!
-//. why is this called fc?? give it a better name so can search on it
-CString 
-//fc(long n)
-fc(ULONGLONG n)
+//. give better name so can search on it
+CString fc(ULONGLONG n)
 {
 	const int nChars = 50;
 	TCHAR szPlain[nChars];
 	TCHAR szFormatted[nChars];
 
-//	_stprintf(szPlain, "%d", n);
-//	wsprintf(szPlain, "%d", n);
 	wsprintf(szPlain, "%llu", n); // long long unsigned
 
-	// this always prints 2 decimal places - lame!
+	// this always prints 2 decimal places
 //	::GetNumberFormat(LOCALE_USER_DEFAULT, 0, szPlain, NULL, szFormatted, nChars);
 	
 //	NUMBERFMT nf;
@@ -103,6 +93,7 @@ fc(ULONGLONG n)
 //	nf.NegativeOrder = 1;
 
 //	::GetNumberFormat(0, 0, szPlain, &nf, szFormatted, nChars);
+  
 	::GetNumberFormat(0, 0, szPlain, &g_nf, szFormatted, nChars);
 	return szFormatted;
 }
@@ -110,8 +101,7 @@ fc(ULONGLONG n)
 
 
 // Get global colors
-void 
-GetColors()
+void GetColors()
 {
 	g_clrWindow = ::GetSysColor(COLOR_WINDOW);
 	g_clrWindowText = ::GetSysColor(COLOR_WINDOWTEXT);
@@ -122,12 +112,7 @@ GetColors()
 	g_clr3dFace = ::GetSysColor(COLOR_3DFACE);
 	g_clr3dHighlight = ::GetSysColor(COLOR_3DHILIGHT);
 	g_clr3dShadow = ::GetSysColor(COLOR_3DSHADOW);
-//	g_clrHyperlinkText = 0x00d00030; // blue?
-//	g_clrHyperlinkText = 0x00f00000; // blue
-//	g_clrHyperlinkText = 0x004090a0; // brown
 	g_clrHyperlinkText = 0x0020a020; // green
-//	g_clrHyperlinkText = 0x00ff0000; // blue - doesn't work!
-//	g_clrHyperlinkText = RGB(0, 0, 255); // blue - "
 }
 
 
@@ -137,8 +122,7 @@ GetColors()
 // Use the SDK ::GetClassName() function because MFC IsKindOf fails if no CEdit variable 
 // has been created for the control you're trying to test.
 // This is used by cut copy paste code - see Q145616 in msdn 
-BOOL 
-IsEdit(CWnd *pWnd)
+BOOL IsEdit(CWnd *pWnd)
 {
 	ASSERT(pWnd);
 	HWND hWnd = pWnd->GetSafeHwnd();
@@ -157,8 +141,7 @@ IsEdit(CWnd *pWnd)
 
 
 // Function to convert unsigned char (byte) to string of length 2, eg 0xAE -> "AE"
-void 
-Char2Hex(const unsigned char ch, char* szHex)
+void Char2Hex(const unsigned char ch, char* szHex)
 {
 	unsigned char byte[2];
 	byte[0] = ch/16;
@@ -174,8 +157,7 @@ Char2Hex(const unsigned char ch, char* szHex)
 }
 
 // Function to convert string of length 2 to unsigned char, eg "B9" -> 0xB9
-void 
-Hex2Char(const char* szHex, unsigned char& rch)
+void Hex2Char(const char* szHex, unsigned char& rch)
 {
 	rch = 0;
 	for(int i=0; i<2; i++)
@@ -192,8 +174,7 @@ Hex2Char(const char* szHex, unsigned char& rch)
 }    
 
 // Function to convert string of unsigned chars to string of chars, eg 0x9E3D -> "9E3D"
-void 
-CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iSize)
+void CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iSize)
 {
 	int i;
 	char szHex[3];
@@ -206,8 +187,7 @@ CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iSize)
 }
 
 // Function to convert string of chars to string of unsigned chars, eg "9E3D" -> 0x9E3D
-void 
-HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, int iSize)
+void HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, int iSize)
 {
 	int i;
 	unsigned char ch;
@@ -223,12 +203,11 @@ HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, int iSize)
 
 // Use this to print debug strings that are longer than 512 characters.
 // TRACE is limited to 512 chars!
-// none of these work either
+// none of these work either:
 //	afxDump << (LPCTSTR) strNewText;
 //	afxDump.OutputString(strNewText);
 //	AfxOutputDebugString(strNewText);
-void 
-TRACESTRING(LPCTSTR szFormat, LPCTSTR szString)
+void TRACESTRING(LPCTSTR szFormat, LPCTSTR szString)
 {
 	CString strString = szString;
 	int nLen = strString.GetLength();
@@ -243,10 +222,10 @@ TRACESTRING(LPCTSTR szFormat, LPCTSTR szString)
 		TRACE(szFormat, szString);
 }
 
+
 // Output the given string to the given file.
 // Good for rtf debugging.
-void 
-TRACETOFILE(LPCTSTR szFilename, LPCTSTR szString)
+void TRACETOFILE(LPCTSTR szFilename, LPCTSTR szString)
 {
 	TRACE("Writing string to file %s...", szFilename);
 	CStdioFile f(szFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeText);
@@ -257,10 +236,8 @@ TRACETOFILE(LPCTSTR szFilename, LPCTSTR szString)
 
 
 // Get Windows error message
-CString 
-GetErrorMessage(DWORD dwError)
+CString GetErrorMessage(DWORD dwError)
 {
-//	LPVOID lpMsgBuf;
 	if (dwError == 0) 
 		dwError = ::GetLastError();
 
@@ -269,25 +246,16 @@ GetErrorMessage(DWORD dwError)
 	LPTSTR lpBuffer = s.GetBuffer(nChars);
 
 	::FormatMessage(
-//			FORMAT_MESSAGE_ALLOCATE_BUFFER | 
 			FORMAT_MESSAGE_FROM_SYSTEM | 
 			FORMAT_MESSAGE_IGNORE_INSERTS,
 			NULL,
 			dwError,
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-//			(LPTSTR) &lpMsgBuf,
-//			0,
 			lpBuffer,
 			nChars,
 			NULL 
 			);
 	
-	// Display the string.
-//	MessageBox( NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION );
-//	AfxMessageBox((LPCTSTR) lpMsgBuf, MB_OK | MB_ICONINFORMATION);
-	// Free the buffer.
-//	::LocalFree(lpMsgBuf);
-//	CString s = (LPCTSTR) lpMsgBuf;
 	s.ReleaseBuffer();
 
 	return s;
@@ -297,8 +265,7 @@ GetErrorMessage(DWORD dwError)
 
 
 
-void 
-HandleShellExecuteError(HINSTANCE h)
+void HandleShellExecuteError(HINSTANCE h)
 {
 	/* 
 	Returns a value greater than 32 if successful, or an error value that is less 
@@ -335,8 +302,7 @@ HandleShellExecuteError(HINSTANCE h)
 
 // Display last Windows error message
 // from msdev
-void 
-DisplayLastError(LPTSTR lpszFunction) 
+void DisplayLastError(LPTSTR lpszFunction) 
 { 
 	LPVOID lpMsgBuf;
 	LPVOID lpDisplayBuf;
@@ -353,10 +319,6 @@ DisplayLastError(LPTSTR lpszFunction)
 
 	lpDisplayBuf = LocalAlloc(LMEM_ZEROINIT, 
 		strlen( (const char*) lpMsgBuf) + strlen( (const char*) lpszFunction) + 40); 
-//	wsprintf((char*) lpDisplayBuf, 
-//		"%s failed with error %d: %s", 
-//		lpszFunction, dw, (char*) lpMsgBuf); 
-//	::MessageBox(NULL, (char*) lpDisplayBuf, "Error", MB_OK);
 	AfxMessageBox((LPCTSTR) lpMsgBuf, MB_ICONINFORMATION);
 
 	::LocalFree(lpMsgBuf);
@@ -366,108 +328,8 @@ DisplayLastError(LPTSTR lpszFunction)
 
 
 
-/*
-oops, see BrowseFolder in neomem.cpp
 
-//*********************************************************************************
-// Function name		- GetFolder
-// Description			- Get a folder path
-// Дата модификации		- 25.09.2000
-// Кем модифицирована	- S. Sokolenko
-// In					-
-//						  strSelectedFolder - reference to string for store folder path
-// Out				-
-//						  lpszTitle - title for caption
-//						  hwndOwner - reference to parent window 
-//						  strRootFolder - root folder 
-//						  strStartFolder - current foldet
-// Return				- TRUE if user select OK, else FALSE.
-//*********************************************************************************
-CString strTmpPath;
-
-int CALLBACK BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData)
-{
-	TCHAR szDir[MAX_PATH];
-	switch(uMsg){
-	case BFFM_INITIALIZED:
-		if (lpData){
-			strcpy(szDir, strTmpPath.GetBuffer(strTmpPath.GetLength()));
-			SendMessage(hwnd,BFFM_SETSELECTION,TRUE,(LPARAM)szDir);
-		}
-		break;
-	case BFFM_SELCHANGED: {
-	   if (SHGetPathFromIDList((LPITEMIDLIST) lParam ,szDir)){
-		  SendMessage(hwnd,BFFM_SETSTATUSTEXT,0,(LPARAM)szDir);
-	   }
-	   break;
-	}
-	default:
-	   break;
-	}
-         
-	return 0;
-}
-
-BOOL GetFolder(CString* strSelectedFolder,
-				   const char* lpszTitle,
-				   const HWND hwndOwner, 
-				   const char* strRootFolder, 
-				   const char* strStartFolder)
-{
-	char pszDisplayName[MAX_PATH];
-	LPITEMIDLIST lpID;
-	BROWSEINFOA bi;
-	
-	bi.hwndOwner = hwndOwner;
-	if (strRootFolder == NULL){
-		bi.pidlRoot = NULL;
-	}else{
-	   LPITEMIDLIST  pIdl = NULL;
-	   IShellFolder* pDesktopFolder;
-	   char          szPath[MAX_PATH];
-	   OLECHAR       olePath[MAX_PATH];
-	   ULONG         chEaten;
-	   ULONG         dwAttributes;
-
-	   strcpy(szPath, (LPCTSTR)strRootFolder);
-	   if (SUCCEEDED(SHGetDesktopFolder(&pDesktopFolder)))
-	   {
-		   MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szPath, -1, olePath, MAX_PATH);
-		   pDesktopFolder->ParseDisplayName(NULL, NULL, olePath, &chEaten, &pIdl, &dwAttributes);
-		   pDesktopFolder->Release();
-	   }
-	   bi.pidlRoot = pIdl;
-	}
-	bi.pszDisplayName = pszDisplayName;
-	bi.lpszTitle = lpszTitle;
-	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT;
-	bi.lpfn = BrowseCallbackProc;
-	if (strStartFolder == NULL){
-		bi.lParam = FALSE;
-	}else{
-		strTmpPath.Format("%s", strStartFolder);
-		bi.lParam = TRUE;
-	}
-	bi.iImage = NULL;
-	lpID = SHBrowseForFolderA(&bi);
-	if (lpID != NULL){
-		BOOL b = SHGetPathFromIDList(lpID, pszDisplayName);
-		if (b == TRUE){
-			strSelectedFolder->Format("%s",pszDisplayName);
-			return TRUE;
-		}
-	}else{
-		strSelectedFolder->Empty();
-	}
-	return FALSE;
-}
-
-*/
-
-
-
-void 
-pause()
+void pause()
 {
 //	Sleep(2000); // sleep for 2 seconds
 
@@ -480,13 +342,9 @@ pause()
 
 
 
-
-
-
-
 // Throw an assertion (pass as an application exception)
-// actually, why throw it, when you could just call HandleError directly!??
-// oh, because throwing an exception will stop the program, but calling a routine
+// actually, why throw it, when you could just call HandleError directly?
+// because throwing an exception will stop the program, but calling a routine
 // will just return it to that place (since we're using WM_CLOSE to exit the app,
 // which isn't appropriate sometimes...). So use ShowError for a recoverable error. 
 
@@ -495,15 +353,14 @@ pause()
 // exception mechanism bypasses the normal exit path from a function. Therefore, 
 // you must be sure to delete those memory blocks that would be deleted in a 
 // normal exit. 
-void 
-ThrowAssertion(LPCSTR lpszFilename, int nLine, 
+void ThrowAssertion(LPCSTR lpszFilename, int nLine, 
 				LPCSTR lpszExpression, LPCSTR lpszError/*=NULL*/)
 {
-//	CAppException* pe = new CAppException(TRUE); // pass true if creating on the heap!
-	// Bug: can't just copy LPCTSTR pointer to string, because it might be a temporary object!!
+//	CAppException* pe = new CAppException(TRUE); // pass true if creating on the heap
+	// Bug: can't just copy LPCTSTR pointer to string, because it might be a temporary object.
 	// The error message was getting overwritten with FE EE's and didn't know what was going on - 
-	// a CString was being passed here and then going out of scope because of the throw! 
-	// So use strcpy or CStrings!
+	// a CString was being passed here and then going out of scope because of the throw - 
+	// so use strcpy or CStrings
 //	pe->m_pszError = pszError; // store error message
 //	pe->m_strError = "Assertion Failed";
 //	throw pe;
@@ -528,28 +385,5 @@ ThrowAssertion(LPCSTR lpszFilename, int nLine,
 }
 
 
-
-
-
-
-// Assertion functions used in release mode
-
-/*
-void ExitApp()
-{
-	// same as double-clicking on main window close box
-//	ASSERT(AfxGetApp()->m_pMainWnd != NULL);
-	AfxGetApp()->m_pMainWnd->SendMessage(WM_CLOSE);
-} 
-
-void XAssertValid(const CObject* pobj)
-{
-	if (!pobj)
-	{
-		AfxMessageBox("ERROR! An assertion failed due to a null pointer. This is a test version and doesn't have rigorous error handling. To be safe you should just shut down your computer now. Otherwise, the program will try to close normally.", MB_ICONEXCLAMATION);
-		ExitApp();
-	}
-}
-*/
 
 

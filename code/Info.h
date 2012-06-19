@@ -25,7 +25,6 @@ public:
 	CString& GetDiskSpaceAvailable();
 
 	CString& GetWindowsVersion();
-//	CString& GetCommonControlsVersion();
 	float GetCommonControlsVersionNumber();
 	float GetRichEditVersionNumber();
 	LPCTSTR GetRichEditVersionString();
@@ -34,7 +33,6 @@ public:
 	CString& GetProgramVersion();
 	CString& GetProgramBuild();
 	CString& GetProgramCopyright();
-//	CString& GetProgramDate();
 	int GetProgramVersionNumber();
 
 	CString& GetMemoryAvailable();
@@ -52,11 +50,7 @@ private:
 	float m_fRichEditVersionNumber; // eg 5.30
 	CString m_strRichEditVersion; // full version info eg "5.30.23.1203"
 
-//	CString m_strCommonControlsVersion;
 	BOOL m_bUnicode;
-//	WORD m_wCommonMajor;
-//	WORD m_wCommonMinor;
-//	DWORD m_dwCommon;
 //	CString m_strLanguageName;
 	CString m_strLocaleName;
 	CString m_strLocaleInfo;
@@ -67,7 +61,7 @@ private:
 	CString m_strProgramBuild; // eg Build 92 (2006/01/02)
 	CString m_strProgramCopyright;
 	CTime m_tProgramDate;
-//	CString m_strProgramDate;
+  
 	int m_nMajor;
 	int m_nMinor;
 	int m_nRevision;

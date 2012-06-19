@@ -29,20 +29,19 @@ END_MESSAGE_MAP()
 
 //CMDITrayFrame::CMDITrayFrame(UINT uIDD,CWnd* pParent /*=NULL*/)
 //	: CMDIFrameWnd(uIDD, pParent)
-CMDITrayFrame::CMDITrayFrame()
+CMDITrayFrame::CMDITrayFrame() :
+	m_bTrayIconVisible(FALSE),
+	m_nDefaultMenuItem(0),
+	m_bMinimizeToTray(FALSE)
 {
 	m_nidIconData.cbSize = sizeof(NOTIFYICONDATA);
 //	m_nidIconData.cbSize = NOTIFYICONDATA_V1_SIZE; //` make sure we're using win95 compatible version
+	m_nidIconData.szTip[0] = 0;	
 	m_nidIconData.hWnd = 0;
 	m_nidIconData.uID = 1;
 	m_nidIconData.uCallbackMessage = WM_TRAY_ICON_NOTIFY_MESSAGE;
 	m_nidIconData.hIcon = 0;
-	m_nidIconData.szTip[0] = 0;	
 	m_nidIconData.uFlags = NIF_MESSAGE;
-
-	m_bTrayIconVisible = FALSE;
-	m_nDefaultMenuItem = 0;
-	m_bMinimizeToTray = FALSE;
 }
 
 
@@ -87,10 +86,9 @@ BOOL CMDITrayFrame::AddIcon(UINT uID, UINT uIconID, LPCTSTR szTooltip, UINT uMen
 	m_nidIconData.uID = uID;
 	m_nidIconData.uFlags = NIF_MESSAGE;
 
-	// Bug: System tray icon was all screwy - bad colors and blotchy - Deja said to use LoadImage instead
-	// of LoadIcon and it fixed it. Also said to make sure the icon you use has just one size in it (the 16x16)
+	// bug: system tray icon was messed up - bad colors and blotchy - deja said to use loadimage instead
+	// of loadicon and it fixed it. also said to make sure the icon you use has just one size in it (the 16x16)
 	// and 16 colors. 
-//	HICON hIcon = AfxGetApp()->LoadIcon(uIconID);
 	HICON hIcon = (HICON) ::LoadImage(AfxGetApp()->m_hInstance, 
 								MAKEINTRESOURCE(uIconID), IMAGE_ICON, 16, 16, 0);
 	if (hIcon)
@@ -99,7 +97,6 @@ BOOL CMDITrayFrame::AddIcon(UINT uID, UINT uIconID, LPCTSTR szTooltip, UINT uMen
 		m_nidIconData.uFlags |= NIF_ICON;
 	}
 
-//	strcpy(m_nidIconData.szTip, szTooltip);
 	strcpy_s(m_nidIconData.szTip, szTooltip);
 	m_nidIconData.uFlags |= NIF_TIP;
 
@@ -141,136 +138,11 @@ BOOL CMDITrayFrame::HideIcon(UINT uID)
 
 
 
-/*
-void CMDITrayFrame::TraySetIcon(HICON hIcon)
-{
-	ASSERT(hIcon);
-
-	m_nidIconData.hIcon = hIcon;
-	m_nidIconData.uFlags |= NIF_ICON;
-}
-*/
-
-/*
-void CMDITrayFrame::TraySetIcon(UINT nResourceID)
-{
-	ASSERT(nResourceID>0);
-	HICON hIcon = 0;
-	hIcon = AfxGetApp()->LoadIcon(nResourceID);
-	if (hIcon)
-	{
-		m_nidIconData.hIcon = hIcon;
-		m_nidIconData.uFlags |= NIF_ICON;
-	}
-	else
-	{
-		TRACE0("FAILED TO LOAD ICON\n");
-	}
-}
-*/
-
-/*
-void CMDITrayFrame::TraySetIcon(LPCTSTR lpszResourceName)
-{
-	HICON hIcon = 0;
-	hIcon = AfxGetApp()->LoadIcon(lpszResourceName);
-	if (hIcon)
-	{
-		m_nidIconData.hIcon = hIcon;
-		m_nidIconData.uFlags |= NIF_ICON;
-	}
-	else
-	{
-		TRACE0("FAILED TO LOAD ICON\n");
-	}
-}
-
-void CMDITrayFrame::TraySetToolTip(LPCTSTR lpszToolTip)
-{
-	ASSERT(strlen(lpszToolTip) > 0 && strlen(lpszToolTip) < 64);
-
-	strcpy(m_nidIconData.szTip, lpszToolTip);
-	m_nidIconData.uFlags |= NIF_TIP;
-}
-
-
-BOOL CMDITrayFrame::TrayShow()
-{
-	BOOL bSuccess = FALSE;
-	if (!m_bTrayIconVisible)
-	{
-		bSuccess = Shell_NotifyIcon(NIM_ADD, &m_nidIconData);
-		if (bSuccess)
-			m_bTrayIconVisible= TRUE;
-	}
-	else
-	{
-		TRACE0("ICON ALREADY VISIBLE");
-	}
-	return bSuccess;
-}
-
-
-BOOL CMDITrayFrame::TrayHide()
-{
-	BOOL bSuccess = FALSE;
-	if (m_bTrayIconVisible)
-	{
-		bSuccess = Shell_NotifyIcon(NIM_DELETE, &m_nidIconData);
-		if (bSuccess)
-			m_bTrayIconVisible= FALSE;
-	}
-	else
-	{
-		TRACE0("ICON ALREADY HIDDEN");
-	}
-	return bSuccess;
-}
-
-
-BOOL CMDITrayFrame::TrayUpdate()
-{
-	BOOL bSuccess = FALSE;
-	if (m_bTrayIconVisible)
-	{
-		bSuccess = Shell_NotifyIcon(NIM_MODIFY, &m_nidIconData);
-	}
-	else
-	{
-		TRACE0("ICON NOT VISIBLE");
-	}
-	return bSuccess;
-}
-
-
-BOOL CMDITrayFrame::TraySetMenu(UINT nResourceID,UINT nDefaultPos)
-{
-	BOOL bSuccess;
-	bSuccess = m_mnuTrayMenu.LoadMenu(nResourceID);
-	return bSuccess;
-}
-
-
-BOOL CMDITrayFrame::TraySetMenu(LPCTSTR lpszMenuName,UINT nDefaultPos)
-{
-	BOOL bSuccess;
-	bSuccess = m_mnuTrayMenu.LoadMenu(lpszMenuName);
-	return bSuccess;
-}
-
-
-BOOL CMDITrayFrame::TraySetMenu(HMENU hMenu,UINT nDefaultPos)
-{
-	m_mnuTrayMenu.Attach(hMenu);
-	return TRUE;
-}
-*/
-
-
 // bug: 2009-12-24 had void instead of LRESULT. search Q195032. very nasty. 
 // would cause weird crashes via stack corruption in release version, 
-// not debug version. great. just moving the mouse over the tray icon 
-// would have been enough to cause problems. sheesh.
+// not debug version. just moving the mouse over the tray icon 
+// would have been enough to cause problems. 
+// code from codeproject
 LRESULT CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam) 
 { 
     UINT uID; 
@@ -279,8 +151,6 @@ LRESULT CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam)
     uID = (UINT) wParam; 
     uMsg = (UINT) lParam; 
  
-//	if (uID != 1)
-//		return;
 	if (uID < 1) return NULL;
 	
 	CPoint pt;	
@@ -324,37 +194,14 @@ LRESULT CMDITrayFrame::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 
 void CMDITrayFrame::OnSysCommand(UINT nID, LPARAM lParam)
 {
-/*
-	if (m_bMinimizeToTray)
-	{
-		if ((nID & 0xFFF0) == SC_MINIMIZE)
-		{
-			if (TrayShow())
-				this->ShowWindow(SW_HIDE);
-		}
-		else
-			CMDIFrameWnd::OnSysCommand(nID, lParam);	
-	}
-	else
-*/
 		CMDIFrameWnd::OnSysCommand(nID, lParam);
 }
-
-
-/*
-void CMDITrayFrame::TraySetMinimizeToTray(BOOL bMinimizeToTray)
-{
-	m_bMinimizeToTray = bMinimizeToTray;
-}
-*/
 
 
 
 void CMDITrayFrame::OnTrayRButtonUp(UINT uID, CPoint pt)
 {
 	// Show popup menu, setting default item
-//	m_mnuTrayMenu.GetSubMenu(0)->SetDefaultItem(m_nDefaultMenuItem, TRUE);
-//	m_mnuTrayMenu.GetSubMenu(0)->TrackPopupMenu(TPM_BOTTOMALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON, pt.x, pt.y, this);
 	CMenu mnu;
 	UINT uMenuID = m_auMenuIDs.GetAt(uID);
 	if (mnu.LoadMenu(uMenuID))
@@ -370,7 +217,6 @@ void CMDITrayFrame::OnTrayLButtonUp(UINT uID, CPoint pt)
 {
 	if (uID == 1)
 	{
-//		if (TrayHide())
 		HideIcon(1);
 		this->ShowWindow(SW_SHOW);
 	}
@@ -379,11 +225,6 @@ void CMDITrayFrame::OnTrayLButtonUp(UINT uID, CPoint pt)
 
 void CMDITrayFrame::OnTrayLButtonDblClk(UINT uID, CPoint pt)
 {
-//	if (m_bMinimizeToTray)
-//		if (TrayHide())
-//			this->ShowWindow(SW_SHOW);
-//	if (TrayHide())
-//		this->ShowWindow(SW_SHOW);
 }
 
 

@@ -1,11 +1,12 @@
 
 // CListCtrlEx
-// This class extends the CListCtrl class.
-// a bit rummy though, because it knows about bobjects etc.
+// This class extends the CListCtrl class to handle BObjects.
 // Date: February 2000
 //-----------------------------------------------------------------------------------------------------------------
 
-// IMPORTANT: Need to set m_pDoc because various routines need it!!!!
+// currently knows about bobjects and columns etc. make it pure ui. 
+
+// IMPORTANT: Need to set m_pDoc because various routines need it!
 
 // To have a dummy new row, you must set m_bDummyRow = TRUE and assign
 // the index of the new row icon to m_nNewIconIndex.
@@ -15,11 +16,12 @@
 //  gray and won't let user change their checkbox)
 
 
+//, listviews can have state columns - eg could indicate if an item had children
+//, or could indicate that with an overlay
+
+
 //-----------------------------------------------------------------------------------------------------------------
 
-
-//, listviews can have state columns - could indicate if an item had children
-//, or could indicate that with an overlay
 
 
 #pragma once
@@ -27,7 +29,6 @@
 
 class BDataColumns;
 class BDataLink;
-//class BObject;
 class BObjects;
 class CNeoDoc;
 #include "BData.h"
@@ -57,7 +58,7 @@ public:
 	virtual ~CListCtrlEx();
 
 	// Enums
-	enum eRowConstants {keyDummyRow = 0}; // -3}; // 0};
+	enum eRowConstants {keyDummyRow = 0}; 
 
 	// these must be shifted 8 bits to the left to fit in the LVIS_OVERLAYMASK bits
 	enum eItemStates {stateNone = 0, stateDisabled = 1 << 8}; // used with GetItemState(LVIS_STATEIMAGEMASK)
@@ -90,7 +91,6 @@ public:
 	int AddObject(BObject *pobj, BObject *pobjParent = NULL);
 	void ClearSelections();
 	void ClearSortMemory();
-//	void CopyColumnInfo();
 	BOOL CopyCurrentCellToClipboard();
 	BOOL CopyToClipboard(BOOL bIncludeHeaders);
 	BOOL CutCurrentCellToClipboard();
@@ -118,7 +118,6 @@ public:
 	ULONG GetSelectedObjectID();
 	int HitTestEx(CPoint &pt, int* pnCol) const;
 	int IndexToOrder(int nColIndex);
-//	int InsertColumnAsk(BObject* pobjParent, int nCol = -1);
 	int InsertColumnAsk(OBJID idProperty = 0, int nCol = -1, BObject* pobjParent = NULL);
 	int InitializeColumns(BDataColumns* pdatColumns, BOOL bExpandLastColumn = FALSE, BOOL bSaveChangesAutomatically = FALSE);
 	void InvalidateCurrentCell();
@@ -172,9 +171,6 @@ public:
 	// Columns
 	// Note: The listview never owns a bdata object - it always points to someone else's!
 	BDataColumns* m_pdatColumns; // Pointer to column arrangement info
-//	BOOL m_bColumnInfoChanged; // Flag indicating if user changed column order or widths, etc.
-//	BOOL m_bColumnInfoCopied; // Flag to keep track of if we copied the column info array yet
-//	BOOL m_bColumnInfoSaved; // Flag to keep track of if destructor needs to delete the bdata
 	BOOL m_bColumnsChanged; // Flag indicating if user changed column order or widths, etc.
 	BOOL m_bSaveChangesAutomatically; // If True, listview will save any changes directly to m_pdatColumns as they are made.
 
@@ -186,14 +182,6 @@ public:
 	int m_iSortDirection; // Direction of sort (1=ascending, -1=descending)
 
 private:
-//	CObArray m_aobjProps; // Array of properties represented by columns
-//	BOOL m_bBackgroundDrawn;
-//	BOOL m_blnDragging;
-//	BOOL m_blnDraggingRight;
-//	CImageList* m_pDragImageList; // Pointer to image list created by drag operations
-//	int m_nDragItem; // Item being dragged
-//	int m_nDropItem; // Item being dropped onto
-//	int m_nPopup;	// Stores node in tree right clicked on
 	
 	BOOL m_bMouseDown; // Used in drag drop
 	CPoint m_ptDragStart; // Start point for drag drop - user must move a certain distance from this to register as drag start.
@@ -205,7 +193,6 @@ private:
 	CUIntArray m_anRowLines;
 	UINT m_nPrintLinesTotal;
 	UINT m_nPrintLinesPerPage;
-//	UINT m_nPrintLineHeight;
 
 
 	// Implementation
@@ -232,12 +219,10 @@ private:
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnNotifyClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnKillFocus(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNotifyDeleteItem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNotifyDeleteAllItems(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnNotifyRClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnNotifyItemChanging(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

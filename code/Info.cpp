@@ -7,7 +7,6 @@
 #include "Info.h"
 
 #include "FileVersion.h"
-//#include "RegKey.h"
 #include "ModuleVersion.h"
 
 
@@ -85,14 +84,14 @@ CInfo::CInfo() :
 	m_bUnicode (FALSE),
 	m_fCommonControlsVersionNumber (0),
 	m_fRichEditVersionNumber (0),
-//	m_i64DiskFreeSpace (0),
 	m_lngProcessorSpeed (0),
-//	m_ms (0),
 	m_nMajor (0),
 	m_nMinor (0),
 	m_nRevision (0)
-//	m_tProgramDate (0)
 {
+  //,
+//	m_i64DiskFreeSpace = 0;
+//	m_ms = 0;
 }
 
 CInfo::~CInfo()
@@ -169,15 +168,6 @@ CString& CInfo::GetProgramCopyright()
 }
 
 
-/*
-// Gets program .exe modified date eg "15 June 2002"
-CString& CInfo::GetProgramDate()
-{
-	LoadProgramInfo();
-	return m_strProgramDate;
-}
-*/
-
 
 // Get version number in integer form, eg for version 1.3.20 will return 1320.
 int CInfo::GetProgramVersionNumber()
@@ -195,15 +185,10 @@ int CInfo::GetProgramVersionNumber()
 CString& CInfo::GetMemoryAvailable()
 {
 	LoadMemoryInfo();
-//	float fMBAvail = m_ms.dwTotalVirtual/1024.0f/1024.0f;
-//	float fMBAvail = m_ms.dwAvailVirtual/1024.0f/1024.0f;
 	float fAvailVirtual = m_ms.dwAvailVirtual/1024.0f/1024.0f;
 	float fTotalVirtual = m_ms.dwTotalVirtual/1024.0f/1024.0f;
 	float fAvailPhys = m_ms.dwAvailPhys/1024.0f/1024.0f;
 	float fTotalPhys = m_ms.dwTotalPhys/1024.0f/1024.0f;
-//	m_strMemoryAvailable.Format("%.1fMB", fTotalVirtual);
-//	m_strMemoryAvailable.Format("%.1fMB", fAvailVirtual);
-//	m_strMemoryAvailable.Format("%.1fMB Virtual Memory Available", fMBAvail);
 	m_strMemoryAvailable.Format("%.1fMB of %.1fMB Virtual Memory Available, %.1fMB or %.1fMB Physical Memory Available", 
 		fAvailVirtual, fTotalVirtual, fAvailPhys, fTotalPhys
 		);
@@ -217,7 +202,6 @@ CString& CInfo::GetVirtualMemory()
 	LoadMemoryInfo();
 	float fAvailVirtual = m_ms.dwAvailVirtual/1024.0f/1024.0f;
 	float fTotalVirtual = m_ms.dwTotalVirtual/1024.0f/1024.0f;
-//	m_strVirtualMemory.Format("%.1fMB of %.1fMB Available", fAvailVirtual, fTotalVirtual);
 	m_strVirtualMemory.Format("%.0fMB of %.0fMB Virtual", fAvailVirtual, fTotalVirtual);
 	return m_strVirtualMemory;
 }
@@ -227,7 +211,6 @@ CString& CInfo::GetPhysicalMemory()
 	LoadMemoryInfo();
 	float fAvailPhys = m_ms.dwAvailPhys/1024.0f/1024.0f;
 	float fTotalPhys = m_ms.dwTotalPhys/1024.0f/1024.0f;
-//	m_strPhysicalMemory.Format("%.1fMB of %.1fMB Available", fAvailPhys, fTotalPhys);
 	m_strPhysicalMemory.Format("%.0fMB of %.0fMB Physical", fAvailPhys, fTotalPhys);
 	return m_strPhysicalMemory;
 }
@@ -355,29 +338,8 @@ void CInfo::LoadWindowsInfo()
 				//for unknown windows/newest windows version
 				m_strWindowsVersion = _T("Windows ");
 
-			// Test for workstation versus server
-//			if (bOsVersionInfoEx)
-//			{
-//				if (osvi.wProductType == VER_NT_WORKSTATION)
-//					m_strPlatform += "Professional ";
-//				if (osvi.wProductType == VER_NT_SERVER)
-//					m_strPlatform += "Server ";
-//			}
-//			else
-//			{
-//				HKEY hKey;
-//				char szProductType[80];
-//				DWORD dwBufLen;
-//				::RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\ProductOptions",
-//						0, KEY_QUERY_VALUE, &hKey);
-//				::RegQueryValueEx(hKey, "ProductType", NULL, NULL, (LPBYTE) szProductType, &dwBufLen);
-//				::RegCloseKey(hKey);
-//				if (lstrcmpi( "WINNT", szProductType) == 0)
-//					m_strPlatform += "Workstation ";
-//				if (lstrcmpi( "SERVERNT", szProductType) == 0)
-//					m_strPlatform += "Server ";
-//			}
-
+      //, handle vista and 7
+      
 		}
 		break;
 
@@ -424,9 +386,6 @@ void CInfo::LoadWindowsInfo()
 	DWORD dwVersion = GetDllVersion(szLibraryName);
 	WORD wMajor = HIWORD(dwVersion);
 	WORD wMinor = LOWORD(dwVersion);
-//	CString str;
-//	str.Format("%d.%d", wMajor, wMinor);
-//	m_fCommonControlsVersionNumber = (float) atof(str); //... tchar???
 	m_fCommonControlsVersionNumber = (float) ((float) wMajor + (float) wMinor / 100.0f);
 
 
@@ -444,16 +403,11 @@ void CInfo::LoadWindowsInfo()
 	}
 	else
 	{
+    //,
 //		ver.GetFileVersionInfo(_T("Riched32.dll")); // this might return 5.0, so just set manually
 		m_strRichEditVersion = "1.0";
 		m_fRichEditVersionNumber = 1.0f;
 	}
-
-	// Check for richedit enhanced features
-//	LPCTSTR szEnhancedFeatures = "";
-//	if (m_fRichEditVersionNumber < 5.0f)
-//		szEnhancedFeatures = "(Enhanced features not available)";
-
 
 	//, Get cryptographic provider version info
 	// To determine the actual version of the provider in use, call CryptGetProvParam with the 
@@ -467,9 +421,6 @@ void CInfo::LoadWindowsInfo()
 
 
 
-// maybe it's better to just hardcode the labels for now
-// fill a structure with program, company, version, release date, etc. info
-// will be used by about dialog and error log
 void CInfo::LoadProgramInfo()
 {
 	// Only need to update once
@@ -492,17 +443,8 @@ void CInfo::LoadProgramInfo()
 		return;
 	}
 
-	// Get program date
-	// 1.1d not a reliable way of getting the build date!
-//	CFileStatus fs;
-//	f.GetStatus(fs);
-//	m_tProgramDate = fs.m_mtime;
-//	m_strProgramDate = m_tProgramDate.Format("%#d %B %Y"); // eg 15 June 2002
-
 	// Get some strings
 	f.GetVersionValue("ProductName", m_strProgramName); // eg "NeoMem"
-//	f.GetVersionValue("ProductVersion", m_strProgramVersion); // eg "0.9"
-//	f.GetVersionValue("FileVersion", m_strFileVersion); // eg "0.9f"
 	f.GetVersionValue("LegalCopyright", m_strProgramCopyright); // eg "Copyright (c) 2001-2004 NeoMem.org"
 //	"CompanyName"
 //	"FileDescription"
@@ -512,15 +454,11 @@ void CInfo::LoadProgramInfo()
 
 	CString str;
 	f.GetVersionValue("ProductVersion", str); // eg "0.9i, Build 77 (2006-01-02)"
-//	m_strProgramVersion = str.Left(str.GetLength() - 1); // eg "0.9"
-//	m_strProgramBuild = str.Right(1); // eg "i"
-//	m_strProgramVersion = str.Left(3); // eg "0.9"
-//	m_strProgramBuild = str.Mid(3); // eg "i (build 77)"
 	int nComma = str.Find(_T(','));
 	m_strProgramVersion = str.Left(nComma); //  eg "0.9i"
 	m_strProgramBuild = str.Mid(nComma+2); // eg "Build 77 (2006-01-02)"
 
-	//. Get version numbers from version # binary resource (two long ints)
+	//, Get version numbers from version # binary resource (two long ints)
 	// Specifies the binary version number for the file. The version consists of two 32-bit integers, 
 	// defined by four 16-bit integers. For example, "FILEVERSION 3,10,0,61" is translated into two 
 	// doublewords: 0x0003000a and 0x0000003d, in that order. Therefore, if version is defined by 
@@ -605,7 +543,6 @@ void CInfo::LoadDiskInfo()
 		// the drive letter and colon. This is required on Windows 95 and 98.      
 		if (m_strDrive[1] == ':')
 		{
-//			m_strDrive = m_strDrive.Left(1) + ":\\";
 			m_strDrive = m_strDrive.Left(1) + ":"; // eg "C:"
 			strDrive = m_strDrive + "\\"; // eg "C:\\"
 		}
@@ -631,7 +568,6 @@ void CInfo::LoadDiskInfo()
 		ULARGE_INTEGER i64FreeBytesToCaller; // Windows 2000: If per-user quotas are in use, this value may be less than the total number of free bytes on the disk. 
 		ULARGE_INTEGER i64TotalBytes; // Windows 2000: If per-user quotas are in use, this value may be less than the total number of bytes on the disk. 
 		ULARGE_INTEGER i64FreeBytes;
-//		bResult = ::GetDiskFreeSpaceEx(m_strDrive, &i64FreeBytesToCaller, &i64TotalBytes, &i64FreeBytes);
 		bResult = ::GetDiskFreeSpaceEx(strDrive, &i64FreeBytesToCaller, &i64TotalBytes, &i64FreeBytes);
 		if (bResult)
 		{
@@ -650,18 +586,16 @@ void CInfo::LoadDiskInfo()
 		DWORD dwBytesPerSector; 
 		DWORD dwFreeClusters; 
 		DWORD dwTotalClusters; 
-//		bResult = ::GetDiskFreeSpace(m_strDrive, &dwSectorsPerCluster, &dwBytesPerSector, &dwFreeClusters, &dwTotalClusters);
 		bResult = ::GetDiskFreeSpace(strDrive, &dwSectorsPerCluster, &dwBytesPerSector, &dwFreeClusters, &dwTotalClusters);
 		if (bResult)
 		{
-//			m_i64DiskTotalSpace = (__int64)dwTotalClusters * dwSectPerClust * dwBytesPerSect;
-            m_i64DiskFreeSpace.QuadPart = (__int64)dwFreeClusters * dwSectorsPerCluster * dwBytesPerSector;
+      m_i64DiskFreeSpace.QuadPart = (__int64)dwFreeClusters * dwSectorsPerCluster * dwBytesPerSector;
 		}
 	}
 
 	if (!bResult)
 	{
-		// Error - could not get free space for ...
+		//, Error - could not get free space for ...
 //		AfxMessageBox("error!");
 	}
 	
@@ -679,22 +613,10 @@ void CInfo::LoadProcessorInfo()
 	CString strRawClockFrequency;
 	CTimer timer;
 
-//	long tickslong;
-//	long tickslongextra;
-
 	timer.Start();
 	Sleep(1000);
 	unsigned cpuspeed100 = (unsigned)(timer.Stop()/10000);
-//	tickslong = cpuspeed100/100;
 	m_lngProcessorSpeed = cpuspeed100/100;
-//	tickslongextra = cpuspeed100 - (tickslong*100);
-//	strRawClockFrequency.Format("%d.%d   MHz   estimate ", tickslong,tickslongextra);
-//	strRawClockFrequency.Format("%d MHz", tickslong);
-//	m_strProcessorSpeed.Format("%d MHz", tickslong);
-//	m_RawClockFrequencyControl.SetWindowText(strRawClockFrequency);	
-
-//	m_strProcessorVendor = GetProfileString(szSettings, szRegistrationName, ""); // eg "GenuineIntel"
-//	m_strProcessorIdentifier = GetProfileString(szSettings, szRegistrationName, ""); // eg "Pentium(r) II Processor"
 
 	CRegKey r;
 	LPTSTR psz;
@@ -758,7 +680,6 @@ CString& CInfo::GetLocaleInfo()
 	::GetLocaleInfo(nLocale, LOCALE_SENGLANGUAGE, pszLocaleName, nChars);
 	m_strLocaleName.ReleaseBuffer();
 
-//	m_strLocaleInfo.Format("LocaleID=%x LanguageID=%x", nLocale, nLanguage);
 	m_strLocaleInfo.Format("LocaleID=%x (%s) LanguageID=%x", nLocale, (LPCTSTR) m_strLocaleName, nLanguage);
 
 	return m_strLocaleInfo;

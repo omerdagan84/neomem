@@ -1,5 +1,6 @@
 
 // MirrorFileEx.cpp: implementation of the CMirrorFileEx class.
+// Copy of MFC's CMirrorFile class
 
 
 #include "precompiled.h"

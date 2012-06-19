@@ -23,20 +23,8 @@ public:
 	BOOL AddIcon(UINT uID, UINT uIconID, LPCTSTR szTooltip, UINT uMenuID);
 	BOOL HideIcon(UINT uID);
 	BOOL UpdateIcon(UINT uID, UINT uIconID);
-//	void TraySetMinimizeToTray(BOOL bMinimizeToTray = TRUE);
-//	BOOL TraySetMenu(UINT nResourceID,UINT nDefaultPos=0);	
-//	BOOL TraySetMenu(HMENU hMenu,UINT nDefaultPos=0);	
-//	BOOL TraySetMenu(LPCTSTR lpszMenuName,UINT nDefaultPos=0);	
-//	BOOL TrayUpdate();
-//	BOOL TrayShow();
-//	BOOL TrayHide();
-//	void TraySetToolTip(LPCTSTR lpszToolTip);
-//	void TraySetIcon(HICON hIcon);
-//	void TraySetIcon(UINT nResourceID);
-//	void TraySetIcon(LPCTSTR lpszResourceName);
 
 	BOOL TrayIsVisible();
-//	CMDITrayFrame(UINT uIDD,CWnd* pParent = NULL);   // standard constructor
 	CMDITrayFrame();   // standard constructor
 	
 	virtual void OnTrayLButtonUp(UINT uID, CPoint pt);

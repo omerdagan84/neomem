@@ -44,9 +44,7 @@ BEGIN_MESSAGE_MAP(CListCtrlEx, CListCtrl)
 	ON_WM_HSCROLL()
 	ON_WM_CHAR()
 	ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
-	ON_NOTIFY_REFLECT(NM_CLICK, OnNotifyClick)
 	ON_NOTIFY_REFLECT(NM_KILLFOCUS, OnKillFocus)
-	ON_NOTIFY_REFLECT(NM_RCLICK, OnNotifyRClick)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnNotifyDeleteItem)
 	ON_NOTIFY_REFLECT(LVN_DELETEALLITEMS, OnNotifyDeleteAllItems)
 	ON_NOTIFY_REFLECT(LVN_ITEMCHANGING, OnNotifyItemChanging)
@@ -66,8 +64,8 @@ BEGIN_MESSAGE_MAP(CListCtrlEx, CListCtrl)
 	//}}AFX_MSG_MAP
 	ON_NOTIFY(NM_RCLICK, 0, OnColumnRClick)
 	ON_UPDATE_COMMAND_UI(ID_COLUMN_SORT_CLEAR, OnUpdateColumnSortClear)
-	// What a pain in the ass - don't ask me why this works, it just does.
-	// This is for changing the width of a header, etc.
+	// don't ask me why this works, it just does.
+	// this is for changing the width of a header, etc.
 //	ON_NOTIFY_EX(HDN_ITEMCHANGED, 0, OnHeaderItemChanged)
 	ON_NOTIFY_EX(HDN_ITEMCHANGEDW, 0, OnHeaderItemChanged)
 	ON_NOTIFY_EX(HDN_ITEMCHANGEDA, 0, OnHeaderItemChanged)
@@ -79,49 +77,48 @@ END_MESSAGE_MAP()
 // Construction/Destruction
 //---------------------------------------------------------------------------
 
-CListCtrlEx::CListCtrlEx()
-{
-	m_pDoc = 0;
+CListCtrlEx::CListCtrlEx() :
+	m_pDoc(0),
 
 	// Flags for mode of listview
-	m_nMode = modeNormalListView;
-	m_nFocusState = fsNone;
-	m_bExpandLastColumn = FALSE;
-	m_bExpandAllColumns = FALSE;
-	m_bDisableFirstColumn = FALSE;
-	m_bDisabledItems = FALSE;
+	m_nMode(modeNormalListView),
+	m_nFocusState(fsNone),
+	m_bExpandLastColumn(FALSE),
+	m_bExpandAllColumns(FALSE),
+	m_bDisableFirstColumn(FALSE),
+	m_bDisabledItems(FALSE),
 
 	// Selected cell
-	m_nRow = -1;
-	m_nCol = -1;
+	m_nRow(-1),
+	m_nCol(-1),
 
 	// Dummy row
-	m_bDummyRow = FALSE;
-	m_nNewIconIndex = 0;
+	m_bDummyRow(FALSE),
+	m_nNewIconIndex(0),
 	
 	// Columns
-	m_bAutoColumns = FALSE;
-	m_pdatColumns = NULL;
-//	m_bColumnInfoChanged = FALSE;
-//	m_bColumnInfoCopied = FALSE;
-//	m_bColumnInfoSaved = FALSE;
-	m_bColumnsChanged = FALSE;
-	m_bSaveChangesAutomatically = FALSE;
-	m_nTargetColumn = -1;
+	m_bAutoColumns(FALSE),
+	m_pdatColumns(NULL),
+//	m_bColumnInfoChanged(FALSE),
+//	m_bColumnInfoCopied(FALSE),
+//	m_bColumnInfoSaved(FALSE),
+	m_bColumnsChanged(FALSE),
+	m_bSaveChangesAutomatically(FALSE),
+	m_nTargetColumn(-1),
 
 	// Sort
-	m_lngSortPropertyID = 0;
-	m_iSortDirection = 1;
+	m_lngSortPropertyID(0),
+	m_iSortDirection(1),
 
 	// Drag Drop
-//	m_nDragOver = 0;
-	m_bMouseDown = FALSE;
+//	m_nDragOver(0),
+	m_bMouseDown(FALSE),
 
-//	GetColors();
-	m_clrDisabledItems = 0x00f08080; // light blue
-//	m_clrDisabledItems = 0x00808080; // gray
-
+//	GetColors()
+	m_clrDisabledItems(0x00f08080) // light blue
+{
 }
+
 
 CListCtrlEx::~CListCtrlEx()
 {
@@ -172,7 +169,6 @@ int CListCtrlEx::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 
-
 // ListView is requesting information to display an item
 void CListCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult) 
 {
@@ -190,7 +186,7 @@ void CListCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 			// Get property associated with the specified column
 			ULONG lngPropertyID = GetColumnPropertyID(pLVITEM->iSubItem);
 			// Get object string
-			// Note const_cast to remove const from text!
+			// Note const_cast to remove const from text
 			// Special case for Property View - need to display the value of the property for the
 			// document's current object. The Value column has a dummy property of propValue assigned to it.
 			if (lngPropertyID == propValue)
@@ -239,7 +235,7 @@ int CListCtrlEx::FindItemData(LPARAM lParam)
 // Note: This window gets the focus when the user is dragging something over it
 // In that case, we don't want to draw the highlight because the drag drop code handles
 // highlighting whatever item the cursor is over
-// But how do we know that's the case??
+// But how do we know that's the case?
 // This might be why the default behavior is to just draw a focus rectangle around the first cell
 // when the focus is first gained.
 // Maybe on lose focus, we should set cell to -1, -1
@@ -347,17 +343,13 @@ void CListCtrlEx::SelectItem(int nItem)
 		RedrawItems(nItem, nItem); // make sure item's new state gets drawn
 
 		// Make sure it's visible
-//		if (nItem != -1) 
-//			EnsureVisible(nItem, FALSE);
 		if (nItem != -1)
 		{
-			// Note: GetCountPerPage may return -1 if listview is not visible yet!
-			// In that case, DON'T call EnsureVisible because it goes all screwy!
+			// Note: GetCountPerPage may return -1 if listview is not visible yet
+			// In that case, DON'T call EnsureVisible because it gets messed up
 			int nPerPage = GetCountPerPage(); 
 			if (nPerPage != -1)
 			{
-//				int nTop = GetTopIndex();
-//				if ((nItem < nTop) || (nItem >= (nTop + nPerPage)))
 				EnsureVisible(nItem, TRUE);
 			}
 		}
@@ -392,13 +384,6 @@ int CListCtrlEx::SelectItemData(LPARAM lParam)
 // This handles select cell mode.
 LPARAM CListCtrlEx::GetSelectedItemData()
 {
-//	POSITION pos = GetFirstSelectedItemPosition();
-//	if (pos)
-//	{
-//		int nItem = GetNextSelectedItem(pos);
-//		return GetItemData(nItem);
-//	}
-//	return NULL;
 	int nItem = GetSelectedItem();
 	if (nItem == -1)
 		return NULL;
@@ -513,13 +498,12 @@ CEdit* CListCtrlEx::EditSubItem(int nItem, int nCol, LPCTSTR pszEditText /* = 0 
 	// If user didn't pass any starting text, then use contents of cell.
 	CString strEditText;
 	if (pszEditText == 0)
-		// Note: GetItemText has a bug in it so had to make my own version GetItemTextOP!!
+		// Note: GetItemText has a bug in it so had to make my own version GetItemTextOP
 		strEditText = GetItemTextOP(nItem, nCol);
 	else
 		strEditText = pszEditText;
 
 	// Create CEditInPlace edit control, with text obtained from the cell (or what user passed to this routine).
-//	CEdit *pEdit = new CEditInPlace (this, nItem, nCol, strEditText); // last term is CString (not a reference either)
 	CEditInPlace *pEdit = new CEditInPlace (this, nItem, nCol, strEditText); // last term is CString (not a reference either)
 	pEdit->Create(dwStyle, r, this, IDC_TXT_EDIT);
 //	pEdit->SetFocus(); // added this - didn't help bomb problem
@@ -571,7 +555,7 @@ CEdit* CListCtrlEx::EditCurrentCell(LPCTSTR pszEditText /* = 0 */)
 // loses focus. Clicking on the scrollbars of the ListView control does not take away the focus 
 // from the edit control. We therefore add handlers for the scrollbar messages which force focus 
 // away from the edit control by setting the focus to the list view control itself. 
-//. also erase focus rect because it gets screwed up on scroll!
+//. also erase focus rect because it gets messed up on scroll
 void CListCtrlEx::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	if (GetFocus() != this) SetFocus();
@@ -595,35 +579,7 @@ void CListCtrlEx::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 // Note: We use this code because it's easier than SubItemHitTest.
 int CListCtrlEx::HitTestEx(CPoint &pt, int* pnCol) const
 {
-/*
-	LVHITTESTINFO hti;
-	hti.pt = pt;
-	
-	// This is very strange: need to convert from constant this pointer to non-constant this pointer.
-	// How are you supposed to call this method if you have to do this each time???
-	CListCtrlEx& rthis = (*((CListCtrlEx*) this));
-	if (rthis.SubItemHitTest(&hti) == -1)
-	{
-		// Listview says we're not on any item, but we need to check if we're on the first
-		// column, because it handles it weirdly (only says you're on it if you click on the label).
-		int nIndex = OrderToCol(0);
-
-		*nCol = -1;
-		return -1;
-	}
-	*nCol = hti.iSubItem;
-	return hti.iItem;
-*/
-
-	// If listview is not in LVS_REPORT style, just return the row found
-//	if ((GetWindowLong(m_hWnd, GWL_STYLE) & LVS_TYPEMASK) != LVS_REPORT)
-//	{
-//		int nRow = HitTest(pt, NULL);
-//		if (pnCol) 
-//			*pnCol = 0;
-//		return nRow;
-//	}
-
+  
 	// Get the top and bottom row visible
 	int nTopRow = GetTopIndex();
 	int nBottomRow = nTopRow + GetCountPerPage();
@@ -667,8 +623,6 @@ int CListCtrlEx::HitTestEx(CPoint &pt, int* pnCol) const
 
 
 
-
-
 // This is where we'll highlight the currently selected cell and draw the focus rectangle!
 // NM_CUSTOMDRAW handler.
 void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
@@ -701,7 +655,7 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 	case CDDS_ITEMPREPAINT:
 		// Ask for subitem notifications
 		*pResult = CDRF_NOTIFYSUBITEMDRAW;
-		//, could also color alternate rows here!
+		//, could also color alternate rows here
 //			int iRow = lplvcd->nmcd.dwItemSpec;
 //			if (iRow & 1)
 //			{
@@ -736,7 +690,7 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 				}
 			}
 
-			//, Check if item is high priority and change color?
+			//, could check if item is high priority and change color
 //			if ()
 //			{
 //			}
@@ -820,8 +774,8 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 	case CDDS_POSTPAINT:
 		{
 			// Draw focus rectangle only if focus state is highlight or focusrect.
-			// Also don't draw it if the current row is behind the header!
-			// BUG: = instead of == again!
+			// Also don't draw it if the current row is behind the header
+			// BUG: = instead of == again
 //			if (m_nMode == modeSelectCell)
 			if (m_nMode & modeSelectCell)
 			{
@@ -875,8 +829,6 @@ BOOL CListCtrlEx::GetCellRect(int nRow, int nColIndex, CRect &r, int nArea /* = 
 
 	// Get the next cell's position to get the right edge
 	CRect rNextCell;
-//	nCol = 1;
-//	nColIndex = OrderToIndex(1);
 	int nOrder = IndexToOrder(0);
 	nColIndex = OrderToIndex(nOrder + 1);
 	if (!GetSubItemRect(nRow, nColIndex, nArea, rNextCell))
@@ -893,7 +845,6 @@ BOOL CListCtrlEx::GetCellRect(int nRow, int nColIndex, CRect &r, int nArea /* = 
 	{
 		// If column 0 has been moved, then we need to get the right edge of the previous cell (lame).
 		// (You can't just get subitem rect for col 0 because it returns the whole row)
-//		CRect rPrevCell;
 		nColIndex = OrderToIndex(nOrder - 1);
 		if (!GetSubItemRect(nRow, nColIndex, nArea, r))
 			return FALSE;
@@ -931,8 +882,6 @@ void CListCtrlEx::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
     switch (nChar)
     {
 		case VK_LEFT:
-//			if (nColOrder > 0)
-//				SelectCellOrder(m_nRow, nColOrder - 1);
 				if (nColOrder > 0)
 					SelectCellOrder(m_nRow, nColOrder - 1);
 				else if (m_nRow > 0)
@@ -940,8 +889,6 @@ void CListCtrlEx::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			return;
 
 		case VK_RIGHT:
-//			if (nColOrder < GetColumnCount() - 1)
-//				SelectCellOrder(m_nRow, nColOrder + 1);
 			if (nColOrder < GetColumnCount() - 1)
 				SelectCellOrder(m_nRow, nColOrder + 1);
 			else if (m_nRow < GetItemCount() - 1)
@@ -1032,7 +979,7 @@ void CListCtrlEx::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	xTRACE("CListCtrlEx::OnChar\n");
 
-    BOOL bControl = ::GetKeyState(VK_CONTROL) < 0;
+	BOOL bControl = ::GetKeyState(VK_CONTROL) < 0;
 	BOOL bInvalidChar = ((nChar == VK_ESCAPE) | (nChar == VK_TAB) | (nChar == VK_RETURN));
 
 	// If in cell select mode and not a control character or invalid character,
@@ -1058,8 +1005,6 @@ void CListCtrlEx::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 		CListCtrl::OnChar(nChar, nRepCnt, nFlags);
 	}
 }
-
-
 
 
 
@@ -1132,10 +1077,7 @@ BOOL CListCtrlEx::EnsureCellVisible(int nRow, int nCol)
 	EnsureVisible(nRow, TRUE);
 
 	// Now scroll so the column is visible, if necessary
-	// bug: didn't update this to account for column order!
-//	int nOffset = 0;
-//	for (int i = 0; i < nCol; i++)
-//		nOffset += GetColumnWidth(i);
+	// bug: didn't update this to account for column order
 	int nColOrder = IndexToOrder(nCol);
 	int nOffset = 0;
 	for (int i = 0; i < nColOrder; i++)
@@ -1153,7 +1095,6 @@ BOOL CListCtrlEx::EnsureCellVisible(int nRow, int nCol)
 
 	CRect rClient;
 	GetClientRect(&rClient);
-//	if (nOffset + r.left < 0 || nOffset + r.left > rClient.right)
 	if (nOffset + r.left < 0 || nOffsetRight + r.left > rClient.right)
 	{
 		CSize sz;
@@ -1188,13 +1129,9 @@ void CListCtrlEx::InvalidateCurrentCell()
 void CListCtrlEx::OnNotifyDeleteItem(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	// BUG:: did = instead of == again!!
+	// bug:: did = instead of == again
 	if (m_nMode & modeSelectCell)
 	{
-//		m_nFocusState = fsNone;
-//		InvalidateCurrentCell();
-//		m_nRow = -1;
-//		m_nCol = -1;
 		// Reselect the cell - will reposition if on invalid cell
 		SelectCell(m_nRow, m_nCol);
 	}
@@ -1205,7 +1142,7 @@ void CListCtrlEx::OnNotifyDeleteItem(NMHDR* pNMHDR, LRESULT* pResult)
 void CListCtrlEx::OnNotifyDeleteAllItems(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	// BUG:: did = instead of == again!!
+	// bug:: did = instead of == again
 	if (m_nMode & modeSelectCell)
 	{
 		m_nFocusState = fsNone;
@@ -1219,100 +1156,13 @@ void CListCtrlEx::OnNotifyDeleteAllItems(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 
-// Position the edit cell at the row/col clicked at.
-// Moved to OnLButtonDown
-void CListCtrlEx::OnNotifyClick(NMHDR* pNMHDR, LRESULT* pResult) 
-{
-/*
-	// Only do this if in cell select mode
-//	if (m_nMode == modeSelectCell)
-	if (m_nMode & modeSelectCell)
-	{
-		// Get position of click
-		CPoint ptScreen(::GetMessagePos()); // Get position of message source
-		CPoint ptClient = ptScreen;
-		CListCtrl::ScreenToClient(&ptClient);
-
-		// Get item clicked on
-		UINT nFlags;
-		int nRow = HitTest(ptClient, &nFlags);
-
-		// Deselect item if user clicked on icon or label
-		// Note: If user was selecting several items, this message will be received
-		// when they release the mouse button over the last item. For that reason,
-		// if there is more than one item selected, we won't deselect this item.
-		if (GetSelectedCount() == 1)
-		{
-			if (nFlags & LVHT_ONITEM)
-				SetItemState(nRow, 0, LVIS_SELECTED | LVIS_FOCUSED);
-		}
-
-		// Find column and row clicked on
-		int nCol;
-		nRow = HitTestEx(ptClient, &nCol);
-
-		// Select the cell
-		SelectCell(nRow, nCol);
-
-	//	CString s;
-	//	s.Format("Clicked on row %d and column %d\n", nRow, nCol);
-	//	xTRACE(s);
-	}
-*/
-
-	*pResult = 0;
-}
-
-
-
-
-// Position the edit cell at the row/col clicked at
-void CListCtrlEx::OnNotifyRClick(NMHDR* pNMHDR, LRESULT* pResult) 
-{
-//	AfxMessageBox("notifyrclick"); 
-	// use left click code - need to do the same thing
-//	OnNotifyClick(pNMHDR, pResult);
-/*
-	// Only do this if in cell select mode
-//	if (m_nMode == modeSelectCell)
-	if (m_nMode & modeSelectCell)
-	{
-		// Get position of click
-		CPoint ptScreen(::GetMessagePos()); // Get position of message source
-		CPoint ptClient = ptScreen;
-		CListCtrl::ScreenToClient(&ptClient);
-
-		// Get item clicked on
-		UINT nFlags;
-		int nRow = HitTest(ptClient, &nFlags);
-
-		// If user didn't click on the actual item in first cell, select the cell
-		if (!(nFlags & LVHT_ONITEM))
-		{
-			// Find column and row clicked on
-			int nCol;
-			nRow = HitTestEx(ptClient, &nCol);
-
-			// Select the cell
-			SelectCell(nRow, nCol);
-
-		//	CString s;
-		//	s.Format("Clicked on row %d and column %d\n", nRow, nCol);
-		//	xTRACE(s);
-		}
-	}
-*/
-	*pResult = 0;
-}
-
-
 
 /*
 // See individual CView classes for double click handling.
 // Also see BObject::UIEditValue, pobj->UIEditValue(lngPropertyID);
 void CListCtrlEx::OnNotifyDblClk(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	AfxMessageBox("clce dblclick!");	
+	AfxMessageBox("clce dblclick");	
 	// get selected item
 	// check mouse position - if over icon or label, select the item
 	// if over a cell, edit value in dialog or do nothing
@@ -1357,7 +1207,6 @@ void CListCtrlEx::RecalculateLayout()
 			}
 
 			// Fill client width if possible
-//			nWidth = cx - nWidths;
 			nWidth = r.right - nWidths;
 			if (nWidth > 0)
 				SetColumnWidth(nCol, nWidth);
@@ -1405,21 +1254,7 @@ void CListCtrlEx::OnNotifyItemChanging(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMLISTVIEW* pnmlv = (NM_LISTVIEW*)pNMHDR;
 
-	// Use bitwise XOR (^) to find which bits are changing.
-//	UINT nChangedBits = pnmlv->uNewState ^ pnmlv->uOldState;
 	UINT nChangedBits = pnmlv->uChanged;
-
-	// Get target column
-	// silly - listview doesn't handle selecting cells - I DO!!!
-//	BOOL bSelectionChanging = (nChangedBits & LVIS_SELECTED);
-//	if (bSelectionChanging)
-//	{
-//		if (pnmlv->uNewState & LVIS_SELECTED)
-//		{
-////			m_nTargetColumn = OrderToIndex(pnmlv->iSubItem); //?
-//			m_nTargetColumn = pnmlv->iSubItem;
-//		}
-//	}
 
 	// Allow/disallow checking/unchecking items.
 	if (m_bDisabledItems)
@@ -1432,13 +1267,12 @@ void CListCtrlEx::OnNotifyItemChanging(NMHDR* pNMHDR, LRESULT* pResult)
 			// If item is disabled, don't allow change (return True).
 			// Bug: For some reason, uOldState doesn't include the overlaymask bits, so need to get them
 			// using GetItemState instead.
-//			if (pnmlv->uOldState & LVIS_OVERLAYMASK == stateDisabled)
 			if (GetItemState(pnmlv->iItem, LVIS_OVERLAYMASK) == stateDisabled)
 				*pResult = TRUE;
 			else
 				// Otherwise allow the change
 				*pResult = FALSE;
-			// BUG:: forgot to say return here, so was allowing any changes
+			// bug: forgot to say return here, so was allowing any changes
 			return;
 		}
 	}
@@ -1488,7 +1322,6 @@ BOOL CListCtrlEx::CopyToClipboard(BOOL bIncludeHeaders)
 	{
 		int nIndex = OrderToIndex(nCol);
 		GetColumn(nIndex, &lvc);
-//		strLine += strColumn;
 		strLine += CString(szBuffer);
 		strLine += (nCol == nCols - 1) ? strLF : strTab;
 	}
@@ -1502,7 +1335,6 @@ BOOL CListCtrlEx::CopyToClipboard(BOOL bIncludeHeaders)
 		for (int nCol = 0; nCol < nCols; nCol++)
 		{
 			int nIndex = OrderToIndex(nCol);
-//			strLine += GetItemText(nRow, nIndex);
 			strLine += GetItemText(nRow, nIndex);
 			strLine += (nCol == nCols - 1) ? strLF : strTab;
 		}
@@ -1526,7 +1358,6 @@ int CListCtrlEx::GetColumnCount()
 // Returns the index of the column at the specified column position
 int CListCtrlEx::OrderToIndex(int nColPosition)
 {
-//	return GetHeaderCtrl()->OrderToIndex(nColPosition);
 	CHeaderCtrl* pHeader = (CHeaderCtrl*)GetDlgItem(0);
 	return pHeader->OrderToIndex(nColPosition);
 }
@@ -1578,9 +1409,6 @@ int CListCtrlEx::MoveItemToSibling(int nSource, int nTarget, BOOL bAfter)
 
 	return nNewPosition;
 }
-
-
-
 
 
 
@@ -1688,12 +1516,10 @@ int CListCtrlEx::GetSelectedItems(BDataLink *pdatLink)
 			if (GetCheck(i))
 			{
 				// Don't include disabled items
-//				if (GetItemState(i, LVIS_STATEIMAGEMASK) != stateDisabled)
 				if (GetItemState(i, LVIS_OVERLAYMASK) != stateDisabled)					
 				{
 					BObject* pobj = (BObject*) GetItemData(i);
 					if (pobj)
-//					if ((pobj != NULL) && (pobj != (BObject*) keyDummyRow))
 					{
 						ASSERT_VALID(pobj);
 						pdatLink->AddLink(pobj);
@@ -1708,7 +1534,6 @@ int CListCtrlEx::GetSelectedItems(BDataLink *pdatLink)
 		BObject* pobj = (BObject*) GetSelectedItemData();
 		// If nothing is selected pobj will be zero, which is alright.
 		if (pobj)
-//		if ((pobj != NULL) && (pobj != (BObject*) keyDummyRow))
 		{
 			ASSERT_VALID(pobj);
 		}
@@ -1770,8 +1595,6 @@ void CListCtrlEx::SetCheckboxes(BOOL bCheckboxes)
 		// Turn off single selection mode
 		LONG lngStyle = ::GetWindowLong(m_hWnd, GWL_STYLE);
 		::SetWindowLong(m_hWnd, GWL_STYLE, lngStyle & ~LVS_SINGLESEL);
-		// Clear all checks
-//		SetItemState(
 		// Check off the selected item, if any
 		int nItem = GetSelectedItem();
 		if (nItem != -1)
@@ -1854,10 +1677,6 @@ void CListCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 			int nItem = GetItemCount(); // always add to end of the list because of recursion
 
 			// Add this BObject to the list and store pointer to object in item data
-//			int nIndex = InsertItem(nItem, pobjStart->GetPropertyText(propName), nImage);
-//			int nIndex = InsertItem(nItem, LPSTR_TEXTCALLBACK, nImage);
-//			ASSERT (nIndex != -1);
-//			SetItemData(nIndex, (DWORD) pobjStart);
 			lvi.iItem = nItem;
 			lvi.iImage = nImage; 
 			lvi.lParam = (LPARAM) pobjStart;
@@ -1898,25 +1717,21 @@ void CListCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 			BObject* pobj = (BObject*) paChildren->GetAt(i);
 			ASSERT_VALID(pobj);
 
-			// BUG:: Used && instead of &!!!!!!!
+			// bug: used && instead of &
 			if (!(pobj->GetFlag(lngExcludeFlags)))
 			{
 				// Always add to the end of the list because of recursion
 				int nItem = ListView_GetItemCount(m_hWnd);
 
 				// Add this BObject to the list 
-				// BUG:: If dialog's listview is set to be sorted, insert item will fail and return -1
+				// bug: If dialog's listview is set to be sorted, insert item will fail and return -1
 				// if you try to pass LPSTR_TEXTCALLBACK. Fortunately the help said not to do
 				// this, but it took a while to find it.
-//				int nIndex = InsertItem(nItem, LPSTR_TEXTCALLBACK, nImage);
-//				ASSERT (nIndex != -1);
-//				SetItemData(nIndex, (DWORD) pobj);
 				lvi.iItem = nItem;
 				lvi.iImage = pobj->GetIconIndex(); 
 				lvi.lParam = (LPARAM) pobj;
 				lvi.iIndent = nIndent;
 				// For the most speed, send the message directly by using the insert item macro
-//				int nIndex = (int) ::SendMessage(m_hWnd, LVM_INSERTITEM, 0, (LPARAM) &lvi);
 				int nIndex = ListView_InsertItem(m_hWnd, &lvi);
 				ASSERT(nIndex != -1);
 
@@ -1963,7 +1778,6 @@ int CListCtrlEx::AddObject(BObject *pobj, BObject *pobjParent /* = NULL */)
 			
 			LVITEM lvi;
 			lvi.mask = LVIF_IMAGE | LVIF_PARAM | LVIF_TEXT | LVIF_INDENT;
-//			lvi.iItem = nItems; // add new item
 			lvi.iItem = nParent + 1; // add under parent
 			lvi.iSubItem = 0;
 			lvi.pszText = LPSTR_TEXTCALLBACK;
@@ -2031,13 +1845,6 @@ void CListCtrlEx::RemoveDummyRow()
 // Note: We store the PropertyID in each column's lParam data.
 ULONG CListCtrlEx::GetColumnPropertyID(int iCol /* = -1 */) 
 {
-//	if (m_pdatColumns)
-//	{
-//		if (iCol == -1)
-//			iCol = m_nCol;
-//		ASSERT_VALID(m_pdatColumns);
-//		return m_pdatColumns->GetPropertyID(iCol);
-//	}
 	if (iCol == -1) 
 		iCol = m_nCol; // use current cell column if none specified
 	// If no cell selected return 0
@@ -2079,7 +1886,7 @@ BOOL CListCtrlEx::OnHeaderEndDrag(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
 
 	if (pitem->mask == HDI_ORDER)
 	{
-		// Save column order here?? why not?
+		// Save column order here? why not?
 		// i don't think we need to because the control handles the order transparently - 
 		// eg it always returns the index, not the order
 //		int iNewOrder = pitem->iOrder;
@@ -2089,7 +1896,7 @@ BOOL CListCtrlEx::OnHeaderEndDrag(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
 
 		// Notify parent window
 		//. note: since this hasn't returned yet, the order hasn't been set for the listview yet.
-		// therefore, this will save the existing order, not the new order!!
+		// therefore, this will save the existing order, not the new order!
 		// so let's skip this for now - not as important as keeping column id's in synch.
 //		NotifyParentOfChanges();
 	}
@@ -2139,12 +1946,8 @@ void CListCtrlEx::DeleteColumnProperty(BObject *pobjPropertyDef)
 	{
 		phdr->GetItem(i, &hdi);
 		if (hdi.lParam == (long) lngPropertyID)
-//		ULONG lngPropertyID = (ULONG) hdi.lParam;
-//		BObject* pobj = m_pDoc->GetObject(lngPropertyID);
-//		if (pobj == pobjPropertyDef)
 		{
 			// Delete column
-//			phdr->DeleteItem(nCol);
 			VERIFY(DeleteColumn(i));
 			// Update indexes so can walk through other columns
 			i--;
@@ -2176,7 +1979,6 @@ BOOL CListCtrlEx::CopyCurrentCellToClipboard()
 {
 	if (m_nRow != -1 && m_nCol != -1)
 	{
-//		CString str = GetItemText(m_nRow, m_nCol);
 		CString str = GetItemTextOP(m_nRow, m_nCol);
 		theApp.CopyToClipboard(str);
 		return TRUE;
@@ -2189,33 +1991,11 @@ BOOL CListCtrlEx::CutCurrentCellToClipboard()
 {
 	if (CopyCurrentCellToClipboard())
 	{
-/*
-		// now send endlabeledit message with blank text
-		int nID = GetDlgCtrlID();
-		NMLVDISPINFO nmdi;
-		NMHDR* pnm = (NMHDR*) &nmdi;
-		pnm->code = LVN_ENDLABELEDIT;
-		pnm->hwndFrom = m_hWnd;
-		pnm->idFrom = nID;
-		nmdi.item.mask = LVIF_TEXT;
-		nmdi.item.iItem = m_nRow;
-		nmdi.item.iSubItem = m_nCol;
-//		nmdi.item.pszText = 0;
-		nmdi.item.pszText = "";
-		// this doesn't get to the cviewcontents like intended
-		GetParent()->SendNotifyMessage(WM_NOTIFY, nID, (LPARAM) &nmdi); 
-*/
-		// now want to clear the current cell contents
-		// (if there are any contents)
-		// since this listview doesn't know anything about the bobjects it is displaying,
-		// need to send the event to the view
-//		this->SetItemText(
-
 		// Send LVN_ENDLABELEDIT notification to parent of ListView ctrl
-		//, make a method for notifications!
+		//, make a method for notifications
 		NMLVDISPINFO nmdi;
 		nmdi.hdr.hwndFrom = m_hWnd;
-		nmdi.hdr.idFrom = -1; // GetDlgCtrlID(); // this should be edit control id!
+		nmdi.hdr.idFrom = -1; // GetDlgCtrlID(); // this should be edit control id
 		nmdi.hdr.code = LVN_ENDLABELEDIT;
 
 		nmdi.item.mask = LVIF_TEXT;
@@ -2225,8 +2005,6 @@ BOOL CListCtrlEx::CutCurrentCellToClipboard()
 		nmdi.item.cchTextMax = 1;
 
 		GetParent()->SendMessage(WM_NOTIFY, GetDlgCtrlID(), (LPARAM) &nmdi); 
-//		GetParent()->GetParent()->SendMessage(WM_NOTIFY, GetParent()->GetDlgCtrlID(), (LPARAM)&nmdi);
-
 
 		return TRUE;
 	}
@@ -2304,18 +2082,13 @@ CString CListCtrlEx::GetItemTextOP(int nItem, int nSubItem)
 		lvi.cchTextMax = nLen;
 		lvi.pszText = str.GetBufferSetLength(nLen);
 		nChars  = (int)::SendMessage(m_hWnd, LVM_GETITEMTEXT, (WPARAM)nItem, (LPARAM)&lvi);
-		str.ReleaseBuffer(); // bug? didn't have this for some reason
-	// Bug in MFC or control here - nChars returns 0 even though didn't retrieve all characters.
-	// So now we check if nChars is 0 AND the string is not blank, which means we should continue getting chars.
-	// Note: IsEmpty and GetLength don't work because we're using GetBuffer.
-//	} while (nRes == nLen-1);
-//	} while ((nRes == nLen-1) || (nRes == 0 && !str.IsEmpty()));
-//	} while ((nRes == nLen-1) || (nRes == 0 && (str.GetLength() != 0)));
-//	} while ((nChars == nLen-1) || (nChars == 0 && (_tcslen(lvi.pszText) != 0)));
+		str.ReleaseBuffer(); // bug: didn't have this for some reason
+		// Bug in MFC or control here - nChars returns 0 even though didn't retrieve all characters.
+		// So now we check if nChars is 0 AND the string is not blank, which means we should continue getting chars.
+		// Note: IsEmpty and GetLength don't work because we're using GetBuffer.
 	// If filled buffer then go back for another round
 	} while ((nChars == nLen) || (nChars == 0 && (_tcslen(lvi.pszText) != 0)));
 
-//	str.ReleaseBuffer();
 	return str;	
 }
 
@@ -2377,17 +2150,12 @@ void CListCtrlEx::OnMouseMove(UINT nFlags, CPoint ptClient)
 		//, see if moved far enough
 //		ptClient - m_ptDragStart
 //		this->DragAcceptFiles
-		xTRACE("start drag!!\n");
-		// send notification message to parent!
-//		GetParent()->SendMessage(LVN_BEGINDRAG, 0, 0);
-//		GetParent()->SendNotifyMessage(LVN_BEGINDRAG, 0, 0);
-//		this->
-//		GetParent()->SendMessage(WM_NOTIFY, LVN_BEGINDRAG, 0);
-
-		// Send LVN_ENDLABELEDIT notification to parent of ListView ctrl
+		xTRACE("start drag\n");
+		
+		// Send notification to parent of ListView ctrl
 		NMLVDISPINFO nmdi;
 		nmdi.hdr.hwndFrom = m_hWnd;
-		nmdi.hdr.idFrom = GetDlgCtrlID(); // this should be edit control id!
+		nmdi.hdr.idFrom = GetDlgCtrlID(); // this should be edit control id
 		nmdi.hdr.code = LVN_BEGINDRAG;
 //		nmdi.item.mask = LVIF_TEXT;
 //		nmdi.item.iItem = m_nRow;
@@ -2396,12 +2164,12 @@ void CListCtrlEx::OnMouseMove(UINT nFlags, CPoint ptClient)
 //		nmdi.item.cchTextMax = 1;
 		GetParent()->SendMessage(WM_NOTIFY, GetDlgCtrlID(), (LPARAM) &nmdi);
 
-		m_bMouseDown = FALSE; //, bad name for this flag!
+		m_bMouseDown = FALSE; //, bad name for this flag
 	}
 
 	// See if mouse is over a hyperlink.
 	// We let each bdata handle this how they want.
-	// For hyperlink, changes cursor to a hand!
+	// For hyperlink, changes cursor to a hand
 	//, if too slow, cache propertytypeid and do switch statement here
 	int nCol;
 	int nRow = HitTestEx(ptClient, &nCol);
@@ -2436,7 +2204,6 @@ void CListCtrlEx::OnLButtonUp(UINT nFlags, CPoint point)
 
 void CListCtrlEx::OnRButtonDown(UINT nFlags, CPoint ptClient) 
 {
-//	if (m_nMode == modeSelectCell)
 	if (m_nMode & modeSelectCell)
 	{
 		// Find column and row clicked on
@@ -2479,18 +2246,10 @@ int CListCtrlEx::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message)
 	// If editing a cell, return noactivate, otherwise call the base class as usual.
 	// Bug: This bombed when switching focus from another app - pwnd was 0.
 	CWnd* pwnd = GetFocus();
-//	BOOL bFocusInEdit = (pwnd->GetDlgCtrlID() == IDC_TXT_EDIT);
 	BOOL bFocusInEdit = ((pwnd != 0) && (pwnd->GetDlgCtrlID() == IDC_TXT_EDIT));
 
 	// If user clicks somewhere else in the listview, should call base class. 
 	// Need to determine if click occurred in the edit window.
-//	DWORD dwPos = ::GetMessagePos();
-//	POINTS p = MAKEPOINTS(dwPos);
-//	CPoint p(MAKEPOINTS(dwPos));
-//	CPoint p = MAKEPOINTS(dwPos);
-//	int x = GET_X_LPARAM(dwPos);
-//	int y = GET_Y_LPARAM(dwPos);
-//	CPoint p(x, y);
 	CPoint p(::GetMessagePos()); // get position of message source in screen coords
 	CWnd* pwndClick = WindowFromPoint(p);
 	ASSERT_VALID(pwndClick);
@@ -2498,7 +2257,6 @@ int CListCtrlEx::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message)
 
 	// If focus is not in edit control, OR user did NOT click in edit control, call the base class.
 	// This will terminate the edit control if it has focus.
-//	if ((pwnd == NULL) || (pwnd->GetDlgCtrlID() != IDC_TXT_EDIT))
 	if (!bFocusInEdit || !bClickedInEdit)
 		return CListCtrl::OnMouseActivate(pDesktopWnd, nHitTest, message);
 	else
@@ -2569,7 +2327,6 @@ BData* CListCtrlEx::GetCellBData(int nRow /* = -1 */, int nCol /* = -1 */)
 		// If we're in Properties view, pobj will be the PropertyDef bobject we want to look up.
 		BObject* pobj = (BObject*) GetItemData(nRow);
 		if (pobj)
-//		if ((pobj != NULL) && (pobj != (BObject*) keyDummyRow))
 		{
 			ASSERT_VALID(pobj);
 			// Get property associated with the specified column
@@ -2593,7 +2350,6 @@ BData* CListCtrlEx::GetCellBData(int nRow /* = -1 */, int nCol /* = -1 */)
 int CListCtrlEx::GetColumnWidths(int nCols /* = 0 */)
 {
 	int nWidths = 0;
-//	int nCols = GetColumnCount();
 	if (nCols == 0)
 		nCols = GetColumnCount();
 	if (nCols > 0)
@@ -2659,28 +2415,24 @@ void CListCtrlEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	// Get printer font, adjusting size if necessary to fit all chars
 	rpim.InitFonts(pDC);
 	int nPrintChars = rpim.m_nPageWidthWithinMargins / rpim.m_nPrintCharWidth;
-//	float fScale = (float) rpim.m_nPixelsPerInchX  / (float) nScreenPixelsPerInchX; // ratio of page to screen pixels
 	float fScale = (float) rpim.m_nPageWidthWithinMargins / (float) nColWidthsTotal; // factor to convert from screen pixels to page pixels
 	if (nScreenChars > nPrintChars)
 	{
 		float fFactor = (float) nPrintChars / (float) nScreenChars;
 		rpim.InitFonts(pDC, fFactor);
 		nPrintChars = rpim.m_nPageWidthWithinMargins / rpim.m_nPrintCharWidth;
-//		fScale = (float) rpim.m_nPageWidthWithinMargins / (float) nColWidthsTotal; // ratio of page pixels to screen pixels
 	}
 
 	// Horizontal space between cells 
 	UINT nCellSpacing = rpim.m_nPixelsPerInchX / 20; // pixels (1/20th of an inch)
 
 	// Get arrays of column positions and widths
-//	float fScale = (float) rpim.m_nPageWidthWithinMargins / (float) nColWidthsTotal; // ratio of page pixels to screen pixels
 	m_anColPos.SetSize(nCols);
 	m_anColWidth.SetSize(nCols);
 	m_anRowLines.SetSize(nRows);
 	UINT nPos = 0;
 	for (int i = 0; i < nCols; i++)
 	{
-//		UINT nWidth = GetColumnWidth(i);
 		int nCol = OrderToIndex(i);
 		UINT nWidth = GetColumnWidth(nCol);
 		UINT nPosScaled = (int) (nPos * fScale);
@@ -2712,7 +2464,7 @@ void CListCtrlEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	// extends past the edge of the rectangle specified by the lprc parameter. A carriage return-line feed 
 	// sequence also breaks the line. 
 	UINT uFormat = DT_CALCRECT + DT_NOPREFIX + DT_WORDBREAK;
-//.	LONG nSingleLineHeight = rpim.m_nPrintLineHeight;	 // giving 24 or 20 - should be 34!?
+	LONG nSingleLineHeight = rpim.m_nPrintLineHeight;	 //, giving 24 or 20 - should be 34?
 	LONG nSingleLineHeight = 34; // what it should be
 	ASSERT(nSingleLineHeight > 0);
 	for (int j = 0; j < nRows; j++)
@@ -2740,8 +2492,6 @@ void CListCtrlEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	// Calculate number of pages
 	int nAvailHeight = rpim.m_nPageHeightWithinMargins - 
 					(rpim.m_nHeaderLineHeight * (rpim.m_nHeaderLines + rpim.m_nFooterLines));
-//	m_nPrintLinesPerPage = (rpim.m_nPageHeightWithinMargins - 
-//					(rpim.m_nPrintLineHeight * (rpim.m_nHeaderLines + rpim.m_nFooterLines))) / rpim.m_nPrintLineHeight;
 	m_nPrintLinesPerPage = nAvailHeight / rpim.m_nPrintLineHeight;
 	m_nPrintLinesPerPage--; // subtract one line to leave room for column headers on each page
 	UINT nPages = max (1, (m_nPrintLinesTotal + (m_nPrintLinesPerPage - 1)) / m_nPrintLinesPerPage);
@@ -2871,25 +2621,6 @@ void CListCtrlEx::OnColumnClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 
-// Copy the column info bdata to a new memory block if we haven't done so already
-// so we can modify it.
-// The reason for this is because we might be inheriting the bdata from the
-// class, and we don't want to modify the bdata directly.
-/*
-void CListCtrlEx::CopyColumnInfo()
-{
-	if (!m_bColumnInfoCopied)
-	{
-		// Invoke copy constructor to create copy of the array
-		BDataColumns* pdatCopy = new BDataColumns(m_pdatColumns);
-		m_pdatColumns = pdatCopy;
-		// Set flag
-		m_bColumnInfoCopied = TRUE;
-	}
-}
-*/
-
-
 
 // Insert a new column in the listview. Will ask the user which property to insert.
 // Pass the position to insert the new column at, otherwise will insert at the current
@@ -2899,46 +2630,7 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 
 	ASSERT_VALID(m_pDoc);
 
-//	CString strCaption = _T("Insert Column");
-//	CString strInstructions = _T("&Select the property to add to this view as a new column.");
-//	ULONG lngStartID = folderProperties;
-//	BObject* pobjProperties = m_pDoc->GetObject(lngStartID);
-
 	int nNewCol = -1;
-
-/*
-	// Filter properties based on which ones are associated with default class
-	// to do this, we can set a temporary flag for those objects we want to exclude, and add this flag
-	// to our exclude flags which we pass to the dialog, (or pass as the filtered exclude flags)
-	// but how do we get these properties?
-	// first get list of all properties and set the temp flag for them
-	// need the parent object, then get its default class, then get the props associated with that class,
-	// then walk through and clear the temp flag for all those objects.
-	// OR could let the calling routine deal with this shit
-	if (pobjParent) {
-		pobjProperties->SetFlag(flagFilter, TRUE, TRUE);
-		BObject* pobjClass = pobjParent->GetPropertyLink(propDefaultClass);
-		if (pobjClass) {
-			CObArray aPropertyDefs;
-			int nProps = pobjClass->GetPropertyDefs(aPropertyDefs, FALSE, TRUE);
-			for (int i = 0; i < nProps; i++) {
-				BObject* pobjPropDef = (BObject*) aPropertyDefs.GetAt(i);
-				ASSERT_VALID(pobjPropDef);
-				// Clear this property's filter flag!
-				pobjPropDef->SetFlag(flagFilter, FALSE, FALSE);
-			}
-		}
-	}
-
-//	CDialogEditLink dlg;
-//	dlg.m_nHelpID = IDD_INSERT_COLUMN;
-	// If user asked to filter properties, tell dialog
-//	if (pobjParent)
-//		dlg.ShowFilterCheckbox(TRUE, theApp.m_lngExcludeFlags | flagFilter);
-//	if (dlg.DoModalLinkSimple(strCaption, strInstructions, lngStartID, 0, 0, theApp.m_lngExcludeFlags) == IDOK)
-*/
-
-//		m_pobjDefaultClass = m_pobjParent->GetPropertyLink(propDefaultClass);
 
 	// Get default class (eg if we're on a folder, it can have a default class associated with it)
 	BObject* pobjDefaultClass = NULL;
@@ -2947,11 +2639,9 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 	if (pobjDefaultClass == NULL)
 		pobjDefaultClass = m_pDoc->GetObject(classPaper);
 
-	
 	// Let user pick a property if not specified
 	if (idProperty == 0) {
 		CDialogSelectProperty dlg;
-//		dlg.m_pobjParent = pobjParent;
 		dlg.m_pobjDefaultClass = pobjDefaultClass;
 		if (dlg.DoModal() == IDCANCEL)
 			return -1;
@@ -2976,7 +2666,6 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 		m_bColumnsChanged = TRUE;
 
 		// Add column to header/listview control
-//			int nItem = InsertColumn(nCol, m_pdatColumns->GetColumnName(nCol, m_pDoc), rci.m_nColAlignment, rci.m_nColWidth);
 		BObject* pobjPropDef = m_pDoc->GetObject(idProperty);
 		// 1.1d make sure we actually have an object!
 		if (pobjPropDef)  {
@@ -3020,12 +2709,6 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 		AfxMessageBox(_T("That property is already in the view."), MB_ICONINFORMATION);
 	}
 
-	// Clear the temporary flag from all the property bobjects
-//	if (pobjParent) {
-//		pobjProperties->SetFlag(flagFilter, FALSE, TRUE);
-//	}
-
-//	return -1;
 	return nNewCol;
 }
 
@@ -3045,19 +2728,18 @@ BOOL CListCtrlEx::SaveColumnOrder(BDataColumns* pdatColumns)
 	int nColumns = GetColumnCount();
 	LPINT anOrder = (LPINT) malloc(nColumns*sizeof(int));
 	ASSERT(anOrder);
-//	CUIntArray anOrder;
+//,	CUIntArray anOrder;
 //	anOrder.SetSize(nColumns);
 
 	// Get info to temp array
 	GetColumnOrderArray(anOrder, nColumns);
 
 	// Save temp array to bdata object
-//	m_pdatColumns->SetColumnOrder(anOrder, nColumns);
 	pdatColumns->SetColumnOrder(anOrder, nColumns);
 
 	// Delete temp array
-//	delete anOrder; // Bug: Forgot to delete this memory block
-	free((void*) anOrder); // Bug: Used delete instead of free!! but it didn't crash!?
+//	delete anOrder; // bug: forgot to delete this memory block
+	free((void*) anOrder); // bug: used delete instead of free
 
 	return TRUE;
 }
@@ -3072,7 +2754,6 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 
 	ASSERT_VALID(m_pDoc);
 	ASSERT_VALID(pobj);
-//	ASSERT_VALID(m_pdatColumns);					
 	CHeaderCtrl* phdr = GetHeaderCtrl();
 	ASSERT_VALID(phdr);
 
@@ -3100,7 +2781,6 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 		{
 			xTRACE("  save to object\n");
 			// Save column info to the object
-//			pobj->SetPropertyData(propColumnInfoArray, pdatColumns, FALSE, FALSE);
 			pobj->SetPropertyData(propColumnInfoArray, pdatColumns, TRUE, FALSE);
 		}
 		else
@@ -3109,7 +2789,6 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 			// Save column info to the object's class
 			ULONG lngClassID = pobj->GetClassID();
 			BObject* pobjClass = m_pDoc->GetObject(lngClassID);
-//			pobjClass->SetPropertyData(propObjectColumnInfoArray, pdatColumns, FALSE, FALSE);
 			pobjClass->SetPropertyData(propObjectColumnInfoArray, pdatColumns, TRUE, FALSE);
 		}
 		
@@ -3124,8 +2803,6 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 // Returns zero-based index of column that displays the specified property, or -1 if couldn't be found.
 int CListCtrlEx::FindColumn(ULONG lngPropertyID) {
 
-//	ASSERT_VALID(m_pdatColumns);
-//	return m_pdatColumns->GetColumnIndex(lngPropertyID);
 	CHeaderCtrl* phdr = GetHeaderCtrl();
 	ASSERT_VALID(phdr);
 	// Walk through columns to find property
@@ -3213,10 +2890,6 @@ int CListCtrlEx::InitializeColumns(BDataColumns* pdatColumns, BOOL bExpandLastCo
 	HDITEM hdi;
 	hdi.mask = HDI_LPARAM;
 
-	// Save a pointer to the column data.
-	// Note: We don't own it!
-//	m_pdatColumns = pdatColumns;
-
 	// Delete all columns
 	while (DeleteColumn(0));
 
@@ -3235,8 +2908,7 @@ int CListCtrlEx::InitializeColumns(BDataColumns* pdatColumns, BOOL bExpandLastCo
 		//, use macro for speed
 		InsertColumn(i, pobjPropDef->GetPropertyText(propName), nAlignment, rci.m_nColWidth);
 
-		//, damn microsoft - header control DOES have itemdata, just not exposed through listview!!!
-//		hdi.lParam = (long) pobjPropDef;
+		//, header control DOES have itemdata, just not exposed through listview!
 		hdi.lParam = rci.m_lngPropertyID;
 		phdr->SetItem(i, &hdi);
 	}
@@ -3275,11 +2947,11 @@ BOOL CListCtrlEx::UpdateColumn(int nCol, BObject* pobjPropertyDef)
 	int nAlignment = pobjPropertyDef->GetPropertyDefAlignment();
 	
 	// Edit the column
-	// Funky: must use setcolumn for text and setitem for lparam!!!! LAME!!!
-	// SetItem would appear to handle both but text just turns out blank if you use it!
+	// must use setcolumn for text and setitem for lparam
+	// SetItem would appear to handle both but text just turns out blank if you use it
 	LVCOLUMN lvc;
 	lvc.mask = LVCF_TEXT | LVCF_FMT;
-	lvc.pszText = (LPTSTR) szText; // note cast!
+	lvc.pszText = (LPTSTR) szText; // note cast
 	lvc.fmt = nAlignment;
 	SetColumn(nCol, &lvc);
 
@@ -3291,18 +2963,6 @@ BOOL CListCtrlEx::UpdateColumn(int nCol, BObject* pobjPropertyDef)
 	return TRUE;
 }
 
-
-
-/*
-// Helper class used to store information about each column (or row?)
-class CColumnData
-{
-public:
-	ULONG m_lngPropertyID;
-	ULONG m_lngPropertyTypeID;
-	BObject* pobjPropertyDef;
-};
-*/
 
 
 
@@ -3338,7 +2998,7 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 	if (pobj1 && pobj2)
 	{
 /*
-		// Check for high priority items first
+		//, Check for high priority items first
 		// If object 1 is high priority and object 2 is not, put object 1 first
 		// If object 2 is high priority and object 1 is not, put object 2 first
 		BOOL bHigh1 = (pobj1->GetFlag(flagHighPriority));
@@ -3346,7 +3006,7 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		BOOL bDifferent = (bHigh1 ^ bHigh2);
 		if (bDifferent) return iDir * (bHigh1 ? -1 : 1);
 
-		// Check for folders - folders should come before other objects
+		//, Check for folders - folders should come before other objects
 		// If object 1 is a folder and object 2 is not, put object 1 first
 		// If object 2 is a folder and object 1 is not, put object 2 first
 		BOOL bFolder1 = (pobj1->GetClassID() == classFolder);
@@ -3371,7 +3031,7 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		case proptypeCurrency:
 		case proptypeCalculated:
 			{
-				//, will eventually need to compare using units also!
+				//, will eventually need to compare using units also
 				BDataNumber* pdat1 = (BDataNumber*) pobj1->GetPropertyData(lngPropertyID);
 				if (pdat1 == 0) return iDir;
 				BDataNumber* pdat2 = (BDataNumber*) pobj2->GetPropertyData(lngPropertyID);
@@ -3386,7 +3046,7 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 			}
 		case proptypeDate:
 			{
-				//, will eventually need to compare using units also!
+				//, will eventually need to compare using units also
 				BDataDate* pdat1 = (BDataDate*) pobj1->GetPropertyData(lngPropertyID);
 				if (pdat1 == 0) return iDir;
 				BDataDate* pdat2 = (BDataDate*) pobj2->GetPropertyData(lngPropertyID);
@@ -3497,8 +3157,8 @@ void CListCtrlEx::SortByProperty(ULONG lngPropertyID /* = 0 */, int iDir /* = 0 
 	}
 
 	// Show up or down icon
-	//. image list won't cut it - will need to do owner draw to get it to appear in the center like outlook!
-	//. use CustomDraw message!?
+	//. image list won't cut it - will need to do owner draw to get it to appear in the center like outlook
+	//. use CustomDraw message?
 //	CHeaderCtrl* pHeader = m_lvw.GetHeaderCtrl();
 //	ASSERT_VALID(pHeader);
 //	HDITEM hdi;
@@ -3557,13 +3217,6 @@ void CListCtrlEx::OnColumnRClick(NMHDR * pNMHDR, LRESULT * pResult) {
 	m_nTargetColumn = GetHeaderCtrl()->SendMessage(HDM_HITTEST, 0, (LPARAM) (LPHDHITTESTINFO) &hti);
 
 	// Show popup menu
-//	CMenu menu;
-//	if (menu.LoadMenu(IDR_POPUP_CONTENTS_HEADER)) {
-//		CMenu* pPopup = menu.GetSubMenu(0);
-//		if (pPopup) {
-//			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
-//		}
-//	}
 	BCMenu menu;
 	menu.LoadMenu(IDR_POPUP_CONTENTS_HEADER);
 	menu.LoadToolbar(IDR_MAINFRAME);
@@ -3609,10 +3262,8 @@ void CListCtrlEx::OnColumnInsert() {
 	BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 	// First we want to disable all the currently visible properties
 	DisableVisibleProperties();
-	// Don't let user insert something before first column!
-	// (otherwise the control gets screwy and the icon sticks with the new col 0 and the Name column has no icon!)
-//	if (m_nTargetColumn == 0) 
-//		m_nTargetColumn = 1;
+	// Don't let user insert something before first column
+	// (otherwise the control gets screwy and the icon sticks with the new col 0 and the Name column has no icon)
 	if (IndexToOrder(m_nTargetColumn) == 0)
 		m_nTargetColumn = OrderToIndex(1);
 	OBJID idProperty = 0; // pass 0 to make it ask user 
@@ -3642,7 +3293,6 @@ void CListCtrlEx::EnableAllProperties() {
 	BObject* pobjProperties = m_pDoc->GetObject(folderProperties);
 	ASSERT_VALID(pobjProperties);
 	pobjProperties->SetFlag(flagDisabled, FALSE, TRUE);
-//	pobjProperties->ClearFlag(flagDisabled, TRUE);
 }
 
 
@@ -3702,7 +3352,7 @@ void CListCtrlEx::OnUpdateColumnSortClear(CCmdUI* pCmdUI)
 	// Should only be enabled if autosort is OFF for parent
 	// (because in that case, user can move items up and down, and will need to be able to
 	// turn sort off in order to do that).
-	// Also only enable if contents are sorted!
+	// Also only enable if contents are sorted
 	BObject* pobjStart = m_pDoc->GetCurrentObject();
 	BOOL bAutosort = !(pobjStart->GetFlag(flagNoAutosort));
 	BOOL bEnable = (bAutosort == FALSE) && (m_lngSortPropertyID != 0);
@@ -3720,8 +3370,6 @@ LRESULT CListCtrlEx::OnLvwColumnsChanged(WPARAM wParam, LPARAM lParam)
 	BObject* pobj = m_pDoc->GetCurrentObject();
 	ASSERT_VALID(pobj);
 	SaveColumnInfo(pobj); // this saves the BDataColumns object to the current pobj
-	// Set flag so we know we're no longer responsible for deleting the BDataColumns object.
-//	m_bColumnsSaved = TRUE;
 	return 0;
 }
 
@@ -3741,7 +3389,6 @@ void CListCtrlEx::FollowLink(CView* pViewToRestore /* = NULL */)
 				ASSERT_VALID(pobj);
 				// Select item in treeview
 				// This will broadcast all the update messages necessary (save, select, load)
-//				m_pDoc->SetCurrentObject(pobj, this);
 				m_pDoc->SetCurrentObject(pobj);
 				// now restore focus to right side
 				if (pViewToRestore)
@@ -3772,3 +3419,6 @@ BOOL CListCtrlEx::SelectAnything()
 	}
 	return FALSE;
 }
+
+
+
