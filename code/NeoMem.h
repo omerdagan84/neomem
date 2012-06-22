@@ -1,5 +1,4 @@
 
-
 // CNeoMem
 // This class encapsulates all code associated with the main application,
 // which is responsible for registering the window with Windows,
@@ -268,7 +267,7 @@ public:
 
 // Globals
 //----------------------------------------------------------------------------------------------------------
-//, yeesh, fix this
+//. cleanup
 
 // these are just declarations. see elsewhere for definitions. 
 

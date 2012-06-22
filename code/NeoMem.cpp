@@ -13,11 +13,9 @@
 #include "DialogAbout2.h"
 #include "DialogError.h"
 #include "DialogNotice.h"
-//#include "DialogTip.h"
 #include "DialogWelcome.h"
 #include "DocManagerEx.h"
 #include "Email.h"
-//#include "Error.h"
 #include "FileFormat.h"
 #include "FrameMain.h"
 #include "FrameChild.h"
@@ -28,7 +26,6 @@
 #include "PageOptionsDisplay.h"
 #include "PageOptionsFile.h"
 #include "PropertySheetEx2.h"
-//#include "RegKey.h"
 #include "Strings.h"
 #include "ViewRtf.h"
 #include "ViewTabs.h"
@@ -60,8 +57,6 @@ static char THIS_FILE[] = __FILE__;
 
 
 // Header defaults
-//const COLORREF clrHeaderBackgroundDefault = 0x00303030;
-//const COLORREF clrHeaderBackgroundDefault = 0x84c4b7; 
 const COLORREF clrHeaderBackgroundDefault = 0x80c0b8;
 const COLORREF clrHeaderForegroundDefault = 0x00ffffff;
 const int nHeaderFontSizeDefault = 160;
@@ -73,9 +68,8 @@ const LPCTSTR szHeaderFontNameDefault = _T("Arial");
 //TERMINATE_FN old_terminate = NULL;
 
 // Handle an exception that was thrown outside of a message loop.
-// doesn't seem to get called. 
-void 
-TerminateRoutine() {
+//, doesn't get called
+void TerminateRoutine() {
 	AfxMessageBox("Unhandled Exception!", MB_ICONEXCLAMATION);
 	// cleanup
 	// call old terminate routine
@@ -84,10 +78,6 @@ TerminateRoutine() {
 	// Exit 
 	exit(-1);
 }
-
-
-
-
 
 
 
@@ -171,8 +161,7 @@ CNeoMem::CNeoMem() :
 
 // Register application manually - using MFC's you would get the 
 // new file and also print commands registered. 
-void 
-CNeoMem::RegisterApplication() {
+void CNeoMem::RegisterApplication() {
 
 //		[HKEY_CLASSES_ROOT\.neo]
 //			@="Neomem.Document"
@@ -232,8 +221,7 @@ CNeoMem::RegisterApplication() {
 
 // InitInstance is called by AfxWinMain, which then enters the thread's message 
 // loop via Run. see mfc/src/WinMain.cpp and ThrdCore.cpp
-BOOL 
-CNeoMem::InitInstance() {
+BOOL CNeoMem::InitInstance() {
 
 	TRACE("InitInstance\n");
 
@@ -277,7 +265,7 @@ CNeoMem::InitInstance() {
 
 	// Set the terminate routine which catches unhandled exceptions not caught in a message loop.
 	// Bug: Converted TerminateRoutine from a class method to a global function but forgot to 
-	// remove the definition in the .h file, so couldn't get this to compile!!
+	// remove the definition in the .h file, so couldn't get this to compile
 	set_terminate(TerminateRoutine);
 
 	// Make sure we are running on a decent version of the common controls - if not,
@@ -300,7 +288,7 @@ CNeoMem::InitInstance() {
 	float fVersion = m_objInfo.GetRichEditVersionNumber();
 //	float fVersion = 1.0;
 	if (fVersion < 5.0f) {
-		// user doesn't have RichEd20.dll on their system!
+		// user doesn't have RichEd20.dll on their system
 		AfxMessageBox("Notice: NeoMem requires version 2.0 or 3.0 of the RichEdit control, which does "
 			"not appear to be on your system. This control is included in various Microsoft products - the "
 			"easiest way to obtain it is by installing the latest Word Viewer from Microsoft. See the NeoMem "
@@ -308,20 +296,20 @@ CNeoMem::InitInstance() {
 		return FALSE;
 	}
 
-	//! Make sure we have CryptoAPI available?
+	//. Make sure we have CryptoAPI available?
 	// Windows 95, Windows NT 3.5x, and Windows NT 4.0 do not support Microsoft's CryptoAPI 
 	// standard out of the box. For Windows 95, Internet Explorer (IE) 3.02 or higher installs crypto.
 	// For Windows NT 4.0, Service Pack 3 installs it. Windows NT 3.51 does not support CryptoAPI.
 	// will bomb if try to use crypto functions and they're not available
 
-	//. Make sure we are running on 16-bit displays at least
+	//, Make sure we are running on 16-bit displays at least
 //	if (m_b
 
 	// Save the current (app) directory so we know where to find the template and example files.
-//	DWORD dwLength = MAX_PATH;
+//,	DWORD dwLength = MAX_PATH;
 	DWORD dwLength = 2048; // MAX_PATH;
 	LPTSTR szPath = m_strApplicationFolder.GetBuffer(dwLength);
-	// bug: current directory isn't always where the .exe is for some reason - sometimes it's C:\!
+	// bug: current directory isn't always where the .exe is for some reason - sometimes it's C:\
 //	::GetCurrentDirectory(dwLength, szPath);
 //	_tcscpy(szPath, m_pszExeName); // this is just "NEOMEM"
 	::GetModuleFileName(NULL, szPath, dwLength); // full path and file name
@@ -332,7 +320,7 @@ CNeoMem::InitInstance() {
 	CString strOldTemplate = m_strApplicationFolder + _T("\\Template1.1.neo");
 	if (FileExists(strOldTemplate))
 		_tremove(strOldTemplate);
-	// 1.1 if app is in debug or release folder, use the main documents folder to find template file! 
+	// 1.1 if app is in debug or release folder, use the main documents folder to find template file!
 	// (prevents having 3 copies of it lying around...)
 	// Just go up one folder to main project folder then down to files folder (was Documents)
 	// 1.2 moved this here from LoadOptions
@@ -483,7 +471,7 @@ CNeoMem::InitInstance() {
 	// A typical application uses one of the two CDocTemplate-derived classes provided by the 
 	// Microsoft Foundation Class Library: CSingleDocTemplate, which implements SDI, and 
 	// CMultiDocTemplate, which implements MDI. 
-	// why is just viewtree here?? Because the creation of the child frame is overridden
+	// why is just viewtree here? Because the creation of the child frame is overridden
 	// to create more than one view object
 //	CMultiDocTemplate* pDocTemplate;
 //	pDocTemplate = new CMultiDocTemplate(
@@ -525,7 +513,7 @@ CNeoMem::InitInstance() {
 	// This eliminates the need to ship a .REG file with your application.
 	// Note: If the registration database already associates a given filename extension with another 
 	// file type, no new association is created. 
-	// Only do this if we're running in release mode, otherwise when you double click a file it'll run in debug mode!
+	// Only do this if we're running in release mode, otherwise when you double click a file it'll run in debug mode
 #ifndef DEBUG
 	if (m_bRegisterFileType) {
 		TRACE("register file type\n");
@@ -641,7 +629,7 @@ CNeoMem::InitInstance() {
 	m_rtf.Create(WS_CHILD | ES_MULTILINE, CRect(0,0,0,0), AfxGetMainWnd(), 100);
 	// 1.1 Set max length
 	// Bug: Text was being truncated on moving text to another object - turned out text was limited
-	// to 32k by default! Had never noticed this - only tested on short text views!!
+	// to 32k by default. Had never noticed this - only tested on short text views.
 	m_rtf.LimitText(0xffffff);  // 16MB // this sends EM_LIMITTEXT message
 
 	// Show Tip of the Day
@@ -721,8 +709,7 @@ CNeoMem::InitInstance() {
 // framework, with other overridable functions for doing special cleanup specific to those 
 // objects.
 // Note: At this point, the windows have all been destroyed, so can't save Window positions here.
-int 
-CNeoMem::ExitInstance() {
+int CNeoMem::ExitInstance() {
 	xTRACE("CNeoMem::ExitInstance\n");
 
 	// Set flag
@@ -747,11 +734,11 @@ CNeoMem::ExitInstance() {
 	// BUG:: this is where a crash happened.
 	// The problem is, MFC puts m_nShowCmd into m_pCmdInfo temporarily,
 	// and is supposed to remove it on receiving the DDE message, but 
-	// the DDE message was never received!!!
+	// the DDE message was never received.
 	// This was due to short .exe name not being used. This was fixed but problem persisted.
 	// It turns out it was because I had left some msgboxes in InitInstance, which were
 	// somehow interfering with the DDE messaging, so the symptoms remained the same.
-	// Lesson: MsgBoxes are BAD FOR DEBUGGING!!!
+	// Lesson: MsgBoxes are BAD FOR DEBUGGING!
 	if (m_pCmdInfo) {
 		if (!AfxIsValidAddress(m_pCmdInfo, sizeof(CCommandLineInfo))) {
 			CString str;
@@ -767,8 +754,7 @@ CNeoMem::ExitInstance() {
 
 
 // This will move information from the registry to an ini file
-void 
-CNeoMem::MoveRegistryToIniFile(CString sInifile) {
+void CNeoMem::MoveRegistryToIniFile(CString sInifile) {
 
 	// if registry key exists, read info from there, and set flag. 
 	CRegKey r;
@@ -815,8 +801,7 @@ CNeoMem::MoveRegistryToIniFile(CString sInifile) {
 
 // Tell MFC to use the specified ini file, instead of the registry,
 // to store profile information. 
-void 
-CNeoMem::UseIniFile(CString sInifile) {
+void CNeoMem::UseIniFile(CString sInifile) {
 	// clear this string - this is what mfc uses to see which it should use (reg/ini)
 	free((void*)m_pszRegistryKey);
 	m_pszRegistryKey = NULL;
@@ -829,9 +814,9 @@ CNeoMem::UseIniFile(CString sInifile) {
 
 
 
-// Load settings from registry
-void 
-CNeoMem::LoadOptions() {
+// Load settings from registry, or set defaults
+void CNeoMem::LoadOptions() {
+  
 	// Used to get various binary settings
 	BYTE* pData = 0;
 	UINT nBytes = 0;
@@ -847,8 +832,6 @@ CNeoMem::LoadOptions() {
 
 	// Load page margins
 	// set default: (twips)
-//	m_rectPageMargins.SetRect(1440, 1440, 1440, 1440);
-//	m_rectPageMargins.SetRect(720, 720, 720, 720);
 	int nDefaultMargin = 1440 * 3 / 4; // .75 inch
 	m_rectPageMargins.left = GetProfileInt(szSettings, szMarginLeft, nDefaultMargin);
 	m_rectPageMargins.right = GetProfileInt(szSettings, szMarginRight, nDefaultMargin);
@@ -866,13 +849,10 @@ CNeoMem::LoadOptions() {
 	}
 	else {
 		// Create default of 16pt Arial
-		// BUG:: pt size is in 10ths of a point - MFC's param name is misleading!!!
-//		m_fontHeader.CreatePointFont(160, _T("Arial"));
-		m_fontHeader.CreatePointFont(nHeaderFontSizeDefault, szHeaderFontNameDefault);
+		// bug: pt size is in 10ths of a point - MFC's param name is misleading
+		m_fontHeader.CreatePointFont(nHeaderFontSizeDefault, szHeaderFontNameDefault); // eg 160 and "Arial"
 	}
 	// Get header colors
-//	m_clrHeaderBackground = GetProfileInt(szSettings, szHeaderBackgroundColor, 0x00303030);
-//	m_clrHeaderForeground = GetProfileInt(szSettings, szHeaderForegroundColor, 0x00ffffff);
 	m_clrHeaderBackground = GetProfileInt(szSettings, szHeaderBackgroundColor, clrHeaderBackgroundDefault);
 	m_clrHeaderForeground = GetProfileInt(szSettings, szHeaderForegroundColor, clrHeaderForegroundDefault);
 
@@ -880,7 +860,7 @@ CNeoMem::LoadOptions() {
 	if (GetProfileBinary(szSettings, szCustomColors, &pData, &nBytes) && pData) {
 		// Copy data into array - cool!
 		memcpy(&m_clrCustomColors[0], pData, sizeof(COLORREF) * 16);
-		// BUG::: FORGOT TO DELETE pDATA!!!!! 64 byte memory leak!!!
+		// bug: forgot to delete pData - 64 byte memory leak
 		// Make sure that you check for memory leaks everytime you add new functionality,
 		// otherwise you'll never know what's causing it without tracking it down the hard way.
 		delete pData;
@@ -930,7 +910,7 @@ CNeoMem::LoadOptions() {
 //	m_nDateFormat = GetProfileInt(szSettings, szDateFormat, 0);
 
 	// Admin mode
-	// 1.1d should have commented this out in 1.1c! (switched to cmd line)
+	// 1.1d should have commented this out in 1.1c (switched to cmd line)
 //	m_bAdmin = GetProfileInt(szSettings, szAdmin, FALSE);
 
 	// Get document folder
@@ -981,14 +961,6 @@ CNeoMem::LoadOptions() {
 	// tan: 0x0090a8b8   0x0098c8e0
 	// green: #CCFF66 #66CC33
 	// 0x00bbggrr
-//	m_clrHomeTopBack = 0x0068ffd0;
-//	m_clrHomeTopBack2 = 0x0040e078;
-//	m_clrHomeTopBack = 0x0060f4c8;
-//	m_clrHomeTopBack2 = 0x0038d870;
-//	m_clrHomeTopFore = 0x00ffffff;
-//	m_clrHomeTopBack = 0x0090b8c0; // tan
-//	m_clrHomeTopBack2 = 0x0080a8b0;
-//	m_clrHomeTopFore = 0x00ffffff;
 	m_clrHomeTopBack = 0x0098c0c8; // tan
 	m_clrHomeTopBack2 = 0x0080a8b0;
 	m_clrHomeTopFore = 0x00ffffff;
@@ -1000,23 +972,13 @@ CNeoMem::LoadOptions() {
 	m_clrHomeBottomBack = 0x007888a0;
 	m_clrHomeBottomBack2 = 0x00a0a8b8;
 	m_clrHomeBottomFore = 0x00ffffff;
-//	m_clrHomeBottomBack = 0x00222244;
-//	m_clrHomeBottomBack2 = 0x00000000;
-//	m_clrHomeBottomFore = 0x00ffffff;
 
-//	m_clrHomeDescriptionFore = 0x00ff0000;
-//	m_clrHomeDescriptionFore = 0x004090a0; // brown
 	m_clrHomeDescriptionFore = 0x0020a020; // green
 	
 
 	// Template file
-//	CString strTemplateFile = theApp.m_strApplicationFolder + _T("\\Template.neo"); // default
-//	CString strTemplateFile = _T("Template.neo"); // default (always in app folder)
 	CString strTemplateFile;
 	strTemplateFile.LoadString(IDS_TEMPLATE_FILE); // "Template.neo" by default
-	// 1.1 no need to store this in registry - it complicates things - just get from 
-	// the string resource and be done with it.
-//	m_strTemplateFileName = GetProfileString(szSettings, szTemplateFileName, strTemplateFile);
 	m_strTemplateFileName = strTemplateFile;
 	m_strTemplatePath = m_strApplicationFolder + _T("\\") + m_strTemplateFileName;
 
@@ -1048,8 +1010,7 @@ CNeoMem::LoadOptions() {
 
 
 // Save current settings in registry
-void 
-CNeoMem::SaveOptions() {
+void CNeoMem::SaveOptions() {
 
 	// Margins
 	WriteProfileInt(szSettings, szMarginLeft, m_rectPageMargins.left);
@@ -1084,11 +1045,6 @@ CNeoMem::SaveOptions() {
 	// Name and date formats
 	WriteProfileInt(szSettings, szNameFormat, m_nNameFormat);
 //	WriteProfileInt(szSettings, szDateFormat, m_nDateFormat);
-
-// 1.1	// Registration information
-//	WriteProfileString(szSettings, szRegistrationName, m_strRegistrationName);
-//	WriteProfileString(szSettings, szRegistrationKey, m_strRegistrationKey);
-//	WriteProfileInt(szSettings, szInstallDate, m_nInstallDate);
 
 	// Document folder
 	WriteProfileString(szSettings, szDocumentFolder, m_strDocumentFolder);
@@ -1134,9 +1090,7 @@ CNeoMem::SaveOptions() {
 
 
 // Initialize the application image list
-void 
-CNeoMem::LoadImageList() {
-//	m_imlApp.Create(16, 16, ILC_MASK | ILC_COLOR24, 10, 10);
+void CNeoMem::LoadImageList() {
 	m_imlApp.Create(16, 16, ILC_MASK, 10, 10);
 	m_nIconArrowUp = m_imlApp.Add(LoadIcon(IDI_ARROW_UP));
 	m_nIconArrowDown = m_imlApp.Add(LoadIcon(IDI_ARROW_DOWN));
@@ -1149,9 +1103,7 @@ CNeoMem::LoadImageList() {
 //---------------------------------------------------------------------------
 
 // App command to run the dialog
-void 
-CNeoMem::OnCmdHelpAbout() {
-//	CDialogAbout dlg;
+void CNeoMem::OnCmdHelpAbout() {
 	CWaitCursor wc;
 	CDialogAbout2 dlg;
 	dlg.DoModal();
@@ -1160,8 +1112,7 @@ CNeoMem::OnCmdHelpAbout() {
 
 
 // Bring up options dialog and let user change settings
-void 
-CNeoMem::OnCmdViewOptions() {
+void CNeoMem::OnCmdViewOptions() {
 
 	// Before calling options, save any current data, if any
 	CNeoDoc* pDoc = CNeoDoc::GetDoc();
@@ -1171,7 +1122,6 @@ CNeoMem::OnCmdViewOptions() {
 	}
 
 	// Note: can turn off help button if you want
-//	CPropertySheetEx2 sh(_T("Options"), AfxGetMainWnd());
 	CSheetOptions sh(_T("Options"), AfxGetMainWnd());
 	CPageOptionsDisplay pgDisplay;
 	CPageOptionsFile pgFile;
@@ -1270,7 +1220,7 @@ CNeoMem::OnCmdViewOptions() {
 		}
 
 		// AutoRecover
-		// 1.2a bug 3966: wasn't turning off autorecover timer!
+		// 1.2a bug 3966: wasn't turning off autorecover timer
 		if ((m_bAutoRecover != pgFile.m_bAutoRecover) || (m_nAutoRecoverMinutes != pgFile.m_nAutoRecoverMinutes)) {
 			m_bAutoRecover = pgFile.m_bAutoRecover;
 			m_nAutoRecoverMinutes = pgFile.m_nAutoRecoverMinutes;
@@ -1299,20 +1249,15 @@ CNeoMem::OnCmdViewOptions() {
 //-------------------------------------------------------------------
 
 
-
-void 
-CNeoMem::OnFilePrintSetup() {
+void CNeoMem::OnFilePrintSetup() {
 	CWinApp::OnFilePrintSetup();
 }
 
 
 
-
-
-// page setup support functions from wordapp.cpp
-//, um, move these?
-inline int 
-roundleast(int n) {
+// page setup support functions from wordapp.cpp MFC
+//, move these?
+inline int roundleast(int n) {
 	int mod = n%10;
 	n -= mod;
 	if (mod >= 5)
@@ -1322,16 +1267,14 @@ roundleast(int n) {
 	return n;
 }
 
-static void 
-RoundRect(LPRECT r1) {
+static void RoundRect(LPRECT r1) {
 	r1->left = roundleast(r1->left);
 	r1->right = roundleast(r1->right);
 	r1->top = roundleast(r1->top);
 	r1->bottom = roundleast(r1->bottom);
 }
 
-static void 
-MulDivRect(LPRECT r1, LPRECT r2, int num, int div) {
+static void MulDivRect(LPRECT r1, LPRECT r2, int num, int div) {
 	r1->left = ::MulDiv(r2->left, num, div);
 	r1->top = ::MulDiv(r2->top, num, div);
 	r1->right = ::MulDiv(r2->right, num, div);
@@ -1340,10 +1283,9 @@ MulDivRect(LPRECT r1, LPRECT r2, int num, int div) {
 
 
 
-// code taken from wordapp.cpp
+// code taken from wordapp.cpp MFC
 // changed so that margins are set for the app, not for the document
-void 
-CNeoMem::OnFilePageSetup() {
+void CNeoMem::OnFilePageSetup() {
 	CPageSetupDialog dlg;
 	PAGESETUPDLG& psd = dlg.m_psd;
 
@@ -1383,8 +1325,7 @@ CNeoMem::OnFilePageSetup() {
 
 
 // Return a pointer to the application image list
-CImageList* 
-CNeoMem::GetAppImageList() {
+CImageList* CNeoMem::GetAppImageList() {
 	return &m_imlApp;
 }
 
@@ -1392,33 +1333,30 @@ CNeoMem::GetAppImageList() {
 
 
 // Toggle display of header view
-void 
-CNeoMem::OnCmdViewHeader() {
+void CNeoMem::OnCmdViewHeader() {
 	m_bDisplayHeader = !m_bDisplayHeader;
 	// Refresh display
 	// mainly just need to resize the header view with repaint TRUE
 	CNeoDoc::GetDoc()->UpdateAllViewsEx(NULL, hintResize);
 }
 
-void 
-CNeoMem::OnUpdateViewHeader(CCmdUI* pCmdUI) {
+void CNeoMem::OnUpdateViewHeader(CCmdUI* pCmdUI) {
 	pCmdUI->SetCheck(m_bDisplayHeader ? 1 : 0);	
 }
 
 
 // Let user change font and foreground color for Header View
-void 
-CNeoMem::OnCmdViewHeaderFont() {
+void CNeoMem::OnCmdViewHeaderFont() {
 	LOGFONT lf;
 	if (!m_fontHeader.GetLogFont(&lf))
 		return;
-	CFontDialog dlg(&lf); //. parent wnd?
+	CFontDialog dlg(&lf); //, parent wnd?
 	dlg.m_cf.rgbColors = m_clrHeaderForeground;
 	if (dlg.DoModal() == IDOK) {
 		m_clrHeaderForeground = dlg.m_cf.rgbColors;
 		if (m_fontHeader.DeleteObject()) {
-			m_fontHeader.CreateFontIndirect(&lf); //. check return value
-			// this is supposed to redraw the window but it doesn't work!
+			m_fontHeader.CreateFontIndirect(&lf); //, check return value
+			// this is supposed to redraw the window but it doesn't work
 			// i think the child windows are excused because they are immune from being redrawn.
 //			m_pMainWnd->Invalidate();
 //			m_pMainWnd->UpdateWindow();
@@ -1438,9 +1376,8 @@ CNeoMem::OnCmdViewHeaderFont() {
 // the custom color boxes in the dialog box. If the user modifies these colors, the system 
 // updates the array with the new RGB values. To preserve new custom colors between calls 
 // to the ChooseColor function, you should allocate static memory for the array. 
-void 
-CNeoMem::OnCmdViewHeaderColor() {
-	CColorDialog dlg(m_clrHeaderBackground); //. parent wnd?
+void CNeoMem::OnCmdViewHeaderColor() {
+	CColorDialog dlg(m_clrHeaderBackground); //, parent wnd?
 	dlg.m_cc.lpCustColors = &m_clrCustomColors[0];
 	if (dlg.DoModal() == IDOK) {
 		m_clrHeaderBackground = dlg.GetColor();
@@ -1453,18 +1390,12 @@ CNeoMem::OnCmdViewHeaderColor() {
 
 
 // Reset header to defaults
-void 
-CNeoMem::OnCmdViewHeaderReset() {
+void CNeoMem::OnCmdViewHeaderReset() {
 	m_clrHeaderBackground = clrHeaderBackgroundDefault;
 	m_clrHeaderForeground = clrHeaderForegroundDefault;
 	if (m_fontHeader.DeleteObject()) {
 		m_fontHeader.CreatePointFont(nHeaderFontSizeDefault, szHeaderFontNameDefault);
-//		m_fontHeader.CreatePointFont(160, _T("Arial"));
 	}
-
-	// Get header colors
-//	m_clrHeaderBackground = GetProfileInt(szSettings, szHeaderBackgroundColor, 0x00303030);
-//	m_clrHeaderForeground = GetProfileInt(szSettings, szHeaderForegroundColor, 0x00ffffff);
 
 	UpdateAllDocumentViews(hintRefresh);
 }
@@ -1475,8 +1406,7 @@ CNeoMem::OnCmdViewHeaderReset() {
 // Walk through all open documents and send hintSave.
 // This is called before exiting.
 // Virtual override.
-BOOL 
-CNeoMem::SaveAllModified() {
+BOOL CNeoMem::SaveAllModified() {
 	// Get doc template
 	POSITION pos = GetFirstDocTemplatePosition();
 	CDocTemplate* pDocTemplate = GetNextDocTemplate(pos);
@@ -1503,8 +1433,7 @@ CNeoMem::SaveAllModified() {
 
 
 
-BOOL 
-CNeoMem::OnDDECommand(LPTSTR lpszCommand) {
+BOOL CNeoMem::OnDDECommand(LPTSTR lpszCommand) {
 	xTRACE("CNeoMem::OnDDECommand(%s)\n", lpszCommand);
 
 //	CString str;
@@ -1519,11 +1448,6 @@ CNeoMem::OnDDECommand(LPTSTR lpszCommand) {
 	// and return TRUE.  See implementation of CWinApp::OnDDEComand
 	// for example of parsing the DDE command string.
 
-	// now we can display the tip of the day dialog?
-//	if (m_bShowTips)
-//		OnCmdHelpTipOfTheDay();
-//	AfxMessageBox("Show welcome dialog here?");
-
 	// Return FALSE for any DDE commands you do not handle.
 	return FALSE;
 }
@@ -1537,14 +1461,12 @@ CNeoMem::OnDDECommand(LPTSTR lpszCommand) {
 
 
 // Bring up the neomem website
-void 
-CNeoMem::OnCmdHelpWebsite() {
+void CNeoMem::OnCmdHelpWebsite() {
 	GotoWebsite();
 }
 
 
-void 
-CNeoMem::OnCmdHelpEmail() {
+void CNeoMem::OnCmdHelpEmail() {
 //	SendEmail();
 	CEmail email;
 	email.AskSend();
@@ -1553,8 +1475,7 @@ CNeoMem::OnCmdHelpEmail() {
 
 
 // Show the tip of the day dialog
-void 
-CNeoMem::OnCmdHelpTipOfTheDay() {
+void CNeoMem::OnCmdHelpTipOfTheDay() {
 //	CDialogTip dlg;
 //	dlg.m_bShowTips = m_bShowTips;
 //	dlg.m_nTip = m_nTip;
@@ -1568,16 +1489,13 @@ CNeoMem::OnCmdHelpTipOfTheDay() {
 
 
 
-
-
 // Set text of status bar
 // Pass 0 or () to show the default string ("Ready")
-void 
-CNeoMem::SetStatusBarText(LPCTSTR lpszText /* = 0 */) {
+void CNeoMem::SetStatusBarText(LPCTSTR lpszText /* = 0 */) {
 	ASSERT_VALID(m_pMainWnd);
 	CString str;
 	if (lpszText == 0) {
-		str.LoadString(AFX_IDS_IDLEMESSAGE);
+		str.LoadString(AFX_IDS_IDLEMESSAGE); // "Ready"
 		lpszText = (LPCTSTR) str;
 	}
 //	((CFrameMain*) m_pMainWnd)->m_sbr.SetWindowText(lpszText);
@@ -1588,10 +1506,9 @@ CNeoMem::SetStatusBarText(LPCTSTR lpszText /* = 0 */) {
 
 // This will update the progress bar on the status bar.
 // Call with 0 items to hide the progress bar. 
-void 
-CNeoMem::UpdateProgressBar(ULONG nItem, ULONG nItems /* =0 */) {
+void CNeoMem::UpdateProgressBar(ULONG nItem, ULONG nItems /* =0 */) {
 	xTRACE("CNeoMem::UpdateProgressBar(nItem %d,  nItems %d)\n", nItem, nItems);
-	//, violating oo here - make protected and add methods
+	//, make protected and add methods
 	CFrameMain* pMain = (CFrameMain*) AfxGetMainWnd();
 	ASSERT_VALID(pMain);
 	CProgressCtrl& rprog = pMain->m_sbr.m_wndProgress;
@@ -1608,11 +1525,9 @@ CNeoMem::UpdateProgressBar(ULONG nItem, ULONG nItems /* =0 */) {
 
 
 
-
 // Override this to register short .exe name instead of long name
 // See Q148806 in Knowledge Base (MFC bug)
-void 
-CNeoMem::EnableShellOpen() {
+void CNeoMem::EnableShellOpen() {
 	ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
 
 	// Get .exe's short name
@@ -1639,16 +1554,14 @@ CNeoMem::EnableShellOpen() {
 
 
 /* // 1.1
-void 
-CNeoMem::OnCmdEnterKey() {
+void CNeoMem::OnCmdEnterKey() {
 	EnterRegistrationKey();
 }
 
 
 // Compare specified key for the given name with the calculated key.
 // Returns True if they match.
-BOOL 
-CNeoMem::VerifyRegistrationKey(CString& strName, CString& strKey) {
+BOOL CNeoMem::VerifyRegistrationKey(CString& strName, CString& strKey) {
 	char* pszName = strName.GetBuffer(0);
 
 	CString strCalcKey;
@@ -1671,8 +1584,7 @@ CNeoMem::VerifyRegistrationKey(CString& strName, CString& strKey) {
 */
 
 
-CDocument* 
-CNeoMem::OpenDocumentFile(LPCTSTR lpszFileName) {
+CDocument* CNeoMem::OpenDocumentFile(LPCTSTR lpszFileName) {
 	// Add your specialized code here and/or call the base class	
 	return CWinApp::OpenDocumentFile(lpszFileName);
 }
@@ -1680,17 +1592,14 @@ CNeoMem::OpenDocumentFile(LPCTSTR lpszFileName) {
 
 
 // Return ObjectID of top object, either Main root or User root
-ULONG 
-CNeoMem::GetTopObjectID() {
+ULONG CNeoMem::GetTopObjectID() {
 	return m_bAdmin ? rootMain : rootUser;
 }
 
 
 
-
 // Advance tip counter to next available tip
-void 
-CNeoMem::GotoNextTip() {
+void CNeoMem::GotoNextTip() {
 	if (m_nTip == 0)
 		m_nTip = IDS_TIP1;
 	else
@@ -1701,14 +1610,11 @@ CNeoMem::GotoNextTip() {
 
 	m_strTip.LoadString(m_nTip);
 
-//,	_fgetts(m_memTips.m_hFile //??
-
 }
 
 
 // Reverse tip counter to previous tip
-void 
-CNeoMem::GotoPreviousTip() {
+void CNeoMem::GotoPreviousTip() {
 	if (m_nTip == IDS_TIP1)
 		m_nTip = IDS_TIP_LAST;
 	else
@@ -1719,8 +1625,7 @@ CNeoMem::GotoPreviousTip() {
 
 
 // Get pointer to current tip text
-LPCTSTR 
-CNeoMem::GetTip() {
+LPCTSTR CNeoMem::GetTip() {
 	return m_strTip;
 }
 
@@ -1733,10 +1638,10 @@ CNeoMem::GetTip() {
 
 
 // This is where we handle any uncaught exceptions that occur during processing 
-// of a Windows message. [but doesn't include those outside of that situation!]
+// of a Windows message. [but doesn't include those outside of that situation]
 // Should give message with the exception, saying to save your work and close the program.
 // This gets called from AfxCallWndProc, which catches any uncaught exceptions 
-// within the message loop!
+// within the message loop
 // TRY {
 //      lResult = pWnd->WindowProc(nMsg, wParam, lParam);
 //   } CATCH_ALL(e) {
@@ -1746,14 +1651,12 @@ CNeoMem::GetTip() {
 // [from wincore.cpp]
 //. write exceptions to logfile
 // Don't delete the exception here because AfxCallWndProc (which called this routine) 
-// does that!!
+// does that.
 // If you rethrow the exception from this routine, control would pass to the 
 // terminate handler, which would just shut down the program.
-LRESULT 
-CNeoMem::ProcessWndProcException(CException* pe, const MSG* pMsg) {
+LRESULT CNeoMem::ProcessWndProcException(CException* pe, const MSG* pMsg) {
 //	e->ReportError();
 //	return CWinApp::ProcessWndProcException(pe, pMsg);
-
 
 	CError* pError = NULL;
 
@@ -1812,7 +1715,7 @@ CNeoMem::ProcessWndProcException(CException* pe, const MSG* pMsg) {
 		// same as double-clicking on main window close box
 //		ASSERT(AfxGetApp()->m_pMainWnd != NULL);
 //		AfxGetApp()->m_pMainWnd->SendMessage(WM_CLOSE);
-// 1.1		m_bCrashing = TRUE; // set flag so that nag dialog won't show up!
+// 1.1		m_bCrashing = TRUE; // set flag so that nag dialog won't show up
 		m_pMainWnd->SendMessage(WM_CLOSE);
 	}
 
@@ -1827,8 +1730,7 @@ CNeoMem::ProcessWndProcException(CException* pe, const MSG* pMsg) {
 // let user email it to me, and if it's really severe, close the program.
 // Returns True if user chose to Continue (or if not a severe error), or
 // False if user chose to Shut Down the program.
-BOOL 
-CNeoMem::HandleError(CError& e) {
+BOOL CNeoMem::HandleError(CError& e) {
 	// CException has a member GetErrorMessage, which could be overridden
 
 	// If the error level is Low, just show the error message in a dialog.
@@ -1857,8 +1759,7 @@ CNeoMem::HandleError(CError& e) {
 
 // Walk through all document templates and all open documents, sending
 // the specified hint and object to all views.
-void 
-CNeoMem::UpdateAllDocumentViews(LPARAM lHint, CObject* pHint /* = 0 */) {
+void CNeoMem::UpdateAllDocumentViews(LPARAM lHint, CObject* pHint /* = 0 */) {
 	TRACE("UpdateAllDocumentViews %s\n", GetHintName(lHint));
 
 	// Walk through document templates
@@ -1880,8 +1781,7 @@ CNeoMem::UpdateAllDocumentViews(LPARAM lHint, CObject* pHint /* = 0 */) {
 
 // Walk through all document templates and all open documents, sending
 // the specified hint and object to all bobjects.
-void 
-CNeoMem::UpdateAllDocumentObjects(ULONG lngMsg, BOOL bRecurse /* = TRUE */) {
+void CNeoMem::UpdateAllDocumentObjects(ULONG lngMsg, BOOL bRecurse /* = TRUE */) {
 
 	// Walk through document templates
 	POSITION posDocTemplate = GetFirstDocTemplatePosition();
@@ -1904,8 +1804,7 @@ CNeoMem::UpdateAllDocumentObjects(ULONG lngMsg, BOOL bRecurse /* = TRUE */) {
 
 
 
-void 
-CNeoMem::GotoWebsite() {
+void CNeoMem::GotoWebsite() {
 	if (IDYES == AfxMessageBox("This will attempt to open the NeoMem.org website. Continue?", MB_ICONQUESTION + MB_YESNO)) {
 		CString strURL;
 		strURL.Format("http://%s", (LPCTSTR) theApp.m_strWebsite); // www.neomem.org
@@ -1922,8 +1821,7 @@ CNeoMem::GotoWebsite() {
 // Search the specified RTF string for the specified plain text.
 // We use an invisible rtf control to convert the rtf to plain text. 
 // Returns position of occurrence withing the string, or -1 if not found.
-long 
-CNeoMem::SearchRtfString(LPCTSTR pszRtfString, LPCTSTR pszSearchFor, BOOL bMatchCase, BOOL bWholeWord) {
+long CNeoMem::SearchRtfString(LPCTSTR pszRtfString, LPCTSTR pszSearchFor, BOOL bMatchCase, BOOL bWholeWord) {
 
 	// Assign rtf text to search through
 	m_rtf.SetRtf(pszRtfString);
@@ -1936,9 +1834,9 @@ CNeoMem::SearchRtfString(LPCTSTR pszRtfString, LPCTSTR pszSearchFor, BOOL bMatch
 	// Specify search term and properties
 	FINDTEXTEX ft;
 	ft.chrg = cr;
-	ft.lpstrText = const_cast <LPSTR> (pszSearchFor); // Note const_cast!!
+	ft.lpstrText = const_cast <LPSTR> (pszSearchFor); //, Note const_cast!!
 	DWORD dwSearchFlags = (bMatchCase ? FR_MATCHCASE : 0) | (bWholeWord ? FR_WHOLEWORD : 0);
-	dwSearchFlags |= FR_DOWN; // This is needed for RichEdit 2.0 and later!
+	dwSearchFlags |= FR_DOWN; // This is needed for RichEdit 2.0 and later
 
 	// Search for text
 	// Bug:: redefined int nPos here - BAD!
@@ -1953,35 +1851,14 @@ CNeoMem::SearchRtfString(LPCTSTR pszRtfString, LPCTSTR pszSearchFor, BOOL bMatch
 
 // Update common control library, if necessary, and delete update file if not needed.
 // Returns False if should abort application.
-BOOL 
-CNeoMem::UpdateCommonControls() {
+BOOL CNeoMem::UpdateCommonControls() {
 	TRACE("UpdateCommonControls\n");
 
-//	LPCTSTR szUpdateProgram = "50comupd.exe";
 	float fVersionRequired = 5.80f;
 	float fVersionExisting = m_objInfo.GetCommonControlsVersionNumber();
 
 //	if (TRUE)
 	if (fVersionExisting < fVersionRequired) {
-//		CString strMsg;
-//		strMsg.Format(
-//			"In order to run NeoMem, your Windows Common Control Library file (Comctl32.dll) needs to "
-//			"be upgraded to version %.2f. Your file is version %.2f. "
-//			"Click OK to run the update program (%s) or Cancel to exit. \n\n"
-//			"See the ReadMe.txt file for more information.",
-//			fVersionRequired,
-//			fVersionExisting,
-//			szUpdateProgram
-//			);
-//		strMsg.Format(
-//			"In order to run NeoMem, your Windows Common Control Library file (Comctl32.dll) needs to "
-//			"be upgraded to version %.2f or later. Your file is version %.2f. "
-//			"This free upgrade is available from Microsoft's website at http://www.microsoft.com/msdownload/ieplatform/ie/comctrlx86.asp.\n\n"
-//			,
-//			fVersionRequired,
-//			fVersionExisting
-//			);
-//		AfxMessageBox(strMsg, MB_ICONINFORMATION);
 		CString str;
 		str.Format(
 			"In order to run NeoMem, your Windows Common Control Library needs to be updated to a newer version."
@@ -2000,42 +1877,26 @@ CNeoMem::UpdateCommonControls() {
 		dlg.m_strMessage = str;
 		dlg.DoModal();
 
-//		if (IDOK == AfxMessageBox(strMsg, MB_OKCANCEL | MB_ICONEXCLAMATION)) {
-//			// Run the upgrade program
-//			UINT nErr = (UINT) ::ShellExecute(NULL, "open", szUpdateProgram, NULL, NULL, SW_SHOW);
-//			if (nErr <= 32) {
-//				strMsg.Format("Unable to run update file (%s). ", szUpdateProgram);
-//				AfxMessageBox(strMsg, MB_ICONEXCLAMATION);
-//			}
-//		}
 		return FALSE;
 	}
-//	else {
-//		// Delete upgrade file if still there
-//		xTRACE("Attempting to delete %s\n", szUpdateProgram);
-//		remove(szUpdateProgram);
-//	}
 	return TRUE;
 }
 
 
 
 // Load strings from string resource
-void 
-CNeoMem::LoadStrings() {
+void CNeoMem::LoadStrings() {
 	TRACE("LoadStrings\n");
 
 	m_strWebsite.LoadString(IDS_WEBSITE);
 	m_strEmail.LoadString(IDS_EMAIL);
-//	m_strBuildDate.LoadString(IDS_BUILD_DATE);
 }
 
 
 
 // Bring up a help topic
 // Must add keyword to hlp/HelpIDs.h file
-void 
-CNeoMem::OnCmdHelpKeyboard() {
+void CNeoMem::OnCmdHelpKeyboard() {
 	// Show the custom help topic that has the context string "HID_KEYBOARD_SHORTCUTS"
 	// in the help .RTF file, and which is mapped to the DWORD ID HID_KEYBOARD_SHORTCUTS
 	// in the HelpIDs.h file, which is included in the [Map] section of the Neomem.hm file.
@@ -2045,9 +1906,6 @@ CNeoMem::OnCmdHelpKeyboard() {
 	// dwData =  Address of a HELPWININFO structure that specifies the size and position of either 
 	// a primary or secondary Help window. 
 
-//	AfxGetApp()->WinHelp(HID_MYTOPIC);
-//	AfxGetApp()->WinHelp(0x10000 + ID_MYCOMMAND);
-//	theApp.WinHelp(keyboard_shortcuts);
 	theApp.WinHelp(HID_KEYBOARD_SHORTCUTS);
 }
 
@@ -2055,15 +1913,15 @@ CNeoMem::OnCmdHelpKeyboard() {
 
 // Copy specified text to the clipboard.
 // Returns True if successful.
-BOOL 
-CNeoMem::CopyToClipboard(CString &str) {
+BOOL CNeoMem::CopyToClipboard(CString &str) {
 	TRACE("CopyToClipboard\n");
+  
 //	if (OpenClipboard())
 	if (::OpenClipboard(NULL)) {
 		::EmptyClipboard();
 
 		// Copy the CString to global memory for the clipboard to use
-		// Bug: Didn't check for 0 length, so sf.Detach failed with an assert!
+		// Bug: Didn't check for 0 length, so sf.Detach failed with an assert
 		//, make a cstringex savetoglobal method
 		UINT nBytes = str.GetLength();
 		if (nBytes != 0) {
@@ -2085,8 +1943,7 @@ CNeoMem::CopyToClipboard(CString &str) {
 
 // Get text from clipboard (if any) and put it into the given cstring.
 // Returns True if successful, or False if no text on clipboard.
-BOOL 
-CNeoMem::GetTextFromClipboard(CString &str) {
+BOOL CNeoMem::GetTextFromClipboard(CString &str) {
 	BOOL bSuccess = FALSE;
 	if (::IsClipboardFormatAvailable(CF_TEXT)) {
 		if (::OpenClipboard(NULL)) {
@@ -2136,16 +1993,14 @@ CNeoMem::GetTextFromClipboard(CString &str) {
 
 
 
-void 
-CNeoMem::OnCmdHelpShowWelcome() {
+void CNeoMem::OnCmdHelpShowWelcome() {
 	CDialogWelcome dlg;
 	dlg.DoModal();
 }
 
 
 /*
-void 
-CNeoMem::ShowTipAtStartup(void) {
+void CNeoMem::ShowTipAtStartup(void) {
 	// CG: This function added by 'Tip of the Day' component.
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
@@ -2156,8 +2011,7 @@ CNeoMem::ShowTipAtStartup(void) {
 	}
 }
 
-void 
-CNeoMem::ShowTipOfTheDay(void) {
+void CNeoMem::ShowTipOfTheDay(void) {
 	// CG: This function added by 'Tip of the Day' component.
 	CTipDlg dlg;
 	dlg.DoModal();
@@ -2169,9 +2023,7 @@ CNeoMem::ShowTipOfTheDay(void) {
 
 
 
-
-void 
-CNeoMem::LoadTips() {
+void CNeoMem::LoadTips() {
 /*
 	// Open tip file from resource data
 	// Note: Use NULL for hModule and it will load from current .exe's module
@@ -2198,8 +2050,7 @@ CNeoMem::LoadTips() {
 
 
 // Callback used by CNeoMem::BrowseFolder
-int CALLBACK 
-BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData) {
+int CALLBACK BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData) {
 	TCHAR szDir[MAX_PATH];
 	switch (uMsg) {
 		// Indicates the browse dialog box has finished initializing. The lParam value is zero. 
@@ -2227,8 +2078,7 @@ BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData) {
 // Browse for a folder. 
 // Returns True if user hit OK, with name of folder in cstring.
 // See also Browse for a Folder the Non-COM Way Brian Hart in MSDN
-BOOL 
-CNeoMem::BrowseFolder(LPCTSTR szInstructions, CString &strFolder) {
+BOOL CNeoMem::BrowseFolder(LPCTSTR szInstructions, CString &strFolder) {
 	BOOL bOK = FALSE;
 
 	LPMALLOC pMalloc;
@@ -2275,15 +2125,11 @@ CNeoMem::BrowseFolder(LPCTSTR szInstructions, CString &strFolder) {
 
 // Show the welcome dialog if flag is set and no other files are open.
 // Note: m_bAppShuttingDown is set in the main frame WM_CLOSE handler.
-void 
-CNeoMem::ShowWelcomeDialog() {
+void CNeoMem::ShowWelcomeDialog() {
 	BOOL bShow = m_bShowWelcome && // Option for welcome dialog
 							(GetDocCount() == 0) && // No documents open
 							(m_bAppShuttingDown == FALSE) && // App is not shutting down
 							(m_bWindowsShuttingDown == FALSE); // Windows is not shutting down
-//	if ((m_bShowWelcome) &&
-//		(GetDocCount() == 0) &&
-//		(!m_bAppShuttingDown))
 	if (bShow) {
 		CDialogWelcome dlg;
 		dlg.DoModal();
@@ -2294,8 +2140,7 @@ CNeoMem::ShowWelcomeDialog() {
 
 
 // Get a count of the number of open documents.
-int 
-CNeoMem::GetDocCount() {
+int CNeoMem::GetDocCount() {
 	int nCount = 0;
 	//, just one doc template
 	POSITION pos = GetFirstDocTemplatePosition();
@@ -2316,16 +2161,10 @@ CNeoMem::GetDocCount() {
 
 
 
-
-
-
-
-
-
 // Global functions
 //-----------------------------------------------------------------------------------------------------------------
 
-//, um
+//, move
 
 // This hooks into the new operator memory allocation so you can find where memory is
 // being allocated but not released.
@@ -2341,11 +2180,8 @@ static BOOL AFXAPI AllocHook(size_t nSize, BOOL bObject, LONG lRequestNumber) {
 
 
 
-
-
 // This is called when a crash happens - all dirty files are saved to copies.
-BOOL 
-CNeoMem::SaveAllModifiedBackup(CString& strMsg) {
+BOOL CNeoMem::SaveAllModifiedBackup(CString& strMsg) {
 	// There is only one doc template
 	POSITION pos = GetFirstDocTemplatePosition();
 	CDocTemplate* pDocTemplate = GetNextDocTemplate(pos);
@@ -2362,8 +2198,6 @@ CNeoMem::SaveAllModifiedBackup(CString& strMsg) {
 
 				// If doc needs to be saved, try to save it to a backup file
 				if (pDoc->IsModified()) {
-// test - corrupt doc
-//pDoc->m_pobjRoot = 0;
 
 					CString strOriginalName = pDoc->GetPathName();
 //					// If string is empty then file hasn't been saved yet - use the doc title (Document1)
@@ -2398,7 +2232,7 @@ CNeoMem::SaveAllModifiedBackup(CString& strMsg) {
 			catch (CException* pe) {
 				pe->Delete();
 				strMsg += "Unable to save remaining documents.\r\n";
-				pos = 0; // exit loop!
+				pos = 0; // exit loop
 			}
 		}
 	}
@@ -2410,8 +2244,7 @@ CNeoMem::SaveAllModifiedBackup(CString& strMsg) {
 
 
 // Get current child frame window, or NULL if none. 
-CFrameChild* 
-CNeoMem::GetChildFrame() {
+CFrameChild* CNeoMem::GetChildFrame() {
 	CFrameMain* pmain = (CFrameMain*) m_pMainWnd; //.cast
 	if (pmain) {
 		ASSERT_VALID(pmain);
@@ -2426,8 +2259,7 @@ CNeoMem::GetChildFrame() {
 
 
 // Get current main frame window
-CFrameMain* 
-CNeoMem::GetMainFrame() {
+CFrameMain* CNeoMem::GetMainFrame() {
 	CFrameMain* pmain = (CFrameMain*) m_pMainWnd;
 	ASSERT_VALID(pmain);
 	return pmain;
@@ -2436,9 +2268,8 @@ CNeoMem::GetMainFrame() {
 
 
 // Returns True if the main window is maximized
-//, this doesn't work! showCmd comes out SW_NORMAL even when it's maxed!!
-BOOL 
-CNeoMem::IsMaximized() {
+//, this doesn't work - showCmd comes out SW_NORMAL even when it's maxed
+BOOL CNeoMem::IsMaximized() {
 	if (m_pMainWnd) {
 		ASSERT_VALID(m_pMainWnd);
 		WINDOWPLACEMENT wp;
@@ -2452,11 +2283,8 @@ CNeoMem::IsMaximized() {
 
 
 // Overriding the base class version
-void 
-CNeoMem::OnFileOpen() {
+void CNeoMem::OnFileOpen() {
 	TRACE("CNeoMem::OnFileOpen\n");
-//	ASSERT(m_pDocManager != NULL);
-//	m_pDocManager->OnFileOpen();
 	CDocManagerEx* pDocMgr = STATIC_DOWNCAST(CDocManagerEx, m_pDocManager);
 	ASSERT_VALID(pDocMgr);
 	pDocMgr->OnFileOpen();
@@ -2466,11 +2294,9 @@ CNeoMem::OnFileOpen() {
 
 
 
-
 // Convert the specified rtf text into plain text.
 // Returns True if successful.
-BOOL 
-CNeoMem::ConvertRtfToPlain(LPCTSTR pszRtf, CString &strPlain) {
+BOOL CNeoMem::ConvertRtfToPlain(LPCTSTR pszRtf, CString &strPlain) {
 	// Assign rtf text to our invisible rtf control, then get the plain text using the standard method.
 	m_rtf.SetRtf(pszRtf);
 	m_rtf.GetWindowText(strPlain);
@@ -2479,45 +2305,37 @@ CNeoMem::ConvertRtfToPlain(LPCTSTR pszRtf, CString &strPlain) {
 
 
 
-
-
 //, Convert the specified plain text to rtf.
 // Returns True if successful.
-BOOL 
-CNeoMem::ConvertPlainToRtf(CString& strPlain, CString& strRtf) {
+BOOL CNeoMem::ConvertPlainToRtf(CString& strPlain, CString& strRtf) {
 	ASSERT(FALSE);
 	// Assign plain text to our invisible rtf control, then get the rtf text.
 //	m_rtf.SetRtf(pszRtf);
 //	m_rtf.GetWindowText(strPlain);
 //	m_rtf.SetWindowText(strPlain);
 //	strRtf = m_rtf.GetRtf();
-
 	// walk through, converting 
-
 	return TRUE;
 }
 
 
 
 // Bring up help topic
-void 
-CNeoMem::OnCmdHelpWhatIs() {
+void CNeoMem::OnCmdHelpWhatIs() {
 	theApp.WinHelp(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)
 }
 
 
 // Bring up help topic
 // Must add keyword to hlp/HelpIDs.h file
-void 
-CNeoMem::OnHelpWhatsNew() {
+void CNeoMem::OnHelpWhatsNew() {
 	theApp.WinHelp(HID_WHATS_NEW);
 }
 
 
 // Show a message to the user, giving them the option to turn it off in the future.
 //. define the different messages better
-UINT 
-CNeoMem::ShowMessage(UINT nMessage) {
+UINT CNeoMem::ShowMessage(UINT nMessage) {
 	CDialogMessage2 dlg;
 
 	// Define captions, messages and their corresponding registry entries
@@ -2551,8 +2369,7 @@ CNeoMem::ShowMessage(UINT nMessage) {
 
 
 // called by neodoc on successful file save
-void 
-CNeoMem::ResetAutoRecoverTimer() {
+void CNeoMem::ResetAutoRecoverTimer() {
 	if (m_bAutoRecover) {
 		GetMainFrame()->SetAutoRecoverTimer(m_nAutoRecoverMinutes);
 	}
@@ -2561,8 +2378,7 @@ CNeoMem::ResetAutoRecoverTimer() {
 
 
 // Save AutoRecover information for all files
-void 
-CNeoMem::DoAutoRecoverSave() {
+void CNeoMem::DoAutoRecoverSave() {
 	m_bDoingAutoRecover = TRUE;
 	SaveAllModified();
 	m_bDoingAutoRecover = FALSE;
@@ -2570,14 +2386,10 @@ CNeoMem::DoAutoRecoverSave() {
 
 
 
-
-void 
-CNeoMem::DoTests() {
-
-	// Run all Unit Tests
-	// this is called from InitInstance if in test mode (ie run with /t option).
-	//. and for now, by ctrl+alt+shift+T command. 
-
+// Run all Unit Tests
+// this is called from InitInstance if in test mode (ie run with /t option).
+//. and for now, by ctrl+alt+shift+T command. 
+void CNeoMem::DoTests() {
 
 	// must wrap in try/catch because we're not inside a windows message handler!
 	// see ProcessWndProcException
@@ -2614,8 +2426,8 @@ CNeoMem::DoTests() {
 		//, should take and return handles, not pointers. 
 		//, all props should be optional. have a default location, class, name. 
 
-		//, should document really know about current object? NO! that's a ui thing. 
-		// there could be multiple ui's looking at the db. duh. 
+		//, should document really know about current object? no, that's a ui thing. 
+		// there could be multiple ui's looking at the db. 
 		// it's pretty entwined in cneodoc though. 
 
 		// add folder for fish
@@ -2680,13 +2492,10 @@ CNeoMem::DoTests() {
 //,		pdoc->UIAddNewObject2(gpgui);
 
 
-
-
 		// set folder default to fish class
 //		pdoc->UIChangeObjectContents(hobjFishClass);
 		// This will set document modified flag and update views
 		hobjFishFolder->SetPropertyLink(propDefaultClass, hobjFishClass);
-
 
 		// add a new property 'price'
 //		pdoc->UIAddNewPropertyDef(); //, adapt this
@@ -2697,10 +2506,8 @@ CNeoMem::DoTests() {
 		// set plecy's price
 		hobjPlecy->SetPropertyText(propPrice, "$1.34");
 
-
 		// select the fish folder
 		pdoc->SetCurrentObject(hobjFishFolder);
-
 
 		// add price to the contents view
 //		nCol = GetColumnCount();
@@ -2716,28 +2523,23 @@ CNeoMem::DoTests() {
 		hobjPlecy->SetPropertyText(propDescription, "plecostomus catfish");
 //		hobjPlecy->SetDescription("plecostomus catfish");
 
-
 		// add another fish
 		HOBJECT hobjGlassfish = pdoc->CreateObject(classFish, "glassfish", hobjFishFolder);
 		pdoc->AddObject(hobjGlassfish);
-
-
 
 		// convert the prop to a string
 //		hobjPrice->SetPropertyData(propPropType, proptypeString);
 
 
 
-
-
 	}
 	catch (CException* e) {
-		// wtf?
+		//?
 		const MSG msg = {0};
 		AfxGetThread()->ProcessWndProcException(e, &msg);
 	}
 
-//, beeps too loud!		AfxMessageBox("All tests done.");
+//, beeps too loud		AfxMessageBox("All tests done.");
 
 }
 
@@ -2746,8 +2548,7 @@ CNeoMem::DoTests() {
 
 
 
-void 
-CNeoMem::Export(BObject *pobj) {
+void CNeoMem::Export(BObject *pobj) {
 	// ask user what they want to export
 	// ask what type of export they want (.rtf, .txt, .xml, .neo) 
 	// outlook has wizard:
@@ -2760,8 +2561,6 @@ CNeoMem::Export(BObject *pobj) {
 	// and clicked on export
 
 	// First make sure the current item's text is saved
-//	CFrameChild* pframe = GetChildFrame();
-//	CNeoDoc* pdoc = (CNeoDoc*) pframe->GetActiveDocument(); //.cast
 	CNeoDoc* pdoc = CNeoDoc::GetDoc();
 	BObject* pobjCurrent = pdoc->GetCurrentObject();
 	pdoc->UpdateAllViewsEx(NULL, hintSave, pobjCurrent);
@@ -2854,31 +2653,23 @@ CNeoMem::Export(BObject *pobj) {
 	
 	// Get export filename
 	if (dlg.DoModal() == IDOK) {
-//		CString strFilename = dlg.GetPathName();
-//		AfxMessageBox(strFilename);
 		strFilename = dlg.GetPathName(); // eg full/path/test.rtf
 		int nFilterIndex = dlg.GetFilterIndex() - 1; // go from one-based to zero-based!
 		eFileFormat nFormat = theApp.m_listExportFormats.GetFormatId(nFilterIndex);
-
-//		CPath path = CPath(strFilename);
-//		strExtension = path.GetExtension();
-//		strTitle = dlg.GetFileTitle(); // eg test
 		strExtension = dlg.GetFileExt(); // eg rtf
-//		strExtension = "csv"; // force this, in case they changed it. meh. 
+//		strFolder = dlg.GetFolderPath(); // bombs
 
 		// remember the selected folder and format
 		CPath path = CPath(strFilename);
 		path = path.GetPath(); // exclude filename
 		strFolder = path.GetStr();
 		strFolder = strFolder.LeftFrom('\\'); // remove trailing slash
-//		strFolder = dlg.GetFolderPath(); // bombs!
 
 		m_strExportFolder = strFolder;
 		m_strExportFormat = strExtension;
 
 		// do the export, handled by document
 		CWaitCursor wc;
-//		pdoc->Export(pobj, bRecurse, bSystem, strExtension, strFilename);
 		pdoc->Export(pobj, bRecurse, bSystem, nFormat, strFilename);
 
 	}
@@ -2891,7 +2682,8 @@ CNeoMem::Export(BObject *pobj) {
 
 // Debug routines
 //-------------------------------------------------------------------------------------------------------------
-//, ugh
+//, move/cleanup
+
 
 #ifdef _DEBUG
 
@@ -3013,8 +2805,7 @@ static const NotifyCodeString aNotifyCodes[] = {
 
 // Usage:
 
-CString 
-CNeoMem::GetNotifyCodeString(UINT nNotifyCode) {
+CString CNeoMem::GetNotifyCodeString(UINT nNotifyCode) {
 	// array of codes and strings describing them
 	// walk through array to find the code
 	// return the string
@@ -3072,8 +2863,7 @@ static const CodeString aCodes[] = {
 };
 
 
-LPCTSTR 
-CNeoMem::GetCodeName(DWORD dwCodeType, DWORD nCodeID) {
+LPCTSTR CNeoMem::GetCodeName(DWORD dwCodeType, DWORD nCodeID) {
 	// array of codes and strings describing them
 	// walk through array to find the code
 	// return the string
@@ -3099,14 +2889,13 @@ CNeoMem::GetCodeName(DWORD dwCodeType, DWORD nCodeID) {
 
 // show an error message and let user continue or quit. 
 // see also ThrowAssertion
-BOOL 
-CNeoMem::ShowError(CString strMsg) {
+BOOL CNeoMem::ShowError(CString strMsg) {
 
-//	CAppException* pe = new CAppException(TRUE); // pass true if creating on the heap!
-	// Bug: can't just copy LPCTSTR pointer to string, because it might be a temporary object!!
+//	CAppException* pe = new CAppException(TRUE); // pass true if creating on the heap
+	// Bug: can't just copy LPCTSTR pointer to string, because it might be a temporary object.
 	// The error message was getting overwritten with FE EE's and didn't know what was going on - 
-	// a CString was being passed here and then going out of scope because of the throw! 
-	// So use strcpy or CStrings!
+	// a CString was being passed here and then going out of scope because of the throw.
+	// So use strcpy or CStrings.
 //	pe->m_pszError = pszError; // store error message
 //	pe->m_strError = "Assertion Failed";
 //	throw pe;
@@ -3138,6 +2927,9 @@ CNeoMem::ShowError(CString strMsg) {
 // Global objects
 //-----------------------------------------------------------------------------------------------------------------
 
+//. cleanup
+
+
 // The one and only CNeoMem object
 CNeoMem theApp;
 
@@ -3148,14 +2940,12 @@ CGUI* gpgui = &theApp.m_gui;
 // When modifying a variable or function at file scope, the static keyword specifies 
 // that the variable or function has internal linkage (its name is not visible 
 // from outside the file in which it is declared). 
-//, um
 // Each static data member must be initialized once (and only once) 
 // at file scope (i.e., not in the body of the class definition).
 // define and initialize static data member at file scope 
-// [so even if moved these into app class as static members, this code
+//
+// so even if moved these into app class as static members, this code
 // would still be here. eg CString CNeoMem::g_strSpace = _T(" ");
-// bleh. 
-// maybe #define is the way to go after all. shite.]
 CString g_strSpace = _T(" ");
 CString g_strCommaSpace = _T(", ");
 CString g_strQuote = _T("\"");

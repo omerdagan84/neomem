@@ -108,7 +108,7 @@ void CPageClassSummary::DoDataExchange(CDataExchange* pDX)
 		ASSERT_VALID(pobjDefaultClass);
 
 		// Get autosort
-		//, make some method!
+		//, make some method
 		BDataFlags* pdat = DYNAMIC_DOWNCAST(BDataFlags, m_pobj->GetPropertyData(propObjectFlags));
 		BOOL bAutosort = FALSE;
 		if (pdat)

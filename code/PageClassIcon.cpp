@@ -142,7 +142,7 @@ void CPageClassIcon::DoDataExchange(CDataExchange* pDX)
 //			m_pobj->m_lngIconID = 0;
 //		else
 //			m_pobj->m_lngIconID = pobjIcon->GetObjectID();
-		m_pobj->SetIconID(lngIconID); // this should be okay, right?
+		m_pobj->SetIconID(lngIconID); //, check this is okay
 	}
 }
 
@@ -150,7 +150,6 @@ void CPageClassIcon::DoDataExchange(CDataExchange* pDX)
 
 BOOL CPageClassIcon::OnSetActive() 
 {
-//	CPropertySheet* psheet = (CPropertySheet*) GetParent();
 	CSheetWizard* psheet = (CSheetWizard*) GetParent();
 	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_NEXT);
 	psheet->SetClassWizardTitle();

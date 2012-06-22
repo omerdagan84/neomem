@@ -58,7 +58,7 @@ BOOL CPageOptionsDisplay::OnInitDialog()
 	m_lblNameFormat.SetFont(&theApp.m_fontControlsBold);
 
 	// Get available date formats and fill the combo
-	// Unfortunately, windows 98 only!
+	// Unfortunately, windows 98 only
 //	::EnumDateFormatsEx((DATEFMT_ENUMPROCEX) EnumDateFormatsProcEx, LOCALE_USER_DEFAULT, DATE_LONGDATE);
 //	::EnumDateFormatsEx((DATEFMT_ENUMPROCEX) EnumDateFormatsProcEx, LOCALE_USER_DEFAULT, DATE_SHORTDATE);
 //	::EnumDateFormatsEx((DATEFMT_ENUMPROCEX) EnumDateFormatsProcEx, LOCALE_USER_DEFAULT, DATE_YEARMONTH);

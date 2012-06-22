@@ -133,7 +133,7 @@ public:
 
 	// User-interface routines - generally bring up a dialog to get 
 	// information from user.
-	//, which is not good - ideally would have callbacks to ui layer. 
+	//. ideally should have callbacks to ui layer. 
 	BObject* UIAddNewClass();
 	BObject* UIAddNewFolder(BObject* pobjParent = 0, BOOL bSelectNewObject = TRUE);
 	BObject* UIAddNewObject(BObject* pobjParent = 0, BOOL bSelectNewObject = TRUE); 

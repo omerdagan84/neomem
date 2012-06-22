@@ -124,8 +124,7 @@ void CPageClassContents::DoDataExchange(CDataExchange* pDX)
 
 BOOL CPageClassContents::OnSetActive() 
 {
-//	CPropertySheet* psheet = (CPropertySheet*) GetParent();
-	CSheetWizard* psheet = (CSheetWizard*) GetParent();
+	CSheetWizard* psheet = (CSheetWizard*) GetParent(); //, cast
 	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_NEXT);
 	psheet->SetClassWizardTitle();
 	return CPropertyPage::OnSetActive();
@@ -160,10 +159,6 @@ void CPageClassContents::LoadData()
 		bNoAutosort = pdatFlags->m_lngFlags & flagNoAutosort;
 
 	// Since this form gets reloaded, you might wind up with both checks on unless you explicitly set both!
-//	if (bNoAutosort)
-//		m_optSortNo.SetCheck(1);
-//	else
-//		m_optSortYes.SetCheck(1);
 	m_optSortNo.SetCheck(bNoAutosort ? 1 : 0);
 	m_optSortYes.SetCheck(bNoAutosort ? 0 : 1);
 

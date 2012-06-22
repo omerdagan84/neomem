@@ -85,7 +85,6 @@ void CPageClassType::DoDataExchange(CDataExchange* pDX)
 			lngPropTypeID = pobjPropType->GetObjectID();
 		}
 		// Get combo box index based on property type
-//		int nSel = (lngPropTypeID == proptypeString ? 0 : 1);
 		int nSel = 0;
 		switch (lngPropTypeID)
 		{
@@ -98,7 +97,6 @@ void CPageClassType::DoDataExchange(CDataExchange* pDX)
 	else // Save
 	{
 		int nSel = m_cboNameType.GetCurSel();
-//		ULONG lngPropTypeID = (nSel == 0 ? proptypeString : proptypePersonName);
 		ULONG lngPropTypeID = proptypeString;
 		switch (nSel)
 		{
