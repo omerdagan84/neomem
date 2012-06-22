@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Edit Property Dialog</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<OBJECT TYPE="application/x-oleobject" CLASSID="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+	<PARAM NAME="Keyword" VALUE="edit property dialog">
+	<PARAM NAME="Keyword" VALUE="edit property">
+	<PARAM NAME="Keyword" VALUE="properties: editing">
+	<PARAM NAME="Keyword" VALUE="property: editing">
+</OBJECT>
+
+<H2><A NAME="hidd_edit_property"></A>Dialogs</H2>
+
+<P>Edit Property Dialog</P>
+
+<P>The <B>Edit Property Dialog</B> lets you edit the definition of a property, which defines the type of data it will store and how it will be displayed. </P>
+
+<TABLE border=1 cols=2 frame=box rules=all width=486>
+
+<TR VALIGN="top">
+<TD width=23%>Width1Width3Width1710Width3Width5580<B>Name</B></TD>
+<TD width=77%>The name of the property. This does not have to be unique, but it will help to distinguish different properties if it is. 
+<P>Width1Width3Width1710Width3Width5580</P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=23%><B>Description</B></TD>
+<TD width=77%>Optional description of the property.
+<P>Width1Width3Width1710Width3Width5580</P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=23%><B>Type</B></TD>
+<TD width=77%>The type of data that the property will store. Possible types are Boolean (Yes/No), Currency, Date/Time, Link, Number, and String. See <A HREF="neom5qk3.htm">Properties and Property Types</A> for more information.
+<P>Width1Width3Width1710Width3Width5580</P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=23%><B>Type Description</B></TD>
+<TD width=77%>This displays the description for the selected property type. This field is read-only.
+<P>Width1Width3Width1710Width3Width5580</P>
+</TD>
+</TR>
+</TABLE><BR>
+
+<P>If you select the type <B>Link</B>, the following additional options will become available:</P>
+
+<TABLE border=1 cols=2 frame=box rules=all width=486>
+
+<TR VALIGN="top">
+<TD width=28%>Width1Width3Width2070Width3Width5220<B>Link Source</B></TD>
+<TD width=72%>A link property links to other objects in the file. The <B>Link Source</B> is the folder (or other object) which contains the objects you want to link to. For instance, an <B>Author</B> property could specify an <B>Authors</B> folder for the Link Source, which would contain <B>Person</B> objects representing authors. 
+<P>To create a new Link Source folder, click on the <B>New</B> button next to the dropdown.</P>
+
+<P>Width1Width3Width2070Width3Width5220</P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=28%><B>Limit Link to One Object</B></TD>
+<TD width=72%>Link properties can link to more than one object. If you want to limit links for this property to one object, check off this option.
+<P>Width1Width3Width2070Width3Width5220</P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=28%><B>Display Link Object Hierarchy</B></TD>
+<TD width=72%>If your link source folder contains a hierarchy of items you can display the parents of the link object by checking this option. For instance instead of just displaying "Taos" for the property value, NeoMem could display "Taos, New Mexico, Texas, United States". The <A HREF="neom1n1h.htm">example file</A> contains a Locations folder which demonstrates this option. 
+<P>Width1Width3Width2070Width3Width5220</P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=28%><B>Display Additional Property</B></TD>
+<TD width=72%>Sometimes the names of the objects that you link to might not be unique. In this case you can display an additional property to make the name unique. For instance, if you were linking to a folder containing museums, and some of the museums had the same name, you could distinguish them by displaying the Location as well. In this case, "Museum of Fine Arts" would become "Museum of Fine Arts, Boston".
+<P>Width1Width3Width2070Width3Width5220</P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=28%><B>Property</B></TD>
+<TD width=72%>This dropdown becomes available if you check off the Display Additional Property above. Select the property you want to be displayed after the name of the link object.
+<P>Width1Width3Width2070Width3Width5220</P>
+</TD>
+</TR>
+</TABLE><BR>
+
+</BODY>
+</HTML>

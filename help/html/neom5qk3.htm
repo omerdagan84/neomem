@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Properties and Property Types</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<OBJECT TYPE="application/x-oleobject" CLASSID="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+	<PARAM NAME="Keyword" VALUE="properties">
+	<PARAM NAME="Keyword" VALUE="property types">
+	<PARAM NAME="Keyword" VALUE="data types">
+	<PARAM NAME="Keyword" VALUE="number data type">
+	<PARAM NAME="Keyword" VALUE="string data type">
+	<PARAM NAME="Keyword" VALUE="link data type">
+	<PARAM NAME="Keyword" VALUE="boolean data type">
+	<PARAM NAME="Keyword" VALUE="date/time data type">
+	<PARAM NAME="Keyword" VALUE="hyperlink data type">
+	<PARAM NAME="Keyword" VALUE="currency data type">
+</OBJECT>
+
+<H2><A NAME="properties"></A>Classes and Properties</H2>
+
+<H1>Properties and Property Types</H1>
+
+<P>Every object in a NeoMem file can store any number of property values. Each NeoMem file contains a collection of properties which can be assigned to the objects in the file. Each <B>property</B> can be of one of the different <B>property types</B>, summarized below. </P>
+
+<P>Each property type may display a different type of dialog when you hit <B>F4</B> or double click on a property value. For example, if you hit <B>F4</B> on a Link property value, the <B>Edit Link Dialog</B> is displayed. </P>
+
+<TABLE border=1 cols=3 frame=box rules=all width=488>
+
+<TR VALIGN="top">
+<TD width=19%>Width1Width3Width1458Width3Width3870Width3Width1980<B><U>Type</U></B></TD>
+<TD width=53%><B><U>Description</U></B></TD>
+<TD width=28%><B><U>Edit DialogWidth1Width3Width1458Width3Width3870Width3Width1980</U></B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%>&nbsp;</TD>
+<TD width=53%>&nbsp;</TD>
+<TD width=28%><I>Width1Width3Width1458Width3Width3870Width3Width1980</I></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Boolean</B></TD>
+<TD width=53%>A simple Yes or No value.</TD>
+<TD width=28%>(none)Width1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Currency</B></TD>
+<TD width=53%>Stores a currency value (e.g. $1,531.59). Values are stored with 15 digits of precision.</TD>
+<TD width=28%>Windows CalculatorWidth1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Date/Time</B></TD>
+<TD width=53%>Can store a date and an optional time value, in the range of January 1, 100 to December 31, 9999. 
+<P>You can store a date and a time by entering a string like "May 5, 1973 5:45pm", or a time alone, like "8:30:00 PM".</P>
+
+<P>You can also store approximate dates, for example "May 1973", "1956", "Aft June 10, 1953", "Bef 1650", "Ca. 1254", "1979?", "Summer 1954", "Christmas 1982", etc., and NeoMem will attempt to store the date so that it will sort correctly.</P>
+
+<P>If the date you enter cannot be parsed and stored numerically, you will be asked if you want to store the date as a string. For example, you could enter "Christmas early 70's". Such a string will not sort correctly, however.</P>
+</TD>
+<TD width=28%><A HREF="neom73ad.htm">Edit Date Dialog</A>
+<P>Note: This dialog is limited to dates after <B>September 1753</B>.<U>Width1Width3Width1458Width3Width3870Width3Width1980</U></P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Email</B></TD>
+<TD width=53%>Use to store email addresses</TD>
+<TD width=28%>Edit String DialogWidth1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>File</B></TD>
+<TD width=53%>Use to store links to local files</TD>
+<TD width=28%>File Selection DialogWidth1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Folder</B></TD>
+<TD width=53%>Use to store links to local folders</TD>
+<TD width=28%>Folder Selection DialogWidth1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Hyperlink</B></TD>
+<TD width=53%>(Deprecated in favor of Email and Website property types). Use to store email addresses and websites to allow for quick launching of email program or browser. Hyperlink values will be shown in green, and the cursor will change to a hand when the mouse is over a value. Clicking on the value will launch your email program or web browser, as appropriate. 
+<P>Note: A "mailto:" or "http://" prefix is not necessary.</P>
+</TD>
+<TD width=28%>Edit String DialogWidth1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Link</B></TD>
+<TD width=53%>Links to one or more objects in the same file. For instance, a book object could link to one or more author objects using a link property.</TD>
+<TD width=28%><A HREF="neom2qgb.htm">Edit Link Dialog</A><U>Width1Width3Width1458Width3Width3870Width3Width1980</U></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Number</B></TD>
+<TD width=53%>Stores a number value (e.g. 5,233.54). Numbers are stored in double-precision format, with 15 digits of precision and a range of approximately 1.7E-308 to 1.7E+308.</TD>
+<TD width=28%>Windows CalculatorWidth1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>String</B></TD>
+<TD width=53%>Stores a string value (e.g. "This is a string"). Strings are basically unlimited in length (up to 2GB).</TD>
+<TD width=28%>Edit String DialogWidth1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=19%><B>Website</B></TD>
+<TD width=53%>Use to store website addresses</TD>
+<TD width=28%>Edit String DialogWidth1Width3Width1458Width3Width3870Width3Width1980</TD>
+</TR>
+</TABLE><BR>
+
+<P>Note: If you need to change the property type of an existing property, you can do so by editing the property using the <B>Property Wizard</B>. If you have already stored values for the existing property, NeoMem will attempt to convert the values to the new property type, though this conversion may be of different quality for different types of conversions. NeoMem will warn you before you attempt such a conversion.</P>
+
+</BODY>
+</HTML>
