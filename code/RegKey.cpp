@@ -1,6 +1,7 @@
 
 // CRegKeyX
 // Taken from ATL source code, downloaded from CodeGuru
+//. not needed with vs2010
 
 
 #include "precompiled.h"

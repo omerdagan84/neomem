@@ -45,8 +45,7 @@ _AFX_RICHEDITEX_STATE _afxRichEditStateEx;
 // this will clash with the use of the CRichEditCtrl class (including the 
 // CRichEditView class).
 // Returns True if successful.
-BOOL PASCAL 
-AfxInitRichEditEx()
+BOOL PASCAL AfxInitRichEditEx()
 {
 	if (!::AfxInitRichEdit())
 	{
@@ -86,7 +85,7 @@ END_MESSAGE_MAP()
 CRichEditCtrlEx::CRichEditCtrlEx()
 {
 	//. how is this safe? if we're casting from cricheditctrl to the ex version, won't this write over
-	// some random memory location???
+	// some random memory location?
 //	m_pRichEditOle = NULL;
 //	m_lpObject = NULL;
 //	m_lpStorage = NULL;
@@ -101,8 +100,7 @@ CRichEditCtrlEx::~CRichEditCtrlEx()
 
 
 
-BOOL 
-CRichEditCtrlEx::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CRichEditCtrlEx::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	// Make sure it's multiline
 	cs.style |= ES_MULTILINE;
@@ -112,8 +110,7 @@ CRichEditCtrlEx::PreCreateWindow(CREATESTRUCT& cs)
 
 
 
-BOOL 
-CRichEditCtrlEx::Create(
+BOOL CRichEditCtrlEx::Create(
 //							 LPCTSTR lpszClassName, LPCTSTR lpszWindowName, 
 //							 DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, 
 //							 UINT nID, CCreateContext* pContext) 
@@ -219,9 +216,7 @@ public:
 // value is less than the number of bytes requested by the control, then 
 // the control assumes that there is no more text available and it will 
 // stop calling this function. 
-static DWORD CALLBACK 
-EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
-//DWORD CALLBACK CRichEditCtrlEx::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
+static DWORD CALLBACK EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
 {
 	xTRACE("EditStreamCallBack\n");
 
@@ -232,10 +227,9 @@ EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
 	{
 		// Get uses CString
 		// Copy data from rtf buffer to CString
-		//. this allocates cb bytes, then copies the data in buffer to the cstring
+		//, this allocates cb bytes, then copies the data in buffer to the cstring
 		CString strAppend((LPCTSTR) pbBuff, cb);
-//		TRACESTRING("  Get %s\n", (LPCTSTR) strAppend);
-		//. this allocates a new memory block, then copies the two cstrings to it		
+		//, this allocates a new memory block, then copies the two cstrings to it		
 		pcc->m_str += strAppend;
 	}
 	else // SetRtf - add more rtf text to the control
@@ -274,8 +268,7 @@ EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
 
 // Set the rich edit text for this control, optionally replacing the current 
 // selection only. 
-void 
-CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
+void CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 {
 	xTRACE("CRichEditCtrlEx::SetRtf\n");
 
@@ -283,7 +276,6 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 	::SendMessage(m_hWnd, WM_SETREDRAW, FALSE, 0);
 
 	// Check if the text is rtf or plain
-//	if (strncmp(pszRtf, "{\\rtf", 5) != 0)
 	if (_tcsncmp(pszRtf, "{\\rtf", 5) != 0)
 	{
 		// we just have plain text, so use setwindowtext instead of streamin.
@@ -300,8 +292,8 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 	CString strRtf;
 	// Add rtf codes if not there
 	// wouldn't it be better to let the control do this? 
-	// ie just add the text as PLAIN, not RTF!??
-	// well, yeah, but can't get that to work!
+	// ie just add the text as PLAIN, not RTF?
+	// well, yeah, but can't get that to work
 		// Since we have to specify the font for the rtf, use the default font the user specified.
 		// Note: using CString should be acceptable here because shouldn't need to do this very often.
 		CFontEx& font = theApp.m_fontRtfDefault;
@@ -311,7 +303,7 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 		// 1.1 removed spaces also - was causing problems with default font. maybe also with pasting?
 		strRtf.Format(
 			"{\\rtf1\\ansi\\deff0\\deftab720\\deflang1033" // header
-			"{\\fonttbl{\\f0\\fswiss %s;}}"  // font name   //, fswiss??? what if not swiss font?
+			"{\\fonttbl{\\f0\\fswiss %s;}}"  // font name   //, fswiss? what if not swiss font?
 			"{\\colortbl\\red0\\green0\\blue0;}" //, could set default color here
 			"\\pard\\plain\\f0\\fs%d"  // fontsize = pointsize*2
 			"{%s}" // plain text
@@ -322,7 +314,7 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 			);
 		// Now replace all cr/lf's with \par.
 		strRtf.Replace("\r\n", "\\par ");
-		//. hmm, how about plain \n's also? 
+		//. how about plain \n's also? 
 		// Get buffer (read-only)
 		pszRtf = (LPCTSTR) strRtf;
 */
@@ -337,7 +329,7 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 		RtfCallbackCookie cc;
 		cc.m_psz = pszRtf;
 
-		//! could this be screwing things up? eg paste unicode chars????
+		//. could this be screwing things up? eg paste unicode chars?
 		long nCharsRtf = _tcslen(pszRtf); // initialize number of characters in string
 		cc.m_nCharsLeft = nCharsRtf;
 		
@@ -345,7 +337,6 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 		es.dwCookie = (DWORD) &cc;
 		es.dwError = 0;
 		es.pfnCallback = EditStreamCallBack;
-	//	es.pfnCallback = CRichEditCtrlEx::EditStreamCallBack;
 
 		// Stream in the characters
 		// SFF_PLAINRTF - If specified, only keywords common to all languages are 
@@ -353,7 +344,7 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 		// If not specified, all keywords are streamed in. You can combine this 
 		// flag with the SF_RTF flag.
 //		int nFormat = SF_RTF;
-		int nFormat = SF_RTF | SFF_PLAINRTF; // 1.2c see if this helps with crashing?
+		int nFormat = SF_RTF | SFF_PLAINRTF; // 1.2c see if this helps with crashing
 		if (bSelectionOnly)
 			nFormat |= SFF_SELECTION;
 
@@ -365,9 +356,8 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 		long nCharsStreamed = StreamIn(nFormat, es);
 		// nChars streamed in should match the number of characters in pszRtf?
 	//	ASSERT(nCharsStreamed == nCharsRtf); // this fails (streamed = eb, nchars = 2eb)
-		// Bug: Was truncating some text because the text limit was at the default 32k! 
-		// Need to always check error return values!
-//		ASSERT(es.dwError == 0); // make sure no error occurred 
+		// Bug: Was truncating some text because the text limit was at the default 32k
+		// Need to always check error return values
 		if (es.dwError != 0)
 		{
 			// 0xfffffff0 (-16) passed blank string, or plaintext, or invalidly 
@@ -378,9 +368,9 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 			//		this happens if you don't have a closing brace at the end of 
 			//		the file, or there's a null byte in the text somewhere. 
 
-			// windows doesn't seem to have error strings for richedit errors. lame.
+			// windows doesn't seem to have error strings for richedit errors
 //			CString strError = GetErrorMessage(es.dwError);
-//			TRACE("   Error!! %s\n", (LPCTSTR) strError);
+//			TRACE("   Error %s\n", (LPCTSTR) strError);
 //			AfxMessageBox(strError);
 //			cc.m_psz + cc.m_nC
 
@@ -391,8 +381,7 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 			CString strBad = CString(pszBad);
 			strBad = strBad.Left(30);
 
-			// send error report with dwError code!
-			//!!!
+			// send error report with dwError code
 			CString strMsg;
 			strMsg.Format(
 				"The richedit control had trouble loading the text for some reason.\r\n"
@@ -402,13 +391,11 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 				es.dwError,
 				(LPCTSTR) strBad
 				);
-//			AfxMessageBox(strMsg);
 			ThrowAssertion(THIS_FILE, __LINE__, "es.dwError != 0", (LPCTSTR) strMsg);
-//			theApp.ShowError(strError, THIS_FILE, __LINE__);
 
-			
-/*			// try again as plain text
-			// this doesn't work! it returns no error, but the rtf control is empty!
+		
+/*			//, try again as plain text
+			// this doesn't work - it returns no error, but the rtf control is empty
 			nFormat = SF_TEXT;
 			nCharsStreamed = StreamIn(nFormat,es);
 			if (es.dwError != 0)
@@ -429,13 +416,11 @@ CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 
 // Get rtf text from control.
 // Note: We don't use const for this because it's not as important that this be fast.
-CString 
-CRichEditCtrlEx::GetRtf(BOOL bSelectionOnly /* = FALSE */)
+CString CRichEditCtrlEx::GetRtf(BOOL bSelectionOnly /* = FALSE */)
 {
 	TRACE("CRichEditCtrlEx::GetRtf(bSelectionOnly = %d)\n", bSelectionOnly);
 
 //	CString str;
-
 //	RtfCallbackCookie cc(str, TRUE);
 	RtfCallbackCookie cc;
 	cc.m_bGet = TRUE;
@@ -451,8 +436,6 @@ CRichEditCtrlEx::GetRtf(BOOL bSelectionOnly /* = FALSE */)
 	StreamOut(nFormat, es);
 	ASSERT(es.dwError == 0); // make sure no error occurred
 
-//	xTRACE("CRichEditCtrlEx::GetRtf %s\n", (LPCTSTR) str);
-//	return str;
 	return cc.m_str;
 }
 
@@ -461,8 +444,7 @@ CRichEditCtrlEx::GetRtf(BOOL bSelectionOnly /* = FALSE */)
 
 
 /*
-void 
-CRichEditCtrlEx::OnNotifyChange() 
+void CRichEditCtrlEx::OnNotifyChange() 
 {
 	// TODO: If this is a RICHEDIT control, the control will not
 	// send this notification unless you override the CRichEditCtrl::OnInitDialog()
@@ -477,14 +459,11 @@ CRichEditCtrlEx::OnNotifyChange()
 
 // Find next occurrence of string, starting at end of current selection.
 // Returns zero-based character position of next match, or -1 if not found.
-long 
-CRichEditCtrlEx::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord)
+long CRichEditCtrlEx::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord)
 {
 	// Search from end of current selection to end of doc
 	CHARRANGE cr;
 	GetSel(cr);
-//	cr.cpMin = 0;
-//	cr.cpMax = -1;
 	cr.cpMin = cr.cpMax;
 	cr.cpMax = -1;
 
@@ -502,6 +481,7 @@ CRichEditCtrlEx::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord
 		cr = ft.chrgText; // range in which text is found
 		// This function does not scroll the contents of the CRichEditCtrl so that the caret is visible.
 		SetSel(cr);
+    //,
 //		long nLine = rRtf.LineFromChar(nIndex);
 //		rRtf.LineScroll(
 //		rRtf.SendMessage(EM_SCROLLCARET);
@@ -513,8 +493,7 @@ CRichEditCtrlEx::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord
 
 
 // See OnRButtonDown
-void 
-CRichEditCtrlEx::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CRichEditCtrlEx::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
 	xTRACE("CRichEditCtrlEx::OnContextMenu(point.x,y=%d,%d)\n", point.x, point.y);	
 }
@@ -524,8 +503,7 @@ CRichEditCtrlEx::OnContextMenu(CWnd* pWnd, CPoint point)
 
 
 // Fill a CFont object with currently selected font information.
-BOOL 
-CRichEditCtrlEx::GetCurrentFont(CFontEx &font)
+BOOL CRichEditCtrlEx::GetCurrentFont(CFontEx &font)
 {
 	// Call this function to get the character formatting attributes of the current selection. 
 	// The cf parameter receives the attributes of the first character in the current selection. 
@@ -538,9 +516,8 @@ CRichEditCtrlEx::GetCurrentFont(CFontEx &font)
 
 
 // Returns True if current selection is at the beginning of a line.
-//. should check if prev char is CR instead of looking at position, as might just be due to word wrapping!
-BOOL 
-CRichEditCtrlEx::IsAtStartOfLine()
+//. should check if prev char is CR instead of looking at position, as might just be due to word wrapping
+BOOL CRichEditCtrlEx::IsAtStartOfLine()
 {
 	long nStartChar;
 	long nEndChar;
@@ -567,8 +544,7 @@ CRichEditCtrlEx::IsAtStartOfLine()
 
 
 // Extended the FindText method so that it would save the... 
-long 
-CRichEditCtrlEx::FindText2(DWORD dwFlags, FINDTEXT* pFindText)
+long CRichEditCtrlEx::FindText2(DWORD dwFlags, FINDTEXT* pFindText)
 {
 	return 0;
 }
@@ -579,8 +555,7 @@ CRichEditCtrlEx::FindText2(DWORD dwFlags, FINDTEXT* pFindText)
 // Center the current selection vertically in the control.
 // This is used by the search routines.
 //, currently just works if text is below halfway point
-void 
-CRichEditCtrlEx::CenterSelectionVertically()
+void CRichEditCtrlEx::CenterSelectionVertically()
 {
 	// Get position of selection
 	long nStartChar, nEndChar;
@@ -592,13 +567,13 @@ CRichEditCtrlEx::CenterSelectionVertically()
 	GetClientRect(&r);
 	int nDelta = (pt.y - r.bottom / 2);
 	int nLines = 1; 
-	// might already be scrolled as far as it will go!
+	// might already be scrolled as far as it will go
 	while (nDelta > 0)
 	{
 		LineScroll(nLines);
 		pt = GetCharPos(nStartChar);
 		int nNewDelta = (pt.y - r.bottom / 2);
-		if (nDelta == nNewDelta) break; // exit if no change from last time - can't scroll any more!
+		if (nDelta == nNewDelta) break; // exit if no change from last time - can't scroll any more
 		nDelta = nNewDelta;
 	}
 
@@ -613,11 +588,9 @@ CRichEditCtrlEx::CenterSelectionVertically()
 
 
 
-
 // Turn auto URL detect on/off
 // Requires 2.0
-BOOL 
-CRichEditCtrlEx::AutoURLDetect(BOOL bEnable)
+BOOL CRichEditCtrlEx::AutoURLDetect(BOOL bEnable)
 {
 	ASSERT(::IsWindow(m_hWnd));
 	return (BOOL) ::SendMessage(m_hWnd, EM_AUTOURLDETECT, bEnable, 0);
@@ -626,12 +599,10 @@ CRichEditCtrlEx::AutoURLDetect(BOOL bEnable)
 
 
 
-
 /*
 
 // get the length of the text in the control
-unsigned long int 
-TMyRichEdit::GetCurrentLength(void)
+unsigned long int TMyRichEdit::GetCurrentLength(void)
 {
         // get the length of the text in the control
         // if using Rich Edit 1.0 (BCB 1.0 & 3.0 use RE 1.0)
@@ -645,8 +616,7 @@ TMyRichEdit::GetCurrentLength(void)
   
 // get the line number of the current cursor position.
 // returns the line number of the current cursor position in the RE control.
-unsigned int 
-TMyRichEdit::GetLine(void)
+unsigned int TMyRichEdit::GetLine(void)
 {
         CHARRANGE chrg;
         ::SendMessage(Handle, EM_EXGETSEL, 0, (LPARAM) &chrg);
@@ -656,8 +626,7 @@ TMyRichEdit::GetLine(void)
 
 // get the column (character offset) of the cursor position in the control.
 // returns the column (character offset) of the cursor position in the RE control.
-unsigned int 
-TMyRichEdit::GetColumn(void)
+unsigned int TMyRichEdit::GetColumn(void)
 {
         CHARRANGE chrg;
         ::SendMessage(Handle, EM_EXGETSEL, 0, (LPARAM) &chrg);
@@ -667,8 +636,7 @@ TMyRichEdit::GetColumn(void)
 
 // set the cursor position to a specific line in the control.
 //      line - the line number (zero-based) to which the cursor will be moved.
-void 
-TMyRichEdit::SetLine(unsigned int line)
+void TMyRichEdit::SetLine(unsigned int line)
 {
         CHARRANGE chrg;
         chrg.cpMin = chrg.cpMax = ::SendMessage(Handle, EM_LINEINDEX, (WPARAM) line, 0);
@@ -680,8 +648,7 @@ TMyRichEdit::SetLine(unsigned int line)
 
 // set the cursor position to a particular column (in the current line).
 //      column - the column to which to move the cursor (zero-based).
-void 
-TMyRichEdit::SetColumn(unsigned int column)
+void TMyRichEdit::SetColumn(unsigned int column)
 {
         CHARRANGE chrg;
         unsigned int currLine = GetLine();
@@ -697,8 +664,7 @@ TMyRichEdit::SetColumn(unsigned int column)
 
 
 
-void 
-CRichEditCtrlEx::OnDestroy() 
+void CRichEditCtrlEx::OnDestroy() 
 {
 	this->Clear();
 //	ReleasePointers();
@@ -710,8 +676,7 @@ CRichEditCtrlEx::OnDestroy()
 
 /*
 // Insert a bitmap into the richedit control.
-bool 
-CRichEditCtrlEx::InsertBitmap(CString strFile)
+bool CRichEditCtrlEx::InsertBitmap(CString strFile)
 {
 	// Get the interface to the CRichEditCtrl.
 	m_pRichEditOle = this->GetIRichEditOle();
@@ -767,8 +732,7 @@ CRichEditCtrlEx::InsertBitmap(CString strFile)
 // creates the object within the provided storage. The result is an IUnknown pointer to 
 // the object that is then converted to a true IOleObject pointer by a call to 
 // QueryInterface.
-bool 
-CRichEditCtrlEx::CreateFromFile(LPCTSTR lpszFileName)
+bool CRichEditCtrlEx::CreateFromFile(LPCTSTR lpszFileName)
 {
 	USES_CONVERSION;
 
@@ -837,8 +801,7 @@ CRichEditCtrlEx::CreateFromFile(LPCTSTR lpszFileName)
 
 
 
-void 
-CRichEditCtrlEx::ReleasePointers()
+void CRichEditCtrlEx::ReleasePointers()
 {
 	if (m_lpObject)
 	{
@@ -870,8 +833,7 @@ CRichEditCtrlEx::ReleasePointers()
 
 
 // Requires 2.0
-DWORD 
-CRichEditCtrlEx::GetSelectionCharFormat2(CHARFORMAT2 &cf2) const
+DWORD CRichEditCtrlEx::GetSelectionCharFormat2(CHARFORMAT2 &cf2) const
 {
 	ASSERT(::IsWindow(m_hWnd));
 	cf2.cbSize = sizeof(CHARFORMAT2);
@@ -880,8 +842,7 @@ CRichEditCtrlEx::GetSelectionCharFormat2(CHARFORMAT2 &cf2) const
 
 
 // Requires 2.0
-DWORD 
-CRichEditCtrlEx::Redo()
+DWORD CRichEditCtrlEx::Redo()
 {
 	ASSERT(::IsWindow(m_hWnd));
 	return (DWORD)::SendMessage(m_hWnd, EM_REDO, 0, 0);
@@ -889,8 +850,7 @@ CRichEditCtrlEx::Redo()
 
 
 // Requires 2.0
-DWORD 
-CRichEditCtrlEx::CanRedo()
+DWORD CRichEditCtrlEx::CanRedo()
 {
 	ASSERT(::IsWindow(m_hWnd));
 	return (DWORD)::SendMessage(m_hWnd, EM_CANREDO, 0, 0);
@@ -898,8 +858,7 @@ CRichEditCtrlEx::CanRedo()
 
 
 
-void 
-CRichEditCtrlEx::SetDefaultCharFormat2(CHARFORMAT2 cf2)
+void CRichEditCtrlEx::SetDefaultCharFormat2(CHARFORMAT2 cf2)
 {
 	// Set default char format (pass wparam 0 to set default)
 	LRESULT ret = ::SendMessage(m_hWnd, EM_SETCHARFORMAT, SCF_DEFAULT, (LPARAM) &cf2);
@@ -907,8 +866,7 @@ CRichEditCtrlEx::SetDefaultCharFormat2(CHARFORMAT2 cf2)
 }
 
 
-void 
-CRichEditCtrlEx::Spike()
+void CRichEditCtrlEx::Spike()
 {
 	CString str;
 	theApp.GetTextFromClipboard(str);
@@ -920,8 +878,7 @@ CRichEditCtrlEx::Spike()
 
 
 // static 
-bool 
-CRichEditCtrlEx::Test()
+bool CRichEditCtrlEx::Test()
 {
 	CRichEditCtrlEx rtf;
 
@@ -950,7 +907,7 @@ s = "{\\rtf1\\ansi\\deff0\\deftab720\\deflang1033" // header
 	"{\\fonttbl{\\f0\\fswiss Arial;}}"  // font name
 	"{\\colortbl\\red0\\green0\\blue0;}" //, could set default color here
 	"\\pard\\plain\\f0\\fs24"  // fontsize = pointsize*2
-	"{bleargh ok were going to just add a bunch of text so be patient"
+	"{ok were going to just add a bunch of text so be patient"
 	"1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890" // 100 chars
 	"1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890" // 100 chars
 	"1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890" // 100 chars

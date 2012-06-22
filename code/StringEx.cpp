@@ -45,8 +45,6 @@ void CStringEx::AppendComma(LPCTSTR lpsz)
 
 
 
-
-//
 LPCTSTR CStringEx::GetNextToken(LPCTSTR pszDelimiter)
 {
 	return 0;
@@ -312,14 +310,13 @@ CStringEx CStringEx::LeftFrom(TCHAR c, int nOccurrence) const
 
 // Format the given integer into a string with commas separating the thousands places
 //, call this FormatEx and Replace %t's with thousands formatted string - handle variable params, etc.
-// see library function fc!!!
+// see library function fc
 void CStringEx::FormatThousands(ULONG n)
 {
 	// Convert number to a plain string, eg "1313", then call windows routine to add commas
 	// (or whatever, depending on international settings)
 	const int nChars = 50;
 	TCHAR szPlain[nChars];
-//	_stprintf(szPlain, "%d", n);
 	wsprintf(szPlain, "%d", n);
 	LPTSTR szFormatted = GetBuffer(nChars);
 //	::GetNumberFormat(LOCALE_USER_DEFAULT, 0, szPlain, NULL, szFormatted, nChars); 	// this always prints 2 decimal places!
@@ -378,3 +375,6 @@ void CStringEx::RemoveBadChars()
 	this->operator = (strNew);
 
 }
+
+
+

@@ -13,7 +13,7 @@
 
 */
 
-//, rename to CSheetClassWizard
+//. rename to CSheetClassWizard
 
 
 #pragma once

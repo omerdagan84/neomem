@@ -1,0 +1,227 @@
+Scan Results for HTML Project: NeoMem.hhp
+HHPMod Version 3.2.2
+June 22, 2012: 03:49 PM
+
+HTML Project File: C:\Users\bburns\Documents\Projects\neomem\neomemC\work\help\NeoMem.hhp
+HTML Contents File: C:\Users\bburns\Documents\Projects\neomem\neomemC\work\help\neomem.hhc
+HTML Index File: C:\Users\bburns\Documents\Projects\neomem\neomemC\work\help\NeoMem.hhk
+
+Original WinHelp 4 Project File: C:\Users\bburns\Documents\Projects\neomem\neomemC\work\help\NeoMem.hpj
+
+Data Extracted from WinHelp 4 Project File:
+---------------------------------------------
+ Map Files: 2
+    C:\Users\bburns\Documents\Projects\neomem\neomemC\work\help\HelpIDs.h
+    C:\Users\bburns\Documents\Projects\neomem\neomemC\work\help\NeoMem.hm
+ Alias Definitions in WinHelp File: 42
+
+ Number of ContextID's defined =  3
+
+Data extracted from HTML Help Project File created by HTML Workshop:
+---------------------------------------------------------------------------
+
+ Topic Files (total): 73
+ Untitled Topics: 2 (may be converted popups)
+
+ Note - in the listing below, the new .htm file name will be
+derived from the first Winhelp Topic_ID.
+
+.htm File:         WinHelp Topic_ID's:                 WinHelp Topic Title:                                                                     
+----------         -----------------                   --------------------                                                                     
+
+neom984l.htm       hidr_neomem_type                    What is NeoMem?
+    " Contains 4 Links:
+          neom1n1h.htm = example_file.htm
+          neom19bn.htm = folders_and_objects.htm
+          neom0g4z.htm = classes_and_properties.htm
+          neom5flj.htm = views_overview.htm
+neom7wl3.htm       hid_whats_new                       What's New
+    " Contains 1 Link:
+          neom2h9w.htm = import_export.htm
+neom1n1h.htm       example_file                        Example File
+neom1hir.htm       limitations                         Limitations
+    " Contains 1 Link:
+          neom1fsc.htm = hidd_file_general.htm
+neom26us.htm       contact                             Contact Information
+neom938x.htm       faq                                 Frequently Asked Questions
+    " Contains 1 Link:
+          neom1n1h.htm = example_file.htm
+neom3j04.htm       technical_support                   Technical Support
+    " Contains 1 Link:
+          neom938x.htm = faq.htm
+neom19bn.htm       folders_and_objects                 Folders and Objects
+    " Contains 11 Links:
+          neom2lbb.htm = navigating.htm
+          neom9zjm.htm = home_folder.htm
+          neom7n3o.htm = add_object.htm
+          neom8lv8.htm = rename_object.htm
+          neom3mic.htm = delete_object.htm
+          neom1l84.htm = move_object.htm
+          neom7ne6.htm = change_object_icon.htm
+          neom1df7.htm = change_object_class.htm
+          neom42ur.htm = change_object_contents.htm
+          neom1bvr.htm = sorting.htm
+          neom2vzb.htm = printing.htm
+neom2lbb.htm       navigating                          Navigating
+    " Contains 1 Link:
+          neom5flj.htm = views_overview.htm
+neom9zjm.htm       home_folder                         Home Folder
+    " Contains 1 Link:
+          neom1n1h.htm = example_file.htm
+neom7n3o.htm       add_object                          Adding a New Object
+    " Contains 3 Links:
+          neom3rxw.htm = hidd_edit_object.htm
+          neom3iya.htm = hidd_edit_folder.htm
+          neom1df7.htm = change_object_class.htm
+neom8lv8.htm       rename_object                       Renaming an Object
+neom3mic.htm       delete_object                       Deleting an Object
+    " Contains 1 Link:
+          neom9zjm.htm = home_folder.htm
+neom1l84.htm       move_object                         Moving an Object
+    " Contains 1 Link:
+          neom5qk3.htm = properties.htm
+neom7ne6.htm       change_object_icon                  Changing the Icon of an Object
+    " Contains 1 Link:
+          neom5ub7.htm = edit_class.htm
+neom1df7.htm       change_object_class                 Changing the Class of an Object
+neom42ur.htm       change_object_contents              Changing the Contents of an Object
+    " Contains 3 Links:
+          neom1n1h.htm = example_file.htm
+          neom7n3o.htm = add_object.htm
+          neom16sz.htm = add_class.htm
+neom1bvr.htm       sorting                             Sorting Objects
+    " Contains 2 Links:
+          neom5x4f.htm = hidd_class_intro.htm
+          neom5qk3.htm = properties.htm
+neom2vzb.htm       printing                            Printing Objects
+    " Contains 1 Link:
+          neom5pki.htm = hidd_preview_toolbar.htm
+neom0g4z.htm       classes_and_properties              Classes and Properties
+    " Contains 5 Links:
+          neom814j.htm = system_classes.htm
+          neom16sz.htm = add_class.htm
+          neom5ub7.htm = edit_class.htm
+          neom4vjn.htm = delete_class.htm
+          neom5qk3.htm = properties.htm
+neom814j.htm       system_classes                      System Classes and Properties
+neom16sz.htm       add_class                           Creating a new class
+    " Contains 1 Link:
+          neom5x4f.htm = hidd_class_intro.htm
+neom5ub7.htm       edit_class                          Editing an existing class
+    " Contains 1 Link:
+          neom5x4f.htm = hidd_class_intro.htm
+neom4vjn.htm       delete_class                        Deleting a class
+    " Contains 1 Link:
+          neom5x4f.htm = hidd_class_intro.htm
+neom5qk3.htm       properties                          Properties and Property Types
+    " Contains 2 Links:
+          neom73ad.htm = hidd_edit_date.htm
+          neom2qgb.htm = hidd_edit_link.htm
+neom5flj.htm       views_overview                      Views
+    " Contains 9 Links:
+          neom84kz.htm = modifying_views.htm
+          neom30l3.htm = data_view.htm
+          neom8zw7.htm = search_view.htm
+          neom6it3.htm = index_view.htm
+          neom1anr.htm = home_view.htm
+          neom8khj.htm = text_view.htm
+          neom0kl3.htm = contents_view.htm
+          neom1xdj.htm = properties_view.htm
+          neom6wmj.htm = hid_clock.htm
+neom84kz.htm       modifying_views                     Modifying Views
+neom30l3.htm       data_view                           Data View
+neom8zw7.htm       search_view                         Search View
+neom6it3.htm       index_view                          Index View
+neom1anr.htm       home_view                           Home View
+neom8khj.htm       text_view                           Text View
+neom0kl3.htm       contents_view                       Contents View
+    " Contains 1 Link:
+          neom42ur.htm = change_object_contents.htm
+neom1xdj.htm       properties_view                     Properties View
+neom6wmj.htm       hid_clock                           Clock View
+neom6rw2.htm       autorecover                         AutoRecover
+neom535a.htm       encryption                          Password Protection/Encryption
+    " Contains 1 Link:
+          neom4dfd.htm = hidd_file_security.htm
+neom1nqx.htm       hidd_add_property                   Add Property Dialog
+neom3iya.htm       hidd_edit_folder                    New Folder Dialog
+neom3rxw.htm       hidd_edit_object                    New Object Dialog
+    " Contains 1 Link:
+          neom3iya.htm = hidd_edit_folder.htm
+neom2zub.htm       hidd_change_class_contents          Change Class Contents Dialog
+    " Contains 1 Link:
+          neom42ur.htm = change_object_contents.htm
+neom8jhq.htm       hidd_change_class_icon              Change Class Icon Dialog
+    " Contains 1 Link:
+          neom7ne6.htm = change_object_icon.htm
+neom1xv7.htm       hidd_change_object_class            Change Class Dialog
+    " Contains 1 Link:
+          neom1df7.htm = change_object_class.htm
+neom5zar.htm       hidd_change_object_contents         Change Contents Dialog
+    " Contains 2 Links:
+          neom3rxw.htm = hidd_edit_object.htm
+          neom42ur.htm = change_object_contents.htm
+neom8fu6.htm       hidd_change_object_icon             Change Icon Dialog
+    " Contains 2 Links:
+          neom5x4f.htm = hidd_class_intro.htm
+          neom7ne6.htm = change_object_icon.htm
+neom5x4f.htm       hidd_class_intro                    Class Wizard
+neom6eqt.htm       hidd_class_name                     Class Wizard: Name and Description
+neom28dh.htm       hidd_class_type                     Class Wizard: Name Type
+    " Contains 1 Link:
+          neom6y7g.htm = hidd_options_general.htm
+neom8hta.htm       hidd_class_icon                     Class Wizard: Icon
+neom3kqb.htm       hidd_class_properties               Class Wizard: Properties
+neom6j1v.htm       hidd_class_contents                 Class Wizard: Contents
+    " Contains 2 Links:
+          neom42ur.htm = change_object_contents.htm
+          neom1bvr.htm = sorting.htm
+neom96gp.htm       hidd_class_summary                  Class Wizard: Summary
+neom73ad.htm       hidd_edit_date                      Edit Date Dialog
+    " Contains 1 Link:
+          neom5qk3.htm = properties.htm
+neom2qgb.htm       hidd_edit_link                      Edit Link Dialog
+    " Contains 1 Link:
+          neom5qk3.htm = properties.htm
+neom8nj9.htm       hidd_edit_person_name               Edit Person Name Dialog
+    " Contains 1 Link:
+          neom6y7g.htm = hidd_options_general.htm
+neom45x5.htm       hidd_edit_property                  Edit Property Dialog
+    " Contains 2 Links:
+          neom5qk3.htm = properties.htm
+          neom1n1h.htm = example_file.htm
+neom1fsc.htm       hidd_file_general                   File Properties Dialog
+neom4dfd.htm       hidd_file_security                  File Security Dialog
+neom98vo.htm       hidd_goto_object                    Goto Object Dialog
+neom05tb.htm       hidd_move_object_to                 Move Object Dialog
+neom0j8v.htm       hidd_move_text_to                   Move Text Dialog
+neom8bak.htm       hidd_object_general                 Object Properties Dialog
+neom6y7g.htm       hidd_options_general                Options Dialog
+neom63n8.htm       hidd_print                          Print Dialog
+    " Contains 2 Links:
+          neom2vzb.htm = printing.htm
+          neom5pki.htm = hidd_preview_toolbar.htm
+neom5pki.htm       hidd_preview_toolbar                Print Preview
+    " Contains 1 Link:
+          neom2vzb.htm = printing.htm
+neom6vvo.htm       hidd_property_wizard                Property Wizard
+    " Contains 1 Link:
+          neom5x4f.htm = hidd_class_intro.htm
+neom2h9w.htm       import_export                       Import and Export
+neom7wqb.htm       requirements                        System Requirements
+    " Contains 1 Link:
+          neom1hir.htm = limitations.htm
+neom9qpf.htm       hid_keyboard_shortcuts              Keyboard Shortcuts
+neom3ran.htm       legal_info                          Legal Information
+neom4vvw.htm       uninstall                           Uninstall NeoMem
+
+     Topic Files Without Titles:
+----------------------------------------------------------------
+
+.htm File:         WinHelp Topic_ID's:           Number of Internal (from other .htm Files)                                                     
+                                                 And External(via Map Files) References:                                                        
+                                                   Internal:     External:                                                                      
+----------         -----------------             -------------------------------------                                                          
+
+neom5zol.htm       hid_ht_nowhere                       0           0
+neom9b3o.htm       afx_hidp_default                     0           0

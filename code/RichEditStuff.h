@@ -7,7 +7,7 @@
 
 
 
-//` from what?
+//` from where?
 class CReObject : public _reobject
 {
 public:

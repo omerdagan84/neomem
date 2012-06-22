@@ -1,6 +1,6 @@
 
 // CRichEditCtrlEx
-// Extension of the CRichEditCtrl class, so we can use the richedit 2.0 dll. 
+// Extension of the MFC CRichEditCtrl class, so we can use the richedit 2.0 dll. 
 // Also added methods like GetRtf, AutoURLDetect, FindNext, etc. 
 // Date: February 2000
 //-----------------------------------------------------------------------------------------------------------------

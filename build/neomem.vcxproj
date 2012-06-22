@@ -385,10 +385,306 @@
     <ClInclude Include="..\code\WinMsg.h" />
     <ClInclude Include="..\code\XComboBoxEx.h" />
     <ClInclude Include="..\help\HelpIDs.h" />
-    <ClInclude Include="..\resources\resource.h" />
+    <ClInclude Include="..\help\NeoMem.h" />
+    <ClInclude Include="..\help\NewAliases.h" />
+    <CustomBuild Include="..\resources\resource.h">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\help\HTMLDefines.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">echo // Generated Help Map file.  Used by NeoMem.HHP. &gt; "..\help\HTMLDefines.h"
+echo. &gt; "..\help\HTMLDefines.h"
+echo // Commands (ID_* and IDM_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h ID_,HID_,0x10000 IDM_,HIDM_,0x10000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+echo. &gt;&gt; "..\help\HTMLDefines.h"
+echo // Prompts (IDP_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h IDP_,HIDP_,0x30000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+echo. &gt;&gt; "..\help\HTMLDefines.h"
+echo // Resources (IDR_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h IDR_,HIDR_,0x20000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+echo. &gt;&gt; "..\help\HTMLDefines.h"
+echo // Dialogs (IDD_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h IDD_,HIDD_,0x20000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+echo. &gt;&gt; "..\help\HTMLDefines.h"
+echo // Frame Controls (IDW_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h /a afxhh.h IDW_,HIDW_,0x50000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating map file for help compiler...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\help\HTMLDefines.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">echo // Generated Help Map file.  Used by NeoMem.HHP. &gt; "..\help\HTMLDefines.h"
+echo. &gt; "..\help\HTMLDefines.h"
+echo // Commands (ID_* and IDM_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h ID_,HID_,0x10000 IDM_,HIDM_,0x10000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+echo. &gt;&gt; "..\help\HTMLDefines.h"
+echo // Prompts (IDP_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h IDP_,HIDP_,0x30000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+echo. &gt;&gt; "..\help\HTMLDefines.h"
+echo // Resources (IDR_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h IDR_,HIDR_,0x20000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+echo. &gt;&gt; "..\help\HTMLDefines.h"
+echo // Dialogs (IDD_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h IDD_,HIDD_,0x20000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+echo. &gt;&gt; "..\help\HTMLDefines.h"
+echo // Frame Controls (IDW_*) &gt;&gt; "..\help\HTMLDefines.h"
+makehm /h /a afxhh.h IDW_,HIDW_,0x50000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefines.h"
+</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generating map file for help compiler...</Message>
+    </CustomBuild>
+
+
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\help\NeoMem.hm" />
+    <None Include="..\help\html\add_class.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\add_object.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\afx_hidp_default.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\autorecover.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\change_object_class.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\change_object_contents.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\change_object_icon.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\classes_and_properties.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\contact.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\contents_view.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\data_view.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\delete_class.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\delete_object.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\edit_class.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\encryption.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\example_file.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\faq.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\folders_and_objects.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_add_property.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_change_class_contents.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_change_class_icon.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_change_object_class.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_change_object_contents.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_change_object_icon.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_class_contents.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_class_icon.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_class_intro.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_class_name.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_class_properties.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_class_summary.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_class_type.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_edit_date.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_edit_folder.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_edit_link.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_edit_object.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_edit_person_name.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_edit_property.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_file_general.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_file_security.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_goto_object.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_move_object_to.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_move_text_to.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_object_general.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_options_general.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_preview_toolbar.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_print.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidd_property_wizard.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hidr_neomem_type.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hid_clock.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hid_ht_nowhere.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hid_keyboard_shortcuts.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\hid_whats_new.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\home_folder.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\home_view.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\import_export.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\index_view.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\legal_info.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\limitations.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\modifying_views.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\move_object.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\navigating.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\printing.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\properties.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\properties_view.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\rename_object.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\requirements.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\search_view.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\sorting.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\system_classes.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\technical_support.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\text_view.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\uninstall.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\html\views_overview.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\help\neomem.hhc" />
+    <None Include="..\help\NeoMem.hhk" />
+    
+    <CustomBuild Include="..\help\NeoMem.hhp">
+      <FileType>Document</FileType>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)NeoMem.chm;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\help\HTMLDefines.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">start /wait hhc "..\help\NeoMem.hhp"
+if not exist "..\help\NeoMem.chm" goto :HelpError
+copy "..\help\NeoMem.chm" "$(OutDir)NeoMem.chm"
+goto :HelpDone
+:HelpError
+echo ..\help\NeoMem.hhp(1) : error:Problem encountered creating help file
+echo.
+:HelpDone
+echo.
+</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Making help file...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)NeoMem.chm;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\help\HTMLDefines.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">start /wait hhc "..\help\NeoMem.hhp"
+if not exist "..\help\NeoMem.chm" goto :HelpError
+copy "..\help\NeoMem.chm" "$(OutDir)NeoMem.chm"
+goto :HelpDone
+:HelpError
+echo ..\help\NeoMem.hhp(1) : error:Problem encountered creating help file
+echo.
+:HelpDone
+echo.
+</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Making help file...</Message>
+    </CustomBuild>
+    
+    
+    <None Include="..\help\popups.js" />
     <None Include="..\resources\Resource.hm" />
   </ItemGroup>
   <ItemGroup>
@@ -396,11 +692,6 @@
     <ResourceCompile Include="..\resources\version.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\help\NeoMem.cnt" />
-    <None Include="..\help\NeoMem.hm" />
-    <None Include="..\help\NeoMem.hpj" />
-    <None Include="..\help\NeoMem.rtf" />
-    <None Include="..\help\readme.txt" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\version.rct" />
   </ItemGroup>

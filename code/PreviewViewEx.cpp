@@ -1,5 +1,6 @@
 
 // CPreviewViewEx
+// from MFC
 
 
 #include "precompiled.h"
@@ -44,8 +45,8 @@ void CPreviewViewEx::OnInitialUpdate()
 {
 	CPreviewView::OnInitialUpdate();
 
+	//. calculate the total size of this view
 //	CSize sizeTotal;
-	// TODO: calculate the total size of this view
 //	sizeTotal.cx = sizeTotal.cy = 100;
 //	SetScrollSizes(MM_TEXT, sizeTotal);
 }
@@ -196,7 +197,7 @@ void CPreviewViewEx::Dump(CDumpContext& dc) const
 // CPreviewViewEx message handlers
 void CPreviewViewEx::OnPreviewSetup() 
 {
-	//, this works, but getting preview to recognize changes might take a while, so leaving button out for v1!
+	//, this works, but getting preview to recognize changes might take a while, so leaving button out for v1
 //	AfxMessageBox("hi!");
 //	ON_COMMAND(ID_FILE_PRINT_SETUP, OnFilePrintSetup)
 //	ON_COMMAND(ID_FILE_PAGE_SETUP, OnFilePageSetup)

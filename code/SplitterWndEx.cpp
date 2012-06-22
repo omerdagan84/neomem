@@ -239,7 +239,7 @@ void CSplitterWndEx::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	else
 	{
-		//. user repositioned main splitter - store new % width in document!?
+		//. user repositioned main splitter - store new % width in document?
 	}
 } 
 
@@ -251,8 +251,8 @@ void CSplitterWndEx::OnSize(UINT nType, int cx, int cy)
 	// Call base class handler
 	CSplitterWnd::OnSize(nType, cx, cy);
 
-	//. bug - this is getting called after closing print preview for some reason, and repositioning the splitter. 030315
-	//	    OnSetPreviewMode takes over window and gets this screwed up
+	//. bug - this is getting called after closing print preview for some reason, and repositioning the splitter. 20030315
+	//	    OnSetPreviewMode takes over window and gets this messed up
 
 	// Now tell parent that splitter was resized
 	if (m_lngMode == modeSplitterContents)

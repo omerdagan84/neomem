@@ -78,7 +78,8 @@ BEGIN_MESSAGE_MAP(CFrameMain, BaseClass)
 	
 	// Used when a specific help context cannot be found.
 	ON_COMMAND(ID_DEFAULT_HELP, BaseClass::OnHelpFinder)
-	
+
+
 	// Print handlers
 //	ON_COMMAND(ID_FILE_PRINT, OnFilePrint)
 //	ON_COMMAND(ID_FILE_PRINT_DIRECT, OnFilePrint)

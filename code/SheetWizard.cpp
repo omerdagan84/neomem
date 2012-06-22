@@ -91,7 +91,7 @@ int CSheetWizard::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 // Returns
 //	wizard answer (ID_WIZFINISH or IDCANCEL)
 //
-//, ugh this code sucks.
+//. clean up this code - too complex
 //int CSheetWizard::DoModalParameters(eWizardMode nMode, BObject* pobj /* = 0 */)
 int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 */) {
 

@@ -42,10 +42,8 @@ public:
 	void SetPaperSize(CSize sizePaper);
 
 	// Formatting
-//`	CHARFORMAT& GetCharFormatSelection();
 	CHARFORMAT2& GetCharFormatSelection2(); //`
 	PARAFORMAT& GetParaFormatSelection();
-//`	void SetCharFormat(CHARFORMAT cf);
 	void SetCharFormat2(CHARFORMAT2 cf2); //`
 	BOOL SetParaFormat(PARAFORMAT& pf);
 	CRichEditCntrItem* GetSelectedItem() const;
@@ -117,7 +115,6 @@ private:
 	CRect m_rectPrintableArea; // twips
 	CDWordArray m_aPageStart;    // array of starting pages
 	PARAFORMAT m_paraformat;
-//	CHARFORMAT m_charformat;
 	CHARFORMAT2 m_charformat2; //`
 	BOOL m_bSyncCharFormat;
 	BOOL m_bSyncParaFormat;

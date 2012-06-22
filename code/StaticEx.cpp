@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 /*
-//.. could set different default tab stop - this is 1/2 inch
+//, could set different default tab stop - this is 1/2 inch
 // ideally, let user pick one
 // unless...
 // could read default font info here

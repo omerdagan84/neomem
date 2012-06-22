@@ -1,6 +1,9 @@
 
 // This file defines string constants
 
+//, any better way to handle strings, ie without header file? 
+
+
 
 #include "precompiled.h"
 #include "strings.h"
@@ -12,7 +15,9 @@ static char BASED_CODE THIS_FILE[] = __FILE__;
 
 
 
-//, just leaving these as is for now - need to find/write regkey mover...
+
+
+//. just leaving these as is for now - need to find/write regkey mover...
 const TCHAR szRegKey[] = _T("Intaglio Software");
 const TCHAR szRegKeyDebug[] = _T("Intaglio Software Debug");
 //const TCHAR szRegKeyOld[] = _T("Intaglio Software");

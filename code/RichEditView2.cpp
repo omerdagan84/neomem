@@ -122,11 +122,9 @@ CRichEditView2::CRichEditView2() : CCtrlView(RICHEDIT_CLASS, AFX_WS_DEFAULT_VIEW
 	m_nHeaderHeightTwips = 0;
 	m_nFooterHeightTwips = 0;
 
-//	::ZeroMemory(&m_charformat, sizeof(CHARFORMAT));//`
 	::ZeroMemory(&m_charformat2, sizeof(CHARFORMAT2));
 	::ZeroMemory(&m_paraformat, sizeof(PARAFORMAT));
 
-//	m_charformat.cbSize = sizeof(CHARFORMAT);//`
 	m_charformat2.cbSize = sizeof(CHARFORMAT2);
 	m_paraformat.cbSize = sizeof(PARAFORMAT);
 
@@ -145,8 +143,7 @@ CRichEditView2::~CRichEditView2()
 }
 
 
-BOOL 
-CRichEditView2::PreCreateWindow(CREATESTRUCT& cs)
+BOOL CRichEditView2::PreCreateWindow(CREATESTRUCT& cs)
 {
 //`	if (!AfxInitRichEdit())
 //	if (!AfxInitRichEditEx())
@@ -165,8 +162,7 @@ CRichEditView2::PreCreateWindow(CREATESTRUCT& cs)
 
 
 
-int 
-CRichEditView2::OnCreate(LPCREATESTRUCT lpcs)
+int CRichEditView2::OnCreate(LPCREATESTRUCT lpcs)
 {
 	if (CCtrlView::OnCreate(lpcs) != 0)
 		return -1;
@@ -185,8 +181,7 @@ CRichEditView2::OnCreate(LPCREATESTRUCT lpcs)
 	return 0;
 }
 
-void 
-CRichEditView2::OnInitialUpdate()
+void CRichEditView2::OnInitialUpdate()
 {
 	CCtrlView::OnInitialUpdate();
 	m_bSyncCharFormat = m_bSyncParaFormat = TRUE;
@@ -197,8 +192,7 @@ CRichEditView2::OnInitialUpdate()
 // Document like functions
 //--------------------------------------------------------------------------------------------------
 
-void 
-CRichEditView2::OnDestroy()
+void CRichEditView2::OnDestroy()
 {
 	xTRACE("CRichEditView2::OnDestroy\n");
 	if (m_lpRichEditOle != NULL)
@@ -208,8 +202,7 @@ CRichEditView2::OnDestroy()
 
 
 // Clear all contents
-void 
-CRichEditView2::DeleteContents()
+void CRichEditView2::DeleteContents()
 {
 	ASSERT_VALID(this);
 	ASSERT(m_hWnd != NULL);
@@ -221,8 +214,7 @@ CRichEditView2::DeleteContents()
 
 
 // This should be called when printing characteristics have changed (SetMargins or SetPaperSize).
-void 
-CRichEditView2::WrapChanged()
+void CRichEditView2::WrapChanged()
 {
 	CWaitCursor wait;
 //`	CRichEditCtrl& ctrl = GetRichEditCtrl();
@@ -257,8 +249,7 @@ public:
 
 
 // Read and write CRichEditView2 object to archive, with length prefix.
-void 
-CRichEditView2::Serialize(CArchive& ar)
+void CRichEditView2::Serialize(CArchive& ar)
 {
 	ASSERT_VALID(this);
 	ASSERT(m_hWnd != NULL);
@@ -267,8 +258,7 @@ CRichEditView2::Serialize(CArchive& ar)
 }
 
 
-void 
-CRichEditView2::Stream(CArchive& ar, BOOL bSelection)
+void CRichEditView2::Stream(CArchive& ar, BOOL bSelection)
 {
 	EDITSTREAM es = {0, 0, EditStreamCallBack};
 //`	_afxRichEditCookie cookie(ar);
@@ -291,8 +281,7 @@ CRichEditView2::Stream(CArchive& ar, BOOL bSelection)
 
 
 // return 0 for no error, otherwise return error code
-DWORD CALLBACK 
-CRichEditView2::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
+DWORD CALLBACK CRichEditView2::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
 {
 //`	_afxRichEditCookie* pCookie = (_afxRichEditCookie*)dwCookie;
 	RichEditCookie* pCookie = (RichEditCookie*)dwCookie;
@@ -331,7 +320,7 @@ CRichEditView2::EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG 
 
 
 // XRichEditOleCallback
-// This is the COM interface for the control!
+// This is the COM interface for the control
 //--------------------------------------------------------------------------------------------------
 
 BEGIN_INTERFACE_MAP(CRichEditView2, CCtrlView)
@@ -528,8 +517,7 @@ STDMETHODIMP CRichEditView2::XRichEditOleCallback::GetContextMenu(
 
 
 // called by cviewrtf
-void 
-CRichEditView2::OnUpdateCharEffect(CCmdUI* pCmdUI, DWORD dwMask, DWORD dwEffect)
+void CRichEditView2::OnUpdateCharEffect(CCmdUI* pCmdUI, DWORD dwMask, DWORD dwEffect)
 {
 //	GetCharFormatSelection();
 //	pCmdUI->SetCheck((m_charformat.dwMask & dwMask) ?
@@ -541,8 +529,7 @@ CRichEditView2::OnUpdateCharEffect(CCmdUI* pCmdUI, DWORD dwMask, DWORD dwEffect)
 
 
 // called by cviewrtf
-void 
-CRichEditView2::OnParaAlign(WORD wAlign)
+void CRichEditView2::OnParaAlign(WORD wAlign)
 {
 	GetParaFormatSelection();
 	m_paraformat.dwMask = PFM_ALIGNMENT;
@@ -552,8 +539,7 @@ CRichEditView2::OnParaAlign(WORD wAlign)
 
 
 // called by cviewrtf
-void 
-CRichEditView2::OnUpdateParaAlign(CCmdUI* pCmdUI, WORD wAlign)
+void CRichEditView2::OnUpdateParaAlign(CCmdUI* pCmdUI, WORD wAlign)
 {
 	GetParaFormatSelection();
 	// disable if no word wrap since alignment is meaningless
@@ -1726,10 +1712,6 @@ void CRichEditView2::OnTextNotFound(LPCTSTR lpszFind)
 {
 //	MessageBeep(MB_ICONHAND);
 	//` Replace the beep with a message box
-//	LPCTSTR pszMsg = " was not found.";
-//	TCHAR *lpszBuf = new TCHAR[_tcslen(lpszMsg) + _tcslen(lpszFind)];
-//	wsprintf( lpszBuf, "%s %s", lpszFind, lpszMsg );
-//	AfxMessageBox( lpszBuf );
 	CString strMsg;
 	strMsg.Format("The text '%s' was not found.", lpszFind);
 	AfxMessageBox(strMsg, MB_ICONINFORMATION);
@@ -2707,7 +2689,7 @@ HMENU CRichEditView2::GetContextMenu(WORD seltyp, LPOLEOBJECT lpoleobj, CHARRANG
 
 
 // Handle context menu key ("Application Key").
-// Note: This does not get called on right button click! See OnRButtonDown
+// Note: This does not get called on right button click - see OnRButtonDown
 void CRichEditView2::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
 	xTRACE("CRichEditView2::OnContextMenu(point.x=%d, point.y=%d)\n", point.x, point.y);
@@ -2924,7 +2906,7 @@ void CRichEditView2::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		// Trap Shift+Down because of stupid richedit control - old version used to let you select lines
 		// one at a time but new version has weird behavior that I'm trying to get around. 
 
-		// only do this if running richedit 2.0 or 3.0?? just 3.0??
+		// only do this if running richedit 2.0 or 3.0? just 3.0?
 		// i think since we specify the classname as riched20a or whatever that we'll always be using 2.0 or 3.0
 		// is there a difference between 2.0 and 3.0? i'm using 5.0
 		
