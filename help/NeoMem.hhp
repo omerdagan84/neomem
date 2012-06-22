@@ -1,78 +1,122 @@
 [OPTIONS]
 Contents file=neomem.hhc
 Index file=NeoMem.hhk
+Default Topic=html\hidr_neomem_type.htm
 
 [FILES]
-html\neom984l.htm
-html\neom7wl3.htm
-html\neom1n1h.htm
-html\neom1hir.htm
-html\neom26us.htm
-html\neom938x.htm
-html\neom3j04.htm
-html\neom19bn.htm
-html\neom2lbb.htm
-html\neom9zjm.htm
-html\neom7n3o.htm
-html\neom8lv8.htm
-html\neom3mic.htm
-html\neom1l84.htm
-html\neom7ne6.htm
-html\neom1df7.htm
-html\neom42ur.htm
-html\neom1bvr.htm
-html\neom2vzb.htm
-html\neom0g4z.htm
-html\neom814j.htm
-html\neom16sz.htm
-html\neom5ub7.htm
-html\neom4vjn.htm
-html\neom5qk3.htm
-html\neom5flj.htm
-html\neom84kz.htm
-html\neom30l3.htm
-html\neom8zw7.htm
-html\neom6it3.htm
-html\neom1anr.htm
-html\neom8khj.htm
-html\neom0kl3.htm
-html\neom1xdj.htm
-html\neom6wmj.htm
-html\neom6rw2.htm
-html\neom535a.htm
-html\neom1nqx.htm
-html\neom3iya.htm
-html\neom3rxw.htm
-html\neom2zub.htm
-html\neom8jhq.htm
-html\neom1xv7.htm
-html\neom5zar.htm
-html\neom8fu6.htm
-html\neom5x4f.htm
-html\neom6eqt.htm
-html\neom28dh.htm
-html\neom8hta.htm
-html\neom3kqb.htm
-html\neom6j1v.htm
-html\neom96gp.htm
-html\neom73ad.htm
-html\neom2qgb.htm
-html\neom8nj9.htm
-html\neom45x5.htm
-html\neom1fsc.htm
-html\neom4dfd.htm
-html\neom98vo.htm
-html\neom05tb.htm
-html\neom0j8v.htm
-html\neom8bak.htm
-html\neom6y7g.htm
-html\neom63n8.htm
-html\neom5pki.htm
-html\neom6vvo.htm
-html\neom2h9w.htm
-html\neom7wqb.htm
-html\neom9qpf.htm
-html\neom3ran.htm
-html\neom4vvw.htm
-html\neom5zol.htm
-html\neom9b3o.htm
+html\hidr_neomem_type.htm
+html\hid_whats_new.htm
+html\example_file.htm
+html\limitations.htm
+html\contact.htm
+html\faq.htm
+html\technical_support.htm
+html\folders_and_objects.htm
+html\navigating.htm
+html\home_folder.htm
+html\add_object.htm
+html\rename_object.htm
+html\delete_object.htm
+html\move_object.htm
+html\change_object_icon.htm
+html\change_object_class.htm
+html\change_object_contents.htm
+html\sorting.htm
+html\printing.htm
+html\classes_and_properties.htm
+html\system_classes.htm
+html\add_class.htm
+html\edit_class.htm
+html\delete_class.htm
+html\properties.htm
+html\views_overview.htm
+html\modifying_views.htm
+html\data_view.htm
+html\search_view.htm
+html\index_view.htm
+html\home_view.htm
+html\text_view.htm
+html\contents_view.htm
+html\properties_view.htm
+html\hid_clock.htm
+html\autorecover.htm
+html\encryption.htm
+html\hidd_add_property.htm
+html\hidd_edit_folder.htm
+html\hidd_edit_object.htm
+html\hidd_change_class_contents.htm
+html\hidd_change_class_icon.htm
+html\hidd_change_object_class.htm
+html\hidd_change_object_contents.htm
+html\hidd_change_object_icon.htm
+html\hidd_class_intro.htm
+html\hidd_class_name.htm
+html\hidd_class_type.htm
+html\hidd_class_icon.htm
+html\hidd_class_properties.htm
+html\hidd_class_contents.htm
+html\hidd_class_summary.htm
+html\hidd_edit_date.htm
+html\hidd_edit_link.htm
+html\hidd_edit_person_name.htm
+html\hidd_edit_property.htm
+html\hidd_file_general.htm
+html\hidd_file_security.htm
+html\hidd_goto_object.htm
+html\hidd_move_object_to.htm
+html\hidd_move_text_to.htm
+html\hidd_object_general.htm
+html\hidd_options_general.htm
+html\hidd_print.htm
+html\hidd_preview_toolbar.htm
+html\hidd_property_wizard.htm
+html\import_export.htm
+html\requirements.htm
+html\hid_keyboard_shortcuts.htm
+html\legal_info.htm
+html\uninstall.htm
+html\hid_ht_nowhere.htm
+html\afx_hidp_default.htm
+[MAP]
+#include HelpIDs.h
+#include NeoMem.h
+[ALIAS]
+#include NewAliases.h
+#Include csAlias.h
+AFX_HIDP_ASK_TO_SAVE = html\afx_hidp_default.htm
+AFX_HIDP_ASK_TO_UPDATE = html\afx_hidp_default.htm
+AFX_HIDP_BAD_VERB = html\afx_hidp_default.htm
+AFX_HIDP_COMMAND_FAILURE = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_ACCESS_READ = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_ACCESS_WRITE = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_DISK_FULL = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_INVALID_FORMAT = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_INVALID_PATH = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_IO_ERROR_READ = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_IO_ERROR_WRITE = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_MEMORY_ALLOC = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_AUTO_REGISTER = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_CONNECT = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_CREATE_DOC = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_LAUNCH = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_LAUNCH_HELP = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_NOTIFY = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_OPEN_DOC = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_REGISTER = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_SAVE_DOC = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_START_PRINT = html\afx_hidp_default.htm
+AFX_HIDP_FAILED_TO_UPDATE = html\afx_hidp_default.htm
+AFX_HIDP_FILE_TOO_LARGE = html\afx_hidp_default.htm
+AFX_HIDP_INTERNAL_FAILURE = html\afx_hidp_default.htm
+AFX_HIDP_INVALID_FILENAME = html\afx_hidp_default.htm
+AFX_HIDP_PARSE_INT = html\afx_hidp_default.htm
+AFX_HIDP_PARSE_INT_RANGE = html\afx_hidp_default.htm
+AFX_HIDP_PARSE_REAL = html\afx_hidp_default.htm
+AFX_HIDP_PARSE_REAL_RANGE = html\afx_hidp_default.htm
+AFX_HIDP_PARSE_STRING_SIZE = html\afx_hidp_default.htm
+AFX_HIDP_SERVER_BUSY = html\afx_hidp_default.htm
+AFX_HIDP_STATIC_OBJECT = html\afx_hidp_default.htm
+HIDD_OPTIONS_FILE = html\hidd_options_general.htm              ; 2nd tab of options dialog maps to general help page
+[TEXT POPUPS]
+cshelp.h
+cshelp.txt

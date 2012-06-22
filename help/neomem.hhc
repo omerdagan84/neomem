@@ -9,39 +9,39 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Overview">
-			<param name="Local" value="html/neom984l.htm">
+			<param name="Local" value="html/hidr_neomem_type.htm">
 			</OBJECT>
-			<A HREF="html/neom984l.htm">Overview</A><BR>
+			<A HREF="html/hidr_neomem_type.htm">Overview</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="What's New?">
-			<param name="Local" value="html/neom7wl3.htm">
+			<param name="Local" value="html/hid_whats_new.htm">
 			</OBJECT>
-			<A HREF="html/neom7wl3.htm">What's New?</A><BR>
+			<A HREF="html/hid_whats_new.htm">What's New?</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Example File">
-			<param name="Local" value="html/neom1n1h.htm">
+			<param name="Local" value="html/example_file.htm">
 			</OBJECT>
-			<A HREF="html/neom1n1h.htm">Example File</A><BR>
+			<A HREF="html/example_file.htm">Example File</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Limitations">
-			<param name="Local" value="html/neom1hir.htm">
+			<param name="Local" value="html/limitations.htm">
 			</OBJECT>
-			<A HREF="html/neom1hir.htm">Limitations</A><BR>
+			<A HREF="html/limitations.htm">Limitations</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Contact Information">
-			<param name="Local" value="html/neom26us.htm">
+			<param name="Local" value="html/contact.htm">
 			</OBJECT>
-			<A HREF="html/neom26us.htm">Contact Information</A><BR>
+			<A HREF="html/contact.htm">Contact Information</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Frequently Asked Questions">
-			<param name="Local" value="html/neom938x.htm">
+			<param name="Local" value="html/faq.htm">
 			</OBJECT>
-			<A HREF="html/neom938x.htm">Frequently Asked Questions</A><BR>
+			<A HREF="html/faq.htm">Frequently Asked Questions</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Technical Support">
-			<param name="Local" value="html/neom3j04.htm">
+			<param name="Local" value="html/technical_support.htm">
 			</OBJECT>
-			<A HREF="html/neom3j04.htm">Technical Support</A><BR>
+			<A HREF="html/technical_support.htm">Technical Support</A><BR>
 	</UL>
 	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="Folders and Objects">
@@ -49,64 +49,64 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Overview">
-			<param name="Local" value="html/neom19bn.htm">
+			<param name="Local" value="html/folders_and_objects.htm">
 			</OBJECT>
-			<A HREF="html/neom19bn.htm">Overview</A><BR>
+			<A HREF="html/folders_and_objects.htm">Overview</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Navigating">
-			<param name="Local" value="html/neom2lbb.htm">
+			<param name="Local" value="html/navigating.htm">
 			</OBJECT>
-			<A HREF="html/neom2lbb.htm">Navigating</A><BR>
+			<A HREF="html/navigating.htm">Navigating</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Home Folder">
-			<param name="Local" value="html/neom9zjm.htm">
+			<param name="Local" value="html/home_folder.htm">
 			</OBJECT>
-			<A HREF="html/neom9zjm.htm">Home Folder</A><BR>
+			<A HREF="html/home_folder.htm">Home Folder</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Adding an Object or Folder">
-			<param name="Local" value="html/neom7n3o.htm">
+			<param name="Local" value="html/add_object.htm">
 			</OBJECT>
-			<A HREF="html/neom7n3o.htm">Adding an Object or Folder</A><BR>
+			<A HREF="html/add_object.htm">Adding an Object or Folder</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Renaming an Object">
-			<param name="Local" value="html/neom8lv8.htm">
+			<param name="Local" value="html/rename_object.htm">
 			</OBJECT>
-			<A HREF="html/neom8lv8.htm">Renaming an Object</A><BR>
+			<A HREF="html/rename_object.htm">Renaming an Object</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Deleting an Object">
-			<param name="Local" value="html/neom3mic.htm">
+			<param name="Local" value="html/delete_object.htm">
 			</OBJECT>
-			<A HREF="html/neom3mic.htm">Deleting an Object</A><BR>
+			<A HREF="html/delete_object.htm">Deleting an Object</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Moving an Object">
-			<param name="Local" value="html/neom1l84.htm">
+			<param name="Local" value="html/move_object.htm">
 			</OBJECT>
-			<A HREF="html/neom1l84.htm">Moving an Object</A><BR>
+			<A HREF="html/move_object.htm">Moving an Object</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Changing the Icon of an Object">
-			<param name="Local" value="html/neom7ne6.htm">
+			<param name="Local" value="html/change_object_icon.htm">
 			</OBJECT>
-			<A HREF="html/neom7ne6.htm">Changing the Icon of an Object</A><BR>
+			<A HREF="html/change_object_icon.htm">Changing the Icon of an Object</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Changing the Class of an Object">
-			<param name="Local" value="html/neom1df7.htm">
+			<param name="Local" value="html/change_object_class.htm">
 			</OBJECT>
-			<A HREF="html/neom1df7.htm">Changing the Class of an Object</A><BR>
+			<A HREF="html/change_object_class.htm">Changing the Class of an Object</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Changing the Contents of an Object">
-			<param name="Local" value="html/neom42ur.htm">
+			<param name="Local" value="html/change_object_contents.htm">
 			</OBJECT>
-			<A HREF="html/neom42ur.htm">Changing the Contents of an Object</A><BR>
+			<A HREF="html/change_object_contents.htm">Changing the Contents of an Object</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Sorting Objects, Autosort and Moving Items Up and Down">
-			<param name="Local" value="html/neom1bvr.htm">
+			<param name="Local" value="html/sorting.htm">
 			</OBJECT>
-			<A HREF="html/neom1bvr.htm">Sorting Objects, Autosort and Moving Items Up and Down</A><BR>
+			<A HREF="html/sorting.htm">Sorting Objects, Autosort and Moving Items Up and Down</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Printing Objects">
-			<param name="Local" value="html/neom2vzb.htm">
+			<param name="Local" value="html/printing.htm">
 			</OBJECT>
-			<A HREF="html/neom2vzb.htm">Printing Objects</A><BR>
+			<A HREF="html/printing.htm">Printing Objects</A><BR>
 	</UL>
 	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="Classes and Properties">
@@ -114,34 +114,34 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Overview">
-			<param name="Local" value="html/neom0g4z.htm">
+			<param name="Local" value="html/classes_and_properties.htm">
 			</OBJECT>
-			<A HREF="html/neom0g4z.htm">Overview</A><BR>
+			<A HREF="html/classes_and_properties.htm">Overview</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="System Classes and Properties">
-			<param name="Local" value="html/neom814j.htm">
+			<param name="Local" value="html/system_classes.htm">
 			</OBJECT>
-			<A HREF="html/neom814j.htm">System Classes and Properties</A><BR>
+			<A HREF="html/system_classes.htm">System Classes and Properties</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Creating a New Class">
-			<param name="Local" value="html/neom16sz.htm">
+			<param name="Local" value="html/add_class.htm">
 			</OBJECT>
-			<A HREF="html/neom16sz.htm">Creating a New Class</A><BR>
+			<A HREF="html/add_class.htm">Creating a New Class</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Editing an Existing Class">
-			<param name="Local" value="html/neom5ub7.htm">
+			<param name="Local" value="html/edit_class.htm">
 			</OBJECT>
-			<A HREF="html/neom5ub7.htm">Editing an Existing Class</A><BR>
+			<A HREF="html/edit_class.htm">Editing an Existing Class</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Deleting a Class">
-			<param name="Local" value="html/neom4vjn.htm">
+			<param name="Local" value="html/delete_class.htm">
 			</OBJECT>
-			<A HREF="html/neom4vjn.htm">Deleting a Class</A><BR>
+			<A HREF="html/delete_class.htm">Deleting a Class</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Properties and Property Types">
-			<param name="Local" value="html/neom5qk3.htm">
+			<param name="Local" value="html/properties.htm">
 			</OBJECT>
-			<A HREF="html/neom5qk3.htm">Properties and Property Types</A><BR>
+			<A HREF="html/properties.htm">Properties and Property Types</A><BR>
 	</UL>
 	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="Views">
@@ -149,49 +149,49 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Overview">
-			<param name="Local" value="html/neom5flj.htm">
+			<param name="Local" value="html/views_overview.htm">
 			</OBJECT>
-			<A HREF="html/neom5flj.htm">Overview</A><BR>
+			<A HREF="html/views_overview.htm">Overview</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Modifying Views">
-			<param name="Local" value="html/neom84kz.htm">
+			<param name="Local" value="html/modifying_views.htm">
 			</OBJECT>
-			<A HREF="html/neom84kz.htm">Modifying Views</A><BR>
+			<A HREF="html/modifying_views.htm">Modifying Views</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Data View">
-			<param name="Local" value="html/neom30l3.htm">
+			<param name="Local" value="html/data_view.htm">
 			</OBJECT>
-			<A HREF="html/neom30l3.htm">Data View</A><BR>
+			<A HREF="html/data_view.htm">Data View</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Search View">
-			<param name="Local" value="html/neom8zw7.htm">
+			<param name="Local" value="html/search_view.htm">
 			</OBJECT>
-			<A HREF="html/neom8zw7.htm">Search View</A><BR>
+			<A HREF="html/search_view.htm">Search View</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Index View">
-			<param name="Local" value="html/neom6it3.htm">
+			<param name="Local" value="html/index_view.htm">
 			</OBJECT>
-			<A HREF="html/neom6it3.htm">Index View</A><BR>
+			<A HREF="html/index_view.htm">Index View</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Home View">
-			<param name="Local" value="html/neom1anr.htm">
+			<param name="Local" value="html/home_view.htm">
 			</OBJECT>
-			<A HREF="html/neom1anr.htm">Home View</A><BR>
+			<A HREF="html/home_view.htm">Home View</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Text View">
-			<param name="Local" value="html/neom8khj.htm">
+			<param name="Local" value="html/text_view.htm">
 			</OBJECT>
-			<A HREF="html/neom8khj.htm">Text View</A><BR>
+			<A HREF="html/text_view.htm">Text View</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Contents View">
-			<param name="Local" value="html/neom0kl3.htm">
+			<param name="Local" value="html/contents_view.htm">
 			</OBJECT>
-			<A HREF="html/neom0kl3.htm">Contents View</A><BR>
+			<A HREF="html/contents_view.htm">Contents View</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Properties View">
-			<param name="Local" value="html/neom1xdj.htm">
+			<param name="Local" value="html/properties_view.htm">
 			</OBJECT>
-			<A HREF="html/neom1xdj.htm">Properties View</A><BR>
+			<A HREF="html/properties_view.htm">Properties View</A><BR>
 	</UL>
 	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="Features">
@@ -199,14 +199,14 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="AutoRecover">
-			<param name="Local" value="html/neom6rw2.htm">
+			<param name="Local" value="html/autorecover.htm">
 			</OBJECT>
-			<A HREF="html/neom6rw2.htm">AutoRecover</A><BR>
+			<A HREF="html/autorecover.htm">AutoRecover</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Password Protection/Encryption">
-			<param name="Local" value="html/neom535a.htm">
+			<param name="Local" value="html/encryption.htm">
 			</OBJECT>
-			<A HREF="html/neom535a.htm">Password Protection/Encryption</A><BR>
+			<A HREF="html/encryption.htm">Password Protection/Encryption</A><BR>
 	</UL>
 	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="Dialogs">
@@ -214,129 +214,129 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Add Property Dialog">
-			<param name="Local" value="html/neom1nqx.htm">
+			<param name="Local" value="html/hidd_add_property.htm">
 			</OBJECT>
-			<A HREF="html/neom1nqx.htm">Add Property Dialog</A><BR>
+			<A HREF="html/hidd_add_property.htm">Add Property Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="New Object Dialog">
-			<param name="Local" value="html/neom3rxw.htm">
+			<param name="Local" value="html/hidd_edit_object.htm">
 			</OBJECT>
-			<A HREF="html/neom3rxw.htm">New Object Dialog</A><BR>
+			<A HREF="html/hidd_edit_object.htm">New Object Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="New Folder Dialog">
-			<param name="Local" value="html/neom3iya.htm">
+			<param name="Local" value="html/hidd_edit_folder.htm">
 			</OBJECT>
-			<A HREF="html/neom3iya.htm">New Folder Dialog</A><BR>
+			<A HREF="html/hidd_edit_folder.htm">New Folder Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Change Class Contents Dialog">
-			<param name="Local" value="html/neom2zub.htm">
+			<param name="Local" value="html/hidd_change_class_contents.htm">
 			</OBJECT>
-			<A HREF="html/neom2zub.htm">Change Class Contents Dialog</A><BR>
+			<A HREF="html/hidd_change_class_contents.htm">Change Class Contents Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Change Class Icon Dialog">
-			<param name="Local" value="html/neom8jhq.htm">
+			<param name="Local" value="html/hidd_change_class_icon.htm">
 			</OBJECT>
-			<A HREF="html/neom8jhq.htm">Change Class Icon Dialog</A><BR>
+			<A HREF="html/hidd_change_class_icon.htm">Change Class Icon Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Change Object Class Dialog">
-			<param name="Local" value="html/neom1xv7.htm">
+			<param name="Local" value="html/hidd_change_object_class.htm">
 			</OBJECT>
-			<A HREF="html/neom1xv7.htm">Change Object Class Dialog</A><BR>
+			<A HREF="html/hidd_change_object_class.htm">Change Object Class Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Change Object Contents Dialog">
-			<param name="Local" value="html/neom5zar.htm">
+			<param name="Local" value="html/hidd_change_object_contents.htm">
 			</OBJECT>
-			<A HREF="html/neom5zar.htm">Change Object Contents Dialog</A><BR>
+			<A HREF="html/hidd_change_object_contents.htm">Change Object Contents Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Change Object Icon Dialog">
-			<param name="Local" value="html/neom8fu6.htm">
+			<param name="Local" value="html/hidd_change_object_icon.htm">
 			</OBJECT>
-			<A HREF="html/neom8fu6.htm">Change Object Icon Dialog</A><BR>
+			<A HREF="html/hidd_change_object_icon.htm">Change Object Icon Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Class Wizard: Intro">
-			<param name="Local" value="html/neom5x4f.htm">
+			<param name="Local" value="html/hidd_class_intro.htm">
 			</OBJECT>
-			<A HREF="html/neom5x4f.htm">Class Wizard: Intro</A><BR>
+			<A HREF="html/hidd_class_intro.htm">Class Wizard: Intro</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Class Wizard: Name and Description">
-			<param name="Local" value="html/neom6eqt.htm">
+			<param name="Local" value="html/hidd_class_name.htm">
 			</OBJECT>
-			<A HREF="html/neom6eqt.htm">Class Wizard: Name and Description</A><BR>
+			<A HREF="html/hidd_class_name.htm">Class Wizard: Name and Description</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Class Wizard: Name Type">
-			<param name="Local" value="html/neom28dh.htm">
+			<param name="Local" value="html/hidd_class_type.htm">
 			</OBJECT>
-			<A HREF="html/neom28dh.htm">Class Wizard: Name Type</A><BR>
+			<A HREF="html/hidd_class_type.htm">Class Wizard: Name Type</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Class Wizard: Icon">
-			<param name="Local" value="html/neom8hta.htm">
+			<param name="Local" value="html/hidd_class_icon.htm">
 			</OBJECT>
-			<A HREF="html/neom8hta.htm">Class Wizard: Icon</A><BR>
+			<A HREF="html/hidd_class_icon.htm">Class Wizard: Icon</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Class Wizard: Properties">
-			<param name="Local" value="html/neom3kqb.htm">
+			<param name="Local" value="html/hidd_class_properties.htm">
 			</OBJECT>
-			<A HREF="html/neom3kqb.htm">Class Wizard: Properties</A><BR>
+			<A HREF="html/hidd_class_properties.htm">Class Wizard: Properties</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Class Wizard: Contents">
-			<param name="Local" value="html/neom6j1v.htm">
+			<param name="Local" value="html/hidd_class_contents.htm">
 			</OBJECT>
-			<A HREF="html/neom6j1v.htm">Class Wizard: Contents</A><BR>
+			<A HREF="html/hidd_class_contents.htm">Class Wizard: Contents</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Class Wizard: Summary">
-			<param name="Local" value="html/neom96gp.htm">
+			<param name="Local" value="html/hidd_class_summary.htm">
 			</OBJECT>
-			<A HREF="html/neom96gp.htm">Class Wizard: Summary</A><BR>
+			<A HREF="html/hidd_class_summary.htm">Class Wizard: Summary</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Edit Date Dialog">
-			<param name="Local" value="html/neom73ad.htm">
+			<param name="Local" value="html/hidd_edit_date.htm">
 			</OBJECT>
-			<A HREF="html/neom73ad.htm">Edit Date Dialog</A><BR>
+			<A HREF="html/hidd_edit_date.htm">Edit Date Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Edit Link Dialog">
-			<param name="Local" value="html/neom2qgb.htm">
+			<param name="Local" value="html/hidd_edit_link.htm">
 			</OBJECT>
-			<A HREF="html/neom2qgb.htm">Edit Link Dialog</A><BR>
+			<A HREF="html/hidd_edit_link.htm">Edit Link Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Edit Person Name Dialog">
-			<param name="Local" value="html/neom8nj9.htm">
+			<param name="Local" value="html/hidd_edit_person_name.htm">
 			</OBJECT>
-			<A HREF="html/neom8nj9.htm">Edit Person Name Dialog</A><BR>
+			<A HREF="html/hidd_edit_person_name.htm">Edit Person Name Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Edit Property Dialog">
-			<param name="Local" value="html/neom45x5.htm">
+			<param name="Local" value="html/hidd_edit_property.htm">
 			</OBJECT>
-			<A HREF="html/neom45x5.htm">Edit Property Dialog</A><BR>
+			<A HREF="html/hidd_edit_property.htm">Edit Property Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="File Properties Dialog">
-			<param name="Local" value="html/neom1fsc.htm">
+			<param name="Local" value="html/hidd_file_general.htm">
 			</OBJECT>
-			<A HREF="html/neom1fsc.htm">File Properties Dialog</A><BR>
+			<A HREF="html/hidd_file_general.htm">File Properties Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="File Security Dialog">
-			<param name="Local" value="html/neom4dfd.htm">
+			<param name="Local" value="html/hidd_file_security.htm">
 			</OBJECT>
-			<A HREF="html/neom4dfd.htm">File Security Dialog</A><BR>
+			<A HREF="html/hidd_file_security.htm">File Security Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Object Properties Dialog">
-			<param name="Local" value="html/neom8bak.htm">
+			<param name="Local" value="html/hidd_object_general.htm">
 			</OBJECT>
-			<A HREF="html/neom8bak.htm">Object Properties Dialog</A><BR>
+			<A HREF="html/hidd_object_general.htm">Object Properties Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Options Dialog">
-			<param name="Local" value="html/neom6y7g.htm">
+			<param name="Local" value="html/hidd_options_general.htm">
 			</OBJECT>
-			<A HREF="html/neom6y7g.htm">Options Dialog</A><BR>
+			<A HREF="html/hidd_options_general.htm">Options Dialog</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Print Preview">
-			<param name="Local" value="html/neom5pki.htm">
+			<param name="Local" value="html/hidd_preview_toolbar.htm">
 			</OBJECT>
-			<A HREF="html/neom5pki.htm">Print Preview</A><BR>
+			<A HREF="html/hidd_preview_toolbar.htm">Print Preview</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Property Wizard">
-			<param name="Local" value="html/neom6vvo.htm">
+			<param name="Local" value="html/hidd_property_wizard.htm">
 			</OBJECT>
-			<A HREF="html/neom6vvo.htm">Property Wizard</A><BR>
+			<A HREF="html/hidd_property_wizard.htm">Property Wizard</A><BR>
 	</UL>
 	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="Files">
@@ -344,9 +344,9 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Import and Export">
-			<param name="Local" value="html/neom2h9w.htm">
+			<param name="Local" value="html/import_export.htm">
 			</OBJECT>
-			<A HREF="html/neom2h9w.htm">Import and Export</A><BR>
+			<A HREF="html/import_export.htm">Import and Export</A><BR>
 	</UL>
 	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="Appendix">
@@ -354,19 +354,19 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="System Requirements">
-			<param name="Local" value="html/neom7wqb.htm">
+			<param name="Local" value="html/requirements.htm">
 			</OBJECT>
-			<A HREF="html/neom7wqb.htm">System Requirements</A><BR>
+			<A HREF="html/requirements.htm">System Requirements</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Keyboard Shortcuts">
-			<param name="Local" value="html/neom9qpf.htm">
+			<param name="Local" value="html/hid_keyboard_shortcuts.htm">
 			</OBJECT>
-			<A HREF="html/neom9qpf.htm">Keyboard Shortcuts</A><BR>
+			<A HREF="html/hid_keyboard_shortcuts.htm">Keyboard Shortcuts</A><BR>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Legal Information">
-			<param name="Local" value="html/neom3ran.htm">
+			<param name="Local" value="html/legal_info.htm">
 			</OBJECT>
-			<A HREF="html/neom3ran.htm">Legal Information</A><BR>
+			<A HREF="html/legal_info.htm">Legal Information</A><BR>
 	</UL>
 	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="Uninstall">
@@ -374,9 +374,9 @@
 	<UL>
 		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="How to Uninstall">
-			<param name="Local" value="html/neom4vvw.htm">
+			<param name="Local" value="html/uninstall.htm">
 			</OBJECT>
-			<A HREF="html/neom4vvw.htm">How to Uninstall</A><BR>
+			<A HREF="html/uninstall.htm">How to Uninstall</A><BR>
 	</UL>
 </UL>
 </HTML>

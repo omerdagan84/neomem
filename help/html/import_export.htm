@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Import and Export</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<OBJECT TYPE="application/x-oleobject" CLASSID="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+	<PARAM NAME="Keyword" VALUE="files: import">
+	<PARAM NAME="Keyword" VALUE="files: export">
+	<PARAM NAME="Keyword" VALUE="import files">
+	<PARAM NAME="Keyword" VALUE="export files">
+	<PARAM NAME="Keyword" VALUE="import and export">
+	<PARAM NAME="Keyword" VALUE="csv files">
+	<PARAM NAME="Keyword" VALUE="rtf files">
+	<PARAM NAME="Keyword" VALUE="tab-delimited files">
+</OBJECT>
+
+<H2><A NAME="import_export"></A>Files</H2>
+
+<P>Import and Export</P>
+
+<P><B>Import</B></P>
+
+<P>If you have information in text files that you would like to import into NeoMem, you can do so by selecting the object that will be the parent of the new information, then selecting <B>File / Import... </B>from the main menu. Currently only text or rich text files (rtf) are supported. </P>
+
+<P><B>Export</B> </P>
+
+<P>You can export the contents of the entire file to a <B>Comma Separated Values</B> (csv) text file by selecting <B>File / Export... </B>from the main menu. Or, to export a selected object and its child objects, right click on it in the Data View, and select <B>Export Object (and children)...</B> from the popup menu. </P>
+
+<P>The resulting <B>csv</B> file will include columns with object id's where appropriate, for instance any link properties will have a column showing a human readable version, and another column for the object id's linked to (for multiple objects, they will just be separated by commas). </P>
+
+<P>The last two columns in the file will be the contents of the <B>Text View</B>, one column for the <B>rtf</B> version, and one for the plain text version. </P>
+
+<P><B>Warning:</B> Importing the resulting csv file may fail if your <B>Text Views</B> have a lot of text in them - for instance, <B>Excel</B> has a limit of 32k characters per cell - beyond that and the text will spill over into following cells. And <B>Access</B> has a limit of 65k characters per row in the text file. Beyond that and it crashes (tested on Excel 2003 and Access 2003). </P>
+
+<P>Also, to import correctly into <B>Excel</B>, you should use File/Open, and NOT Data/Import External Data, because the latter does not correctly interpret the line breaks in the Text View fields. But using File/Open will work properly.</P>
+
+<P>To export data from the <B>Contents View</B>, you can copy the data to the clipboard by clicking in the <B>Contents View </B>to select it as the current view, then selecting <B>Edit / Copy Grid Contents</B> and then pasting the data into a spreadsheet program or word processor. The cell data will be separated by tab characters, which most spreadsheets will be able to parse correctly.</P>
+
+<P>You can also export data from the <B>Properties View </B>as above for the <B>Contents View</B>. </P>
+
+</BODY>
+</HTML>
