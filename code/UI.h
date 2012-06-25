@@ -9,7 +9,7 @@
 // to be passed to the various db routines which might
 // need user feedback. 
 
-// and could also make a testUi, for mock tests!
+// and could also make a testUi, for mock tests
 
 // the gui ui would bring up dialogs. 
 // the console ui would print and input, etc.

@@ -440,7 +440,7 @@ void CViewSearch::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			for (int i = 0; i < nObjects; i++)
 			{
 				BObject* pobj = (BObject*) ph->m_paObjects->GetAt(i);
-				// Note: Object has already been deleted, so don't validate it!
+				// Note: Object has already been deleted, so don't validate it
 //				ASSERT_VALID(pobj);
 				// remove from the list
 				m_lvw.DeleteItemData((LPARAM) pobj);
@@ -483,7 +483,7 @@ void CViewSearch::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// otherwise refresh the cbo list
 				m_cboSearchIn.RedrawWindow();
 			}
-			// Bug: forgot to put break;!!!!
+			// Bug: forgot to put break;
 			break;
 		}
 
@@ -571,9 +571,8 @@ void CViewSearch::OnKeyReturn()
 //------------------------------------------------------------------------------------------------------
 
 //, is there a way we could handle context menus more generally?
-// ie create some object that will create the menu and handle the item selected??
-// i don't like having to do this in each view
-// let CViewEx handle it?
+// ie create some object that will create the menu and handle the item selected?
+// i don't like having to do this in each view - let CViewEx handle it?
 // ie it could call virtual method to get selected objects into an array,
 // then depending on what was selected, bring up a different menu
 // or could call a virtual method to get the popup menu
@@ -663,14 +662,14 @@ void CViewSearch::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 
 	//, do data validation, return FALSE if you don't like it
  
-	// Reload accelerators so we will get the Return command!
+	// Reload accelerators so we will get the Return command
 	LoadViewAccelerators(IDR_VIEW_SEARCH);
 	
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
 	LVITEM* pLVITEM = &(pDispInfo->item);
 	if (pLVITEM->pszText)
 	{
-		// bug: for some reason lparam is not always filled out correctly!
+		// bug: for some reason lparam is not always filled out correctly
 //		BObject* pobj = (BObject*) pLVITEM->lParam;
 //		ASSERT_VALID(pobj);
 		int nItem = pLVITEM->iItem;
@@ -821,7 +820,7 @@ void CViewSearch::OnNotifyItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
 			m_pDoc->SetCurrentObject(pobj, this);
 
 			// If we're supposed to look in rtf, then search in rtf view first
-			// Note: if text found in Home object rtf view won't be available!
+			// Note: if text found in Home object rtf view won't be available
 			if (m_lngPropertyID == propRtfText || m_lngPropertyID == 0)
 			{
 //				CView* pView = ShowView(viewText, FALSE); // show rtf view but don't activate it
@@ -886,7 +885,7 @@ void CViewSearch::OnCmdEditFindNext()
 //		CView* pView = ShowView(viewText, FALSE, TRUE);
 		CView* pView = ShowView(viewText, FALSE, FALSE);
 		CViewRtf* pViewRtf = DYNAMIC_DOWNCAST(CViewRtf, pView);
-		if (pViewRtf) // Home Folder does not include viewrtf so this will be zero!
+		if (pViewRtf) // Home Folder does not include viewrtf so this will be zero
 		{
 			ASSERT_VALID(pViewRtf);
 			long nPos = pViewRtf->FindNext(m_strFindText, m_bMatchCase, m_bWholeWord);
@@ -1046,3 +1045,5 @@ void CViewSearch::OnObjMoveTo()
 void CViewSearch::OnUpdateObjMoveTo(CCmdUI* pCmdUI) 
 {
 }
+
+

@@ -352,3 +352,6 @@ void CViewHomeInner::GetFileDescription()
 	}
 	m_lblDescription.SetWindowText(pszDescription);
 }
+
+
+

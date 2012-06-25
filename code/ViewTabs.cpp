@@ -219,7 +219,7 @@ void CViewTabs::OnInitialUpdate()
 		SelectView(viewData);
 
 		// for some reason, if you don't pass pobjRoot, the tab ctrl doesn't draw itself, and
-		// is transparent!! lame!
+		// is transparent.
 		// Invalidate doesn't help
 		// it might be because when you load the tree, then change the object,
 		// the tree selchange event is not being triggered
@@ -246,7 +246,7 @@ void CViewTabs::OnInitialUpdate()
 	}
 	else
 	{
-		// If in contents mode, add tabs now??
+		// If in contents mode, add tabs now?
 		// could get current object from document, which should have set it by now(?)
 //		m_tbc.SetExtendedStyle
 //		BObject* pobjCurrent = pDoc->GetCurrentObject();
@@ -485,7 +485,7 @@ void CViewTabs::RecalcLayout(BOOL bRepaint)
 			// get current height of panes as percent of avail height
 //			int cyCur, cyMin;
 
-			///// hmm - if we store the % height in the tab data, why not just use that?!
+			///// hmm - if we store the % height in the tab data, why not just use that?
 			// so if user resizes splitter panes we'll have to write that to the tab data
 			// otherwise this will get out of whack
 
@@ -701,7 +701,7 @@ void CViewTabs::ShowTab(int nTab)
 		// Initialize the splitter for this tab to the required number of views.
 		// Returns a pointer to the splitter, and sets m_bNewSplitter if had to
 		// deleteing existing one and create a new one.
-		//, maybe should pass ref to flag instead of hiding it in a m_ var!
+		//, maybe should pass ref to flag instead of hiding it in a m_ var
 		CSplitterWndEx* pSplitter = InitializeSplitter(nTab, nViews);
 		ASSERT_VALID(pSplitter);
 
@@ -788,15 +788,15 @@ void CViewTabs::ShowTab(int nTab)
 		// Show the splitter
 		pSplitter->ShowWindow(SW_SHOW);
 
-		// BUG:: Views were not being positioned properly sometimes. The help said that you didn't
+		// BUG: Views were not being positioned properly sometimes. The help said that you didn't
 		// need to call this if you resized the panes with the splitter invisible, but I tried it anyway,
-		// and it fixed the problem!
+		// and it fixed the problem.
 		pSplitter->RecalcLayout();
 
 	}
 
 	// Unfreeze the display
-	//. not working right!!
+	//. not working right
 //	SetRedraw(TRUE);
 //	Invalidate(FALSE);
 
@@ -1025,14 +1025,13 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 				return 0;
 		}
 
-		// BUG:: In release version, this doesn't assert, so if you open an old file or something,
+		// BUG: In release version, this doesn't assert, so if you open an old file or something,
 		// pClass can be 0, which will bomb the program in CreateChildView.
 		// Now it returns 0 from the default case handler.
 		ASSERT(pClass);
 
 		// Add a View as a child of the tabstrip
-		// Note: had BAD BAD BUG here - declared pView again in braces, which meant that it disappeared
-		// before the end. BE CAREFUL OF DOING THIS!!!
+		// Bug: declared pView again in braces, which meant that it disappeared before the end.
 		CRect r;
 		r.SetRectEmpty();
 //		pView = CreateChildView(this, pClass, GetDocument(), r, 0);
@@ -1050,14 +1049,14 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 		m_Map.SetAt((WORD) lngViewID, (void*) pView);
 
 		// Now update the view, as we just loaded it
-		// BUG:: This somehow wiped out the m_pDocument pointer in the release version only!! 
-		//    Very weird bug! Hard to trace too!
+		// BUG: This somehow wiped out the m_pDocument pointer in the release version only.
+		//    Very weird bug - hard to trace too.
 //		pView->SendMessage(WM_SELECT_CURRENT, 0, 0);
 //		AfxCallWndProc(pView, pView->m_hWnd, WM_SELECT_CURRENT, 0, 0);
 
 		// Now tell the view to load itself
 		// Send the negative of the view we want to send the message to,
-		// in order to have the message received by only one view!!
+		// in order to have the message received by only one view
 //		BObject* pobjCurrent = ((CNeoDoc*) GetDocument())->GetCurrentObject();
 //		GetDocument()->UpdateAllViewsEx(-pView, hintLoad, pobjCurrent);
 
@@ -1129,7 +1128,7 @@ CView* CViewTabs::GetNextView(CView *pviewCurrent)
 // Returns pointer to previous visible view, or NULL if current view is not in list, or
 // -1 if already at end of list.
 // Called by CFrameChild object to implement F6 navigation
-//, merge with getnext??
+//, merge with getnext?
 CView* CViewTabs::GetPreviousView(CView *pviewCurrent)
 //CViewEx* CViewTabs::GetPreviousView(CViewEx *pviewCurrent)
 {
@@ -1200,7 +1199,7 @@ void CViewTabs::OnTabMerge()
 
 		// Create splitter window of 2 rows and 1 column
 		//, actually might need more than 2 rows! need to check
-		// array attached to new tab!!
+		// array attached to new tab
 		m_pSplitter = new CSplitterWndEx;
 		if (!m_pSplitter->CreateStatic(this, 2, 1, WS_CHILD | WS_BORDER))
 		{
@@ -1213,7 +1212,7 @@ void CViewTabs::OnTabMerge()
 
 		// Add the new view(s) also as child of splitter
 		// view may or may not be loaded already
-		// may be more than one view in the tab also!
+		// may be more than one view in the tab also
 		// need to get its array and walk through it
 //		m_pSplitter->SetPane(1, 0, m_pNewView);
 //		CView* pNewView = ShowView(lngNewViewID);
@@ -1597,7 +1596,7 @@ void CViewTabs::OnViewEdit()
 	// Bring up dialog with available views for this tab, let user modify and reorder.
 	
 	// maybe the dialog should let them arrange the entire view arrangement, i.e.,
-	// this would be the BDataViews->UIEditValue method!?
+	// this would be the BDataViews->UIEditValue method?
 	// dialog would be more complicated though and might be confusing.
 
 	PrepareToModifyViews();
@@ -1741,7 +1740,7 @@ void CViewTabs::PrepareToModifyViews()
 	{
 //		BDataViews* pdatViews = new BDataViews(m_pdatViews);
 //		m_pdatViews = pdatViews;
-		m_pdatViews = STATIC_DOWNCAST(BDataViews, m_pdatViews->CreateCopy());
+		m_pdatViews = STATIC_DOWNCAST(BDataViews, m_pdatViews->CreateCopy()); //, cast
 		// Set flag
 		m_bViewsCopied = TRUE;
 	}
@@ -1861,5 +1860,7 @@ BOOL CViewTabs::IsViewVisible(ULONG lngViewID)
 	}
 	return FALSE;
 }
+
+
 
 

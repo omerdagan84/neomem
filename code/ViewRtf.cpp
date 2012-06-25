@@ -157,12 +157,11 @@ CViewRtf::~CViewRtf()
 
 
 
-int 
-CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	xTRACE("CViewRtf OnCreate - create toolbar and rtf child view\n");
 	
-	// Putting this in constructor doesn't work cause g_ haven't been initialized yet!
+	// Putting this in constructor doesn't work cause g_ haven't been initialized yet
 //	m_clrForecolor = g_clrWindowText;
 //	m_clrBackcolor = g_clrWindow;
 
@@ -181,14 +180,13 @@ CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// safely cast to it, even though it's returned as a cview pointer. 
 	// dynamic cast will make sure it's valid to do so. 
 	// see http://www.cplusplus.com/doc/tutorial/typecasting/
-
 	CRect r;
 	GetClientRect(r);
 	m_pViewRtf = dynamic_cast<CRichEditView2*> (CreateChildView(RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
 	if (m_pViewRtf) 
 	{
 		// Subclass the rtf control with our extended class (provides GetRtf and SetRtf methods)
-		//, Not sure why this cast is valid - see definition of GetRichEditCtrlEx
+		//.. Not sure why this cast is valid - see definition of GetRichEditCtrlEx
 //		m_prtf = (CRichEditCtrlEx*) &(m_pViewRtf->GetRichEditCtrl());
 		m_prtf = &(m_pViewRtf->GetRichEditCtrlEx());
 		ASSERT_VALID(m_prtf);
@@ -235,14 +233,12 @@ CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //--------------------------------------------------------------------------------------------------
 
 #ifdef _DEBUG
-void 
-CViewRtf::AssertValid() const
+void CViewRtf::AssertValid() const
 {
 	CViewEx::AssertValid();
 }
 
-void 
-CViewRtf::Dump(CDumpContext& dc) const
+void CViewRtf::Dump(CDumpContext& dc) const
 {
 	CViewEx::Dump(dc);
 }
@@ -254,15 +250,13 @@ CViewRtf::Dump(CDumpContext& dc) const
 // Drawing
 //--------------------------------------------------------------------------------------------------
 
-void 
-CViewRtf::OnDraw(CDC* pDC) 
+void CViewRtf::OnDraw(CDC* pDC) 
 {
 	CViewEx::OnDraw(pDC);
 }
 
 
-BOOL 
-CViewRtf::OnEraseBkgnd(CDC* pDC) 
+BOOL CViewRtf::OnEraseBkgnd(CDC* pDC) 
 {
 	return CViewEx::OnEraseBkgnd(pDC);
 }
@@ -272,15 +266,14 @@ CViewRtf::OnEraseBkgnd(CDC* pDC)
 //---------------------------------------------------------------------------
 
 
-BOOL 
-CViewRtf::DoPrint(BOOL bPreview)
+BOOL CViewRtf::DoPrint(BOOL bPreview)
 {
 	xTRACE("CViewRtf::DoPrint - send message to m_pViewRtf\n");
 	if (bPreview)
 		m_pViewRtf->SendMessage(WM_COMMAND, ID_FILE_PRINT_PREVIEW, 0);
 	else
 		m_pViewRtf->SendMessage(WM_COMMAND, ID_FILE_PRINT, 0);
-	// Can't use this view because all the print code is in CRichEditViewEx!!
+	// Can't use this view because all the print code is in CRichEditViewEx
 //	if (bPreview)
 //		CViewEx::OnFilePrintPreview(); // in cviewex
 //	else
@@ -293,16 +286,14 @@ CViewRtf::DoPrint(BOOL bPreview)
 // as in ID_FILE_PRINT_PREVIEW, and have the handler call OnFilePrint or OnFilePrintPreview,
 // which could pass the message on to the child view
 /*
-void 
-CViewRtf::OnFilePrint()
+void CViewRtf::OnFilePrint()
 {
 	xTRACE("CViewRtf OnFilePrint - send message to m_pViewRtf\n");
 	m_pViewRtf->SendMessage(WM_COMMAND, ID_FILE_PRINT, 0);
 }
 
 // This gets called from CFrameMain ID_FILE_PRINT_PREVIEW handler
-void 
-CViewRtf::OnFilePrintPreview()
+void CViewRtf::OnFilePrintPreview()
 {
 	xTRACE("CViewRtf OnFilePrintPreview - send message to m_pViewRtf\n");
 	// Hand to CRichEditView
@@ -314,8 +305,7 @@ CViewRtf::OnFilePrintPreview()
 */
 
 
-BOOL 
-CViewRtf::OnPreparePrinting(CPrintInfo* pInfo)
+BOOL CViewRtf::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	xTRACE("CViewRtf OnPreparePrinting\n");
 	// default preparation
@@ -325,8 +315,7 @@ CViewRtf::OnPreparePrinting(CPrintInfo* pInfo)
 }
 
 // Override to allocate fonts and other resources required for printing
-void 
-CViewRtf::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
+void CViewRtf::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
 	xTRACE("CViewRtf OnBeginPrinting\n");
 	// TODO: add extra initialization before printing
@@ -338,8 +327,7 @@ CViewRtf::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 // Also called before screen repaints.
 // Perform print-time pagination by overriding OnPrepareDC and setting pInfo->m_bContinuePrinting
 // to TRUE or FALSE each time it's called. FALSE terminates the print job.
-void 
-CViewRtf::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) 
+void CViewRtf::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) 
 {
 	xTRACE("CViewRtf OnPrepareDC\n");
 	CViewEx::OnPrepareDC(pDC, pInfo);
@@ -353,8 +341,7 @@ CViewRtf::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
 // Called before each page is printed. Override to print headers, footers, and other page 
 // elements that aren't drawn by OnDraw or to print without relying on OnDraw.
 // Note: This doesn't get called because we let CRichEditView2 handle printing.
-void 
-CViewRtf::OnPrint(CDC* pDC, CPrintInfo* pInfo) 
+void CViewRtf::OnPrint(CDC* pDC, CPrintInfo* pInfo) 
 {
 	xTRACE("CViewRtf OnPrint\n");
 
@@ -369,8 +356,7 @@ CViewRtf::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 
 
 // Deallocate resources allocated in OnBeginPrinting
-void 
-CViewRtf::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
+void CViewRtf::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
 	xTRACE("CViewRtf OnEndPrinting\n");
 	// TODO: add cleanup after printing
@@ -385,8 +371,7 @@ CViewRtf::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 //--------------------------------------------------------------------------------------------------
 
 
-void 
-CViewRtf::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void CViewRtf::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
 	TRACE("    CViewRtf::OnUpdate %s\n", theApp.GetHintName(lHint));
 
@@ -420,7 +405,7 @@ CViewRtf::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				m_prtf->SetRtf(pszRtf, FALSE);
 
 /*
-//. test!!!!!!! trying to track down weird insertion of blank lines!!
+//.. test - trying to track down weird insertion of blank lines!
 if (strlen(pszRtf) > 0)
 {
 //	CString strRtf = m_prtf->GetRtf(FALSE);
@@ -437,8 +422,8 @@ if (strlen(pszRtf) > 0)
 */
 
 				// Set the default font if it's blank
-				// Bug: This wasn't returning 0 even for new items because of blanks that got in it in SetRtf!!
-				//    Caused screwy behaviour with default fonts - took forever to track down!!!!
+				// Bug: This wasn't returning 0 even for new items because of blanks that got in it in SetRtf
+				//    Caused screwy behaviour with default fonts - took forever to track down
 				if (m_prtf->GetWindowTextLength() == 0)
 					SetDefaultFont(theApp.m_fontRtfDefault);
 
@@ -522,7 +507,7 @@ if (strlen(pszRtf) > 0)
 
 		case hintSelect:
 			{
-				// Bug: This was a pain in the ass - the rtf control wasn't refreshing in some instances, finally
+				// Bug: This was a pain - the rtf control wasn't refreshing in some instances, finally
 				// got it to redraw using SetRect, which according to the documentation, will force
 				// a redraw of the text. 
 				xTRACE("CViewRtf::OnUpdate hintSelect - redraw window\n");
@@ -532,7 +517,7 @@ if (strlen(pszRtf) > 0)
 
 		case hintPropertyChange:
 			{
-				// Refresh display if text property changed! (eg if user drag dropped text onto this object)
+				// Refresh display if text property changed (eg if user drag dropped text onto this object)
 				CHint* ph = (CHint*) pHint;
 				ASSERT_VALID(ph);
 				BObject* pobj = ph->m_pobjObject;
@@ -560,8 +545,7 @@ if (strlen(pszRtf) > 0)
 
 
 
-void 
-CViewRtf::OnSize(UINT nType, int cx, int cy) 
+void CViewRtf::OnSize(UINT nType, int cx, int cy) 
 {
 	xTRACE("CViewRtf OnSize\n"); 
 
@@ -576,31 +560,27 @@ CViewRtf::OnSize(UINT nType, int cx, int cy)
 
 
 
-void 
-CViewRtf::OnCmdEditCut() 
+void CViewRtf::OnCmdEditCut() 
 {
 	ASSERT_VALID(m_prtf);
 	m_prtf->Cut();
 }
 
-void 
-CViewRtf::OnCmdEditSpike() 
+void CViewRtf::OnCmdEditSpike() 
 {
 	ASSERT_VALID(m_prtf);
 	m_prtf->Spike();
 }
 
 
-void 
-CViewRtf::OnCmdEditCopy() 
+void CViewRtf::OnCmdEditCopy() 
 {
 	ASSERT_VALID(m_prtf);
 	m_prtf->Copy();
 }
 
 
-void 
-CViewRtf::OnCmdEditPasteFormatted() 
+void CViewRtf::OnCmdEditPasteFormatted() 
 {
 	ASSERT_VALID(m_prtf);
 	
@@ -682,20 +662,18 @@ CViewRtf::OnCmdEditPasteFormatted()
 }
 
 // Paste clipboard contents as plain text
-void 
-CViewRtf::OnCmdEditPastePlain() 
+void CViewRtf::OnCmdEditPastePlain() 
 {
 	ASSERT_VALID(m_prtf);
 	//. for some reason this loses the trailing newline. 
 	// can't fix it cause this just sends a EM_PASTESPECIAL message with
-	// nformat = CF_TEXT to the dang control. thanks misosoft
+	// nformat = CF_TEXT to the dang control
 	m_prtf->PasteSpecial(CF_TEXT);
 }
 
 
 
-void 
-CViewRtf::OnCmdEditClear() 
+void CViewRtf::OnCmdEditClear() 
 {
 	ASSERT_VALID(m_prtf);
 	m_prtf->Clear();
@@ -704,8 +682,7 @@ CViewRtf::OnCmdEditClear()
 
 
 
-void 
-CViewRtf::OnFormatBold()
+void CViewRtf::OnFormatBold()
 {
 	ASSERT_VALID(m_pViewRtf);
 	CHARFORMAT2 cf2;
@@ -720,8 +697,7 @@ CViewRtf::OnFormatBold()
 }
 
 
-void 
-CViewRtf::OnFormatItalic()
+void CViewRtf::OnFormatItalic()
 {
 	ASSERT_VALID(m_pViewRtf);
 	CHARFORMAT2 cf2;
@@ -735,8 +711,7 @@ CViewRtf::OnFormatItalic()
 }
 
 
-void 
-CViewRtf::OnFormatUnderline()
+void CViewRtf::OnFormatUnderline()
 {
 	ASSERT_VALID(m_pViewRtf);
 	CHARFORMAT2 cf2;
@@ -750,8 +725,7 @@ CViewRtf::OnFormatUnderline()
 }
 
 
-void 
-CViewRtf::OnFormatStrikethrough()
+void CViewRtf::OnFormatStrikethrough()
 {
 	ASSERT_VALID(m_pViewRtf);
 	CHARFORMAT2 cf2;
@@ -766,32 +740,28 @@ CViewRtf::OnFormatStrikethrough()
 }
 
 
-void 
-CViewRtf::OnFormatLeft()
+void CViewRtf::OnFormatLeft()
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnParaAlign(PFA_LEFT);
 }
 
 
-void 
-CViewRtf::OnFormatCenter()
+void CViewRtf::OnFormatCenter()
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnParaAlign(PFA_CENTER);
 }
 
 
-void 
-CViewRtf::OnFormatRight()
+void CViewRtf::OnFormatRight()
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnParaAlign(PFA_RIGHT);
 }
 
 
-void 
-CViewRtf::OnFormatBullet()
+void CViewRtf::OnFormatBullet()
 {
 	// Toggle this on/off
 
@@ -826,8 +796,7 @@ CViewRtf::OnFormatBullet()
 
 // Change the selection to the specified font
 // This is called from the toolbar
-void 
-CViewRtf::ChangeFont(CString& strFontName)
+void CViewRtf::ChangeFont(CString& strFontName)
 {
 	ASSERT_VALID(m_pViewRtf);
 
@@ -842,8 +811,7 @@ CViewRtf::ChangeFont(CString& strFontName)
 
 // Change the selection to the specified font size
 // This is called from the toolbar
-void 
-CViewRtf::ChangeSize(int nSize)
+void CViewRtf::ChangeSize(int nSize)
 {
 	ASSERT_VALID(m_pViewRtf);
 	CHARFORMAT2 cf2;
@@ -856,57 +824,49 @@ CViewRtf::ChangeSize(int nSize)
 
 
 
-void 
-CViewRtf::OnUpdateFormatBold(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatBold(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnUpdateCharEffect(pCmdUI, CFM_BOLD, CFE_BOLD);
 }
 
-void 
-CViewRtf::OnUpdateFormatItalic(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatItalic(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnUpdateCharEffect(pCmdUI, CFM_ITALIC, CFE_ITALIC);
 }
 
-void 
-CViewRtf::OnUpdateFormatUnderline(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatUnderline(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnUpdateCharEffect(pCmdUI, CFM_UNDERLINE, CFE_UNDERLINE);
 }
 
-void 
-CViewRtf::OnUpdateFormatStrikethrough(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatStrikethrough(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnUpdateCharEffect(pCmdUI, CFM_STRIKEOUT, CFE_STRIKEOUT);
 }
 
-void 
-CViewRtf::OnUpdateFormatLeft(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatLeft(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnUpdateParaAlign(pCmdUI, PFA_LEFT);
 }
 
-void 
-CViewRtf::OnUpdateFormatCenter(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatCenter(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnUpdateParaAlign(pCmdUI, PFA_CENTER);
 }
 
-void 
-CViewRtf::OnUpdateFormatRight(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatRight(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	m_pViewRtf->OnUpdateParaAlign(pCmdUI, PFA_RIGHT);
 }
 
-void 
-CViewRtf::OnUpdateFormatBullet(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatBullet(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	PARAFORMAT pf;
@@ -924,8 +884,7 @@ CViewRtf::OnUpdateFormatBullet(CCmdUI* pCmdUI)
 
 // Don't do this if toolbar cbo is dropped down
 //. fix prob with selecting item
-void 
-CViewRtf::OnUpdateFormatFont(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatFont(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 	CHARFORMAT2 cf2;
@@ -952,8 +911,7 @@ CViewRtf::OnUpdateFormatFont(CCmdUI* pCmdUI)
 
 
 // Update font size combo based on current selection.
-void 
-CViewRtf::OnUpdateFormatSize(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateFormatSize(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(m_pViewRtf);
 
@@ -990,8 +948,7 @@ CViewRtf::OnUpdateFormatSize(CCmdUI* pCmdUI)
 
 
 // ctrl-y handler
-void 
-CViewRtf::OnCmdEditDeleteLine() 
+void CViewRtf::OnCmdEditDeleteLine() 
 {
 	// first need to select the current line
 	// equiv of HOME, Shift+END
@@ -1001,8 +958,7 @@ CViewRtf::OnCmdEditDeleteLine()
 
 // Find next occurrence of search text
 // This is the F3 handler
-void 
-CViewRtf::OnCmdEditFindNext() 
+void CViewRtf::OnCmdEditFindNext() 
 {
 	m_pViewRtf->FindNext();
 }
@@ -1012,8 +968,7 @@ CViewRtf::OnCmdEditFindNext()
 // Find next occurrence of string, starting at end of current selection.
 // Returns zero-based character position of next match, or -1 if not found.
 // This is called from CViewSearch when stepping through search results.
-long 
-CViewRtf::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord)
+long CViewRtf::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord)
 {
 	// Store find text in rtfviewex so that F3 will work for it.
 	//, yes this is kludgy - would like to merge this with cricheditviewex class - very messy.
@@ -1035,8 +990,7 @@ CViewRtf::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord)
 
 
 //. Find Next should be disabled if no Find has been run to set the search text
-void 
-CViewRtf::OnUpdateEditFindNext(CCmdUI* pCmdUI) 
+void CViewRtf::OnUpdateEditFindNext(CCmdUI* pCmdUI) 
 {
 //	if (_afxRichEditState->strFind.
 	pCmdUI->Enable(TRUE);
@@ -1049,8 +1003,7 @@ CViewRtf::OnUpdateEditFindNext(CCmdUI* pCmdUI)
 // but the CRichEditView2 to have the focus,
 // hence all these gyrations
 
-void 
-CViewRtf::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
+void CViewRtf::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	xTRACE("CViewRtf OnActivateView %d\n", bActivate);
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
@@ -1063,8 +1016,7 @@ CViewRtf::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveV
 }
 
 
-void 
-CViewRtf::OnSetFocus(CWnd* pOldWnd) 
+void CViewRtf::OnSetFocus(CWnd* pOldWnd) 
 {
 	xTRACE("CViewRtf OnSetFocus - set focus to CRichEditView2 window\n");
 	CViewEx::OnSetFocus(pOldWnd);	
@@ -1078,8 +1030,7 @@ CViewRtf::OnSetFocus(CWnd* pOldWnd)
 }
 
 
-void 
-CViewRtf::OnKillFocus(CWnd* pNewWnd) 
+void CViewRtf::OnKillFocus(CWnd* pNewWnd) 
 {
 	xTRACE("CViewRtf OnKillFocus - do nothing\n");
 	CViewEx::OnKillFocus(pNewWnd);
@@ -1088,8 +1039,7 @@ CViewRtf::OnKillFocus(CWnd* pNewWnd)
 
 
 /*
-void 
-CViewRtf::OnEditDelete() 
+void CViewRtf::OnEditDelete() 
 {
 	// Clear the current selection. Can be undone.
 	m_pViewRtf->GetRichEditCtrl().Clear();
@@ -1101,8 +1051,7 @@ CViewRtf::OnEditDelete()
 
 
 
-void 
-CViewRtf::OnCmdEditSelectAll() 
+void CViewRtf::OnCmdEditSelectAll() 
 {
 	xTRACE("CViewRtf::SelectAll\n");
 	// Select all text
@@ -1112,8 +1061,7 @@ CViewRtf::OnCmdEditSelectAll()
 
 
 // Set selection to default text color
-void 
-CViewRtf::SetDefaultColor()
+void CViewRtf::SetDefaultColor()
 {
 	CHARFORMAT2 cf2;
 	cf2.cbSize = sizeof(CHARFORMAT2);
@@ -1128,13 +1076,12 @@ CViewRtf::SetDefaultColor()
 
 
 
-void 
-CViewRtf::OnTest() 
+void CViewRtf::OnTest() 
 {
 /*
 
-	// bug: this code shows that the print preview problem is out of my hands - it's due to the 
-	// rtf control's screwy rendering! took a while to figure this out - thought i had screwed
+	// bug: this code shows that the print preview problem is due to the 
+	// rtf control's rendering. took a while to figure this out - thought i had screwed
 	// up the foundation framework somehow and the scaling was messed up
 
 	// Get printer DC
@@ -1195,15 +1142,14 @@ CViewRtf::OnTest()
 
 /*
 // obsolete
-void 
-CViewRtf::ColorHyperlinks()
+void CViewRtf::ColorHyperlinks()
 {
 	// search through text for hyperlink prefixes
 	// (www. )
 	// color the relevant text
 	// add to array of hyperlinks for mouseover code
 
-	// could predefine this for speed, store an array of them!
+	// could predefine this for speed, store an array of them
 	FINDTEXTEX ftPrefix;
 	ftPrefix.chrg.cpMin = 0;
 	ftPrefix.chrg.cpMax = -1;
@@ -1245,8 +1191,7 @@ CViewRtf::ColorHyperlinks()
 
 }
 
-void 
-CViewRtf::OnMouseMove(UINT nFlags, CPoint point) 
+void CViewRtf::OnMouseMove(UINT nFlags, CPoint point) 
 {
 	CViewEx::OnMouseMove(nFlags, point);
 	int nHyperlink = GetHyperlinkFromPos(&point);
@@ -1261,8 +1206,7 @@ CViewRtf::OnMouseMove(UINT nFlags, CPoint point)
 }
 
   
-void 
-CViewRtf::OnLButtonDown(UINT nFlags, CPoint point) 
+void CViewRtf::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	CViewEx::OnLButtonDown(nFlags, point);
 	// Check if clicked on a hyperlink
@@ -1277,8 +1221,7 @@ CViewRtf::OnLButtonDown(UINT nFlags, CPoint point)
 // See if the given point is over a hyperlink. 
 // Returns the number of the hyperlink, or -1 if none. 
 // Inline for speed.
-inline int 
-CViewRtf::GetHyperlinkFromPos(CPoint* point)
+inline int CViewRtf::GetHyperlinkFromPos(CPoint* point)
 {
 	if (m_nHyperlinks > 0)
 	{
@@ -1286,7 +1229,7 @@ CViewRtf::GetHyperlinkFromPos(CPoint* point)
 		// The return value specifies the zero-based character index of the character nearest the 
 		// specified point. The return value indicates the last character in the edit control if the 
 		// specified point is beyond the last character in the control. 
-		// Note: Help says to use POINTL structure but it's the same as POINT!
+		// Note: Help says to use POINTL structure but it's the same as POINT
 		ULONG nChar = ::SendMessage(m_prtf->m_hWnd, EM_CHARFROMPOS, 0, (LPARAM) &point);
 
 		// Look through array of hyperlink start/stop positions to see if mouse is over one
@@ -1311,8 +1254,7 @@ CViewRtf::GetHyperlinkFromPos(CPoint* point)
 // Set the specified character range to the specified character format.
 // Note: This is inline for speed (called during mousemove etc).
 //, also uses SendMessage for speed.
-inline void 
-CViewRtf::SetFormat(CHARRANGE& cr, CHARFORMAT& cf)
+inline void CViewRtf::SetFormat(CHARRANGE& cr, CHARFORMAT& cf)
 {
 	CHARRANGE crSavePosition;
 	m_prtf->HideSelection(TRUE, FALSE); 
@@ -1332,8 +1274,7 @@ CViewRtf::SetFormat(CHARRANGE& cr, CHARFORMAT& cf)
 
 
 // Save any attached ole objects as hidden subobjects and remove them
-void 
-CViewRtf::SaveOleObjects()
+void CViewRtf::SaveOleObjects()
 {
 	xTRACE("CViewRtf::SaveOleObjects()\n");
 
@@ -1389,7 +1330,7 @@ CViewRtf::SaveOleObjects()
 				if (reo.pstg)
 				{
 
-					// Open and read a stream!
+					// Open and read a stream
 					// Use IStorage::OpenStream to get an IStream interface
 //					COleStreamFile osf;
 //					if (osf.OpenStream(reo.pstg, "\001Ole"))
@@ -1455,7 +1396,7 @@ CViewRtf::SaveOleObjects()
 	CRichEditCntrItem* pItem;
 	CRichEditDoc* pRedoc = m_pViewRtf->GetDocument();
 	//, for whatever reason this isn't working - pos = 0 
-	// need to update the richeditdoc somehow??
+	// need to update the richeditdoc somehow?
 	POSITION pos = pRedoc->GetStartPosition();
 	while (pos != NULL)
 	{
@@ -1477,8 +1418,7 @@ CViewRtf::SaveOleObjects()
 
 /*
 // Don't delete this - good for debugging
-BOOL 
-CViewRtf::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
+BOOL CViewRtf::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
 {
 	NMHDR* pnm = (NMHDR*) lParam;
 //	UINT nIDFrom = pnm->idFrom;
@@ -1505,8 +1445,7 @@ CViewRtf::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 /*
 // User clicked on a toolbar dropdown button, so bring up appropriate menu or dialog.
 // TBN_DROPDOWN handler.
-void 
-CViewRtf::OnToolbarDropDown(NMHDR* pNMHDR, LRESULT* pResult)
+void CViewRtf::OnToolbarDropDown(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMTOOLBAR* pNmtb = (NMTOOLBAR*) pNMHDR;
 //	UINT nButtonID = m_tbrRtf.IndexToCommand(pNmtb->iItem); 
@@ -1534,8 +1473,7 @@ CViewRtf::OnToolbarDropDown(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 // Apply current text color
-void 
-CViewRtf::OnFormatApplyForecolor()
+void CViewRtf::OnFormatApplyForecolor()
 {
 	CHARFORMAT2 cf2;
 	cf2.cbSize = sizeof(CHARFORMAT2);
@@ -1563,8 +1501,7 @@ CViewRtf::OnFormatApplyForecolor()
 
 
 // Apply current background color
-void 
-CViewRtf::OnFormatApplyBackcolor()
+void CViewRtf::OnFormatApplyBackcolor()
 {	
 	CHARFORMAT2 cf2;
 	cf2.cbSize = sizeof(CHARFORMAT2);
@@ -1579,8 +1516,7 @@ CViewRtf::OnFormatApplyBackcolor()
 
 
 // Get a new text color
-void 
-CViewRtf::OnFormatForecolor()
+void CViewRtf::OnFormatForecolor()
 {
 	m_tbrRtf.m_ctlForecolor.DropDown(FALSE);
 /*
@@ -1609,8 +1545,7 @@ CViewRtf::OnFormatForecolor()
 
 
 //void CViewRtf::GetNewBackcolor() 
-void 
-CViewRtf::OnFormatBackcolor() 
+void CViewRtf::OnFormatBackcolor() 
 {
 	m_tbrRtf.m_ctlBackcolor.DropDown(FALSE);
 
@@ -1627,8 +1562,7 @@ CViewRtf::OnFormatBackcolor()
 
 
 // Color was selected in color window.
-LRESULT 
-CViewRtf::OnSelEndOK(WPARAM wParam, LPARAM lParam) 
+LRESULT CViewRtf::OnSelEndOK(WPARAM wParam, LPARAM lParam) 
 {
 	COLORREF clr = (COLORREF) wParam;
 	UINT uID = (UINT) lParam;
@@ -1668,8 +1602,7 @@ CViewRtf::OnSelEndOK(WPARAM wParam, LPARAM lParam)
 
 
 // User clicked on a color button.
-LRESULT 
-CViewRtf::OnColorButtonClick(WPARAM wParam, LPARAM lParam) 
+LRESULT CViewRtf::OnColorButtonClick(WPARAM wParam, LPARAM lParam) 
 {
 	COLORREF clr = (COLORREF) wParam;
 	UINT uID = (UINT) lParam;
@@ -1709,8 +1642,7 @@ CViewRtf::OnColorButtonClick(WPARAM wParam, LPARAM lParam)
 
 
 
-void 
-CViewRtf::OnEditClearFormat() 
+void CViewRtf::OnEditClearFormat() 
 {
 	// Set selected text to default font, size, and clear all effects
 	//. only do if text is selected
@@ -1723,8 +1655,7 @@ CViewRtf::OnEditClearFormat()
 
 
 
-void 
-CViewRtf::OnEditInsertLink() 
+void CViewRtf::OnEditInsertLink() 
 {
 	//. bring up a dialog to select link type and link object
 	// file, email, website, ftp, news
@@ -1744,15 +1675,13 @@ CViewRtf::OnEditInsertLink()
 }
 
 
-void 
-CViewRtf::OnCmdEditInsertObject() 
+void CViewRtf::OnCmdEditInsertObject() 
 {
 }
 
 
 
-void 
-CViewRtf::OnCmdEditInsertLine() 
+void CViewRtf::OnCmdEditInsertLine() 
 {
 	ASSERT_VALID(m_pViewRtf);
 
@@ -1769,7 +1698,7 @@ CViewRtf::OnCmdEditInsertLine()
 	CRect rSize;
 	// bug: GetTextExtent was returning (0, 1) and couldn't understand why - it was because 
 	// the font was miniscule as a result of not multiplying the point size by 10 in CFontEx code.
-	//. Still screwy for Arial font - does rtf control render text differently than gettextextent??
+	//. Still screwy for Arial font - does rtf control render text differently than gettextextent?
 	
 	CFont* pfontOld = dc.SelectObject(&font);
 	CSize sz = dc.GetTextExtent(strMeasure);
@@ -1788,7 +1717,7 @@ CViewRtf::OnCmdEditInsertLine()
 	CString strLine(cDash, nChars);
 	strLine += "\n"; // add carriage return to end
 
-	// If in the middle of a line, prepend a carriage return!
+	// If in the middle of a line, prepend a carriage return
 	if (!m_prtf->IsAtStartOfLine())
 		strLine = "\n" + strLine;
 
@@ -1800,7 +1729,7 @@ CViewRtf::OnCmdEditInsertLine()
 	// what if we just added characters one by one until one of them goes to another line?
 	// that might be more robust than this approach.
 	// then just back off a character or two.
-	// only drawback is that undo only undoes part of the line now!!!
+	// only drawback is that undo only undoes part of the line now
 
 	// Note: For ReplaceSel, if there is no current selection, the replacement text is inserted 
 	// at the insertion point, that is, the current caret location.
@@ -1821,7 +1750,7 @@ CViewRtf::OnCmdEditInsertLine()
 	// Now insert the ending line feed so won't get stuck with any other non-space characters.
 	m_prtf->ReplaceSel("\n");
 	m_prtf->GetSel(nStartChar, nEndChar); // gets current selection
-	m_prtf->SetSel(nStartChar - 1, nStartChar - 1); // backup one char to before the CR!
+	m_prtf->SetSel(nStartChar - 1, nStartChar - 1); // backup one char to before the CR
 
 	// Insert dashes until we reach the next line
 	int nChars = 0;
@@ -1854,12 +1783,11 @@ CViewRtf::OnCmdEditInsertLine()
 // EM_SETEVENTMASK message. 
 // If you send the EM_AUTOURLDETECT message to enable automatic URL detection, 
 // the rich edit control automatically sets the CFE_LINK effect for modified text that it identifies as a URL. 
-//. does this mean we can set the cfe_link style ourselves for different text?? cool!
-// could also link to other objects if we wanted! ie could say insert link to object, 
-// store hidden text objectid, then regular text for object name!
-// this code would intercept clicking on it!
-void 
-CViewRtf::OnRtfLink(NMHDR* pNMHDR, LRESULT* pResult)
+//. does this mean we can set the cfe_link style ourselves for different text? cool
+// could also link to other objects if we wanted - ie could say insert link to object, 
+// store hidden text objectid, then regular text for object name.
+// this code would intercept clicking on it
+void CViewRtf::OnRtfLink(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	ENLINK* pLink = (ENLINK*) pNMHDR;
 
@@ -1933,8 +1861,8 @@ CViewRtf::OnRtfLink(NMHDR* pNMHDR, LRESULT* pResult)
 	if (pLink->msg == WM_RBUTTONUP)
 	{
 		//. bring up hyperlink popup menu here?
-		//. this is really confusing interfacing with rbuttondown in cricheditview2!
-//		AfxMessageBox("rup hyperlink popup!");
+		//. this is really confusing interfacing with rbuttondown in cricheditview2
+//		AfxMessageBox("rup hyperlink popup");
 
 		CMenu menu;	
 		CPoint ptScreen(::GetMessagePos()); // Get position of message source
@@ -1957,8 +1885,7 @@ CViewRtf::OnRtfLink(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 // Insert symbol character
-void 
-CViewRtf::OnEditInsertSymbol() 
+void CViewRtf::OnEditInsertSymbol() 
 {
 	CWaitCursor wc;
 	HINSTANCE h = ::ShellExecute(NULL, "open", "charmap", NULL, NULL, SW_SHOWNORMAL);
@@ -1968,8 +1895,7 @@ CViewRtf::OnEditInsertSymbol()
 
 
 // Needs selection
-void 
-CViewRtf::OnUpdateNeedSel(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateNeedSel(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(this);
 	long nStartChar, nEndChar;
@@ -1980,8 +1906,7 @@ CViewRtf::OnUpdateNeedSel(CCmdUI* pCmdUI)
 
 
 // Needs something on clipboard
-void 
-CViewRtf::OnUpdateNeedClip(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateNeedClip(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(this);
 	pCmdUI->Enable(m_prtf->CanPaste());
@@ -1989,8 +1914,7 @@ CViewRtf::OnUpdateNeedClip(CCmdUI* pCmdUI)
 
 
 // Needs text in the rtf control
-void 
-CViewRtf::OnUpdateNeedText(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateNeedText(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(this);
 	pCmdUI->Enable(m_prtf->GetTextLength() != 0);
@@ -1998,8 +1922,7 @@ CViewRtf::OnUpdateNeedText(CCmdUI* pCmdUI)
 
 
 // Needs find text
-void 
-CViewRtf::OnUpdateNeedFind(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateNeedFind(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(this);
 //	_AFX_RICHEDIT_STATE* pEditState = _afxRichEditState;
@@ -2011,8 +1934,7 @@ CViewRtf::OnUpdateNeedFind(CCmdUI* pCmdUI)
 
 
 // Shift text right by one tab stop
-void 
-CViewRtf::OnCmdEditShiftRight() 
+void CViewRtf::OnCmdEditShiftRight() 
 {
 	// walk through selected text, inserting \\tabs after \\pars
 	// getrtf text, walk through it and change it, then write it back
@@ -2060,23 +1982,20 @@ CViewRtf::OnCmdEditShiftRight()
 
 
 // Shift selected text left by one tab stop
-void 
-CViewRtf::OnCmdEditShiftLeft() 
+void CViewRtf::OnCmdEditShiftLeft() 
 {
 }
 
 
 // See CRichEditView2::OnRButtonDown
-void 
-CViewRtf::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CViewRtf::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
 	xTRACE("CViewRtf OnContextMenu %d %d\n", point.x, point.y);		
 }
 
 
 
-void 
-CViewRtf::OnCmdEditFind() 
+void CViewRtf::OnCmdEditFind() 
 {
 	// pass command on to cricheditview
 //	m_pViewRtf->FindText(m_strFindText, m_bMatchCase, m_bWholeWord);
@@ -2084,16 +2003,14 @@ CViewRtf::OnCmdEditFind()
 }
 
 
-void 
-CViewRtf::OnCmdEditReplace() 
+void CViewRtf::OnCmdEditReplace() 
 {
 	// pass command on to cricheditview
 	m_pViewRtf->SendMessage(WM_COMMAND, ID_EDIT_REPLACE);
 }
 
 
-void 
-CViewRtf::OnFormatFont() 
+void CViewRtf::OnFormatFont() 
 {
 	// pass command on to cricheditview
 	m_pViewRtf->SendMessage(WM_COMMAND, ID_FORMAT_FONT);
@@ -2104,16 +2021,14 @@ CViewRtf::OnFormatFont()
 
 // Goto top of text
 // Called by CViewSearch to make sure we start search at beginning of document
-void 
-CViewRtf::GotoStart()
+void CViewRtf::GotoStart()
 {
 	m_prtf->SetSel(0, 0);
 }
 
 
 // Undo last change to rtf contents.
-void 
-CViewRtf::OnCmdEditUndo() 
+void CViewRtf::OnCmdEditUndo() 
 {
 	ASSERT_VALID(m_prtf);
 	m_prtf->Undo();
@@ -2124,8 +2039,7 @@ CViewRtf::OnCmdEditUndo()
 
 
 // Redo last undo. 
-void 
-CViewRtf::OnCmdEditRedo() 
+void CViewRtf::OnCmdEditRedo() 
 {
 	ASSERT_VALID(m_prtf);
 	m_prtf->Redo();
@@ -2134,16 +2048,14 @@ CViewRtf::OnCmdEditRedo()
 }
 
 
-void 
-CViewRtf::OnUpdateEditUndo(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateEditUndo(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(this);
 	pCmdUI->Enable(m_prtf->CanUndo());
 }
 
 
-void 
-CViewRtf::OnUpdateEditRedo(CCmdUI* pCmdUI)
+void CViewRtf::OnUpdateEditRedo(CCmdUI* pCmdUI)
 {
 	ASSERT_VALID(this);
 	pCmdUI->Enable(m_prtf->CanRedo());
@@ -2153,16 +2065,14 @@ CViewRtf::OnUpdateEditRedo(CCmdUI* pCmdUI)
 
 // Toggle zoom on/off
 // Requires 3.0
-void 
-CViewRtf::OnViewZoom() 
+void CViewRtf::OnViewZoom() 
 {
 	m_bZoom = ! m_bZoom;
 	SetZoom();
 }
 
 // Requires 3.0
-void 
-CViewRtf::OnUpdateViewZoom(CCmdUI* pCmdUI) 
+void CViewRtf::OnUpdateViewZoom(CCmdUI* pCmdUI) 
 {
 	pCmdUI->SetCheck(m_bZoom ? 1 : 0);	
 }
@@ -2170,8 +2080,7 @@ CViewRtf::OnUpdateViewZoom(CCmdUI* pCmdUI)
 
 // 1.2 Set zoom for rtf control	
 // Requires 3.0
-void 
-CViewRtf::SetZoom()
+void CViewRtf::SetZoom()
 {
 	return;
 
@@ -2189,11 +2098,10 @@ CViewRtf::SetZoom()
 
 
 
-void 
-CViewRtf::AdjustWindow()
+void CViewRtf::AdjustWindow()
 {
 	// Bug: Window got stuck in some sizes and wouldn't update - turned out I was using
-	// GetRect and SetRect instead of GetClientRect and SetRect to update the rtf window!
+	// GetRect and SetRect instead of GetClientRect and SetRect to update the rtf window
 
 	// Bug: This seems to work alright, but if you load another file then close it, this window
 	// gets resized twice, the first time smaller, the second time back to normal, 
@@ -2221,8 +2129,7 @@ CViewRtf::AdjustWindow()
 
 
 // Move selected text to another object
-void 
-CViewRtf::OnEditMoveTo() 
+void CViewRtf::OnEditMoveTo() 
 {
 	ASSERT_VALID(m_pDoc);
 	BObject* pobjCurrent = m_pDoc->GetCurrentObject();
@@ -2258,8 +2165,7 @@ CViewRtf::OnEditMoveTo()
 
 
 // Sort selected text alphabetically
-void 
-CViewRtf::OnEditSortSelectedText() 
+void CViewRtf::OnEditSortSelectedText() 
 {
 	// walk through text, adding each paragraph to a list
 	// then sort the list, spit it all out to a string, 
@@ -2270,11 +2176,11 @@ CViewRtf::OnEditSortSelectedText()
 	AfxMessageBox(strSelection); //.
 
 
-	// a bitch - looks like
+	// looks like
 	// {rtf codes blah blah first line\par
 	// second line\par
 	// third line\par
-	// so would need to parse rtf shit correctly to find first line
+	// so would need to parse rtf correctly to find first line
 	// do later
 
 /*
@@ -2295,9 +2201,9 @@ CViewRtf::OnEditSortSelectedText()
 			strNew = strSelection.Left(nChar+1) + "\\tab " + strSelection.Mid(nChar+1);
 			//.. now walk through finding "\\par " and inserting more "\\tab " s
 			// replace "\\par\r\n" with "\\par\r\n\\tab "
-			// make sure that character preceding \\par is not \, otherwise could be literal text, not a return code!
+			// make sure that character preceding \\par is not \, otherwise could be literal text, not a return code
 			// also ignore if followed by }, ie "\\par\r\n}"
-			//. might have to read through char by char and parse to make sure it's safe!
+			//. might have to read through char by char and parse to make sure it's safe
 			//0d0a = cr nl
 //			strNew.Replace("\\par\r\n", "\\par\r\n\\tab ");
 			int nStart = 0;
@@ -2326,10 +2232,9 @@ CViewRtf::OnEditSortSelectedText()
 
 // Set the default font in the RTF control.
 //, This doesn't do quite what you think it will - it sets the entire contents of the rtf to this font,
-// even if some characters have explicit font settings! Sometimes!!?
-// So only use it when the control is blank!?
-void 
-CViewRtf::SetDefaultFont(CFontEx& font)
+// even if some characters have explicit font settings. Sometimes?
+// So only use it when the control is blank?
+void CViewRtf::SetDefaultFont(CFontEx& font)
 {
 	ASSERT_VALID(m_prtf);
  	CHARFORMAT2 cf2;
@@ -2340,8 +2245,7 @@ CViewRtf::SetDefaultFont(CFontEx& font)
 
 
 
-void 
-CViewRtf::OnEditInsertDate() 
+void CViewRtf::OnEditInsertDate() 
 {
 	ASSERT_VALID(m_pViewRtf);
 
@@ -2352,5 +2256,7 @@ CViewRtf::OnEditInsertDate()
 	// Replace current selection with date string (it's how notepad works)
 	m_prtf->ReplaceSel(strDate, TRUE);
 }
+
+
 
 

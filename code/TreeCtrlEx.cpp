@@ -274,7 +274,7 @@ HTREEITEM CTreeCtrlEx::FindItemData(DWORD dwData, HTREEITEM htiStartItem /* = 0 
 
 	if (htiItem == NULL)
 	{
-		//, not very efficient - creates another call for each sibling item!
+		//, not very efficient - creates another call for each sibling item -
 		// just loop through
 		HTREEITEM htiSibling = CTreeCtrl::GetNextSiblingItem(htiStartItem);
 		if (htiSibling)
@@ -589,7 +589,7 @@ void CTreeCtrlEx::SortByProperty(HTREEITEM htiParent, ULONG lngPropertyID)
 // The default implementation passes this message to the parent window before any processing 
 // occurs. If the parent window returns TRUE, processing is halted.
 // We handle this so that if user is renaming an item and clicks in the edit ctrl the focus does not
-// pass to the tree ctrl!
+// pass to the tree ctrl.
 int CTreeCtrlEx::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) 
 {
 	xTRACE("CTreeCtrlEx::OnMouseActivate\n");	

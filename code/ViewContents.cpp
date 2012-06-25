@@ -258,7 +258,7 @@ BOOL CViewContents::OnPreparePrinting(CPrintInfo* pInfo) {
 	// DoPreparePrinting. MFC displays the maximum page number in the To box of the Print dialog.
 	// If you don't set the maximum page number in OnPreparePrinting, you should set it in
 	// OnBeginPrinting if possible. (better there because at this point you don't know what
-	// printer the user has chosen!!)
+	// printer the user has chosen)
 //	pInfo->SetMaxPage(nMaxPage);
 
 	// A nonzero return from OnPreparePrinting begins the printing process, and a 0 return
@@ -537,7 +537,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				for (int i = 0; i < nItems; i++) {
 					BObject* pobj = (BObject*) paObjects->GetAt(i);
 					// Note: pobj may be invalid by this point because it's already been deleted,
-					// but we still need to remove it from the list, so DON'T ASSERT_VALID!
+					// but we still need to remove it from the list, so DON'T ASSERT_VALID
 //					ASSERT_VALID(pobj);
 					int nItem = m_lvw.FindItemData((LPARAM) pobj);
 					if (nItem != -1) {
@@ -552,15 +552,15 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				}
 				// Bug: If deleting object from index view, and the next object selected happens to be that
 				// object's parent, then the object gets deleted after being adding to the contents view,
-				// but getdispinfo gets called on the deleted object, causing a bomb!
-				// And a bad bomb too, because in release mode you're pointing at invalid data!
+				// but getdispinfo gets called on the deleted object, causing a bomb.
+				// And a bad bomb too, because in release mode you're pointing at invalid data.
 				break;
 			}
 		
 		case hintPropertyChange: {
 
 				//... need to update any dependent properties also
-				// eg if classid changes, then classname changes also!
+				// eg if classid changes, then classname changes also
 				// parent -> location, etc.
 				// need generic way of handling this
 				// eg if this were displaying a calculated property, like total = rate * hours
@@ -669,7 +669,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				int nSource = m_lvw.FindItemData((LPARAM) pobjSource);
 				int nTarget = m_lvw.FindItemData((LPARAM) pobjTarget);
 				
-				// bug:: instead of != -1 had && -1 for target!!
+				// bug:: instead of != -1 had && -1 for target
 				if ((nSource != -1) && (nTarget != -1)) {
 					// Move the source before or after the target
 					int nSourceNew = m_lvw.MoveItemToSibling(nSource, nTarget, bAfter);
@@ -769,7 +769,7 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen) {
 	if (!bContextKey) {
 
 		// Exit if right click was in header control
-		//, move onheaderrclick code here, then move it down below!
+		//, move onheaderrclick code here, then move it down below
 		CRect r;
 		m_lvw.GetHeaderCtrl()->GetClientRect(&r);
 		m_lvw.GetHeaderCtrl()->ClientToScreen(&r);
@@ -789,7 +789,7 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen) {
 	BOOL bOnNewRow = (pobj == (BObject*) CListCtrlEx::keyDummyRow);
 
 	// See if rclicked on first column
-	// Bug: wasn't converting to the right window - was using this view's screentoclient, not m_lvw's!
+	// Bug: wasn't converting to the right window - was using this view's screentoclient, not m_lvw's
 	UINT nFlags;
 	CPoint ptClient = ptScreen;
 	m_lvw.ScreenToClient(&ptClient);
@@ -1006,7 +1006,7 @@ void CViewContents::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 
 // User finished editing the text of a cell.
 // Do data validation, return FALSE if you don't like it.
-//, move this to clistctrlex also!?
+//, move this to clistctrlex also?
 void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 
 	xTRACE("CViewContents::OnEndLabelEdit\n");
@@ -1114,7 +1114,7 @@ void CViewContents::OnCmdEditCopy() {
 	xTRACE("  Copy the following objects to the clipboard: %s\n", (LPCTSTR) strItems);
 
 	// Put the data on the clipboard
-	//... memory leak - when is this supposed to get deleted??
+	//.. memory leak - when is this supposed to get deleted?
 	// maybe the operating system takes care of it?
 	COleDataSource* pds = new COleDataSource;
 	pds->CacheGlobalData(theApp.m_cfObjects, hGlobal);
@@ -1444,6 +1444,7 @@ void CViewContents::OnNotifyDblClk(NMHDR* pNMHDR, LRESULT* pResult)
 			ASSERT_VALID(pobj);
 			// Select item in treeview
 			// This will broadcast all the update messages necessary (save, select, load)
+      
 			// bug: was passing this view to SetCurrentObject, but that meant that this view wasn't
 			// receiving the update message, so if you double clicked on a folder, the contents would not
 			// be refreshed even though you were now on a new object! fixed 2003-04-04.
@@ -1863,7 +1864,7 @@ void CViewContents::OnUpdateColumnSortClear(CCmdUI* pCmdUI)
 	// Should only be enabled if autosort is OFF for parent
 	// (because in that case, user can move items up and down, and will need to be able to
 	// turn sort off in order to do that).
-	// Also only enable if contents are sorted!
+	// Also only enable if contents are sorted
 	BObject* pobjStart = m_pDoc->GetCurrentObject();
 	BOOL bAutosort = !(pobjStart->GetFlag(flagNoAutosort));
 	BOOL bEnable = (bAutosort == FALSE) && (m_lvw.m_lngSortPropertyID != 0);
@@ -1983,4 +1984,5 @@ BOOL CViewContents::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERIN
 	// the command, then let the base class OnCmdMsg handle it.
 	return CViewEx::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
+
 

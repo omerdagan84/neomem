@@ -680,9 +680,9 @@ void CViewProperties::OnCmdAddProperty()
 		ASSERT_VALID(pobjProperty);
 
 		// Add the selected property to the object's classdef
-		// Can't just edit the bdata directly, because it might be the parent classdef's!!!
-		// So we need to make a copy, then write the copy back to the class!!
-		// Actually that's not true since propObjectProperties doesn't get handled like that!!
+		// Can't just edit the bdata directly, because it might be the parent classdef's
+		// So we need to make a copy, then write the copy back to the class
+		// Actually that's not true since propObjectProperties doesn't get handled like that
 //		BDataLink* pdat = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 //		BDataLink* pdatCopy = STATIC_DOWNCAST(BDataLink, pdat->CreateCopy());
 //		pdatCopy->AddLink(pobjProperty);
@@ -691,7 +691,7 @@ void CViewProperties::OnCmdAddProperty()
 //			// Standard - if bobject didn't save bdata then delete it
 //			delete pdatCopy;
 //		}
-		//, duplicate code in 3 places!!
+		//, duplicate code in 3 places
 		BDataLink* pdatLinks = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 		if (pdatLinks)
 		{
@@ -707,7 +707,7 @@ void CViewProperties::OnCmdAddProperty()
 			pobjClass->SetPropertyData(propObjectProperties, pdatLinks);
 		}
 
-		// Redisplay this view using CViewEx's single view update method!
+		// Redisplay this view using CViewEx's single view update method
 		UpdateView(NULL, hintLoad, m_pobjCurrent);
 
 		// Select the value of the property just added
@@ -799,4 +799,6 @@ void CViewProperties::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 	// call base class to delete gdi objects
 	CViewEx::OnEndPrinting(pDC, pInfo);
 }
+
+
 

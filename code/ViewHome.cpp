@@ -364,3 +364,6 @@ void CViewHome::OnPaint()
 	
 //	DrawLines();
 }
+
+
+

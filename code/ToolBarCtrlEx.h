@@ -9,12 +9,12 @@
 
 
 // Bug: Used to crash on mousemove handling - I had commented out an ASSERT
-// that seemed innocuous but wasn't!
+// that seemed innocuous but wasn't.
 // If you derive a class from this make sure to include DECLARE_DYNAMIC and IMPLEMENT_DYNAMIC - 
-// that was what was causing the really nasty crashes (that the ASSERT would have caught).
-// (Nasty crash = move mouse over toolbar and get access violation, then would have to reboot
-// because other programs were affected also!)
-// 2002-08-21 Still crashing sometimes!!
+// that was what was causing the bad crashes (that the ASSERT would have caught).
+// (Bad crash = move mouse over toolbar and get access violation, then would have to reboot
+// because other programs were affected also)
+// 2002-08-21 Still crashing sometimes
 
 
 

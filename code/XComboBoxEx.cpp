@@ -59,8 +59,7 @@ void XComboBoxEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 
 		// Depending on what information is being requested, return different info
 		if (nMask & TVIF_TEXT)
-			//, Note cast to tchar from const!
-			rcbi.pszText = (TCHAR*) pobj->GetPropertyText(propName);
+			rcbi.pszText = (TCHAR*) pobj->GetPropertyText(propName); //, Note cast to tchar from const!
 	}
 
 	*pResult = 0;
@@ -365,3 +364,5 @@ BOOL XComboBoxEx::SelectAnything()
 	return FALSE;
 
 }
+
+

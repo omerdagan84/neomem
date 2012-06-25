@@ -82,8 +82,7 @@ CViewEx::~CViewEx()
 }
 
 
-BOOL 
-CViewEx::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CViewEx::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	// WS_CLIPCHILDREN   Excludes the area occupied by child windows when you draw 
 	// within the parent window. Used when you create the parent window.
@@ -94,8 +93,7 @@ CViewEx::PreCreateWindow(CREATESTRUCT& cs)
 
 
 
-int 
-CViewEx::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CViewEx::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -115,15 +113,13 @@ CViewEx::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 // Call this to tell the view about the child view attached to it
-void 
-CViewEx::SetChildView(CWnd* pView)
+void CViewEx::SetChildView(CWnd* pView)
 {
 	m_pviewChild = pView;
 }
 
 // Call this to tell the view that there is a toolbar attached to it (optional)
-void 
-CViewEx::SetToolBar(CToolBarCtrl* pWnd)
+void CViewEx::SetToolBar(CToolBarCtrl* pWnd)
 {
 	m_ptbr = pWnd;
 }
@@ -138,8 +134,7 @@ CViewEx::SetToolBar(CToolBarCtrl* pWnd)
 //. make this a method?
 ///* static */ CView* 
 //CViewEx::CreateChildView(CWnd* pParent, CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID)
-CView* 
-CViewEx::CreateChildView(CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID)
+CView* CViewEx::CreateChildView(CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID)
 {
 	xTRACE("CViewEx::CreateChildView of Class %s\n", pViewClass->m_lpszClassName);
 
@@ -182,7 +177,7 @@ CViewEx::CreateChildView(CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos,
 	//. pass style here?
 	// too bad we don't have more control over the style of the border
 	// bug: Very strange - if you create the window without WS_VISIBLE, then
-	// the rtf control will not accept enters!
+	// the rtf control will not accept enters
 	//, why is it okay to pass null for classname here? 
 //	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_BORDER;
 	DWORD dwStyle = WS_CHILD | WS_VISIBLE;
@@ -216,21 +211,18 @@ CViewEx::CreateChildView(CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos,
 
 #ifdef _DEBUG
 
-void 
-CViewEx::AssertValid() const
+void CViewEx::AssertValid() const
 {
 	CView::AssertValid();
 }
 
-void 
-CViewEx::Dump(CDumpContext& dc) const
+void CViewEx::Dump(CDumpContext& dc) const
 {
 	CView::Dump(dc);
 }
 
 /*
-CNeoDoc* 
-CViewEx::GetDocument() // non-debug version is inline
+CNeoDoc* CViewEx::GetDocument() // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNeoDoc)));
 	return (CNeoDoc*)m_pDocument;
@@ -240,8 +232,7 @@ CViewEx::GetDocument() // non-debug version is inline
 #endif //_DEBUG
 
 /*
-CNeoDoc* 
-CViewEx::GetDocument()
+CNeoDoc* CViewEx::GetDocument()
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNeoDoc)));
 	return (CNeoDoc*)m_pDocument;
@@ -254,8 +245,7 @@ CViewEx::GetDocument()
 
 
 // Reposition child view and toolbar (if any)
-void 
-CViewEx::OnSize(UINT nType, int cx, int cy) 
+void CViewEx::OnSize(UINT nType, int cx, int cy) 
 {
 	xTRACE("CViewEx::OnSize\n");
 
@@ -293,8 +283,7 @@ CViewEx::OnSize(UINT nType, int cx, int cy)
 
 
 
-BOOL 
-CViewEx::OnEraseBkgnd(CDC* pDC) 
+BOOL CViewEx::OnEraseBkgnd(CDC* pDC) 
 {
 	xTRACE("CViewEx::OnEraseBkgnd\n");
 
@@ -349,8 +338,7 @@ CViewEx::OnEraseBkgnd(CDC* pDC)
 
 
 // Draw border around client area and toolbar if any, and titlebar if visible.
-void 
-CViewEx::OnDraw(CDC* pDC)
+void CViewEx::OnDraw(CDC* pDC)
 {
 	xTRACE("CViewEx::OnDraw - draw border around client area and toolbar (if any)\n");
 
@@ -411,16 +399,14 @@ CViewEx::OnDraw(CDC* pDC)
 
 
 // Virtual method that each view should implement do handle printing/print preview
-BOOL 
-CViewEx::DoPrint(BOOL bPreview)
+BOOL CViewEx::DoPrint(BOOL bPreview)
 {
 	return FALSE; // not handled by base class
 }
 
 
 // copied from mfc ViewPrev.cpp
-void 
-CViewEx::OnFilePrintPreview()
+void CViewEx::OnFilePrintPreview()
 {
 	// In derived classes, implement special window handling here
 	// Be sure to Unhook Frame Window close if hooked.
@@ -453,8 +439,7 @@ CViewEx::OnFilePrintPreview()
 // This is the WM_DEVMODECHANGE handler.
 // The framework calls this member function for all top-level CWnd objects when the user 
 // changes device-mode settings. 
-void 
-CViewEx::OnDevModeChange(LPTSTR /*lpDeviceName*/)
+void CViewEx::OnDevModeChange(LPTSTR /*lpDeviceName*/)
 {
 	CDC dc;
 	AfxGetApp()->CreatePrinterDC(dc);
@@ -465,8 +450,7 @@ CViewEx::OnDevModeChange(LPTSTR /*lpDeviceName*/)
 // This is typically called by the view when it gets a WM_DEVMODECHANGE.
 // Also called during page setup.
 //, this doesn't seem to get called when you change orientation...
-void 
-CViewEx::OnPrinterChanged(const CDC& dcPrinter)
+void CViewEx::OnPrinterChanged(const CDC& dcPrinter)
 {
 /*
 	CSize size;
@@ -491,8 +475,7 @@ CViewEx::OnPrinterChanged(const CDC& dcPrinter)
 
 
 
-void 
-CViewEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) 
+void CViewEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) 
 {
 //	CView::OnBeginPrinting(pDC, pInfo);
 
@@ -502,8 +485,7 @@ CViewEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 }
 
 
-void 
-CViewEx::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) 
+void CViewEx::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) 
 {
 //	CView::OnEndPrinting(pDC, pInfo);
 
@@ -521,8 +503,7 @@ CViewEx::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 
 // This routine was added to make up for lack of ability to send update hint to a single view.
 // This works just like UpdateAllViews, but just targets this view.
-void 
-CViewEx::UpdateView(CView* pSender, LPARAM lHint, CObject* pHint)
+void CViewEx::UpdateView(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 	// Call OnUpdate, which is a virtual function overridden by each view derived from ViewEx.
 	OnUpdate(pSender, lHint, pHint);
@@ -536,8 +517,7 @@ CViewEx::UpdateView(CView* pSender, LPARAM lHint, CObject* pHint)
 // Supply ToolTip text for toolbar
 // Toolbar control sends TTN_NEEDTEXT to PARENT of Toolbar control! (usually CViewEx)
 // Code adapted from CFrameWnd class
-BOOL 
-CViewEx::OnToolTipText(UINT, NMHDR* pNMHDR, LRESULT* pResult)
+BOOL CViewEx::OnToolTipText(UINT, NMHDR* pNMHDR, LRESULT* pResult)
 {
 	ASSERT(pNMHDR->code == TTN_NEEDTEXTA || pNMHDR->code == TTN_NEEDTEXTW);
 
@@ -588,8 +568,7 @@ CViewEx::OnToolTipText(UINT, NMHDR* pNMHDR, LRESULT* pResult)
 
 // my simple version
 /*
-BOOL 
-CViewEx::OnToolTipText(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
+BOOL CViewEx::OnToolTipText(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
 {
 	TOOLTIPTEXT *pTTT = (TOOLTIPTEXT *)pNMHDR;
     UINT nID =pNMHDR->idFrom;
@@ -616,8 +595,7 @@ CViewEx::OnToolTipText(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
 // If PreTranslateMessage() returns TRUE, MFC will assume that you have 
 // handled the message. If it returns FALSE, MFC assumes that you have 
 // elected not to handle it and will proceed with its normal dispatch process.
-BOOL 
-CViewEx::PreTranslateMessage(MSG* pMsg) 
+BOOL CViewEx::PreTranslateMessage(MSG* pMsg) 
 {
 	// Translate a message using a custom accelerator table (if any) for the view.
 	if (m_hAccel && pMsg->message >= WM_KEYFIRST && pMsg->message <= WM_KEYLAST)
@@ -635,8 +613,7 @@ CViewEx::PreTranslateMessage(MSG* pMsg)
 // Returns handle to accelerator, or NULL.
 // Also stores handle to accelerator in m_hAccel variable.
 // Ex. LoadAccel(IDR_VIEW_SEARCH);
-HACCEL 
-CViewEx::LoadViewAccelerators(int nAccelID)
+HACCEL CViewEx::LoadViewAccelerators(int nAccelID)
 {
 	m_hAccel = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(nAccelID));
 	return m_hAccel;
@@ -653,8 +630,7 @@ CViewEx::LoadViewAccelerators(int nAccelID)
 
 // Register this window as an OLE drop target
 // Note: Revoke will be called automatically when the view window is destroyed
-void 
-CViewEx::DragRegister(CWnd* pwndDropTarget)
+void CViewEx::DragRegister(CWnd* pwndDropTarget)
 {
 //	ASSERT_VALID(pwndDropTarget);
 	m_DropTarget.Register(this);
@@ -663,8 +639,7 @@ CViewEx::DragRegister(CWnd* pwndDropTarget)
 
 
 /*
-void 
-CViewEx::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
+void CViewEx::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	xTRACE("CViewEx::OnBeginDrag\n");
 
@@ -707,8 +682,7 @@ CViewEx::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 
 // Start a drag-drop operation by wrapping the drag objects into an hGlobal memory block.
 // Derived class should fill m_aDragObjects with objects to be dragged and then call this routine.
-void 
-CViewEx::DragStart()
+void CViewEx::DragStart()
 {
 	xTRACE("CViewEx::DragStart\n");
 
@@ -751,8 +725,7 @@ CViewEx::DragStart()
 // Any data required from the data object should be retrieved at this time for later use in 
 // the OnDragOver member function. The view should also be updated at this time to give 
 // the user visual feedback.
-DROPEFFECT 
-CViewEx::OnDragEnter(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point) 
+DROPEFFECT CViewEx::OnDragEnter(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point) 
 {
 	// Call base class
 	CView::OnDragEnter(pDataObject, dwKeyState, point);
@@ -785,8 +758,7 @@ CViewEx::OnDragEnter(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point
 // this function is called continuously, any code contained within it should be optimized as much as possible. 
 // If this function returns DROPEFFECT_NONE, then OnDrop will NOT get called on mouseup!
 // This should be overridden in each derived CView* class to highlight the object the cursor is over.
-DROPEFFECT 
-CViewEx::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint ptClient) 
+DROPEFFECT CViewEx::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint ptClient) 
 {
 	// Call base class
 	return CView::OnDragOver(pDataObject, dwKeyState, ptClient);
@@ -816,8 +788,7 @@ CViewEx::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint ptClie
 // behavior for this event. The default implementation automatically scrolls windows when the 
 // cursor is dragged into the default scroll region inside the border of each window.
 // This will scroll the window specified in DragRegister, for instance a treeview window.
-DROPEFFECT 
-CViewEx::OnDragScroll(DWORD dwKeyState, CPoint point)
+DROPEFFECT CViewEx::OnDragScroll(DWORD dwKeyState, CPoint point)
 {
 	xTRACE("CViewEx::OnDragScroll\n");
 
@@ -855,8 +826,7 @@ CViewEx::OnDragScroll(DWORD dwKeyState, CPoint point)
 // Override this function to implement the effect of an OLE drop into the client area of the view. 
 // The data object can be examined via pDataObject for Clipboard data formats and data 
 // dropped at the specified point.
-BOOL 
-CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint ptClient) 
+BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint ptClient) 
 {
 	xTRACE("CViewEx::OnDrop\n");
 	
@@ -985,8 +955,7 @@ CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint ptCli
 
 
 
-void 
-CViewEx::OnDragLeave() 
+void CViewEx::OnDragLeave() 
 {
 	CView::OnDragLeave();
 }
@@ -994,8 +963,7 @@ CViewEx::OnDragLeave()
 
 
 // Virtual function that derived view should override and return pointer to object under the given point.
-BObject* 
-CViewEx::DragGetDropTarget(CPoint ptClient)
+BObject* CViewEx::DragGetDropTarget(CPoint ptClient)
 {
 	return NULL;
 }
@@ -1007,9 +975,8 @@ CViewEx::DragGetDropTarget(CPoint ptClient)
 
 
 // Get a sibling view
-//. also look in nav view!
-CView* 
-CViewEx::GetSiblingView(ULONG lngViewID)
+//. also look in nav view
+CView* CViewEx::GetSiblingView(ULONG lngViewID)
 {
 	CFrameChild* pChild = (CFrameChild*) GetParentFrame();
 	CViewHeader* pviewHeader = (CViewHeader*) pChild->m_pviewHeader;
@@ -1027,8 +994,7 @@ CViewEx::GetSiblingView(ULONG lngViewID)
 
 // Find and show the selected view, and optionally set the focus to it.
 //, need to fix all this view handling code
-CView* 
-CViewEx::ShowView(ULONG lngViewID, BOOL bSetActive, BOOL bAskAddIfNotFound)
+CView* CViewEx::ShowView(ULONG lngViewID, BOOL bSetActive, BOOL bAskAddIfNotFound)
 {
 	CFrameChild* pFrame = (CFrameChild*) GetParentFrame();
 	if (pFrame)
@@ -1063,8 +1029,7 @@ CViewEx::ShowView(ULONG lngViewID, BOOL bSetActive, BOOL bAskAddIfNotFound)
 
 // UPDATE_COMMAND_UI handler for Edit Copy and Edit Cut which both require that 
 // the current focus is on an edit control that has text selected.
-void 
-CViewEx::OnUpdateNeedSel(CCmdUI* pCmdUI) 
+void CViewEx::OnUpdateNeedSel(CCmdUI* pCmdUI) 
 {
 	// Get the current focus & determine if it's on a CEdit control.
 	CWnd* pWnd = GetFocus();
@@ -1082,8 +1047,7 @@ CViewEx::OnUpdateNeedSel(CCmdUI* pCmdUI)
 
 // UPDATE_COMMAND_UI handlers for Edit Paste requires that focus be on an edit 
 // control and that the clipboard contains text to be pasted into the control.
-void 
-CViewEx::OnUpdateNeedClip(CCmdUI* pCmdUI) 
+void CViewEx::OnUpdateNeedClip(CCmdUI* pCmdUI) 
 {
 	// Get the current focus & determine if it's on a CEdit control also check 
 	// to see if the control is read-only.
@@ -1099,8 +1063,7 @@ CViewEx::OnUpdateNeedClip(CCmdUI* pCmdUI)
 
 
 // Copy handler
-void 
-CViewEx::OnEditCopy() 
+void CViewEx::OnEditCopy() 
 {
 	CEdit* pEdit = (CEdit*)GetFocus();
 //	ASSERT(IsEdit(pEdit));
@@ -1109,8 +1072,7 @@ CViewEx::OnEditCopy()
 }
 
 // Cut handler
-void 
-CViewEx::OnEditCut() 
+void CViewEx::OnEditCut() 
 {
 	CEdit* pEdit = (CEdit*)GetFocus();
 //	ASSERT(IsEdit(pEdit));
@@ -1119,8 +1081,7 @@ CViewEx::OnEditCut()
 }
 
 // Paste handler
-void 
-CViewEx::OnEditPastePlain() 
+void CViewEx::OnEditPastePlain() 
 {
 	CEdit* pEdit = (CEdit*)GetFocus();
 //	ASSERT(IsEdit(pEdit));
@@ -1139,8 +1100,7 @@ CViewEx::OnEditPastePlain()
 
 
 // Prompt user and then remove this view from the tab by sending a hint to the tab view.
-void 
-CViewEx::OnViewHide() 
+void CViewEx::OnViewHide() 
 {
 	ASSERT(m_lngViewID);
 	BObject* pobjView = m_pDoc->GetObject(m_lngViewID);
@@ -1167,8 +1127,7 @@ CViewEx::OnViewHide()
 
 
 // Move this view up in the view order
-void 
-CViewEx::OnViewMoveUp() 
+void CViewEx::OnViewMoveUp() 
 {
 	ASSERT(m_lngViewID);
 	BObject* pobjView = m_pDoc->GetObject(m_lngViewID);
@@ -1182,37 +1141,32 @@ CViewEx::OnViewMoveUp()
 
 // Virtual function to be overridden by each view that will forward the given 
 // keypress to the main control.
-BOOL 
-CViewEx::PressKey(UINT nVK)
+BOOL CViewEx::PressKey(UINT nVK)
 {
 	return FALSE;
 }
 
 
 
-void 
-CViewEx::ShowTitleBar(BOOL bShow)
+void CViewEx::ShowTitleBar(BOOL bShow)
 {
 	m_bShowTitleBar = bShow;
 }
 
 
-void 
-CViewEx::SetTitleBarName(LPCTSTR pszName)
+void CViewEx::SetTitleBarName(LPCTSTR pszName)
 {
 	m_strTitleBar = pszName;
 }
 
 
-void 
-CViewEx::SetViewID(ULONG lngViewID)
+void CViewEx::SetViewID(ULONG lngViewID)
 {
 	m_lngViewID = lngViewID;
 }
 
 
-ULONG 
-CViewEx::GetViewID()
+ULONG CViewEx::GetViewID()
 {
 	return m_lngViewID;
 }
@@ -1220,8 +1174,7 @@ CViewEx::GetViewID()
 
 
 // Is this view the active view?
-BOOL 
-CViewEx::IsActiveView()
+BOOL CViewEx::IsActiveView()
 {
 	CFrameChild* pChild = (CFrameChild*) GetParentFrame();
 	CViewEx* pview = pChild->GetCurrentView();
@@ -1234,8 +1187,7 @@ CViewEx::IsActiveView()
 
 
 
-void 
-CViewEx::OnRButtonDown(UINT nFlags, CPoint point) 
+void CViewEx::OnRButtonDown(UINT nFlags, CPoint point) 
 {
 /*
 	// Exit if on Home Object
@@ -1282,8 +1234,7 @@ CViewEx::OnRButtonDown(UINT nFlags, CPoint point)
 //
 
 	
-//void 
-//CMymenuView::OnRButtonDown(UINT /*nFlags*/, CPoint point) //SK: removed warning C4100: 'nFlags' : unreferenced formal parameter
+//void CMymenuView::OnRButtonDown(UINT /*nFlags*/, CPoint point) //SK: removed warning C4100: 'nFlags' : unreferenced formal parameter
 //{
 
 /*
@@ -1305,8 +1256,7 @@ CViewEx::OnRButtonDown(UINT nFlags, CPoint point)
 
 
 // Popup menu handler for bcmenu
-void 
-CViewEx::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CViewEx::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
 {
 	BOOL bFlag = FALSE;
 	if (lpMeasureItemStruct->CtlType == ODT_MENU)
@@ -1323,8 +1273,7 @@ CViewEx::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 
 
 // Popup menu handler for bcmenu
-LRESULT 
-CViewEx::OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu) 
+LRESULT CViewEx::OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu) 
 {
 	LRESULT lresult;
 	if (BCMenu::IsMenu(pMenu))
@@ -1338,8 +1287,7 @@ CViewEx::OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu)
 // Initialize a popup menu for use with bcmenu routines.
 // Returns a pointer to a BCMenu object
 // Call this from the child view.
-BCMenu* 
-CViewEx::InitPopup(UINT nPopupID, UINT nDefaultID)
+BCMenu* CViewEx::InitPopup(UINT nPopupID, UINT nDefaultID)
 {
 	m_popmenu.DestroyMenu();
 	m_popmenu.LoadMenu(nPopupID);
@@ -1367,8 +1315,7 @@ CViewEx::InitPopup(UINT nPopupID, UINT nDefaultID)
 /*
 // Add an object. 
 // This is the default ID_OBJ_ADD handler.
-void 
-CViewEx::OnCmdAddObject() 
+void CViewEx::OnCmdAddObject() 
 {
 	if (m_pobjTarget)
 	{
@@ -1380,8 +1327,8 @@ CViewEx::OnCmdAddObject()
 
 
 
-//.. goes into endless loop! augh!
-// because the childframe will hand the command to its child view. which is us!
+//.. goes into endless loop
+// because the childframe will hand the command to its child view. which is us
 
 /*
 from mfc:
@@ -1406,11 +1353,10 @@ BOOL CView::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHan
 
 
 // so it should be okay to have cmd handlers here in cviewex
-// it just seems an odd place for them, eh? 
+// it just seems an odd place for them
 // 
 /*
-BOOL 
-CViewEx::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CViewEx::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
 {
 	// 
 

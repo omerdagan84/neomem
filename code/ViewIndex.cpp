@@ -279,7 +279,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			for (int i = 0; i < nObjects; i++)
 			{
 				BObject* pobj = (BObject*) ph->m_paObjects->GetAt(i);
-				// Note: Object has already been deleted, so don't validate it!
+				// Note: Object has already been deleted, so don't validate it
 //				ASSERT_VALID(pobj);
 				// delete from list
 				m_lvw.DeleteItemData((LPARAM) pobj);
@@ -543,7 +543,7 @@ void CViewIndex::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 	LVITEM* pLVITEM = &(pDispInfo->item);
 	if (pLVITEM->pszText)
 	{
-		// bug: for some reason lparam is not always filled out correctly!
+		// bug: for some reason lparam is not always filled out correctly
 //		BObject* pobj = (BObject*) pLVITEM->lParam;
 //		ASSERT_VALID(pobj);
 		int nItem = pLVITEM->iItem;
@@ -807,7 +807,7 @@ void CViewIndex::ReloadItems()
 	// Walk through all objects recursively and add them
 	AddChildrenToList(pobjRoot);
 
-	//, use above code until listviewex handles textcallback!!
+	//, use above code until listviewex handles textcallback
 //		m_lvw.AddObjects(pobjRoot, theApp.m_lngExcludeFlags, TRUE, TRUE);
 
 	// Sort items
@@ -833,3 +833,5 @@ void CViewIndex::FilterItems()
 {
 //	m_lvw.SetItemState();...
 }
+
+
