@@ -75,8 +75,7 @@ CFrameChild::~CFrameChild()
 }
 
 
-BOOL 
-CFrameChild::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CFrameChild::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	if (!CMDIChildWnd::PreCreateWindow(cs))
 		return FALSE;
@@ -96,8 +95,7 @@ CFrameChild::PreCreateWindow(CREATESTRUCT& cs)
 // Note: Do not replace values passed in the CREATESTRUCT structure. They are for 
 // informational use only. If you want to override the initial window rectangle, for 
 // example, override the CWnd member function PreCreateWindow.
-BOOL 
-CFrameChild::OnCreateClient(LPCREATESTRUCT /*lpcs*/,	CCreateContext* pContext)
+BOOL CFrameChild::OnCreateClient(LPCREATESTRUCT /*lpcs*/,	CCreateContext* pContext)
 {
 	xTRACE("CFrameChild OnCreateClient - create main splitter and two tab views\n");
 
@@ -159,14 +157,12 @@ CFrameChild::OnCreateClient(LPCREATESTRUCT /*lpcs*/,	CCreateContext* pContext)
 //----------------------------------------------------------------------------
 
 #ifdef _DEBUG
-void 
-CFrameChild::AssertValid() const
+void CFrameChild::AssertValid() const
 {
 	CMDIChildWnd::AssertValid();
 }
 
-void 
-CFrameChild::Dump(CDumpContext& dc) const
+void CFrameChild::Dump(CDumpContext& dc) const
 {
 	CMDIChildWnd::Dump(dc);
 }
@@ -185,8 +181,7 @@ CFrameChild::Dump(CDumpContext& dc) const
 //----------------------------------------------------------------------------
 
 /*
-CWnd* 
-CFrameChild::GetRightPane()
+CWnd* CFrameChild::GetRightPane()
 {
 	CWnd* pWnd = m_wndSplitter.GetPane(0, 1);
 	return pWnd;

@@ -298,6 +298,8 @@ protected:
 	afx_msg void OnFileSecurity();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnFileSave();
 };
 
 

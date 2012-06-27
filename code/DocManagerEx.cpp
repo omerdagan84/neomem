@@ -119,9 +119,9 @@ CDocManagerEx::~CDocManagerEx()
 BOOL CDocManagerEx::DoPromptFileName(CString& fileName, UINT nIDSTitle, DWORD lFlags, 
 								   BOOL bOpenFileDialog, CDocTemplate* pTemplate)
 {
-//`	CFileDialog dlgFile(bOpenFileDialog);
-	CFileDialogEx dlgFile(bOpenFileDialog);
-	dlgFile.m_pDoc = m_pDoc; //` save document (if specified) so dialog can access its properties (encryption etc)
+	CFileDialog dlgFile(bOpenFileDialog);
+///	CFileDialogEx dlgFile(bOpenFileDialog);
+///	dlgFile.m_pDoc = m_pDoc; //` save document (if specified) so dialog can access its properties (encryption etc)
 	
 	CString title;
 	VERIFY(title.LoadString(nIDSTitle));

@@ -427,8 +427,6 @@ makehm /h /a afxhh.h IDW_,HIDW_,0x50000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefi
 </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generating map file for help compiler...</Message>
     </CustomBuild>
-
-
   </ItemGroup>
   <ItemGroup>
     <None Include="..\help\html\add_class.htm">
@@ -652,7 +650,6 @@ makehm /h /a afxhh.h IDW_,HIDW_,0x50000 "%(FullPath)" &gt;&gt; "..\help\HTMLDefi
     </None>
     <None Include="..\help\neomem.hhc" />
     <None Include="..\help\NeoMem.hhk" />
-    
     <CustomBuild Include="..\help\NeoMem.hhp">
       <FileType>Document</FileType>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)NeoMem.chm;%(Outputs)</Outputs>
@@ -682,8 +679,6 @@ echo.
 </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Making help file...</Message>
     </CustomBuild>
-    
-    
     <None Include="..\help\popups.js" />
     <None Include="..\resources\Resource.hm" />
   </ItemGroup>
@@ -698,4 +693,9 @@ echo.
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="\Users\bburns\Documents\Projects\neomem\neomemC\work\resources\NeoMem.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

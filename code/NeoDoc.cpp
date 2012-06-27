@@ -116,6 +116,7 @@ BEGIN_MESSAGE_MAP(CNeoDoc, CDocument)
 //	ON_UPDATE_COMMAND_UI(ID_OBJ_MOVE_TO, OnUpdateObjMoveTo)
 //	ON_COMMAND(ID_FILE_SEND_MAIL, OnFileSendMail)
 //	ON_UPDATE_COMMAND_UI(ID_FILE_SEND_MAIL, OnUpdateFileSendMail)
+ON_COMMAND(ID_FILE_SAVE, &CNeoDoc::OnFileSave)
 END_MESSAGE_MAP()
 
 
@@ -3552,6 +3553,7 @@ BObject* CNeoDoc::UIMoveObjectTo() {
 
 
 // Advanced overridable DoFileSave from adapted from MFC DocCore.cpp
+// Called by OnFileSave
 // 1.0 Added read-only message.
 // 1.1 Added AutoBackup and AutoRecover handling.
 BOOL CNeoDoc::DoFileSave() {
@@ -4112,4 +4114,11 @@ void CNeoDoc::RemoveObjectFromIndex(OBJID idObject)
 	m_mapObjects.RemoveKey(idObject);
 }
 
+
+
+
+void CNeoDoc::OnFileSave()
+{
+	CDocument::OnFileSave();
+}
 

@@ -23,7 +23,7 @@ void DisplayLastError(LPTSTR lpszFunction);
 
 void Char2Hex(const unsigned char ch, char* szHex);
 void Hex2Char(const char* szHex, unsigned char& rch);
-void CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iSize);
+void CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iBufsize, int iSize);
 void HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, int iSize);
 
 

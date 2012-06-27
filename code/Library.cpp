@@ -174,7 +174,7 @@ void Hex2Char(const char* szHex, unsigned char& rch)
 }    
 
 // Function to convert string of unsigned chars to string of chars, eg 0x9E3D -> "9E3D"
-void CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iSize)
+void CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iBufsize, int iSize)
 {
 	int i;
 	char szHex[3];
@@ -182,7 +182,7 @@ void CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iSize)
 	for(i=0; i<iSize; i++)
 	{
 		Char2Hex(pucCharStr[i], szHex);
-		strcat_s(pszHexStr, 2, szHex);
+		strcat_s(pszHexStr, iBufsize, szHex);
 	}
 }
 

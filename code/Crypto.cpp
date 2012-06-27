@@ -358,7 +358,7 @@ CString CCrypto::GetSessionKeyHash(CString &strPassword)
 	// Now convert the data bytes into hexascii characters
 	char szHexAscii[60];
 	int nBytes = dwDataLen; // number of bytes of data to convert
-	CharStr2HexStr((const unsigned char*) pbData, (char*) szHexAscii, nBytes);
+	CharStr2HexStr((const unsigned char*) pbData, (char*) szHexAscii, 60, nBytes);
 
 	return szHexAscii;
 }
