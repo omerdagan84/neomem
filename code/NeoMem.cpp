@@ -322,7 +322,7 @@ BOOL CNeoMem::InitInstance() {
 	CString strOldTemplate = m_strApplicationFolder + _T("\\Template1.1.neo");
 	if (FileExists(strOldTemplate))
 		_tremove(strOldTemplate);
-	// 1.1 if app is in debug or release folder, use the main documents folder to find template file!
+	// 1.1 if app is in debug or release folder, use the main documents folder to find template file
 	// (prevents having 3 copies of it lying around...)
 	// Just go up one folder to main project folder then down to files folder (was Documents)
 	// 1.2 moved this here from LoadOptions
@@ -331,8 +331,8 @@ BOOL CNeoMem::InitInstance() {
 
 	// Locate the help file (when files are in final configuration)
 	//. check for final version
-	//. free memory first
-//	m_pszHelpFilePath = "../help/NeoMem.chm";
+	//. free psz memory first
+//	m_pszHelpFilePath = "NeoMem.chm";
 
 	// Get colors (this is a global function that reads to global variables)
 	GetColors();
@@ -2327,8 +2327,14 @@ BOOL CNeoMem::ConvertPlainToRtf(CString& strPlain, CString& strRtf) {
 
 
 // Bring up help topic
+//, couldn't get this to work in vs10, so hid the menu item
+// What is &NeoMem?
+// ID_HELP_WHAT_IS
+// Brings up help page which explains NeoMem\nShow Help Topic
 void CNeoMem::OnCmdHelpWhatIs() {
 	theApp.HtmlHelpA(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)
+//	theApp.HtmlHelpA(IDR_NEOMEM_TYPE); // tried this
+//	theApp.HtmlHelpA(HID_WHAT_IS); // tried this
 }
 
 

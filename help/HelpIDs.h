@@ -23,6 +23,8 @@
 #define HID_KEYBOARD_SHORTCUTS 101
 #define HID_WHATS_NEW 103
 #define HID_CLOCK 104
+#define HID_WHAT_IS 105
+
 
 
 

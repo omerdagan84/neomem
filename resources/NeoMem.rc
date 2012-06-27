@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -18,13 +18,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -32,18 +30,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_OLE_RESOURCES\r\n"
     "#define _AFX_NO_TRACKER_RESOURCES\r\n"
@@ -72,120 +70,120 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "icons\\_NeoMem.ico"
-IDI_CHIP                ICON    DISCARDABLE     "icons\\Chip.ico"
-IDI_FOLDER              ICON    DISCARDABLE     "icons\\Folder4.ico"
-IDI_ARROW_UP            ICON    DISCARDABLE     "icons\\ArrowUp.ico"
-IDI_ARROW_DOWN          ICON    DISCARDABLE     "icons\\ArrowDown.ico"
-IDI_BOOK                ICON    DISCARDABLE     "icons\\Book.ico"
-IDI_PAPER               ICON    DISCARDABLE     "icons\\Doc.ico"
-IDI_LABEL               ICON    DISCARDABLE     "icons\\Label.ico"
-IDI_PAPERCLIP           ICON    DISCARDABLE     "icons\\Clip03.ico"
-IDI_COFFEE              ICON    DISCARDABLE     "icons\\Coffee.ico"
-IDI_BULLET_BLUE         ICON    DISCARDABLE     "icons\\BulletBlue.ico"
-IDI_SALAD               ICON    DISCARDABLE     "icons\\Salad.ico"
-IDI_CAR                 ICON    DISCARDABLE     "icons\\TR2.ico"
-IDI_NEW                 ICON    DISCARDABLE     "icons\\new.ico"
-IDI_CAMERA              ICON    DISCARDABLE     "icons\\Camera.ico"
-IDI_BOX                 ICON    DISCARDABLE     "icons\\Box2.ico"
-IDI_MEDICINE            ICON    DISCARDABLE     "icons\\Medicine.ico"
-IDI_NOTE                ICON    DISCARDABLE     "icons\\note.ico"
-IDI_WRENCH              ICON    DISCARDABLE     "icons\\wrench.ico"
-IDI_BIRD                ICON    DISCARDABLE     "icons\\Bird.ico"
-IDI_BULLET_GREEN        ICON    DISCARDABLE     "icons\\bulletGreen.ico"
-IDI_DIAMOND_BLUE        ICON    DISCARDABLE     "icons\\diamondBlue.ico"
-IDI_DIAMOND_GREEN       ICON    DISCARDABLE     "icons\\diamondGreen.ico"
-IDI_DIAMOND_GREEN_DK    ICON    DISCARDABLE     "icons\\diamondGreenDk.ico"
-IDI_MONEY               ICON    DISCARDABLE     "icons\\Money 1.ico"
-IDI_QUOTE               ICON    DISCARDABLE     "icons\\quote.ico"
-IDI_SPHERE_WHITE        ICON    DISCARDABLE     "icons\\sphereWhite.ico"
-IDI_CITY                ICON    DISCARDABLE     "icons\\city.ico"
-IDI_CD                  ICON    DISCARDABLE     "icons\\CD.ico"
-IDI_FOREST              ICON    DISCARDABLE     "icons\\forest.ico"
-IDI_PARK                ICON    DISCARDABLE     "icons\\Park.ico"
-IDI_DIAMOND_BLUE2       ICON    DISCARDABLE     "icons\\diamondBlue2.ico"
-IDI_NEWSPAPER           ICON    DISCARDABLE     "icons\\newspaper.ico"
-IDI_BUILDING            ICON    DISCARDABLE     "icons\\building.ico"
-IDI_DIAMOND_BLUEGREEN   ICON    DISCARDABLE     "icons\\diamondBlueGreen.ico"
-IDI_CIRCLE_BLUE         ICON    DISCARDABLE     "icons\\circle_blue.ico"
-IDI_NIGHT               ICON    DISCARDABLE     "icons\\night.ico"
-IDI_FLOWER              ICON    DISCARDABLE     "icons\\FlowerRose.ico"
-IDI_FURNITURE           ICON    DISCARDABLE     "icons\\Bookcase.ico"
-IDI_VIDEOTAPE           ICON    DISCARDABLE     "icons\\Videotape.ico"
-IDI_TAPE                ICON    DISCARDABLE     "icons\\Tape.ico"
-IDI_HOUSE               ICON    DISCARDABLE     "icons\\House.ico"
-IDI_TRIANGLES           ICON    DISCARDABLE     "icons\\Icon.ico"
-IDI_COMPUTER            ICON    DISCARDABLE     "icons\\Computer.ico"
-IDI_GUITAR              ICON    DISCARDABLE     "icons\\Guitar.ico"
-IDI_ART                 ICON    DISCARDABLE     "icons\\Art.ico"
-IDI_PAINTBRUSH          ICON    DISCARDABLE     "icons\\Art Medium.ico"
-IDI_MOVIE               ICON    DISCARDABLE     "icons\\Movie2.ico"
-IDI_DIAMOND_PURPLE      ICON    DISCARDABLE     "icons\\diamondPurple.ico"
-IDI_COMPUTER_EQUIPMENT  ICON    DISCARDABLE     "icons\\Computer Equipment.ico"
-IDI_RECORD              ICON    DISCARDABLE     "icons\\Record8aa.ico"
-IDI_TRIANGLES_BLUE      ICON    DISCARDABLE     "icons\\trianglesBlue.ico"
-IDI_LAND                ICON    DISCARDABLE     "icons\\Land.ico"
-IDI_BIKE                ICON    DISCARDABLE     "icons\\Bike.ico"
-IDI_MAN                 ICON    DISCARDABLE     "icons\\Man andy.ico"
-IDI_WOMAN               ICON    DISCARDABLE     "icons\\woman jjl.ico"
-IDI_CELLPHONE           ICON    DISCARDABLE     "icons\\Cellphone.ico"
-IDI_SCANNER             ICON    DISCARDABLE     "icons\\Scanner.ico"
-IDI_CLIPPERS            ICON    DISCARDABLE     "icons\\Clippers.ico"
-IDI_PIANO               ICON    DISCARDABLE     "icons\\Piano.ico"
-IDI_OCEAN               ICON    DISCARDABLE     "icons\\Ocean.ico"
-IDI_APPLE               ICON    DISCARDABLE     "icons\\Apple.ico"
-IDI_NEBULA              ICON    DISCARDABLE     "icons\\_Nebula.ico"
-IDI_GALAXY              ICON    DISCARDABLE     "icons\\Galaxy.ico"
-IDI_ART2                ICON    DISCARDABLE     "icons\\art2.ico"
-IDI_VIDEOCLIP           ICON    DISCARDABLE     "icons\\Movie Film.ico"
-IDI_MUSEUM              ICON    DISCARDABLE     "icons\\Museum.ico"
-IDI_ROOM                ICON    DISCARDABLE     "icons\\Room.ico"
-IDI_LEAF                ICON    DISCARDABLE     "icons\\Leaf.ico"
-IDI_COIN                ICON    DISCARDABLE     "icons\\Coin.ico"
-IDI_RED_CROSS           ICON    DISCARDABLE     "icons\\RedCross.ico"
-IDI_PRESENT             ICON    DISCARDABLE     "icons\\Present.ico"
-IDI_CHALKBOARD          ICON    DISCARDABLE     "icons\\Chalkboard.ico"
-IDI_CHEMICALS           ICON    DISCARDABLE     "icons\\Chemicals.ico"
-IDI_PRINTER             ICON    DISCARDABLE     "icons\\printer.ico"
-IDI_PERSON              ICON    DISCARDABLE     "icons\\person.ico"
-IDI_SOCCER_BALL         ICON    DISCARDABLE     "icons\\Soccer ball.ico"
-IDR_COMPANY             ICON    DISCARDABLE     "icons\\Intaglio green on black (256 color only).ico"
-IDI_ENVELOPE            ICON    DISCARDABLE     "icons\\Envelope.ico"
-IDR_NEOMEM_TYPE         ICON    DISCARDABLE     "icons\\_NeoMem Document.ico"
-IDI_WORLD               ICON    DISCARDABLE     "icons\\bluesphere3.ico"
-IDI_ALARM1              ICON    DISCARDABLE     "icons\\Clock.ico"
-IDI_ALARM2              ICON    DISCARDABLE     "icons\\Clock2.ico"
-IDI_BACKCOLOR           ICON    DISCARDABLE     "icons\\Backcolor.ico"
-IDI_FORECOLOR           ICON    DISCARDABLE     "icons\\Forecolor.ico"
-IDR_SYSTRAY             ICON    DISCARDABLE     "icons\\systray.ico"
-IDI_WALLET              ICON    DISCARDABLE     "icons\\Wallet.ico"
-IDI_DRIVERSLICENSE      ICON    DISCARDABLE     "icons\\DriversLicense.ico"
-IDI_CREDITCARD          ICON    DISCARDABLE     "icons\\CreditCard.ico"
+IDR_MAINFRAME           ICON                    "icons\\_NeoMem.ico"
+IDI_CHIP                ICON                    "icons\\Chip.ico"
+IDI_FOLDER              ICON                    "icons\\Folder4.ico"
+IDI_ARROW_UP            ICON                    "icons\\ArrowUp.ico"
+IDI_ARROW_DOWN          ICON                    "icons\\ArrowDown.ico"
+IDI_BOOK                ICON                    "icons\\Book.ico"
+IDI_PAPER               ICON                    "icons\\Doc.ico"
+IDI_LABEL               ICON                    "icons\\Label.ico"
+IDI_PAPERCLIP           ICON                    "icons\\Clip03.ico"
+IDI_COFFEE              ICON                    "icons\\Coffee.ico"
+IDI_BULLET_BLUE         ICON                    "icons\\BulletBlue.ico"
+IDI_SALAD               ICON                    "icons\\Salad.ico"
+IDI_CAR                 ICON                    "icons\\TR2.ico"
+IDI_NEW                 ICON                    "icons\\new.ico"
+IDI_CAMERA              ICON                    "icons\\Camera.ico"
+IDI_BOX                 ICON                    "icons\\Box2.ico"
+IDI_MEDICINE            ICON                    "icons\\Medicine.ico"
+IDI_NOTE                ICON                    "icons\\note.ico"
+IDI_WRENCH              ICON                    "icons\\wrench.ico"
+IDI_BIRD                ICON                    "icons\\Bird.ico"
+IDI_BULLET_GREEN        ICON                    "icons\\bulletGreen.ico"
+IDI_DIAMOND_BLUE        ICON                    "icons\\diamondBlue.ico"
+IDI_DIAMOND_GREEN       ICON                    "icons\\diamondGreen.ico"
+IDI_DIAMOND_GREEN_DK    ICON                    "icons\\diamondGreenDk.ico"
+IDI_MONEY               ICON                    "icons\\Money 1.ico"
+IDI_QUOTE               ICON                    "icons\\quote.ico"
+IDI_SPHERE_WHITE        ICON                    "icons\\sphereWhite.ico"
+IDI_CITY                ICON                    "icons\\city.ico"
+IDI_CD                  ICON                    "icons\\CD.ico"
+IDI_FOREST              ICON                    "icons\\forest.ico"
+IDI_PARK                ICON                    "icons\\Park.ico"
+IDI_DIAMOND_BLUE2       ICON                    "icons\\diamondBlue2.ico"
+IDI_NEWSPAPER           ICON                    "icons\\newspaper.ico"
+IDI_BUILDING            ICON                    "icons\\building.ico"
+IDI_DIAMOND_BLUEGREEN   ICON                    "icons\\diamondBlueGreen.ico"
+IDI_CIRCLE_BLUE         ICON                    "icons\\circle_blue.ico"
+IDI_NIGHT               ICON                    "icons\\night.ico"
+IDI_FLOWER              ICON                    "icons\\FlowerRose.ico"
+IDI_FURNITURE           ICON                    "icons\\Bookcase.ico"
+IDI_VIDEOTAPE           ICON                    "icons\\Videotape.ico"
+IDI_TAPE                ICON                    "icons\\Tape.ico"
+IDI_HOUSE               ICON                    "icons\\House.ico"
+IDI_TRIANGLES           ICON                    "icons\\Icon.ico"
+IDI_COMPUTER            ICON                    "icons\\Computer.ico"
+IDI_GUITAR              ICON                    "icons\\Guitar.ico"
+IDI_ART                 ICON                    "icons\\Art.ico"
+IDI_PAINTBRUSH          ICON                    "icons\\Art Medium.ico"
+IDI_MOVIE               ICON                    "icons\\Movie2.ico"
+IDI_DIAMOND_PURPLE      ICON                    "icons\\diamondPurple.ico"
+IDI_COMPUTER_EQUIPMENT  ICON                    "icons\\Computer Equipment.ico"
+IDI_RECORD              ICON                    "icons\\Record8aa.ico"
+IDI_TRIANGLES_BLUE      ICON                    "icons\\trianglesBlue.ico"
+IDI_LAND                ICON                    "icons\\Land.ico"
+IDI_BIKE                ICON                    "icons\\Bike.ico"
+IDI_MAN                 ICON                    "icons\\Man andy.ico"
+IDI_WOMAN               ICON                    "icons\\woman jjl.ico"
+IDI_CELLPHONE           ICON                    "icons\\Cellphone.ico"
+IDI_SCANNER             ICON                    "icons\\Scanner.ico"
+IDI_CLIPPERS            ICON                    "icons\\Clippers.ico"
+IDI_PIANO               ICON                    "icons\\Piano.ico"
+IDI_OCEAN               ICON                    "icons\\Ocean.ico"
+IDI_APPLE               ICON                    "icons\\Apple.ico"
+IDI_NEBULA              ICON                    "icons\\_Nebula.ico"
+IDI_GALAXY              ICON                    "icons\\Galaxy.ico"
+IDI_ART2                ICON                    "icons\\art2.ico"
+IDI_VIDEOCLIP           ICON                    "icons\\Movie Film.ico"
+IDI_MUSEUM              ICON                    "icons\\Museum.ico"
+IDI_ROOM                ICON                    "icons\\Room.ico"
+IDI_LEAF                ICON                    "icons\\Leaf.ico"
+IDI_COIN                ICON                    "icons\\Coin.ico"
+IDI_RED_CROSS           ICON                    "icons\\RedCross.ico"
+IDI_PRESENT             ICON                    "icons\\Present.ico"
+IDI_CHALKBOARD          ICON                    "icons\\Chalkboard.ico"
+IDI_CHEMICALS           ICON                    "icons\\Chemicals.ico"
+IDI_PRINTER             ICON                    "icons\\printer.ico"
+IDI_PERSON              ICON                    "icons\\person.ico"
+IDI_SOCCER_BALL         ICON                    "icons\\Soccer ball.ico"
+IDR_COMPANY             ICON                    "icons\\Intaglio green on black (256 color only).ico"
+IDI_ENVELOPE            ICON                    "icons\\Envelope.ico"
+IDR_NEOMEM_TYPE         ICON                    "icons\\_NeoMem Document.ico"
+IDI_WORLD               ICON                    "icons\\bluesphere3.ico"
+IDI_ALARM1              ICON                    "icons\\Clock.ico"
+IDI_ALARM2              ICON                    "icons\\Clock2.ico"
+IDI_BACKCOLOR           ICON                    "icons\\Backcolor.ico"
+IDI_FORECOLOR           ICON                    "icons\\Forecolor.ico"
+IDR_SYSTRAY             ICON                    "icons\\systray.ico"
+IDI_WALLET              ICON                    "icons\\Wallet.ico"
+IDI_DRIVERSLICENSE      ICON                    "icons\\DriversLicense.ico"
+IDI_CREDITCARD          ICON                    "icons\\CreditCard.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "toolbars\\tbrMain.bmp"
-IDR_TOOLBAR_SEARCH_OLD  BITMAP  DISCARDABLE     "toolbars\\tbrSearch.bmp"
-IDR_TOOLBAR_CONTENTS    BITMAP  DISCARDABLE     "toolbars\\tbrContents.bmp"
-IDR_TOOLBAR_OBSOLETE    BITMAP  DISCARDABLE     "toolbars\\tbrObsolete.bmp"
-IDR_TOOLBAR_RTF         BITMAP  DISCARDABLE     "toolbars\\tbrRtf.bmp"
-IDR_TOOLBAR_INDEX       BITMAP  DISCARDABLE     "toolbars\\tbrIndex.bmp"
-IDR_TOOLBAR_PROPERTIES  BITMAP  DISCARDABLE     "toolbars\\tbrProperties.bmp"
-IDR_TOOLBAR_SEARCH      BITMAP  DISCARDABLE     "toolbars\\tbrSearchNew.bmp"
-IDR_TOOLBAR_OTHER       BITMAP  DISCARDABLE     "toolbars\\tbrOther.bmp"
-IDB_NEOMEM              BITMAP  DISCARDABLE     "logos\\logoNeoMem.bmp"
-IDB_ARROW_UP            BITMAP  DISCARDABLE     "buttons\\arrow_up.bmp"
-IDB_ARROW_DOWN          BITMAP  DISCARDABLE     "buttons\\arrow_down.bmp"
+IDR_MAINFRAME           BITMAP                  "toolbars\\tbrMain.bmp"
+IDR_TOOLBAR_SEARCH_OLD  BITMAP                  "toolbars\\tbrSearch.bmp"
+IDR_TOOLBAR_CONTENTS    BITMAP                  "toolbars\\tbrContents.bmp"
+IDR_TOOLBAR_OBSOLETE    BITMAP                  "toolbars\\tbrObsolete.bmp"
+IDR_TOOLBAR_RTF         BITMAP                  "toolbars\\tbrRtf.bmp"
+IDR_TOOLBAR_INDEX       BITMAP                  "toolbars\\tbrIndex.bmp"
+IDR_TOOLBAR_PROPERTIES  BITMAP                  "toolbars\\tbrProperties.bmp"
+IDR_TOOLBAR_SEARCH      BITMAP                  "toolbars\\tbrSearchNew.bmp"
+IDR_TOOLBAR_OTHER       BITMAP                  "toolbars\\tbrOther.bmp"
+IDB_NEOMEM              BITMAP                  "logos\\logoNeoMem.bmp"
+IDB_ARROW_UP            BITMAP                  "buttons\\arrow_up.bmp"
+IDB_ARROW_DOWN          BITMAP                  "buttons\\arrow_down.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+IDR_MAINFRAME TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -219,7 +217,7 @@ BEGIN
     BUTTON      ID_OBJ_MOVE_DOWN
 END
 
-IDR_TOOLBAR_SEARCH_OLD TOOLBAR DISCARDABLE  16, 15
+IDR_TOOLBAR_SEARCH_OLD TOOLBAR 16, 15
 BEGIN
     BUTTON      IDC_LBL_SEARCH_IN
     BUTTON      IDC_CBO_SEARCH_IN
@@ -228,7 +226,7 @@ BEGIN
     BUTTON      IDC_BTN_NEXT_MATCH
 END
 
-IDR_TOOLBAR_CONTENTS TOOLBAR DISCARDABLE  16, 15
+IDR_TOOLBAR_CONTENTS TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_OBJ_ADD
     BUTTON      ID_OBJ_ADD_FOLDER
@@ -252,7 +250,7 @@ BEGIN
     BUTTON      ID_VIEW_GRIDLINES
 END
 
-IDR_TOOLBAR_OBSOLETE TOOLBAR DISCARDABLE  16, 15
+IDR_TOOLBAR_OBSOLETE TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_WINDOW_NEXT
     BUTTON      ID_WINDOW_PREVIOUS
@@ -268,7 +266,7 @@ BEGIN
     BUTTON      ID_BUTTON50199
 END
 
-IDR_TOOLBAR_RTF TOOLBAR DISCARDABLE  16, 15
+IDR_TOOLBAR_RTF TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_FORMAT_BOLD
     BUTTON      ID_FORMAT_ITALIC
@@ -286,12 +284,12 @@ BEGIN
     BUTTON      ID_FORMAT_BULLET
 END
 
-IDR_TOOLBAR_INDEX TOOLBAR DISCARDABLE  16, 15
+IDR_TOOLBAR_INDEX TOOLBAR 16, 15
 BEGIN
     BUTTON      IDC_CBO_CLASS
 END
 
-IDR_TOOLBAR_PROPERTIES TOOLBAR DISCARDABLE  16, 15
+IDR_TOOLBAR_PROPERTIES TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_OBJ_EDIT_IN_PLACE
     BUTTON      ID_OBJ_EDIT_IN_DIALOG
@@ -302,7 +300,7 @@ BEGIN
     BUTTON      ID_DELETE_PROPERTY
 END
 
-IDR_TOOLBAR_SEARCH TOOLBAR DISCARDABLE  16, 15
+IDR_TOOLBAR_SEARCH TOOLBAR 16, 15
 BEGIN
     BUTTON      IDC_TXT_SEARCH
     BUTTON      IDC_BTN_GO
@@ -311,7 +309,7 @@ BEGIN
     BUTTON      IDC_CBO_SEARCH_IN
 END
 
-IDR_TOOLBAR_OTHER TOOLBAR DISCARDABLE  16, 15
+IDR_TOOLBAR_OTHER TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_WINDOW_CASCADE
     BUTTON      ID_WINDOW_TILE_HORZ
@@ -339,7 +337,7 @@ END
 // Menu
 //
 
-IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -367,7 +365,6 @@ BEGIN
         MENUITEM "&Help Topics\tF1",            ID_HELP_FINDER
         MENUITEM SEPARATOR
         MENUITEM "What's New?",                 ID_HELP_WHATS_NEW
-        MENUITEM "What is &NeoMem?",            ID_HELP_WHAT_IS
         MENUITEM "&Keyboard Shortcuts",         ID_HELP_KEYBOARD
         MENUITEM SEPARATOR
         MENUITEM "Show &Start Screen...",       ID_HELP_SHOW_WELCOME
@@ -379,7 +376,7 @@ BEGIN
     END
 END
 
-IDR_NEOMEM_TYPE MENU PRELOAD DISCARDABLE 
+IDR_NEOMEM_TYPE MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -452,7 +449,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Change &Class...",            ID_OBJ_CHANGE_OBJECT_CLASS
         MENUITEM "Change C&ontents...",         ID_OBJ_CHANGE_OBJECT_CONTENTS
-
         MENUITEM "Change &Icon...",             ID_OBJ_CHANGE_OBJECT_ICON
         MENUITEM SEPARATOR
         MENUITEM "Change Class Con&tents...",   ID_OBJ_CHANGE_CLASS_CONTENTS
@@ -518,7 +514,6 @@ BEGIN
         MENUITEM "&Help Topics\tF1",            ID_HELP_FINDER
         MENUITEM SEPARATOR
         MENUITEM "What's New?",                 ID_HELP_WHATS_NEW
-        MENUITEM "What is &NeoMem?",            ID_HELP_WHAT_IS
         MENUITEM "&Keyboard Shortcuts",         ID_HELP_KEYBOARD
         MENUITEM SEPARATOR
         MENUITEM "Show &Start Screen...",       ID_HELP_SHOW_WELCOME
@@ -530,7 +525,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_TREE MENU DISCARDABLE 
+IDR_POPUP_TREE MENU
 BEGIN
     POPUP "Tree"
     BEGIN
@@ -543,7 +538,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Change Class...",             ID_OBJ_CHANGE_OBJECT_CLASS
         MENUITEM "Change Contents...",          ID_OBJ_CHANGE_OBJECT_CONTENTS
-
         MENUITEM "Change Icon...",              ID_OBJ_CHANGE_OBJECT_ICON
         MENUITEM SEPARATOR
         MENUITEM "Change Class Contents...",    ID_OBJ_CHANGE_CLASS_CONTENTS
@@ -558,7 +552,7 @@ BEGIN
     END
 END
 
-IDR_WHAT_IS_THIS_MENU MENU DISCARDABLE 
+IDR_WHAT_IS_THIS_MENU MENU
 BEGIN
     POPUP "a"
     BEGIN
@@ -566,7 +560,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_TREE_RIGHT MENU DISCARDABLE 
+IDR_POPUP_TREE_RIGHT MENU
 BEGIN
     POPUP "Popup_Right"
     BEGIN
@@ -577,7 +571,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_RTF MENU DISCARDABLE 
+IDR_POPUP_RTF MENU
 BEGIN
     POPUP "Rtf"
     BEGIN
@@ -600,7 +594,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_CONTENTS MENU DISCARDABLE 
+IDR_POPUP_CONTENTS MENU
 BEGIN
     POPUP "Contents"
     BEGIN
@@ -620,7 +614,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Change Class...",             ID_OBJ_CHANGE_OBJECT_CLASS
         MENUITEM "Change Contents...",          ID_OBJ_CHANGE_OBJECT_CONTENTS
-
         MENUITEM "Change Icon...",              ID_OBJ_CHANGE_OBJECT_ICON
         MENUITEM SEPARATOR
         MENUITEM "Change Class Contents...",    ID_OBJ_CHANGE_CLASS_CONTENTS
@@ -630,7 +623,7 @@ BEGIN
     END
 END
 
-IDR_OBSOLETE MENU DISCARDABLE 
+IDR_OBSOLETE MENU
 BEGIN
     MENUITEM "&Refresh",                    ID_VIEW_REFRESH
     MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
@@ -659,7 +652,7 @@ BEGIN
     MENUITEM "Spi&ke\tCtrl+Alt+X",          ID_EDIT_SPIKE
 END
 
-IDR_POPUP_CONTENTS_EMPTY MENU DISCARDABLE 
+IDR_POPUP_CONTENTS_EMPTY MENU
 BEGIN
     POPUP "Contents Empty"
     BEGIN
@@ -670,7 +663,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_SEARCH MENU DISCARDABLE 
+IDR_POPUP_SEARCH MENU
 BEGIN
     POPUP "Search"
     BEGIN
@@ -682,7 +675,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Change Class...",             ID_OBJ_CHANGE_OBJECT_CLASS
         MENUITEM "Change Contents...",          ID_OBJ_CHANGE_OBJECT_CONTENTS
-
         MENUITEM "Change Icon...",              ID_OBJ_CHANGE_OBJECT_ICON
         MENUITEM SEPARATOR
         MENUITEM "Change Class Contents...",    ID_OBJ_CHANGE_CLASS_CONTENTS
@@ -692,7 +684,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_CONTENTS_HEADER MENU DISCARDABLE 
+IDR_POPUP_CONTENTS_HEADER MENU
 BEGIN
     POPUP "Contents Header"
     BEGIN
@@ -708,7 +700,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_EDIT_VALUE MENU DISCARDABLE 
+IDR_POPUP_EDIT_VALUE MENU
 BEGIN
     POPUP "Value"
     BEGIN
@@ -725,7 +717,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_CONTENTS_MULTI MENU DISCARDABLE 
+IDR_POPUP_CONTENTS_MULTI MENU
 BEGIN
     POPUP "contents multi"
     BEGIN
@@ -733,7 +725,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_INDEX MENU DISCARDABLE 
+IDR_POPUP_INDEX MENU
 BEGIN
     POPUP "Index"
     BEGIN
@@ -745,7 +737,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Change Class...",             ID_OBJ_CHANGE_OBJECT_CLASS
         MENUITEM "Change Contents...",          ID_OBJ_CHANGE_OBJECT_CONTENTS
-
         MENUITEM "Change Icon...",              ID_OBJ_CHANGE_OBJECT_ICON
         MENUITEM SEPARATOR
         MENUITEM "Change Class Contents...",    ID_OBJ_CHANGE_CLASS_CONTENTS
@@ -755,7 +746,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_HEADER MENU DISCARDABLE 
+IDR_POPUP_HEADER MENU
 BEGIN
     POPUP "popupHeader"
     BEGIN
@@ -768,7 +759,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_PROPERTIES MENU DISCARDABLE 
+IDR_POPUP_PROPERTIES MENU
 BEGIN
     POPUP "Properties"
     BEGIN
@@ -778,7 +769,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_MINI_HEADER MENU DISCARDABLE 
+IDR_POPUP_MINI_HEADER MENU
 BEGIN
     POPUP "mini header"
     BEGIN
@@ -790,7 +781,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_TAB MENU DISCARDABLE 
+IDR_POPUP_TAB MENU
 BEGIN
     POPUP "tab"
     BEGIN
@@ -800,7 +791,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_CLOCK MENU DISCARDABLE 
+IDR_POPUP_CLOCK MENU
 BEGIN
     POPUP "Clock"
     BEGIN
@@ -818,7 +809,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_SYSTEM_TRAY MENU DISCARDABLE 
+IDR_POPUP_SYSTEM_TRAY MENU
 BEGIN
     POPUP "tray"
     BEGIN
@@ -829,7 +820,7 @@ BEGIN
     END
 END
 
-IDR_POPUP_HYPERLINK MENU DISCARDABLE 
+IDR_POPUP_HYPERLINK MENU
 BEGIN
     POPUP "hyperlink"
     BEGIN
@@ -841,7 +832,7 @@ BEGIN
     END
 END
 
-IDR_FORV2 MENU DISCARDABLE 
+IDR_FORV2 MENU
 BEGIN
     POPUP "for version 2"
     BEGIN
@@ -871,13 +862,12 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+IDR_MAINFRAME ACCELERATORS
 BEGIN
     ",",            ID_NAVIGATE_BACK,       ASCII,  ALT, NOINVERT
     ".",            ID_NAVIGATE_FORWARD,    ASCII,  ALT, NOINVERT
     "A",            ID_EDIT_SELECT_ALL,     VIRTKEY, CONTROL, NOINVERT
-    "A",            ID_OBJ_ADD,             VIRTKEY, SHIFT, CONTROL, ALT, 
-                                                    NOINVERT
+    "A",            ID_OBJ_ADD,             VIRTKEY, SHIFT, CONTROL, ALT, NOINVERT
     "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     "C",            ID_VIEW_CONTENTS,       VIRTKEY, ALT, NOINVERT
     "D",            ID_VIEW_DATA,           VIRTKEY, ALT, NOINVERT
@@ -894,8 +884,7 @@ BEGIN
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     "S",            ID_VIEW_SEARCH,         VIRTKEY, ALT, NOINVERT
     "T",            ID_VIEW_RTF,            VIRTKEY, ALT, NOINVERT
-    "T",            ID_VIEW_TEST,           VIRTKEY, SHIFT, CONTROL, ALT, 
-                                                    NOINVERT
+    "T",            ID_VIEW_TEST,           VIRTKEY, SHIFT, CONTROL, ALT, NOINVERT
     "V",            ID_EDIT_PASTE_FORMATTED, VIRTKEY, CONTROL, NOINVERT
     "V",            ID_EDIT_PASTE_PLAIN,    VIRTKEY, CONTROL, ALT, NOINVERT
     VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
@@ -915,18 +904,15 @@ BEGIN
     VK_LEFT,        ID_NAVIGATE_LEFT,       VIRTKEY, ALT, NOINVERT
     VK_LEFT,        ID_VIEW_PREVIOUS,       VIRTKEY, CONTROL, ALT, NOINVERT
     VK_NEXT,        ID_VIEW_NEXT,           VIRTKEY, ALT, NOINVERT
-    VK_NEXT,        ID_NAVIGATE_PAGEDOWN,   VIRTKEY, SHIFT, CONTROL, ALT, 
-                                                    NOINVERT
+    VK_NEXT,        ID_NAVIGATE_PAGEDOWN,   VIRTKEY, SHIFT, CONTROL, ALT, NOINVERT
     VK_PRIOR,       ID_VIEW_PREVIOUS,       VIRTKEY, ALT, NOINVERT
-    VK_PRIOR,       ID_NAVIGATE_PAGEUP,     VIRTKEY, SHIFT, CONTROL, ALT, 
-                                                    NOINVERT
+    VK_PRIOR,       ID_NAVIGATE_PAGEUP,     VIRTKEY, SHIFT, CONTROL, ALT, NOINVERT
     VK_RETURN,      ID_NAVIGATE_FOLLOW_LINK, VIRTKEY, CONTROL, NOINVERT
     VK_RETURN,      ID_OBJ_PROPERTIES,      VIRTKEY, ALT, NOINVERT
     VK_RIGHT,       ID_NAVIGATE_RIGHT,      VIRTKEY, ALT, NOINVERT
     VK_RIGHT,       ID_VIEW_NEXT,           VIRTKEY, CONTROL, ALT, NOINVERT
     VK_SPACE,       ID_EDIT_CLEAR_FORMAT,   VIRTKEY, CONTROL, NOINVERT
-    VK_SPACE,       ID_VIEW_NEXT,           VIRTKEY, SHIFT, CONTROL, ALT, 
-                                                    NOINVERT
+    VK_SPACE,       ID_VIEW_NEXT,           VIRTKEY, SHIFT, CONTROL, ALT, NOINVERT
     VK_UP,          ID_NAVIGATE_UP,         VIRTKEY, ALT, NOINVERT
     "W",            ID_OBJ_ADD,             VIRTKEY, CONTROL, NOINVERT
     "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
@@ -934,7 +920,7 @@ BEGIN
     "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
 END
 
-IDR_VIEW_SEARCH ACCELERATORS DISCARDABLE 
+IDR_VIEW_SEARCH ACCELERATORS
 BEGIN
     "M",            ID_OBJ_MOVE_TO,         VIRTKEY, CONTROL, NOINVERT
     VK_F3,          ID_EDIT_FIND_NEXT,      VIRTKEY, NOINVERT
@@ -943,15 +929,14 @@ BEGIN
     VK_TAB,         ID_KEY_SHIFT_TAB,       VIRTKEY, SHIFT, NOINVERT
 END
 
-IDR_VIEW_RTF ACCELERATORS DISCARDABLE 
+IDR_VIEW_RTF ACCELERATORS
 BEGIN
     "B",            ID_FORMAT_BOLD,         VIRTKEY, CONTROL, NOINVERT
     "D",            ID_FORMAT_STRIKETHROUGH, VIRTKEY, CONTROL, NOINVERT
     "I",            ID_FORMAT_ITALIC,       VIRTKEY, CONTROL, NOINVERT
     "K",            ID_FORMAT_APPLY_BACKCOLOR, VIRTKEY, CONTROL, NOINVERT
     "K",            ID_FORMAT_BACKCOLOR,    VIRTKEY, CONTROL, ALT, NOINVERT
-    "L",            ID_EDIT_INSERT_LINE,    VIRTKEY, SHIFT, CONTROL, ALT, 
-                                                    NOINVERT
+    "L",            ID_EDIT_INSERT_LINE,    VIRTKEY, SHIFT, CONTROL, ALT, NOINVERT
     "M",            ID_EDIT_MOVE_TO,        VIRTKEY, CONTROL, NOINVERT
     "T",            ID_FORMAT_APPLY_FORECOLOR, VIRTKEY, CONTROL, NOINVERT
     "T",            ID_FORMAT_FORECOLOR,    VIRTKEY, CONTROL, ALT, NOINVERT
@@ -960,7 +945,7 @@ BEGIN
     VK_F5,          ID_EDIT_INSERT_DATE,    VIRTKEY, NOINVERT
 END
 
-IDR_ACCEL_OBSOLETE ACCELERATORS DISCARDABLE 
+IDR_ACCEL_OBSOLETE ACCELERATORS
 BEGIN
     "B",            ID_VIEW_BOOKMARKS,      VIRTKEY, ALT, NOINVERT
     "E",            ID_FORMAT_CENTER,       VIRTKEY, CONTROL, NOINVERT
@@ -977,36 +962,36 @@ BEGIN
     "Y",            ID_EDIT_DELETE_LINE,    VIRTKEY, CONTROL, NOINVERT
 END
 
-IDR_VIEW_CONTENTS ACCELERATORS DISCARDABLE 
+IDR_VIEW_CONTENTS ACCELERATORS
 BEGIN
     "M",            ID_OBJ_MOVE_TO,         VIRTKEY, CONTROL, NOINVERT
     VK_DELETE,      ID_EDIT_CLEAR,          VIRTKEY, NOINVERT
     VK_RETURN,      ID_NAVIGATE_FOLLOW_LINK, VIRTKEY, CONTROL, NOINVERT
 END
 
-IDR_VIEW_PROPERTIES ACCELERATORS DISCARDABLE 
+IDR_VIEW_PROPERTIES ACCELERATORS
 BEGIN
     VK_DELETE,      ID_EDIT_CLEAR,          VIRTKEY, NOINVERT
 END
 
-IDR_VIEW_INDEX ACCELERATORS DISCARDABLE 
+IDR_VIEW_INDEX ACCELERATORS
 BEGIN
     "M",            ID_OBJ_MOVE_TO,         VIRTKEY, CONTROL, NOINVERT
     VK_DELETE,      ID_OBJ_DELETE,          VIRTKEY, NOINVERT
 END
 
-IDR_VIEW_DATA ACCELERATORS DISCARDABLE 
+IDR_VIEW_DATA ACCELERATORS
 BEGIN
     "M",            ID_OBJ_MOVE_TO,         VIRTKEY, CONTROL, NOINVERT
 END
 
-IDR_DIALOG_ABOUT2 ACCELERATORS DISCARDABLE 
+IDR_DIALOG_ABOUT2 ACCELERATORS
 BEGIN
     "A",            ID_TAB_ABOUT,           VIRTKEY, ALT, NOINVERT
     "R",            ID_TAB_CREDITS,         VIRTKEY, ALT, NOINVERT
 END
 
-IDR_OPTIONS ACCELERATORS DISCARDABLE 
+IDR_OPTIONS ACCELERATORS
 BEGIN
     "E",            ID_TAB_FILE,            VIRTKEY, ALT, NOINVERT
     "S",            ID_TAB_DISPLAY,         VIRTKEY, ALT, NOINVERT
@@ -1019,140 +1004,89 @@ END
 //
 
 IDD_ABOUT_OLD DIALOGEX 0, 0, 241, 133
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About NeoMem"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "ProductName",IDC_PROGRAMNAME,37,12,119,8,SS_NOPREFIX,
-                    WS_EX_TRANSPARENT
-    LTEXT           "LegalCopyright",IDC_COPYRIGHT,37,28,188,22,0,
-                    WS_EX_TRANSPARENT
+    LTEXT           "ProductName",IDC_PROGRAMNAME,37,12,119,8,SS_NOPREFIX,WS_EX_TRANSPARENT
+    LTEXT           "LegalCopyright",IDC_COPYRIGHT,37,28,188,22,0,WS_EX_TRANSPARENT
     DEFPUSHBUTTON   "OK",IDOK,95,112,50,14,WS_GROUP
     ICON            IDR_COMPANY,IDC_STATIC,12,52,20,20,0,WS_EX_TRANSPARENT
     ICON            IDR_MAINFRAME,IDC_STATIC,12,13,20,20,0,WS_EX_TRANSPARENT
-    LTEXT           "Visit the website at www.neomem.org.",IDC_COMPANYDESC,
-                    37,60,181,10,0,WS_EX_TRANSPARENT
-    LTEXT           "ProductVersion",IDC_VERSION,37,20,119,8,SS_NOPREFIX,
-                    WS_EX_TRANSPARENT
-    LTEXT           "CompanyName",IDC_COMPANYNAME,37,52,119,8,SS_NOPREFIX,
-                    WS_EX_TRANSPARENT
-    LTEXT           "www.neomem.org",IDC_WEBSITE,37,70,119,8,SS_NOPREFIX | 
-                    NOT WS_VISIBLE,WS_EX_TRANSPARENT
-    LTEXT           "email: bburns@neomem.org",IDC_EMAIL,37,90,119,8,
-                    SS_NOPREFIX | NOT WS_VISIBLE,WS_EX_TRANSPARENT
-    LTEXT           "Send comments and suggestions to:",IDC_COMPANYDESC2,37,
-                    80,181,10,NOT WS_VISIBLE,WS_EX_TRANSPARENT
-    CONTROL         "",IDC_STATIC,"Static",SS_WHITERECT | SS_SUNKEN | NOT 
-                    WS_VISIBLE,7,7,227,99
+    LTEXT           "Visit the website at www.neomem.org.",IDC_COMPANYDESC,37,60,181,10,0,WS_EX_TRANSPARENT
+    LTEXT           "ProductVersion",IDC_VERSION,37,20,119,8,SS_NOPREFIX,WS_EX_TRANSPARENT
+    LTEXT           "CompanyName",IDC_COMPANYNAME,37,52,119,8,SS_NOPREFIX,WS_EX_TRANSPARENT
+    LTEXT           "www.neomem.org",IDC_WEBSITE,37,70,119,8,SS_NOPREFIX | NOT WS_VISIBLE,WS_EX_TRANSPARENT
+    LTEXT           "email: bburns@neomem.org",IDC_EMAIL,37,90,119,8,SS_NOPREFIX | NOT WS_VISIBLE,WS_EX_TRANSPARENT
+    LTEXT           "Send comments and suggestions to:",IDC_COMPANYDESC2,37,80,181,10,NOT WS_VISIBLE,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_STATIC,"Static",SS_WHITERECT | SS_SUNKEN | NOT WS_VISIBLE,7,7,227,99
 END
 
 IDD_EDIT_LINK DIALOGEX 0, 0, 278, 199
-STYLE DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTROLPARENT
 CAPTION "Edit Link"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select the object to link to below. ",
-                    IDC_LBL_INSTRUCTIONS,7,7,264,19
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOSORTHEADER | WS_TABSTOP,7,26,264,117,
-                    WS_EX_CLIENTEDGE,HIDC_LVW
-    CONTROL         "Allow &more than one selection",IDC_CHK_MULTIPLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,7,147,120,10
-    CONTROL         "(filter)",IDC_CHK_FILTER,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_TABSTOP,127,147,44,10
-    CONTROL         "Show &hierarchy",IDC_CHK_HIERARCHY,"Button",
-                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,202,147,69,
-                    10,0,HIDC_CHK_HIERARCHY
-    PUSHBUTTON      "New &Sibling...",IDC_BTN_ADD,7,160,50,15,0,0,
-                    HIDC_BTN_ADD
-    PUSHBUTTON      "New &Child...",IDC_BTN_ADD_CHILD,60,160,50,15,0,0,
-                    HIDC_BTN_ADD_CHILD
+    LTEXT           "Select the object to link to below. ",IDC_LBL_INSTRUCTIONS,7,7,264,19
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOSORTHEADER | WS_TABSTOP,7,26,264,117,WS_EX_CLIENTEDGE,HIDC_LVW
+    CONTROL         "Allow &more than one selection",IDC_CHK_MULTIPLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,147,120,10
+    CONTROL         "(filter)",IDC_CHK_FILTER,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,127,147,44,10
+    CONTROL         "Show &hierarchy",IDC_CHK_HIERARCHY,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,202,147,69,10,0,HIDC_CHK_HIERARCHY
+    PUSHBUTTON      "New &Sibling...",IDC_BTN_ADD,7,160,50,15,0,0,HIDC_BTN_ADD
+    PUSHBUTTON      "New &Child...",IDC_BTN_ADD_CHILD,60,160,50,15,0,0,HIDC_BTN_ADD_CHILD
     PUSHBUTTON      "&Edit...",IDC_BTN_EDIT,113,160,50,15,0,0,HIDC_BTN_EDIT
-    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,166,160,50,15,0,0,
-                    HIDC_BTN_DELETE
-    PUSHBUTTON      "De&fault",IDC_BTN_USE_DEFAULT,221,160,50,15,0,0,
-                    HIDC_BTN_USE_DEFAULT
+    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,166,160,50,15,0,0,HIDC_BTN_DELETE
+    PUSHBUTTON      "De&fault",IDC_BTN_USE_DEFAULT,221,160,50,15,0,0,HIDC_BTN_USE_DEFAULT
     DEFPUSHBUTTON   "OK",IDOK,87,178,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,140,178,50,14
     PUSHBUTTON      "&Help",IDC_BTN_HELP,221,177,50,15
     PUSHBUTTON      "arrange",IDC_BTN_ARRANGE,7,180,28,12,NOT WS_VISIBLE
     PUSHBUTTON      "up",IDC_BTN_UP,47,180,13,12,BS_BITMAP | NOT WS_VISIBLE
-    PUSHBUTTON      "down",IDC_BTN_DOWN,64,180,13,12,BS_BITMAP | NOT 
-                    WS_VISIBLE
+    PUSHBUTTON      "down",IDC_BTN_DOWN,64,180,13,12,BS_BITMAP | NOT WS_VISIBLE
 END
 
 IDD_OPTIONS_DISPLAY DIALOGEX 0, 0, 252, 214
-STYLE DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Di&splay"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Default Font",IDC_LBL_FONT,7,7,48,11,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "The Text View will use this font for any new objects.",
-                    IDC_STATIC,7,18,238,12
-    EDITTEXT        IDC_TXT_FONT,7,32,178,13,ES_AUTOHSCROLL | WS_DISABLED,0,
-                    HIDC_TXT_FONT
-    PUSHBUTTON      "&Change Font...",IDC_BTN_FONT,189,30,56,15,0,0,
-                    HIDC_BTN_FONT
-    LTEXT           "Name Format",IDC_LBL_NAME_FORMAT,7,53,57,11,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Display &names as",IDC_STATIC,7,81,60,11,0,
-                    WS_EX_TRANSPARENT
-    COMBOBOX        IDC_CBO_NAME_FORMAT,74,80,109,44,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_NAME_FORMAT
-    LTEXT           "Date Format",IDC_LBL_DATE_FORMAT,7,98,48,11,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Date properties use the Short Date style, which is set in the Regional Settings Control Panel. To change this setting, click on the button below to bring up the Control Panel, then click on the Date tab.",
-                    IDC_STATIC,8,111,237,29
-    LTEXT           "Sample Date",IDC_LBL_DATE,7,157,48,11,0,
-                    WS_EX_TRANSPARENT
-    EDITTEXT        IDC_TXT_DATE,55,157,128,13,ES_AUTOHSCROLL | WS_DISABLED,
-                    0,HIDC_TXT_DATE
-    PUSHBUTTON      "&Date Format...",IDC_BTN_DATE_FORMAT,189,155,56,15,0,0,
-                    HIDC_BTN_DATE_FORMAT
+    LTEXT           "Default Font",IDC_LBL_FONT,7,7,48,11,0,WS_EX_TRANSPARENT
+    LTEXT           "The Text View will use this font for any new objects.",IDC_STATIC,7,18,238,12
+    EDITTEXT        IDC_TXT_FONT,7,32,178,13,ES_AUTOHSCROLL | WS_DISABLED,0,HIDC_TXT_FONT
+    PUSHBUTTON      "&Change Font...",IDC_BTN_FONT,189,30,56,15,0,0,HIDC_BTN_FONT
+    LTEXT           "Name Format",IDC_LBL_NAME_FORMAT,7,53,57,11,0,WS_EX_TRANSPARENT
+    LTEXT           "Display &names as",IDC_STATIC,7,81,60,11,0,WS_EX_TRANSPARENT
+    COMBOBOX        IDC_CBO_NAME_FORMAT,74,80,109,44,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_NAME_FORMAT
+    LTEXT           "Date Format",IDC_LBL_DATE_FORMAT,7,98,48,11,0,WS_EX_TRANSPARENT
+    LTEXT           "Date properties use the Short Date style, which is set in the Regional Settings Control Panel. To change this setting, click on the button below to bring up the Control Panel, then click on the Date tab.",IDC_STATIC,8,111,237,29
+    LTEXT           "Sample Date",IDC_LBL_DATE,7,157,48,11,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_TXT_DATE,55,157,128,13,ES_AUTOHSCROLL | WS_DISABLED,0,HIDC_TXT_DATE
+    PUSHBUTTON      "&Date Format...",IDC_BTN_DATE_FORMAT,189,155,56,15,0,0,HIDC_BTN_DATE_FORMAT
     CONTROL         "&Show Tip of the Day at Startup",IDC_CHK_SHOW_TIPS,
-                    "Button",BS_AUTOCHECKBOX | BS_TOP | NOT WS_VISIBLE | 
-                    WS_TABSTOP,209,82,36,11,0,HIDC_CHK_SHOW_TIPS
-    COMBOBOX        IDC_CBO_DATE_FORMAT,216,94,29,48,CBS_DROPDOWNLIST | NOT 
-                    WS_VISIBLE | WS_VSCROLL | WS_TABSTOP,0,
-                    HIDC_CBO_DATE_FORMAT
-    LTEXT           "This will change the order in which peoples' names are displayed.",
-                    IDC_STATIC,7,66,238,12
-    LTEXT           "The clock uses the Long Date style, which you can also modify.",
-                    IDC_STATIC,7,140,238,9
+                    "Button",BS_AUTOCHECKBOX | BS_TOP | NOT WS_VISIBLE | WS_TABSTOP,209,82,36,11,0,HIDC_CHK_SHOW_TIPS
+    COMBOBOX        IDC_CBO_DATE_FORMAT,216,94,29,48,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_DATE_FORMAT
+    LTEXT           "This will change the order in which peoples' names are displayed.",IDC_STATIC,7,66,238,12
+    LTEXT           "The clock uses the Long Date style, which you can also modify.",IDC_STATIC,7,140,238,9
 END
 
 IDD_EDIT_OBJECT DIALOGEX 0, 0, 301, 210
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "New Object"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Enter a name and select a class for the new object. ",
-                    IDC_LBL_INSTRUCTIONS,7,7,287,20,0,WS_EX_TRANSPARENT
+    LTEXT           "Enter a name and select a class for the new object. ",IDC_LBL_INSTRUCTIONS,7,7,287,20,0,WS_EX_TRANSPARENT
     LTEXT           "&Name:",IDC_STATIC,7,31,27,11,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_TXT_NAME,52,31,173,14,ES_AUTOHSCROLL,0,HIDC_TXT_NAME
     LTEXT           "&Class:",IDC_LBL_CLASS,7,49,41,25,0,WS_EX_TRANSPARENT
-    CONTROL         "List1",IDC_LVW_CLASS,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,52,47,
-                    173,79,WS_EX_CLIENTEDGE
+    CONTROL         "List1",IDC_LVW_CLASS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,52,47,173,79,WS_EX_CLIENTEDGE
     PUSHBUTTON      "Create ne&w class...",IDC_BTN_NEW_CLASS,227,48,67,15
-    LTEXT           "Class Description:",IDC_STATIC,7,132,40,21,0,
-                    WS_EX_TRANSPARENT
-    EDITTEXT        IDC_TXT_DESCRIPTION,52,131,173,25,ES_MULTILINE | 
-                    ES_READONLY | NOT WS_TABSTOP,0,HIDC_TXT_DESCRIPTION
-    LTEXT           "&Location:",IDC_LBL_LOCATION,7,162,41,21,0,
-                    WS_EX_TRANSPARENT
-    CONTROL         "",IDC_CBO_LOCATION,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP,52,160,173,83
-    LTEXT           "&Folder Contains:",IDC_LBL_DEFAULT_CLASS,7,186,38,17,
-                    NOT WS_VISIBLE,WS_EX_TRANSPARENT
-    CONTROL         "",IDC_CBO_DEFAULT_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP,43,
-                    191,23,83
+    LTEXT           "Class Description:",IDC_STATIC,7,132,40,21,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_TXT_DESCRIPTION,52,131,173,25,ES_MULTILINE | ES_READONLY | NOT WS_TABSTOP,0,HIDC_TXT_DESCRIPTION
+    LTEXT           "&Location:",IDC_LBL_LOCATION,7,162,41,21,0,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_CBO_LOCATION,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,52,160,173,83
+    LTEXT           "&Folder Contains:",IDC_LBL_DEFAULT_CLASS,7,186,38,17,NOT WS_VISIBLE,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_CBO_DEFAULT_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP,43,191,23,83
     PUSHBUTTON      "New...",IDC_BTN_NEW_CLASS2,262,151,32,13,NOT WS_VISIBLE
     DEFPUSHBUTTON   "OK",IDOK,99,189,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,151,189,50,14
@@ -1161,38 +1095,30 @@ BEGIN
 END
 
 IDD_OBJECT_GENERAL DIALOGEX 0, 0, 206, 173
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 CAPTION "General"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Name",IDC_STATIC,7,13,38,11
     EDITTEXT        IDC_TXT_NAME,55,12,144,13,ES_AUTOHSCROLL,0,HIDC_TXT_NAME
     LTEXT           "Class",IDC_STATIC,7,29,38,11
-    EDITTEXT        IDC_TXT_CLASS,55,28,144,13,ES_AUTOHSCROLL | WS_DISABLED,
-                    0,HIDC_TXT_CLASS
+    EDITTEXT        IDC_TXT_CLASS,55,28,144,13,ES_AUTOHSCROLL | WS_DISABLED,0,HIDC_TXT_CLASS
     LTEXT           "Location",IDC_STATIC,7,44,38,11
-    EDITTEXT        IDC_TXT_LOCATION,55,43,144,13,ES_AUTOHSCROLL | 
-                    WS_DISABLED,0,HIDC_TXT_LOCATION
+    EDITTEXT        IDC_TXT_LOCATION,55,43,144,13,ES_AUTOHSCROLL | WS_DISABLED,0,HIDC_TXT_LOCATION
     LTEXT           "Children",IDC_STATIC,7,59,38,11
-    EDITTEXT        IDC_TXT_CHILDREN,55,58,144,13,ES_AUTOHSCROLL | 
-                    WS_DISABLED,0,HIDC_TXT_CHILDREN
+    EDITTEXT        IDC_TXT_CHILDREN,55,58,144,13,ES_AUTOHSCROLL | WS_DISABLED,0,HIDC_TXT_CHILDREN
     LTEXT           "Size",IDC_STATIC,7,75,38,11
-    EDITTEXT        IDC_TXT_SIZE,55,74,144,13,ES_AUTOHSCROLL | WS_DISABLED,0,
-                    HIDC_TXT_SIZE
+    EDITTEXT        IDC_TXT_SIZE,55,74,144,13,ES_AUTOHSCROLL | WS_DISABLED,0,HIDC_TXT_SIZE
     LTEXT           "Flags",IDC_STATIC,7,91,38,11
-    EDITTEXT        IDC_TXT_FLAGS,55,90,144,13,ES_AUTOHSCROLL | WS_DISABLED,
-                    0,HIDC_TXT_FLAGS
+    EDITTEXT        IDC_TXT_FLAGS,55,90,144,13,ES_AUTOHSCROLL | WS_DISABLED,0,HIDC_TXT_FLAGS
     LTEXT           "Description",IDC_STATIC,7,107,38,11
-    EDITTEXT        IDC_TXT_DESCRIPTION,55,107,144,59,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL,0,
-                    HIDC_TXT_DESCRIPTION
+    EDITTEXT        IDC_TXT_DESCRIPTION,55,107,144,59,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL,0,HIDC_TXT_DESCRIPTION
     LTEXT           "ObjectID",IDC_LBL_OBJECTID,8,157,38,11
-    EDITTEXT        IDC_TXT_OBJECTID,56,156,144,13,ES_AUTOHSCROLL,0,
-                    HIDC_TXT_OBJECTID
+    EDITTEXT        IDC_TXT_OBJECTID,56,156,144,13,ES_AUTOHSCROLL,0,HIDC_TXT_OBJECTID
 END
 
-IDD_PREVIEW_TOOLBAR DIALOG DISCARDABLE  0, 0, 356, 17
-STYLE WS_CHILD
+IDD_PREVIEW_TOOLBAR DIALOG 0, 0, 356, 17
+STYLE DS_SETFONT | WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
     PUSHBUTTON      "&Print...",ID_PREVIEW_PRINT,3,3,40,12
@@ -1205,165 +1131,122 @@ BEGIN
     PUSHBUTTON      "&Close",AFX_ID_PREVIEW_CLOSE,313,3,40,12
 END
 
-IDD_ABOUT2 DIALOG DISCARDABLE  0, 0, 293, 221
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUT2 DIALOG 0, 0, 293, 221
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About NeoMem"
 FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "Tab1",IDC_TBS,"SysTabControl32",0x0,7,7,279,191
-    CONTROL         "",IDC_RTF,"RichEdit20A",WS_BORDER | WS_VSCROLL | 
-                    WS_TABSTOP | 0x804,172,201,43,13
+    CONTROL         "",IDC_RTF,"RichEdit20A",ES_MULTILINE | ES_READONLY | WS_BORDER | WS_VSCROLL | WS_TABSTOP,172,201,43,13
     PUSHBUTTON      "C&redits...",IDC_BTN_CREDITS,7,200,50,14,NOT WS_VISIBLE
-    CONTROL         910,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | 
-                    SS_SUNKEN | NOT WS_VISIBLE,141,202,21,12
+    CONTROL         910,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE,141,202,21,12
     PUSHBUTTON      "&Close",IDC_BTN_CLOSE,236,200,50,14
 END
 
-IDD_ERROR DIALOG DISCARDABLE  0, 0, 242, 185
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+IDD_ERROR DIALOG 0, 0, 242, 185
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
 CAPTION "Error"
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "An error has occurred! ",IDC_LBL_TITLE,7,7,228,11
-    EDITTEXT        IDC_TXT_ERROR,7,22,228,52,ES_MULTILINE | ES_AUTOVSCROLL | 
-                    ES_WANTRETURN | WS_VSCROLL
-    LTEXT           "Please describe briefly what you were doing when the error occurred (optional). ",
-                    IDC_LBL_DESCRIPTION,7,80,228,19
-    EDITTEXT        IDC_DESCRIPTION,7,101,228,37,ES_MULTILINE | 
-                    ES_AUTOHSCROLL | ES_WANTRETURN
-    LTEXT           "You can email an error report by clicking on the Send Email button below. ",
-                    IDC_STATIC,7,143,191,18
+    EDITTEXT        IDC_TXT_ERROR,7,22,228,52,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "Please describe briefly what you were doing when the error occurred (optional). ",IDC_LBL_DESCRIPTION,7,80,228,19
+    EDITTEXT        IDC_DESCRIPTION,7,101,228,37,ES_MULTILINE | ES_AUTOHSCROLL | ES_WANTRETURN
+    LTEXT           "You can email an error report by clicking on the Send Email button below. ",IDC_STATIC,7,143,191,18
     PUSHBUTTON      "Send &Email...",IDC_BTN_SEND,7,164,54,14
     PUSHBUTTON      "&Copy to Clipboard",IDC_BTN_COPY2,67,164,68,14
-    PUSHBUTTON      "&Continue",IDC_BTN_CONTINUE,128,158,50,14,NOT 
-                    WS_VISIBLE
+    PUSHBUTTON      "&Continue",IDC_BTN_CONTINUE,128,158,50,14,NOT WS_VISIBLE
     PUSHBUTTON      "&Shut Down NeoMem",IDC_BTN_EXIT,155,164,80,14
 END
 
 IDD_TIP DIALOGEX 0, 0, 224, 129
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Tip of the Day"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "&Close",IDOK,167,108,50,14
     PUSHBUTTON      "&Next Tip",IDC_BTN_NEXT_TIP,114,108,50,14
-    CONTROL         "&Show Tips at Startup",IDC_CHK_SHOW_TIPS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,7,111,88,11
+    CONTROL         "&Show Tips at Startup",IDC_CHK_SHOW_TIPS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,111,88,11
     LTEXT           "Did you know...",IDC_LBL_INSTRUCTIONS,7,7,171,13
-    CONTROL         "",IDC_BACKGROUND,"Static",SS_WHITERECT | SS_SUNKEN | 
-                    NOT WS_VISIBLE,7,22,210,80,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_BACKGROUND,"Static",SS_WHITERECT | SS_SUNKEN | NOT WS_VISIBLE,7,22,210,80,WS_EX_TRANSPARENT
 END
 
-IDD_FILE_GENERAL DIALOG DISCARDABLE  0, 0, 207, 162
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+IDD_FILE_GENERAL DIALOG 0, 0, 207, 162
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 CAPTION "General"
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "Name",ID_STATIC,8,13,38,11
     EDITTEXT        IDC_TXT_NAME,56,12,144,13,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Location",IDC_LBL_LOCATION,8,29,42,11
-    EDITTEXT        IDC_TXT_LOCATION,56,27,144,13,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    EDITTEXT        IDC_TXT_LOCATION,56,27,144,13,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Objects",ID_STATIC,8,43,38,11
-    EDITTEXT        IDC_TXT_OBJECTS,56,42,144,13,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    EDITTEXT        IDC_TXT_OBJECTS,56,42,144,13,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Memory Used",ID_STATIC,8,58,45,11
     EDITTEXT        IDC_TXT_SIZE,56,57,144,13,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "File Size",ID_STATIC,8,73,38,11
-    EDITTEXT        IDC_TXT_FILE_SIZE,56,72,144,13,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    EDITTEXT        IDC_TXT_FILE_SIZE,56,72,144,13,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Encryption",ID_STATIC,8,87,42,11
-    EDITTEXT        IDC_TXT_ENCRYPTION,56,87,144,13,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    EDITTEXT        IDC_TXT_ENCRYPTION,56,87,144,13,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Data Model",ID_STATIC,8,103,43,11
-    EDITTEXT        IDC_TXT_DATA_MODEL,56,103,144,13,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    LTEXT           "File Structure",IDC_LBL_FILE_STRUCTURE,8,119,46,11,NOT 
-                    WS_VISIBLE
-    EDITTEXT        IDC_TXT_FILE_STRUCTURE,56,118,144,13,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_VISIBLE
+    EDITTEXT        IDC_TXT_DATA_MODEL,56,103,144,13,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "File Structure",IDC_LBL_FILE_STRUCTURE,8,119,46,11,NOT WS_VISIBLE
+    EDITTEXT        IDC_TXT_FILE_STRUCTURE,56,118,144,13,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE
     LTEXT           "Description",ID_STATIC,8,144,38,11,NOT WS_VISIBLE
-    EDITTEXT        IDC_TXT_DESCRIPTION,56,142,144,13,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_WANTRETURN | NOT WS_VISIBLE
+    EDITTEXT        IDC_TXT_DESCRIPTION,56,142,144,13,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | NOT WS_VISIBLE
     PUSHBUTTON      "Set...",IDC_BTN_PASSWORD,7,132,15,13,NOT WS_VISIBLE
-    PUSHBUTTON      "Set Data Model...",IDC_BTN_DATA_MODEL,27,133,74,13,NOT 
-                    WS_VISIBLE
+    PUSHBUTTON      "Set Data Model...",IDC_BTN_DATA_MODEL,27,133,74,13,NOT WS_VISIBLE
 END
 
 IDD_CLASS_NAME DIALOGEX 0, 0, 284, 156
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Enter the na&me of the class (should be singular, e.g. Book rather than Books).",
-                    IDC_LBL_INSTRUCTIONS,1,12,276,11,0,WS_EX_TRANSPARENT
+    LTEXT           "Enter the na&me of the class (should be singular, e.g. Book rather than Books).",IDC_LBL_INSTRUCTIONS,1,12,276,11,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_TXT_NAME,1,25,278,14,ES_AUTOHSCROLL,0,HIDC_TXT_NAME
-    LTEXT           "Enter a &description of the class (optional).",
-                    IDC_STATIC,1,44,188,11,0,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_TXT_DESCRIPTION,1,57,278,56,ES_MULTILINE | 
-                    ES_AUTOVSCROLL,0,HIDC_TXT_DESCRIPTION
-    LTEXT           "Name and Description",IDC_LBL_TITLE,1,0,187,11,0,
-                    WS_EX_TRANSPARENT
+    LTEXT           "Enter a &description of the class (optional).",IDC_STATIC,1,44,188,11,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_TXT_DESCRIPTION,1,57,278,56,ES_MULTILINE | ES_AUTOVSCROLL,0,HIDC_TXT_DESCRIPTION
+    LTEXT           "Name and Description",IDC_LBL_TITLE,1,0,187,11,0,WS_EX_TRANSPARENT
 END
 
 IDD_CLASS_ICON DIALOGEX 0, 0, 285, 156
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select an icon to be used to represent objects of the class. You can import a new icon by clicking on Import. Click on Use Default to use the default icon.",
-                    IDC_LBL_INSTRUCTIONS,3,14,278,26,0,WS_EX_TRANSPARENT
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,3,40,
-                    188,98,WS_EX_CLIENTEDGE,HIDC_LVW
-    PUSHBUTTON      "&Import...",IDC_BTN_IMPORT,3,142,40,14,0,0,
-                    HIDC_BTN_IMPORT
-    PUSHBUTTON      "&Rename...",IDC_BTN_RENAME,47,142,44,14,0,0,
-                    HIDC_BTN_RENAME
-    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,95,142,40,14,0,0,
-                    HIDC_BTN_DELETE
-    PUSHBUTTON      "Use &Default",IDC_BTN_DEFAULT,139,142,52,14,0,0,
-                    HIDC_BTN_DEFAULT
+    LTEXT           "Select an icon to be used to represent objects of the class. You can import a new icon by clicking on Import. Click on Use Default to use the default icon.",IDC_LBL_INSTRUCTIONS,3,14,278,26,0,WS_EX_TRANSPARENT
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,3,40,188,98,WS_EX_CLIENTEDGE,HIDC_LVW
+    PUSHBUTTON      "&Import...",IDC_BTN_IMPORT,3,142,40,14,0,0,HIDC_BTN_IMPORT
+    PUSHBUTTON      "&Rename...",IDC_BTN_RENAME,47,142,44,14,0,0,HIDC_BTN_RENAME
+    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,95,142,40,14,0,0,HIDC_BTN_DELETE
+    PUSHBUTTON      "Use &Default",IDC_BTN_DEFAULT,139,142,52,14,0,0,HIDC_BTN_DEFAULT
     LTEXT           "Icon",IDC_LBL_TITLE,3,2,187,11,0,WS_EX_TRANSPARENT
 END
 
 IDD_CLASS_SUMMARY DIALOGEX 0, 0, 284, 156
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "That's all the information NeoMem needs to create your new class.",
-                    IDC_LBL_INSTRUCTIONS,7,28,270,20,0,WS_EX_TRANSPARENT
-    CONTROL         "",IDC_RTF,"RichEdit20A",NOT WS_VISIBLE | WS_DISABLED | 
-                    WS_BORDER | WS_VSCROLL | WS_TABSTOP | 0x844,253,92,24,33,
-                    0,HIDC_RTF
-    LTEXT           "Click on Finish to continue, or Back to review or change settings.",
-                    IDC_LBL_INSTRUCTIONS2,7,66,270,20,NOT WS_GROUP,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Congratulations!",IDC_LBL_TITLE,7,7,187,11,0,
-                    WS_EX_TRANSPARENT
+    LTEXT           "That's all the information NeoMem needs to create your new class.",IDC_LBL_INSTRUCTIONS,7,28,270,20,0,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_RTF,"RichEdit20A",ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | NOT WS_VISIBLE | WS_DISABLED | WS_BORDER | WS_VSCROLL | WS_TABSTOP,253,92,24,33,0,HIDC_RTF
+    LTEXT           "Click on Finish to continue, or Back to review or change settings.",IDC_LBL_INSTRUCTIONS2,7,66,270,20,NOT WS_GROUP,WS_EX_TRANSPARENT
+    LTEXT           "Congratulations!",IDC_LBL_TITLE,7,7,187,11,0,WS_EX_TRANSPARENT
 END
 
 IDD_CLASS_PROPERTIES DIALOGEX 0, 0, 285, 156
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Properties",IDC_LBL_TITLE,1,0,187,11,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Select the properties to be included in objects of this class. You can create a new property by clicking on New. Properties that are automatically inherited by this class are shown in blue and cannot be removed.",
-                    IDC_LBL_INSTRUCTIONS,1,12,282,27,0,WS_EX_TRANSPARENT
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,1,50,281,88,
-                    WS_EX_CLIENTEDGE,HIDC_LVW
+    LTEXT           "Properties",IDC_LBL_TITLE,1,0,187,11,0,WS_EX_TRANSPARENT
+    LTEXT           "Select the properties to be included in objects of this class. You can create a new property by clicking on New. Properties that are automatically inherited by this class are shown in blue and cannot be removed.",IDC_LBL_INSTRUCTIONS,1,12,282,27,0,WS_EX_TRANSPARENT
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,1,50,281,88,WS_EX_CLIENTEDGE,HIDC_LVW
     PUSHBUTTON      "Ne&w...",IDC_BTN_ADD,1,140,50,14,0,0,HIDC_BTN_ADD
     PUSHBUTTON      "&Edit...",IDC_BTN_EDIT,53,140,50,14,0,0,HIDC_BTN_EDIT
-    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,105,140,50,14,0,0,
-                    HIDC_BTN_DELETE
-    LTEXT           "Note: You can always add properties to the class later through the Contents View.",
-                    IDC_STATIC,1,40,280,10
+    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,105,140,50,14,0,0,HIDC_BTN_DELETE
+    LTEXT           "Note: You can always add properties to the class later through the Contents View.",IDC_STATIC,1,40,280,10
 END
 
 IDD_EDIT_PROPERTY DIALOGEX 0, 0, 260, 229
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit Property"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -1371,223 +1254,158 @@ BEGIN
     LTEXT           "&Name",IDC_STATIC,11,37,32,11
     EDITTEXT        IDC_TXT_NAME,55,37,182,13,ES_AUTOHSCROLL,0,HIDC_TXT_NAME
     LTEXT           "&Description",IDC_STATIC,11,55,40,11
-    EDITTEXT        IDC_TXT_DESCRIPTION,55,55,182,32,ES_MULTILINE | 
-                    ES_AUTOVSCROLL,0,HIDC_TXT_DESCRIPTION
+    EDITTEXT        IDC_TXT_DESCRIPTION,55,55,182,32,ES_MULTILINE | ES_AUTOVSCROLL,0,HIDC_TXT_DESCRIPTION
     LTEXT           "&Type",IDC_STATIC,11,92,34,11
-    CONTROL         "",IDC_CBO_TYPE,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP,55,90,182,132,0,
-                    HIDC_CBO_TYPE
+    CONTROL         "",IDC_CBO_TYPE,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,55,90,182,132,0,HIDC_CBO_TYPE
     LTEXT           "Link &Source",IDC_LBL_LINK,12,136,39,11,WS_DISABLED
-    CONTROL         "",IDC_CBO_LINK_SOURCE,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP,56,134,
-                    147,96,0,HIDC_CBO_LINK_SOURCE
-    PUSHBUTTON      "Ne&w...",IDC_BTN_NEW,206,134,32,12,WS_DISABLED,0,
-                    HIDC_BTN_NEW
-    CONTROL         "&Limit link to one object",IDC_CHK_LIMIT,"Button",
-                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,56,150,92,12,
-                    0,HIDC_CHK_LIMIT
+    CONTROL         "",IDC_CBO_LINK_SOURCE,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP,56,134,147,96,0,HIDC_CBO_LINK_SOURCE
+    PUSHBUTTON      "Ne&w...",IDC_BTN_NEW,206,134,32,12,WS_DISABLED,0,HIDC_BTN_NEW
+    CONTROL         "&Limit link to one object",IDC_CHK_LIMIT,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,56,150,92,12,0,HIDC_CHK_LIMIT
     CONTROL         "Display link object &hierarchy",IDC_CHK_HIERARCHY,
-                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,56,
-                    162,184,12,0,HIDC_CHK_HIERARCHY
-    CONTROL         "Display &additional property to make name unique:",
-                    IDC_CHK_PROPERTY,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
-                    WS_TABSTOP,56,174,175,12,0,HIDC_CHK_PROPERTY
+                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,56,162,184,12,0,HIDC_CHK_HIERARCHY
+    CONTROL         "Display &additional property to make name unique:",IDC_CHK_PROPERTY,
+                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,56,174,175,12,0,HIDC_CHK_PROPERTY
     LTEXT           "&Property",IDC_LBL_PROPERTY,12,192,44,11,WS_DISABLED
-    CONTROL         "",IDC_CBO_PROPERTY,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP,56,190,
-                    182,84,0,HIDC_CBO_PROPERTY
-    LTEXT           "&Units",IDC_LBL_UNITS,7,210,36,11,NOT WS_VISIBLE | 
-                    WS_DISABLED
-    CONTROL         "",IDC_CBO_UNITS,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | NOT WS_VISIBLE | WS_DISABLED | WS_VSCROLL | 
-                    WS_TABSTOP,47,210,16,20,0,HIDC_CBO_UNITS
+    CONTROL         "",IDC_CBO_PROPERTY,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP,56,190,182,84,0,HIDC_CBO_PROPERTY
+    LTEXT           "&Units",IDC_LBL_UNITS,7,210,36,11,NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "",IDC_CBO_UNITS,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | NOT WS_VISIBLE | WS_DISABLED | WS_VSCROLL | WS_TABSTOP,47,210,16,20,0,HIDC_CBO_UNITS
     DEFPUSHBUTTON   "OK",IDOK,78,208,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,132,208,50,14
     PUSHBUTTON      "Help",IDC_BTN_HELP,203,208,50,14
     LTEXT           "Type Description",IDC_STATIC,11,107,40,20
-    EDITTEXT        IDC_TXT_TYPE_DESCRIPTION,55,107,182,23,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TXT_TYPE_DESCRIPTION,55,107,182,23,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | NOT WS_TABSTOP
 END
 
 IDD_CLASS_INTRO DIALOGEX 0, 0, 284, 157
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "This wizard will guide you through creating or modifying a class, which describes a type of object that can be stored in your file.",
-                    IDC_STATIC,3,0,278,20
-    CONTROL         "&Add a new class",IDC_OPT_ADD,"Button",
-                    BS_AUTORADIOBUTTON,7,23,96,12,0,HIDC_OPT_ADD
-    CONTROL         "&Edit or delete an existing class",IDC_OPT_EDIT,"Button",
-                    BS_AUTORADIOBUTTON,7,34,136,12,0,HIDC_OPT_EDIT
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,3,50,
-                    232,106,WS_EX_CLIENTEDGE,HIDC_LVW
-    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,240,50,40,14,0,0,
-                    HIDC_BTN_DELETE
+    LTEXT           "This wizard will guide you through creating or modifying a class, which describes a type of object that can be stored in your file.",IDC_STATIC,3,0,278,20
+    CONTROL         "&Add a new class",IDC_OPT_ADD,"Button",BS_AUTORADIOBUTTON,7,23,96,12,0,HIDC_OPT_ADD
+    CONTROL         "&Edit or delete an existing class",IDC_OPT_EDIT,"Button",BS_AUTORADIOBUTTON,7,34,136,12,0,HIDC_OPT_EDIT
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,3,50,232,106,WS_EX_CLIENTEDGE,HIDC_LVW
+    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,240,50,40,14,0,0,HIDC_BTN_DELETE
 END
 
 IDD_EDIT_STRING DIALOGEX 0, 0, 261, 154
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit String"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Enter the new value for the string below. Use Ctrl+Enter to start a new line.",
-                    IDC_LBL_INSTRUCTIONS,7,7,247,18
-    EDITTEXT        IDC_TXT_VALUE,7,26,247,103,ES_MULTILINE | ES_AUTOVSCROLL | 
-                    WS_VSCROLL,0,HIDC_TXT_VALUE
+    LTEXT           "Enter the new value for the string below. Use Ctrl+Enter to start a new line.",IDC_LBL_INSTRUCTIONS,7,7,247,18
+    EDITTEXT        IDC_TXT_VALUE,7,26,247,103,ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL,0,HIDC_TXT_VALUE
     DEFPUSHBUTTON   "OK",IDOK,150,133,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,204,133,50,14
 END
 
-IDD_EDIT_NAME DIALOG DISCARDABLE  0, 0, 232, 65
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_EDIT_NAME DIALOG 0, 0, 232, 65
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit Name"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Enter the new name for the object:",
-                    IDC_LBL_INSTRUCTIONS,8,8,216,11
+    LTEXT           "Enter the new name for the object:",IDC_LBL_INSTRUCTIONS,8,8,216,11
     EDITTEXT        IDC_TXT_VALUE,8,20,216,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,119,44,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,175,44,50,14
 END
 
 IDD_EDIT_PERSON_NAME DIALOGEX 0, 0, 212, 157
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit Name"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Enter the name for the person below.",IDC_STATIC,8,8,
-                    126,11
+    LTEXT           "Enter the name for the person below.",IDC_STATIC,8,8,126,11
     LTEXT           "&Title:",IDC_STATIC,8,29,40,11
-    COMBOBOX        IDC_CBO_TITLE,52,28,47,59,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP,0,HIDC_CBO_TITLE
+    COMBOBOX        IDC_CBO_TITLE,52,28,47,59,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_TITLE
     LTEXT           "&First:",IDC_STATIC,8,45,40,11
-    EDITTEXT        IDC_TXT_FIRST,52,44,138,14,ES_AUTOHSCROLL,0,
-                    HIDC_TXT_FIRST
+    EDITTEXT        IDC_TXT_FIRST,52,44,138,14,ES_AUTOHSCROLL,0,HIDC_TXT_FIRST
     LTEXT           "&Middle:",IDC_STATIC,8,61,40,11
-    EDITTEXT        IDC_TXT_MIDDLE,52,60,138,14,ES_AUTOHSCROLL,0,
-                    HIDC_TXT_MIDDLE
+    EDITTEXT        IDC_TXT_MIDDLE,52,60,138,14,ES_AUTOHSCROLL,0,HIDC_TXT_MIDDLE
     LTEXT           "&Last:",IDC_STATIC,8,77,40,11
     EDITTEXT        IDC_TXT_LAST,52,76,138,14,ES_AUTOHSCROLL,0,HIDC_TXT_LAST
     LTEXT           "&Nickname:",IDC_STATIC,8,93,40,11
-    EDITTEXT        IDC_TXT_NICKNAME,52,92,138,14,ES_AUTOHSCROLL,0,
-                    HIDC_TXT_NICKNAME
+    EDITTEXT        IDC_TXT_NICKNAME,52,92,138,14,ES_AUTOHSCROLL,0,HIDC_TXT_NICKNAME
     LTEXT           "&Suffix:",IDC_STATIC,8,109,40,11
-    COMBOBOX        IDC_CBO_SUFFIX,52,108,47,59,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP,0,HIDC_CBO_SUFFIX
+    COMBOBOX        IDC_CBO_SUFFIX,52,108,47,59,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_SUFFIX
     DEFPUSHBUTTON   "OK",IDOK,47,136,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,101,136,50,14
     PUSHBUTTON      "&Help",IDC_BTN_HELP,155,136,50,14
 END
 
 IDD_EDIT_DATE DIALOGEX 0, 0, 196, 162
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit Date"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select the &date from the calendar below.",IDC_STATIC,7,
-                    7,182,11,0,WS_EX_TRANSPARENT
-    CONTROL         "MonthCalendar1",IDC_DATE,"SysMonthCal32",MCS_NOTODAY | 
-                    WS_TABSTOP | 0x8,7,19,182,100,WS_EX_CLIENTEDGE,HIDC_DATE
-    CONTROL         "Enter &time also",IDC_CHK_TIME,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,7,124,69,11,0,HIDC_CHK_TIME
-    CONTROL         "DateTimePicker1",IDC_TIME,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | DTS_UPDOWN | WS_DISABLED | WS_TABSTOP | 
-                    0x8,76,124,62,12,0,HIDC_TIME
+    LTEXT           "Select the &date from the calendar below.",IDC_STATIC,7,7,182,11,0,WS_EX_TRANSPARENT
+    CONTROL         "MonthCalendar1",IDC_DATE,"SysMonthCal32",MCS_NOTODAY | MCS_NOTODAYCIRCLE | WS_TABSTOP,7,19,182,100,WS_EX_CLIENTEDGE,HIDC_DATE
+    CONTROL         "Enter &time also",IDC_CHK_TIME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,124,69,11,0,HIDC_CHK_TIME
+    CONTROL         "DateTimePicker1",IDC_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_DISABLED | WS_TABSTOP | 0x8,76,124,62,12,0,HIDC_TIME
     DEFPUSHBUTTON   "OK",IDOK,33,141,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,86,141,50,14
     PUSHBUTTON      "&Help",IDC_BTN_HELP,139,141,50,14
 END
 
 IDD_CLASS_INHERITANCE DIALOGEX 0, 0, 284, 153
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         734,IDC_STATIC,"Static",SS_BITMAP | SS_SUNKEN,0,0,87,155
-    LTEXT           "Inheritance",IDC_LBL_TITLE,92,0,187,11,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Instructions",IDC_LBL_INSTRUCTIONS,92,12,188,20,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Note: If your class is a type of person you should inherit your class from Person so that names are handled correctly.",
-                    IDC_STATIC,92,32,188,18,0,WS_EX_TRANSPARENT
+    LTEXT           "Inheritance",IDC_LBL_TITLE,92,0,187,11,0,WS_EX_TRANSPARENT
+    LTEXT           "Instructions",IDC_LBL_INSTRUCTIONS,92,12,188,20,0,WS_EX_TRANSPARENT
+    LTEXT           "Note: If your class is a type of person you should inherit your class from Person so that names are handled correctly.",IDC_STATIC,92,32,188,18,0,WS_EX_TRANSPARENT
     CONTROL         "&Inherit properties from another class",IDC_CHK_INHERIT,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,92,50,136,12,
-                    WS_EX_TRANSPARENT
-    CONTROL         "Tree1",IDC_TVW,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_HASLINES | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | 
-                    TVS_FULLROWSELECT | WS_DISABLED | WS_BORDER | WS_TABSTOP,
-                    92,64,188,88,WS_EX_CLIENTEDGE,HIDC_TVW
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,92,50,136,12,WS_EX_TRANSPARENT
+    CONTROL         "Tree1",IDC_TVW,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_DISABLED | WS_BORDER | WS_TABSTOP,92,64,188,88,WS_EX_CLIENTEDGE,HIDC_TVW
 END
 
 IDD_CLASS_CONTENTS DIALOGEX 0, 0, 284, 153
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Contents",IDC_LBL_TITLE,3,0,187,11,0,WS_EX_TRANSPARENT
-    LTEXT           "If objects of this class are to store child objects, what should the default class for the child objects be? (If the class doesn't exist yet you can always specify it later).",
-                    IDC_LBL_INSTRUCTIONS,3,13,275,22,0,WS_EX_TRANSPARENT
-    CONTROL         "Yes, they may need to store child objects",
-                    IDC_OPT_CHILDREN_YES,"Button",BS_AUTORADIOBUTTON | NOT 
-                    WS_VISIBLE,32,133,154,9
-    CONTROL         "No, they won't need to store child objects",
-                    IDC_OPT_CHILDREN_NO,"Button",BS_AUTORADIOBUTTON | NOT 
-                    WS_VISIBLE,32,144,154,9
-    LTEXT           "What should the &default class for the child objects be?",
-                    IDC_LBL_DEFAULT_CLASS,0,119,187,10,NOT WS_VISIBLE,
-                    WS_EX_TRANSPARENT
-    CONTROL         "",IDC_CBO_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP,22,42,147,98
-    LTEXT           "Should the child objects be &sorted alphabetically?",
-                    IDC_LBL_SORTED,3,66,187,10,0,WS_EX_TRANSPARENT
-    CONTROL         "Yes, automatically sort the child objects",
-                    IDC_OPT_SORT_YES,"Button",BS_AUTORADIOBUTTON,20,79,169,9
-    CONTROL         "No, let me arrange the child objects in any order",
-                    IDC_OPT_SORT_NO,"Button",BS_AUTORADIOBUTTON,20,90,169,9
-    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ | NOT WS_VISIBLE,0,
-                    129,189,1
+    LTEXT           "If objects of this class are to store child objects, what should the default class for the child objects be? (If the class doesn't exist yet you can always specify it later).",IDC_LBL_INSTRUCTIONS,3,13,275,22,0,WS_EX_TRANSPARENT
+    CONTROL         "Yes, they may need to store child objects",IDC_OPT_CHILDREN_YES,
+                    "Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,32,133,154,9
+    CONTROL         "No, they won't need to store child objects",IDC_OPT_CHILDREN_NO,
+                    "Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,32,144,154,9
+    LTEXT           "What should the &default class for the child objects be?",IDC_LBL_DEFAULT_CLASS,0,119,187,10,NOT WS_VISIBLE,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_CBO_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,22,42,147,98
+    LTEXT           "Should the child objects be &sorted alphabetically?",IDC_LBL_SORTED,3,66,187,10,0,WS_EX_TRANSPARENT
+    CONTROL         "Yes, automatically sort the child objects",IDC_OPT_SORT_YES,
+                    "Button",BS_AUTORADIOBUTTON,20,79,169,9
+    CONTROL         "No, let me arrange the child objects in any order",IDC_OPT_SORT_NO,
+                    "Button",BS_AUTORADIOBUTTON,20,90,169,9
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ | NOT WS_VISIBLE,0,129,189,1
 END
 
 IDD_CLASS_FOLDER DIALOGEX 0, 0, 284, 153
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Do you want to add a new folder to contain objects of this class?",
-                    IDC_LBL_INSTRUCTIONS,4,12,275,16,0,WS_EX_TRANSPARENT
-    CONTROL         "&Yes, add a new folder",IDC_CHK_ADD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,4,32,92,12,0,HIDC_CHK_ADD
-    EDITTEXT        IDC_TXT_NAME,4,64,188,14,ES_AUTOHSCROLL | WS_DISABLED,0,
-                    HIDC_TXT_NAME
-    LTEXT           "&Location of the folder",IDC_LBL_LOCATION,4,80,72,10,
-                    WS_DISABLED,WS_EX_TRANSPARENT
-    CONTROL         "Tree1",IDC_TVW,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_HASLINES | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | 
-                    TVS_FULLROWSELECT | WS_DISABLED | WS_BORDER | WS_TABSTOP,
-                    4,92,188,60,WS_EX_CLIENTEDGE,HIDC_TVW
-    LTEXT           "Na&me for the folder",IDC_LBL_NAME,4,52,64,11,
-                    WS_DISABLED,WS_EX_TRANSPARENT
+    LTEXT           "Do you want to add a new folder to contain objects of this class?",IDC_LBL_INSTRUCTIONS,4,12,275,16,0,WS_EX_TRANSPARENT
+    CONTROL         "&Yes, add a new folder",IDC_CHK_ADD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,4,32,92,12,0,HIDC_CHK_ADD
+    EDITTEXT        IDC_TXT_NAME,4,64,188,14,ES_AUTOHSCROLL | WS_DISABLED,0,HIDC_TXT_NAME
+    LTEXT           "&Location of the folder",IDC_LBL_LOCATION,4,80,72,10,WS_DISABLED,WS_EX_TRANSPARENT
+    CONTROL         "Tree1",IDC_TVW,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_DISABLED | WS_BORDER | WS_TABSTOP,4,92,188,60,WS_EX_CLIENTEDGE,HIDC_TVW
+    LTEXT           "Na&me for the folder",IDC_LBL_NAME,4,52,64,11,WS_DISABLED,WS_EX_TRANSPARENT
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,0,48,280,1
-    LTEXT           "Add Folder",IDC_LBL_TITLE,4,0,187,11,0,
-                    WS_EX_TRANSPARENT
+    LTEXT           "Add Folder",IDC_LBL_TITLE,4,0,187,11,0,WS_EX_TRANSPARENT
 END
 
 IDD_NEW_FILE DIALOGEX 0, 0, 206, 135
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "New File"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,95,114,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,149,114,50,14
-    LTEXT           "Select the template to use for the new file and click OK.",
-                    IDC_INSTRUCTIONS,7,7,185,12
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_SINGLESEL | 
-                    LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_AUTOARRANGE | WS_TABSTOP,7,22,192,86,
-                    WS_EX_CLIENTEDGE,HIDC_LVW
+    LTEXT           "Select the template to use for the new file and click OK.",IDC_INSTRUCTIONS,7,7,185,12
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_AUTOARRANGE | WS_TABSTOP,7,22,192,86,WS_EX_CLIENTEDGE,HIDC_LVW
 END
 
-IDD_EDIT_NUMBER DIALOG DISCARDABLE  0, 0, 113, 78
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_EDIT_NUMBER DIALOG 0, 0, 113, 78
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit Number"
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -1606,114 +1424,84 @@ BEGIN
 END
 
 IDD_NEW_LINK_SOURCE DIALOGEX 0, 0, 257, 197
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "New Link Source"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "To add a new link source, you'll need to add a new folder that will contain the items to be linked to.",
-                    IDC_STATIC,8,7,237,17
+    LTEXT           "To add a new link source, you'll need to add a new folder that will contain the items to be linked to.",IDC_STATIC,8,7,237,17
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,0,28,256,1
     LTEXT           "Class",IDC_LBL_CLASS,8,32,64,12
-    LTEXT           "First, choose what class of items the folder will contain. If you've already created the class, you can select it here. Otherwise, click on the New Class button to create a new one. ",
-                    IDC_STATIC,8,45,232,27
+    LTEXT           "First, choose what class of items the folder will contain. If you've already created the class, you can select it here. Otherwise, click on the New Class button to create a new one. ",IDC_STATIC,8,45,232,27
     LTEXT           "&Class",IDC_STATIC,8,96,42,11
-    CONTROL         "",IDC_CBO_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP,57,96,119,83,0,
-                    HIDC_CBO_CLASS
-    PUSHBUTTON      "Ne&w Class...",IDC_BTN_NEW_CLASS,180,96,48,13,0,0,
-                    HIDC_BTN_NEW_CLASS
+    CONTROL         "",IDC_CBO_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,57,96,119,83,0,HIDC_CBO_CLASS
+    PUSHBUTTON      "Ne&w Class...",IDC_BTN_NEW_CLASS,180,96,48,13,0,0,HIDC_BTN_NEW_CLASS
     LTEXT           "Folder",IDC_LBL_FOLDER,8,116,64,12
-    LTEXT           "Next, enter the name for the new folder. By default, the folder will be added to the Home folder. You can change its location later if you wish.",
-                    IDC_STATIC,8,129,236,19
+    LTEXT           "Next, enter the name for the new folder. By default, the folder will be added to the Home folder. You can change its location later if you wish.",IDC_STATIC,8,129,236,19
     LTEXT           "&Folder Name",IDC_STATIC,8,152,48,12
-    EDITTEXT        IDC_TXT_FOLDER_NAME,57,152,159,14,ES_AUTOHSCROLL,0,
-                    HIDC_TXT_FOLDER_NAME
+    EDITTEXT        IDC_TXT_FOLDER_NAME,57,152,159,14,ES_AUTOHSCROLL,0,HIDC_TXT_FOLDER_NAME
     DEFPUSHBUTTON   "OK",IDOK,91,176,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,146,176,50,14
-    LTEXT           "Note: You can use the same class for several different link folders. For instance, you can use a Category class in different category folders.",
-                    IDC_STATIC,8,72,232,20
+    LTEXT           "Note: You can use the same class for several different link folders. For instance, you can use a Category class in different category folders.",IDC_STATIC,8,72,232,20
     PUSHBUTTON      "&Help",IDC_BTN_HELP,200,176,50,14
 END
 
 IDD_CLASS_TYPE DIALOGEX 0, 0, 294, 162
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Name Type",IDC_LBL_TITLE,1,0,187,11,0,WS_EX_TRANSPARENT
-    LTEXT           "If your class is for a type of person, select Person Name below. When you enter a name for an object of this class NeoMem will attempt to break it into first and last names. If your class is not for a person, just select Regular Name.",
-                    IDC_LBL_INSTRUCTIONS,1,12,289,29,0,WS_EX_TRANSPARENT
-    COMBOBOX        IDC_CBO_NAME_TYPE,0,47,171,56,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_NAME_TYPE
-    LTEXT           "If objects of your class do not need names, you can select Date below (for instance, for events). Otherwise just select Regular Name.",
-                    IDC_STATIC,3,99,195,27,NOT WS_VISIBLE
+    LTEXT           "If your class is for a type of person, select Person Name below. When you enter a name for an object of this class NeoMem will attempt to break it into first and last names. If your class is not for a person, just select Regular Name.",IDC_LBL_INSTRUCTIONS,1,12,289,29,0,WS_EX_TRANSPARENT
+    COMBOBOX        IDC_CBO_NAME_TYPE,0,47,171,56,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_NAME_TYPE
+    LTEXT           "If objects of your class do not need names, you can select Date below (for instance, for events). Otherwise just select Regular Name.",IDC_STATIC,3,99,195,27,NOT WS_VISIBLE
 END
 
 IDD_PRINT DIALOGEX 0, 0, 242, 161
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Print"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select the &view that you want to print and click OK.",
-                    IDC_STATIC,7,7,228,14
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOSORTHEADER | WS_TABSTOP,7,23,228,74,
-                    WS_EX_CLIENTEDGE,HIDC_LVW
-    LTEXT           "Note: If there is any text selected in the Text View, the printout will be limited to that text.",
-                    IDC_STATIC,7,100,228,15
-    CONTROL         "&Print header and footer",IDC_CHK_HEADERFOOTER,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,7,121,96,12
-    CONTROL         "&Limit Text View to selected text",IDC_CHK_LIMIT,"Button",
-                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,7,142,35,
-                    12
+    LTEXT           "Select the &view that you want to print and click OK.",IDC_STATIC,7,7,228,14
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOSORTHEADER | WS_TABSTOP,7,23,228,74,WS_EX_CLIENTEDGE,HIDC_LVW
+    LTEXT           "Note: If there is any text selected in the Text View, the printout will be limited to that text.",IDC_STATIC,7,100,228,15
+    CONTROL         "&Print header and footer",IDC_CHK_HEADERFOOTER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,121,96,12
+    CONTROL         "&Limit Text View to selected text",IDC_CHK_LIMIT,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,7,142,35,12
     DEFPUSHBUTTON   "OK",IDOK,68,140,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,122,140,50,14
     PUSHBUTTON      "&Help",IDC_BTN_HELP,185,140,50,14
 END
 
-IDD_WELCOME DIALOG DISCARDABLE  0, 0, 274, 199
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_WELCOME DIALOG 0, 0, 274, 199
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Start"
 FONT 8, "MS Sans Serif"
 BEGIN
-    CONTROL         910,IDC_PIC_HEADER,"Static",SS_BITMAP | SS_CENTERIMAGE | 
-                    SS_RIGHTJUST | SS_REALSIZEIMAGE | SS_SUNKEN,7,7,260,25
-    CONTROL         "",IDC_RTF,"RichEdit20A",WS_BORDER | WS_VSCROLL | 
-                    WS_TABSTOP | 0x844,7,34,260,124
+    CONTROL         910,IDC_PIC_HEADER,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_RIGHTJUST | SS_REALSIZEIMAGE | SS_SUNKEN,7,7,260,25
+    CONTROL         "",IDC_RTF,"RichEdit20A",ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_BORDER | WS_VSCROLL | WS_TABSTOP,7,34,260,124
     PUSHBUTTON      "Open E&xample File",IDC_BTN_EXAMPLE,7,161,77,14
     PUSHBUTTON      "Create &New File",IDC_BTN_NEW_FILE,98,161,77,14
-    PUSHBUTTON      "Open &Existing File...",IDC_BTN_EXISTING_FILE,189,161,
-                    77,14
-    CONTROL         "&Show this screen when no files are loaded",
-                    IDC_CHK_SHOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,181,
-                    161,11
+    PUSHBUTTON      "Open &Existing File...",IDC_BTN_EXISTING_FILE,189,161,77,14
+    CONTROL         "&Show this screen when no files are loaded",IDC_CHK_SHOW,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,181,161,11
     PUSHBUTTON      "&Close",IDB_BTN_CLOSE,217,178,50,14
 END
 
 IDD_CLASS_VIEWS DIALOGEX 0, 0, 287, 157
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         734,IDC_STATIC,"Static",SS_BITMAP | SS_SUNKEN,0,0,87,155
     LTEXT           "Views",IDC_LBL_TITLE,92,0,187,11,0,WS_EX_TRANSPARENT
-    LTEXT           "Select the views you want to include for objects of this class. Views that are automatically included are shown in blue, and cannot be removed.",
-                    IDC_LBL_INSTRUCTIONS,92,12,188,35,0,WS_EX_TRANSPARENT
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,92,48,188,102,
-                    WS_EX_CLIENTEDGE,HIDC_LVW
+    LTEXT           "Select the views you want to include for objects of this class. Views that are automatically included are shown in blue, and cannot be removed.",IDC_LBL_INSTRUCTIONS,92,12,188,35,0,WS_EX_TRANSPARENT
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,92,48,188,102,WS_EX_CLIENTEDGE,HIDC_LVW
 END
 
 IDD_VIEWS DIALOGEX 0, 0, 252, 143
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Views"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "You can modify which views will be available below, and change the order with the up and down buttons.",
-                    IDC_INSTRUCTIONS,7,7,238,17
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_TABSTOP,7,29,204,
-                    87,WS_EX_CLIENTEDGE,HIDC_LVW
+    LTEXT           "You can modify which views will be available below, and change the order with the up and down buttons.",IDC_INSTRUCTIONS,7,7,238,17
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_TABSTOP,7,29,204,87,WS_EX_CLIENTEDGE,HIDC_LVW
     PUSHBUTTON      "Up",IDC_BTN_UP,216,55,29,14
     PUSHBUTTON      "Down",IDC_BTN_DOWN,216,71,29,14
     DEFPUSHBUTTON   "OK",IDOK,89,122,50,14
@@ -1722,249 +1510,188 @@ BEGIN
 END
 
 IDD_OPTIONS_FILE DIALOGEX 0, 0, 291, 215
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Fil&e"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Default Folder",IDC_LBL_FOLDER,7,7,76,9,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "This determines the &folder NeoMem will start in when you open or save a file.",
-                    IDC_STATIC,7,19,277,11
-    EDITTEXT        IDC_TXT_FOLDER,7,35,231,13,ES_AUTOHSCROLL | NOT 
-                    WS_TABSTOP,0,HIDC_TXT_FOLDER
-    PUSHBUTTON      "Browse...",IDC_BTN_BROWSE,241,34,43,15,0,0,
-                    HIDC_BTN_BROWSE
+    LTEXT           "Default Folder",IDC_LBL_FOLDER,7,7,76,9,0,WS_EX_TRANSPARENT
+    LTEXT           "This determines the &folder NeoMem will start in when you open or save a file.",IDC_STATIC,7,19,277,11
+    EDITTEXT        IDC_TXT_FOLDER,7,35,231,13,ES_AUTOHSCROLL | NOT WS_TABSTOP,0,HIDC_TXT_FOLDER
+    PUSHBUTTON      "Browse...",IDC_BTN_BROWSE,241,34,43,15,0,0,HIDC_BTN_BROWSE
     LTEXT           "AutoStart",IDC_LBL_AUTOSTART,7,52,72,11
-    CONTROL         "Automatically &start NeoMem when Windows starts.",
-                    IDC_CHK_AUTOSTART,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    7,64,193,13
+    CONTROL         "Automatically &start NeoMem when Windows starts.",IDC_CHK_AUTOSTART,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,64,193,13
     LTEXT           "AutoLoad",IDC_LBL_STARTUP,7,82,95,11
-    CONTROL         "Automatically re&load current file on NeoMem startup.",
-                    IDC_CHK_STARTUP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,
-                    94,212,13
+    CONTROL         "Automatically re&load current file on NeoMem startup.",IDC_CHK_STARTUP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,94,212,13
     LTEXT           "AutoRecover",IDC_LBL_AUTORECOVER,7,114,60,11
-    CONTROL         "Automatically save &recovery information every",
-                    IDC_CHK_AUTORECOVER,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,7,127,167,12
+    CONTROL         "Automatically save &recovery information every",IDC_CHK_AUTORECOVER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,127,167,12
     EDITTEXT        IDC_TXT_AUTORECOVER,176,127,35,13,ES_AUTOHSCROLL
-    CONTROL         "spinAutoRecover",IDC_SPIN_AUTORECOVER,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS,213,126,11,13
+    CONTROL         "spinAutoRecover",IDC_SPIN_AUTORECOVER,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,213,126,11,13
     LTEXT           "minutes.",IDC_LBL_AUTORECOVER2,227,128,57,11
     LTEXT           "AutoBackup",IDC_LBL_AUTOBACKUP,7,148,71,11
-    LTEXT           "Checking this will keep the existing file as a backup before saving a new version of it.",
-                    IDC_STATIC,7,160,277,11
-    CONTROL         "Keep &backup copy of file on save (will append ""_Backup"" to current file name).",
-                    IDC_CHK_AUTOBACKUP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    7,170,277,12
-    EDITTEXT        IDC_TXT_STARTUP,7,194,177,13,ES_AUTOHSCROLL | NOT 
-                    WS_VISIBLE | NOT WS_TABSTOP,0,HIDC_TXT_STARTUP
-    PUSHBUTTON      "Browse...",IDC_BTN_BROWSE_STARTUP,189,193,43,15,NOT 
-                    WS_VISIBLE,0,HIDC_BTN_BROWSE_STARTUP
-    PUSHBUTTON      "Use &Current",IDC_BTN_USE_CURRENT,235,193,49,15,NOT 
-                    WS_VISIBLE,0,HIDC_BTN_USE_CURRENT
-    COMBOBOX        IDC_CBO_AUTOBACKUP,141,196,136,72,CBS_DROPDOWNLIST | NOT 
-                    WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Checking this will keep the existing file as a backup before saving a new version of it.",IDC_STATIC,7,160,277,11
+    CONTROL         "Keep &backup copy of file on save (will append ""_Backup"" to current file name).",IDC_CHK_AUTOBACKUP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,170,277,12
+    EDITTEXT        IDC_TXT_STARTUP,7,194,177,13,ES_AUTOHSCROLL | NOT WS_VISIBLE | NOT WS_TABSTOP,0,HIDC_TXT_STARTUP
+    PUSHBUTTON      "Browse...",IDC_BTN_BROWSE_STARTUP,189,193,43,15,NOT WS_VISIBLE,0,HIDC_BTN_BROWSE_STARTUP
+    PUSHBUTTON      "Use &Current",IDC_BTN_USE_CURRENT,235,193,49,15,NOT WS_VISIBLE,0,HIDC_BTN_USE_CURRENT
+    COMBOBOX        IDC_CBO_AUTOBACKUP,141,196,136,72,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_SELECT_PROPERTY DIALOGEX 0, 0, 266, 229
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Add Property"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select the property to add to the view. Properties that are already visible in the view are shown in blue. To create a new property, click the New button.",
-                    IDC_LBL_INSTRUCTIONS,7,7,252,18
-    CONTROL         "Show &all available properties",IDC_OPT_SHOW_ALL,"Button",
-                    BS_AUTORADIOBUTTON,7,34,113,13
-    CONTROL         "Show properties associated with the specified class only:",
-                    IDC_OPT_SHOW_SELECTED,"Button",BS_AUTORADIOBUTTON,7,47,
-                    196,13
+    LTEXT           "Select the property to add to the view. Properties that are already visible in the view are shown in blue. To create a new property, click the New button.",IDC_LBL_INSTRUCTIONS,7,7,252,18
+    CONTROL         "Show &all available properties",IDC_OPT_SHOW_ALL,"Button",BS_AUTORADIOBUTTON,7,34,113,13
+    CONTROL         "Show properties associated with the specified class only:",IDC_OPT_SHOW_SELECTED,
+                    "Button",BS_AUTORADIOBUTTON,7,47,196,13
     LTEXT           "&Class",IDC_STATIC,7,64,25,11
-    CONTROL         "",IDC_CBO_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP,40,62,219,141,0,
-                    HIDC_CBO_CLASS
+    CONTROL         "",IDC_CBO_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,40,62,219,141,0,HIDC_CBO_CLASS
     LTEXT           "&Properties",IDC_STATIC,7,80,43,11
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOSORTHEADER | WS_TABSTOP,7,93,252,92,
-                    WS_EX_CLIENTEDGE,HIDC_LVW
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOSORTHEADER | WS_TABSTOP,7,93,252,92,WS_EX_CLIENTEDGE,HIDC_LVW
     PUSHBUTTON      "&New...",IDC_BTN_ADD,7,188,46,15,0,0,HIDC_BTN_ADD
     PUSHBUTTON      "&Edit...",IDC_BTN_EDIT,58,188,46,15,0,0,HIDC_BTN_EDIT
-    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,108,188,46,15,0,0,
-                    HIDC_BTN_DELETE
+    PUSHBUTTON      "&Delete...",IDC_BTN_DELETE,108,188,46,15,0,0,HIDC_BTN_DELETE
     PUSHBUTTON      "&Help",IDC_BTN_HELP,213,207,46,15
     DEFPUSHBUTTON   "OK",IDOK,81,208,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,134,208,50,14
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,27,252,1
 END
 
-IDD_EDIT_RTF DIALOG DISCARDABLE  0, 0, 321, 223
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_EDIT_RTF DIALOG 0, 0, 321, 223
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit Text"
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,208,202,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,264,202,50,14
-    CONTROL         "",IDC_RTF,"RichEdit20A",WS_BORDER | WS_TABSTOP | 0x80,7,
-                    38,307,159
+    CONTROL         "",IDC_RTF,"RichEdit20A",ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP,7,38,307,159
     LTEXT           "Static",IDC_STATIC,7,7,198,12
 END
 
-IDD_EXCEPTION DIALOG DISCARDABLE  0, 0, 195, 132
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_EXCEPTION DIALOG 0, 0, 195, 132
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Throw Exception"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Select the type of exception to throw and hit OK.",
-                    IDC_STATIC,7,7,181,11
-    LISTBOX         IDC_LST,7,20,181,86,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
-                    WS_TABSTOP
+    LTEXT           "Select the type of exception to throw and hit OK.",IDC_STATIC,7,7,181,11
+    LISTBOX         IDC_LST,7,20,181,86,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "OK",IDOK,45,111,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,100,111,50,14
 END
 
-IDD_NOTICE DIALOG DISCARDABLE  0, 0, 252, 153
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_NOTICE DIALOG 0, 0, 252, 153
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Notice"
 FONT 8, "MS Sans Serif"
 BEGIN
-    EDITTEXT        IDC_TXT,7,34,238,95,ES_MULTILINE | ES_AUTOVSCROLL | 
-                    WS_VSCROLL
-    PUSHBUTTON      "&Goto Microsoft Download Site...",IDC_BTN_DOWNLOAD,7,
-                    132,119,14
+    EDITTEXT        IDC_TXT,7,34,238,95,ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
+    PUSHBUTTON      "&Goto Microsoft Download Site...",IDC_BTN_DOWNLOAD,7,132,119,14
     PUSHBUTTON      "&Close",IDC_BTN_CLOSE,195,132,50,14
-    CONTROL         910,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | 
-                    SS_SUNKEN,7,7,238,24
+    CONTROL         910,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN,7,7,238,24
 END
 
-IDD_MESSAGE DIALOG DISCARDABLE  0, 0, 259, 153
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_MESSAGE DIALOG 0, 0, 259, 153
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "&Don't show this message in the future",IDC_CHK_OPTION,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,132,134,14
-    CONTROL         "",IDC_RTF,"RichEdit20A",WS_BORDER | WS_TABSTOP | 0x80,7,
-                    35,245,93
+    CONTROL         "",IDC_RTF,"RichEdit20A",ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP,7,35,245,93
     PUSHBUTTON      "&Close",IDC_BTN_CLOSE,202,132,50,14
     PUSHBUTTON      "A",IDC_BTN_A,147,132,50,14,NOT WS_VISIBLE
-    CONTROL         910,IDC_PIC_HEADER,"Static",SS_BITMAP | SS_CENTERIMAGE | 
-                    SS_RIGHTJUST | SS_REALSIZEIMAGE | SS_SUNKEN,7,7,245,25
+    CONTROL         910,IDC_PIC_HEADER,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_RIGHTJUST | SS_REALSIZEIMAGE | SS_SUNKEN,7,7,245,25
 END
 
-IDD_IMPORT DIALOG DISCARDABLE  0, 0, 280, 170
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_IMPORT DIALOG 0, 0, 280, 170
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Import"
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,223,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,223,24,50,14
     LISTBOX         IDC_LST,7,20,208,93,WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Select the type of data you want to import:",IDC_STATIC,
-                    7,7,208,11
-    LTEXT           "Enter or select the file to import data from:",
-                    IDC_STATIC,7,115,208,12
+    LTEXT           "Select the type of data you want to import:",IDC_STATIC,7,7,208,11
+    LTEXT           "Enter or select the file to import data from:",IDC_STATIC,7,115,208,12
     EDITTEXT        IDC_TXT_FILE,7,131,242,15,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_BTN_SELECT_FILE,253,133,20,12
 END
 
-IDD_TIMER DIALOG DISCARDABLE  0, 0, 302, 151
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_TIMER DIALOG 0, 0, 302, 151
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Timer"
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,57,130,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,111,130,50,14
-    LTEXT           "Enter the amount of time to count down from:",
-                    IDC_STATIC,7,7,288,11
+    LTEXT           "Enter the amount of time to count down from:",IDC_STATIC,7,7,288,11
     EDITTEXT        IDC_TXT_SEC,52,68,47,14,ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_SPIN_SEC,"msctls_updown32",UDS_WRAP | 
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS,260,129,11,15
+    CONTROL         "Spin1",IDC_SPIN_SEC,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,260,129,11,15
     EDITTEXT        IDC_TXT_MIN,52,49,47,14,ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_SPIN_MIN,"msctls_updown32",UDS_WRAP | 
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS,245,129,11,15
+    CONTROL         "Spin1",IDC_SPIN_MIN,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,245,129,11,15
     LTEXT           "Minutes",IDC_STATIC,7,51,32,12
     LTEXT           "Seconds",IDC_STATIC,7,70,33,12
     EDITTEXT        IDC_TXT_HOURS,54,30,48,14,ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_SPIN_HOURS,"msctls_updown32",UDS_WRAP | 
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS,229,129,11,15
+    CONTROL         "Spin1",IDC_SPIN_HOURS,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,229,129,11,15
     LTEXT           "Hours",IDC_STATIC,7,32,32,12
-    CONTROL         "Slider1",IDC_SLIDE_HOURS,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,103,25,164,22
+    CONTROL         "Slider1",IDC_SLIDE_HOURS,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,103,25,164,22
 END
 
 IDD_EDIT_OBJECT2 DIALOGEX 0, 0, 321, 250
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select the type of object you want to add:",
-                    IDC_LBL_CLASS,7,49,244,11,0,WS_EX_TRANSPARENT
-    CONTROL         "List1",IDC_LVW_CLASS,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,7,60,
-                    156,104,WS_EX_CLIENTEDGE
+    LTEXT           "Select the type of object you want to add:",IDC_LBL_CLASS,7,49,244,11,0,WS_EX_TRANSPARENT
+    CONTROL         "List1",IDC_LVW_CLASS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,7,60,156,104,WS_EX_CLIENTEDGE
     PUSHBUTTON      "Advanced >>",IDC_BTN_ADVANCED,264,151,50,14
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,187,307,1
-    CONTROL         "Use this type of object as the default for this location.",
-                    IDC_CHK_SET_DEFAULT,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,7,230,269,13
-    LTEXT           "Where do you want to add the new object?",
-                    IDC_LBL_LOCATION,7,196,248,11,0,WS_EX_TRANSPARENT
-    CONTROL         "",IDC_CBO_LOCATION,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP,7,210,211,83
+    CONTROL         "Use this type of object as the default for this location.",IDC_CHK_SET_DEFAULT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,230,269,13
+    LTEXT           "Where do you want to add the new object?",IDC_LBL_LOCATION,7,196,248,11,0,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_CBO_LOCATION,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,7,210,211,83
     PUSHBUTTON      "Create a N&ew Class...",IDC_BTN_NEW_CLASS,166,61,85,16
     DEFPUSHBUTTON   "OK",IDOK,264,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,264,23,50,14
     PUSHBUTTON      "&Help",IDC_BTN_HELP,264,49,50,14
-    LTEXT           "Enter a name for the new object:",IDC_LBL_NAME,7,7,191,
-                    11,0,WS_EX_TRANSPARENT
+    LTEXT           "Enter a name for the new object:",IDC_LBL_NAME,7,7,191,11,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_TXT_NAME,7,20,155,14,ES_AUTOHSCROLL,0,HIDC_TXT_NAME
     LTEXT           "Description",IDC_STATIC,244,220,70,13
 END
 
 IDD_INSERT_PROPERTY DIALOGEX 0, 0, 335, 220
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Insert Column"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select an existing property or enter a name for a new property.",
-                    IDC_LBL_INSTRUCTIONS,7,7,252,18
-    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOSORTHEADER | WS_TABSTOP,19,50,252,80,
-                    WS_EX_CLIENTEDGE,HIDC_LVW
+    LTEXT           "Select an existing property or enter a name for a new property.",IDC_LBL_INSTRUCTIONS,7,7,252,18
+    CONTROL         "List1",IDC_LVW,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOSORTHEADER | WS_TABSTOP,19,50,252,80,WS_EX_CLIENTEDGE,HIDC_LVW
     PUSHBUTTON      "&Help",IDC_BTN_HELP,278,52,50,15
     DEFPUSHBUTTON   "OK",IDOK,278,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,278,23,50,14
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,27,252,1
     EDITTEXT        IDC_TXT_NAME,50,154,160,13,ES_AUTOHSCROLL
     LTEXT           "Name",IDC_STATIC,18,155,33,11
-    CONTROL         "Limit properties displayed to those associated with the default class",
-                    IDC_CHK_LIMIT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,
-                    185,255,14
-    CONTROL         "Add an existing property",IDC_OPT_EXISTING,"Button",
-                    BS_AUTORADIOBUTTON,7,32,207,13
-    CONTROL         "Create and add a new property",IDC_OPT_NEW,"Button",
-                    BS_AUTORADIOBUTTON,7,140,207,13
+    CONTROL         "Limit properties displayed to those associated with the default class",IDC_CHK_LIMIT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,185,255,14
+    CONTROL         "Add an existing property",IDC_OPT_EXISTING,"Button",BS_AUTORADIOBUTTON,7,32,207,13
+    CONTROL         "Create and add a new property",IDC_OPT_NEW,"Button",BS_AUTORADIOBUTTON,7,140,207,13
     PUSHBUTTON      "Advanced >>",IDC_BTN_ADVANCED,278,165,50,15
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,182,321,1
 END
 
 IDD_INSERT_LINK DIALOGEX 0, 0, 258, 180
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Insert Link"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select the type of link to insert, then enter information about the link.",
-                    IDC_STATIC,7,7,220,16
-    CONTROL         "List1",IDC_LVW_TYPE,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOSORTHEADER | WS_TABSTOP,7,23,244,102,
-                    WS_EX_CLIENTEDGE
+    LTEXT           "Select the type of link to insert, then enter information about the link.",IDC_STATIC,7,7,220,16
+    CONTROL         "List1",IDC_LVW_TYPE,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOSORTHEADER | WS_TABSTOP,7,23,244,102,WS_EX_CLIENTEDGE
     LTEXT           "File",IDC_LBL_LINK,7,133,30,12
     EDITTEXT        IDC_TXT_LINK,42,130,191,15,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_BTN_BROWSE,236,130,15,14
@@ -1974,28 +1701,19 @@ BEGIN
 END
 
 IDD_EDIT_FOLDER DIALOGEX 0, 0, 303, 207
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "New Folder"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Enter the name for the new folder and select the type of objects it will contain by default. You may also specify a location for the new folder.",
-                    IDC_LBL_INSTRUCTIONS,7,7,257,20,0,WS_EX_TRANSPARENT
+    LTEXT           "Enter the name for the new folder and select the type of objects it will contain by default. You may also specify a location for the new folder.",IDC_LBL_INSTRUCTIONS,7,7,257,20,0,WS_EX_TRANSPARENT
     LTEXT           "&Name:",IDC_LBL_NAME,7,31,40,11,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_TXT_NAME,52,31,173,14,ES_AUTOHSCROLL,0,HIDC_TXT_NAME
-    LTEXT           "&Description:",IDC_LBL_DESCRIPTION,7,48,41,22,0,
-                    WS_EX_TRANSPARENT
-    EDITTEXT        IDC_TXT_DESCRIPTION,52,48,173,42,ES_MULTILINE | 
-                    ES_AUTOVSCROLL,0,HIDC_TXT_DESCRIPTION
-    LTEXT           "&Contents:",IDC_LBL_CLASS,7,98,41,28,0,
-                    WS_EX_TRANSPARENT
-    CONTROL         "List1",IDC_LVW_CLASS,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,52,95,
-                    173,66,WS_EX_CLIENTEDGE
-    LTEXT           "&Location:",IDC_LBL_LOCATION,7,166,41,11,0,
-                    WS_EX_TRANSPARENT
-    CONTROL         "",IDC_CBO_LOCATION,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP,52,164,173,83
+    LTEXT           "&Description:",IDC_LBL_DESCRIPTION,7,48,41,22,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_TXT_DESCRIPTION,52,48,173,42,ES_MULTILINE | ES_AUTOVSCROLL,0,HIDC_TXT_DESCRIPTION
+    LTEXT           "&Contents:",IDC_LBL_CLASS,7,98,41,28,0,WS_EX_TRANSPARENT
+    CONTROL         "List1",IDC_LVW_CLASS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_TABSTOP,52,95,173,66,WS_EX_CLIENTEDGE
+    LTEXT           "&Location:",IDC_LBL_LOCATION,7,166,41,11,0,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_CBO_LOCATION,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,52,164,173,83
     DEFPUSHBUTTON   "OK",IDOK,100,186,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,152,186,50,14
     PUSHBUTTON      "&Help",IDC_BTN_HELP,246,186,50,14
@@ -2003,98 +1721,82 @@ BEGIN
     PUSHBUTTON      "Create ne&w class...",IDC_BTN_NEW_CLASS,229,95,67,15
 END
 
-IDD_FILE_SECURITY DIALOG DISCARDABLE  0, 0, 242, 114
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_FILE_SECURITY DIALOG 0, 0, 242, 114
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "File Security"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Select the type of encryption to use for this file and enter a password. Passwords are case-sensitive.",
-                    IDC_STATIC,7,7,228,25
+    LTEXT           "Select the type of encryption to use for this file and enter a password. Passwords are case-sensitive.",IDC_STATIC,7,7,228,25
     LTEXT           "&Encryption:",IDC_LBL_ENCRYPTION,7,34,48,13
-    COMBOBOX        IDC_CBO_ENCRYPTION,74,33,162,49,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CBO_ENCRYPTION,74,33,162,49,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "&Password:",IDC_LBL_PASSWORD,7,52,47,12
-    EDITTEXT        IDC_TXT_PASSWORD,74,50,72,14,ES_PASSWORD | 
-                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_TXT_PASSWORD,74,50,72,14,ES_PASSWORD | ES_AUTOHSCROLL
     LTEXT           "&Confirm Password:",IDC_LBL_PASSWORD2,7,70,66,12
-    EDITTEXT        IDC_TXT_PASSWORD2,74,67,72,14,ES_PASSWORD | 
-                    ES_AUTOHSCROLL
-    CONTROL         "&Encrypt this file and protect with a password",
-                    IDC_CHK_ENCRYPT,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_TABSTOP,7,93,52,14
+    EDITTEXT        IDC_TXT_PASSWORD2,74,67,72,14,ES_PASSWORD | ES_AUTOHSCROLL
+    CONTROL         "&Encrypt this file and protect with a password",IDC_CHK_ENCRYPT,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,7,93,52,14
     DEFPUSHBUTTON   "OK",IDOK,69,93,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,122,93,50,14
     PUSHBUTTON      "&Help",IDC_BTN_HELP,185,93,50,14
 END
 
-IDD_SAVE_EXTENSION DIALOG DISCARDABLE  0, 0, 205, 31
-STYLE WS_CHILD | WS_CLIPSIBLINGS
+IDD_SAVE_EXTENSION DIALOG 0, 0, 205, 31
+STYLE DS_SETFONT | WS_CHILD | WS_CLIPSIBLINGS
 FONT 8, "MS Sans Serif"
 BEGIN
     PUSHBUTTON      "Options...",IDC_BTN_OPTIONS,7,7,55,15
 END
 
-IDD_UPGRADE_FILE DIALOG DISCARDABLE  0, 0, 274, 162
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_UPGRADE_FILE DIALOG 0, 0, 274, 162
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Upgrade File"
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,84,141,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,138,141,50,14
-    CONTROL         "",IDC_RTF,"RichEdit20A",WS_BORDER | WS_VSCROLL | 
-                    WS_TABSTOP | 0x844,7,7,260,124
+    CONTROL         "",IDC_RTF,"RichEdit20A",ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_BORDER | WS_VSCROLL | WS_TABSTOP,7,7,260,124
     PUSHBUTTON      "&Help",IDC_BTN_HELP,217,141,50,14
 END
 
-IDD_PASSWORD DIALOG DISCARDABLE  0, 0, 243, 90
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_PASSWORD DIALOG 0, 0, 243, 90
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Enter Password"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "This file requires a password to open. Note: Passwords are case-sensitive.",
-                    IDC_LBL_INSTRUCTIONS,7,7,229,19
+    LTEXT           "This file requires a password to open. Note: Passwords are case-sensitive.",IDC_LBL_INSTRUCTIONS,7,7,229,19
     LTEXT           "File:",IDC_STATIC,7,31,37,10
     EDITTEXT        IDC_TXT_FILE,51,28,179,14,ES_AUTOHSCROLL | WS_DISABLED
     LTEXT           "Password:",IDC_LBL_PASSWORD,7,48,40,12
-    EDITTEXT        IDC_TXT_PASSWORD,51,46,98,14,ES_PASSWORD | 
-                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_TXT_PASSWORD,51,46,98,14,ES_PASSWORD | ES_AUTOHSCROLL
     LTEXT           "lblFile",IDC_LBL_FILE,7,72,31,11,NOT WS_VISIBLE
     DEFPUSHBUTTON   "OK",IDOK,68,69,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,125,69,50,14
 END
 
 IDD_CLASS_ADVANCED DIALOGEX 0, 0, 310, 183
-STYLE WS_CHILD | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | WS_CHILD | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Contents",IDC_LBL_TITLE,7,73,187,11,0,WS_EX_TRANSPARENT
-    LTEXT           "If objects of this class are to store child objects, what should the default class for the child objects be? (If the class doesn't exist yet you can always specify it later).",
-                    IDC_LBL_INSTRUCTIONS,7,86,275,22,0,WS_EX_TRANSPARENT
-    CONTROL         "",IDC_CBO_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP,26,107,147,98
-    LTEXT           "Should the child objects be &sorted alphabetically?",
-                    IDC_LBL_SORTED,7,127,187,10,0,WS_EX_TRANSPARENT
-    CONTROL         "Yes, automatically sort the child objects",
-                    IDC_OPT_SORT_YES,"Button",BS_AUTORADIOBUTTON,24,140,169,
-                    9
-    CONTROL         "No, let me arrange the child objects in any order",
-                    IDC_OPT_SORT_NO,"Button",BS_AUTORADIOBUTTON,24,151,169,9
-    LTEXT           "Name Type",IDC_LBL_TITLE2,7,7,187,11,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "If your class is for a type of person, select Person Name below. When you enter a name for an object of this class NeoMem will attempt to break it into first and last names. If your class is not for a person, just select Regular Name.",
-                    IDC_LBL_INSTRUCTIONS2,7,18,289,29,0,WS_EX_TRANSPARENT
-    COMBOBOX        IDC_CBO_NAME_TYPE,7,54,171,56,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_NAME_TYPE
+    LTEXT           "If objects of this class are to store child objects, what should the default class for the child objects be? (If the class doesn't exist yet you can always specify it later).",IDC_LBL_INSTRUCTIONS,7,86,275,22,0,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_CBO_CLASS,"ComboBoxEx32",CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,26,107,147,98
+    LTEXT           "Should the child objects be &sorted alphabetically?",IDC_LBL_SORTED,7,127,187,10,0,WS_EX_TRANSPARENT
+    CONTROL         "Yes, automatically sort the child objects",IDC_OPT_SORT_YES,
+                    "Button",BS_AUTORADIOBUTTON,24,140,169,9
+    CONTROL         "No, let me arrange the child objects in any order",IDC_OPT_SORT_NO,
+                    "Button",BS_AUTORADIOBUTTON,24,151,169,9
+    LTEXT           "Name Type",IDC_LBL_TITLE2,7,7,187,11,0,WS_EX_TRANSPARENT
+    LTEXT           "If your class is for a type of person, select Person Name below. When you enter a name for an object of this class NeoMem will attempt to break it into first and last names. If your class is not for a person, just select Regular Name.",IDC_LBL_INSTRUCTIONS2,7,18,289,29,0,WS_EX_TRANSPARENT
+    COMBOBOX        IDC_CBO_NAME_TYPE,7,54,171,56,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CBO_NAME_TYPE
 END
 
 IDD_MESSAGE2 DIALOGEX 0, 0, 224, 102
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Message"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_BTN_CLOSE,167,81,50,14
-    CONTROL         "",IDC_BACKGROUND,"Static",SS_WHITERECT | SS_SUNKEN | 
-                    NOT WS_VISIBLE,140,25,12,14,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_BACKGROUND,"Static",SS_WHITERECT | SS_SUNKEN | NOT WS_VISIBLE,140,25,12,14,WS_EX_TRANSPARENT
     CONTROL         "&Don't show this message in the future",IDC_CHK_OPTION,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,81,151,14
     LTEXT           "Message",IDC_LBL_MESSAGE,7,7,210,71
@@ -2103,38 +1805,30 @@ BEGIN
 END
 
 IDD_GET_LOCATION DIALOGEX 0, 0, 267, 225
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Select Location"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Select the new location for the text and hit OK. The text will be moved to the end of the selected object's Text View. Use right and left arrows to expand and collapse items.",
-                    IDC_LBL_INSTRUCTIONS,7,7,253,27,0,WS_EX_TRANSPARENT
-    CONTROL         "Tree1",IDC_TVW,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
-                    TVS_FULLROWSELECT | WS_TABSTOP,7,37,253,163,
-                    WS_EX_CLIENTEDGE
+    LTEXT           "Select the new location for the text and hit OK. The text will be moved to the end of the selected object's Text View. Use right and left arrows to expand and collapse items.",IDC_LBL_INSTRUCTIONS,7,7,253,27,0,WS_EX_TRANSPARENT
+    CONTROL         "Tree1",IDC_TVW,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_TABSTOP,7,37,253,163,WS_EX_CLIENTEDGE
     DEFPUSHBUTTON   "OK",IDOK,82,204,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,134,204,50,14
     PUSHBUTTON      "&Help",IDC_BTN_HELP,210,204,50,14
 END
 
-IDD_EXPORT DIALOG DISCARDABLE  0, 0, 407, 132
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_EXPORT DIALOG 0, 0, 407, 132
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Export"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "This will export the selected item(s) to the file with the format specified.",
-                    IDC_STATIC,7,7,393,16
+    LTEXT           "This will export the selected item(s) to the file with the format specified.",IDC_STATIC,7,7,393,16
     LTEXT           "Selected Item:",IDC_STATIC,7,29,48,12
     LTEXT           "item",IDC_LBL_ITEM,59,29,341,13
-    CONTROL         "Recurse (include child objects)",IDC_CHK_RECURSE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,59,43,151,13
-    CONTROL         "Include system objects (class and property definitions, etc)",
-                    IDC_CHK_SYSTEM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,59,
-                    59,207,11
+    CONTROL         "Recurse (include child objects)",IDC_CHK_RECURSE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,59,43,151,13
+    CONTROL         "Include system objects (class and property definitions, etc)",IDC_CHK_SYSTEM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,59,59,207,11
     LTEXT           "Format:",IDC_STATIC,7,75,36,11
-    COMBOBOX        IDC_CBO_FORMAT,59,74,186,59,CBS_DROPDOWNLIST | CBS_SORT | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CBO_FORMAT,59,74,186,59,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Destination:",IDC_STATIC,7,91,42,12
     EDITTEXT        IDC_TXT_FILENAME,59,90,321,14,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_BTN_CHOOSE_FILE,383,91,17,12
@@ -2142,8 +1836,8 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,204,111,50,14
 END
 
-IDD_DIALOG1 DIALOG DISCARDABLE  0, 0, 186, 90
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_DIALOG1 DIALOG 0, 0, 186, 90
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -2158,7 +1852,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUT_OLD, DIALOG
     BEGIN
@@ -2568,7 +2262,7 @@ END
 // Cursor
 //
 
-IDC_CURSOR_HAND         CURSOR  DISCARDABLE     "cursors\\Hand.cur"
+IDC_CURSOR_HAND         CURSOR                  "cursors\\Hand.cur"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2657,10 +2351,6 @@ END
 // BINARYFILE
 //
 
-IDF_TIPS_FILE BINARYFILE DISCARDABLE 
-BEGIN
-
-END
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2668,7 +2358,7 @@ END
 // String Table
 //
 
-STRINGTABLE PRELOAD DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "NeoMem"
     IDR_NEOMEM_TYPE         "\nDocument\nNeoMem\nNeoMem Files (*.neo)\n.neo\nNeoMem.Document\nNeoMem Document"
@@ -2677,14 +2367,14 @@ BEGIN
     IDS_COMPANY             "NeoMem.org"
 END
 
-STRINGTABLE PRELOAD DISCARDABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_APP_TITLE       "NeoMem"
     AFX_IDS_IDLEMESSAGE     "Ready"
     AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_INDICATOR_EXT        "EXT"
     ID_INDICATOR_CAPS       "CAP"
@@ -2694,7 +2384,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew (Ctrl+N)"
     ID_FILE_OPEN            "Open an existing document\nOpen (Ctrl+O)"
@@ -2708,7 +2398,7 @@ BEGIN
     ID_FILE_SEND_MAIL       "Send item through email\nSend Email"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
@@ -2719,7 +2409,7 @@ BEGIN
     ID_HELP                 "Display help for current task or command\nHelp"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_MRU_FILE1       "Open this document"
     ID_FILE_MRU_FILE2       "Open this document"
@@ -2739,7 +2429,7 @@ BEGIN
     ID_FILE_MRU_FILE16      "Open this document"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_HEADER_COLOR    "Set the background color for the header\nSet Background Color"
     ID_OBJ_MOVE_TO          "Move object to a new location.\nMove Object (Ctrl+M)"
@@ -2750,7 +2440,7 @@ BEGIN
     ID_VIEW_PREVIOUS        "Switch back to the previous visible view window"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_DATA            "Go to the Data view window"
     ID_VIEW_SEARCH          "Go to the Search view window"
@@ -2764,7 +2454,7 @@ BEGIN
     ID_VIEW_INDEX           "Go to the Index view window"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
     ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
@@ -2774,7 +2464,7 @@ BEGIN
     ID_WINDOW_SPLIT         "Adjust the splitter position\nSplitter Position"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_EDIT_CLEAR           "Erase the selection\nDelete Text (Del)"
     ID_EDIT_CLEAR_ALL       "Erase everything\nClear All"
@@ -2788,13 +2478,13 @@ BEGIN
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_ZOOM            "Zoom the Text View (Toggle on/off)"
     ID_EDIT_PASTE_FORMATTED "Insert clipboard contents as formatted text\nPaste (Ctrl+V)"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_OBJ_CHANGE_OBJECT_CONTENTS 
                             "Change the default class for adding new subobjects to this object."
@@ -2804,14 +2494,14 @@ BEGIN
     ID_EDIT_PASTE_PLAIN     "Insert clipboard contents as unformatted text\nPaste Plain (Ctrl+Alt+V)"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the main toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
     ID_VIEW_AUTOARRANGE     "Arrange icons on a grid."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -2822,19 +2512,19 @@ BEGIN
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
     AFX_IDS_MDICHILD        "Activate this window"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DISK_SPACE          "Free Disk Space: %lu KB Free on %c:"
     IDS_DISK_SPACE_UNAVAIL  "Disk Space Unavailable"
@@ -2842,7 +2532,7 @@ BEGIN
     IDP_AFXOLEINIT_FAILED   "Failed to initialize Object Linking and Embedding"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ERROR_MOVE_SELF     "Can't move an object onto itself."
     IDS_ERROR_MOVE_PARENT   "Can't move an object onto its parent."
@@ -2851,7 +2541,7 @@ BEGIN
     IDS_ERROR_OUT_OF_MEMORY "Out of memory."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_SMALLICON       "Display items by using small icons.\nSmall Icons"
     ID_VIEW_LARGEICON       "Display items by using large icons.\nLarge Icons"
@@ -2861,12 +2551,12 @@ BEGIN
     ID_VIEW_BYNAME          "Sorts the icons alphabetically."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_REFRESH         "Refresh the display\nRefresh"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_OPTIONS         "Set options for the program\nOptions"
     ID_OBJ_MOVE_UP          "Move the object up relative to its siblings\nMove Object Up"
@@ -2874,7 +2564,7 @@ BEGIN
     ID_FILE_PROPERTIES      "Displays properties for the current file\nProperties"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_EDIT_DELETE_LINE     "Delete the current line\nDelete Line"
     ID_FILE_EXPORT          "Export all objects to file\nExport"
@@ -2885,7 +2575,7 @@ BEGIN
     ID_EDIT_SORT_SELECTED_TEXT "Sort the selected text.\nSort Text"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_FORMAT_LEFT          "Align paragraph left\nLeft Align"
     ID_FORMAT_CENTER        "Align paragraph center\nCenter Align"
@@ -2896,7 +2586,7 @@ BEGIN
     ID_DELETE_PROPERTY      "Delete the selected property value\nDelete Property (Del)"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_FONT_NAME            "Select font name\nFont Name"
     ID_FONT_SIZE            "Select font size\nFont Size"
@@ -2911,7 +2601,7 @@ BEGIN
     ID_EDIT_INSERT_LINE     "Insert a line of dashes at insertion point\nInsert Line (Ctrl+L)"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_HELP_WEBSITE         "Go to the NeoMem.org website using the default web browser"
     ID_HELP_EMAIL           "Send a comment, suggestion, or bug report via email"
@@ -2923,7 +2613,7 @@ BEGIN
     ID_FORMAT_FORECOLOR     "Set text foreground color\nSelect Text Color (Ctrl+Alt+T)"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_OBJ_OPEN             "Select the object as the current object\nOpen Object"
     ID_OBJ_DELETE           "Delete the selected object\nDelete Object"
@@ -2932,7 +2622,7 @@ BEGIN
     ID_VIEW_HEADER_FONT     "Set the font and font color for the header\nSet font"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_HELP_TIP_OF_THE_DAY  "Show the tip of the day"
     ID_OBJ_CHANGE_OBJECT_CLASS 
@@ -2945,7 +2635,7 @@ BEGIN
                             "Sort the items by the selected column in decending order\nSort Descending"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_OBJ_EDIT_IN_DIALOG   "Edit the selected value in a dialog\nEdit Value in Dialog (F4)"
     ID_PASTE_PLAIN          "Toggle plain text paste on/off\nPlain Text Paste"
@@ -2953,7 +2643,7 @@ BEGIN
     ID_OBJ_EXPORT           "Export the selected item(s)\nExport"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDC_BTN_NEXT_MATCH      "Goto next match for this search\nNext Match (F3)"
     ID_INDICATOR_DATE       "              ..."
@@ -2965,12 +2655,12 @@ BEGIN
     ID_VIEW_HEADER_RESET    "Reset the header font and colors to the defaults\nReset to defaults"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDC_BTN_GO              "Start search\nStart search"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_OBJ_PRIORITY_HIGH    "Toggle high priority on/off for selected item"
     ID_FILE_DELETE_ALL      "Delete all user objects in order to create a new template file"
@@ -2978,7 +2668,7 @@ BEGIN
     IDC_LBL_SEARCH_IN       "Search in\nSearch in"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDC_CBO_SEARCH_IN       "Search in\nSearch in"
     ID_COLUMN_EDIT_PROPERTY "Edit the specified property definition\nEdit Property"
@@ -2988,12 +2678,12 @@ BEGIN
     ID_TAB_HIDE             "Remove this tab for this object and other objects of the same class"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     CG_IDS_TIPOFTHEDAY      "Displays a Tip of the Day."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     CG_IDS_TIPOFTHEDAYMENU  "Ti&p of the Day..."
     CG_IDS_DIDYOUKNOW       "Did you know..."
@@ -3002,7 +2692,7 @@ BEGIN
     CG_IDS_TIPOFTHEDAYHELP  "&Help"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TIP1                "To add a new object, you can select New Object from the Object menu, type Ctrl+E, or click on the New Object button on the toolbar."
     IDS_TIP2                "You can move objects by drag-dropping them with the mouse to their new location."
@@ -3021,7 +2711,7 @@ BEGIN
     IDS_TIP15               "You can move text to a new location in the Text View by selecting it, then dragging it to the new location with the mouse down."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TIP16               "You can select text, then drag it to another item and release it. It will be moved to the end of the other item's text. "
     IDS_TIP17               "You can right click on an object to get a menu of commands related to it."
@@ -3040,7 +2730,7 @@ BEGIN
     IDS_TIP_LAST            "This is the last tip."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_MOVE_UP         "Move this view up in the view order\nMove View Up"
     ID_OBJ_CHANGE_CLASS_ICON 
@@ -3052,14 +2742,14 @@ BEGIN
     ID_HELP_WHAT_IS         "Brings up help page which explains NeoMem\nShow Help Topic"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DATE_AFTER          "After,after,aft.,aft"
     IDS_DATE_BEFORE         "Before,before,bef.,bef"
     IDS_DATE_CIRCA          "Circa,circa,about,abt.,abt,ca.,ca"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DATE_JANUARY        "January,january,jan.,jan"
     IDS_DATE_FEBRUARY       "February,february,feb.,feb"
@@ -3074,12 +2764,12 @@ BEGIN
     IDS_DATE_NOVEMBER       "November,november,nov.,nov"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DATE_DECEMBER       "December,december,dec.,dec"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DATE_SPRINGBREAK    "Spring Break,spring break,springbreak"
     IDS_DATE_SUMMER         "Summer,summer,sum"
@@ -3090,7 +2780,7 @@ BEGIN
     IDS_DATE_EASTER         "Easter,easter"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DATE_CHRISTMAS      "Christmas,christmas,xmas"
     IDS_DATE_THANKSGIVING   "Thanksgiving,thanksgiving,tgiving,thanks"
@@ -3098,24 +2788,24 @@ BEGIN
     IDS_DATE_HALLOWEEN      "Halloween,halloween,haloween"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TEMPLATE_FILE       "Template.neo"
     IDS_EXAMPLE_FILE        "Example.neo"
     IDS_HELP_MENU           "&Help"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_TEST            "Throw an exception to test the error handling system"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_TOGGLE_CONTENTS "Show/hide the contents view for all objects of the selected class\nShow/Hide Contents"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_TEST                 "test preview"
     ID_CLOCK_STOPWATCH      "Start the stopwatch...\nStopwatch"
@@ -3126,7 +2816,7 @@ BEGIN
     ID_FORMAT_BACKCOLOR     "Set text background color\nSelect Background Color (Ctrl+Alt+K)"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_CLOCK_HELP           "Information about clock functions"
     ID_CLOCK_FORMAT         "Change the display format for the clock"
@@ -3141,7 +2831,7 @@ BEGIN
     ID_EDIT_MOVE_TO         "Move selected text to another object's Text View\nMove text to another object"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_NAVIGATE_UP          "Go to previous object"
     ID_NAVIGATE_DOWN        "Go to the next object"
@@ -3150,14 +2840,14 @@ BEGIN
     ID_NAVIGATE_HOME        "Go to Home object\nGoto Home"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_INSERT_SYMBOL        "Insert a special symbol using Windows Character Map program\nInsert symbol"
     ID_EDIT_INSERT_SYMBOL   "Insert a special symbol using Windows Character Map program\nInsert symbol"
     ID_NAVIGATE_GOTO        "Goto another object in this file\nGoto Object... (Ctrl+G)"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_HELP_WHATS_NEW       "Describes features new to this version of NeoMem\nShow Help Topic"
     ID_FILE_SECURITY        "Set password and encryption level for file\nSet security level"
@@ -3165,7 +2855,7 @@ BEGIN
                             "Set the date format for the clock in the status bar.\nSet clock format"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     ID_EDIT_INSERT_DATE     "Insert the current date/time"
     ID_FORMAT_STRIKETHRU    "Toggle strikethrough formatting\tStrikethrough"
@@ -3174,12 +2864,12 @@ BEGIN
     ID_EDIT_SPIKE           "Cut text, appending to clipboard contents\nSpike (Ctrl+Alt+X)"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDC_CBO_CLASS           "Select a class to filter the results\nFilter by class"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
