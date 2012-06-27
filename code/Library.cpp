@@ -70,30 +70,22 @@ CString GetFileName(LPCTSTR pszPathName)
 
 
 // Format the given number with proper thousand formatting and return as a new CString object.
-// To use in a printf, be sure to cast the result to LPCTSTR!
-//. use FormatThousands in CStringEx instead!
+// To use in a printf, be sure to cast the result to LPCTSTR
+//. use FormatThousands in CStringEx instead
 //. give better name so can search on it
+//. bug: won't print llu anymore - worked under vs6. so if # > 2^32, will get truncated.
 CString fc(ULONGLONG n)
 {
 	const int nChars = 50;
 	TCHAR szPlain[nChars];
 	TCHAR szFormatted[nChars];
 
-	wsprintf(szPlain, "%llu", n); // long long unsigned
-
+	wsprintf(szPlain, "%lu", n); // long long unsigned
+	//TRACE("szplain: %s\n", szPlain);
 	// this always prints 2 decimal places
 //	::GetNumberFormat(LOCALE_USER_DEFAULT, 0, szPlain, NULL, szFormatted, nChars);
 	
-//	NUMBERFMT nf;
-//	nf.NumDigits = 0; // number of digits after decimal (default is 2)
-//	nf.LeadingZero = 0;
-//	nf.Grouping = 3;
-//	nf.lpDecimalSep = ".";
-//	nf.lpThousandSep = ",";
-//	nf.NegativeOrder = 1;
-
-//	::GetNumberFormat(0, 0, szPlain, &nf, szFormatted, nChars);
-  
+	// g_nf specifies the number format to use
 	::GetNumberFormat(0, 0, szPlain, &g_nf, szFormatted, nChars);
 	return szFormatted;
 }

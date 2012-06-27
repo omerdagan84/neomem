@@ -947,7 +947,6 @@
     </None>
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
-    <None Include="..\help\NeoMem.hm" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\help\html\add_class.htm">
       <Filter>HTML Help Topics</Filter>
@@ -1180,6 +1179,7 @@
     <None Include="..\resources\Resource.hm">
       <Filter>HTML Help Files</Filter>
     </None>
+    <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
   </ItemGroup>
   <ItemGroup>

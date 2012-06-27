@@ -3672,7 +3672,6 @@ void CNeoDoc::SetModifiedFlag(BOOL bModified /* = TRUE */) {
 }
 
 
-
 // Get size of file as a string
 CString CNeoDoc::GetFileSizeString() {
 	CString str;

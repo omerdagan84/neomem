@@ -259,6 +259,7 @@ public:
 
 public:
 	static CString g_strSpace2;
+	virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
 };
 
 

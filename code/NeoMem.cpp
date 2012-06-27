@@ -70,7 +70,7 @@ const LPCTSTR szHeaderFontNameDefault = _T("Arial");
 // Handle an exception that was thrown outside of a message loop.
 //, doesn't get called
 void TerminateRoutine() {
-	AfxMessageBox("Unhandled Exception!", MB_ICONEXCLAMATION);
+	AfxMessageBox("Unhandled Exception", MB_ICONEXCLAMATION);
 	// cleanup
 	// call old terminate routine
 //	if (old_terminate)
@@ -152,7 +152,7 @@ CNeoMem::CNeoMem() :
 	m_sizePaper = CSize(8*1440 + 720, 11*1440); // default size 8.5x11"
 //. ole  	m_pRedoc = 0; // created/destroyed in framemain
 
-  EnableHtmlHelp();
+	EnableHtmlHelp();
   
 	// in vs10, some errors get caught at the wrong location, so add this
 	// see http://connect.microsoft.com/VisualStudio/feedback/details/563622/mfc-default-exception-handling-causes-problems-with-activation-context
@@ -271,7 +271,7 @@ BOOL CNeoMem::InitInstance() {
 	set_terminate(TerminateRoutine);
 
 	// Make sure we are running on a decent version of the common controls - if not,
-	// tell user to upgrade!
+	// tell user to upgrade
 	if (!UpdateCommonControls())
 		return FALSE;
 
@@ -329,6 +329,10 @@ BOOL CNeoMem::InitInstance() {
 	if ((m_strApplicationFolder.Right(5) == "Debug") || (m_strApplicationFolder.Right(7) == "Release"))
 		m_strApplicationFolder = m_strApplicationFolder.LeftFrom('\\') + _T("\\files"); 
 
+	// Locate the help file (when files are in final configuration)
+	//. check for final version
+	//. free memory first
+//	m_pszHelpFilePath = "../help/NeoMem.chm";
 
 	// Get colors (this is a global function that reads to global variables)
 	GetColors();
@@ -1908,7 +1912,7 @@ void CNeoMem::OnCmdHelpKeyboard() {
 	// dwData =  Address of a HELPWININFO structure that specifies the size and position of either 
 	// a primary or secondary Help window. 
 
-	theApp.WinHelp(HID_KEYBOARD_SHORTCUTS);
+	theApp.HtmlHelpA(HID_KEYBOARD_SHORTCUTS);
 }
 
 
@@ -2324,14 +2328,14 @@ BOOL CNeoMem::ConvertPlainToRtf(CString& strPlain, CString& strRtf) {
 
 // Bring up help topic
 void CNeoMem::OnCmdHelpWhatIs() {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)
+	theApp.HtmlHelpA(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)
 }
 
 
 // Bring up help topic
 // Must add keyword to hlp/HelpIDs.h file
 void CNeoMem::OnHelpWhatsNew() {
-	theApp.WinHelp(HID_WHATS_NEW);
+	theApp.HtmlHelpA(HID_WHATS_NEW);
 }
 
 
@@ -2954,3 +2958,20 @@ CString g_strQuote = _T("\"");
 CString g_strQuoteSpace = _T("\" ");
 
 
+
+
+void CNeoMem::WinHelp(DWORD dwData, UINT nCmd)
+{
+	CWinApp::WinHelp(dwData, nCmd);
+/*
+	switch (nCmd)
+	{
+		case HELP_CONTEXT: 
+			HtmlHelp(NULL, m_pszHelpFilePath, HH_HELP_CONTEXT, dwData);
+			break;
+		case HELP_FINDER: 
+			HtmlHelp(NULL, m_pszHelpFilePath, HH_DISPLAY_TOPIC, 0);
+			break;	
+	}
+*/
+}

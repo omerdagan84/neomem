@@ -187,7 +187,9 @@
     <ClCompile Include="..\code\PageOptionsDisplay.cpp" />
     <ClCompile Include="..\code\PageOptionsFile.cpp" />
     <ClCompile Include="..\code\Path.cpp" />
-    <ClCompile Include="..\code\precompiled.cpp" />
+    <ClCompile Include="..\code\precompiled.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\code\PreviewViewEx.cpp" />
     <ClCompile Include="..\code\PrintInfoMore.cpp" />
     <ClCompile Include="..\code\PropertyPageEx2.cpp" />
