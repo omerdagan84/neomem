@@ -333,8 +333,8 @@ _AFXRICH_INLINE CRichEditDoc* CRichEditView2::GetDocument() const
 class _AFX_EDIT_STATE : public CNoTrackObject
 {
 public:
-	_AFX_EDIT_STATE();
-	virtual ~_AFX_EDIT_STATE();
+//	_AFX_EDIT_STATE();
+//	virtual ~_AFX_EDIT_STATE();
 
 	CFindReplaceDialog* pFindReplaceDlg; // find or replace dialog
 	BOOL bFindOnly; // Is pFindReplace the find or replace?
@@ -352,7 +352,7 @@ class _AFX_RICHEDIT_STATE : public _AFX_EDIT_STATE
 {
 public:
 	HINSTANCE m_hInstRichEdit;      // handle to RICHED32.DLL
-	virtual ~_AFX_RICHEDIT_STATE();
+//	virtual ~_AFX_RICHEDIT_STATE();
 };
 
 

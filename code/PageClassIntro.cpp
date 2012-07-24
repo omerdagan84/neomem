@@ -45,7 +45,8 @@ CPageClassIntro::~CPageClassIntro() {
 }
 
 
-// Note: This only gets called once!!
+// Note: This only gets called once!
+
 BOOL CPageClassIntro::OnInitDialog() {
 
 	// Get document and parent sheet

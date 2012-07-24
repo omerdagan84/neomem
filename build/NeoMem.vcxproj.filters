@@ -1181,108 +1181,313 @@
     </None>
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
-    <None Include="..\resources\icons\_NeoMem.ico" />
-    <None Include="..\resources\icons\Chip.ico" />
-    <None Include="..\resources\icons\Folder4.ico" />
-    <None Include="..\resources\icons\ArrowUp.ico" />
-    <None Include="..\resources\icons\ArrowDown.ico" />
-    <None Include="..\resources\icons\Book.ico" />
-    <None Include="..\resources\icons\Doc.ico" />
-    <None Include="..\resources\icons\Label.ico" />
-    <None Include="..\resources\icons\Clip03.ico" />
-    <None Include="..\resources\icons\Coffee.ico" />
-    <None Include="..\resources\icons\BulletBlue.ico" />
-    <None Include="..\resources\icons\Salad.ico" />
-    <None Include="..\resources\icons\TR2.ico" />
-    <None Include="..\resources\icons\new.ico" />
-    <None Include="..\resources\icons\Camera.ico" />
-    <None Include="..\resources\icons\Box2.ico" />
-    <None Include="..\resources\icons\Medicine.ico" />
-    <None Include="..\resources\icons\note.ico" />
-    <None Include="..\resources\icons\wrench.ico" />
-    <None Include="..\resources\icons\Bird.ico" />
-    <None Include="..\resources\icons\bulletGreen.ico" />
-    <None Include="..\resources\icons\diamondBlue.ico" />
-    <None Include="..\resources\icons\diamondGreen.ico" />
-    <None Include="..\resources\icons\diamondGreenDk.ico" />
-    <None Include="..\resources\icons\Money 1.ico" />
-    <None Include="..\resources\icons\quote.ico" />
-    <None Include="..\resources\icons\sphereWhite.ico" />
-    <None Include="..\resources\icons\city.ico" />
-    <None Include="..\resources\icons\CD.ico" />
-    <None Include="..\resources\icons\forest.ico" />
-    <None Include="..\resources\icons\Park.ico" />
-    <None Include="..\resources\icons\diamondBlue2.ico" />
-    <None Include="..\resources\icons\newspaper.ico" />
-    <None Include="..\resources\icons\building.ico" />
-    <None Include="..\resources\icons\diamondBlueGreen.ico" />
-    <None Include="..\resources\icons\circle_blue.ico" />
-    <None Include="..\resources\icons\night.ico" />
-    <None Include="..\resources\icons\FlowerRose.ico" />
-    <None Include="..\resources\icons\Bookcase.ico" />
-    <None Include="..\resources\icons\Videotape.ico" />
-    <None Include="..\resources\icons\Tape.ico" />
-    <None Include="..\resources\icons\House.ico" />
-    <None Include="..\resources\icons\Icon.ico" />
-    <None Include="..\resources\icons\Computer.ico" />
-    <None Include="..\resources\icons\Guitar.ico" />
-    <None Include="..\resources\icons\Art.ico" />
-    <None Include="..\resources\icons\Art Medium.ico" />
-    <None Include="..\resources\icons\Movie2.ico" />
-    <None Include="..\resources\icons\diamondPurple.ico" />
-    <None Include="..\resources\icons\Computer Equipment.ico" />
-    <None Include="..\resources\icons\Record8aa.ico" />
-    <None Include="..\resources\icons\trianglesBlue.ico" />
-    <None Include="..\resources\icons\Land.ico" />
-    <None Include="..\resources\icons\Bike.ico" />
-    <None Include="..\resources\icons\Man andy.ico" />
-    <None Include="..\resources\icons\woman jjl.ico" />
-    <None Include="..\resources\icons\Cellphone.ico" />
-    <None Include="..\resources\icons\Scanner.ico" />
-    <None Include="..\resources\icons\Clippers.ico" />
-    <None Include="..\resources\icons\Piano.ico" />
-    <None Include="..\resources\icons\Ocean.ico" />
-    <None Include="..\resources\icons\Apple.ico" />
-    <None Include="..\resources\icons\_Nebula.ico" />
-    <None Include="..\resources\icons\Galaxy.ico" />
-    <None Include="..\resources\icons\art2.ico" />
-    <None Include="..\resources\icons\Movie Film.ico" />
-    <None Include="..\resources\icons\Museum.ico" />
-    <None Include="..\resources\icons\Room.ico" />
-    <None Include="..\resources\icons\Leaf.ico" />
-    <None Include="..\resources\icons\Coin.ico" />
-    <None Include="..\resources\icons\RedCross.ico" />
-    <None Include="..\resources\icons\Present.ico" />
-    <None Include="..\resources\icons\Chalkboard.ico" />
-    <None Include="..\resources\icons\Chemicals.ico" />
-    <None Include="..\resources\icons\printer.ico" />
-    <None Include="..\resources\icons\person.ico" />
-    <None Include="..\resources\icons\Soccer ball.ico" />
-    <None Include="..\resources\icons\Intaglio green on black (256 color only).ico" />
-    <None Include="..\resources\icons\Envelope.ico" />
-    <None Include="..\resources\icons\_NeoMem Document.ico" />
-    <None Include="..\resources\icons\bluesphere3.ico" />
-    <None Include="..\resources\icons\Clock.ico" />
-    <None Include="..\resources\icons\Clock2.ico" />
-    <None Include="..\resources\icons\Backcolor.ico" />
-    <None Include="..\resources\icons\Forecolor.ico" />
-    <None Include="..\resources\icons\systray.ico" />
-    <None Include="..\resources\icons\Wallet.ico" />
-    <None Include="..\resources\icons\DriversLicense.ico" />
-    <None Include="..\resources\icons\CreditCard.ico" />
-    <None Include="..\resources\toolbars\tbrMain.bmp" />
-    <None Include="..\resources\toolbars\tbrSearch.bmp" />
-    <None Include="..\resources\toolbars\tbrContents.bmp" />
-    <None Include="..\resources\toolbars\tbrObsolete.bmp" />
-    <None Include="..\resources\toolbars\tbrRtf.bmp" />
-    <None Include="..\resources\toolbars\tbrIndex.bmp" />
-    <None Include="..\resources\toolbars\tbrProperties.bmp" />
-    <None Include="..\resources\toolbars\tbrSearchNew.bmp" />
-    <None Include="..\resources\toolbars\tbrOther.bmp" />
-    <None Include="..\resources\logos\logoNeoMem.bmp" />
-    <None Include="..\resources\buttons\arrow_up.bmp" />
-    <None Include="..\resources\buttons\arrow_down.bmp" />
-    <None Include="..\resources\cursors\Hand.cur" />
+    <None Include="..\resources\Resource.hm" />
+    <None Include="..\resources\icons\_Nebula.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\wrench.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\_NeoMem Document.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\_NeoMem.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Apple.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\buttons\arrow_down.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\buttons\arrow_up.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\ArrowDown.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\ArrowUp.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Art Medium.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Art.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\art2.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Backcolor.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Bike.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Bird.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\bluesphere3.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Book.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Bookcase.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Box2.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\building.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\BulletBlue.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\bulletGreen.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Camera.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\CD.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Cellphone.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Chalkboard.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Chemicals.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Chip.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\circle_blue.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\city.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Clip03.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Clippers.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Clock.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Clock2.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Coffee.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Coin.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Computer Equipment.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Computer.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\CreditCard.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\diamondBlue.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\diamondBlue2.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\diamondBlueGreen.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\diamondGreen.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\diamondGreenDk.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\diamondPurple.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Doc.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\DriversLicense.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Envelope.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\FlowerRose.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Folder4.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Forecolor.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\forest.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Galaxy.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Guitar.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\cursors\Hand.cur">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\House.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Icon.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Intaglio green on black (256 color only).ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Label.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Land.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Leaf.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\logos\logoNeoMem.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Man andy.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Medicine.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Money 1.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Movie Film.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Movie2.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Museum.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\new.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\newspaper.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\night.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\note.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Ocean.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Park.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\person.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Piano.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Present.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\printer.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\quote.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Record8aa.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\RedCross.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Room.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\woman jjl.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Salad.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Scanner.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Soccer ball.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\sphereWhite.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\systray.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Tape.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrContents.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrIndex.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrMain.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrObsolete.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrOther.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrProperties.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrRtf.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrSearch.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\toolbars\tbrSearchNew.bmp">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\TR2.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\trianglesBlue.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Videotape.ico">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="..\resources\icons\Wallet.ico">
+      <Filter>Resource files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\help\NeoMem.hhp">
