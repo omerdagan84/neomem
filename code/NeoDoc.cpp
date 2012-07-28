@@ -580,7 +580,7 @@ HOBJECT CNeoDoc::CreateObject(
 
 	// Set properties
 	pobjNew->SetFlags(lngFlags);
-	pobjNew->m_lngIconID = idIcon; //, leave as direct ref for now (too confusing yet!)
+	pobjNew->SetIconID(idIcon); //, leave as direct ref for now (too confusing yet!)
 	pobjNew->SetObjectText(strName); // ie the object name
 
 	// Add the new object to the specified parent object.

@@ -131,9 +131,7 @@ public:
 	private:
 	OBJID m_lngObjectID; // Unique ObjectID, or 0 if this is a property BObject.
 	OBJID m_lngClassID;	// ClassID of this BObject, or PropertyID if this is a property BObject.
-	public: // grr, change to private eventually
 	OBJID m_lngIconID;	// IconID of this BObject (0 means it's using the classdef icon)
-	private:
 	ULONG m_lngFlags; // 32 bit flags
 	BObjects* m_paChildren; // pointer to list containing pointers to child bobjects. null if has no children.
 	BObjects* m_paProperties; // pointer to list containing pointers to property bobjects. null if has no properties.

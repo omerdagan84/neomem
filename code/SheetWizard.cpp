@@ -228,9 +228,9 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			m_pobjEditOriginal->SetPropertyText(propName, m_pobj->GetPropertyText(propName), FALSE, FALSE);
 			m_pobjEditOriginal->SetPropertyText(propDescription, m_pobj->GetPropertyText(propDescription), FALSE, FALSE);
 
-			BOOL bIconChanged = (m_pobjEditOriginal->m_lngIconID != m_pobj->m_lngIconID);
+			BOOL bIconChanged = (m_pobjEditOriginal->GetIconID() != m_pobj->GetIconID());
 //			m_pobjEditOriginal->m_lngIconID = m_pobj->m_lngIconID;
-			m_pobjEditOriginal->SetIconID(m_pobj->m_lngIconID);
+			m_pobjEditOriginal->SetIconID(m_pobj->GetIconID());
 
 			// Get flags from the edit object
 //			// Get flags from the edit object (need to get flagObjectHasChildren at least)
@@ -395,7 +395,7 @@ void CSheetWizard::SetEditClass(BObject *pobjClass)
 
 	// Set parent - Note: We move the object to the new parent when the wizard is finished
 	m_pobj->SetParent(pobjClass->GetParent());
-	m_pobj->m_lngIconID = pobjClass->m_lngIconID;
+	m_pobj->SetIconID(pobjClass->GetIconID());
 
 	// Copy property bdata objects, if any
 	m_pobj->CopyPropertyDataFrom(pobjClass, propObjectProperties);
