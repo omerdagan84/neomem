@@ -41,9 +41,13 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
+	BOOL operator< (const BDataDate& that);
+	BOOL operator== (const BDataDate& that);
 
-//, make private
-public:
+	BOOL IsStringDate() {return (m_bitsFlags.Type == BDataDate::flagString);};
+
+
+private:
 	// COleDateTime objects can be used to represent dates between January 1, 100, and 
 	// December 31, 9999. COleDateTime objects are floating point values, with an approximate 
 	// resolution of 1 millisecond

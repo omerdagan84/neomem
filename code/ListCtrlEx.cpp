@@ -2906,10 +2906,10 @@ int CListCtrlEx::InitializeColumns(BDataColumns* pdatColumns, BOOL bExpandLastCo
 
 		// Add the column
 		//, use macro for speed
-		InsertColumn(i, pobjPropDef->GetPropertyText(propName), nAlignment, rci.m_nColWidth);
+		InsertColumn(i, pobjPropDef->GetPropertyText(propName), nAlignment, rci.GetColWidth());
 
 		//, header control DOES have itemdata, just not exposed through listview!
-		hdi.lParam = rci.m_lngPropertyID;
+		hdi.lParam = rci.GetPropertyID();
 		phdr->SetItem(i, &hdi);
 	}
 
@@ -3051,15 +3051,14 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 				if (pdat1 == 0) return iDir;
 				BDataDate* pdat2 = (BDataDate*) pobj2->GetPropertyData(lngPropertyID);
 				if (pdat2 == 0) return -iDir;
-				if (pdat1->m_bitsFlags.Type == BDataDate::flagString) return iDir;
-				if (pdat2->m_bitsFlags.Type == BDataDate::flagString) return -iDir;
-				if (pdat1->m_odt < pdat2->m_odt)
-					iResult = -1;
-				else if (pdat1->m_odt > pdat2->m_odt)
-					iResult = 1;
-				else
+
+				if (pdat1->IsStringDate()) return iDir;
+				if (pdat2->IsStringDate()) return -iDir;
+
+				if (pdat1 == pdat2)
 					iResult = 0;
-				break;
+				else
+					iResult = pdat1 < pdat2 ? -1 : 1;
 			}
 		default: // (treat as strings)
 			{

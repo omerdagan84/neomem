@@ -479,3 +479,12 @@ ULONG BDataDate::GetMemoryUsed(BOOL bRecursive)
 
 
 
+BOOL BDataDate::operator< (const BDataDate& that) 
+{
+	return (m_odt < that.m_odt);
+}
+
+BOOL BDataDate::operator== (const BDataDate& that) 
+{
+	return (m_odt == that.m_odt);
+}

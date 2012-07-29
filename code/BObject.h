@@ -128,7 +128,7 @@ public:
 
 	// Attributes
 	// These are serialized
-	private:
+private:
 	OBJID m_lngObjectID; // Unique ObjectID, or 0 if this is a property BObject.
 	OBJID m_lngClassID;	// ClassID of this BObject, or PropertyID if this is a property BObject.
 	OBJID m_lngIconID;	// IconID of this BObject (0 means it's using the classdef icon)

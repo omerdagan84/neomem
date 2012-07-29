@@ -17,11 +17,18 @@ class ColumnInfo
 {
 public:
 	ColumnInfo();
-public:
+private:
 	ULONG m_lngPropertyID;
 	BObject* m_pobjPropertyDef; // Note: This is not serialized, just the ID is!
 	int m_nColWidth;
 	int m_nColAlignment;
+
+public:
+	ULONG GetPropertyID() { return m_lngPropertyID; };
+	int GetColWidth() { return m_nColWidth; };
+
+friend class BDataColumns;
+
 };
 
 
@@ -66,9 +73,6 @@ private:
 	int m_nColumns; // Number of columns in view
 	CColumnInfoArray m_aci; // Array of ColumnInfo structures
 	CUIntArray m_anOrder; // Array of column indices indicating column order
-public:
-	// These are not serialized
-	BOOL m_bModified;
 };
 
 
