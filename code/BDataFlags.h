@@ -27,7 +27,11 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
-//, make private
+public:
+	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; };
+	ULONG GetFlags() { return m_lngFlags; };
+
+private:
 	ULONG m_lngFlags;
 
 };

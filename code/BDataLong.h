@@ -28,8 +28,11 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
-//, make private
 public:
+	void SetValue(ULONG lngValue) { m_lngValue = lngValue; };
+	ULONG GetValue() { return m_lngValue; };
+
+private:
 	ULONG m_lngValue;
 };
 

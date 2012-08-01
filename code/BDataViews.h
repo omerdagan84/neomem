@@ -67,7 +67,9 @@ public:
 	int GetViewTab(ULONG lngViewID);
 	int InsertView(int nTab, int nView, ULONG lngViewID, ULONG lngViewHeight);
 
-//,private:
+	CViewInfoArray& GetArray() { return m_avi; };
+
+private:
 	CViewInfoArray m_avi; // Array of ViewInfo structures
 
 };

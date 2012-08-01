@@ -567,7 +567,7 @@ HOBJECT CNeoDoc::CreateObject(
 //,		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
 		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, hobjClassDef->GetPropertyData(propObjectFlags));
 		if (pdatFlags)
-			lngFlags = pdatFlags->m_lngFlags;
+			lngFlags = pdatFlags->GetFlags();
 	}
 
 
@@ -1509,7 +1509,7 @@ BData* CNeoDoc::CreateBDataFromPropertyType(OBJID idPropertyType) {
 		case proptypeCurrency:
 			pdat = new BDataNumber;
 			// set the units for the number to currency
-			((BDataNumber*) pdat)->m_lngUnitID = unitCurrency;
+			((BDataNumber*) pdat)->SetUnitID(unitCurrency);
 			break;
 		case proptypeFlags:
 			pdat = new BDataFlags;

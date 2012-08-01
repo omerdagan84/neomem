@@ -41,8 +41,9 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
-	BOOL operator< (const BDataDate& that);
-	BOOL operator== (const BDataDate& that);
+public:
+	BOOL operator< (const BDataDate& that) { return (m_odt < that.m_odt); };
+	BOOL operator== (const BDataDate& that) { return (m_odt == that.m_odt); };
 
 	BOOL IsStringDate() {return (m_bitsFlags.Type == BDataDate::flagString);};
 

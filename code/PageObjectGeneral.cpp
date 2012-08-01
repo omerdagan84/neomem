@@ -106,7 +106,7 @@ BOOL CPageObjectGeneral::OnInitDialog()
 
 	// Get flags
 	BDataFlags datFlags;
-	datFlags.m_lngFlags = m_pobj->GetFlags();
+	datFlags.SetFlags(m_pobj->GetFlags());
 	m_txtFlags.SetWindowText(datFlags.GetBDataText(m_pobj->GetDoc(), propFlags));
 
 	// Get icon?

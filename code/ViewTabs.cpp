@@ -715,7 +715,7 @@ void CViewTabs::ShowTab(int nTab)
 		for (int iView = 0; iView < nViews; iView++)
 		{
 			// Get the ViewID
-			ViewInfo& rvi = m_pdatViews->m_avi[nIndex];
+			ViewInfo& rvi = m_pdatViews->GetArray()[nIndex];
 			ULONG lngViewID = rvi.m_lngViewID;
 			ASSERT(lngViewID);
 			nIndex++;

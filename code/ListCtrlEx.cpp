@@ -3036,9 +3036,10 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 				if (pdat1 == 0) return iDir;
 				BDataNumber* pdat2 = (BDataNumber*) pobj2->GetPropertyData(lngPropertyID);
 				if (pdat2 == 0) return -iDir;
-				if (pdat1->m_dblValue < pdat2->m_dblValue)
+
+				if (pdat1 < pdat2)
 					iResult = -1;
-				else if (pdat1->m_dblValue > pdat2->m_dblValue)
+				else if (pdat1 > pdat2)
 					iResult = 1;
 				else
 					iResult = 0;

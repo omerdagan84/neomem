@@ -29,8 +29,7 @@ public:
 	// These are selected in global options combo
 	enum eNameFormats {nfNone = 0, nfFirstLast = 1, nfLastFirst = 2, nfFirstLAST = 3, nfLASTFirst = 4};
 
-//,make private
-public:
+private:
 	CString m_strTitle;
 	CString m_strFirst;
 	CString m_strMiddle;

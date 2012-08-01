@@ -114,7 +114,7 @@ void CPageClassContents::DoDataExchange(CDataExchange* pDX)
 		if (bNoAutosort)
 		{
 			BDataFlags* pdatFlags = new BDataFlags;
-			pdatFlags->m_lngFlags = bNoAutosort ? flagNoAutosort : 0;
+			pdatFlags->SetFlags(bNoAutosort ? flagNoAutosort : 0);
 			m_pobj->SetPropertyData(propObjectFlags, pdatFlags, FALSE, FALSE);
 		}
 	}
@@ -156,7 +156,7 @@ void CPageClassContents::LoadData()
 	BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, m_pobj->GetPropertyData(propObjectFlags));
 	BOOL bNoAutosort = FALSE;
 	if (pdatFlags)
-		bNoAutosort = pdatFlags->m_lngFlags & flagNoAutosort;
+		bNoAutosort = pdatFlags->GetFlags() & flagNoAutosort;
 
 	// Since this form gets reloaded, you might wind up with both checks on unless you explicitly set both!
 	m_optSortNo.SetCheck(bNoAutosort ? 1 : 0);

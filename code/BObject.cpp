@@ -894,7 +894,7 @@ BOOL BObject::SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText,
 //				BObject* pobjPropertyDef = m_pDoc->GetObject(propFlags);
 //				ASSERT_VALID(pobjPropertyDef);
 				m_pDoc->m_datFlagsTemp.SetBDataText(pszText, pobjPropertyDef);
-				m_lngFlags = m_pDoc->m_datFlagsTemp.m_lngFlags;
+				m_lngFlags = m_pDoc->m_datFlagsTemp.GetFlags();
 				break;
 			}
 
@@ -1072,7 +1072,7 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 	case propFlags:
 		{
 			// Use document's BDataFlags object to get text representation.
-			m_pDoc->m_datFlagsTemp.m_lngFlags = m_lngFlags;
+			m_pDoc->m_datFlagsTemp.SetFlags(m_lngFlags);
 			return m_pDoc->m_datFlagsTemp.GetBDataText(m_pDoc, lngPropertyID);
 		}
 		break;
@@ -1294,7 +1294,7 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			BDataLong* pdatLong = DYNAMIC_DOWNCAST(BDataLong, pdat);
 			ASSERT_VALID(pdatLong);
 
-			pdatLong->m_lngValue = m_lngObjectID;
+			pdatLong->SetValue(m_lngObjectID);
 
 			// Store pointer to this bdata object in the document
 			if (m_pDoc->m_pdatTemp)
@@ -1383,7 +1383,7 @@ void BObject::SetPropertyLong(OBJID lngPropertyID, ULONG lngValue,
 //	}
 	BDataLong* pdat = new BDataLong;
 	ASSERT_VALID(pdat);
-	pdat->m_lngValue = lngValue;
+	pdat->SetValue(lngValue);
 
 	// Store the data in the property object
 	pobjPropertyValue->SetData(pdat);
@@ -1427,7 +1427,7 @@ ULONG BObject::GetPropertyLong(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 		ASSERT_VALID(pobjPropertyValue);
 		BDataLong* pdat = DYNAMIC_DOWNCAST(BDataLong, pobjPropertyValue->GetData());
 		ASSERT_VALID(pdat);
-		return pdat->m_lngValue;
+		return pdat->GetValue();
 	}
 /*
 	else

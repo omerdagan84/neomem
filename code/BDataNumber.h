@@ -30,8 +30,16 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
-//, make private
 public:
+	BOOL operator< (const BDataNumber& that) { return (m_dblValue < that.m_dblValue); };
+	BOOL operator== (const BDataNumber& that) { return (m_dblValue == that.m_dblValue); };
+
+	double GetValue() { return m_dblValue; };
+	void SetValue(double dblValue) { m_dblValue = dblValue; };
+
+	void SetUnitID(ULONG lngUnitID) { m_lngUnitID = lngUnitID; };
+
+private:
 	double m_dblValue; // numerical value
 	ULONG m_lngUnitID; // units associated with the value 
 
