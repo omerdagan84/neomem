@@ -979,7 +979,7 @@ BObject* CViewEx::DragGetDropTarget(CPoint ptClient)
 CView* CViewEx::GetSiblingView(ULONG lngViewID)
 {
 	CFrameChild* pChild = (CFrameChild*) GetParentFrame();
-	CViewHeader* pviewHeader = (CViewHeader*) pChild->m_pviewHeader;
+	CViewHeader* pviewHeader = pChild->GetViewHeader();
 	CView* pview = NULL;
 	if (pviewHeader)
 	{

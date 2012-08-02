@@ -436,10 +436,10 @@ void CViewSearch::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	case hintDelete:
 		{
 			CHint* ph = (CHint*) pHint;
-			int nObjects = ph->m_paObjects->GetSize();
+			int nObjects = ph->paObjects->GetSize();
 			for (int i = 0; i < nObjects; i++)
 			{
-				BObject* pobj = (BObject*) ph->m_paObjects->GetAt(i);
+				BObject* pobj = (BObject*) ph->paObjects->GetAt(i);
 				// Note: Object has already been deleted, so don't validate it
 //				ASSERT_VALID(pobj);
 				// remove from the list
@@ -455,9 +455,9 @@ void CViewSearch::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			// Find item and refresh it
 			CHint* ph = (CHint*) pHint;
 			ASSERT_VALID(ph);
-			BObject* pobj = ph->m_pobjObject;
+			BObject* pobj = ph->pobjObject;
 			ASSERT_VALID(pobj);
-			ULONG lngPropertyID = ph->m_idProperty;
+			ULONG lngPropertyID = ph->idProperty;
 			// check the main list
 			int nItem = m_lvw.FindItemData((LPARAM) pobj);
 			if (nItem != -1)

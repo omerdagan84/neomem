@@ -30,11 +30,11 @@ public:
 	void WriteHeader(BDataLink& datProps);
 	void WriteNewline();
 	void WriteValue(LPCTSTR psz);
+	void WriteLine(LPCTSTR psz);
+	void WriteFooter();
 
 // Attributes
 public:
-	void WriteLine(LPCTSTR psz);
-	void WriteFooter();
 	CString m_strDelim;
 	CString m_strNewline;
 	eFileFormat m_nFormat;

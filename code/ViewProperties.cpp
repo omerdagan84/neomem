@@ -238,11 +238,11 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		{
 			CHint* ph = (CHint*) pHint;
 			ASSERT_VALID(ph);
-			ASSERT_VALID(ph->m_paObjects);
-			int nObjects = ph->m_paObjects->GetSize();
+			ASSERT_VALID(ph->paObjects);
+			int nObjects = ph->paObjects->GetSize();
 			for (int i = 0; i < nObjects; i++)
 			{
-				BObject* pobj = (BObject*) ph->m_paObjects->GetAt(i);
+				BObject* pobj = (BObject*) ph->paObjects->GetAt(i);
 				// Note: Object has already been deleted, so don't validate it!
 //				ASSERT_VALID(pobj);
 				// If the object is a property def, this will remove it from the listview.

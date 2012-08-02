@@ -520,11 +520,11 @@ if (strlen(pszRtf) > 0)
 				// Refresh display if text property changed (eg if user drag dropped text onto this object)
 				CHint* ph = (CHint*) pHint;
 				ASSERT_VALID(ph);
-				BObject* pobj = ph->m_pobjObject;
+				BObject* pobj = ph->pobjObject;
 				ASSERT_VALID(pobj);
 				BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 				// Check if this event refers to the current object and rtf text property
-				if ((ph->m_idProperty == propRtfText) && (pobj == pobjCurrent))
+				if ((ph->idProperty == propRtfText) && (pobj == pobjCurrent))
 				{
 					LPCTSTR pszRtf = pobj->GetPropertyText(propRtfText);
 					m_prtf->SetRtf(pszRtf, FALSE);

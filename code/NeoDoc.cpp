@@ -2055,8 +2055,8 @@ BOOL CNeoDoc::UIEditObject(BObject *pobj) {
 	if (bPersonName || bIcon) {
 		if (pobj->GetData()->UIEditValue(pobj, 0)) {
 			CHint h;
-			h.m_pobjObject = pobj;
-			h.m_idProperty = propName;
+			h.pobjObject = pobj;
+			h.idProperty = propName;
 			UpdateAllViewsEx(0, hintPropertyChange, &h);
 			return TRUE;
 		}
@@ -2709,17 +2709,17 @@ BOOL CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 
 	BDataColumnInfo* pColInfo;
 	pColInfo = new BDataColumnInfo;
-	pColInfo->m_idProperty = propName;
+	pColInfo->idProperty = propName;
 	pColInfo->m_nColWidth = 200;
 	paCols->m_apdat.Add(pColInfo);
 
 	pColInfo = new BDataColumnInfo;
-	pColInfo->m_idProperty = propClassName;
+	pColInfo->idProperty = propClassName;
 	pColInfo->m_nColWidth = 90;
 	paCols->m_apdat.Add(pColInfo);
 
 	pColInfo = new BDataColumnInfo;
-	pColInfo->m_idProperty = propDescription;
+	pColInfo->idProperty = propDescription;
 	pColInfo->m_nColWidth = 220;
 	paCols->m_apdat.Add(pColInfo);
 

@@ -252,9 +252,6 @@
     <ClCompile Include="..\code\GUI.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\Hint.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="..\code\History.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -1488,6 +1485,7 @@
     <None Include="..\resources\icons\Wallet.ico">
       <Filter>Resource files</Filter>
     </None>
+    <None Include="..\resources\Resource.hm" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\help\NeoMem.hhp">

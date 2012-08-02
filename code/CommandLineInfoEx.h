@@ -11,7 +11,10 @@ public:
 	CCommandLineInfoEx();
 	virtual void ParseParam(LPCTSTR pszParam, BOOL bFlag, BOOL bLast);
 
-public:
+	BOOL IsTest() { return m_bTest; };
+	BOOL IsAdmin() { return m_bAdmin; };
+
+private:
 	BOOL m_bTest;
 	BOOL m_bAdmin;
 

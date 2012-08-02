@@ -259,14 +259,14 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 
 			// Note: Let's just assume that all properties changed - makes the code simpler
 			CHint h;
-			h.m_pobjObject = m_pobjEditOriginal;
-			h.m_idProperty = propName; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_idProperty = propDescription; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_idProperty = propIconID; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_idProperty = propObjectProperties; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_idProperty = propObjectFlags; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-			h.m_idProperty = propObjectNamePropertyType; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
-//.			h.m_idProperty = propObjectViewArrangement; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.pobjObject = m_pobjEditOriginal;
+			h.idProperty = propName; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.idProperty = propDescription; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.idProperty = propIconID; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.idProperty = propObjectProperties; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.idProperty = propObjectFlags; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+			h.idProperty = propObjectNamePropertyType; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+//.			h.idProperty = propObjectViewArrangement; m_pdoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 			// Move object to new parent, if changed, and notify views
 			// don't do if on base class cause step 20 is screwy

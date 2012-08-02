@@ -26,6 +26,7 @@ public:
 	virtual BOOL DoPromptFileName2(CString& fileName, UINT nIDSTitle, DWORD lFlags, BOOL bOpenFileDialog, CDocTemplate* pTemplate, CNeoDoc* pDoc);
 
 // Attributes
+private:
 	CNeoDoc* m_pDoc; //` pointer to document, specified in call to DoPromptFileName2
 
 };

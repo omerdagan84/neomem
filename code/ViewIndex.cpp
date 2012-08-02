@@ -224,9 +224,9 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			// Find item and refresh it
 			CHint* ph = (CHint*) pHint;
 			ASSERT_VALID(ph);
-			BObject* pobj = ph->m_pobjObject;
+			BObject* pobj = ph->pobjObject;
 			ASSERT_VALID(pobj);
-			ULONG lngPropertyID = ph->m_idProperty;
+			ULONG lngPropertyID = ph->idProperty;
 			int nItem = m_lvw.FindItemData((LPARAM) pobj);
 			if (nItem != -1)
 			{
@@ -274,11 +274,11 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		{
 			CHint* ph = (CHint*) pHint;
 			ASSERT_VALID(ph);
-			ASSERT_VALID(ph->m_paObjects);
-			int nObjects = ph->m_paObjects->GetSize();
+			ASSERT_VALID(ph->paObjects);
+			int nObjects = ph->paObjects->GetSize();
 			for (int i = 0; i < nObjects; i++)
 			{
-				BObject* pobj = (BObject*) ph->m_paObjects->GetAt(i);
+				BObject* pobj = (BObject*) ph->paObjects->GetAt(i);
 				// Note: Object has already been deleted, so don't validate it
 //				ASSERT_VALID(pobj);
 				// delete from list

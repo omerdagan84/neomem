@@ -182,8 +182,8 @@ BOOL CPageObjectGeneral::OnApply()
 		m_pobj->SetObjectID(lngObjectID);
 
 		CHint h;
-		h.m_pobjObject = m_pobj;
-		h.m_idProperty = propObjectID;
+		h.pobjObject = m_pobj;
+		h.idProperty = propObjectID;
 		m_pobj->GetDoc()->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 		m_bIDChanged = FALSE;

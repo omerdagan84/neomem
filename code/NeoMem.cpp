@@ -564,7 +564,7 @@ BOOL CNeoMem::InitInstance() {
 	// If the value includes flagSystem, then the tree will start with the user root as the root item.
 	// If the value does not include flagSystem, then the tree will start with the system root as the root item.
 	// 1.1c handle admin mode (/admin). this will replace modifying the registry key Admin.
-	m_bAdmin = cmdInfo.m_bAdmin;
+	m_bAdmin = cmdInfo.IsAdmin();
 	if (m_bAdmin) {
 //		m_lngSearchExcludeFlags = 0; // Don't exclude anything from searches
 //		m_lngExcludeFlags = 0; // Don't exclude any classes, properties, property types, etc.
@@ -594,7 +594,7 @@ BOOL CNeoMem::InitInstance() {
 		cmdInfo.m_nShellCommand = CCommandLineInfo::FileNothing; // don't open a new document
 
 	// 1.1c handle test mode (/test)
-	m_bTestMode = cmdInfo.m_bTest;
+	m_bTestMode = cmdInfo.IsTest();
 	if (m_bTestMode) {
 		cmdInfo.m_nShellCommand = CCommandLineInfo::FileNothing; // don't open a document, new or old
 		m_bAutoLoad = FALSE; // make sure we don't autoload a file either
@@ -1505,8 +1505,8 @@ void CNeoMem::SetStatusBarText(LPCTSTR lpszText /* = 0 */) {
 		lpszText = (LPCTSTR) str;
 	}
 //	((CFrameMain*) m_pMainWnd)->m_sbr.SetWindowText(lpszText);
-	GetMainFrame()->m_sbr.SetWindowText(lpszText);
-	GetMainFrame()->m_sbr.Resize();
+	GetMainFrame()->GetStatusBar().SetWindowText(lpszText);
+	GetMainFrame()->GetStatusBar().Resize();
 }
 
 
@@ -1517,7 +1517,7 @@ void CNeoMem::UpdateProgressBar(ULONG nItem, ULONG nItems /* =0 */) {
 	//, make protected and add methods
 	CFrameMain* pMain = (CFrameMain*) AfxGetMainWnd();
 	ASSERT_VALID(pMain);
-	CProgressCtrl& rprog = pMain->m_sbr.m_wndProgress;
+	CProgressCtrl& rprog = pMain->GetStatusBar().m_wndProgress;
 	// Set range if specified
 	if (nItems)
 		rprog.SetRange32(0, nItems);

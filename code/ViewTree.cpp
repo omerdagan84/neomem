@@ -350,7 +350,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				// Delete items from the treeview
 				CHint* pobjHint = (CHint*) pHint;
-				BObjects* paObjects = pobjHint->m_paObjects;
+				BObjects* paObjects = pobjHint->paObjects;
 				ASSERT_VALID(paObjects);
 				int nItems = paObjects->GetSize();
 				for (int i = 0; i < nItems; i++)
@@ -375,14 +375,14 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				ASSERT_VALID(pobjHint);
 
 				// Check if the object is in this view
-				BObject* pobj = pobjHint->m_pobjObject;
+				BObject* pobj = pobjHint->pobjObject;
 				ASSERT_VALID(pobj);
 
 				HTREEITEM hti = m_tvw.FindItemData((DWORD) pobj, 0);
 				if (hti)
 				{
 					// Handle different property changes differently
-					ULONG lngPropertyID = pobjHint->m_idProperty;
+					ULONG lngPropertyID = pobjHint->idProperty;
 					if (lngPropertyID == propIconID || lngPropertyID == propClassID || lngPropertyID == propClassName)
 					{
 						// Get the new index of the icon in the image list
@@ -451,9 +451,9 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// Move item up or down
 				// Move pobjObject before or after pobjTarget, depending on bAfter flag.
 				CHint* ph = (CHint*) pHint;
-				BObject* pobjSource = ph->m_pobjObject;
-				BObject* pobjTarget = ph->m_pobjTarget;
-				BOOL bAfter = ph->m_bAfter;
+				BObject* pobjSource = ph->pobjObject;
+				BObject* pobjTarget = ph->pobjTarget;
+				BOOL bAfter = ph->bAfter;
 				ASSERT_VALID(pobjSource);
 				ASSERT_VALID(pobjTarget);
 

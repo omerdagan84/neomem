@@ -46,13 +46,13 @@ public:
 	HMENU NewDefaultMenu(); // bcmenu
 	CDocument* GetActiveDocumentMDI();
 	BOOL SetAutoRecoverTimer(UINT uMinutes);
+	CStatusBarEx& GetStatusBar() { return m_sbr; };
 
 // Attributes
-public:
+private:
 	CStatusBarEx m_sbr;
 	BCMenu m_menu; // bcmenu
 	BCMenu m_menuDefault; // bcmenu
-private:
 	CToolBar m_tbr;
 	CReBar m_wndReBar;
 	CDialogBar m_wndDlgBar;

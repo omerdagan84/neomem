@@ -221,7 +221,7 @@ void BObject::Serialize(CArchive& ar)
 			{
 				BDataColumnInfo* pc = DYNAMIC_DOWNCAST(BDataColumnInfo, pdatArray->m_apdat.GetAt(i));
 				ASSERT_VALID(pc);
-				OBJID lngPropertyID = pc->m_idProperty;
+				OBJID lngPropertyID = pc->idProperty;
 				int nWidth = pc->m_nColWidth;
 //				int nAlignment = pc->m_nColAlignment;
 				pdatCols->InsertColumn(lngPropertyID, m_pDoc);
@@ -665,8 +665,8 @@ BOOL BObject::DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag /* = TRU
 			if (bUpdateViews)
 			{
 				CHint h;
-				h.m_pobjObject = this;
-				h.m_idProperty = lngPropertyID;
+				h.pobjObject = this;
+				h.idProperty = lngPropertyID;
 				m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 			}
 
@@ -928,8 +928,8 @@ BOOL BObject::SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText,
 	if (bUpdateViews)
 	{
 		CHint h;
-		h.m_pobjObject = this;
-		h.m_idProperty = lngPropertyID;
+		h.pobjObject = this;
+		h.idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 
@@ -1167,8 +1167,8 @@ BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdat,
 	if (bUpdateViews)
 	{
 		CHint h;
-		h.m_pobjObject = this;
-		h.m_idProperty = lngPropertyID;
+		h.pobjObject = this;
+		h.idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 
@@ -1396,8 +1396,8 @@ void BObject::SetPropertyLong(OBJID lngPropertyID, ULONG lngValue,
 	if (bUpdateViews)
 	{
 		CHint h;
-		h.m_pobjObject = this;
-		h.m_idProperty = lngPropertyID;
+		h.pobjObject = this;
+		h.idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 }
@@ -1487,8 +1487,8 @@ void BObject::SetPropertyLink(OBJID lngPropertyID,
 	// Update all views if specified
 	if (bUpdateViews) {
 		CHint h;
-		h.m_pobjObject = this;
-		h.m_idProperty = lngPropertyID;
+		h.pobjObject = this;
+		h.idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 }
@@ -1971,9 +1971,9 @@ BOOL BObject::MoveUp()
 				// tree needs pobj, pobjdest, bAfter
 				// in this case we're moving it before the given item
 				CHint h;
-				h.m_pobjObject = this;
-				h.m_pobjTarget = pobjOther;
-				h.m_bAfter = FALSE;
+				h.pobjObject = this;
+				h.pobjTarget = pobjOther;
+				h.bAfter = FALSE;
 				m_pDoc->UpdateAllViewsEx(NULL, hintReposition, &h);
 				return TRUE;
 			}
@@ -2010,9 +2010,9 @@ BOOL BObject::MoveDown()
 				
 				// Now tell views
 				CHint h;
-				h.m_pobjObject = this;
-				h.m_pobjTarget = pobjOther;
-				h.m_bAfter = TRUE;
+				h.pobjObject = this;
+				h.pobjTarget = pobjOther;
+				h.bAfter = TRUE;
 				m_pDoc->UpdateAllViewsEx(NULL, hintReposition, &h);
 				return TRUE;
 			}
@@ -2227,16 +2227,16 @@ BOOL BObject::SetClassID(OBJID lngNewClassID)
 
 	// Inform views of change
 	CHint h;
-	h.m_pobjObject = this;
-	h.m_idProperty = propClassID;
+	h.pobjObject = this;
+	h.idProperty = propClassID;
 	m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 	// Also broadcast hints for all dependent properties
 	//, need generic way of handling this
-	h.m_idProperty = propClassName;
+	h.idProperty = propClassName;
 	m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
-	h.m_idProperty = propIconID;
+	h.idProperty = propIconID;
 	m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 	return TRUE;
@@ -2384,8 +2384,8 @@ BOOL BObject::SetIconID(OBJID lngIconID)
 
 	// Inform views of change
 	CHint h;
-	h.m_pobjObject = this;
-	h.m_idProperty = propIconID;
+	h.pobjObject = this;
+	h.idProperty = propIconID;
 	m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 
 	// If this is a classdef object, refresh all visible icons
@@ -2618,7 +2618,7 @@ void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, B
 	ASSERT_VALID(pobjFind);
 	
 	CHint h;
-	h.m_pobjObject = this;
+	h.pobjObject = this;
 
 	OBJID lngFindID = pobjFind->GetObjectID();
 	OBJID lngNewID = 0;
@@ -2641,9 +2641,9 @@ void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, B
 //		{
 			SetClassID(lngNewID);
 			// Tell views
-//			h.m_idProperty = propClass;
+//			h.idProperty = propClass;
 //			m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
-			h.m_idProperty = propClassName;
+			h.idProperty = propClassName;
 			m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 //		}
 	}
@@ -2653,7 +2653,7 @@ void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, B
 	{
 		m_lngIconID = lngNewID;
 		// Tell views
-//		h.m_idProperty = propIconID;
+//		h.idProperty = propIconID;
 //		m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 	}
 
@@ -2664,7 +2664,7 @@ void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, B
 		if (m_pdat->ReplaceReferences(pobjFind, pobjNew))
 		{
 			// Tell views
-			h.m_idProperty = m_lngClassID;
+			h.idProperty = m_lngClassID;
 			m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 		}
 	}
@@ -2696,7 +2696,7 @@ void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, B
 				if (pobjPropertyValue->GetData()->ReplaceReferences(pobjFind, pobjNew))
 				{
 					// Tell views
-					h.m_idProperty = pobjPropertyValue->GetClassID();
+					h.idProperty = pobjPropertyValue->GetClassID();
 					m_pDoc->UpdateAllViewsEx(0, hintPropertyChange, &h);
 				}
 			}
@@ -2821,7 +2821,7 @@ BOOL BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews
 		CHint objHint;
 		BObjects aObjects;
 		aObjects.Add(this);
-		objHint.m_paObjects = &aObjects;
+		objHint.paObjects = &aObjects;
 		m_pDoc->UpdateAllViewsEx(NULL, hintDelete, &objHint);
 	}
 

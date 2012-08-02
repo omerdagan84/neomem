@@ -37,17 +37,15 @@ public:
 	void SetSplitterPos(ULONG lngSplitterPos);
 	CView* ShowView(ULONG lngViewID, BOOL bSetActive);
 
+	CViewHeader* GetViewHeader() { return m_pviewHeader; };
+
 // Attributes
-public:
-	CViewHeader* m_pviewHeader;		// pointer to right CViewHeader control
-
 protected:
+	CViewHeader* m_pviewHeader;		// pointer to right CViewHeader control
 	CSplitterWndEx m_wndSplitter;
-
-private:
-	BOOL DoFilePrint(BOOL bPrintPreview, BOOL bAskForView);
 	CViewTabs* m_pviewNavigation;	// pointer to left CViewTabs control
 
+	BOOL DoFilePrint(BOOL bPrintPreview, BOOL bAskForView);
 
 // Overrides
 	// ClassWizard generated virtual function overrides

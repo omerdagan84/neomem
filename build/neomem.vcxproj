@@ -160,7 +160,6 @@
     <ClCompile Include="..\code\FrameChild.cpp" />
     <ClCompile Include="..\code\FrameMain.cpp" />
     <ClCompile Include="..\code\GUI.cpp" />
-    <ClCompile Include="..\code\Hint.cpp" />
     <ClCompile Include="..\code\History.cpp" />
     <ClCompile Include="..\code\IconCache.cpp" />
     <ClCompile Include="..\code\Info.cpp" />

@@ -531,7 +531,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 
 				// Delete items from the listview and/or the column bdata (might be deleting a propertydef!)
 				CHint* pobjHint = (CHint*) pHint;
-				BObjects* paObjects = pobjHint->m_paObjects;
+				BObjects* paObjects = pobjHint->paObjects;
 				ASSERT_VALID(paObjects);
 				int nItems = paObjects->GetSize();
 				for (int i = 0; i < nItems; i++) {
@@ -572,9 +572,9 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				CHint* pobjHint = (CHint*) pHint;
 				ASSERT_VALID(pobjHint);
 				
-				BObject* pobj = pobjHint->m_pobjObject;
+				BObject* pobj = pobjHint->pobjObject;
 				ASSERT_VALID(pobj);
-				OBJID idProperty = pobjHint->m_idProperty;
+				OBJID idProperty = pobjHint->idProperty;
 
 				// Look for object in list
 				int nItem = m_lvw.FindItemData((LPARAM) pobj);
@@ -589,7 +589,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 					}
 
 					// Look for property in columns
-					int nCol = m_lvw.FindColumn(pobjHint->m_idProperty);
+					int nCol = m_lvw.FindColumn(pobjHint->idProperty);
 					if (nCol != -1) {
 						// Update the item's row
 						m_lvw.Update(nItem);
@@ -654,9 +654,9 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				// Move item up or down
 				// Move pobjObject before or after pobjTarget, depending on bAfter flag.
 				CHint* ph = (CHint*) pHint;
-				BObject* pobjSource = ph->m_pobjObject;
-				BObject* pobjTarget = ph->m_pobjTarget;
-				BOOL bAfter = ph->m_bAfter;
+				BObject* pobjSource = ph->pobjObject;
+				BObject* pobjTarget = ph->pobjTarget;
+				BOOL bAfter = ph->bAfter;
 				ASSERT_VALID(pobjSource);
 				ASSERT_VALID(pobjTarget);
 				
