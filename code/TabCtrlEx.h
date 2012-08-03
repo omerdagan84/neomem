@@ -25,7 +25,7 @@ public:
 
 
 // Attributes
-public:
+private:
 	DragPhase m_nDragPhase; // phase of drag operation
 	CPoint m_ptInitial; // initial point
 	int m_nTabDrag; // which tab is being dragged (zero based)

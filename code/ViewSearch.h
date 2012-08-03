@@ -3,8 +3,6 @@
 // The Search View allows the user to search across all objects in the file.
 //-----------------------------------------------------------------------------------------------------------------
 
-
-
 #pragma once
 
 #include "ViewEx.h"
@@ -88,7 +86,7 @@ protected:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewSearch)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

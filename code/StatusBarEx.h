@@ -8,9 +8,6 @@
 // See SetStatusBarText
 
 
-
-
-
 #pragma once
 
 #include "Clock.h"
@@ -27,9 +24,11 @@ public:
 public:
 	void Resize();
 
-// Attributes
+// Public Attributes
 public:
 	CProgressCtrl m_wndProgress;
+
+// Attributes
 private:
 	CClock m_clock;
 //	CEdit m_txt;

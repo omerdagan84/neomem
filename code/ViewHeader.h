@@ -24,9 +24,11 @@ protected:
 
 // Operations
 
-// Attributes
+// Public Attributes
 public:
 	CViewTabs* m_pviewTabs; // tabs view contained by this view
+
+// Attributes
 private:
 	int m_nHeight; // height of this header view in pixels
 
@@ -52,7 +54,7 @@ protected:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewHeader)
 	afx_msg void OnSize(UINT nType, int cx, int cy);

@@ -12,6 +12,7 @@ class CPreviewViewEx : public CPreviewView
 {
 	DECLARE_DYNCREATE(CPreviewViewEx)
 
+// Construction
 protected:
 	CPreviewViewEx();           // protected constructor used by dynamic creation
 	virtual ~CPreviewViewEx();

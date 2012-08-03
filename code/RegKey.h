@@ -25,17 +25,18 @@
 
 class CRegKeyX
 {
+// Construction
 public:
 	CRegKeyX();
 	~CRegKeyX();
 
 // Attributes
 public:
-	operator HKEY() const;
 	HKEY m_hKey;
 
 // Operations
 public:
+	operator HKEY() const;
 	BOOL CopyKey();
 	void GetString(LPCTSTR lpszValueName, CString& strValue); //` added this
 	LONG SetValue(DWORD dwValue, LPCTSTR lpszValueName);
@@ -56,14 +57,9 @@ public:
 //	LONG ReplaceRecurse(HKEY hKey, LPCTSTR lpszOld, LPCTSTR lpszNew, int nIndent = 0); //` added this
 };
 
-inline CRegKeyX::CRegKeyX()
-{m_hKey = NULL;}
-
-inline CRegKeyX::~CRegKeyX()
-{Close();}
-
-inline CRegKeyX::operator HKEY() const
-{return m_hKey;}
+inline CRegKeyX::CRegKeyX() {m_hKey = NULL;}
+inline CRegKeyX::~CRegKeyX() {Close();}
+inline CRegKeyX::operator HKEY() const {return m_hKey;}
 
 inline HKEY CRegKeyX::Detach()
 {

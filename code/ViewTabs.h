@@ -58,12 +58,14 @@ public:
 	BOOL IsViewVisible(ULONG lngViewID);
 	BOOL LoadViews(BObject* pobj);
 
-// Attributes
+// Public Attributes
 public:
 	CObArray m_aCurrentViews; // array of current view objects
 	CTabCtrlEx m_tbc;
 //	CNeoDoc* m_pDoc;
 
+
+// Attributes
 private:
 	ULONG m_lngMode;	// Mode of view (navigation or contents)
 	BOOL m_bDrag;
@@ -101,7 +103,8 @@ protected:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-	// Generated message map functions
+
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewTabs)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

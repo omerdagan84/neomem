@@ -27,10 +27,8 @@ public:
 // Operations
 public:
 	void RecalculateLayout(int cx = 0, int cy = 0);
-private:
-	void GetFileDescription();
 
-// Attributes
+// Public Attributes
 public:
 	CNeoDoc* m_pDoc;
 	CRect m_rMargins;
@@ -41,6 +39,10 @@ public:
 	CStaticEx m_lblDot;
 	CStaticEx m_lblNextTip;
 
+
+// Implementation
+private:
+	void GetFileDescription();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -58,7 +60,8 @@ protected:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
+private:
 	//{{AFX_MSG(CViewHomeInner)
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

@@ -11,13 +11,12 @@ class CPropertySheetEx2 : public CPropertySheet
 {
 	DECLARE_DYNAMIC(CPropertySheetEx2)
 
+// Construction
 public:
 	CPropertySheetEx2::CPropertySheetEx2();
 	CPropertySheetEx2(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 	CPropertySheetEx2(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-
-protected:
-	HACCEL m_hAccel;
+	virtual ~CPropertySheetEx2();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -28,8 +27,8 @@ protected:
 	//}}AFX_VIRTUAL
 
 // Implementation
-public:
-	virtual ~CPropertySheetEx2();
+protected:
+	HACCEL m_hAccel;
 
 	// Generated message map functions
 protected:

@@ -10,9 +10,11 @@
 
 class CStringEx : public CString
 {
+// enums
 public:
 	enum Options {NO_OPTIONS=0, COMMA_DELIMIT=1};
 
+// Operations
 public:
 	void RemoveBadChars();
 	// from codeproject - this is cool - hadn't been able to figure out how to handle the constructor...
@@ -34,6 +36,7 @@ public:
 //	CStringEx CommaDelimitNumber(LPCTSTR s);
 
 
+public: 
 	BOOL IsAscii();
 	int GetCheckSum();
 	UINT GetNextTokenID(UINT nStartID, UINT nStopID, BOOL bSwallowToken);

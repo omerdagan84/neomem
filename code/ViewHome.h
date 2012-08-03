@@ -3,8 +3,6 @@
 // This view is the first view the user sees, and contains the tip of the day.
 //-----------------------------------------------------------------------------------------------------------------
 
-
-
 #pragma once
 
 #include "StaticEx.h"
@@ -67,7 +65,7 @@ protected:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewHome)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

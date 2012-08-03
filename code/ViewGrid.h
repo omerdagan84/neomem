@@ -22,7 +22,6 @@ protected:
 // Operations
 public:
 
-
 // Attributes
 public:
 
@@ -39,7 +38,7 @@ protected:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewGrid)
 		// NOTE - the ClassWizard will add and remove member functions here.

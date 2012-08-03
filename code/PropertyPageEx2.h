@@ -21,6 +21,7 @@ public:
 	~CPropertyPageEx2();
 
 // Dialog Data
+private: 
 	//{{AFX_DATA(CPropertyPageEx2)
 	enum { IDD = IDD_ERROR };
 		// NOTE - ClassWizard will add data members here.

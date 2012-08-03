@@ -54,11 +54,12 @@ public:
 //	void StopTracking(BOOL bAccept); // advanced overridable
 
 // Attributes
-public:
+private:
 	ULONG m_lngMode; // ie eSplitterModes
 
 
 // Implementation
+private:
 	//{{AFX_MSG(CSplitterWndEx)
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint pt);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint pt);

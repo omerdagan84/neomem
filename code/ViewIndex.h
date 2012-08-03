@@ -5,8 +5,6 @@
 // Date: May 2000
 //-----------------------------------------------------------------------------------------------------------------
 
-
-
 #pragma once
 
 
@@ -65,7 +63,7 @@ private:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewIndex)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

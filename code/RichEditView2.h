@@ -83,14 +83,14 @@ public:
 	static DWORD CALLBACK EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb);
 
 
-//	float m_fScale; // delete
-//	CWnd* m_pwndOldParent; //test
-//	CWnd m_wnd; // test
-
 // Attributes
 public:
 	int m_nWordWrap;
 	int m_nBulletIndent;
+
+//	float m_fScale; // delete
+//	CWnd* m_pwndOldParent; //test
+//	CWnd m_wnd; // test
 
 	//` added this to make up for missing MFC global variable
 	_AFX_RICHEDIT_STATE* _afxRichEditState;
@@ -102,6 +102,7 @@ public:
 	BOOL m_bFirstSearch;
 
 	static AFX_DATA ULONG lMaxSize; // maximum number of characters supported
+
 public:
 	long m_nPrintStartChar;
 	long m_nPrintStopChar; 

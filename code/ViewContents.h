@@ -24,33 +24,35 @@ class CViewContents : public CViewEx {
 
 	DECLARE_DYNCREATE(CViewContents)
 
+// Construction
 public:
-
-	// Construction
 	CViewContents();
 	virtual ~CViewContents();
 
-	// Operations
+// Operations
+public:
 	virtual BOOL DoPrint(BOOL bPreview);
 
 
-	// Implementation
+// Public Attributes
+public:
+	CListCtrlEx m_lvw; // list view control
+
+// Attributes
+private: 
+	CToolBarCtrlEx m_tbr; // toolbar control
+//	CUndo m_objUndo; // undo object
+//	int m_nTargetColumn; // selected column for header popup menu
+	int m_nDragOver; // item being dragged over
+
+
+// Implementation
 private:
 	BObject* DragGetDropTarget(CPoint ptClient); // get drop target for given point
 //	void DisableVisibleProperties(); // set flagDisabled for properties that are already visible in this view
 //	void EnableAllProperties(); // clear flagDisabled for all properties
 	BObject* GetSelectedObject(); // get currently selected object
 	void SetTargetObject();
-
-	// Attributes
-//private: 
-public: // so can test drive its functions!
-	CListCtrlEx m_lvw; // list view control
-private: 
-	CToolBarCtrlEx m_tbr; // toolbar control
-//	CUndo m_objUndo; // undo object
-//	int m_nTargetColumn; // selected column for header popup menu
-	int m_nDragOver; // item being dragged over
 
 
 
@@ -75,14 +77,14 @@ private:
 #endif
 
 
-	// Implementation
+// Implementation
 protected:
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Message map functions
+// Message map functions
 protected:
 	//{{AFX_MSG(CViewContents)
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);

@@ -10,10 +10,13 @@
 
 class CPrintInfoMore  
 {
+// Construction
 public:
 	CPrintInfoMore();
 	virtual ~CPrintInfoMore();
 
+// Methods
+public:
 	void Initialize(CDC* pDC);
 	void InitFonts(CDC* pDC, float fFactor = 1.0);
 	void PrintHeader(CDC* pDC, CPrintInfo* pInfo);
@@ -21,6 +24,8 @@ public:
 	void DrawMargins(CDC* pDC, CPrintInfo *pInfo);
 	void Terminate();
 
+// Public Attributes
+public:
 	// GDI objects
 	CFontEx m_fontPrint;
 	CFontEx m_fontPrintBold;

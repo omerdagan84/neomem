@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------------------------------------------
 
 
-
-
 #pragma once
 
 #include "FontEx.h"
@@ -37,8 +35,18 @@ public:
 						BOOL bFontItalic = FALSE);
 	int SetWidthGetHeight(int nWidth);
 
-// Attributes
+
+// Public Attributes
 public:
+	COLORREF m_clrText;
+	COLORREF m_clrHighlight;
+	COLORREF m_clrBackground;
+	COLORREF m_clrBackground2;
+	CRect m_rTextSize;
+	enum eFlags {flagNone = 0, flagUnderline = 1};
+
+// Attributes
+private:
 	BOOL m_bAutosize;
 	BOOL m_bHighlight;
 
@@ -47,28 +55,19 @@ public:
 	CString m_strLink;
 	CString m_strEmail;
 	int m_nSound;
-	
 	BOOL m_bOpaque;
-	COLORREF m_clrText;
-	COLORREF m_clrHighlight;
-	COLORREF m_clrBackground;
-	COLORREF m_clrBackground2;
-
 	HCURSOR m_hCursor;
 
-	CRect m_rTextSize;
 	CRect m_rMargins;
 	CRect m_rControlSize; // textsize + margins
 	CRect m_rPos;
 	CRect m_rDraw; // control size + margin top left
 
 	CFontEx m_font;
-
 	int m_nBkMode;
 	UINT m_nTimer;
-
-	enum eFlags {flagNone = 0, flagUnderline = 1};
 	UINT m_nFlags;
+
 
 
 // Overrides
@@ -78,7 +77,7 @@ public:
 	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CStaticEx)
 	afx_msg void OnPaint();

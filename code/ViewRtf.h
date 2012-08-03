@@ -44,14 +44,7 @@ public:
 	long FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord); // used by viewsearch,
 		// or could get through m_pviewrtf!
 	void SetDefaultFont(CFontEx& font);
-protected:
-//	void ColorHyperlinks();
-	void SetFormat(CHARRANGE& cr, CHARFORMAT& cf);
-//	void GetNewBackcolor();
-//	void GetNewForecolor();
-
-
-// Attributes
+// Public Attributes
 public:
 //	CMiniFrameWnd m_wndMini; // delete
 //	CWnd m_wnd; //delete
@@ -64,6 +57,14 @@ public:
 	// Pointer to the actual Richedit control
 	CRichEditCtrlEx* m_prtf; 
 //	CRichEditCtrl* m_prtf; 
+
+// Implementation
+protected:
+//	void ColorHyperlinks();
+	void SetFormat(CHARRANGE& cr, CHARFORMAT& cf);
+//	void GetNewBackcolor();
+//	void GetNewForecolor();
+
 protected:
 	CToolBarRtf m_tbrRtf;
 	CString m_strFindText;
@@ -94,15 +95,12 @@ protected:
 //	void OnFilePrint();
 //	void OnFilePrintPreview();
 
-// Implementation
-
-
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewRtf)
 	afx_msg void OnUpdateEditUndo(CCmdUI* pCmdUI);

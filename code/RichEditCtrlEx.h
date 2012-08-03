@@ -56,9 +56,8 @@ public:
 	void SetDefaultCharFormat2(CHARFORMAT2 cf2); //`
 	void SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly = FALSE);
 
-private:
-
 /* 
+private:
 	bool CreateFromFile(LPCTSTR lpszFileName);
 	void ReleasePointers();
 	bool InsertBitmap(CString strFile); // This needs to be the full path to the bitmap. (ex. C:\Windows\Bitmap.bmp)

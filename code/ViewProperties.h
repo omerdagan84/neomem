@@ -61,7 +61,7 @@ protected:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewProperties)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

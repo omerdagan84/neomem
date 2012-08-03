@@ -24,19 +24,20 @@ public:
 // Operations
 public:
 
-// Attributes
-protected:
-//	CFont m_font;
-public: //. or hide them?
+// Public Attributes
+public:
 	CComboBox m_cboFontName;
 	CComboBox m_cboFontSize;
 	CColorButton m_ctlForecolor;
 	CColorButton m_ctlBackcolor;
 
+// Attributes
+protected:
+//	CFont m_font;
+
 // Implementation
 protected:
 	static int CALLBACK EnumFontFamExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType, LPARAM lParam);
-
 
 // Overrides
 	// ClassWizard generated virtual function overrides

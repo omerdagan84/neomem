@@ -11,10 +11,12 @@
 
 class CSystemTray  
 {
+// Construction
 public:
 	CSystemTray();
 	virtual ~CSystemTray();
 
+// Attributes
 private:
 	NOTIFYICONDATA m_nidIconData;
 	CMenu m_mnuTrayMenu;

@@ -39,7 +39,7 @@ protected:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+// Generated message map functions
 protected:
 	//{{AFX_MSG(CViewPictures)
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);

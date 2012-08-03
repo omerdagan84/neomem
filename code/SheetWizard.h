@@ -27,34 +27,38 @@ class CSheetWizard : public CPropertySheetEx2 {
 
 	DECLARE_DYNAMIC(CSheetWizard)
 
+// Construction
 public:
 	CSheetWizard();
 	CSheetWizard(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 	CSheetWizard(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 	virtual ~CSheetWizard();
 
-	// Enums
+// Enums
+public: 
 	enum eAddEditMode {modeAddOrEdit = 1, modeAddOnly = 2, modeEditOnly = 3};
 //	enum eWizardMode {modeAddClass = 1, modeEditClass = 2};
 //	enum eWizardMode {modeClass = 1, modeProperty = 2};
 
 
-	// Operations
+// Operations
+public:
 	void SetClassWizardTitle();
 	void SetEditClass(BObject* pobjClass);
 //	int DoModalParameters(eWizardMode nMode, BObject* pobj = 0);
 	int DoModalParameters(int nAddEditMode, BObject* pobjClass = 0);
 
 
-	// Attributes
+// Public Attributes
+public: 
 	CNeoDoc* m_pdoc;
 	BOOL m_bAddMode; // True if user picked Add option in first page
 
-public:
 	BObject* m_pobj; // Pointer to the object we're editing (add or edit)
 	BObject* m_pobjAdd; // New object used in Add mode
 	int m_nAddEditMode;
 
+// Private Attributes
 private:
 	BObject* m_pobjEdit; // New object used in Edit mode (copy of original item user picked)
 	BObject* m_pobjEditOriginal; // Item user picked to Edit in first page, if any
@@ -64,12 +68,12 @@ private:
 //	BOOL m_bAutosort; // True if user chose autosort in page 50
 
 
-	// Overrides
+// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSheetWizard)
 	//}}AFX_VIRTUAL
 
-	// Message Map
+// Message Map
 	protected:
 	//{{AFX_MSG(CSheetWizard)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
