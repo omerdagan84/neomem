@@ -19,18 +19,18 @@ public:
 public:
 	void GetNextTip();
 
-// Attributes
+// Public Attributes
 public:
-//	CBrush m_brush;
 	CString m_strTip;
+	BOOL	m_bShowTips;
+	UINT	m_nLastTip;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogTip)
 	enum { IDD = IDD_TIP };
 	CStatic	m_lblInstructions;
 	CStatic	m_staticBackground;
-	BOOL	m_bShowTips;
-	UINT	m_nLastTip;
 	//}}AFX_DATA
 
 

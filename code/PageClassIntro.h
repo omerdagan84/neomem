@@ -26,6 +26,7 @@ public:
 	~CPageClassIntro();
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CPageClassIntro)
 	enum { IDD = IDD_CLASS_INTRO };
 	CButton	m_btnDelete;
@@ -33,7 +34,8 @@ public:
 	CButton m_optAdd;
 	CButton m_optEdit;
 	//}}AFX_DATA
-  
+ 
+private:
 	CNeoDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;

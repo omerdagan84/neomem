@@ -16,11 +16,9 @@ public:
 	CDialogImport(CWnd* pParent = NULL);   // standard constructor
 
 // Attributes
-private:
-	CString m_strFilename;
-
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogImport)
 	enum { IDD = IDD_IMPORT };
 	CButton	m_btnSelectFile;
@@ -37,6 +35,8 @@ private:
 	//}}AFX_VIRTUAL
 
 // Implementation
+private:
+	CString m_strFilename;
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CDialogImport)

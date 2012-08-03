@@ -34,39 +34,30 @@ public:
 	int DoModalEditFolder(CString& strName, CString& strDescription, BObject* pobjParent, BObject* pobjDefaultClass);
 
 // Attributes
-public:
-//	ULONG m_lngClassID; // new object class id
-//	BObject* m_pobjClass; 
-	BObject* m_pobjParent; // parent of new object - used for display, and to get default class
-	BObject* m_pobjDefaultClass;  // ie contents of folder
+private:
 	CNeoDoc* m_pDoc;
 	BOOL m_bAddMode; // Add mode or edit mode
 	BOOL m_bLocationComboFilled;
-//	BOOL m_bNameChanged;
-//	BOOL m_bDescriptionChanged;
 
-
-// Implementation
-private:
-//	void FillDefaultClassCombo();
-//	void OnClassChanged();
-
-// Dialog Data
-public:
-	//{{AFX_DATA(CDialogEditFolder)
-	enum { IDD = IDD_EDIT_FOLDER };
+public: 
 	CString m_strName;
 	CString	m_strDescription;
+	BObject* m_pobjParent; // parent of new object - used for display, and to get default class
+	BObject* m_pobjDefaultClass;  // ie contents of folder
+
+
+// Dialog Data
+private:
+	//{{AFX_DATA(CDialogEditFolder)
+	enum { IDD = IDD_EDIT_FOLDER };
 	CStatic	m_lblDefaultClass;
 	CStatic	m_lblDescription;
-//	CStatic	m_lblClass;
 	CStatic	m_lblLocation;
 	CStatic	m_lblInstructions;
 	CEdit	m_txtName;
 	CEdit	m_txtDescription;
 	CListCtrlEx	m_lvw;
 	XComboBoxEx	m_cboLocation;
-//	XComboBoxEx	m_cboDefaultClass;
 	CButton	m_btnNewClass;
 	CButton	m_btnHelp;
 	//}}AFX_DATA
@@ -83,10 +74,7 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CDialogEditFolder)
 	virtual BOOL OnInitDialog();
-//	afx_msg void OnChangeEditName();
-//	afx_msg void OnNotifyItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDropdownCboLocation();
-//	afx_msg void OnSelchangeCboLocation();
 	afx_msg void OnBtnNewClass();
 	afx_msg void OnBtnHelp();
 	//}}AFX_MSG

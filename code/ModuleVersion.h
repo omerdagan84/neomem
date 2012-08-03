@@ -1,5 +1,4 @@
 
-
 // CModuleVersion version info about a module.
 // To use:
 // CModuleVersion ver

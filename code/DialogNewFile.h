@@ -17,10 +17,9 @@ class CDialogNewFile : public CDialog
 public:
 	CDialogNewFile(CWnd* pParent = NULL);   // standard constructor
 
-// Attributes
+// Public Attributes
 public:
 	CImageList m_iml;
-
 
 // Dialog Data
 	//{{AFX_DATA(CDialogNewFile)
@@ -38,7 +37,6 @@ public:
 
 // Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CDialogNewFile)
 	virtual BOOL OnInitDialog();

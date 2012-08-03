@@ -20,6 +20,7 @@ public:
 
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogInsertLink)
 	enum { IDD = IDD_INSERT_LINK };
 	CStatic	m_lblLink;

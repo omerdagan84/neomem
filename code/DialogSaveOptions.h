@@ -16,8 +16,13 @@ class CDialogSaveOptions : public CDialog
 public:
 	CDialogSaveOptions(CWnd* pParent = NULL);   // standard constructor
 
+// Public Attributes
+public:
+	int		m_nEncryptionType;
+	CStringEx	m_strPassword;
 
 // Dialog Data
+private: 
 	//{{AFX_DATA(CDialogSaveOptions)
 	enum { IDD = IDD_FILE_SECURITY };
 	CStatic	m_lblPassword2;
@@ -25,8 +30,6 @@ public:
 	CComboBox	m_cboEncryption;
 	CEdit	m_txtPassword;
 	CStatic	m_lblPassword;
-	CStringEx	m_strPassword;
-	int		m_nEncryptionType;
 	//}}AFX_DATA
 
 

@@ -41,6 +41,7 @@ class BObject;
 
 class CNeoMem : public CWinApp
 {
+
 // Construction
 public:
 	CNeoMem();
@@ -80,7 +81,7 @@ public:
 	void UpdateAllDocumentViews(LPARAM lHint, CObject* pHint = 0);
 	BOOL UpdateCommonControls();
 	void UpdateProgressBar(ULONG nItem, ULONG nItems = 0);
-
+	virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
 
 private:
 	void LoadImageList();
@@ -91,7 +92,7 @@ private:
 	void UseIniFile(CString sInifile);
 
 
-// Attributes
+// Public Attributes
 public:
 	// These are stored in registry/ini file
 	BOOL m_bAdmin; // true if admin privileges available. affects which item is the root in the treeview.
@@ -257,9 +258,6 @@ public:
 	DECLARE_MESSAGE_MAP()
 
 
-public:
-	static CString g_strSpace2;
-	virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
 };
 
 

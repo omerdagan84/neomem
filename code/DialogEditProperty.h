@@ -26,8 +26,9 @@ public:
 	BOOL DoModalAdd();
 	int DoModalEdit(LPCTSTR strName, LPCTSTR strDescription);
 
-// Attributes
+// Public Attributes
 public:
+
 	enum eMode {modeNone = 0, modeAddProperty = 1, modeEditProperty = 2};
 	eMode m_nMode;
 
@@ -40,18 +41,20 @@ public:
 	BOOL m_bDisplayHierarchy;
 	BOOL m_bAdditionalProperty;
 	BOOL m_bSystemProperty;
-private:
-	CNeoDoc* m_pDoc;
+	CString	m_strName;
+	CString	m_strDescription;
 	
 
 // Implementation	
+private:
+	CNeoDoc* m_pDoc;
 private:
 	void FillUnitsCombo();
 	void FillPropertyCombo();
 	void FillLinkSourceCombo();
 
 // Dialog Data
-public: 
+private:
 	//{{AFX_DATA(CDialogEditProperty)
 	enum { IDD = IDD_EDIT_PROPERTY };
 	CEdit	m_txtTypeDescription;
@@ -68,14 +71,12 @@ public:
 	CStatic	m_lblInstructions;
 	CEdit	m_txtDescription;
 	CEdit	m_txtName;
-	CString	m_strName;
-	CString	m_strDescription;
 	CButton m_btnNewLinkSource;
 	CButton	m_btnHelp;
 	//}}AFX_DATA
 
 
-	// Overrides
+// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CDialogEditProperty)
 	protected:
@@ -85,7 +86,6 @@ public:
 
 // Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CDialogEditProperty)
 	virtual BOOL OnInitDialog();

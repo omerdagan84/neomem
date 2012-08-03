@@ -19,11 +19,10 @@ class CDialogNewLinkSource : public CDialog
 public:
 	CDialogNewLinkSource(CWnd* pParent = NULL);   // standard constructor
 
-// Attributes
+// Public Attributes
 public:
 	CNeoDoc* m_pDoc;
 
-	// Parameters
 	ULONG m_lngClassID; // [out]
 	CString m_strFolderName; // [out]
 
@@ -47,7 +46,6 @@ public:
 
 // Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CDialogNewLinkSource)
 	virtual BOOL OnInitDialog();

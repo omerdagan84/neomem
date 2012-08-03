@@ -27,6 +27,7 @@ public:
 	~CPageClassIcon();
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CPageClassIcon)
 	enum { IDD = IDD_CLASS_ICON };
 	CListCtrlEx	m_lvw;
@@ -38,6 +39,7 @@ public:
 	CStatic	m_lblInstructions;
 	//}}AFX_DATA
 
+private:
 	CNeoDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;

@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------------------------------------------
 
 
-
-
 #pragma once
-
 
 #include "EditEx.h"
 
@@ -18,17 +15,20 @@ class CDialogEditString : public CDialog
 public:
 	CDialogEditString(CWnd* pParent = NULL);   // standard constructor
 
+// Public Attributes
+public:
+	CString	m_strValue;
+	CString m_strCaption;
+	CString m_strInstructions;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogEditString)
 	enum { IDD = IDD_EDIT_STRING };
 	CStatic	m_lblInstructions;
 	CEditEx	m_txtValue;
-	CString	m_strValue;
 	//}}AFX_DATA
 
-	CString m_strCaption;
-	CString m_strInstructions;
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -39,7 +39,6 @@ public:
 
 // Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CDialogEditString)
 	virtual BOOL OnInitDialog();

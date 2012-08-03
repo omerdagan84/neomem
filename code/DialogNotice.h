@@ -17,11 +17,12 @@ class CDialogNotice : public CDialog
 public:
 	CDialogNotice(CWnd* pParent = NULL);   // standard constructor
 
-// Attributes
+// Public Attributes
 public:
 	CString m_strMessage;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogNotice)
 	enum { IDD = IDD_NOTICE };
 	CButton	m_btnDownload;
@@ -39,7 +40,6 @@ public:
 
 // Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CDialogNotice)
 	virtual BOOL OnInitDialog();

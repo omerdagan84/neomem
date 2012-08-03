@@ -19,22 +19,18 @@ public:
 	// standard constructor
 	CDialogError(CWnd* pParent = NULL);
 
+// Public Attributes
+public:
+	CError* m_pe; // pointer to our error object
+	BOOL m_bEnableSendButton;
+
 // Operations
 public:
 	void UpdateDescription();
 
-// Attributes
-public:
-	CError* m_pe; // pointer to our error object
-//	CString m_strErrorMessage;
-//	CString m_strFilesSaved; // info about files being saved to backup copies
-//	CString m_strLocation;
-//	CString m_strWhatWereYouDoing;
-	BOOL m_bEnableSendButton;
-//	CString m_strFullText;
-
 
 // Dialog Data
+private:
   //{{AFX_DATA(CDialogError)
 	enum { IDD = IDD_ERROR };
 	CEdit	m_txtDescription;

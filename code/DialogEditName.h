@@ -13,34 +13,35 @@
 
 class CDialogEditName : public CDialog {
 
-	// Construction
+// Construction
 public:
 	CDialogEditName(CWnd* pParent = NULL);   // standard constructor
 
 
-	// Attributes
+// Public Attributes
 public:
 	CString m_strCaption;
 	CString m_strInstructions;
+	CString	m_strName;
 	BOOL m_bPassword;
 
-	// Dialog Data
+// Dialog Data
+private: 
 	//{{AFX_DATA(CDialogEditName)
 	enum { IDD = IDD_EDIT_NAME };
 	CStatic	m_lblInstructions;
 	CEdit	m_txtName;
-	CString	m_strName;
 	//}}AFX_DATA
 
 
-	// Overrides
+// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CDialogEditName)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-	// Implementation
+// Implementation
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CDialogEditName)

@@ -25,6 +25,7 @@ public:
 	~CPageClassInheritance();
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CPageClassInheritance)
 	enum { IDD = IDD_CLASS_INHERITANCE };
 	CTreeCtrlEx	m_tvw;
@@ -33,6 +34,7 @@ public:
 	CButton	m_chkInherit;
 	//}}AFX_DATA
 
+private:
 	CNeoDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;

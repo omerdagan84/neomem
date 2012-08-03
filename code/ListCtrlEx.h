@@ -150,14 +150,12 @@ public:
 
 
 
-	// Attributes
+	// Public Attributes - part of the interface
+	//, should have other than m_ prefix?
 public:
 	CNeoDoc* m_pDoc;
 	
-	// Colors obtained in GetColors()
-	COLORREF m_clrDisabledItems;
-
-	ULONG m_nMode; // an eMode
+	ULONG m_nMode; // an eMode - normal/select cell/select row, etc
 
 	BOOL m_bDummyRow;
 	BOOL m_bExpandLastColumn;
@@ -166,13 +164,7 @@ public:
 	BOOL m_bDisabledItems; // some items disabled - check stateimage
 	BOOL m_bAutoColumns; // if true the control will handle inserting removing columns, popup etc
 
-	eFocusStates m_nFocusState; 
-
-	// Columns
-	// Note: The listview never owns a bdata object - it always points to someone else's!
-	BDataColumns* m_pdatColumns; // Pointer to column arrangement info
-	BOOL m_bColumnsChanged; // Flag indicating if user changed column order or widths, etc.
-	BOOL m_bSaveChangesAutomatically; // If True, listview will save any changes directly to m_pdatColumns as they are made.
+	eFocusStates m_nFocusState; // none/focus/highlight/inactive
 
 	// These are public so views can access the current cell
 	int m_nRow; // Currently selected row
@@ -181,8 +173,19 @@ public:
 	ULONG m_lngSortPropertyID; // Property being sorted on
 	int m_iSortDirection; // Direction of sort (1=ascending, -1=descending)
 
+
+	// Private attributes
 private:
 	
+	// Colors obtained in GetColors()
+	COLORREF m_clrDisabledItems;
+
+	// Columns
+	// Note: The listview never owns a bdata object - it always points to someone else's!
+	BDataColumns* m_pdatColumns; // Pointer to column arrangement info
+	BOOL m_bColumnsChanged; // Flag indicating if user changed column order or widths, etc.
+	BOOL m_bSaveChangesAutomatically; // If True, listview will save any changes directly to m_pdatColumns as they are made.
+
 	BOOL m_bMouseDown; // Used in drag drop
 	CPoint m_ptDragStart; // Start point for drag drop - user must move a certain distance from this to register as drag start.
 	int m_nTargetColumn; // Target column to use for commands. 

@@ -20,19 +20,20 @@ public:
 public:
 	int DoModalParameters(ULONG lngCurrentViewID);
 
-// Attributes
+// Public Attributes
 public:
 	CNeoDoc* m_pDoc;
 	ULONG m_lngSelectedViewID;
+	BOOL	m_bPrintHeaderFooter;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogPrint)
 	enum { IDD = IDD_PRINT };
 	CButton	m_chkHeaderFooter;
 	CListCtrlEx	m_lvw;
 	CButton	m_chkLimit;
 	CButton	m_btnHelp;
-	BOOL	m_bPrintHeaderFooter;
 	//}}AFX_DATA
 
 // Overrides

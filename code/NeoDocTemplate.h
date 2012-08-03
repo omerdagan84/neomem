@@ -3,12 +3,10 @@
 // Extension to CMultiDocTemplate class
 //-----------------------------------------------------------------------------------------------------------------
 
-
 #pragma once
 
 
 #include "FrameChild.h"
-
 
 
 class CNeoDocTemplate : public CMultiDocTemplate
@@ -21,10 +19,10 @@ public:
 
 // Attributes
 public:
-//	CFrameChild* GetMDIChildFrame();
 
 // Operations
 public:
+//	CFrameChild* GetMDIChildFrame();
 
 // Overrides
 	// ClassWizard generated virtual function overrides

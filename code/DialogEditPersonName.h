@@ -12,23 +12,27 @@
 
 class CDialogEditPersonName : public CDialog
 {
+
 // Construction
 public:
 	CDialogEditPersonName(CWnd* pParent = NULL);   // standard constructor
 
-
-// Dialog Data
-	//{{AFX_DATA(CDialogEditPersonName)
-	enum { IDD = IDD_EDIT_PERSON_NAME };
-	CComboBox	m_cboTitle;
-	CComboBox	m_cboSuffix;
-	CButton	m_btnHelp;
+// Public Attributes
+public: 
 	CString	m_strFirst;
 	CString	m_strLast;
 	CString	m_strMiddle;
 	CString	m_strNickname;
 	CString	m_strSuffix;
 	CString	m_strTitle;
+
+// Dialog Data
+private: 
+	//{{AFX_DATA(CDialogEditPersonName)
+	enum { IDD = IDD_EDIT_PERSON_NAME };
+	CComboBox	m_cboTitle;
+	CComboBox	m_cboSuffix;
+	CButton	m_btnHelp;
 	//}}AFX_DATA
 
 

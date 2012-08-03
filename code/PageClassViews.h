@@ -24,6 +24,7 @@ public:
 	~CPageClassViews();
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CPageClassViews)
 	enum { IDD = IDD_CLASS_VIEWS };
 	CListCtrlEx	m_lvw;
@@ -31,6 +32,7 @@ public:
 	CStatic	m_lblTitle;
 	//}}AFX_DATA
 
+private:
 	CNeoDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;

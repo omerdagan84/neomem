@@ -18,6 +18,7 @@ public:
 	CString m_strFile;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogUpgradeFile)
 	enum { IDD = IDD_UPGRADE_FILE };
 		// NOTE: the ClassWizard will add data members here

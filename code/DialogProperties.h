@@ -16,6 +16,7 @@ public:
 
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogProperties)
 	enum { IDD = IDD_PROPERTIES };
 	CListCtrlEx	m_lvw;

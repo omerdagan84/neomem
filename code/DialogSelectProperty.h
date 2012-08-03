@@ -25,17 +25,12 @@ public:
 public:
 	void AddProperties();
 
-// Attributes
+// Public Attributes
 public:
 	ULONG m_lngSelectedID;
 	BObject* m_pobjDefaultClass;
 	BOOL m_bShowAll;
 	UINT m_nMode; // 0 for default or IDD_PROPERTY_WIZARD
-private:
-	CNeoDoc* m_pDoc;
-	BObject* m_pobjClasses;
-	BObject* m_pobjProperties;
-
 
 // Dialog Data
 	//{{AFX_DATA(CDialogSelectProperty)
@@ -61,6 +56,11 @@ private:
 	//}}AFX_VIRTUAL
 
 // Implementation
+private:
+	CNeoDoc* m_pDoc;
+	BObject* m_pobjClasses;
+	BObject* m_pobjProperties;
+
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CDialogSelectProperty)

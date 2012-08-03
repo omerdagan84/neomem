@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------------------------------------------
 
 
-
 #pragma once
 
 #include "resource.h"
@@ -12,13 +11,14 @@
 
 class CDialogException : public CDialog
 {
+
 // Construction
 public:
 	CDialogException(CWnd* pParent = NULL);   // standard constructor
 
 
-
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogException)
 	enum { IDD = IDD_EXCEPTION };
 	CListBox	m_lst;

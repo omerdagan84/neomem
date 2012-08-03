@@ -32,6 +32,7 @@ protected:
 	HACCEL m_hAccel;
 
 // Dialog Data
+private: 
 	//{{AFX_DATA(CDialogAbout2)
 	enum { IDD = IDD_ABOUT2 };
 	CTabCtrl	m_tbc;
@@ -49,7 +50,6 @@ protected:
 
 // Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CDialogAbout2)
 	virtual BOOL OnInitDialog();

@@ -11,18 +11,19 @@ class CDialogPassword : public CDialog
 public:
 	CDialogPassword(CWnd* pParent = NULL);   // standard constructor
 
-// Attributes
+// Public Attributes
 public:
 	CString m_strValidPassword;
 	CString m_strFilename;
+	CString	m_strPassword;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogPassword)
 	enum { IDD = IDD_PASSWORD };
 	CEdit	m_txtFilename;
 	CStatic	m_lblFilename;
 	CEdit	m_txtPassword;
-	CString	m_strPassword;
 	//}}AFX_DATA
 
 
@@ -36,7 +37,7 @@ public:
 // Implementation
 protected:
 	BOOL Validate();
-
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CDialogPassword)
 	virtual BOOL OnInitDialog();

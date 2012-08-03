@@ -16,8 +16,8 @@ public:
 	CDialogEditRichText(CWnd* pParent = NULL);   // standard constructor
 
 
-
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogEditRichText)
 	enum { IDD = IDD_EDIT_RTF };
 	CRichEditCtrl	m_rtf;
@@ -32,7 +32,6 @@ public:
 
 // Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CDialogEditRichText)
 	virtual BOOL OnInitDialog();

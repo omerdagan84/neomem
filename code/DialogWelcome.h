@@ -17,6 +17,7 @@ public:
 	CDialogWelcome(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogWelcome)
 	enum { IDD = IDD_WELCOME };
 	CStatic	m_picHeader;

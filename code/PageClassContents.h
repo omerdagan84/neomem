@@ -46,6 +46,7 @@ private:
 	CButton m_optSortNo;
 	//}}AFX_DATA
 
+private:
 	CNeoDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;

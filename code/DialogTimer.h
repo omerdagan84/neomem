@@ -14,8 +14,14 @@ class CDialogTimer : public CDialog
 public:
 	CDialogTimer(CWnd* pParent = NULL);   // standard constructor
 
+// Public Attributes
+public:
+	UINT	m_nHours;
+	UINT	m_nMin;
+	UINT	m_nSec;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogTimer)
 	enum { IDD = IDD_TIMER };
 	CSliderCtrl	m_slideHours;
@@ -25,9 +31,6 @@ public:
 	CEdit	m_txtMin;
 	CSpinButtonCtrl	m_spinSec;
 	CSpinButtonCtrl	m_spinMin;
-	UINT	m_nHours;
-	UINT	m_nMin;
-	UINT	m_nSec;
 	//}}AFX_DATA
 
 

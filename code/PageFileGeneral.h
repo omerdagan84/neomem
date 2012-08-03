@@ -25,6 +25,7 @@ private:
 	void DisplayInfo();
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CPageFileGeneral)
 	enum { IDD = IDD_FILE_GENERAL };
 	CButton	m_btnDataModel;

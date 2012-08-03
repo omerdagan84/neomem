@@ -20,13 +20,14 @@ class CDialogViews : public CDialog
 public:
 	CDialogViews(CWnd* pParent = NULL);   // standard constructor
 
-// Attributes
+// Public Attributes
 public:
 	CNeoDoc* m_pDoc;
 	BDataViews* m_pdatViews;
 	int m_nTab;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogViews)
 	enum { IDD = IDD_VIEWS };
 	CListCtrlEx	m_lvw;

@@ -25,12 +25,14 @@ public:
 	~CPageClassSummary();
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CPageClassSummary)
 	enum { IDD = IDD_CLASS_SUMMARY };
 	CStatic	m_lblTitle;
 	CStatic	m_lblInstructions;
 	//}}AFX_DATA
 
+private:
 	CNeoDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;

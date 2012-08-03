@@ -14,13 +14,16 @@ class CDialogExport : public CDialog
 public:
 	CDialogExport(CWnd* pParent = NULL);   // standard constructor
 
-// Attributes
+// Public Attributes
 public:
-	CFileFormat* m_ff;
 	BObject* m_pobj;
+	CFileFormat* m_ff;
 	CString m_strFormat;
+	CString	m_strItem;
+	CString	m_strFilename;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogExport)
 	enum { IDD = IDD_EXPORT };
 	CStatic	m_lblItem;
@@ -31,8 +34,6 @@ public:
 	CButton	m_btnChooseFile;
 	BOOL	m_bRecurse;
 	BOOL	m_bSystem;
-	CString	m_strItem;
-	CString	m_strFilename;
 	//}}AFX_DATA
 
 

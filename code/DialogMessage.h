@@ -22,6 +22,7 @@ public:
 
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogMessage)
 	enum { IDD = IDD_MESSAGE };
 //	CRichEditCtrlEx	m_rtf;

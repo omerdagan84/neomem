@@ -18,7 +18,7 @@ class CDialogGetLocation : public CDialog
 public:
 	CDialogGetLocation(CWnd* pParent = NULL);   // standard constructor
 
-// Attributes
+// Public Attributes
 public:
 	CString m_strCaption;
 	CString m_strInstructions;
@@ -26,10 +26,8 @@ public:
 	BOOL m_bAllowSelectHome;
 	UINT m_nHelpID;
 
-protected:
-	CNeoDoc* m_pDoc;
-
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogGetLocation)
 	enum { IDD = IDD_GET_LOCATION };
 	CButton	m_btnOK;
@@ -46,6 +44,9 @@ protected:
 	//}}AFX_VIRTUAL
 
 // Implementation
+protected:
+	CNeoDoc* m_pDoc;
+
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CDialogGetLocation)

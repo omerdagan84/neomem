@@ -4,7 +4,6 @@
 #pragma once
 
 
-
 //#include "NeoDoc.h"
 class CNeoDoc;
 

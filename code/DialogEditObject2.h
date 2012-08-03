@@ -32,26 +32,28 @@ public:
 	int DoModalAddObject(CString& strName, BObject* pobjParent, BObject* pobjClass, BObject* pobjDefaultClass);
 	int DoModalEditObject(CString& strName, BObject* pobjParent, BObject* pobjClass, BObject* pobjDefaultClass);
 
-// Attributes
+// Public Attributes
 public:
 	ULONG m_lngClassID; // new object class id
 	BObject* m_pobjParent; // parent of new object - used for display, and to get default class
 	BObject* m_pobjClass; 
 	BObject* m_pobjDefaultClass; 
+	CString m_strName;
 
+
+// Implementation
 private:
 	CNeoDoc* m_pDoc;
 	BOOL m_bAddMode; // Add mode or edit mode
 	BOOL m_bLocationComboFilled;
 	BOOL m_bNameChanged;
 
-// Implementation
 private:
 	void FillDefaultClassCombo();
 	void OnClassChanged();
 
 // Dialog Data
-public:
+private:
 	BObject* AddNewClass();
 	//{{AFX_DATA(CDialogEditObject2)
 	enum { IDD = IDD_EDIT_OBJECT2 };
@@ -62,7 +64,6 @@ public:
 	XComboBoxEx	m_cboLocation;
 	CStatic	m_lblInstructions;
 	CEdit	m_txtName;
-	CString m_strName;
 	CEdit	m_txtDescription;
 	CListCtrlEx	m_lvw;
 	CStatic	m_lblDefaultClass;

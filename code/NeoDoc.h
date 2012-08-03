@@ -173,7 +173,8 @@ private:
 	OBJID m_idDefaultFolderLocation; // Default location to add new folders
 	OBJID m_idStartObject; // Object to select on start
 
-public: // leave these public?
+	// These get serialized also - public so View classes can access them
+public: 
 	BDataViews m_datViewsLeft; // Tab/view arrangement for left side
 	BDataColumns m_datColumnsSearchView; // Column arrangement for search view
 	BDataColumns m_datColumnsIndexView; // Column arrangement for index view
@@ -186,21 +187,22 @@ public: // leave these public?
 
 private:
 	CHistory m_objHistory; // History of objects selected
-
-public:
-
-	// These don't get serialized
+	
+		
+// These don't get serialized
+private:	
 	CString m_strPassword; // password for encrypted file
 	CIconCache* m_pIconCache;	// Icon cache (encapsulates an image list)
-	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties
-	CString m_strEmpty;		// An empty string used to return ""
-	CString m_strTextCache; // Temporary string used by all BData objects in GetText method
-	BDataFlags m_datFlagsTemp; // Temporary BDataFlags object used to get string version of m_lngFlags property
-	BOOL m_bSettingCurrentObject; // Flag used by SetCurrentObject routine
 	BOOL m_bAutoRecoverDirty; // Flag used to tell if file has changed since last AutoRecover save
 	BOOL m_bUpgradeFileStructure; // True if file structure needs to be upgraded during Load
 	BOOL m_bUpgradeDataModel; // True if data model needs to be upgraded during Load
 	BOOL m_bLoadingFile; // Set to True during file load
+
+public:
+	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties
+	CString m_strEmpty;		// An empty string used to return ""
+	BDataFlags m_datFlagsTemp; // Temporary BDataFlags object used to get string version of m_lngFlags property
+	BOOL m_bSettingCurrentObject; // Flag used by SetCurrentObject routine
 
 	// Used to update progress bar during serialization
 	ULONG m_nObject;

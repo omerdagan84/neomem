@@ -23,6 +23,7 @@ public:
 	~CPageObjectGeneral();
 
 // Dialog Data
+private: 
 	//{{AFX_DATA(CPageObjectGeneral)
 	enum { IDD = IDD_OBJECT_GENERAL };
 	CStatic	m_lblObjectID;
@@ -38,6 +39,8 @@ public:
 
 public:
 	BObject* m_pobj;
+
+private:
 	BOOL m_bNameChanged;
 	BOOL m_bDescriptionChanged;
 	BOOL m_bIDChanged;

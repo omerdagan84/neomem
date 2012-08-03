@@ -2,7 +2,7 @@
 // CMDITrayFrame
 // This is a frame window that lets you put an icon in the system tray. 
 // Source: http://www.codeproject.com/KB/shell/YaTrayMin.aspx 
-// (complete with a really really really nasty bug. see Q195032)
+// (complete with a nasty bug. see Q195032)
 
 
 #pragma once

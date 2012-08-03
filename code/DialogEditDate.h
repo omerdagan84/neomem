@@ -20,16 +20,17 @@ public:
 // Attributes
 public:
 	BOOL m_bUseTime;
+	COleDateTime m_dtDate;
+	COleDateTime m_dtTime;
 
 // Dialog Data
+private: 
 	//{{AFX_DATA(CDialogEditDate)
 	enum { IDD = IDD_EDIT_DATE };
 	CButton	m_btnHelp;
 	CDateTimeCtrl	m_wndTime;
 	CMonthCalCtrl	m_wndDate;
 	CButton	m_chkTime;
-	COleDateTime	m_dtDate;
-	COleDateTime	m_dtTime;
 	//}}AFX_DATA
 
 // Overrides

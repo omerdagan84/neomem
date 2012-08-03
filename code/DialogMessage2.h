@@ -11,18 +11,19 @@ class CDialogMessage2 : public CDialog
 public:
 	CDialogMessage2(CWnd* pParent = NULL);   // standard constructor
 
-// Attributes
+// Public Attributes
 public:
 	CString m_strCaption;
+	CString	m_strMessage;
+	BOOL	m_bShowMessage;
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CDialogMessage2)
 	enum { IDD = IDD_MESSAGE2 };
 	CButton	m_btnClose;
 	CStatic	m_lblMessage;
 	CButton	m_chkOption;
-	BOOL	m_bShowMessage;
-	CString	m_strMessage;
 	//}}AFX_DATA
 
 // Overrides
@@ -34,7 +35,6 @@ public:
 
 // Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CDialogMessage2)
 	virtual BOOL OnInitDialog();

@@ -22,19 +22,21 @@ class BDataLink;
 
 class CDialogEditLink : public CDialog {
 
-public:
 
-	// Construction
+// Construction
+public:
 	CDialogEditLink(CWnd* pParent = NULL);   // standard constructor
 
-	// Enums
+// Enums
+public:
 	enum eButtonFlags {
 		flagShowNone = 0, flagShowAdd = 1, flagShowImport = 2, 
 		flagShowDefault = 4, flagShowEdit = 8, flagShowDelete = 16, 
 		flagShowClose = 32,	flagShowAddChild = 64
 	};
 
-	// Operations
+// Operations
+public:
 	void AddObject(BOOL bAddAsChild);
 	void AddObjects();
 	int DoModalEdit(CString strCaption, CString strInstructions, ULONG lngStartID, ULONG lngExcludeFlags = 0, BOOL bIncludeStart = FALSE);
@@ -47,7 +49,8 @@ public:
 	void ShowFilterCheckbox(BOOL bFilterOn, ULONG lngFilterExcludeFlags);
 	void UpdateControls();
 
-	// Attributes
+// Public Attributes
+public: 
 
 	// determines which mode will be shown - IDD_EDIT_LINK, IDD_MOVE_TO, etc
 	// UINT m_nMode; 
@@ -85,7 +88,8 @@ private:
 	CBitmap m_bmpUp;
 	CBitmap m_bmpDown;
 
-	// Dialog Data
+// Dialog Data
+private: 
 	//{{AFX_DATA(CDialogEditLink)
 	enum { IDD = IDD_EDIT_LINK };
 	CButton	m_chkFilter;
@@ -107,7 +111,7 @@ private:
 	//}}AFX_DATA
 
 
-	// Overrides
+// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CDialogEditLink)
 	public:
@@ -116,8 +120,8 @@ private:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-	// Message Map
-	protected:
+// Message Map
+protected:
 	//{{AFX_MSG(CDialogEditLink)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBtnAdd();

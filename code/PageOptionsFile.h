@@ -18,11 +18,20 @@ public:
 	CPageOptionsFile();
 	~CPageOptionsFile();
 
-private:
-	BOOL Validate();
-
+// Public Attributes
 public:
+	BOOL	m_bAutoStart;
+	BOOL	m_bAutoBackup;
+	BOOL	m_bAutoRecover;
+	UINT	m_nAutoRecoverMinutes;
+	BOOL	m_bAutoLoad;
+//	CString	m_strStartupFile;
+	CString m_strCurrentFile;
+	CString	m_strDocumentFolder;
+
+
 // Dialog Data
+private: 
 	//{{AFX_DATA(CPageOptionsFile)
 	enum { IDD = IDD_OPTIONS_FILE };
 	CEdit	m_txtAutoRecover;
@@ -42,19 +51,9 @@ public:
 	CButton	m_chkStartup;
 	CButton	m_btnBrowseStartup;
 	CButton	m_btnBrowseFolder;
-	CString	m_strDocumentFolder;
-	BOOL	m_bAutoStart;
-	BOOL	m_bAutoBackup;
-	BOOL	m_bAutoRecover;
-	UINT	m_nAutoRecoverMinutes;
-	BOOL	m_bAutoLoad;
 //	CEdit	m_txtAutoLoadFileName;
-//	CString	m_strStartupFile;
 	//}}AFX_DATA
 
-
-public:
-	CString m_strCurrentFile;
 
 // Overrides
 	// ClassWizard generate virtual function overrides
@@ -68,6 +67,8 @@ public:
 	//}}AFX_VIRTUAL
 
 // Implementation
+private:
+	BOOL Validate();
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CPageOptionsFile)

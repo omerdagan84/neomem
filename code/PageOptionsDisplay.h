@@ -20,15 +20,22 @@ public:
 	CPageOptionsDisplay();
 	~CPageOptionsDisplay();
 
-// Implementation
+// Public Attributes
 public:
-	void UpdateSampleDate();
 	LOGFONT m_lf;
 	CFontEx m_font;
-	void UpdateFontName();
 	BOOL m_bFontChanged;
+//	BOOL	m_bShowTips;
+	int		m_nNameFormat;
+	int		m_nDateFormat;
+
+// Public Methods
+public:
+	void UpdateSampleDate();
+	void UpdateFontName();
 
 // Dialog Data
+private:
 	//{{AFX_DATA(CPageOptionsDisplay)
 	enum { IDD = IDD_OPTIONS_DISPLAY };
 	CStatic	m_lblFont;
@@ -41,11 +48,10 @@ public:
 	CButton	m_btnDateFormat;
 	CComboBox	m_cboNameFormat;
 	CComboBox	m_cboDateFormat;
-//	BOOL	m_bShowTips;
-	int		m_nNameFormat;
-	int		m_nDateFormat;
 	//}}AFX_DATA
 
+
+// Implementation
 
 // Overrides
 	// ClassWizard generate virtual function overrides

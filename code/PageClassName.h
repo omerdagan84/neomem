@@ -24,6 +24,7 @@ public:
 	~CPageClassName(); 
  
 // Dialog Data
+private:
 	//{{AFX_DATA(CPageClassName)
 	enum { IDD = IDD_CLASS_NAME };
 	CStatic	m_lblTitle;
@@ -34,6 +35,7 @@ public:
 	CString	m_strName;
 	//}}AFX_DATA
 
+private:
 	CNeoDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;
