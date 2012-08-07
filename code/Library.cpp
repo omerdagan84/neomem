@@ -7,7 +7,7 @@
 
 
 #include "precompiled.h"
-#include "Library.h"
+//#include "Library.h"
 #include "Error.h"
 
 
@@ -16,7 +16,7 @@
 
 NUMBERFMT g_nf;
 
-COLORREF g_clrWindow;
+//COLORREF g_clrWindow;
 COLORREF g_clrWindowText;
 COLORREF g_clrHighlight;
 COLORREF g_clrHighlightText;
@@ -33,7 +33,8 @@ COLORREF g_clrHyperlinkText;
 
 
 // Returns True if the given file exists.
-BOOL FileExists(LPCTSTR pszFileName)
+// static
+BOOL Library::FileExists(LPCTSTR pszFileName)
 {
 	CFile f;
 	CFileException fe;
@@ -49,7 +50,8 @@ BOOL FileExists(LPCTSTR pszFileName)
 // Get file name with extension from the given path.
 // Eg returns "Stuff.neo" from "C:\Documents\Stuff.neo"
 // Code from MFC routine.
-CString GetFileName(LPCTSTR pszPathName)
+// static
+CString Library::GetFileName(LPCTSTR pszPathName)
 {
   
 	CString s;
@@ -74,7 +76,8 @@ CString GetFileName(LPCTSTR pszPathName)
 //. use FormatThousands in CStringEx instead
 //. give better name so can search on it
 //. bug: won't print llu anymore - worked under vs6. so if # > 2^32, will get truncated.
-CString fc(ULONGLONG n)
+// static
+CString Library::fc(ULONGLONG n)
 {
 	const int nChars = 50;
 	TCHAR szPlain[nChars];
@@ -93,19 +96,36 @@ CString fc(ULONGLONG n)
 
 
 // Get global colors
-void GetColors()
+// static
+void Library::LoadColors()
 {
-	g_clrWindow = ::GetSysColor(COLOR_WINDOW);
-	g_clrWindowText = ::GetSysColor(COLOR_WINDOWTEXT);
-	g_clrHighlight = ::GetSysColor(COLOR_HIGHLIGHT);
-	g_clrHighlightText = ::GetSysColor(COLOR_HIGHLIGHTTEXT);
-	g_clrInactive = ::GetSysColor(COLOR_SCROLLBAR); //, use a different color for this
-	g_clrInactiveText = ::GetSysColor(COLOR_WINDOWTEXT);
-	g_clr3dFace = ::GetSysColor(COLOR_3DFACE);
-	g_clr3dHighlight = ::GetSysColor(COLOR_3DHILIGHT);
-	g_clr3dShadow = ::GetSysColor(COLOR_3DSHADOW);
-	g_clrHyperlinkText = 0x0020a020; // green
+	clrWindow = ::GetSysColor(COLOR_WINDOW);
+	clrWindowText = ::GetSysColor(COLOR_WINDOWTEXT);
+	clrHighlight = ::GetSysColor(COLOR_HIGHLIGHT);
+	clrHighlightText = ::GetSysColor(COLOR_HIGHLIGHTTEXT);
+	clrInactive = ::GetSysColor(COLOR_SCROLLBAR); //, use a different color for this
+	clrInactiveText = ::GetSysColor(COLOR_WINDOWTEXT);
+	clr3dFace = ::GetSysColor(COLOR_3DFACE);
+	clr3dHighlight = ::GetSysColor(COLOR_3DHILIGHT);
+	clr3dShadow = ::GetSysColor(COLOR_3DSHADOW);
+	clrHyperlinkText = 0x0020a020; // green
 }
+
+
+// this seems weird and non DRY, but you have to define the static variables here,
+// in addition to declaring them in the class definition. 
+// without this you get link errors.
+// see: http://msdn.microsoft.com/en-us/library/b1b5y48f.aspx
+COLORREF Library::clrWindow;
+COLORREF Library::clrWindowText;
+COLORREF Library::clrHighlight;
+COLORREF Library::clrHighlightText;
+COLORREF Library::clrInactive;
+COLORREF Library::clrInactiveText;
+COLORREF Library::clr3dFace;
+COLORREF Library::clr3dHighlight;
+COLORREF Library::clr3dShadow;
+COLORREF Library::clrHyperlinkText;
 
 
 

@@ -289,7 +289,7 @@ BOOL CViewHome::OnEraseBkgnd(CDC* pDC)
 
 	if (m_bShowTitleBar)
 	{
-		COLORREF clrBackground = g_clr3dFace;
+		COLORREF clrBackground = Library::clr3dFace;
 		CRect r;
 		GetClientRect(r);
 		r.bottom = m_nTitleBarHeight + 1;

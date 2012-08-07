@@ -2097,7 +2097,7 @@ BOOL CNeoDoc::UIEditObject(BObject *pobj) {
 void CNeoDoc::OnCloseDocument() {
 	// Delete the AutoRecover file (not needed since we're closing down normally)
 	CString strAutoRecover = GetModifiedName(m_strPathName, _T("_AutoRecover"));
-	if (FileExists(strAutoRecover)) {
+	if (Library::FileExists(strAutoRecover)) {
 		TRACE("CNeoDoc::OnCloseDocument - deleting %s\n", (LPCTSTR) strAutoRecover);
 		CFile::Remove(strAutoRecover);
 	}
@@ -2591,14 +2591,14 @@ BOOL CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 
 	CString strErrorBackupName = GetModifiedName(lpszPathName, _T("_ErrorBackup"));
 	CString strAutoRecoverName = GetModifiedName(lpszPathName, _T("_AutoRecover"));
-	BOOL bErrorBackupAvail = FileExists(strErrorBackupName);
-	BOOL bAutoRecoverAvail = FileExists(strAutoRecoverName);
+	BOOL bErrorBackupAvail = Library::FileExists(strErrorBackupName);
+	BOOL bAutoRecoverAvail = Library::FileExists(strAutoRecoverName);
 
 	// Check if there is an _ErrorBackup copy of this file available.
 	// ErrorBackup takes precedence over AutoRecover, because ErrorBackup will be more recent. 
 	if (bErrorBackupAvail) {
 		CString strMsg;
-		CString strFileName = GetFileName(lpszPathName);
+		CString strFileName = Library::GetFileName(lpszPathName);
 		CString strOldVersion = GetModifiedName(strFileName, _T("_ErrorBackupOldVersion"));
 		strMsg.Format(
 				"Error Recovery information for the file \"%s\" exists, which means that NeoMem must have "
@@ -2624,7 +2624,7 @@ BOOL CNeoDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 	// Check if there is an AutoRecover copy of this file available
 	else if (bAutoRecoverAvail) {
 		CString strMsg;
-		CString strFileName = GetFileName(lpszPathName);
+		CString strFileName = Library::GetFileName(lpszPathName);
 		CString strOldVersion = GetModifiedName(strFileName, _T("_AutoRecoverOldVersion"));
 //		strMsg.Format("AutoRecover information for the file \"%s\" exists - would you like to load it?", lpszPathName);
 		strMsg.Format(
@@ -3564,7 +3564,7 @@ BOOL CNeoDoc::DoFileSave() {
 
 	// Check if file exists and is read-only
 	DWORD dwAttrib = GetFileAttributes(m_strPathName);
-	BOOL bFileExists = FileExists(m_strPathName);
+	BOOL bFileExists = Library::FileExists(m_strPathName);
 	BOOL bFileReadOnly = dwAttrib & FILE_ATTRIBUTE_READONLY;
 
 	// If file exists and it is read-only give user a message
@@ -3595,7 +3595,7 @@ BOOL CNeoDoc::DoFileSave() {
 			strBackup = GetModifiedName(m_strPathName, _T("_Backup"));
 			strBackup2 = GetModifiedName(m_strPathName, _T("_Backup__Old"));
 			// If there's already a _Backup file, remove it
-			if (FileExists(strBackup)) {
+			if (Library::FileExists(strBackup)) {
 				_tremove(strBackup2); // delete this in case it was left behind somehow
 				_trename(strBackup, strBackup2); // keep temporarily in case save fails
 			}
@@ -3680,7 +3680,7 @@ CString CNeoDoc::GetFileSizeString() {
 	CFile* f = GetFile(pszFile, CFile::shareDenyNone | CFile::modeRead, &e);
 	if (f) {
 		ULONGLONG ullLength = f->GetLength();
-		str.Format("%s Bytes", (LPCTSTR) fc(ullLength)); // format thousands
+		str.Format("%s Bytes", (LPCTSTR) Library::fc(ullLength)); // format thousands
 		f->Close();
 		delete f;
 	}
@@ -3705,7 +3705,7 @@ CString CNeoDoc::GetNumberOfObjectsString() {
 //	m_txtObjects.SetWindowText(str);
 //	::GetNumberFormat(LOCALE_USER_DEFAULT, 0, str, NULL, szFormatted, nChars);
 //	m_txtObjects.SetWindowText(szFormatted);
-	str.Format("%s (%s User, %s System)", (LPCTSTR) fc(nTotal), (LPCTSTR) fc(nUser), (LPCTSTR) fc(nSystem));
+	str.Format("%s (%s User, %s System)", (LPCTSTR) Library::fc(nTotal), (LPCTSTR) Library::fc(nUser), (LPCTSTR) Library::fc(nSystem));
 	return str;
 }
 

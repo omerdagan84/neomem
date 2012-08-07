@@ -126,7 +126,7 @@ void CDialogTip::OnPaint()
 	dc.FillSolidRect(r, 0x00ffffff);
 
 	// Draw 3d borders
-	dc.Draw3dRect(r, g_clr3dShadow, g_clr3dHighlight);
+	dc.Draw3dRect(r, Library::clr3dShadow, Library::clr3dHighlight);
 
 	// Write tip
 	CGdiObject* pgdiobj = dc.SelectStockObject(ANSI_VAR_FONT);

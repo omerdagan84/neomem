@@ -87,7 +87,7 @@ BOOL CPageObjectGeneral::OnInitDialog()
 	CStringEx str;
 
 //	str.Format("%d", m_pobj->GetChildCount(FALSE));
-	str.Format("%s", (LPCTSTR) fc(m_pobj->GetChildCount(FALSE)));
+	str.Format("%s", (LPCTSTR) Library::fc(m_pobj->GetChildCount(FALSE)));
 	m_txtChildren.SetWindowText(str);
 
 	ULONG lngMem = m_pobj->GetMemoryUsed(FALSE);
@@ -96,11 +96,11 @@ BOOL CPageObjectGeneral::OnInitDialog()
 	{
 		ULONG lngMemRecurse = m_pobj->GetMemoryUsed(TRUE);
 //		str.Format("%d Bytes (%d with children)", lngMem, lngMemRecurse);
-		str.Format("%s Bytes (%s with children)", (LPCTSTR) fc(lngMem), (LPCTSTR) fc(lngMemRecurse));
+		str.Format("%s Bytes (%s with children)", (LPCTSTR) Library::fc(lngMem), (LPCTSTR) Library::fc(lngMemRecurse));
 	}
 	else
 //		str.Format("%d Bytes", lngMem);
-		str.Format("%s Bytes", (LPCTSTR) fc(lngMem));
+		str.Format("%s Bytes", (LPCTSTR) Library::fc(lngMem));
 //	str.FormatThousands("%t Bytes", m_pobj->GetMemoryUsed(FALSE));
 	m_txtSize.SetWindowText(str);
 

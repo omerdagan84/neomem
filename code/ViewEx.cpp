@@ -300,7 +300,7 @@ BOOL CViewEx::OnEraseBkgnd(CDC* pDC)
 	// get erased - need to fill a rectangle if there is a toolbar for this view
 
 	CRect r;		
-	COLORREF clrBackground = g_clr3dFace;
+	COLORREF clrBackground = Library::clr3dFace;
 
 	// Erase client area only if no child view
 	if (m_pviewChild != NULL)
@@ -354,10 +354,10 @@ void CViewEx::OnDraw(CDC* pDC)
 		r.bottom = m_nTitleBarHeight;
 		r.OffsetRect(1, 1);
 		r.DeflateRect(0, 0, 2, 0);
-		pDC->Draw3dRect(r, g_clr3dHighlight, g_clr3dShadow);
+		pDC->Draw3dRect(r, Library::clr3dHighlight, Library::clr3dShadow);
 
-		pDC->SetTextColor(g_clrWindowText);
-		pDC->SetBkColor(g_clr3dFace);
+		pDC->SetTextColor(Library::clrWindowText);
+		pDC->SetBkColor(Library::clr3dFace);
 		CFont* pfontOld = pDC->SelectObject(&theApp.m_fontControls);
 		r.left = 6; // pixels?
 //		pDC->SetBkMode(TRANSPARENT); // transparent background for text
@@ -373,7 +373,7 @@ void CViewEx::OnDraw(CDC* pDC)
 	if (m_pviewChild)
 	{
 		GetClientRect(r);
-		pDC->Draw3dRect(r, g_clr3dShadow, g_clr3dHighlight);
+		pDC->Draw3dRect(r, Library::clr3dShadow, Library::clr3dHighlight);
 	}
 
 	// Draw toolbar border here as well, if the view has a toolbar
@@ -387,7 +387,7 @@ void CViewEx::OnDraw(CDC* pDC)
 			r.top += m_nTitleBarHeight;
 			r.bottom += m_nTitleBarHeight;
 		}
-		pDC->Draw3dRect(r, g_clr3dHighlight, g_clr3dShadow);
+		pDC->Draw3dRect(r, Library::clr3dHighlight, Library::clr3dShadow);
 	}
 
 }

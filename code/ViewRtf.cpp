@@ -1574,7 +1574,7 @@ LRESULT CViewRtf::OnSelEndOK(WPARAM wParam, LPARAM lParam)
 		if (clr != theApp.m_clrTextViewForecolor)
 		{
 			if (clr == CLR_DEFAULT)
-				theApp.m_clrTextViewForecolor = g_clrWindowText;
+				theApp.m_clrTextViewForecolor = Library::clrWindowText;
 			else
 				theApp.m_clrTextViewForecolor = clr;
 			OnFormatApplyForecolor();

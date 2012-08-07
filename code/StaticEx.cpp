@@ -228,8 +228,8 @@ void CStaticEx::OnPaint()
 	// Do not call CStatic::OnPaint() for painting messages
 	CPaintDC dc(this); // device context for painting
 
-	COLORREF clrBackground = (m_clrBackground == -1) ? g_clrWindow : m_clrBackground;
-	COLORREF clrForeground = (m_clrText == -1) ? g_clrWindowText : m_clrText;
+	COLORREF clrBackground = (m_clrBackground == -1) ? Library::clrWindow : m_clrBackground;
+	COLORREF clrForeground = (m_clrText == -1) ? Library::clrWindowText : m_clrText;
 
 //	dc.SetTextColor(m_clrText);
 //	dc.SetBkColor(m_clrBackground);

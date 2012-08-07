@@ -146,7 +146,7 @@ int CViewSearch::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		// Add "Search In" label
 		CString strLabel = " Search In";
-		m_lblSearchIn.m_clrBackground = g_clr3dFace;
+		m_lblSearchIn.m_clrBackground = Library::clr3dFace;
 		if (m_lblSearchIn.Create(strLabel, r, &m_tbr, 0, FALSE, DT_LEFT | DT_VCENTER))
 //		if (m_lblSearchIn.Create(strLabel, r, &m_tbr, 0, FALSE, DT_CENTER | DT_VCENTER))
 		{

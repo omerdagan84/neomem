@@ -519,8 +519,8 @@ void CFrameMain::OnSysColorChange()
 {
 	BaseClass::OnSysColorChange();
 	
-	// Get system colors into global variables
-	GetColors();
+	// Get system colors into static variables
+	Library::LoadColors();
 	
 	// Redraw all windows
 	RedrawWindow();	

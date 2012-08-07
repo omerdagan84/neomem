@@ -163,7 +163,7 @@ void CDialogAbout::OnPaint()
 
 	dc.FillSolidRect(&r, m_colorBackground);
 
-	dc.Draw3dRect(&r, g_clr3dShadow, g_clr3dHighlight);
+	dc.Draw3dRect(&r, Library::clr3dShadow, Library::clr3dHighlight);
 
 	// Do not call CDialog::OnPaint() for painting messages
 }

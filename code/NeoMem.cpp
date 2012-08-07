@@ -320,7 +320,7 @@ BOOL CNeoMem::InitInstance() {
 	m_strIniFolder = m_strApplicationFolder;
 	// 1.2 delete the template1.1.neo file, if it exists (moving back to just template.neo)
 	CString strOldTemplate = m_strApplicationFolder + _T("\\Template1.1.neo");
-	if (FileExists(strOldTemplate))
+	if (Library::FileExists(strOldTemplate))
 		_tremove(strOldTemplate);
 	// 1.1 if app is in debug or release folder, use the main documents folder to find template file
 	// (prevents having 3 copies of it lying around...)
@@ -334,8 +334,8 @@ BOOL CNeoMem::InitInstance() {
 	//. free psz memory first
 //	m_pszHelpFilePath = "NeoMem.chm";
 
-	// Get colors (this is a global function that reads to global variables)
-	GetColors();
+	// Get system colors to static variables
+	Library::LoadColors();
 
 	// Create global fonts to use in various controls
 //	m_fontControls.CreatePointFont(80, _T("MS Sans Serif"));
@@ -661,7 +661,7 @@ BOOL CNeoMem::InitInstance() {
 			// do nothing
 		}
 		// Check if autoload file exists...
-		else if (!FileExists(m_strAutoLoadFileName)) {
+		else if (!Library::FileExists(m_strAutoLoadFileName)) {
 			CString str;
 			str.Format("Could not open the AutoLoad file '%s'.", (LPCTSTR) m_strAutoLoadFileName);
 			AfxMessageBox(str, MB_ICONINFORMATION);
@@ -999,8 +999,8 @@ void CNeoMem::LoadOptions() {
 	m_bAutoBackup = GetProfileInt(szSettings, szAutoBackup, TRUE);
 
 	// Text View
-	m_clrTextViewForecolor = GetProfileInt(szSettings, szTextViewForecolor, g_clrWindowText);
-	m_clrTextViewBackcolor = GetProfileInt(szSettings, szTextViewBackcolor, g_clrWindow);
+	m_clrTextViewForecolor = GetProfileInt(szSettings, szTextViewForecolor, Library::clrWindowText);
+	m_clrTextViewBackcolor = GetProfileInt(szSettings, szTextViewBackcolor, Library::clrWindow);
 
 	// Export folder and format
 	m_strExportFolder = GetProfileString(szSettings, szExportFolder, m_strDocumentFolder);

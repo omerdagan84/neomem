@@ -7,11 +7,27 @@
 #pragma once
 
 
+class Library {
+public:
+	static COLORREF clrWindow;
+	static COLORREF clrWindowText;
+	static COLORREF clrHighlight;
+	static COLORREF clrHighlightText;
+	static COLORREF clrInactive;
+	static COLORREF clrInactiveText;
+	static COLORREF clr3dFace;
+	static COLORREF clr3dHighlight;
+	static COLORREF clr3dShadow;
+	static COLORREF clrHyperlinkText;
 
-BOOL FileExists(LPCTSTR pszFileName);
-CString GetFileName(LPCTSTR szPath);
-CString fc(ULONGLONG n);
-void GetColors();
+
+public:
+	static BOOL FileExists(LPCTSTR pszFileName);
+	static CString GetFileName(LPCTSTR szPath);
+	static CString fc(ULONGLONG n);
+	static void LoadColors();
+};
+
 BOOL IsEdit(CWnd* pWnd); 
 
 void TRACESTRING(LPCTSTR szFormat, LPCTSTR szString);
@@ -36,17 +52,6 @@ void HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, int iSize)
 
 extern NUMBERFMT g_nf;
 
-
-extern COLORREF g_clrWindow;
-extern COLORREF g_clrWindowText;
-extern COLORREF g_clrHighlight;
-extern COLORREF g_clrHighlightText;
-extern COLORREF g_clrInactive;
-extern COLORREF g_clrInactiveText;
-extern COLORREF g_clr3dFace;
-extern COLORREF g_clr3dHighlight;
-extern COLORREF g_clr3dShadow;
-extern COLORREF g_clrHyperlinkText;
 
 
 

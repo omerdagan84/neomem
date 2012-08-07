@@ -130,13 +130,13 @@ int CToolBarRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	r.right = r.left + nWidth;
 	if (!m_ctlBackcolor.Create2(r, this, ID_FORMAT_APPLY_BACKCOLOR, ID_FORMAT_BACKCOLOR))
 		return -1;
-	m_ctlBackcolor.SetDefaultColor(g_clrWindow); // should be white // (this value ignored)
+	m_ctlBackcolor.SetDefaultColor(Library::clrWindow); // should be white // (this value ignored)
 	m_ctlBackcolor.SetColor(theApp.m_clrTextViewBackcolor);
 	GetItemRectFromID(ID_FORMAT_FORECOLOR, &r);
 	r.right = r.left + nWidth;
 	if(!m_ctlForecolor.Create2(r, this, ID_FORMAT_APPLY_FORECOLOR, ID_FORMAT_FORECOLOR))
 		return -1;
-	m_ctlForecolor.SetDefaultColor(g_clrWindowText); // (this value ignored)
+	m_ctlForecolor.SetDefaultColor(Library::clrWindowText); // (this value ignored)
 	m_ctlForecolor.SetColor(theApp.m_clrTextViewForecolor);
 
 

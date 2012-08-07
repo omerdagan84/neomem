@@ -674,8 +674,8 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 			// Default is to always specify standard colors
 			// Note: You have to change the colors for all cells, since otherwise once you change
 			// the colors, all the remaining cells get that color also
-			COLORREF clrBack = g_clrWindow;
-			COLORREF clrFore = g_clrWindowText;
+			COLORREF clrBack = Library::clrWindow;
+			COLORREF clrFore = Library::clrWindowText;
 			*pResult = CDRF_NEWFONT;
 
 			// Check if item is disabled, if so color entire row disabled
@@ -733,7 +733,7 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 						case proptypeWebsite:
 						case proptypeFile:
 						case proptypeFolder:
-							clrFore = g_clrHyperlinkText;
+							clrFore = Library::clrHyperlinkText;
 					}
 				}
 			}
@@ -752,13 +752,13 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 						xTRACE("CListCtrlEx::OnCustomDraw, on the selected col/row (%d/%d) - set to inactive or highlight colors\n", m_nCol, m_nRow);
 						if (m_nFocusState == fsInactive)
 						{
-							clrBack = g_clrInactive;
-							clrFore = g_clrInactiveText;
+							clrBack = Library::clrInactive;
+							clrFore = Library::clrInactiveText;
 						}
 						else // if (m_nFocusState == fsHighlight)
 						{
-							clrBack = g_clrHighlight;
-							clrFore = g_clrHighlightText;
+							clrBack = Library::clrHighlight;
+							clrFore = Library::clrHighlightText;
 						}
 					}
 				} // == row

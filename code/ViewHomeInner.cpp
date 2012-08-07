@@ -263,7 +263,7 @@ BOOL CViewHomeInner::OnEraseBkgnd(CDC* pDC)
 //	COLORREF clr = 0x00ffffff; // white
 	GetClientRect(&r);
 //	pDC->FillSolidRect(&r, clr);
-	pDC->FillSolidRect(&r, g_clrWindow);
+	pDC->FillSolidRect(&r, Library::clrWindow);
 
 	return TRUE;
 }

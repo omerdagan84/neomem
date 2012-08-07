@@ -174,7 +174,7 @@ void CPageFileGeneral::DisplayInfo()
 
 	// Get memory used by all objects, starting at root and recursing downwards
 	BObject* pobjRoot = m_pDoc->GetRoot();
-	str.Format("%s Bytes", (LPCTSTR) fc(pobjRoot->GetMemoryUsed(TRUE)));
+	str.Format("%s Bytes", (LPCTSTR) Library::fc(pobjRoot->GetMemoryUsed(TRUE)));
 	m_txtSize.SetWindowText(str);
 
 	// File Version (eg 1.0) actually an integer but display as a float
