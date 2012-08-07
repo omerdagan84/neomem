@@ -13,6 +13,7 @@ class BDataLink;
 
 class XComboBoxEx : public CComboBoxEx
 {
+
 // Construction
 public:
 	XComboBoxEx();

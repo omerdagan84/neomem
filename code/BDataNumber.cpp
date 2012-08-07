@@ -129,7 +129,7 @@ LPCTSTR BDataNumber::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMach
 
 	if (bMachineVersion)
 	{
-		_stprintf(szFormatted, "%.15g", m_dblValue);
+		_stprintf_s(szFormatted, nChars, "%.15g", m_dblValue);
 		// Now convert formatted string to a CString
 		m_strText = szFormatted;
 	}
@@ -143,7 +143,7 @@ LPCTSTR BDataNumber::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMach
 				// Bug: Used wsprintf here but it doesn't handle reals
 	//			_stprintf(szPlain, "%f");
 	//			_stprintf(szPlain, "%10.2f", m_dblValue);
-				_stprintf(szPlain, "%.2f", m_dblValue); 
+				_stprintf_s(szPlain, nChars, "%.2f", m_dblValue); 
 	//			wsprintf(szPlain, "%.2f", m_dblValue); // doesn't handle reals!
 				// Convert plain string to formatted string, eg "$1,313.43"
 				::GetCurrencyFormat(LOCALE_USER_DEFAULT, 0, szPlain, NULL, szFormatted, nChars);
@@ -186,7 +186,7 @@ LPCTSTR BDataNumber::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMach
 
 	//			_stprintf(szFormatted, "%g", m_dblValue);
 				// Doubles have 15 digits of precision!
-				_stprintf(szFormatted, "%.15g", m_dblValue);
+				_stprintf_s(szFormatted, nChars, "%.15g", m_dblValue);
 	//			wsprintf(szFormatted, "%.15g", m_dblValue);
 				// Now convert formatted string to a CString
 				m_strText = szFormatted;

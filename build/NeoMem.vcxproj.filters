@@ -1486,6 +1486,7 @@
       <Filter>Resource files</Filter>
     </None>
     <None Include="..\resources\Resource.hm" />
+    <None Include="..\resources\Resource.hm" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\help\NeoMem.hhp">

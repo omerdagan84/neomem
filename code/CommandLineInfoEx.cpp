@@ -15,9 +15,9 @@ CCommandLineInfoEx::CCommandLineInfoEx()
 
 void CCommandLineInfoEx::ParseParam (LPCTSTR pszParam, BOOL bFlag, BOOL bLast)
 {
-	if (bFlag && stricmp(pszParam, "Test")==0)
+	if (bFlag && _stricmp(pszParam, "Test")==0)
 		m_bTest = TRUE;
-	else if (bFlag && stricmp(pszParam, "Admin")==0)
+	else if (bFlag && _stricmp(pszParam, "Admin")==0)
 		m_bAdmin = TRUE;
 	else 
 		// let base class try

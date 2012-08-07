@@ -211,9 +211,10 @@ void BCMenuData::SetWideString(const wchar_t *szWideString)
 	
 	if (szWideString)
     {
-		m_szMenuText = new wchar_t[sizeof(wchar_t)*(wcslen(szWideString)+1)];
+		int len = wcslen(szWideString) + 1;
+		m_szMenuText = new wchar_t[sizeof(wchar_t)*len]; // looks like overkill?
 		if (m_szMenuText)
-			wcscpy(m_szMenuText,szWideString);
+			wcscpy_s(m_szMenuText,sizeof(wchar_t)*len,szWideString);
     }
 	else
 		m_szMenuText=NULL;//set to NULL so we need not bother about dangling non-NULL Ptrs
@@ -1686,8 +1687,9 @@ BOOL BCMenu::LoadMenu(LPCTSTR lpszResourceName)
 		// Obtain Caption (and length)
 		
 		nLen = 0;
-		szCaption=new wchar_t[wcslen((wchar_t *)pTp)+1];
-		wcscpy(szCaption,(wchar_t *)pTp);
+		int len = wcslen((wchar_t *)pTp)+1;
+		szCaption=new wchar_t[len];
+		wcscpy_s(szCaption,len,(wchar_t *)pTp);
 		pTp=&pTp[(wcslen((wchar_t *)pTp)+1)*sizeof(wchar_t)];//modified SK
 		
 		// Handle popup menus first....
@@ -1974,8 +1976,9 @@ void BCMenu::SynchronizeMenu(void)
 	CTypedPtrArray<CPtrArray, BCMenuData*> temp;
 	BCMenuData *mdata;
 	CString string;
-	UINT submenu,nID=0,state,j;
-	
+	UINT submenu,nID=0,state;
+	int j;
+
 	InitializeMenuList(0);
 	for(j=0;j<GetMenuItemCount();++j){
 		mdata=NULL;

@@ -201,7 +201,8 @@ BOOL BDataIcon::LoadFile(LPCTSTR szFileName)
 	BOOL bOK = f.Open(szFileName, CFile::modeRead, &fe);
 	if (bOK)
 	{
-		m_nBytes = f.GetLength();
+		// cast is okay, assuming icon file < 4GB
+		m_nBytes = (UINT) f.GetLength();
 
 		// Allocate chunk of memory and read entire file into it
 		m_pData = new unsigned char[m_nBytes];

@@ -44,7 +44,7 @@ CArchive& AFXAPI operator>>(CArchive& ar, class_name* &pOb) \
 */
 
 
-
+//. link - code\BData.cpp(48): warning C4003: not enough actual parameters for macro '_IMPLEMENT_RUNTIMECLASS'
 IMPLEMENT_SERIAL_ABC(BData, CObject, VERSIONABLE_SCHEMA | versionFileStructure) // last parameter is version number
 // get version with int nFileVersion = ar.GetObjectSchema();
 

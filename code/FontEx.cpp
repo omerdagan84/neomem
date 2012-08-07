@@ -185,7 +185,7 @@ void CFontEx::GetCharFormat(CHARFORMAT &cf)
 	cf.bCharSet = lf.lfCharSet;
 	cf.bPitchAndFamily = lf.lfPitchAndFamily;
 	// Check for max length - LF_FACESIZE = 32
-	_sntprintf(cf.szFaceName, LF_FACESIZE, lf.lfFaceName);
+	_sntprintf_s(cf.szFaceName, LF_FACESIZE, LF_FACESIZE, lf.lfFaceName);
 }
 
 
@@ -220,7 +220,7 @@ void CFontEx::GetCharFormat2(CHARFORMAT2 &cf2)
 	cf2.bCharSet = lf.lfCharSet;
 	cf2.bPitchAndFamily = lf.lfPitchAndFamily; // CFM_FACE
 	// Check for max length - LF_FACESIZE = 32
-	_sntprintf(cf2.szFaceName, LF_FACESIZE, lf.lfFaceName);
+	_sntprintf_s(cf2.szFaceName, LF_FACESIZE, LF_FACESIZE, lf.lfFaceName);
 
 }
 

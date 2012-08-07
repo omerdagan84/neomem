@@ -70,6 +70,7 @@
       <AdditionalIncludeDirectories>..\resources;..\help</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>

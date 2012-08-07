@@ -104,6 +104,7 @@ void CDialogImport::OnOK()
 	try
 	{
 		// Open database
+		//. name was marked as #pragma deprecated - move to OLE DB Consumer classes 
 		CDaoDatabase db;
 		// Note: this may throw an exception if database is locked
 //		db.Open(strFile, FALSE, FALSE); // open db shared, NOT read-only
