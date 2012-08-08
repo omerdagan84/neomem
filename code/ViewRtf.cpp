@@ -1821,7 +1821,7 @@ void CViewRtf::OnRtfLink(NMHDR* pNMHDR, LRESULT* pResult)
 
 			// 1.1c use ShellExecuteEx to get better error messages if hyperlinking fails 
 			// (as it was for a user)
-			//! er, just use shellexecute and call HandleShellExecuteError(h)?
+			//! er, just use shellexecute and call Library::HandleShellExecuteError(h)?
 			SHELLEXECUTEINFO sei = {0}; //! cool - better than ZeroMemory!
 			sei.cbSize = sizeof(SHELLEXECUTEINFO);
 //			sei.fMask = SEE_MASK_NOCLOSEPROCESS;
@@ -1840,7 +1840,7 @@ void CViewRtf::OnRtfLink(NMHDR* pNMHDR, LRESULT* pResult)
 //				DWORD n = ERROR_FILE_NOT_FOUND;
 //				CString s = GetErrorMessage(n);
 				// this will call GetLastError and FormatMessage to get an error message
-				CString s = GetErrorMessage(0);
+				CString s = Library::GetErrorMessage(0);
 				AfxMessageBox((LPCTSTR) s, MB_OK | MB_ICONINFORMATION);
 			}
 //			WaitForSingleObject(sei.hProcess,INFINITE);
@@ -1889,7 +1889,7 @@ void CViewRtf::OnEditInsertSymbol()
 {
 	CWaitCursor wc;
 	HINSTANCE h = ::ShellExecute(NULL, "open", "charmap", NULL, NULL, SW_SHOWNORMAL);
-	HandleShellExecuteError(h);
+	Library::HandleShellExecuteError(h);
 }
 
 

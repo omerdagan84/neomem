@@ -6,8 +6,6 @@
 #include "precompiled.h"
 #include "TabCtrlEx.h"
 
-#include "macros.h"
-
 
 
 #ifdef _DEBUG

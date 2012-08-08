@@ -279,7 +279,7 @@ void CCrypto::EncryptPassword(CString &strIn, CString &strOut)
 
 	// Now convert the data bytes into hexascii characters
 	char szHexascii[40];
-	CharStr2HexStr((const unsigned char*) buffer, (char*) szHexascii, nChars);
+	Library::CharStr2HexStr((const unsigned char*) buffer, (char*) szHexascii, nChars);
 	strOut = szHexascii;
 }
 
@@ -305,7 +305,7 @@ void CCrypto::DecryptPassword(CString& strIn, CString& strOut)
 	::ZeroMemory(pData, nData);
 	int nChars = strIn.GetLength();
 	int nBytes = nChars / 2;
-	HexStr2CharStr(strIn, pData, nBytes);
+	Library::HexStr2CharStr(strIn, pData, nBytes);
 
 	// Now decrypt the raw data into a string
 	Decrypt(pData, nBytes);
@@ -358,7 +358,7 @@ CString CCrypto::GetSessionKeyHash(CString &strPassword)
 	// Now convert the data bytes into hexascii characters
 	char szHexAscii[60];
 	int nBytes = dwDataLen; // number of bytes of data to convert
-	CharStr2HexStr((const unsigned char*) pbData, (char*) szHexAscii, 60, nBytes);
+	Library::CharStr2HexStr((const unsigned char*) pbData, (char*) szHexAscii, 60, nBytes);
 
 	return szHexAscii;
 }

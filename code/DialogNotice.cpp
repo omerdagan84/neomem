@@ -73,7 +73,7 @@ void CDialogNotice::OnBtnDownload()
 		LPCTSTR pszURL = "http://www.microsoft.com/msdownload/ieplatform/ie/comctrlx86.asp";
 		CWaitCursor wc;
 		HINSTANCE h = ::ShellExecute(NULL, "open", pszURL, NULL, NULL, SW_SHOWNORMAL);	
-		HandleShellExecuteError(h);
+		Library::HandleShellExecuteError(h);
 }
 
 

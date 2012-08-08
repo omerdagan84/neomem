@@ -135,7 +135,7 @@ void BDataWebsite::UIOnClick()
 			strURL.Format("http://%s", (LPCTSTR) m_strText);
 		CWaitCursor wc;
 		HINSTANCE h = ::ShellExecute(NULL, "open", strURL, NULL, NULL, SW_SHOWNORMAL);
-		HandleShellExecuteError(h);
+		Library::HandleShellExecuteError(h);
 	}
 }
 

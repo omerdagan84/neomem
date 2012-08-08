@@ -90,7 +90,6 @@
 #define DELETE_EXCEPTION(e) do { e->Delete(); } while (0)
 
 
-#include "macros.h"
 #include "library.h"
 
 

@@ -1816,7 +1816,7 @@ void CNeoMem::GotoWebsite() {
 		strURL.Format("http://%s", (LPCTSTR) theApp.m_strWebsite); // www.neomem.org
 		CWaitCursor wc;
 		HINSTANCE h = ::ShellExecute(NULL, "open", strURL, NULL, NULL, SW_SHOWNORMAL);	
-		HandleShellExecuteError(h);
+		Library::HandleShellExecuteError(h);
 	}
 }
 

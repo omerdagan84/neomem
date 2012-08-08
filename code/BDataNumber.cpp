@@ -240,7 +240,7 @@ BOOL BDataNumber::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	CWaitCursor wc;
 	HINSTANCE h = ::ShellExecute(NULL, "open", "Calc.exe", NULL, NULL, SW_SHOWNORMAL);
-	HandleShellExecuteError(h);
+	Library::HandleShellExecuteError(h);
 	return FALSE;
 }
 

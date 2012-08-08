@@ -391,7 +391,7 @@ void CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 				es.dwError,
 				(LPCTSTR) strBad
 				);
-			ThrowAssertion(THIS_FILE, __LINE__, "es.dwError != 0", (LPCTSTR) strMsg);
+			Library::ThrowAssertion(THIS_FILE, __LINE__, "es.dwError != 0", (LPCTSTR) strMsg);
 
 		
 /*			//, try again as plain text

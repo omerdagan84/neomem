@@ -16,21 +16,6 @@
 
 NUMBERFMT g_nf;
 
-//COLORREF g_clrWindow;
-COLORREF g_clrWindowText;
-COLORREF g_clrHighlight;
-COLORREF g_clrHighlightText;
-COLORREF g_clrInactive;
-COLORREF g_clrInactiveText;
-COLORREF g_clr3dFace;
-COLORREF g_clr3dHighlight;
-COLORREF g_clr3dShadow;
-COLORREF g_clrHyperlinkText;
-
-
-
-
-
 
 // Returns True if the given file exists.
 // static
@@ -99,6 +84,7 @@ CString Library::fc(ULONGLONG n)
 // static
 void Library::LoadColors()
 {
+	// set static members
 	clrWindow = ::GetSysColor(COLOR_WINDOW);
 	clrWindowText = ::GetSysColor(COLOR_WINDOWTEXT);
 	clrHighlight = ::GetSysColor(COLOR_HIGHLIGHT);
@@ -112,7 +98,7 @@ void Library::LoadColors()
 }
 
 
-// this seems weird and non DRY, but you have to define the static variables here,
+// this seems weird, but you have to define the static variables here,
 // in addition to declaring them in the class definition. 
 // without this you get link errors.
 // see: http://msdn.microsoft.com/en-us/library/b1b5y48f.aspx
@@ -134,7 +120,8 @@ COLORREF Library::clrHyperlinkText;
 // Use the SDK ::GetClassName() function because MFC IsKindOf fails if no CEdit variable 
 // has been created for the control you're trying to test.
 // This is used by cut copy paste code - see Q145616 in msdn 
-BOOL IsEdit(CWnd *pWnd)
+// static
+BOOL Library::IsEdit(CWnd *pWnd)
 {
 	ASSERT(pWnd);
 	HWND hWnd = pWnd->GetSafeHwnd();
@@ -153,7 +140,7 @@ BOOL IsEdit(CWnd *pWnd)
 
 
 // Function to convert unsigned char (byte) to string of length 2, eg 0xAE -> "AE"
-void Char2Hex(const unsigned char ch, char* szHex)
+void Library::Char2Hex(const unsigned char ch, char* szHex)
 {
 	unsigned char byte[2];
 	byte[0] = ch/16;
@@ -169,7 +156,7 @@ void Char2Hex(const unsigned char ch, char* szHex)
 }
 
 // Function to convert string of length 2 to unsigned char, eg "B9" -> 0xB9
-void Hex2Char(const char* szHex, unsigned char& rch)
+void Library::Hex2Char(const char* szHex, unsigned char& rch)
 {
 	rch = 0;
 	for(int i=0; i<2; i++)
@@ -186,7 +173,7 @@ void Hex2Char(const char* szHex, unsigned char& rch)
 }    
 
 // Function to convert string of unsigned chars to string of chars, eg 0x9E3D -> "9E3D"
-void CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iBufsize, int iSize)
+void Library::CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iBufsize, int iSize)
 {
 	int i;
 	char szHex[3];
@@ -199,7 +186,7 @@ void CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iBufsi
 }
 
 // Function to convert string of chars to string of unsigned chars, eg "9E3D" -> 0x9E3D
-void HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, int iSize)
+void Library::HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, int iSize)
 {
 	int i;
 	unsigned char ch;
@@ -247,8 +234,9 @@ void TRACETOFILE(LPCTSTR szFilename, LPCTSTR szString)
 }
 
 
-// Get Windows error message
-CString GetErrorMessage(DWORD dwError)
+// Get Windows error message - pass 0 to get last error
+// static
+CString Library::GetErrorMessage(DWORD dwError)
 {
 	if (dwError == 0) 
 		dwError = ::GetLastError();
@@ -275,9 +263,7 @@ CString GetErrorMessage(DWORD dwError)
 
 
 
-
-
-void HandleShellExecuteError(HINSTANCE h)
+void Library::HandleShellExecuteError(HINSTANCE h)
 {
 	/* 
 	Returns a value greater than 32 if successful, or an error value that is less 
@@ -314,7 +300,7 @@ void HandleShellExecuteError(HINSTANCE h)
 
 // Display last Windows error message
 // from msdev
-void DisplayLastError(LPTSTR lpszFunction) 
+void Library::DisplayLastError(LPTSTR lpszFunction) 
 { 
 	LPVOID lpMsgBuf;
 	LPVOID lpDisplayBuf;
@@ -341,17 +327,6 @@ void DisplayLastError(LPTSTR lpszFunction)
 
 
 
-void pause()
-{
-//	Sleep(2000); // sleep for 2 seconds
-
-//	DWORD dwTime = ::GetTickCount();
-//	DWORD dwWait = 1000;
-//	while (::GetTickCount() < dwTime + dwWait);
-//	AfxMessageBox("continue");
-//	for (ULONG lng = 0; lng < 100000; lng++);
-}
-
 
 
 // Throw an assertion (pass as an application exception)
@@ -365,7 +340,8 @@ void pause()
 // exception mechanism bypasses the normal exit path from a function. Therefore, 
 // you must be sure to delete those memory blocks that would be deleted in a 
 // normal exit. 
-void ThrowAssertion(LPCSTR lpszFilename, int nLine, 
+// static
+void Library::ThrowAssertion(LPCSTR lpszFilename, int nLine, 
 				LPCSTR lpszExpression, LPCSTR lpszError/*=NULL*/)
 {
 //	CAppException* pe = new CAppException(TRUE); // pass true if creating on the heap

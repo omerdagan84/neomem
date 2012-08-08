@@ -82,7 +82,7 @@ void CDialogException::OnOK()
 		AfxThrowUserException();
 		break;
 	case 4:
-		ThrowAssertion(THIS_FILE, __LINE__, "test error", "meh"); // default message is "Assertion Failed"
+		Library::ThrowAssertion(THIS_FILE, __LINE__, "test error", "meh"); // default message is "Assertion Failed"
 		break;
 	case 5:
 		ASSERT(0);

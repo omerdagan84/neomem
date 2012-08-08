@@ -722,9 +722,6 @@
     <ClInclude Include="..\code\LogFile.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\macros.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\MDITrayFrame.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -1485,6 +1482,7 @@
     <None Include="..\resources\icons\Wallet.ico">
       <Filter>Resource files</Filter>
     </None>
+    <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
   </ItemGroup>

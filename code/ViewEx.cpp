@@ -1033,7 +1033,7 @@ void CViewEx::OnUpdateNeedSel(CCmdUI* pCmdUI)
 {
 	// Get the current focus & determine if it's on a CEdit control.
 	CWnd* pWnd = GetFocus();
-	if ((pWnd == NULL) || !IsEdit(pWnd))
+	if ((pWnd == NULL) || !Library::IsEdit(pWnd))
 		pCmdUI->Enable(FALSE);
 	else
 	{
@@ -1053,7 +1053,7 @@ void CViewEx::OnUpdateNeedClip(CCmdUI* pCmdUI)
 	// to see if the control is read-only.
 	CWnd* pWnd = GetFocus();
 	if ((pWnd == NULL) || 
-		(!IsEdit(pWnd)) || 
+		(!Library::IsEdit(pWnd)) || 
 		((pWnd->GetStyle() & ES_READONLY) != 0)
 		)
 		pCmdUI->Enable(FALSE);
@@ -1066,8 +1066,8 @@ void CViewEx::OnUpdateNeedClip(CCmdUI* pCmdUI)
 void CViewEx::OnEditCopy() 
 {
 	CEdit* pEdit = (CEdit*)GetFocus();
-//	ASSERT(IsEdit(pEdit));
-	if (IsEdit(pEdit))
+//	ASSERT(Library::IsEdit(pEdit));
+	if (Library::IsEdit(pEdit))
 		pEdit->Copy();
 }
 
@@ -1075,8 +1075,8 @@ void CViewEx::OnEditCopy()
 void CViewEx::OnEditCut() 
 {
 	CEdit* pEdit = (CEdit*)GetFocus();
-//	ASSERT(IsEdit(pEdit));
-	if (IsEdit(pEdit))
+//	ASSERT(Library::IsEdit(pEdit));
+	if (Library::IsEdit(pEdit))
 		pEdit->Cut();
 }
 
@@ -1084,9 +1084,9 @@ void CViewEx::OnEditCut()
 void CViewEx::OnEditPastePlain() 
 {
 	CEdit* pEdit = (CEdit*)GetFocus();
-//	ASSERT(IsEdit(pEdit));
+//	ASSERT(Library::IsEdit(pEdit));
 //	ASSERT(::IsClipboardFormatAvailable(CF_TEXT));
-	if (IsEdit(pEdit) && ::IsClipboardFormatAvailable(CF_TEXT))
+	if (Library::IsEdit(pEdit) && ::IsClipboardFormatAvailable(CF_TEXT))
 	{
 		pEdit->Paste();
 	}

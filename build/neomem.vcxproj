@@ -322,7 +322,6 @@
     <ClInclude Include="..\code\Library.h" />
     <ClInclude Include="..\code\ListCtrlEx.h" />
     <ClInclude Include="..\code\LogFile.h" />
-    <ClInclude Include="..\code\macros.h" />
     <ClInclude Include="..\code\MDITrayFrame.h" />
     <ClInclude Include="..\code\MirrorFileEx.h" />
     <ClInclude Include="..\code\ModuleVersion.h" />
