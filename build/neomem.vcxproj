@@ -206,6 +206,7 @@
     <ClCompile Include="..\code\StaticEx.cpp" />
     <ClCompile Include="..\code\StatusBarEx.cpp" />
     <ClCompile Include="..\code\StringEx.cpp" />
+    <ClCompile Include="..\code\Strings.cpp" />
     <ClCompile Include="..\code\SystemTray.cpp" />
     <ClCompile Include="..\code\TabCtrlEx.cpp" />
     <ClCompile Include="..\code\TabOrder.cpp" />
