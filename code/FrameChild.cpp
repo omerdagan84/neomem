@@ -10,7 +10,6 @@
 #include "DialogExport.h"
 #include "DialogPrint.h"
 #include "NeoMem.h"
-#include "Strings.h"
 #include "ViewHeader.h"
 #include "ViewRtf.h"
 #include "ViewTabs.h"

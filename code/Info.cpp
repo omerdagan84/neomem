@@ -4,6 +4,7 @@
 
 #include "precompiled.h"
 #include "NeoMem.h"
+#include "Strings.h"
 #include "Info.h"
 
 #include "FileVersion.h"
@@ -622,7 +623,7 @@ void CInfo::LoadProcessorInfo()
 	LPTSTR psz;
 	DWORD dwChars = 256;
 
-	if (ERROR_SUCCESS == r.Open(HKEY_LOCAL_MACHINE, szCentralProcessor)) {
+	if (ERROR_SUCCESS == r.Open(HKEY_LOCAL_MACHINE, Strings::szCentralProcessor)) {
 	
 		psz = m_strProcessorIdentifier.GetBuffer(dwChars);
 		r.QueryStringValue(psz, "ProcessorNameString", &dwChars); // eg "Pentium(r) II Processor"

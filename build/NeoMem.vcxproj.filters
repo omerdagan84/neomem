@@ -378,9 +378,6 @@
     <ClCompile Include="..\code\StringEx.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\Strings.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="..\code\SystemTray.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -833,9 +830,6 @@
     <ClInclude Include="..\code\StringEx.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\Strings.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\SystemTray.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -922,6 +916,9 @@
     </ClInclude>
     <ClInclude Include="..\help\NewAliases.h">
       <Filter>HTML Help Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\Strings.h">
+      <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

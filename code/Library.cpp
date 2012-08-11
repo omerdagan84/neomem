@@ -140,6 +140,7 @@ BOOL Library::IsEdit(CWnd *pWnd)
 
 
 // Function to convert unsigned char (byte) to string of length 2, eg 0xAE -> "AE"
+// static
 void Library::Char2Hex(const unsigned char ch, char* szHex)
 {
 	unsigned char byte[2];
@@ -156,6 +157,7 @@ void Library::Char2Hex(const unsigned char ch, char* szHex)
 }
 
 // Function to convert string of length 2 to unsigned char, eg "B9" -> 0xB9
+// static
 void Library::Hex2Char(const char* szHex, unsigned char& rch)
 {
 	rch = 0;
@@ -173,6 +175,7 @@ void Library::Hex2Char(const char* szHex, unsigned char& rch)
 }    
 
 // Function to convert string of unsigned chars to string of chars, eg 0x9E3D -> "9E3D"
+// static
 void Library::CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, int iBufsize, int iSize)
 {
 	int i;
@@ -186,6 +189,7 @@ void Library::CharStr2HexStr(const unsigned char* pucCharStr, char* pszHexStr, i
 }
 
 // Function to convert string of chars to string of unsigned chars, eg "9E3D" -> 0x9E3D
+// static
 void Library::HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, int iSize)
 {
 	int i;
@@ -198,40 +202,6 @@ void Library::HexStr2CharStr(const char* pszHexStr, unsigned char* pucCharStr, i
 }
 
 
-
-
-// Use this to print debug strings that are longer than 512 characters.
-// TRACE is limited to 512 chars!
-// none of these work either:
-//	afxDump << (LPCTSTR) strNewText;
-//	afxDump.OutputString(strNewText);
-//	AfxOutputDebugString(strNewText);
-void TRACESTRING(LPCTSTR szFormat, LPCTSTR szString)
-{
-	CString strString = szString;
-	int nLen = strString.GetLength();
-	if (nLen > 512)
-	{
-		CString strLeft = strString.Left(100);
-		CString strRight = strString.Right(100);
-		CString strNew = strLeft + " ..... " + strRight;
-		TRACE(szFormat, (LPCTSTR) strNew);
-	}
-	else
-		TRACE(szFormat, szString);
-}
-
-
-// Output the given string to the given file.
-// Good for rtf debugging.
-void TRACETOFILE(LPCTSTR szFilename, LPCTSTR szString)
-{
-	TRACE("Writing string to file %s...", szFilename);
-	CStdioFile f(szFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeText);
-	f.WriteString(szString);
-	f.Close();
-	TRACE(" done.\n");
-}
 
 
 // Get Windows error message - pass 0 to get last error
@@ -262,7 +232,7 @@ CString Library::GetErrorMessage(DWORD dwError)
 }
 
 
-
+// static
 void Library::HandleShellExecuteError(HINSTANCE h)
 {
 	/* 
@@ -300,6 +270,7 @@ void Library::HandleShellExecuteError(HINSTANCE h)
 
 // Display last Windows error message
 // from msdev
+// static
 void Library::DisplayLastError(LPTSTR lpszFunction) 
 { 
 	LPVOID lpMsgBuf;
@@ -373,5 +344,43 @@ void Library::ThrowAssertion(LPCSTR lpszFilename, int nLine,
 }
 
 
+
+//------------------------
+
+// not used very much
+
+
+// Use this to print debug strings that are longer than 512 characters.
+// TRACE is limited to 512 chars!
+// none of these work either:
+//	afxDump << (LPCTSTR) strNewText;
+//	afxDump.OutputString(strNewText);
+//	AfxOutputDebugString(strNewText);
+void TRACESTRING(LPCTSTR szFormat, LPCTSTR szString)
+{
+	CString strString = szString;
+	int nLen = strString.GetLength();
+	if (nLen > 512)
+	{
+		CString strLeft = strString.Left(100);
+		CString strRight = strString.Right(100);
+		CString strNew = strLeft + " ..... " + strRight;
+		TRACE(szFormat, (LPCTSTR) strNew);
+	}
+	else
+		TRACE(szFormat, szString);
+}
+
+
+// Output the given string to the given file.
+// Good for rtf debugging.
+void TRACETOFILE(LPCTSTR szFilename, LPCTSTR szString)
+{
+	TRACE("Writing string to file %s...", szFilename);
+	CStdioFile f(szFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeText);
+	f.WriteString(szString);
+	f.Close();
+	TRACE(" done.\n");
+}
 
 

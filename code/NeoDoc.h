@@ -200,7 +200,6 @@ private:
 
 public:
 	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties
-	CString m_strEmpty;		// An empty string used to return ""
 	BDataFlags m_datFlagsTemp; // Temporary BDataFlags object used to get string version of m_lngFlags property
 	BOOL m_bSettingCurrentObject; // Flag used by SetCurrentObject routine
 

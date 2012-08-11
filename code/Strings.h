@@ -1,64 +1,65 @@
 
+#pragma once
 
 
+class Strings {
 
-#ifndef __AFXWIN_H__
-	#error include 'precompiled.h' before including this file for PCH
-#endif
+public:
 
-extern const TCHAR szRegKey[];
-extern const TCHAR szRegKeyDebug[];
-extern const TCHAR szSettings[];
-extern const TCHAR szWindowPosition[];
-extern const TCHAR szDisplayHeader[];
-extern const TCHAR szHeaderFont[];
-extern const TCHAR szHeaderBackgroundColor[];
-extern const TCHAR szHeaderForegroundColor[];
-extern const TCHAR szCustomColors[];
-extern const TCHAR szDisplayGridlines[];
-extern const TCHAR szRtfDefaultFont[];
-extern const TCHAR szShowTips[];
-extern const TCHAR szLastTip[];
-//extern const TCHAR szExcludeFlags[];
-// 1.1d // extern const TCHAR szAdmin[];
-extern const TCHAR szNameFormat[];
-extern const TCHAR szDateFormat[];
-extern const TCHAR szDocumentFolder[];
-// 1.1 extern const TCHAR szRegistrationName[];
-// 1.1 extern const TCHAR szRegistrationKey[];
-extern const TCHAR szShowWelcome[];
-extern const TCHAR szAutoLoad[];
-extern const TCHAR szAutoLoadFileName[];
-//extern const TCHAR szAddAsSibling[];
-//extern const TCHAR szSelectNewObject[];
-extern const TCHAR szTemplateFileName[];
-extern const TCHAR szAutoStart[];
-extern const TCHAR szAutoRecover[];
-extern const TCHAR szAutoRecoverMinutes[];
-extern const TCHAR szAutoBackup[];
-// 1.1 extern const TCHAR szInstallDate[];
-extern const TCHAR szMarginLeft[];
-extern const TCHAR szMarginTop[];
-extern const TCHAR szMarginRight[];
-extern const TCHAR szMarginBottom[];
-extern const TCHAR szTextViewForecolor[];
-extern const TCHAR szTextViewBackcolor[];
-extern const TCHAR szPrintHeaderFooter[];
-extern const TCHAR szExportFolder[];
-extern const TCHAR szExportFormat[];
-extern const TCHAR szRegisterFileType[];
-
-
-//extern const TCHAR szExplorerKey[];
-extern const TCHAR szShellFolders[];
-extern const TCHAR szWindowsRun[];
-extern const TCHAR szCentralProcessor[];
+	static const TCHAR szRegKey[];
+	static const TCHAR szRegKeyDebug[];
+	static const TCHAR szSettings[];
+	static const TCHAR szWindowPosition[];
+	static const TCHAR szDisplayHeader[];
+	static const TCHAR szHeaderFont[];
+	static const TCHAR szHeaderBackgroundColor[];
+	static const TCHAR szHeaderForegroundColor[];
+	static const TCHAR szCustomColors[];
+	static const TCHAR szDisplayGridlines[];
+	static const TCHAR szRtfDefaultFont[];
+	static const TCHAR szShowTips[];
+	static const TCHAR szLastTip[];
+	//static const TCHAR szExcludeFlags[];
+	// 1.1d // static const TCHAR szAdmin[];
+	static const TCHAR szNameFormat[];
+	static const TCHAR szDateFormat[];
+	static const TCHAR szDocumentFolder[];
+	// 1.1 static const TCHAR szRegistrationName[];
+	// 1.1 static const TCHAR szRegistrationKey[];
+	static const TCHAR szShowWelcome[];
+	static const TCHAR szAutoLoad[];
+	static const TCHAR szAutoLoadFileName[];
+	//static const TCHAR szAddAsSibling[];
+	//static const TCHAR szSelectNewObject[];
+	static const TCHAR szTemplateFileName[];
+	static const TCHAR szAutoStart[];
+	static const TCHAR szAutoRecover[];
+	static const TCHAR szAutoRecoverMinutes[];
+	static const TCHAR szAutoBackup[];
+	// 1.1 static const TCHAR szInstallDate[];
+	static const TCHAR szMarginLeft[];
+	static const TCHAR szMarginTop[];
+	static const TCHAR szMarginRight[];
+	static const TCHAR szMarginBottom[];
+	static const TCHAR szTextViewForecolor[];
+	static const TCHAR szTextViewBackcolor[];
+	static const TCHAR szPrintHeaderFooter[];
+	static const TCHAR szExportFolder[];
+	static const TCHAR szExportFormat[];
+	static const TCHAR szRegisterFileType[];
 
 
-//extern const TCHAR szExportFilter[];
-//extern const TCHAR szExportFilter2[];
-//extern const TCHAR szImportFilter[];
-extern const TCHAR szIconFilter[];
-extern const TCHAR szNeoMemFilter[];
+	//static const TCHAR szExplorerKey[];
+	static const TCHAR szShellFolders[];
+	static const TCHAR szWindowsRun[];
+	static const TCHAR szCentralProcessor[];
 
+
+	//static const TCHAR szExportFilter[];
+	//static const TCHAR szExportFilter2[];
+	//static const TCHAR szImportFilter[];
+	static const TCHAR szIconFilter[];
+	static const TCHAR szNeoMemFilter[];
+
+};
 

@@ -810,7 +810,7 @@ void CFrameMain::OnClose()
 	}
 
 	// Save position to registry
-	SaveWindowPlacement(szSettings, szWindowPosition);
+	SaveWindowPlacement(Strings::szSettings, Strings::szWindowPosition);
 
 	// Set flag in the app so it knows we're closing
 	theApp.m_bAppShuttingDown = TRUE;

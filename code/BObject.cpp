@@ -1039,8 +1039,7 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 			else
 				// Return reference to an empty string (can't return "" because would 
 				// return a reference to a temporary object)
-//				return m_pDoc->m_strEmpty; // (No Parent)
-				// well now we're using lpctstr so it should be okay
+				// we're using lpctstr so this should be okay
 				return "";
 		}
 		break;
@@ -1099,9 +1098,8 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 			}
 			else
 				// Property was not found - need to return zero-length string.
-				// Can't return "" because it creates a temporary variable.
-				// Note: now we're using lpctstr so we could use ""
-				return m_pDoc->m_strEmpty;
+				// we're using lpctstr so this should be okay
+				return "";
 		}
 		break;
 	}

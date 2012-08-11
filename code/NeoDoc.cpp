@@ -24,7 +24,7 @@
 #include "ConstantsDatabase.h"
 #include "CryptoFile.h"
 #include "CryptoArchive.h"
-
+#include "Strings.h"
 
 //. get rid of all these dependencies
 #include "Constants.h"
@@ -53,7 +53,6 @@
 #include "PropertySheetEx2.h"
 #include "Resource.h"
 #include "SheetWizard.h"
-#include "Strings.h"
 #include "ViewRtf.h"
 
 
@@ -154,9 +153,6 @@ CNeoDoc::CNeoDoc() {
 
 	// Create the icon cache (encapsulates an image list)
 	m_pIconCache = new CIconCache(this);
-
-	// Create empty string
-	m_strEmpty.Empty();
 
 	m_objHistory.SetSize(50); // number of objects to remember in history
 }
@@ -1870,7 +1866,7 @@ BObject* CNeoDoc::UIImportIcon(CUI* pui, CString strFilename /* ="" */, CString 
 	// Get filename if not specified
 	if (strFilename.IsEmpty()) {
 		// Ask user for icon file
-		if (!pui->GetFileName("Import Icon", "ico", szIconFilter, strFilename))
+		if (!pui->GetFileName("Import Icon", "ico", Strings::szIconFilter, strFilename))
 			return NULL;
 		// Bring up file open dialog to choose .ico file
 //		CFileDialogEx dlg(TRUE, _T("ico"), _T(""), OFN_HIDEREADONLY, szIconFilter, AfxGetMainWnd());

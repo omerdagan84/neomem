@@ -9,7 +9,6 @@
 
 #include "DialogEditLink.h"
 #include "NeoMem.h"
-#include "Strings.h"
 //#include "help\HelpIDs.h"
 
 #include "BDataColumns.h"

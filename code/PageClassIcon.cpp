@@ -9,7 +9,6 @@
 #include "Constants.h"
 #include "DialogEditName.h"
 #include "NeoMem.h"
-#include "Strings.h"
 
 #include "NeoDoc.h"
 #include "BDataIcon.h"

@@ -26,7 +26,6 @@
 #include "PrintInfoMore.h"
 #include "RichEditCtrlEx.h"
 #include "RichEditDocEx.h"
-#include "Strings.h"
 #include "StringEx.h"
 #include "Test.h"
 
@@ -207,6 +206,7 @@ public:
 
 private:
 	CImageList m_imlApp; // application image list
+
 
 
 // debug routines

@@ -63,6 +63,9 @@ const int nHeaderFontSizeDefault = 160;
 const LPCTSTR szHeaderFontNameDefault = _T("Arial");
 
 
+
+
+
 // Function headers
 //typedef void (*TERMINATE_FN)();
 //TERMINATE_FN old_terminate = NULL;
@@ -623,7 +626,7 @@ BOOL CNeoMem::InitInstance() {
 
 	// The main window has been initialized, so show and update it.
 	TRACE("show main window\n");
-	if (!pMainFrame->LoadWindowPlacement(szSettings, szWindowPosition))
+	if (!pMainFrame->LoadWindowPlacement(Strings::szSettings, Strings::szWindowPosition))
 		pMainFrame->ShowWindow(m_nCmdShow);
 	pMainFrame->UpdateWindow();
 
@@ -764,7 +767,7 @@ void CNeoMem::MoveRegistryToIniFile(CString sInifile) {
 
 	// if registry key exists, read info from there, and set flag. 
 	CRegKey r;
-	CString sCompanyName = CString(szRegKey);
+	CString sCompanyName = CString(Strings::szRegKey);
 	CString sKey = _T("Software\\") + sCompanyName + _T("\\NeoMem");
 	if (r.Open(HKEY_CURRENT_USER, sKey) == ERROR_SUCCESS) {
 		TRACE("registry key found - moving to ini file\n");
@@ -839,17 +842,17 @@ void CNeoMem::LoadOptions() {
 	// Load page margins
 	// set default: (twips)
 	int nDefaultMargin = 1440 * 3 / 4; // .75 inch
-	m_rectPageMargins.left = GetProfileInt(szSettings, szMarginLeft, nDefaultMargin);
-	m_rectPageMargins.right = GetProfileInt(szSettings, szMarginRight, nDefaultMargin);
-	m_rectPageMargins.top = GetProfileInt(szSettings, szMarginTop, nDefaultMargin);
-	m_rectPageMargins.bottom = GetProfileInt(szSettings, szMarginBottom, nDefaultMargin);
+	m_rectPageMargins.left = GetProfileInt(Strings::szSettings, Strings::szMarginLeft, nDefaultMargin);
+	m_rectPageMargins.right = GetProfileInt(Strings::szSettings, Strings::szMarginRight, nDefaultMargin);
+	m_rectPageMargins.top = GetProfileInt(Strings::szSettings, Strings::szMarginTop, nDefaultMargin);
+	m_rectPageMargins.bottom = GetProfileInt(Strings::szSettings, Strings::szMarginBottom, nDefaultMargin);
 
-	m_bPrintHeaderFooter = GetProfileInt(szSettings, szPrintHeaderFooter, TRUE);
+	m_bPrintHeaderFooter = GetProfileInt(Strings::szSettings, Strings::szPrintHeaderFooter, TRUE);
 
 	// Header View
-	m_bDisplayHeader = GetProfileInt(szSettings, szDisplayHeader, TRUE);
+	m_bDisplayHeader = GetProfileInt(Strings::szSettings, Strings::szDisplayHeader, TRUE);
 	// get font for header view
-	if (GetProfileBinary(szSettings, szHeaderFont, &pData, &nBytes) && pData) {
+	if (GetProfileBinary(Strings::szSettings, Strings::szHeaderFont, &pData, &nBytes) && pData) {
 		m_fontHeader.CreateFontIndirect((LOGFONT*) pData);
 		delete pData;
 	}
@@ -859,11 +862,11 @@ void CNeoMem::LoadOptions() {
 		m_fontHeader.CreatePointFont(nHeaderFontSizeDefault, szHeaderFontNameDefault); // eg 160 and "Arial"
 	}
 	// Get header colors
-	m_clrHeaderBackground = GetProfileInt(szSettings, szHeaderBackgroundColor, clrHeaderBackgroundDefault);
-	m_clrHeaderForeground = GetProfileInt(szSettings, szHeaderForegroundColor, clrHeaderForegroundDefault);
+	m_clrHeaderBackground = GetProfileInt(Strings::szSettings, Strings::szHeaderBackgroundColor, clrHeaderBackgroundDefault);
+	m_clrHeaderForeground = GetProfileInt(Strings::szSettings, Strings::szHeaderForegroundColor, clrHeaderForegroundDefault);
 
 	// Get custom colors used in the various color dialogs
-	if (GetProfileBinary(szSettings, szCustomColors, &pData, &nBytes) && pData) {
+	if (GetProfileBinary(Strings::szSettings, Strings::szCustomColors, &pData, &nBytes) && pData) {
 		// Copy data into array - cool!
 		memcpy(&m_clrCustomColors[0], pData, sizeof(COLORREF) * 16);
 		// bug: forgot to delete pData - 64 byte memory leak
@@ -894,10 +897,10 @@ void CNeoMem::LoadOptions() {
 	}
 
 	// Gridlines
-	m_bDisplayGridlines = GetProfileInt(szSettings, szDisplayGridlines, TRUE);
+	m_bDisplayGridlines = GetProfileInt(Strings::szSettings, Strings::szDisplayGridlines, TRUE);
 
 	// Get default font for Text View
-	if (GetProfileBinary(szSettings, szRtfDefaultFont, &pData, &nBytes) && pData) {
+	if (GetProfileBinary(Strings::szSettings, Strings::szRtfDefaultFont, &pData, &nBytes) && pData) {
 		m_fontRtfDefault.CreateFontIndirect((LOGFONT*) pData);
 		delete pData;
 	}
@@ -908,10 +911,10 @@ void CNeoMem::LoadOptions() {
 
 	// Tip of the Day
 //,	m_bShowTips = GetProfileInt(szSettings, szShowTips, TRUE);
-	m_nTip = GetProfileInt(szSettings, szLastTip, 0);
+	m_nTip = GetProfileInt(Strings::szSettings, Strings::szLastTip, 0);
 
 	// Name format
-	m_nNameFormat = GetProfileInt(szSettings, szNameFormat, BDataPersonName::nfFirstLast);
+	m_nNameFormat = GetProfileInt(Strings::szSettings, Strings::szNameFormat, BDataPersonName::nfFirstLast);
 
 //	m_nDateFormat = GetProfileInt(szSettings, szDateFormat, 0);
 
@@ -920,13 +923,13 @@ void CNeoMem::LoadOptions() {
 //	m_bAdmin = GetProfileInt(szSettings, szAdmin, FALSE);
 
 	// Get document folder
-	m_strDocumentFolder = GetProfileString(szSettings, szDocumentFolder, "");
+	m_strDocumentFolder = GetProfileString(Strings::szSettings, Strings::szDocumentFolder, "");
 	if (m_strDocumentFolder.IsEmpty()) {
 		// Note: SHGetFolderPath requires certain DLL's to be installed, so screw it. Just get from registry:
 		// HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders
 		// Note: Can't use GetProfileString because you can't really use it except with mycompany/myapp key.
 		CRegKey r;
-		r.Open(HKEY_CURRENT_USER, szShellFolders);
+		r.Open(HKEY_CURRENT_USER, Strings::szShellFolders);
 		DWORD dwCount = MAX_PATH;
 		LPTSTR szPath = m_strDocumentFolder.GetBuffer(dwCount);
 		r.QueryStringValue(szPath, _T("Personal"), &dwCount); // was QueryValue
@@ -952,11 +955,11 @@ void CNeoMem::LoadOptions() {
 	::SetCurrentDirectory(m_strDocumentFolder);
 
 	// Welcome dialog
-	m_bShowWelcome = GetProfileInt(szSettings, szShowWelcome, TRUE);
+	m_bShowWelcome = GetProfileInt(Strings::szSettings, Strings::szShowWelcome, TRUE);
 
 	// Startup file
-	m_bAutoLoad = GetProfileInt(szSettings, szAutoLoad, TRUE); // 1.2a made default true
-	m_strAutoLoadFileName = GetProfileString(szSettings, szAutoLoadFileName, "");
+	m_bAutoLoad = GetProfileInt(Strings::szSettings, Strings::szAutoLoad, TRUE); // 1.2a made default true
+	m_strAutoLoadFileName = GetProfileString(Strings::szSettings, Strings::szAutoLoadFileName, "");
 
 	//, Add Object Dialog options
 //	m_bAddAsSibling = GetProfileInt(szSettings, szAddAsSibling, FALSE);
@@ -989,25 +992,25 @@ void CNeoMem::LoadOptions() {
 	m_strTemplatePath = m_strApplicationFolder + _T("\\") + m_strTemplateFileName;
 
 	// AutoStart
-	m_bAutoStart = GetProfileInt(szSettings, szAutoStart, FALSE);
+	m_bAutoStart = GetProfileInt(Strings::szSettings, Strings::szAutoStart, FALSE);
 
 	// AutoRecover
-	m_bAutoRecover = GetProfileInt(szSettings, szAutoRecover, TRUE);
-	m_nAutoRecoverMinutes = GetProfileInt(szSettings, szAutoRecoverMinutes, 5);
+	m_bAutoRecover = GetProfileInt(Strings::szSettings, Strings::szAutoRecover, TRUE);
+	m_nAutoRecoverMinutes = GetProfileInt(Strings::szSettings, Strings::szAutoRecoverMinutes, 5);
 
 	// AutoBackup
-	m_bAutoBackup = GetProfileInt(szSettings, szAutoBackup, TRUE);
+	m_bAutoBackup = GetProfileInt(Strings::szSettings, Strings::szAutoBackup, TRUE);
 
 	// Text View
-	m_clrTextViewForecolor = GetProfileInt(szSettings, szTextViewForecolor, Library::clrWindowText);
-	m_clrTextViewBackcolor = GetProfileInt(szSettings, szTextViewBackcolor, Library::clrWindow);
+	m_clrTextViewForecolor = GetProfileInt(Strings::szSettings, Strings::szTextViewForecolor, Library::clrWindowText);
+	m_clrTextViewBackcolor = GetProfileInt(Strings::szSettings, Strings::szTextViewBackcolor, Library::clrWindow);
 
 	// Export folder and format
-	m_strExportFolder = GetProfileString(szSettings, szExportFolder, m_strDocumentFolder);
-	m_strExportFormat = GetProfileString(szSettings, szExportFormat, "csv");
+	m_strExportFolder = GetProfileString(Strings::szSettings, Strings::szExportFolder, m_strDocumentFolder);
+	m_strExportFormat = GetProfileString(Strings::szSettings, Strings::szExportFormat, "csv");
 
 	// Register .neo file type?
-	m_bRegisterFileType = GetProfileInt(szSettings, szRegisterFileType, TRUE);
+	m_bRegisterFileType = GetProfileInt(Strings::szSettings, Strings::szRegisterFileType, TRUE);
 	
 	// Set flag so ExitInstance knows it can call SaveOptions
 	m_bOptionsLoaded = TRUE;
@@ -1019,76 +1022,76 @@ void CNeoMem::LoadOptions() {
 void CNeoMem::SaveOptions() {
 
 	// Margins
-	WriteProfileInt(szSettings, szMarginLeft, m_rectPageMargins.left);
-	WriteProfileInt(szSettings, szMarginRight, m_rectPageMargins.right);
-	WriteProfileInt(szSettings, szMarginTop, m_rectPageMargins.top);
-	WriteProfileInt(szSettings, szMarginBottom, m_rectPageMargins.bottom);
+	WriteProfileInt(Strings::szSettings, Strings::szMarginLeft, m_rectPageMargins.left);
+	WriteProfileInt(Strings::szSettings, Strings::szMarginRight, m_rectPageMargins.right);
+	WriteProfileInt(Strings::szSettings, Strings::szMarginTop, m_rectPageMargins.top);
+	WriteProfileInt(Strings::szSettings, Strings::szMarginBottom, m_rectPageMargins.bottom);
 
-	WriteProfileInt(szSettings, szPrintHeaderFooter, m_bPrintHeaderFooter);
+	WriteProfileInt(Strings::szSettings, Strings::szPrintHeaderFooter, m_bPrintHeaderFooter);
 
 	// Header View
-	WriteProfileInt(szSettings, szDisplayHeader, m_bDisplayHeader);
+	WriteProfileInt(Strings::szSettings, Strings::szDisplayHeader, m_bDisplayHeader);
 	LOGFONT lf;
 	if (m_fontHeader.GetLogFont(&lf))
-		WriteProfileBinary(szSettings, szHeaderFont, (LPBYTE) &lf, sizeof(LOGFONT));
-	WriteProfileInt(szSettings, szHeaderBackgroundColor, m_clrHeaderBackground);
-	WriteProfileInt(szSettings, szHeaderForegroundColor, m_clrHeaderForeground);
+		WriteProfileBinary(Strings::szSettings, Strings::szHeaderFont, (LPBYTE) &lf, sizeof(LOGFONT));
+	WriteProfileInt(Strings::szSettings, Strings::szHeaderBackgroundColor, m_clrHeaderBackground);
+	WriteProfileInt(Strings::szSettings, Strings::szHeaderForegroundColor, m_clrHeaderForeground);
 
 	// Save custom colors
-	WriteProfileBinary(szSettings, szCustomColors, (LPBYTE) &m_clrCustomColors[0], sizeof(COLORREF) * 16);
+	WriteProfileBinary(Strings::szSettings, Strings::szCustomColors, (LPBYTE) &m_clrCustomColors[0], sizeof(COLORREF) * 16);
 
 	// Gridlines
-	WriteProfileInt(szSettings, szDisplayGridlines, m_bDisplayGridlines);
+	WriteProfileInt(Strings::szSettings, Strings::szDisplayGridlines, m_bDisplayGridlines);
 
 	// Save default rtf font
 	if (m_fontRtfDefault.GetLogFont(&lf))
-		WriteProfileBinary(szSettings, szRtfDefaultFont, (LPBYTE) &lf, sizeof(LOGFONT));
+		WriteProfileBinary(Strings::szSettings, Strings::szRtfDefaultFont, (LPBYTE) &lf, sizeof(LOGFONT));
 
 	// Tips
-//	WriteProfileInt(szSettings, szShowTips, m_bShowTips);
-	WriteProfileInt(szSettings, szLastTip, m_nTip);
+//	WriteProfileInt(Strings::szSettings, Strings::szShowTips, m_bShowTips);
+	WriteProfileInt(Strings::szSettings, Strings::szLastTip, m_nTip);
 
 	// Name and date formats
-	WriteProfileInt(szSettings, szNameFormat, m_nNameFormat);
-//	WriteProfileInt(szSettings, szDateFormat, m_nDateFormat);
+	WriteProfileInt(Strings::szSettings, Strings::szNameFormat, m_nNameFormat);
+//	WriteProfileInt(Strings::szSettings, Strings::szDateFormat, m_nDateFormat);
 
 	// Document folder
-	WriteProfileString(szSettings, szDocumentFolder, m_strDocumentFolder);
+	WriteProfileString(Strings::szSettings, Strings::szDocumentFolder, m_strDocumentFolder);
 
 	// Welcome
-	WriteProfileInt(szSettings, szShowWelcome, m_bShowWelcome);
+	WriteProfileInt(Strings::szSettings, Strings::szShowWelcome, m_bShowWelcome);
 
 	// Add Object Dialog options
-//	WriteProfileInt(szSettings, szAddAsSibling, m_bAddAsSibling);
-//	WriteProfileInt(szSettings, szSelectNewObject, m_bSelectNewObject);
+//	WriteProfileInt(Strings::szSettings, Strings::szAddAsSibling, m_bAddAsSibling);
+//	WriteProfileInt(Strings::szSettings, Strings::szSelectNewObject, m_bSelectNewObject);
 
 	//, write Home view colors
 
 	// Template file
 	//, not really using this now
-	WriteProfileString(szSettings, szTemplateFileName, m_strTemplateFileName);
+	WriteProfileString(Strings::szSettings, Strings::szTemplateFileName, m_strTemplateFileName);
 
 	// AutoLoad
-	WriteProfileInt(szSettings, szAutoLoad, m_bAutoLoad);
-	WriteProfileString(szSettings, szAutoLoadFileName, m_strAutoLoadFileName);
+	WriteProfileInt(Strings::szSettings, Strings::szAutoLoad, m_bAutoLoad);
+	WriteProfileString(Strings::szSettings, Strings::szAutoLoadFileName, m_strAutoLoadFileName);
 
 	// AutoStart
-	WriteProfileInt(szSettings, szAutoStart, m_bAutoStart);
+	WriteProfileInt(Strings::szSettings, Strings::szAutoStart, m_bAutoStart);
 
 	// AutoRecover
-	WriteProfileInt(szSettings, szAutoRecover, m_bAutoRecover);
-	WriteProfileInt(szSettings, szAutoRecoverMinutes, m_nAutoRecoverMinutes);
+	WriteProfileInt(Strings::szSettings, Strings::szAutoRecover, m_bAutoRecover);
+	WriteProfileInt(Strings::szSettings, Strings::szAutoRecoverMinutes, m_nAutoRecoverMinutes);
 
 	// AutoBackup
-	WriteProfileInt(szSettings, szAutoBackup, m_bAutoBackup);
+	WriteProfileInt(Strings::szSettings, Strings::szAutoBackup, m_bAutoBackup);
 
 	// Text View
-	WriteProfileInt(szSettings, szTextViewForecolor, m_clrTextViewForecolor);
-	WriteProfileInt(szSettings, szTextViewBackcolor, m_clrTextViewBackcolor);
+	WriteProfileInt(Strings::szSettings, Strings::szTextViewForecolor, m_clrTextViewForecolor);
+	WriteProfileInt(Strings::szSettings, Strings::szTextViewBackcolor, m_clrTextViewBackcolor);
 
 	// Export folder and format
-	WriteProfileString(szSettings, szExportFolder, m_strExportFolder);
-	WriteProfileString(szSettings, szExportFormat, m_strExportFormat);
+	WriteProfileString(Strings::szSettings, Strings::szExportFolder, m_strExportFolder);
+	WriteProfileString(Strings::szSettings, Strings::szExportFormat, m_strExportFormat);
 
 }
 
@@ -1216,7 +1219,7 @@ void CNeoMem::OnCmdViewOptions() {
 			TCHAR szExeName[MAX_PATH];
 			if (::GetModuleFileName(NULL, szExeName, MAX_PATH)) {
 				CRegKey r;
-				if (ERROR_SUCCESS == r.Open(HKEY_CURRENT_USER, szWindowsRun)) {
+				if (ERROR_SUCCESS == r.Open(HKEY_CURRENT_USER, Strings::szWindowsRun)) {
 					if (m_bAutoStart)
 						r.SetStringValue(szExeName, m_pszAppName); // was SetValue
 					else
@@ -2362,7 +2365,7 @@ UINT CNeoMem::ShowMessage(UINT nMessage) {
 	LPCTSTR szMessage = szMessages[nMessage];
 	LPCTSTR szCaption = szCaptions[nMessage];
 
-	BOOL bShowMessage = GetProfileInt(szSettings, szRegistryEntry, TRUE);
+	BOOL bShowMessage = GetProfileInt(Strings::szSettings, szRegistryEntry, TRUE);
 	if (bShowMessage) {
 		dlg.m_bShowMessage = TRUE;
 		dlg.m_strMessage = szMessage;
@@ -2371,7 +2374,7 @@ UINT CNeoMem::ShowMessage(UINT nMessage) {
 		if (nAnswer == IDOK) {
 			bShowMessage = dlg.m_bShowMessage;
 			if (bShowMessage == FALSE)
-				WriteProfileInt(szSettings, szRegistryEntry, bShowMessage);
+				WriteProfileInt(Strings::szSettings, szRegistryEntry, bShowMessage);
 		}
 		return nAnswer;
 	}

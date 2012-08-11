@@ -53,6 +53,7 @@ extern NUMBERFMT g_nf;
 
 
 
+// macros from macros.h, which was merged here. it was included in precompiled.h
 
 
 // In release mode, we want asserts to at least raise an exception if they are false.
