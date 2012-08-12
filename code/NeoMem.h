@@ -59,6 +59,7 @@ public:
 	CFrameChild* GetChildFrame();
 	int GetDocCount();
 	CFrameMain* GetMainFrame();
+	CProgressCtrl& GetProgressBar();
 	BOOL GetTextFromClipboard(CString& str);
 	LPCTSTR GetTip();
 	ULONG GetTopObjectID();
@@ -79,7 +80,6 @@ public:
 	void UpdateAllDocumentObjects(ULONG lngMsg, BOOL bRecurse = TRUE);
 	void UpdateAllDocumentViews(LPARAM lHint, CObject* pHint = 0);
 	BOOL UpdateCommonControls();
-	void UpdateProgressBar(ULONG nItem, ULONG nItems = 0);
 	virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
 
 private:

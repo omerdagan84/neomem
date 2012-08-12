@@ -116,6 +116,7 @@ public:
 	int GetVersionFileStructure() { return m_nVersionFileStructure; };
 	int GetVersionDataModel() { return m_nVersionDataModel; };
 	BOOL IsBObjectValid(BObject* pobj);
+	BOOL IsSettingCurrentObject() { return m_bSettingCurrentObject; } ;
 	BOOL IsTargetSingle();
 	void RemoveObjectFromIndex(OBJID idObject);
 	BOOL SaveModifiedBackup();
@@ -185,42 +186,31 @@ public:
 	BDataColumns m_datColumnsViewFolder; // Column arrangement for views folder
 	BDataColumns m_datColumnsDefault; // Column arrangement (Name, Class) //, not serialized yet
 
-private:
-	CHistory m_objHistory; // History of objects selected
-	
 		
 // These don't get serialized
 private:	
+	CHistory m_objHistory; // History of objects selected
 	CString m_strPassword; // password for encrypted file
 	CIconCache* m_pIconCache;	// Icon cache (encapsulates an image list)
 	BOOL m_bAutoRecoverDirty; // Flag used to tell if file has changed since last AutoRecover save
 	BOOL m_bUpgradeFileStructure; // True if file structure needs to be upgraded during Load
 	BOOL m_bUpgradeDataModel; // True if data model needs to be upgraded during Load
 	BOOL m_bLoadingFile; // Set to True during file load
-
-public:
-	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties
-	BDataFlags m_datFlagsTemp; // Temporary BDataFlags object used to get string version of m_lngFlags property
+	CMapObjects m_mapObjects;  // Map from ObjectID to BObject pointer
 	BOOL m_bSettingCurrentObject; // Flag used by SetCurrentObject routine
 
-	// Used to update progress bar during serialization
-	ULONG m_nObject;
-	ULONG m_nObjects; 
-
-private:
-	// not serialized
-	CMapObjects m_mapObjects;  // Map from ObjectID to BObject pointer
-
+public:
+	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties  //, better way?
+	BDataFlags m_datFlagsTemp; // Temporary BDataFlags object used to get string version of m_lngFlags property  //, better way?
 
 
 	// Implementation
 private:
-	BOOL OnOpenDocumentEx(LPCTSTR lpszPathName);
-	BOOL OnSaveDocumentEx(LPCTSTR lpszPathName);
-
 //	BDataLink m_datTarget; // Object or objects which will be acted on by the object command handlers
 	BObject* m_pobjTarget; // Object which will be acted on by the object command handlers
 
+	BOOL OnOpenDocumentEx(LPCTSTR lpszPathName);
+	BOOL OnSaveDocumentEx(LPCTSTR lpszPathName);
 	void UpgradeFile(CArchive& ar);
 	void Synchronize(CNeoDoc* pdocTemplate);
 	void SynchronizeDelete(BObject* pobjThis, CNeoDoc* pdocTemplate);

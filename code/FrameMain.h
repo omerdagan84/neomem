@@ -56,7 +56,6 @@ private:
 	CToolBar m_tbr;
 	CReBar m_wndReBar;
 	CDialogBar m_wndDlgBar;
-//	CProgressCtrl m_wndProgressBar;
 //	CRichEditCtrlEx m_rtfInvisible; // invisible rtf used for various routines (search, drag drop, etc)
 	UINT m_uAutoRecoverTimerID;
 

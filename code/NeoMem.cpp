@@ -1507,31 +1507,18 @@ void CNeoMem::SetStatusBarText(LPCTSTR lpszText /* = 0 */) {
 		str.LoadString(AFX_IDS_IDLEMESSAGE); // "Ready"
 		lpszText = (LPCTSTR) str;
 	}
-//	((CFrameMain*) m_pMainWnd)->m_sbr.SetWindowText(lpszText);
 	GetMainFrame()->GetStatusBar().SetWindowText(lpszText);
 	GetMainFrame()->GetStatusBar().Resize();
 }
 
 
-// This will update the progress bar on the status bar.
-// Call with 0 items to hide the progress bar. 
-void CNeoMem::UpdateProgressBar(ULONG nItem, ULONG nItems /* =0 */) {
-	xTRACE("CNeoMem::UpdateProgressBar(nItem %d,  nItems %d)\n", nItem, nItems);
-	//, make protected and add methods
+// Get a reference to the progress bar control
+CProgressCtrl& CNeoMem::GetProgressBar() {
 	CFrameMain* pMain = (CFrameMain*) AfxGetMainWnd();
 	ASSERT_VALID(pMain);
-	CProgressCtrl& rprog = pMain->GetStatusBar().m_wndProgress;
-	// Set range if specified
-	if (nItems)
-		rprog.SetRange32(0, nItems);
-	// Set current position in range
-	rprog.SetPos(nItem);
-	if (nItem || nItems)
-		rprog.ShowWindow(SW_SHOW);
-	else
-		rprog.ShowWindow(SW_HIDE);
+	CProgressCtrl& rprog = pMain->GetStatusBar().GetProgressBar();
+	return rprog;
 }
-
 
 
 // Override this to register short .exe name instead of long name

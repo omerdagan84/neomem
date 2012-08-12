@@ -23,13 +23,11 @@ public:
 // Operations
 public:
 	void Resize();
-
-// Public Attributes
-public:
-	CProgressCtrl m_wndProgress;
+	CProgressCtrl& GetProgressBar() { return m_wndProgress; };
 
 // Attributes
 private:
+	CProgressCtrl m_wndProgress;
 	CClock m_clock;
 //	CEdit m_txt;
 	int m_nClockPane;

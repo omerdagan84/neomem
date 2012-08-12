@@ -143,9 +143,7 @@ void BObject::Serialize(CArchive& ar)
 		ar << m_bytViewHeight; //, remove in v2
 
 		// Update progress bar
-		m_pDoc->m_nObject++;
-		theApp.UpdateProgressBar(m_pDoc->m_nObject);
-
+		theApp.GetProgressBar().StepIt();
 	}
 
 	else
@@ -364,8 +362,7 @@ void BObject::Serialize(CArchive& ar)
 			xTRACE("    Read ObjectID %d: \"%s\"\n", m_lngObjectID, (LPCTSTR) GetPropertyText(propName));
 
 		// Update progress bar
-		m_pDoc->m_nObject++;
-		theApp.UpdateProgressBar(m_pDoc->m_nObject);
+		theApp.GetProgressBar().StepIt();
 	}
 
 }
@@ -3494,8 +3491,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 	}
 
 	// Update progress bar
-	m_pDoc->m_nObject++;
-	theApp.UpdateProgressBar(m_pDoc->m_nObject);
+	theApp.GetProgressBar().StepIt();
 
 	nIndent++;
 	// Now walk through children and call this routine recursively

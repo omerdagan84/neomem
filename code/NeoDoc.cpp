@@ -1187,8 +1187,9 @@ void CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFo
 
 		// Initialize the progress bar and show it
 		int nObjects = pobj->GetChildCount(TRUE) + 1;
-		m_nObject = 0;
-		theApp.UpdateProgressBar(m_nObject, nObjects);
+		theApp.GetProgressBar().SetRange(0, nObjects);
+		theApp.GetProgressBar().SetPos(0);
+		theApp.GetProgressBar().ShowWindow(SW_SHOW);
 		theApp.SetStatusBarText(_T("Exporting data..."));
 
 		// export header
@@ -1205,7 +1206,8 @@ void CNeoDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFo
 		file.Close();
 
 		// update status bar
-		theApp.UpdateProgressBar(0);
+		theApp.GetProgressBar().SetPos(0);
+		theApp.GetProgressBar().ShowWindow(SW_HIDE);
 		theApp.SetStatusBarText(_T("Data exported"));
 
 //		CString s = _T("Finished exporting data to file \"") + strFilename + _T("\".");
@@ -3213,16 +3215,17 @@ void CNeoDoc::Serialize(CArchive& ar) {
 		ar << wReserved;
 
 		// Get and write total number of objects here so can display progress bar on writing AND reading!
-		m_nObject = 0; // initialize object number
-		m_nObjects = m_pobjRoot->GetChildCount(TRUE, TRUE) + 1; // add one for root object itself!
-		ar << m_nObjects;
+		ULONG nObjects = m_pobjRoot->GetChildCount(TRUE, TRUE) + 1; // add one for root object itself!
+		ar << nObjects;
 
 		// Get and write number of objects with ObjectID's
 		ULONG nObjectIDs = m_pobjRoot->GetChildCount(TRUE, FALSE) + 1; // add one for root object itself!
 		ar << nObjectIDs;
 
 		// Initialize the progress bar and show it
-		theApp.UpdateProgressBar(m_nObject, m_nObjects);
+		theApp.GetProgressBar().SetRange32(0, nObjects);
+		theApp.GetProgressBar().SetPos(0);
+		theApp.GetProgressBar().ShowWindow(SW_SHOW);
 
 		// This is what saves the entire file recursively!
 		ar << m_pobjRoot;
@@ -3380,9 +3383,9 @@ void CNeoDoc::Serialize(CArchive& ar) {
 		ar >> wReserved;
 
 		// Read total number of objects in file so can update progress bar correctly
-		m_nObject = 0; // initialize object number
-		ar >> m_nObjects;
-		yTRACE("  Total number of objects in file: %d\n", m_nObjects);
+		ULONG nObjects;
+		ar >> nObjects;
+		yTRACE("  Total number of objects in file: %d\n", nObjects);
 
 		// Read number of objects with ObjectID's
 		ULONG nObjectIDs;
@@ -3397,7 +3400,9 @@ void CNeoDoc::Serialize(CArchive& ar) {
 		m_mapObjects.InitHashTable(nHashSize);
 
 		// Initialize the progress bar and show it
-		theApp.UpdateProgressBar(m_nObject, m_nObjects);
+		theApp.GetProgressBar().SetRange32(0, nObjects);
+		theApp.GetProgressBar().SetPos(0);
+		theApp.GetProgressBar().ShowWindow(SW_SHOW);
 
 		// This is what reads all the objects into memory, recursing from the root object!
 		TRY {
@@ -3471,7 +3476,8 @@ void CNeoDoc::Serialize(CArchive& ar) {
 	}
 
 	// Hide progress bar
-	theApp.UpdateProgressBar(0);
+	theApp.GetProgressBar().SetPos(0);
+	theApp.GetProgressBar().ShowWindow(SW_HIDE);
 
 }
 

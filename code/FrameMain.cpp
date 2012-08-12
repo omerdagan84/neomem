@@ -157,12 +157,6 @@ int CFrameMain::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (!m_sbr.Create(this))
 		return -1;
 
-	// Create Progress Bar
-//	CRect r;
-//	if (!m_wndProgressBar.Create(WS_VISIBLE | WS_CHILD | PBS_SMOOTH, r, m_wndStatusBar, 100))
-//		return -1;
-
-
 	// Initialize system tray icon
 //	TraySetIcon(IDR_MAINFRAME);
 //	TraySetToolTip("NeoMem - click to restore");

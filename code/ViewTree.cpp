@@ -601,7 +601,7 @@ void CViewTree::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 	//		return;
 
 		// If this was triggered by SetCurrentObject then exit (don't need to call it again!)
-		if (m_pDoc->m_bSettingCurrentObject) return;
+		if (m_pDoc->IsSettingCurrentObject()) return;
 
 		// If in process of renaming item, don't update current item
 		if (m_bTempSelection) return;
