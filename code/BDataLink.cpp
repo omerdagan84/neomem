@@ -1267,7 +1267,7 @@ bool BDataLink::Test(CNeoDoc* pdoc)
 	{
 		// verify object
 		BDataLink* pdat = (BDataLink*) pobj->GetPropertyData(lngPropertyID);
-		// this bombs
+		//. this bombs
 		pdat->IsValid(pdoc);
 	}
 

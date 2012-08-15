@@ -63,24 +63,24 @@ public:
 	int FindReferences(BObject* pobjFind, CObArray& aRefs, BOOL bRecurse);
 	BObject* GetChild(int nChild);
 	int GetChildCount(BOOL bRecurse = FALSE, BOOL bIncludeProperties = FALSE) const;
-	BObjects* GetChildren() { return m_paChildren; }; // inline
+	BObjects* GetChildren() { return m_paChildren; };
 	BOOL GetClassDefNewName(CString& strName);
-	OBJID GetClassID() { return m_lngClassID; }; // inline
+	OBJID GetClassID() { return m_lngClassID; }; 
 	BObject* GetClassObject();
-	BData* GetData() { return m_pdat; }; // inline
+	BData* GetData() { return m_pdat; };
 	ULONG GetDefaultIconID();
-	CNeoDoc* GetDoc() { return m_pDoc; }; // inline
+	CNeoDoc* GetDoc() { return m_pDoc; };
 	BOOL GetFlag(ULONG lngFlag);
-	ULONG GetFlags() { return m_lngFlags; }; // inline
+	ULONG GetFlags() { return m_lngFlags; };
 	OBJID GetIconID();
 	int GetIconIndex();
 //	int GetLinks(BObjects& aObjects, BObject* pobjStart);
 	ULONG GetMemoryUsed(BOOL bRecurse) const;
 	LPCTSTR GetName(BOOL bIncludeClassName);
-	OBJID GetObjectID() { return m_lngObjectID; }; // inline
-	BObject* GetParent() { return m_pobjParent; }; // inline
+	OBJID GetObjectID() { return m_lngObjectID; };
+	BObject* GetParent() { return m_pobjParent; };
 	int GetParents(BObjects& aParents, BObject* pobjStopAt, BOOL bIncludeThisObject = TRUE, BOOL bIncludeStopObject = FALSE);
-	BObjects* GetProperties() { return m_paProperties; }; // inline
+	BObjects* GetProperties() { return m_paProperties; };
 	BData* GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	int GetPropertyDefAlignment();
 	CString GetPropertyDefMachineVersionName();
@@ -89,7 +89,7 @@ public:
 	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	LPCTSTR GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
-	BYTE GetViewHeight() { return m_bytViewHeight; }; // inline
+	BYTE GetViewHeight() { return m_bytViewHeight; };
 	int HasChildren() const;
 //	void InitToZero();
 	BOOL IsChild(BObject* pobjPossibleParent) const;
@@ -109,18 +109,18 @@ public:
 	BOOL SetClassID(OBJID lngNewClassID);
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
 	BOOL SetData(BData* pData);
-	void SetDoc(CNeoDoc* pdoc) { m_pDoc = pdoc; }; // inline
+	void SetDoc(CNeoDoc* pdoc) { m_pDoc = pdoc; }; 
 	void SetFlag(ULONG lngFlag, BOOL bValue = TRUE, BOOL bRecurse = FALSE);
-	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; }; // inline
+	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; };
 	BOOL SetIconID(OBJID lngIconID);
-	void SetObjectID(OBJID lngObjectID) { m_lngObjectID = lngObjectID; }; // inline
+	void SetObjectID(OBJID lngObjectID) { m_lngObjectID = lngObjectID; };
 	void SetObjectText(const CString& strText);
 	void SetParent(BObject* pobjNewParent);
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdat, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	void SetPropertyLink(OBJID lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	void SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);
-	void SetViewHeight(BYTE bytViewHeight) { m_bytViewHeight = bytViewHeight; }; // inline
+	void SetViewHeight(BYTE bytViewHeight) { m_bytViewHeight = bytViewHeight; };
 	BOOL SortChildren();
 
 	BOOL UIEditValue(OBJID lngPropertyID);
