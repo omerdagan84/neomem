@@ -126,6 +126,7 @@ void CPageClassProperties::DoDataExchange(CDataExchange* pDX)
 
 		// Save bdata to the class we're editing
 		m_pobj->SetPropertyData(propObjectProperties, pdatLink, FALSE, FALSE);
+		delete pdatLink;
 	}
 }
 

@@ -116,6 +116,7 @@ void CPageClassContents::DoDataExchange(CDataExchange* pDX)
 			BDataFlags* pdatFlags = new BDataFlags;
 			pdatFlags->SetFlags(bNoAutosort ? flagNoAutosort : 0);
 			m_pobj->SetPropertyData(propObjectFlags, pdatFlags, FALSE, FALSE);
+			delete pdatFlags;
 		}
 	}
 }

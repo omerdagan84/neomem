@@ -90,13 +90,8 @@ BOOL CUndo::Restore()
 {
 	if (IsValid())
 	{
-		// SetPropertyData returns true if it keeps pdat, or false if it doesn't
-		if (m_pobj->SetPropertyData(m_lngPropertyID, m_pdat))
-//			delete m_pdat; // if returned false, we must delete data
-			m_pdat = NULL; // bobject kept bdata, so we don't need to delete it
-//		m_pobj = NULL;
-//		m_pdat = NULL; // we no longer own it
-//		m_lngPropertyID = 0;
+		m_pobj->SetPropertyData(m_lngPropertyID, m_pdat);
+		delete m_pdat;
 		Clear();
 		return TRUE;
 	}

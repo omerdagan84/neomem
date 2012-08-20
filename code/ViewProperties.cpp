@@ -683,11 +683,8 @@ void CViewProperties::OnCmdAddProperty()
 //		BDataLink* pdat = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 //		BDataLink* pdatCopy = STATIC_DOWNCAST(BDataLink, pdat->CreateCopy());
 //		pdatCopy->AddLink(pobjProperty);
-//		if (!pobjClass->SetPropertyData(propObjectProperties, pdatCopy))
-//		{
-//			// Standard - if bobject didn't save bdata then delete it
-//			delete pdatCopy;
-//		}
+//		pobjClass->SetPropertyData(propObjectProperties, pdatCopy);
+//		delete pdatCopy;
 		//, duplicate code in 3 places
 		BDataLink* pdatLinks = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 		if (pdatLinks)

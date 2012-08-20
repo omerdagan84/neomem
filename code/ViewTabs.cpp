@@ -108,6 +108,9 @@ CViewTabs::~CViewTabs()
 	}
 	// Delete copied view info if it was not saved
 	DeleteCopiedViewInfo();
+
+	// Delete BData object
+	delete m_pdatViews;
 }
 
 
@@ -210,7 +213,8 @@ void CViewTabs::OnInitialUpdate()
 		ASSERT (m_tbc.GetItemCount() == 0);
 
 		// Get left side tab/view arrangement from document
-		m_pdatViews = &(m_pDoc->m_datViewsLeft);
+		m_pdatViews = DYNAMIC_DOWNCAST(BDataViews, m_pDoc->m_datViewsLeft.CreateCopy());
+		ASSERT_VALID(m_pdatViews);
 
 		// Modify tab control to correspond with list of available views
 		UpdateTabs();

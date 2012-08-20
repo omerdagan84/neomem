@@ -54,7 +54,7 @@ public:
 	void ConvertToHardLinks(BOOL bRecurse);
 	void ConvertToSoftLinks(BOOL bRecurse);
 	void CopyFrom(BObject* pobj);
-	BData* CopyPropertyDataFrom(BObject* pobjSource, OBJID lngPropertyID);
+	void CopyPropertyDataFrom(BObject* pobjSource, OBJID lngPropertyID);
 	BOOL DeleteObject(BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE, BOOL bAskUser = FALSE);
 	void DisplayProperties(); // const
@@ -116,7 +116,7 @@ public:
 	void SetObjectID(OBJID lngObjectID) { m_lngObjectID = lngObjectID; };
 	void SetObjectText(const CString& strText);
 	void SetParent(BObject* pobjNewParent);
-	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdat, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+	void SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	void SetPropertyLink(OBJID lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	void SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);

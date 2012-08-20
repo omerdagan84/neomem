@@ -212,6 +212,7 @@ void CDialogSelectProperty::OnBtnAdd()
 					pdatLinks->AddLink(pobjNew);
 				}
 				pobjClass->SetPropertyData(propObjectProperties, pdatLinks);
+				delete pdatLinks;
 			}
 		}
 

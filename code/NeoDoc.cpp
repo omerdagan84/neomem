@@ -1909,6 +1909,7 @@ BObject* CNeoDoc::UIImportIcon(CUI* pui, CString strFilename /* ="" */, CString 
 
 	// Set its icon property
 	hobjIcon->SetPropertyData(propIconData, pdat, FALSE, FALSE);
+	delete pdat;
 
 	//, Set its file source property
 //	hobjIcon->SetPropertyText(propSourceFile, strFilename, FALSE, FALSE);

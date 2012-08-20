@@ -2792,6 +2792,7 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 			BObject* pobjClass = m_pDoc->GetObject(lngClassID);
 			pobjClass->SetPropertyData(propObjectColumnInfoArray, pdatColumns, TRUE, FALSE);
 		}
+		delete pdatColumns;
 		
 		// Clear flag
 		m_bColumnsChanged = FALSE;
