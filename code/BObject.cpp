@@ -1249,9 +1249,6 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			ASSERT_VALID(pobjClass);
 			pdatLink->SetLink(pobjClass);
 
-//x			// Store pointer to this bdata object
-//x			SavePointer(pdatLink);
-
 			// Return a pointer to the temporary bdata object
 			return pdatLink;
 
@@ -1276,8 +1273,6 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 				ASSERT_VALID(pobjParent);
 			pdatLink->SetLink(pobjParent); // zero is okay here
 
-//x			SavePointer(pdatLink);
-
 			// Return a pointer to the temporary bdata object
 			return pdatLink;
 
@@ -1293,8 +1288,6 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			ASSERT_VALID(pdatLong);
 
 			pdatLong->SetValue(m_lngObjectID);
-
-//x			SavePointer(pdatLong);
 
 			// Return a pointer to the temporary bdata object
 			return pdatLong;
@@ -1315,9 +1308,6 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			pdat->SetBDataText(m_strTextCache, 0, FALSE);
 //			theApp.ConvertRtfToPlain(pszRtf, pdat->m_strText); // protected member
 			
-			// Store pointer to this bdata object
-//x			SavePointer(pdat);
-
 			// Return a pointer to the temporary bdata object
 			return pdat;
 
@@ -1345,7 +1335,6 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 		// as appropriate for the property and save it
 		BData* pdat = m_pDoc->CreateBData(lngPropertyID);
 		ASSERT_VALID(pdat);
-//x		SavePointer(pdat);
 		return pdat;
 	}
 
