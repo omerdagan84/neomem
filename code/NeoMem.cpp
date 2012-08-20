@@ -1514,9 +1514,7 @@ void CNeoMem::SetStatusBarText(LPCTSTR lpszText /* = 0 */) {
 
 // Get a reference to the progress bar control
 CProgressCtrl& CNeoMem::GetProgressBar() {
-	CFrameMain* pMain = (CFrameMain*) AfxGetMainWnd();
-	ASSERT_VALID(pMain);
-	CProgressCtrl& rprog = pMain->GetStatusBar().GetProgressBar();
+	CProgressCtrl& rprog = GetMainFrame()->GetStatusBar().GetProgressBar();
 	return rprog;
 }
 
@@ -2256,7 +2254,7 @@ CFrameChild* CNeoMem::GetChildFrame() {
 
 // Get current main frame window
 CFrameMain* CNeoMem::GetMainFrame() {
-	CFrameMain* pmain = (CFrameMain*) m_pMainWnd;
+	CFrameMain* pmain = (CFrameMain*) m_pMainWnd; //cast
 	ASSERT_VALID(pmain);
 	return pmain;
 }

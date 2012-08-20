@@ -3221,6 +3221,7 @@ void CNeoDoc::Serialize(CArchive& ar) {
 
 		// Initialize the progress bar and show it
 		theApp.GetProgressBar().SetRange32(0, nObjects);
+		theApp.GetProgressBar().SetStep(1);
 		theApp.GetProgressBar().SetPos(0);
 		theApp.GetProgressBar().ShowWindow(SW_SHOW);
 
@@ -3232,6 +3233,9 @@ void CNeoDoc::Serialize(CArchive& ar) {
 		// part of the file and so that part wasn't being encrypted (not sure why MFC wouldn't have 
 		// called it as expected - kind of strange). Hard to track this one down.
 		ar.Flush();
+
+		// Turn progress bar off
+		theApp.GetProgressBar().ShowWindow(SW_HIDE);
 
 		// Turn encryption off
 		if (m_nEncryptionType)
@@ -3398,6 +3402,7 @@ void CNeoDoc::Serialize(CArchive& ar) {
 
 		// Initialize the progress bar and show it
 		theApp.GetProgressBar().SetRange32(0, nObjects);
+		theApp.GetProgressBar().SetStep(1);
 		theApp.GetProgressBar().SetPos(0);
 		theApp.GetProgressBar().ShowWindow(SW_SHOW);
 
@@ -3468,6 +3473,9 @@ void CNeoDoc::Serialize(CArchive& ar) {
 //		BData* pdat = pobjClass->GetPropertyData(propObjectViewArrangement);
 //		BDataViews* pdatViews = DYNAMIC_DOWNCAST(BDataViews, pdat);
 //		pdatViews->InsertView(1, 0, viewProperties, 0);
+
+		// Turn progress bar off
+		theApp.GetProgressBar().ShowWindow(SW_HIDE);
 
 		theApp.SetStatusBarText(_T("File loaded"));
 	}
