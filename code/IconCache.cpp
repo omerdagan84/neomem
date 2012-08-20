@@ -100,14 +100,12 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 		// Get the icon object so we can get the raw data for the icon
 		BObject* pobjIcon = pDoc->GetObject(lngIconID);
 		ASSERT_VALID(pobjIcon);
-//		BDataIcon* pData = (BDataIcon*) pobjIcon->GetPropertyData(propIconData);
-//		BDataIcon* pData = DYNAMIC_DOWNCAST(BDataIcon, pobjIcon->GetPropertyData(propIconData));
-		BDataIcon* pData = STATIC_DOWNCAST(BDataIcon, pobjIcon->GetPropertyData(propIconData));
+		BDataIcon* pData = DYNAMIC_DOWNCAST(BDataIcon, pobjIcon->GetPropertyData(propIconData));
 		if (pData)
 		{
 			// Get HICON handle from raw data (a BDataIcon object)
 			ASSERT_VALID(pData);
-			hIcon = pData->GetIcon(16, 16);
+			hIcon = pData->GetIcon(16, 16); // creates icon from raw data
 		}
 		else // icon resource needs to be loaded
 		{
@@ -123,6 +121,8 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 				return -1;
 			}
 		}
+
+		delete pData;
 
 		if (!hIcon) return -1;
 

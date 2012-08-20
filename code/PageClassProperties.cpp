@@ -299,6 +299,7 @@ void CPageClassProperties::LoadData()
 	{
 		ASSERT_VALID(pdatLink);
 		m_lvw.SetSelectedItems(pdatLink);
+		delete pdatLink;
 	}
 
 	// Now select the first property, just to have something selected

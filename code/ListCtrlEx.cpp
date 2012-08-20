@@ -2306,6 +2306,7 @@ BOOL CListCtrlEx::PressKey(UINT nVK)
 // Get the bdata object associated with the specified row and column.
 // Don't pass any parameters to get current cell's bdata.
 // May return NULL if no bdata object. 
+// None of the callers seem to modify the bdata object.
 BData* CListCtrlEx::GetCellBData(int nRow /* = -1 */, int nCol /* = -1 */)
 {
 	BData* pdat = 0;
@@ -3044,6 +3045,8 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 				else
 					iResult = 0;
 				break;
+				delete pdat1;
+				delete pdat2;
 			}
 		case proptypeDate:
 			{
@@ -3053,13 +3056,19 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 				BDataDate* pdat2 = (BDataDate*) pobj2->GetPropertyData(lngPropertyID);
 				if (pdat2 == 0) return -iDir;
 
-				if (pdat1->IsStringDate()) return iDir;
-				if (pdat2->IsStringDate()) return -iDir;
-
 				if (pdat1 == pdat2)
 					iResult = 0;
 				else
 					iResult = pdat1 < pdat2 ? -1 : 1;
+
+				BOOL bString1 = pdat1->IsStringDate();
+				BOOL bString2 = pdat2->IsStringDate();
+
+				if (bString1) iResult = iDir;
+				else if (bString2) iResult = -iDir;
+
+				delete pdat1;
+				delete pdat2;
 			}
 		default: // (treat as strings)
 			{

@@ -196,9 +196,9 @@ void CDialogSelectProperty::OnBtnAdd()
 			BObject* pobjClass = (BObject*) m_cboClass.GetSelectedItemData();
 			if (pobjClass)
 			{
-				// this will assert if not bdatalink
+				// this will not compile if not bdatalink ? 
 				//, duplicate code in 3 places!
-				BDataLink* pdatLinks = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
+				BDataLink* pdatLinks = DYNAMIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 				if (pdatLinks)
 				{
 					ASSERT_VALID(pdatLinks);
@@ -210,8 +210,8 @@ void CDialogSelectProperty::OnBtnAdd()
 					pdatLinks = new BDataLink;
 					pdatLinks->SetMultiple();
 					pdatLinks->AddLink(pobjNew);
-					pobjClass->SetPropertyData(propObjectProperties, pdatLinks);
 				}
+				pobjClass->SetPropertyData(propObjectProperties, pdatLinks);
 			}
 		}
 

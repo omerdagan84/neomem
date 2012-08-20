@@ -680,9 +680,6 @@ void CViewProperties::OnCmdAddProperty()
 		ASSERT_VALID(pobjProperty);
 
 		// Add the selected property to the object's classdef
-		// Can't just edit the bdata directly, because it might be the parent classdef's
-		// So we need to make a copy, then write the copy back to the class
-		// Actually that's not true since propObjectProperties doesn't get handled like that
 //		BDataLink* pdat = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 //		BDataLink* pdatCopy = STATIC_DOWNCAST(BDataLink, pdat->CreateCopy());
 //		pdatCopy->AddLink(pobjProperty);
@@ -704,8 +701,9 @@ void CViewProperties::OnCmdAddProperty()
 			pdatLinks = new BDataLink;
 			pdatLinks->SetMultiple();
 			pdatLinks->AddLinkID(lngPropertyID, m_pDoc);
-			pobjClass->SetPropertyData(propObjectProperties, pdatLinks);
 		}
+		pobjClass->SetPropertyData(propObjectProperties, pdatLinks);
+		delete pdatLinks;
 
 		// Redisplay this view using CViewEx's single view update method
 		UpdateView(NULL, hintLoad, m_pobjCurrent);

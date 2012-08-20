@@ -304,6 +304,7 @@ BOOL CDialogEditLink::OnInitDialog()
 		BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, m_pobjStart->GetPropertyData(propColumnInfoArray));
 		ASSERT_VALID(pdatColumns);
 		m_lvw.InitializeColumns(pdatColumns);
+		delete pdatColumns;
 		m_bHierarchy = TRUE; // show in tree form, sorting children alphabetically
 	}
 	

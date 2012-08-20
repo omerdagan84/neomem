@@ -1269,6 +1269,7 @@ bool BDataLink::Test(CNeoDoc* pdoc)
 		BDataLink* pdat = (BDataLink*) pobj->GetPropertyData(lngPropertyID);
 		//. this bombs
 		pdat->IsValid(pdoc);
+		delete pdat;
 	}
 
 //	if (dat.UIEditValue(pobj, pobjPropdef))

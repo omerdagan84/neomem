@@ -67,7 +67,7 @@ public:
 	BOOL GetClassDefNewName(CString& strName);
 	OBJID GetClassID() { return m_lngClassID; }; 
 	BObject* GetClassObject();
-	BData* GetData() { return m_pdat; };
+	BData* GetBData() { return m_pdat; };
 	ULONG GetDefaultIconID();
 	CNeoDoc* GetDoc() { return m_pDoc; };
 	BOOL GetFlag(ULONG lngFlag);
@@ -126,6 +126,7 @@ public:
 	BOOL UIEditValue(OBJID lngPropertyID);
 
 
+private:
 	// Attributes
 	// These are serialized
 private:
@@ -136,7 +137,7 @@ private:
 	BObjects* m_paChildren; // pointer to list containing pointers to child bobjects. null if has no children.
 	BObjects* m_paProperties; // pointer to list containing pointers to property bobjects. null if has no properties.
 	BObject* m_pobjParent; // pointer to parent BObject
-	BData* m_pdat; // pointer to data object containing data (name for an object BObject or property value for a property BObject)
+	BData* m_pdat; // pointer to data object containing data (name for an object BObject or property value for a property BObject) //, yuck
 	BYTE m_bytViewHeight; //, height of first pane in view as percent of total (eg 50) (this is temporary for v1.0)
 //	BDataViews* m_pdatViews; // view and height information for this object (may be null)
 
@@ -154,6 +155,7 @@ private:
 	CNeoDoc* m_pDoc; // pointer to the document which stores this bobject
 	CStringEx m_strTextCache; // This is a cache for the text-representation for this data object
 //	int m_bStringValid; // Flag indicating if string cache is valid. Set to false when data changes
+	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties 
 
 
 #ifdef _DEBUG

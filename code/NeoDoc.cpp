@@ -140,7 +140,6 @@ CNeoDoc::CNeoDoc() {
 	m_pobjCurrent = NULL;
 	m_idNextObject = 0;
 	m_lngSplitterPos = 0;
-	m_pdatTemp = NULL;
 	m_pobjTarget = NULL;
 	m_idDefaultFolderLocation = 0;
 	m_idStartObject = 0;
@@ -168,10 +167,6 @@ CNeoDoc::~CNeoDoc() {
 	// Delete the icon cache (destructor will destroy image list)
 	if (m_pIconCache)
 		delete m_pIconCache;
-
-	// Delete the temporary bdata object, if any
-	if (m_pdatTemp)
-		delete m_pdatTemp;
 
 	// Delete the Index - note this doesn't delete the BObjects themselves
 	m_mapObjects.RemoveAll();
@@ -562,8 +557,10 @@ HOBJECT CNeoDoc::CreateObject(
 	if (lngFlags == 0) {
 //,		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
 		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, hobjClassDef->GetPropertyData(propObjectFlags));
-		if (pdatFlags)
+		if (pdatFlags) {
 			lngFlags = pdatFlags->GetFlags();
+			delete pdatFlags;
+		}
 	}
 
 
@@ -2038,20 +2035,20 @@ BObject* CNeoDoc::UIAddNewObject(
 BOOL CNeoDoc::UIEditObject(BObject *pobj) {	
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobj);
-	ASSERT_VALID(pobj->GetData());
+	ASSERT_VALID(pobj->GetBData());
 
 	// Check if object has a person name, in which case, just bring up the edit person name dialog.
 	// If editing an icon, just let user modify name!
 	ULONG idClass = pobj->GetClassID();
 	BOOL bIcon = (idClass == classIcon);
-	BOOL bPersonName = (pobj->GetData()->IsKindOf(RUNTIME_CLASS(BDataPersonName)));
+	BOOL bPersonName = (pobj->GetBData()->IsKindOf(RUNTIME_CLASS(BDataPersonName)));
 //	ULONG idClass = pobj->GetClassID();
 //	BObject* pobjClass = m_pDoc->GetObject(idClass);
 //	BObject* pobjNamePropType = pobjClass->GetPropertyLink(propObjectNamePropertyType);
 //	OBJID idNamePropType = pobjNamePropType->GetObjectID();
 //	if (lngNamePropTypeID == proptypePersonName)
 	if (bPersonName || bIcon) {
-		if (pobj->GetData()->UIEditValue(pobj, 0)) {
+		if (pobj->GetBData()->UIEditValue(pobj, 0)) {
 			CHint h;
 			h.pobjObject = pobj;
 			h.idProperty = propName;

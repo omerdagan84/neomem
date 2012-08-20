@@ -52,7 +52,8 @@ BObject::BObject() :
 	m_paProperties (NULL),
 	m_pdat (NULL),
 	m_pDoc (NULL),
-	m_pobjParent (NULL)
+	m_pobjParent (NULL),
+	m_pdatTemp (NULL)
 {
 }
 
@@ -89,6 +90,13 @@ BObject::~BObject()
 	{
 		ASSERT_VALID(m_paChildren);
 		delete m_paChildren;
+	}
+
+	// Delete the temporary bdata object, if any
+	if (m_pdatTemp) 
+	{
+		ASSERT_VALID(m_pdatTemp);
+		delete m_pdatTemp;
 	}
 
 	// Release property objects recursively (descructor recursively deletes property objects)
@@ -1085,13 +1093,13 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 				// Rather than calling this routine again, could duplicate the code here.
 				// Also, that way we could pass lngpropid to the bdata gettext, which sometimes needs it.
 				ASSERT_VALID(pobjPropertyValue);
-				if (pobjPropertyValue->GetData() == NULL)
+				if (pobjPropertyValue->GetBData() == NULL)
 				{
 					// No bdata object exists yet - we need to create one appropriate for this class
 					pobjPropertyValue->m_pdat = m_pDoc->CreateBData(pobjPropertyValue->GetClassID());
 				}
-				ASSERT_VALID(pobjPropertyValue->GetData());
-				return pobjPropertyValue->GetData()->GetBDataText(m_pDoc, lngPropertyID);
+				ASSERT_VALID(pobjPropertyValue->GetBData());
+				return pobjPropertyValue->GetBData()->GetBDataText(m_pDoc, lngPropertyID);
 			}
 			else
 				// Property was not found - need to return zero-length string.
@@ -1172,13 +1180,9 @@ BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdat,
 
 
 
-// Get the underlying data associated with a property.
-// This may create a temporary bdata object in some cases (e.g. for pseudo properties),
-// but it is owned by the document, so you don't have to worry about deleting it. 
-// IMPORTANT: For some properties this may return the classdef's parent's value (e.g.
-// propObjectProperties, propObjectViewArrangement, etc.), so you shouldn't just modify
-// the bdata object directly - you must create a copy of it, then write the copy back to the classdef.
-// See BObject::UIEditValue for an example.
+// Get a copy of the underlying data object associated with a property.
+// Be sure to delete the bdata object when done with it. 
+// To modify a value, write it back to the object with SetPropertyData.
 BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=FALSE*/)
 {
 	ASSERT_VALID(this);
@@ -1203,7 +1207,11 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 				m_pdat = m_pDoc->CreateBData(m_lngClassID);
 			}
 			ASSERT_VALID(m_pdat);
-			return m_pdat;
+
+			// create copy
+			BData* pdat = m_pdat->CreateCopy();
+
+			return pdat;
 			break;
 		}
 
@@ -1241,13 +1249,11 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			ASSERT_VALID(pobjClass);
 			pdatLink->SetLink(pobjClass);
 
-			// Store pointer to this bdata object in the document
-			if (m_pDoc->m_pdatTemp)
-				delete m_pDoc->m_pdatTemp;
-			m_pDoc->m_pdatTemp = pdatLink;
+//x			// Store pointer to this bdata object
+//x			SavePointer(pdatLink);
 
 			// Return a pointer to the temporary bdata object
-			return m_pDoc->m_pdatTemp;
+			return pdatLink;
 
 			break;
 		}
@@ -1270,13 +1276,10 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 				ASSERT_VALID(pobjParent);
 			pdatLink->SetLink(pobjParent); // zero is okay here
 
-			// Store pointer to this bdata object in the document
-			if (m_pDoc->m_pdatTemp)
-				delete m_pDoc->m_pdatTemp;
-			m_pDoc->m_pdatTemp = pdatLink;
+//x			SavePointer(pdatLink);
 
 			// Return a pointer to the temporary bdata object
-			return m_pDoc->m_pdatTemp;
+			return pdatLink;
 
 			break;
 		}
@@ -1291,13 +1294,10 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 
 			pdatLong->SetValue(m_lngObjectID);
 
-			// Store pointer to this bdata object in the document
-			if (m_pDoc->m_pdatTemp)
-				delete m_pDoc->m_pdatTemp;
-			m_pDoc->m_pdatTemp = pdat;
+//x			SavePointer(pdatLong);
 
 			// Return a pointer to the temporary bdata object
-			return m_pDoc->m_pdatTemp;
+			return pdatLong;
 
 			break;
 		}
@@ -1315,13 +1315,11 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			pdat->SetBDataText(m_strTextCache, 0, FALSE);
 //			theApp.ConvertRtfToPlain(pszRtf, pdat->m_strText); // protected member
 			
-			// Store pointer to this bdata object in the document
-			if (m_pDoc->m_pdatTemp)
-				delete m_pDoc->m_pdatTemp;
-			m_pDoc->m_pdatTemp = pdat;
+			// Store pointer to this bdata object
+//x			SavePointer(pdat);
 
 			// Return a pointer to the temporary bdata object
-			return m_pDoc->m_pdatTemp;
+			return pdat;
 
 			break;
 		}
@@ -1332,7 +1330,8 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			if (pobjPropertyValue)
 			{
 				ASSERT_VALID(pobjPropertyValue);
-				return pobjPropertyValue->GetData();
+				BData* pdat = pobjPropertyValue->GetBData()->CreateCopy();
+				return pdat;
 			}
 		}
 	}
@@ -1343,12 +1342,10 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 	if (bCreateTempBDataIfNotFound)
 	{
 		// If no BData exists in the object or up the class chain, then create a temporary one 
-		// as appropriate for the property and store it in the document
+		// as appropriate for the property and save it
 		BData* pdat = m_pDoc->CreateBData(lngPropertyID);
 		ASSERT_VALID(pdat);
-		if (m_pDoc->m_pdatTemp)
-			delete m_pDoc->m_pdatTemp;
-		m_pDoc->m_pdatTemp = pdat;
+//x		SavePointer(pdat);
 		return pdat;
 	}
 
@@ -1420,7 +1417,7 @@ ULONG BObject::GetPropertyLong(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 	if (pobjPropertyValue)
 	{
 		ASSERT_VALID(pobjPropertyValue);
-		BDataLong* pdat = DYNAMIC_DOWNCAST(BDataLong, pobjPropertyValue->GetData());
+		BDataLong* pdat = DYNAMIC_DOWNCAST(BDataLong, pobjPropertyValue->GetBData());
 		ASSERT_VALID(pdat);
 		return pdat->GetValue();
 	}
@@ -1510,7 +1507,7 @@ BObject* BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNo
 	if (pobjPropertyValue)
 	{
 		ASSERT_VALID(pobjPropertyValue);
-		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetData());
+		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetBData());
 		if (pdat)
 		{
 			ASSERT_VALID(pdat);
@@ -1756,8 +1753,7 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 	for (int i = nClasses - 1; i >= nFirst; i--)
 	{
 		pobjClass = (BObject*) apClasses.GetAt(i);
-//		BDataLink* pdatLink = DYNAMIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
-		BDataLink* pdatLink = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
+		BDataLink* pdatLink = DYNAMIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 		if (pdatLink)
 		{
 			ASSERT_VALID(pdatLink);
@@ -1770,6 +1766,7 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 				CObArray& ra = *pa;
 				aPropertyDefs.Append(ra);
 			}
+			delete pdatLink;
 		}
 	}
 
@@ -2044,14 +2041,10 @@ BOOL BObject::UIEditValue(OBJID lngPropertyID)
 		return FALSE;
 	}
 
-	// Get BData associated with object's property.
-	// We'll ALWAYS create a copy of the BData that we get, whether it's from the
-	// object or up the class chain, and UIEditValue off of that.
+	// Get a copy of BData associated with object's property.
 	// If user says OK, then we write the edited bdata object back to the object, which will
 	// always write it to the bobject, not up the class chain.
 	// If they say Cancel, we just delete the BData copy.
-	// Note: For pseudo properties, GetPropertyData will create a temporary BData object stored 
-	// in the document (eg for propClassName, will create a BDataLink object).
 	// Also if the property doesn't exist and there is no default for it, this will create a temporary
 	// BData object and store it in the document.
 	BData* pdat = GetPropertyData(lngPropertyID, TRUE);
@@ -2059,30 +2052,23 @@ BOOL BObject::UIEditValue(OBJID lngPropertyID)
 	{
 		ASSERT_VALID(pdat);
 
-		// Create a copy of this BData object to edit
-		BData* pdatCopy = pdat->CreateCopy();
-		ASSERT_VALID(pdatCopy);
-
 		// UIEditValue will bring up a dialog box that lets user modify the value stored in the BData object.
 		// Need to pass object and property so it knows the context.
 		// It will return True if user said OK in dialog.
-		if (pdatCopy->UIEditValue(this, pobjPropertyDef))
+		if (pdat->UIEditValue(this, pobjPropertyDef))
 		{
 			// User said OK, so let's set the BData copy with the new value to the object.
 			// This also sets the document modified flag and updates views.
 			// Returns False if didn't save pdatCopy to the bobject, in which case we need to delete it.
-			if (!SetPropertyData(lngPropertyID, pdatCopy))
-			{
-				delete pdatCopy; 
-				pdatCopy = 0;
-			}
+			//.ugh
+			if (!SetPropertyData(lngPropertyID, pdat))
+				delete pdat; 
 			return TRUE;
 		}
 		else
 		{
 			// Since we didn't save the BData copy to a property object, we need to delete it now
-			delete pdatCopy; 
-			pdatCopy = 0;
+			delete pdat; 
 		}
 	}
 	return FALSE;
@@ -2445,7 +2431,7 @@ void BObject::ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPrope
 			ASSERT_VALID(pobj);
 			if (pobj->m_lngClassID == lngPropertyID)
 			{
-				BData* pdatOld = pobj->GetData();
+				BData* pdatOld = pobj->GetBData();
 
 				// Create the new bdata type object
 				BData* pdatNew = m_pDoc->CreateBDataFromPropertyType(lngNewPropertyTypeID);
@@ -2574,8 +2560,8 @@ int BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
 				break;
 			}
 			// Check if the property value data references the find object
-			ASSERT_VALID(pobjProp->GetData());
-			if (pobjProp->GetData()->FindReferences(pobjFind)) {
+			ASSERT_VALID(pobjProp->GetBData());
+			if (pobjProp->GetBData()->FindReferences(pobjFind)) {
 				bReferenced = TRUE;
 				break;
 			}
@@ -2687,8 +2673,8 @@ void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, B
 			else
 			{
 				// Remove/replace any references contained in the property value's bdata.
-				ASSERT_VALID(pobjPropertyValue->GetData());
-				if (pobjPropertyValue->GetData()->ReplaceReferences(pobjFind, pobjNew))
+				ASSERT_VALID(pobjPropertyValue->GetBData());
+				if (pobjPropertyValue->GetBData()->ReplaceReferences(pobjFind, pobjNew))
 				{
 					// Tell views
 					h.idProperty = pobjPropertyValue->GetClassID();
@@ -2974,7 +2960,7 @@ BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 	//, duplicate code in 3 places
 	// Note: pdat might be zero if class has no properties assigned to it
 	// Note: AddLinkID will not add duplicate objects (just returns -1 if already there)
-	BDataLink* pdatLinks = STATIC_DOWNCAST(BDataLink, GetPropertyData(propObjectProperties));
+	BDataLink* pdatLinks = DYNAMIC_DOWNCAST(BDataLink, GetPropertyData(propObjectProperties));
 	if (pdatLinks)
 	{
 		ASSERT_VALID(pdatLinks);
@@ -2986,8 +2972,8 @@ BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 		pdatLinks = new BDataLink;
 		pdatLinks->SetMultiple();
 		pdatLinks->AddLinkID(lngPropertyID, m_pDoc);
-		SetPropertyData(propObjectProperties, pdatLinks);
 	}
+	SetPropertyData(propObjectProperties, pdatLinks);
 	return TRUE;
 }
 
@@ -3084,7 +3070,7 @@ void BObject::ConvertToSoftLinks(BOOL bRecurse)
 		{
 			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjProp);
-			BData* pdat = pobjProp->GetData();
+			BData* pdat = pobjProp->GetBData();
 			if (pdat)
 			{
 				OBJID lngPropertyID = pobjProp->GetClassID();
@@ -3128,7 +3114,7 @@ void BObject::ConvertToHardLinks(BOOL bRecurse)
 		{
 			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
 			ASSERT_VALID(pobjProp);
-			BData* pdat = pobjProp->GetData();
+			BData* pdat = pobjProp->GetBData();
 			if (pdat)
 			{
 				OBJID lngPropertyID = pobjProp->GetClassID();
@@ -3164,9 +3150,8 @@ BData* BObject::CopyPropertyDataFrom(BObject *pobjSource, OBJID lngPropertyID)
 	BData* pdat = pobjSource->GetPropertyData(lngPropertyID);
 	if (pdat)
 	{
-		BData* pdatCopy = pdat->CreateCopy();
-		this->SetPropertyData(lngPropertyID, pdatCopy, FALSE, FALSE);
-		return pdatCopy;
+		this->SetPropertyData(lngPropertyID, pdat, FALSE, FALSE);
+		return pdat;
 	}
 	
 	// If bdata can't be found, make sure it doesn't exist in this bobject as well!
@@ -3184,7 +3169,7 @@ void BObject::CopyFrom(BObject* pobjSource)
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
 	ASSERT_VALID(pobjSource);
-
+AfxMessageBox("copyfrom!"); //x
 	// Copy properties
 	this->m_lngFlags = pobjSource->GetFlags();
 	this->m_lngIconID = pobjSource->m_lngIconID; // leave as direct ref
@@ -3213,9 +3198,9 @@ void BObject::CopyFrom(BObject* pobjSource)
 	this->SetParent(pobjThisParent);
 
 	// Copy BData (usually contains name of this BObject)
-	if (pobjSource->GetData())
+	if (pobjSource->GetBData())
 	{
-		this->SetData(pobjSource->GetData()->CreateCopy());
+		this->SetData(pobjSource->GetBData()->CreateCopy());
 	}
 
 	// Delete all existing property subobjects in case this object has some that the new object doesn't. 
@@ -3237,7 +3222,7 @@ void BObject::CopyFrom(BObject* pobjSource)
 			BObject* pobjSourceProp = (BObject*) pobjSourceProps->GetAt(i);
 			ASSERT_VALID(pobjSourceProp);
 			OBJID lngPropertyID = pobjSourceProp->GetClassID();
-			BData* pdatSource = pobjSourceProp->GetData();
+			BData* pdatSource = pobjSourceProp->GetBData();
 			if (pdatSource)
 			{
 				ASSERT_VALID(pdatSource);
@@ -3336,6 +3321,8 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 				{
 					file.WriteDelim();
 				}
+
+				delete pdat;
 			}
 			file.WriteNewline();
 		}
@@ -3478,6 +3465,8 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 							(LPCTSTR) strPropName
 							);
 					}
+
+					delete pdat;
 				}
 
 			}

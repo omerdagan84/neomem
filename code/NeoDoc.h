@@ -200,7 +200,6 @@ private:
 	BOOL m_bSettingCurrentObject; // Flag used by SetCurrentObject routine
 
 public:
-	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties  //, better way?
 	BDataFlags m_datFlagsTemp; // Temporary BDataFlags object used to get string version of m_lngFlags property  //, better way?
 
 

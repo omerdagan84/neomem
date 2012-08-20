@@ -426,11 +426,6 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				// actually only need to copy it if it was inherited from a base class
 				// ie if we got the data directly from the object's class, then we wouldn't need
 				// to copy it, because writing to the data is okay
-				// i wonder if getpropertydata should handle getting a copy?
-				// ie, that's where its more likely to know the source of the data
-				// it's more efficient if we just copy the data when the user changes it
-				// that way we don't wind up copying the data for no reason, eg if user
-				// is just arrowing down through a list of objects
 
 				// Note: hintLoad gets called twice on program startup.
 
@@ -444,8 +439,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 //				}
 
 				// Get column information from object or from object's classdef
-//				BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, pobjStart->GetPropertyData(propColumnInfoArray));
-				BDataColumns* pdatColumns = STATIC_DOWNCAST(BDataColumns, pobjStart->GetPropertyData(propColumnInfoArray));
+				BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, pobjStart->GetPropertyData(propColumnInfoArray));
 				ASSERT_VALID(pdatColumns);
 
 				// Invoke copy constructor to create copy of the array
@@ -462,6 +456,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				// Initialize listview columns
 //				m_lvw.InitializeColumns(m_pdatCopy);
 				m_lvw.InitializeColumns(pdatColumns);
+				delete pdatColumns;
 
 				// Add the children of the start object to the list, with no recursion
 				m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, FALSE, 0, TRUE);
