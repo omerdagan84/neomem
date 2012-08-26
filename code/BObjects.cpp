@@ -132,7 +132,7 @@ LPCTSTR BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
 	int iIndex = 0;
 	for (int i = 0; i < nItems; i++)
 	{
-		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
 		if (!(pobj->GetFlag(lngExcludeFlags)))
 		{
@@ -191,7 +191,7 @@ int BObjects::FindObjectClassID(ULONG lngClassID) // , BOOL bRecursive /* = FALS
 	int nItems = GetSize();
 	for (int i = 0; i < nItems; i++)
 	{
-		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
 		if (pobj->GetClassID() == lngClassID)
 			return i;
@@ -272,7 +272,7 @@ void BObjects::Sort(ULONG lngPropertyID)
 	int nItems = CObArray::GetSize();
 	for (int i = 0; i < nItems; i++)
 	{
-		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
 		// Set the object's parent to the new parent
 		pobj->m_pobjParent = pobjParent;
@@ -299,7 +299,7 @@ BOOL BObjects::MoveTo(BObject* pobjNewParent)
 	{
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 			ASSERT_VALID(pobj);
 
 			// This will display a message and return false if any object cannot be moved.
@@ -368,7 +368,7 @@ BOOL BObjects::IsMoveValid(BObject* pobjTarget)
 	int nItems = GetSize();
 	for (int i = 0; i < nItems; i++)
 	{
-		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
 
 		if (!pobj->IsMoveValid(pobjTarget, TRUE))
@@ -395,7 +395,7 @@ BOOL BObjects::IsDeleteValid()
 	int nItems = GetSize();
 	for (int i = 0; i < nItems; i++)
 	{
-		BObject* pobj = STATIC_DOWNCAST(BObject, GetAt(i));
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
 
 		// Get object's class name (lowercase)

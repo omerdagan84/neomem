@@ -8,6 +8,12 @@
 #include "CryptoFile.h"
 
 
+CCryptoArchive::CCryptoArchive(CFile* pFile, UINT nMode, int nBufSize, void* lpBuf) :
+	CArchive(pFile, nMode, nBufSize, lpBuf)
+{
+}
+
+
 // Start encrypting or decrypting data to/from the archive, using the specified cryptography object. 
 void CCryptoArchive::SetCryptoOn(CCrypto* pCrypto)
 {

@@ -34,7 +34,7 @@ END_MESSAGE_MAP()
 
 CNeoDocTemplate::CNeoDocTemplate(UINT nIDResource, CRuntimeClass* pDocClass, 
 			CRuntimeClass* pFrameClass, CRuntimeClass* pViewClass) : 
-			CMultiDocTemplate(nIDResource, pDocClass, pFrameClass, pViewClass)
+	CMultiDocTemplate(nIDResource, pDocClass, pFrameClass, pViewClass)
 {
 }
 
@@ -74,15 +74,16 @@ CDocument* CNeoDocTemplate::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bMakeVis
 
 void CNeoDocTemplate::InitialUpdateFrame(CFrameWnd* pFrame, CDocument* pDoc, BOOL bMakeVisible)
 {
-	// Cast to our class
-	CFrameChild* pFrameChild = (CFrameChild*) pFrame; //.cast
+	// Downcast to our class
+	// CFrameWnd:CMDIChildWnd:CFrameChild
+	CFrameChild* pFrameChild = DYNAMIC_DOWNCAST(CFrameChild, pFrame); 
 	ASSERT_VALID(pFrameChild);
 
 	// Delegate to implementation in CFrameWnd
 	pFrame->InitialUpdateFrame(pDoc, bMakeVisible);
 
-	// NOW WE CAN SET THE DAMN SPLITTER POS!!
-	CNeoDoc* pNeoDoc = (CNeoDoc*) pDoc; //.cast
+	// Now we can set the splitter position
+	CNeoDoc* pNeoDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDoc);
 	ASSERT_VALID(pNeoDoc);
 	ULONG lngSplitterPos = pNeoDoc->GetSplitterPos();
 	if (lngSplitterPos)

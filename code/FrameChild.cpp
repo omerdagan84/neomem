@@ -829,7 +829,7 @@ BOOL CFrameChild::PreTranslateMessage(MSG* pMsg)
 // Assume user wants to rename current item.
 void CFrameChild::OnObjEditInPlace() 
 {
-	CView* pView = STATIC_DOWNCAST(CView, m_pviewNavigation->m_aCurrentViews.GetAt(0));
+	CView* pView = DYNAMIC_DOWNCAST(CView, m_pviewNavigation->m_aCurrentViews.GetAt(0));
 	ASSERT_VALID(pView);
 	pView->SendMessage(WM_COMMAND, ID_OBJ_EDIT_IN_PLACE);
 }
@@ -841,7 +841,7 @@ void CFrameChild::OnObjEditInPlace()
 /*
 void CFrameChild::OnObjEditInDialog() 
 {
-	CView* pView = STATIC_DOWNCAST(CView, m_pviewNavigation->m_aCurrentViews.GetAt(0));
+	CView* pView = DYNAMIC_DOWNCAST(CView, m_pviewNavigation->m_aCurrentViews.GetAt(0));
 	ASSERT_VALID(pView);
 	pView->SendMessage(WM_COMMAND, ID_OBJ_EDIT_IN_DIALOG);	
 }
@@ -900,7 +900,7 @@ CViewEx* CFrameChild::GetCurrentView()
 // This is the default ID_OBJ_ADD handler.
 void CFrameChild::OnCmdAddObject() 
 {
-	CNeoDoc* pdoc = (CNeoDoc*) GetActiveDocument(); //.cast
+	CNeoDoc* pdoc = (CNeoDoc*) GetActiveDocument(); //cast
 	BObject* pobjTarget = pdoc->GetTargetObject();
 
 	if (pobjTarget)

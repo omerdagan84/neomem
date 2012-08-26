@@ -57,7 +57,7 @@ CString Library::GetFileName(LPCTSTR pszPathName)
 
 
 // Format the given number with proper thousand formatting and return as a new CString object.
-// To use in a printf, be sure to cast the result to LPCTSTR
+// To use in a printf, be sure to cast the result to LPCTSTR (const char*)
 //. use FormatThousands in CStringEx instead
 //. give better name so can search on it
 //. bug: won't print llu anymore - worked under vs6. so if # > 2^32, will get truncated.

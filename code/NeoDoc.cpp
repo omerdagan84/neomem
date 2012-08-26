@@ -231,9 +231,9 @@ void CNeoDoc::ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL 
 // Get a pointer to the child frame associated with this document
 //, this fails if the frame is not active, which is true in opening a file
 CFrameChild* CNeoDoc::GetMDIChildFrame() {
-	CFrameMain* pMainFrame = (CFrameMain*) AfxGetApp()->m_pMainWnd; //,cast
+	CFrameMain* pMainFrame = DYNAMIC_DOWNCAST(CFrameMain, AfxGetApp()->m_pMainWnd); // from CWnd to CFrameMain
 	ASSERT_VALID(pMainFrame);
-	CFrameChild* pChildFrame = (CFrameChild*) pMainFrame->MDIGetActive(); //,cast
+	CFrameChild* pChildFrame = DYNAMIC_DOWNCAST(CFrameChild, pMainFrame->MDIGetActive()); // from CMDIChildWnd to CFrameChild
 	ASSERT_VALID(pChildFrame);
 	return pChildFrame;
 }
@@ -263,17 +263,20 @@ void CNeoDoc::Dump(CDumpContext& dc) const {
 // (eg dialog box) say CNeoDoc::GetDoc();
 /* static */ CNeoDoc* CNeoDoc::GetDoc() {
 
-	//, cast
-	CMDIChildWnd* pChild = ((CMDIFrameWnd*)(AfxGetApp()->m_pMainWnd))->MDIGetActive();
+	CMDIFrameWnd* pFrame = DYNAMIC_DOWNCAST(CMDIFrameWnd, AfxGetApp()->m_pMainWnd);
+	if (!pFrame) return NULL;
+	
+	CMDIChildWnd* pChild = pFrame->MDIGetActive();
 	if (!pChild) return NULL;
 
 	CDocument * pDoc = pChild->GetActiveDocument();
 	if (!pDoc) return NULL;
 	
-	// Fail if doc is of wrong kind
-	if (!pDoc->IsKindOf( RUNTIME_CLASS(CNeoDoc)))
-		return NULL;
-	return (CNeoDoc*) pDoc;
+
+	CNeoDoc* pNDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDoc);
+	if (!pNDoc) return NULL;
+
+	return pNDoc;
 }
 
 
@@ -585,7 +588,7 @@ HOBJECT CNeoDoc::CreateObject(
 	ASSERT_VALID(pobjNew);
 
 	// Return a handle for the new object
-	return pobjNew; //, implicit cast
+	return (HOBJECT) pobjNew; 
 }
 
 
@@ -894,7 +897,7 @@ BOOL CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE 
 		BOOL bSingle = (paObjects->GetSize() == 1);
 		if (bSingle) {
 			// Get classname
-			BObject* pobj = (BObject*) paObjects->GetAt(0); //,cast
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, paObjects->GetAt(0)); 
 			ASSERT_VALID(pobj);
 			CString strClassName = pobj->GetPropertyText(propClassName);
 			strClassName.MakeLower();
@@ -937,7 +940,8 @@ BOOL CNeoDoc::UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall /* = TRUE 
 	// Walk through objects, calling pobj->DeleteObject for each one.
 	int nObjects = paObjects->GetSize();
 	for (int i = 0; i < nObjects; i++) {
-		BObject* pobj = (BObject*) paObjects->GetAt(i); //,cast
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, paObjects->GetAt(i));
+		ASSERT_VALID(pobj);
 		// Attempt to delete object and children - if failed, return False.
 		// This also checks for references to the object and asks user if they 
 		// want to remove them.
@@ -2808,7 +2812,7 @@ BOOL CNeoDoc::DoSave(LPCTSTR lpszPathName, BOOL bReplace) {
 //		if (!AfxGetApp()->DoPromptFileName(newName, bReplace ? AFX_IDS_SAVEFILE : AFX_IDS_SAVEFILECOPY,
 //			OFN_HIDEREADONLY | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN, FALSE, pTemplate)) //` Added OFN_NOREADONLYRETURN to the flags
 //			return FALSE;       // don't even attempt to save
-		CDocManagerEx* pDocMgr = STATIC_DOWNCAST(CDocManagerEx, theApp.m_pDocManager);
+		CDocManagerEx* pDocMgr = STATIC_DOWNCAST(CDocManagerEx, theApp.m_pDocManager); // from CDocManager
 		ASSERT_VALID(pDocMgr);
 		if (!pDocMgr->DoPromptFileName2(newName, bReplace ? AFX_IDS_SAVEFILE : AFX_IDS_SAVEFILECOPY, 
 			OFN_HIDEREADONLY | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN, //` added OFN_NOREADONLYRETURN
@@ -3082,7 +3086,8 @@ BOOL CNeoDoc::OnSaveDocumentEx(LPCTSTR lpszPathName) {
 	}
 
 	// Note: Buffer size of archive is the default 4096 bytes
-	CArchive saveArchive(pFile, CArchive::store | CArchive::bNoFlushOnDelete);
+	// Note use of CCryptoArchive which extends CArchive
+	CCryptoArchive saveArchive(pFile, CArchive::store | CArchive::bNoFlushOnDelete);
 	saveArchive.m_pDocument = this;
 	saveArchive.m_bForceFlat = FALSE;
 	TRY {
@@ -3146,7 +3151,8 @@ void CNeoDoc::Serialize(CArchive& ar) {
 	WORD wReserved = 0;
 	ULONG lngMagic = 0x38af34ad; // Magic bytes to recognize NeoMem file ("NeoMem" in zork bytes: 3 chars in 2 bytes)
 
-	// Cast archive to our extension class so we can get access to protected data members!
+	// Downcast CArchive variable to our extension class
+//	CCryptoArchive* parex = STATIC_DOWNCAST(CCryptoArchive, &ar); // can't use STATIC_DOWNCAST on classes without RTI
 	CCryptoArchive* parex = (CCryptoArchive*) &ar; 
 
 	// Create encryption/decryption object
@@ -3742,7 +3748,8 @@ BOOL CNeoDoc::OnOpenDocumentEx(LPCTSTR lpszPathName) {
 	SetModifiedFlag();  // dirty during de-serialize
 
 	// Note: Buffer size of archive is the default 4096 bytes
-	CArchive loadArchive(pFile, CArchive::load | CArchive::bNoFlushOnDelete);
+	// Note use of CCryptoArchive which extends CArchive
+	CCryptoArchive loadArchive(pFile, CArchive::load | CArchive::bNoFlushOnDelete);
 	loadArchive.m_pDocument = this;
 	loadArchive.m_bForceFlat = FALSE;
 	TRY {

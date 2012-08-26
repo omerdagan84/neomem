@@ -185,6 +185,14 @@ void CListCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 			ASSERT_VALID(pobj);
 			// Get property associated with the specified column
 			ULONG lngPropertyID = GetColumnPropertyID(pLVITEM->iSubItem);
+
+			// pLVITEM->pszText is a pointer to a null-terminated string containing the item text. 
+			// ie LPSTR = char*
+			// but CStrings convert to LPCTSTR, ie const char*
+			// but apparently the char* is because this member is used for both read and write.
+			// so okay to just cast from const char* to char*, as we do below. 
+			// see also http://social.msdn.microsoft.com/Forums/en-US/vcgeneral/thread/9b138faa-56aa-4179-bd93-92f8ebc9e3da/
+
 			// Get object string
 			// Note const_cast to remove const from text
 			// Special case for Property View - need to display the value of the property for the
@@ -639,10 +647,10 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 	if ((m_nMode & modeSelectCell) && (m_nFocusState == fsNone))
 		return;
 	
-	// For this notification, the structure is actually a
-	// NMLVCUSTOMDRAW that tells you what's going on with the custom
-	// draw action. So, we'll need to cast the generic pNMHDR pointer.
-	LPNMLVCUSTOMDRAW  lplvcd = (LPNMLVCUSTOMDRAW)pNMHDR;
+	// For this notification, the structure given (NMHDR* pNMHDR) is actually a
+	// NMLVCUSTOMDRAW structure that tells you what's going on with the custom
+	// draw action. So, we'll need to cast to the larger structure. 
+	LPNMLVCUSTOMDRAW lplvcd = (LPNMLVCUSTOMDRAW) pNMHDR;
 	
 	switch (lplvcd->nmcd.dwDrawStage)
 	{
@@ -745,7 +753,10 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 				// If it is, change the colors.
 				// Note: lplvcd->nmcd.dwItemSpec is the current row index.
 				// Warning: cast from signed to unsigned: m_nRow is -1 sometimes.
-				if (lplvcd->nmcd.dwItemSpec == (UINT) m_nRow)
+				// dwItemSpec is an unsigned long. 
+				// But it's okay because nRow will just become some very large number, 
+				// and won't match dwItemSpec. 
+				if (lplvcd->nmcd.dwItemSpec == (ULONG) m_nRow)
 				{
 					if (lplvcd->iSubItem == m_nCol)
 					{
@@ -2953,7 +2964,9 @@ BOOL CListCtrlEx::UpdateColumn(int nCol, BObject* pobjPropertyDef)
 	// SetItem would appear to handle both but text just turns out blank if you use it
 	LVCOLUMN lvc;
 	lvc.mask = LVCF_TEXT | LVCF_FMT;
-	lvc.pszText = (LPTSTR) szText; // note cast
+	// note cast - const char* to char* - this is okay because pszText has
+	// two functions - read and write, and for this it's just reading the string. 
+	lvc.pszText = (LPTSTR) szText; 
 	lvc.fmt = nAlignment;
 	SetColumn(nCol, &lvc);
 

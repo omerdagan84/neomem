@@ -772,7 +772,7 @@ void CFrameMain::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 // active MDI child window can be found by calling the function MDIGetActive or GetActiveFrame.
 CDocument* CFrameMain::GetActiveDocumentMDI()
 {
-	CMDIChildWnd* pChild = ((CFrameMain*)(AfxGetApp()->m_pMainWnd))->MDIGetActive();
+	CMDIChildWnd* pChild = ((CFrameMain*)(AfxGetApp()->m_pMainWnd))->MDIGetActive(); //. cast
 	if (!pChild)
 		return NULL;
 	CDocument* pDoc = pChild->GetActiveDocument();	

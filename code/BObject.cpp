@@ -356,7 +356,7 @@ void BObject::Serialize(CArchive& ar)
 				int nItems = m_paChildren->GetSize();
 				for (int i = 0; i < nItems; i++)
 				{
-					BObject* pobj = STATIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
+					BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 					ASSERT_VALID(pobj);
 					// Set the object's parent to the new parent
 					pobj->m_pobjParent = this;
@@ -1530,7 +1530,7 @@ int BObject::GetChildCount(BOOL bRecurse /* = FALSE */, BOOL bIncludeProperties 
 		{
 			for (int i = 0; i < nItems; i++)
 			{
-				BObject* pobjChild = STATIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
+				BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 				ASSERT_VALID(pobjChild);
 				nChildren += pobjChild->GetChildCount(bRecurse, bIncludeProperties);
 			}
@@ -1743,7 +1743,8 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 	int nFirst = bInheritedOnly ? 1 : 0; 
 	for (int i = nClasses - 1; i >= nFirst; i--)
 	{
-		pobjClass = (BObject*) apClasses.GetAt(i);
+		pobjClass = DYNAMIC_DOWNCAST(BObject, apClasses.GetAt(i));
+		ASSERT_VALID(pobjClass);
 		BDataLink* pdatLink = DYNAMIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 		if (pdatLink)
 		{
@@ -2711,7 +2712,8 @@ BOOL BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews
 	if (m_paChildren) {
 		ASSERT_VALID(m_paChildren);
 		while (m_paChildren->GetSize() > 0) {
-			BObject* pobjChild = (BObject*) m_paChildren->GetAt(0); //,cast
+			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(0));
+			ASSERT_VALID(pobjChild);
 			// Attempt to delete child - if failed, return False
 			if (!pobjChild->DeleteObject())
 				return FALSE;
@@ -2809,7 +2811,7 @@ BObject* BObject::GetChild(int nChild)
 		int nChildren = m_paChildren->GetSize();
 		if (nChild < nChildren)
 		{
-			BObject* pobjChild = STATIC_DOWNCAST(BObject, m_paChildren->GetAt(nChild));
+			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(nChild));
 			ASSERT_VALID(pobjChild);
 			return pobjChild;
 		}

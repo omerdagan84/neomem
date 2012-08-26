@@ -62,7 +62,6 @@ private:
 	void ReleasePointers();
 	bool InsertBitmap(CString strFile); // This needs to be the full path to the bitmap. (ex. C:\Windows\Bitmap.bmp)
 
-	//. not sure it's safe to extend the class like this since we do direct casts...
 	LPRICHEDITOLE m_pRichEditOle;
 	LPOLEOBJECT m_lpObject;
 	LPSTORAGE m_lpStorage;

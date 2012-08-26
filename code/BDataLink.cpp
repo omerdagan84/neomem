@@ -434,13 +434,14 @@ void BDataLink::Serialize(CArchive &ar)
 		if (IsSingle())
 		{
 			// Note: m_p can be zero - that's how it was in 1.0 and carchive doesn't mind, so no need to check here.
-			BObject* pobj = STATIC_DOWNCAST(BObject, m_p); // in debug will assert if wrong type
+			//, so how can you check the type is a BObject? use rtti?
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_p); 
 			ar << pobj;
 		}
 		else
 		{
 			ASSERT(m_p); // should never be zero here
-			CObArray* pa = STATIC_DOWNCAST(CObArray, m_p);
+			CObArray* pa = DYNAMIC_DOWNCAST(CObArray, m_p);
 			ASSERT_VALID(pa);
 			ar << pa;
 		}
@@ -458,6 +459,7 @@ void BDataLink::Serialize(CArchive &ar)
 		m_bits.nCurrentItem = nCurrentItem;
 
 		// Note: Didn't seem to be any way to read directly into m_p, even with all sorts of casts, etc.
+		//, what good does serializing a pointer do?
 		if (IsSingle()) // make sure m_bits is set before using IsSingle!
 		{
 			BObject* pobj;
@@ -1207,6 +1209,7 @@ CObArray* BDataLink::GetLinkArray()
 	ASSERT(IsHard());
 
 	CreateMultipleArray(); // create array if needed
+	// m_p is a CObject*
 	CObArray* pa = STATIC_DOWNCAST(CObArray, m_p);
 	ASSERT_VALID(pa);
 	return pa;
@@ -1225,7 +1228,7 @@ void BDataLink::CreateMultipleArray()
 	if (m_p)
 	{
 		// Get existing array
-		pa = STATIC_DOWNCAST(CObArray, m_p); // will assert if wrong type
+		pa = STATIC_DOWNCAST(CObArray, m_p);
 		ASSERT_VALID(pa);
 	}
 	else // need to create array

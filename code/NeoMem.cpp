@@ -1828,7 +1828,7 @@ long CNeoMem::SearchRtfString(LPCTSTR pszRtfString, LPCTSTR pszSearchFor, BOOL b
 	// Specify search term and properties
 	FINDTEXTEX ft;
 	ft.chrg = cr;
-	ft.lpstrText = const_cast <LPSTR> (pszSearchFor); //, Note const_cast!!
+	ft.lpstrText = pszSearchFor; // both are const char*
 	DWORD dwSearchFlags = (bMatchCase ? FR_MATCHCASE : 0) | (bWholeWord ? FR_WHOLEWORD : 0);
 	dwSearchFlags |= FR_DOWN; // This is needed for RichEdit 2.0 and later
 
@@ -2239,10 +2239,12 @@ BOOL CNeoMem::SaveAllModifiedBackup(CString& strMsg) {
 
 // Get current child frame window, or NULL if none. 
 CFrameChild* CNeoMem::GetChildFrame() {
-	CFrameMain* pmain = (CFrameMain*) m_pMainWnd; //.cast
+	// CWnd* m_pMainWnd is set to CFrameMain* pMainFrame on InitInstance, 
+	// so it's a CFrameMain*
+	CFrameMain* pmain = STATIC_DOWNCAST(CFrameMain, m_pMainWnd);
 	if (pmain) {
 		ASSERT_VALID(pmain);
-		CFrameChild* pchild = (CFrameChild*) pmain->MDIGetActive(); //.cast
+		CFrameChild* pchild = STATIC_DOWNCAST(CFrameChild, pmain->MDIGetActive());
 		if (pchild) {
 			ASSERT_VALID(pchild);
 			return pchild;

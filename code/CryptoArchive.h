@@ -12,6 +12,7 @@
 class CCryptoArchive : public CArchive
 {
 public:
+	CCryptoArchive(CFile* pFile, UINT nMode, int nBufSize = 4096, void* lpBuf = NULL);
 	void SetCryptoOn(CCrypto* pCrypto);
 	void SetCryptoOff();
 };

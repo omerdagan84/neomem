@@ -148,8 +148,21 @@ void CEmail::Send()
 //			mrd.lpszName = _T("NeoMem Support");
 //			mrd.lpszAddress = _T("SMTP:errors@neomem.org");
 //			mrd.lpszAddress = pszAddress;
-			mrd.lpszName = (LPTSTR) (LPCTSTR) m_strToName; //, note cast
-			mrd.lpszAddress = (LPTSTR) (LPCTSTR) strAddr; //, note cast
+
+			// Converting a CString to a char*
+			// lpszName is LPSTR, which is char*
+			// m_strToName is CString
+			// so need to convert a CString to a char*
+			// CString has an implicit operator to LPCTSTR. That is a 'const char*'. Do NOT use a cast hack to bypass the const. 
+			// LPTSTR is just LPSTR which is char*
+//			mrd.lpszName = (LPTSTR) (LPCTSTR) m_strToName; // bad
+//			mrd.lpszAddress = (LPTSTR) (LPCTSTR) strAddr; // bad
+			// the right way to do it (and releasebuffer at end)
+			char* lpszName = m_strToName.GetBuffer(m_strToName.GetLength());
+			char* lpszAddress = strAddr.GetBuffer(strAddr.GetLength());
+			mrd.lpszName = lpszName;
+			mrd.lpszAddress = lpszAddress;
+
 
 			// Attached file
 			//, for bugs, could attach file?
@@ -163,8 +176,12 @@ void CEmail::Send()
 			memset(&msg, 0, sizeof(msg));
 //			msg.lpszSubject  = _T("NeoMem");
 //			msg.lpszNoteText = _T("Put message text here");
-			msg.lpszSubject  = (LPTSTR) (LPCTSTR) m_strSubject; //, note cast!
-			msg.lpszNoteText = (LPTSTR) (LPCTSTR) m_strMessage; //, note cast!
+
+			char* lpszSubject = m_strSubject.GetBuffer(m_strSubject.GetLength());
+			char* lpszNoteText = m_strMessage.GetBuffer(m_strMessage.GetLength());
+			msg.lpszSubject = lpszSubject;
+			msg.lpszNoteText = lpszNoteText;
+
 			msg.nRecipCount = 1;
 			msg.lpRecips = &mrd;
 //			msg.nFileCount = 1;
@@ -176,6 +193,13 @@ void CEmail::Send()
 //			lpMAPISendMail(NULL, NULL, &msg, 0, 0);
 //			lpMAPISendMail(NULL, NULL, &msg, (FLAGS) (MAPI_LOGON_UI), 0);
 			lpMAPISendMail(NULL, NULL, &msg, (FLAGS) (MAPI_LOGON_UI | MAPI_DIALOG), 0);
+
+			// Release buffers
+			m_strToName.ReleaseBuffer();
+			strAddr.ReleaseBuffer();
+			m_strSubject.ReleaseBuffer();
+			m_strMessage.ReleaseBuffer();
+
 		}
 		else
 		{

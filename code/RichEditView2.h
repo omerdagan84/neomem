@@ -275,7 +275,15 @@ inline CNeoDoc* CRichEditView2::GetDocument()
 
 
 // CRichEditView
-//, This is MFC code, but how can you cast from CRichEditView to CRichEditCtrl??
+// This is MFC code, but how can you cast from CRichEditView to CRichEditCtrl?
+// they both derive from CWnd
+// CWnd has about 10 member variables - HWND is the first. 99% functions though.
+// CRichEditCtrl has NO member variables.
+// CRichEditView adds 10 vars
+// CCtrlView adds 2 vars
+// CView adds 2 vars
+// so CRichEditView has like 14 vars, CRichEditCtrl has NONE. 
+// is that why this is safe? like casting to a base class
 //`_AFXRICH_INLINE CRichEditCtrl& CRichEditView::GetRichEditCtrl() const
 //`	{ return *(CRichEditCtrl*)this; }
 _AFXRICH_INLINE CRichEditCtrlEx& CRichEditView2::GetRichEditCtrlEx() const
