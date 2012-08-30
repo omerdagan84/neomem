@@ -42,7 +42,7 @@ BDataFlags::~BDataFlags()
 // Set data via text parser
 BOOL BDataFlags::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0 */, BOOL bShowErrorMessage /* = TRUE */)
 {
-	// For now, just convert text to integer.
+	//, For now, just convert text to integer.
 	char* pStopChar;
 	m_lngFlags = strtoul(str, &pStopChar, 10);
 	return TRUE;
@@ -125,10 +125,30 @@ BOOL BDataFlags::FindReferences(BObject* pobjFind)
 }
 
 
-
 ULONG BDataFlags::GetMemoryUsed(BOOL bRecursive)
 {
 	ULONG nBytes = sizeof(BDataFlags);
 	return nBytes;
 }
+
+
+
+// Convert a string representation of flags to numeric
+// static
+ULONG BDataFlags::StringToFlags(LPCTSTR pszText) {
+	static BDataFlags dat;
+	dat.SetBDataText(pszText);
+	ULONG lngFlags = dat.GetFlags();
+	return lngFlags;
+}
+
+// Convert a numeric representation of flags to a string
+// static
+LPCTSTR BDataFlags::FlagsToString(ULONG lngFlags) {
+	static BDataFlags dat;
+	dat.SetFlags(lngFlags);
+	LPCTSTR pszFlags = dat.GetBDataText(NULL, 0);
+	return pszFlags;
+}
+
 

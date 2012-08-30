@@ -883,11 +883,7 @@ BOOL BObject::SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText,
 
 		case propFlags:
 			{
-				// Use BDataFlags object in the document to parse text into flags value.
-//				BObject* pobjPropertyDef = m_pDoc->GetObject(propFlags);
-//				ASSERT_VALID(pobjPropertyDef);
-				m_pDoc->m_datFlagsTemp.SetBDataText(pszText, pobjPropertyDef);
-				m_lngFlags = m_pDoc->m_datFlagsTemp.GetFlags();
+				m_lngFlags = BDataFlags::StringToFlags(pszText);
 				break;
 			}
 
@@ -1063,9 +1059,7 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 
 	case propFlags:
 		{
-			// Use document's BDataFlags object to get text representation.
-			m_pDoc->m_datFlagsTemp.SetFlags(m_lngFlags);
-			return m_pDoc->m_datFlagsTemp.GetBDataText(m_pDoc, lngPropertyID);
+			return BDataFlags::FlagsToString(m_lngFlags);
 		}
 		break;
 

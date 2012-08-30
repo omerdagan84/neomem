@@ -100,7 +100,7 @@ public:
 	BOOL DoFileAutoRecoverSave();
 	int FindReferences(BObject* pobjFind, CObArray& aRefs, BObject* pobjStart = 0, BOOL bRecurse = TRUE);
 	BObject* GetCurrentObject();
-	int GetEncryptionType() { return m_nEncryptionType; }; // inline
+	int GetEncryptionType() { return m_nEncryptionType; }; 
 	CString GetFileSizeString();
 	int GetIconIndex(OBJID idIcon);
 	CImageList* GetImageList();
@@ -110,8 +110,8 @@ public:
 	CString GetNumberOfObjectsString();
 	BObject* GetObject(OBJID idObject);
 	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
-	BObject* GetRoot() { return m_pobjRoot; }; // inline - get the root object of the document
-	ULONG GetSplitterPos() { return m_lngSplitterPos; }; // inline
+	BObject* GetRoot() { return m_pobjRoot; }; // get the root object of the document
+	ULONG GetSplitterPos() { return m_lngSplitterPos; };
 	BObject* GetTargetObject();
 	int GetVersionFileStructure() { return m_nVersionFileStructure; };
 	int GetVersionDataModel() { return m_nVersionDataModel; };
@@ -200,8 +200,8 @@ private:
 	BOOL m_bSettingCurrentObject; // Flag used by SetCurrentObject routine
 
 public:
-	BDataFlags m_datFlagsTemp; // Temporary BDataFlags object used to get string version of m_lngFlags property  //, better way?
-
+	ULONG GetFlags(LPCTSTR strFlags); // convert bdataflags string to number
+	LPCTSTR GetFlagText(ULONG lngFlags); // convert bdataflags number to string
 
 	// Implementation
 private:
@@ -220,7 +220,7 @@ private:
 	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CNeoDoc)
-	public:
+public:
 	virtual BOOL CanCloseFrame(CFrameWnd* pFrame);
 	virtual void DeleteContents();
 	virtual void OnCloseDocument();
@@ -228,16 +228,16 @@ private:
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 	virtual void Serialize(CArchive& ar);
-	protected:
+protected:
 	virtual BOOL SaveModified();
 	//}}AFX_VIRTUAL
 
 	// Advanced Overridables
-	protected:
+protected:
 	virtual BOOL DoFileSave();
 	virtual BOOL DoSave(LPCTSTR lpszPathName, BOOL bReplace = TRUE);
 	virtual void ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSaving, UINT nIDPDefault);
-	public:
+public:
 	virtual CFile* GetFile(LPCTSTR lpszFileName, UINT nOpenFlags, CFileException* pError);
 
 #ifdef _DEBUG

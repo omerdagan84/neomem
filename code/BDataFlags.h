@@ -31,6 +31,10 @@ public:
 	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; };
 	ULONG GetFlags() { return m_lngFlags; };
 
+public:
+	static ULONG StringToFlags(LPCTSTR pszText);
+	static LPCTSTR FlagsToString(ULONG lngFlags);
+
 private:
 	ULONG m_lngFlags;
 
