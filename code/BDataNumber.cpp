@@ -227,7 +227,7 @@ BData* BDataNumber::CreateCopy()
 	ASSERT_VALID(pdat);
 	pdat->m_dblValue = m_dblValue;
 	pdat->m_lngUnitID = m_lngUnitID;
-	return (BData*) pdat;
+	return pdat;
 }
 
 

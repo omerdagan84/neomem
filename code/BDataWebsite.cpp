@@ -108,7 +108,7 @@ BData* BDataWebsite::CreateCopy()
 	BDataWebsite* pdatCopy = new BDataWebsite();
 	ASSERT_VALID(pdatCopy);
 	pdatCopy->m_strText = m_strText;
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

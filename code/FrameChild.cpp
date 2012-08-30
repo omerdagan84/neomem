@@ -127,7 +127,7 @@ BOOL CFrameChild::OnCreateClient(LPCREATESTRUCT /*lpcs*/,	CCreateContext* pConte
 	if (m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CViewTabs), CSize(lngSplitterPos, 100), pContext))
 	{
 		// Assign navigation mode to tabs window
-		m_pviewNavigation = (CViewTabs*) m_wndSplitter.GetPane(0, 0);
+		m_pviewNavigation = DYNAMIC_DOWNCAST(CViewTabs, m_wndSplitter.GetPane(0, 0));
 		ASSERT_VALID(m_pviewNavigation);
 		m_pviewNavigation->SetMode(modeNavigation);
 	}
@@ -136,7 +136,7 @@ BOOL CFrameChild::OnCreateClient(LPCREATESTRUCT /*lpcs*/,	CCreateContext* pConte
 	// Create header view, which will contain the contents view
 	if (m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CViewHeader), CSize(200, 100), pContext))
 	{
-		m_pviewHeader = (CViewHeader*) m_wndSplitter.GetPane(0, 1);
+		m_pviewHeader = DYNAMIC_DOWNCAST(CViewHeader, m_wndSplitter.GetPane(0, 1));
 		ASSERT_VALID(m_pviewHeader);
 		// make sure it's on top
 //		m_pviewHeader->SetWindowPos(&CWnd::wndTop, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOCOPYBITS);
@@ -144,7 +144,7 @@ BOOL CFrameChild::OnCreateClient(LPCREATESTRUCT /*lpcs*/,	CCreateContext* pConte
 	else return FALSE;
 	
 	// Set the active view to the first pane
-	SetActiveView( (CView*) m_pviewNavigation);
+	SetActiveView(m_pviewNavigation);
 
 	return TRUE;
 }
@@ -270,7 +270,7 @@ void CFrameChild::SetSplitterPos(ULONG lngSplitterPos)
 // Export the entire document or selected item(s) to a rtf, plain text, or NeoMem file
 void CFrameChild::OnCmdFileExport()
 {
-	CNeoDoc* pdoc = (CNeoDoc*) GetActiveDocument();
+	CNeoDoc* pdoc = DYNAMIC_DOWNCAST(CNeoDoc, GetActiveDocument());
 	BObject* pobj = pdoc->GetObject(rootUser);
 	theApp.Export(pobj);
 }
@@ -282,7 +282,7 @@ void CFrameChild::OnCmdFileExport()
 void CFrameChild::OnCmdFileImport() 
 {
 	// Document handles importing
-	CNeoDoc* pDoc = (CNeoDoc*) GetActiveDocument();
+	CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, GetActiveDocument());
 	pDoc->Import();
 }
 
@@ -324,7 +324,7 @@ void CFrameChild::OnCmdViewNext()
 	if (pviewNext == NULL)
 	{
 //		pviewNext = m_pviewNavigation->GetView(viewData);
-		pviewNext = (CView*) m_pviewNavigation->m_aCurrentViews.GetAt(0);
+		pviewNext = DYNAMIC_DOWNCAST(CView, m_pviewNavigation->m_aCurrentViews.GetAt(0));
 	}
 
 	if (pviewNext)
@@ -372,7 +372,7 @@ void CFrameChild::OnCmdViewPrevious()
 	if (pviewPrevious == NULL)
 	{
 //		pviewNext = m_pviewNavigation->GetView(viewData);
-		pviewPrevious = (CView*) m_pviewNavigation->m_aCurrentViews.GetAt(0);
+		pviewPrevious = DYNAMIC_DOWNCAST(CView, m_pviewNavigation->m_aCurrentViews.GetAt(0));
 	}
 
 	if (pviewPrevious)

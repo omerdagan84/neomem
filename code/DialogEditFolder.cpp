@@ -163,7 +163,7 @@ void CDialogEditFolder::DoDataExchange(CDataExchange* pDX)
 		}
 
 		// Get location (parent)
-		m_pobjParent  = (BObject*) m_cboLocation.GetSelectedItemData();
+		m_pobjParent = (BObject*) m_cboLocation.GetSelectedItemData();
 		if (m_pobjParent)
 		{
 			ASSERT_VALID(m_pobjParent);

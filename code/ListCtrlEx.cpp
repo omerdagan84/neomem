@@ -1725,7 +1725,7 @@ void CListCtrlEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) paChildren->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
 			ASSERT_VALID(pobj);
 
 			// bug: used && instead of &
@@ -3047,9 +3047,9 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		case proptypeCalculated:
 			{
 				//, will eventually need to compare using units also
-				BDataNumber* pdat1 = (BDataNumber*) pobj1->GetPropertyData(lngPropertyID);
+				BDataNumber* pdat1 = DYNAMIC_DOWNCAST(BDataNumber, pobj1->GetPropertyData(lngPropertyID));
 				if (pdat1 == 0) return iDir;
-				BDataNumber* pdat2 = (BDataNumber*) pobj2->GetPropertyData(lngPropertyID);
+				BDataNumber* pdat2 = DYNAMIC_DOWNCAST(BDataNumber, pobj2->GetPropertyData(lngPropertyID));
 				if (pdat2 == 0) return -iDir;
 
 				if (pdat1 < pdat2)
@@ -3065,9 +3065,9 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		case proptypeDate:
 			{
 				//, will eventually need to compare using units also
-				BDataDate* pdat1 = (BDataDate*) pobj1->GetPropertyData(lngPropertyID);
+				BDataDate* pdat1 = DYNAMIC_DOWNCAST(BDataDate, pobj1->GetPropertyData(lngPropertyID));
 				if (pdat1 == 0) return iDir;
-				BDataDate* pdat2 = (BDataDate*) pobj2->GetPropertyData(lngPropertyID);
+				BDataDate* pdat2 = DYNAMIC_DOWNCAST(BDataDate, pobj2->GetPropertyData(lngPropertyID));
 				if (pdat2 == 0) return -iDir;
 
 				if (pdat1 == pdat2)

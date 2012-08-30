@@ -334,7 +334,7 @@ BOOL CDialogEditLink::OnInitDialog()
 		for (int i = 0; i < nItems; i++)
 		{
 			// find in list and move to top
-			BObject* pobj = (BObject*) pa->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 			int nRow = m_lvw.FindItemData((LPARAM) pobj);
 			m_lvw.MoveItemToSibling(nRow, i, FALSE);
 		}
@@ -406,7 +406,7 @@ void CDialogEditLink::OnBtnEdit()
 	CWaitCursor cw;
 
 	// Get class of object to determine which dialog to use
-	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();	
+	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();
 	if (!pobj) return;
 	ASSERT_VALID(pobj);
 	ULONG lngClassID = pobj->GetClassID();
@@ -454,7 +454,7 @@ void CDialogEditLink::OnBtnDelete()
 {
 	CWaitCursor cw;
 
-	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();	
+	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();
 	if (!pobj) return;
 	ASSERT_VALID(pobj);
 	if (m_pDoc->UIDeleteObject(pobj))

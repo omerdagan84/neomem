@@ -1508,7 +1508,7 @@ BData* CNeoDoc::CreateBDataFromPropertyType(OBJID idPropertyType) {
 		case proptypeCurrency:
 			pdat = new BDataNumber;
 			// set the units for the number to currency
-			((BDataNumber*) pdat)->SetUnitID(unitCurrency);
+			(DYNAMIC_DOWNCAST(BDataNumber, pdat))->SetUnitID(unitCurrency);
 			break;
 		case proptypeFlags:
 			pdat = new BDataFlags;
@@ -1673,7 +1673,7 @@ int CNeoDoc::SearchForText(
 					int nItems = paProperties->GetSize();
 					for (int i = 0; i < nItems; i++) {
 						// Search through property text
-						BObject* pobjProp = (BObject*) paProperties->GetAt(i);
+						BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, paProperties->GetAt(i));
 						ASSERT_VALID(pobjProp);
 
 						// Exclude property if it's a system prop, etc.
@@ -1728,7 +1728,7 @@ int CNeoDoc::SearchForText(
 		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++) {
-			BObject* pobj = (BObject*) paChildren->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
 			ASSERT_VALID(pobj);
 			// Search recursively through children
 			SearchForText(pobj, idProperty, strFindText, aResults, lngExcludeFlags, bMatchCase, bWholeWord, TRUE, FALSE);
@@ -2133,14 +2133,14 @@ BOOL CNeoDoc::IsBObjectValid(BObject *pobj) {
 
 // Back
 void CNeoDoc::OnNavigateBack() {
-	BObject* pobj = (BObject*) m_objHistory.GoBack();
+	BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_objHistory.GoBack());
 	if (pobj && IsBObjectValid(pobj)) // check that bobject is still valid first!
 		SetCurrentObject(pobj, NULL, TRUE);
 }
 
 // Forward
 void CNeoDoc::OnNavigateForward() {
-	BObject* pobj = (BObject*) m_objHistory.GoForward();
+	BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_objHistory.GoForward());
 	if (pobj && IsBObjectValid(pobj)) // check that bobject is still valid first!
 		SetCurrentObject(pobj, NULL, TRUE);
 }
@@ -3152,8 +3152,7 @@ void CNeoDoc::Serialize(CArchive& ar) {
 	ULONG lngMagic = 0x38af34ad; // Magic bytes to recognize NeoMem file ("NeoMem" in zork bytes: 3 chars in 2 bytes)
 
 	// Downcast CArchive variable to our extension class
-//	CCryptoArchive* parex = STATIC_DOWNCAST(CCryptoArchive, &ar); // can't use STATIC_DOWNCAST on classes without RTI
-	CCryptoArchive* parex = (CCryptoArchive*) &ar; 
+	CCryptoArchive* parex = (CCryptoArchive*) &ar; // can't use dynamic or static downcast here
 
 	// Create encryption/decryption object
 	CCrypto objCrypto;
@@ -3899,7 +3898,7 @@ void CNeoDoc::SynchronizeRecurse(BObject* pobjTemplate) {
 		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++) {
-			BObject* pobjChild = (BObject*) paChildren->GetAt(i);
+			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
 			ASSERT_VALID(pobjChild);
 			SynchronizeRecurse(pobjChild);
 		}
@@ -3929,7 +3928,7 @@ void CNeoDoc::SynchronizeRecurseProps(BObject* pobjTemplate) {
 		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++) {
-			BObject* pobjChild = (BObject*) paChildren->GetAt(i);
+			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
 			ASSERT_VALID(pobjChild);
 			SynchronizeRecurseProps(pobjChild);
 		}
@@ -3962,7 +3961,7 @@ void CNeoDoc::SynchronizeDelete(BObject *pobjThis, CNeoDoc* pdocTemplate) {
 		ASSERT_VALID(paChildren);
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++) {
-			BObject* pobjChild = (BObject*) paChildren->GetAt(i);
+			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
 			ASSERT_VALID(pobjChild);
 			SynchronizeDelete(pobjChild, pdocTemplate);
 		}
@@ -4082,7 +4081,7 @@ int CNeoDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/) {
 	ASSERT_VALID(pobjProps->GetChildren());
 	int nProps = pobjProps->GetChildren()->GetSize();
 	for (int i = 0; i < nProps; i++) {
-		BObject* pobjProp = (BObject*) pobjProps->GetChildren()->GetAt(i);
+		BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, pobjProps->GetChildren()->GetAt(i));
 		ASSERT_VALID(pobjProp);
 		// just user properties
 		if (!(pobjProp->GetFlag(flagAdminOnly))) {

@@ -25,7 +25,7 @@ CFileFormats::~CFileFormats()
 
 CFileFormat* CFileFormats::GetAt(int i)
 {
-	return (CFileFormat*) CObArray::GetAt(i);
+	return DYNAMIC_DOWNCAST(CFileFormat, CObArray::GetAt(i));
 }
 
 

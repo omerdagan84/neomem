@@ -66,7 +66,7 @@ BData* BDataViews::CreateCopy()
 	// Use the copy constructor
 	BDataViews* pdatCopy = new BDataViews(this);
 	ASSERT_VALID(pdatCopy);
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

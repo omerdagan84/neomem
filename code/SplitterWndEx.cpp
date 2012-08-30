@@ -155,7 +155,7 @@ BOOL CSplitterWndEx::SetPane(int row, int col, CView *pView)
 // Clear the contents of the specified pane
 BOOL CSplitterWndEx::ClearPane(int row, int col)
 {
-	CView* pView = (CView*) GetPane(row, col);
+	CView* pView = DYNAMIC_DOWNCAST(CView, GetPane(row, col));
 	if (pView)
 		pView->SetDlgCtrlID(0);
 	return TRUE;
@@ -229,8 +229,7 @@ void CSplitterWndEx::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 		// Note: This splitter window is contained in a tab control which is contained in the cviewtabs window
 		// so get the parent of the parent
-//		CTabCtrlEx* pwnd = DYNAMIC_DOWNCAST(CTabCtrlEx, GetParent());
-		CTabCtrlEx* pwnd = (CTabCtrlEx*) GetParent();
+		CTabCtrlEx* pwnd = STATIC_DOWNCAST(CTabCtrlEx, GetParent());
 		ASSERT_VALID(pwnd);
 		CViewTabs* pview = DYNAMIC_DOWNCAST(CViewTabs, pwnd->GetParent());
 		ASSERT_VALID(pview);
@@ -261,8 +260,7 @@ void CSplitterWndEx::OnSize(UINT nType, int cx, int cy)
 
 		// Note: This splitter window is contained in a tab control which is contained in the cviewtabs window
 		// so get the parent of the parent
-//		CTabCtrlEx* pwnd = DYNAMIC_DOWNCAST(CTabCtrlEx, GetParent());
-		CTabCtrlEx* pwnd = (CTabCtrlEx*) GetParent();
+		CTabCtrlEx* pwnd = STATIC_DOWNCAST(CTabCtrlEx, GetParent());
 		ASSERT_VALID(pwnd);
 		CViewTabs* pview = DYNAMIC_DOWNCAST(CViewTabs, pwnd->GetParent());
 		ASSERT_VALID(pview);

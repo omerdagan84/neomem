@@ -100,8 +100,9 @@ int CViewEx::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Get document pointer
 	// MFC presumably sets m_pDocument before calling this. 
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNeoDoc)));
-	m_pDoc = (CNeoDoc*) m_pDocument;
+//	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNeoDoc)));
+//	m_pDoc = (CNeoDoc*) m_pDocument;
+	m_pDoc = DYNAMIC_DOWNCAST(CNeoDoc, m_pDocument);
 
 	m_nTitleBarHeight = 20; //. how do we get this? base on text height
 //		CFont* pfontOld = pDC->SelectObject(&theApp.m_fontControls);
@@ -158,6 +159,9 @@ CView* CViewEx::CreateChildView(CRuntimeClass* pViewClass, CDocument* pDoc, CRec
 	CWnd* pWnd;
 	TRY
 	{
+		//, why is it okay to cast a CObject to a CWnd like this? (mfc code)
+		// CreateObject must create a CView object of some type, then 
+		// return it through a CObject pointer. 
 		pWnd = (CWnd*) pViewClass->CreateObject();
 		if (pWnd == NULL)
 			AfxThrowMemoryException();
@@ -901,7 +905,7 @@ BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint 
 		if (aObjects.GetSize() < 1) return FALSE;
 
 		// Make sure objects are from same document as the target...
-		BObject* pobjFirst = (BObject*) aObjects.GetAt(0);
+		BObject* pobjFirst = DYNAMIC_DOWNCAST(BObject, aObjects.GetAt(0));
 		ASSERT_VALID(pobjFirst);
 		if (pobjFirst->GetDoc() != pobjTarget->GetDoc())
 		{
@@ -978,7 +982,7 @@ BObject* CViewEx::DragGetDropTarget(CPoint ptClient)
 //. also look in nav view
 CView* CViewEx::GetSiblingView(ULONG lngViewID)
 {
-	CFrameChild* pChild = (CFrameChild*) GetParentFrame();
+	CFrameChild* pChild = DYNAMIC_DOWNCAST(CFrameChild, GetParentFrame());
 	CViewHeader* pviewHeader = pChild->GetViewHeader();
 	CView* pview = NULL;
 	if (pviewHeader)
@@ -996,7 +1000,7 @@ CView* CViewEx::GetSiblingView(ULONG lngViewID)
 //, need to fix all this view handling code
 CView* CViewEx::ShowView(ULONG lngViewID, BOOL bSetActive, BOOL bAskAddIfNotFound)
 {
-	CFrameChild* pFrame = (CFrameChild*) GetParentFrame();
+	CFrameChild* pFrame = DYNAMIC_DOWNCAST(CFrameChild, GetParentFrame());
 	if (pFrame)
 	{
 		CView* pview = pFrame->ShowView(lngViewID, bSetActive);
@@ -1037,7 +1041,7 @@ void CViewEx::OnUpdateNeedSel(CCmdUI* pCmdUI)
 		pCmdUI->Enable(FALSE);
 	else
 	{
-		CEdit* pEdit = (CEdit*) pWnd;
+		CEdit* pEdit = STATIC_DOWNCAST(CEdit, pWnd);
 		int nBeg, nEnd;
 		pEdit->GetSel(nBeg, nEnd);
 		pCmdUI->Enable(nBeg != nEnd);
@@ -1065,30 +1069,30 @@ void CViewEx::OnUpdateNeedClip(CCmdUI* pCmdUI)
 // Copy handler
 void CViewEx::OnEditCopy() 
 {
-	CEdit* pEdit = (CEdit*)GetFocus();
-//	ASSERT(Library::IsEdit(pEdit));
-	if (Library::IsEdit(pEdit))
+	CWnd* pWnd = GetFocus();
+	if (Library::IsEdit(pWnd)) {
+		CEdit* pEdit = STATIC_DOWNCAST(CEdit, pWnd);
 		pEdit->Copy();
+	}
 }
 
 // Cut handler
 void CViewEx::OnEditCut() 
 {
-	CEdit* pEdit = (CEdit*)GetFocus();
-//	ASSERT(Library::IsEdit(pEdit));
-	if (Library::IsEdit(pEdit))
+	CWnd* pWnd = GetFocus();
+	if (Library::IsEdit(pWnd)) {
+		CEdit* pEdit = STATIC_DOWNCAST(CEdit, pWnd);
 		pEdit->Cut();
+	}
 }
 
 // Paste handler
 void CViewEx::OnEditPastePlain() 
 {
-	CEdit* pEdit = (CEdit*)GetFocus();
-//	ASSERT(Library::IsEdit(pEdit));
-//	ASSERT(::IsClipboardFormatAvailable(CF_TEXT));
-	if (Library::IsEdit(pEdit) && ::IsClipboardFormatAvailable(CF_TEXT))
-	{
-		pEdit->Paste();
+	CWnd* pWnd = GetFocus();
+	if (Library::IsEdit(pWnd) && ::IsClipboardFormatAvailable(CF_TEXT)) {
+		CEdit* pEdit = STATIC_DOWNCAST(CEdit, pWnd);
+		pEdit->Cut();
 	}
 }
 
@@ -1176,9 +1180,12 @@ ULONG CViewEx::GetViewID()
 // Is this view the active view?
 BOOL CViewEx::IsActiveView()
 {
-	CFrameChild* pChild = (CFrameChild*) GetParentFrame();
-	CViewEx* pview = pChild->GetCurrentView();
-	return (pview == this);
+	CFrameChild* pChild = DYNAMIC_DOWNCAST(CFrameChild, GetParentFrame());
+	if (pChild) {
+		CViewEx* pview = pChild->GetCurrentView();
+		return (pview == this);
+	}
+	return FALSE;
 }
 
 
@@ -1293,7 +1300,8 @@ BCMenu* CViewEx::InitPopup(UINT nPopupID, UINT nDefaultID)
 	m_popmenu.LoadMenu(nPopupID);
 	m_popmenu.LoadToolbar(IDR_MAINFRAME);
 	//. load other toolbars here (all of them?)
-	BCMenu* pPopup = (BCMenu*) m_popmenu.GetSubMenu(0);
+	BCMenu* pPopup = DYNAMIC_DOWNCAST(BCMenu, m_popmenu.GetSubMenu(0));
+	ASSERT(pPopup);
 //	BCMenu* pSelect = (BCMenu*) psub->GetSubMenu(1);
 //	if (pSelect)
 //	{

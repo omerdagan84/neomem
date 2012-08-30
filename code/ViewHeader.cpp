@@ -75,9 +75,8 @@ int CViewHeader::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	
 	// Create tab view as child and set it to receive Contents
-//	m_pviewTabs = (CViewTabs*) CreateChildView(this, RUNTIME_CLASS(CViewTabs), GetDocument(), CRect(0,0,0,0), IDC_TAB_CONTROL);
-//	m_pviewTabs = (CViewTabs*) CViewEx::CreateChildView(this, RUNTIME_CLASS(CViewTabs), GetDocument(), CRect(0,0,0,0), IDC_TAB_CONTROL);
-	m_pviewTabs = (CViewTabs*) CreateChildView(RUNTIME_CLASS(CViewTabs), GetDocument(), CRect(0,0,0,0), IDC_TAB_CONTROL);
+	m_pviewTabs = DYNAMIC_DOWNCAST(CViewTabs, CreateChildView(RUNTIME_CLASS(CViewTabs), GetDocument(), CRect(0,0,0,0), IDC_TAB_CONTROL));
+	ASSERT(m_pviewTabs);
 	if (m_pviewTabs)
 		m_pviewTabs->SetMode(modeContents);
 

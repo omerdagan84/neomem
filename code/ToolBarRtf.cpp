@@ -173,7 +173,7 @@ void CToolBarRtf::OnSelectFont()
 	{
 		CString str;
 		m_cboFontName.GetLBText(nIndex, str);
-		CViewRtf* pView = (CViewRtf*) GetParent();
+		CViewRtf* pView = DYNAMIC_DOWNCAST(CViewRtf, GetParent());
 		ASSERT_VALID(pView);
 		pView->ChangeFont(str);
 	}
@@ -189,7 +189,7 @@ void CToolBarRtf::OnSelectSize()
 	{
 //		m_cboFontSize.GetLBText(nIndex, str);
 		int nSize = nFontSizes[nIndex] * 20; // convert to twips
-		CViewRtf* pView = (CViewRtf*) GetParent();
+		CViewRtf* pView = DYNAMIC_DOWNCAST(CViewRtf, GetParent());
 		ASSERT_VALID(pView);
 		pView->ChangeSize(nSize);
 	}

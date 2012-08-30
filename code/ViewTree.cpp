@@ -235,7 +235,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// pHint contains a pointer to the starting bobject.
 				// Walk through bobjects in document, adding children recursively.
 				// or could add children dynamically later as items are expanded.
-				BObject* pobjStart = (BObject*) pHint;
+				BObject* pobjStart = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjStart);
 
 				// Default is to show the root node.
@@ -280,7 +280,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 					// items into the tree, so the bobject in question might not even be
 					// loaded, in which case you'd need to add it into the tree at the
 					// appropriate place
-					BObject* pobjStart = (BObject*) pHint;
+					BObject* pobjStart = DYNAMIC_DOWNCAST(BObject, pHint);
 					ASSERT_VALID(pobjStart);
 
 					HTREEITEM htiSelect = m_tvw.FindItemData((DWORD) pobjStart, 0);
@@ -319,7 +319,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		case hintAdd:
 			{
 				// Add a node to the treeview at the specified location (parent)				
-				BObject* pobjNew = (BObject*) pHint;
+				BObject* pobjNew = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjNew);
 				BObject* pobjParent = pobjNew->GetParent();
 				ASSERT_VALID(pobjParent);
@@ -349,7 +349,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		case hintDelete:
 			{
 				// Delete items from the treeview
-				CHint* pobjHint = (CHint*) pHint;
+				CHint* pobjHint = DYNAMIC_DOWNCAST(CHint, pHint);
 				BObjects* paObjects = pobjHint->paObjects;
 				ASSERT_VALID(paObjects);
 				int nItems = paObjects->GetSize();
@@ -359,7 +359,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 					// select another item, which triggers the selchange event, which 
 					// sends hintSave, hintSelect, and hintLoad
 					// since the current object has been deleted, hintSave will fail
-					BObject* pobj = (BObject*) paObjects->GetAt(i);
+					BObject* pobj = DYNAMIC_DOWNCAST(BObject, paObjects->GetAt(i));
 					// Note: pobj might be an invalid bobject because it's already been deleted
 					// by the time this gets called, so don't do assert on it
 					m_tvw.DeleteItemData((DWORD) pobj);
@@ -371,7 +371,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				// The only properties we need to worry about in this view are Name, IconID, ClassID, ClassName
 
-				CHint* pobjHint = (CHint*) pHint;
+				CHint* pobjHint = DYNAMIC_DOWNCAST(CHint, pHint);
 				ASSERT_VALID(pobjHint);
 
 				// Check if the object is in this view
@@ -411,7 +411,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				// Move object in the treeview to a new parent object
 
-				BObject* pobj = (BObject*) pHint;
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobj);
 
 				BObject* pobjNewParent = pobj->GetParent();
@@ -450,7 +450,8 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				// Move item up or down
 				// Move pobjObject before or after pobjTarget, depending on bAfter flag.
-				CHint* ph = (CHint*) pHint;
+				CHint* ph = DYNAMIC_DOWNCAST(CHint, pHint);
+				ASSERT_VALID(ph);
 				BObject* pobjSource = ph->pobjObject;
 				BObject* pobjTarget = ph->pobjTarget;
 				BOOL bAfter = ph->bAfter;
@@ -493,7 +494,7 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 		case hintResortChildren:
 			{
-				BObject* pobjParent = (BObject*) pHint;
+				BObject* pobjParent = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjParent);
 				HTREEITEM htiParent = m_tvw.FindItemData((DWORD) pobjParent, 0);
 				if (htiParent)
@@ -1221,7 +1222,8 @@ void CViewTree::OnNotifyKeyDown(NMHDR* pNMHDR, LRESULT* pResult)
 		// and send it up to the child frame
 		if (!m_tvw.GetEditControl())
 		{
-			CFrameChild* pFrame = (CFrameChild*) GetParentFrame();
+			CFrameChild* pFrame = DYNAMIC_DOWNCAST(CFrameChild, GetParentFrame());
+			ASSERT_VALID(pFrame);
 			pFrame->SendMessage(WM_COMMAND, ID_OBJ_DELETE);
 		}
 	}

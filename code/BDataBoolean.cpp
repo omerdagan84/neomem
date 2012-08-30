@@ -92,7 +92,7 @@ BData* BDataBoolean::CreateCopy()
 {
 	BDataBoolean* pdat = new BDataBoolean;
 	pdat->m_nValue = m_nValue;
-	return (BData*) pdat;
+	return pdat; // upcast is automatic
 }
 
 

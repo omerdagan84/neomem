@@ -406,7 +406,7 @@ void CClock::AlertUser()
 //	AfxMessageBox("Countdown finished!");
 //	FlashWindow(FALSE);
 
-	CFrameMain* pwnd = (CFrameMain*) AfxGetMainWnd();
+	CFrameMain* pwnd = DYNAMIC_DOWNCAST(CFrameMain, AfxGetMainWnd());
 	pwnd->AddIcon(2, IDI_ALARM1, "NeoMem Alarm - click to view", 0);
 
 }

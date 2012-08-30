@@ -36,6 +36,7 @@ class BObject : public CObject {
 public:
 
 	// Construction
+	void Init();
 	BObject(); // create from serialization only
 	BObject(OBJID lngClassID); // so can set class id from neodoc. 
 	virtual ~BObject();
@@ -155,7 +156,6 @@ private:
 	CNeoDoc* m_pDoc; // pointer to the document which stores this bobject
 	CStringEx m_strTextCache; // This is a cache for the text-representation for this data object
 //	int m_bStringValid; // Flag indicating if string cache is valid. Set to false when data changes
-	BData* m_pdatTemp; // Temporary bdata object used for F4ing pseudo properties 
 
 
 #ifdef _DEBUG

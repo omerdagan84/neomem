@@ -236,7 +236,7 @@ void CDialogSelectProperty::OnBtnEdit()
 	BOOL bModified = FALSE;
 
 	// Get selected object, exit if none selected
-	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();	
+	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();
 	if (pobj == 0) return;
 	ASSERT_VALID(pobj);
 
@@ -265,7 +265,7 @@ void CDialogSelectProperty::OnBtnDelete()
 	CWaitCursor cw;
 
 	// Get selected object, exit if none selected
-	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();	
+	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();
 	if (pobj == 0) return;
 	ASSERT_VALID(pobj);
 
@@ -318,7 +318,7 @@ void CDialogSelectProperty::AddProperties()
 		int nProps = pobjClass->GetPropertyDefs(aPropertyDefs, FALSE, TRUE);
 		for (int i = 0; i < nProps; i++)
 		{
-			BObject* pobjPropDef = (BObject*) aPropertyDefs.GetAt(i);
+			BObject* pobjPropDef = DYNAMIC_DOWNCAST(BObject, aPropertyDefs.GetAt(i));
 			ASSERT_VALID(pobjPropDef);
 			// Clear this property's filter flag!
 			pobjPropDef->SetFlag(flagFilter, FALSE, FALSE);
@@ -377,7 +377,7 @@ void CDialogSelectProperty::OnOptShowSelected()
 void CDialogSelectProperty::OnOK() 
 {
 	// If clicked on a disabled property, let them know
-	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();	
+	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();
 	if (pobj)
 	{
 		// Bug: Was crashing if no property was selected because pobj was 0! Added a check

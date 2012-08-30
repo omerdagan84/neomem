@@ -387,7 +387,7 @@ LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachin
 		int nItems = pa->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) pa->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 			ASSERT_VALID(pobj);
 			if (bMachineVersion)
 			{
@@ -656,7 +656,7 @@ BObject* BDataLink::GetLinkAt(int nIndex)
 	ASSERT(IsHard());
 
 	CObArray* pa = GetLinkArray();
-	return (BObject*) pa->GetAt(nIndex);
+	return DYNAMIC_DOWNCAST(BObject, pa->GetAt(nIndex));
 }
 
 
@@ -671,8 +671,8 @@ int BDataLink::AddLink(BObject *pobj)
 
 	if (IsSoft())
 	{
-		ASSERT_KINDOF(CUIntArray, m_p);
-		CUIntArray* pa = (CUIntArray*) m_p;
+		CUIntArray* pa = DYNAMIC_DOWNCAST(CUIntArray, m_p);
+		ASSERT_VALID(pa);
 
 		// Make sure objectID isn't already in array
 		UINT nID = pobj->GetObjectID();
@@ -697,7 +697,7 @@ int BDataLink::AddLink(BObject *pobj)
 		for (int i = 0; i < nItems; i++)
 		{
 			// If object is already in array, just return -1!
-			if (pobj == (BObject*) pa->GetAt(i))
+			if (pobj == DYNAMIC_DOWNCAST(BObject, pa->GetAt(i)))
 				return -1;
 		}
 
@@ -738,7 +738,7 @@ int BDataLink::GetObjectIDArray(CUIntArray &aObjectIDs)
 	// Walk through and copy links to new array
 	for (int i = 0; i < nItems; i++)
 	{
-		BObject* pobj = (BObject*) pa->GetAt(i);
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 		ASSERT_VALID(pobj);
 		aObjectIDs.SetAt(i, pobj->GetObjectID());
 	}
@@ -765,7 +765,7 @@ BOOL BDataLink::FindReferences(ULONG lngFindObjectID)
 		int nItems = pa->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) pa->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 			ASSERT_VALID(pobj);
 			if (pobj->GetObjectID() == lngFindObjectID)
 				return TRUE;
@@ -805,7 +805,7 @@ BOOL BDataLink::FindReferences(BObject* pobjFind)
 		int nItems = pa->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) pa->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 //			ASSERT_VALID(pobj);
 			if (pobj == pobjFind)
 				return TRUE;
@@ -847,7 +847,7 @@ BOOL BDataLink::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */)
 		int nItems = pa->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) pa->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 //			ASSERT_VALID(pobj);
 			if (pobj == pobjFind)
 			{
@@ -890,7 +890,7 @@ BData* BDataLink::CreateCopy()
 		// Create a new array and copy the old array to it
 		CUIntArray* paNew = new CUIntArray();
 		ASSERT(paNew);
-		CUIntArray* paOld = (CUIntArray*) m_p;
+		CUIntArray* paOld = DYNAMIC_DOWNCAST(CUIntArray, m_p);
 		paNew->Append(*paOld);
 
 		// Now save the new array.
@@ -919,7 +919,7 @@ BData* BDataLink::CreateCopy()
 			pdatCopy->m_bits = m_bits;
 		}
 	}
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 
@@ -969,8 +969,7 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 	//, just want to walk through links - need an iterator
 	if (IsSingle())
 	{
-		BObject* pobj = (BObject*) m_p;
-		// bug: didn't check for 0 case!
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_p);
 		if (pobj)
 		{
 			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
@@ -990,7 +989,8 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 		int nAdded = 0;
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) pa->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
+			ASSERT_VALID(pobj);
 			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
 			{
 				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
@@ -1015,7 +1015,7 @@ BOOL BDataLink::UIHandleCommand(UINT nCommandID)
 
 	BObject* pobj = 0;
 	if (IsSingle())
-		pobj = (BObject*) m_p;
+		pobj = DYNAMIC_DOWNCAST(BObject, m_p);
 	else
 		pobj = GetLinkAt(nIndex);
 	if (pobj)
@@ -1044,7 +1044,7 @@ BOOL BDataLink::IsValid(CNeoDoc* pDoc)
 	if (IsSingle())
 	{
 		if (m_p)
-			bValid = pDoc->IsBObjectValid((BObject*) m_p);
+			bValid = pDoc->IsBObjectValid(DYNAMIC_DOWNCAST(BObject, m_p));
 	}
 	else // multiple links
 	{
@@ -1054,7 +1054,7 @@ BOOL BDataLink::IsValid(CNeoDoc* pDoc)
 		int nItems = pa->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) pa->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 			if (!pDoc->IsBObjectValid(pobj))
 			{
 				bValid = FALSE;
@@ -1122,7 +1122,7 @@ void BDataLink::ConvertToSoftLinks()
 		// bug: didn't check for m_p = 0 case
 		if (m_p)
 		{
-			BObject* pobj = (BObject*) m_p;
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_p);
 			ASSERT_VALID(pobj);
 			paIDs->Add(pobj->GetObjectID());
 		}
@@ -1156,7 +1156,7 @@ void BDataLink::ConvertToHardLinks(CNeoDoc* pDoc)
 
 	// All info is stored in a UInt array
 	ASSERT_KINDOF(CUIntArray, m_p);
-	CUIntArray* paIDs = (CUIntArray*) m_p;
+	CUIntArray* paIDs = DYNAMIC_DOWNCAST(CUIntArray, m_p);
 	m_p = 0; // important to clear this here, so AddLink will create a new hard array
 	
 	// Clear soft links flag
@@ -1269,7 +1269,7 @@ bool BDataLink::Test(CNeoDoc* pdoc)
 	if (pobj->UIEditValue(lngPropertyID))
 	{
 		// verify object
-		BDataLink* pdat = (BDataLink*) pobj->GetPropertyData(lngPropertyID);
+		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobj->GetPropertyData(lngPropertyID));
 		//. this bombs
 		pdat->IsValid(pdoc);
 		delete pdat;

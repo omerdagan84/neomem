@@ -77,9 +77,9 @@ private:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CRichEditCtrlEx)
-	public:
+public:
 	virtual BOOL Create(DWORD dwStyle, const RECT& rcRect, CWnd* pParentWnd, UINT nID);
-	protected:
+protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 

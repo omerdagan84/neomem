@@ -100,7 +100,7 @@ CViewTabs::~CViewTabs()
 	// Destroy splitter windows
 	for (int i = 0; i < m_Splitters.GetSize(); i++)
 	{
-		CSplitterWndEx* pSplitter = (CSplitterWndEx*) m_Splitters[i];
+		CSplitterWndEx* pSplitter = DYNAMIC_DOWNCAST(CSplitterWndEx, m_Splitters[i]);
 		if (pSplitter)
 		{
 			delete pSplitter;
@@ -203,10 +203,6 @@ void CViewTabs::OnInitialUpdate()
 {
 	xTRACE("CViewTabs OnInitialUpdate - add tabs, select current tab, load that view\n");
 
-	// Get document
-//	m_pDoc = STATIC_DOWNCAST(CNeoDoc, GetDocument());
-//	ASSERT_VALID(m_pDoc);
-
 	// If in navigation mode then add tabs and select view
 	if (m_lngMode == modeNavigation) 
 	{
@@ -291,7 +287,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 //			if (m_lngMode == modeContents)
 			{
 				// Get hint object
-				BObject* pobj = (BObject*) pHint;
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobj);
 
 				// Load views associated with the object
@@ -318,7 +314,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 					ASSERT(m_bViewsCopied); // this must be true if m_bViewsChanged is true
 					ASSERT_VALID(m_pdatViews);
 
-					BObject* pobj = (BObject*) pHint;
+					BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 					ASSERT_VALID(pobj);
 					
 					// For v1, just store height of first view in the object
@@ -356,7 +352,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			// Add a view to the current view arrangement
 			//, for now limit to 2 views per tab
 			{
-				BObject* pobjView = (BObject*) pHint;
+				BObject* pobjView = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjView);
 				ULONG lngViewID = pobjView->GetObjectID();
 				ASSERT(lngViewID);
@@ -368,7 +364,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			// Remove a view from the current view arrangement.
 			//, prevent if only view? should remove entire tab otherwise.
 			{
-				BObject* pobjView = (BObject*) pHint;
+				BObject* pobjView = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjView);
 				ULONG lngViewID = pobjView->GetObjectID();
 				ASSERT(lngViewID);
@@ -379,7 +375,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		case hintMoveViewUp:
 			// Move the specified view up in the view arrangement.
 			{
-				BObject* pobjView = (BObject*) pHint;
+				BObject* pobjView = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjView);
 				ULONG lngViewID = pobjView->GetObjectID();
 				ASSERT(lngViewID);
@@ -391,7 +387,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		case hintPropertyChange:
 			{
 				// If current object's class changed, reload view arrangement in case it's different
-				CHint* ph = (CHint*) pHint;
+				CHint* ph = DYNAMIC_DOWNCAST(CHint, pHint);
 				if (ph->idProperty == propClassID)
 				{
 					BObject* pobjCurrent = m_pDoc->GetCurrentObject();
@@ -417,7 +413,7 @@ void CViewTabs::UpdateTabs()
 //	CNeoDoc* pDoc = (CNeoDoc*) GetDocument();
 	//, lame!
 	if (m_pDoc == NULL)
-		m_pDoc = (CNeoDoc*) GetDocument();
+		m_pDoc = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument());
 
 	// Clear tabs
 	m_tbc.DeleteAllItems();
@@ -482,8 +478,7 @@ void CViewTabs::RecalcLayout(BOOL bRepaint)
 	else
 	{
 		// Resize the splitter
-		CSplitterWndEx* pSplitter = (CSplitterWndEx*) m_Splitters[m_nCurrentTab];
-//		CSplitterWndEx* pSplitter = STATIC_DOWNCAST(CSplitterWndEx, m_Splitters[m_nCurrentTab]);
+		CSplitterWndEx* pSplitter = STATIC_DOWNCAST(CSplitterWndEx, m_Splitters[m_nCurrentTab]);
 		if (pSplitter)
 		{
 			// get current height of panes as percent of avail height
@@ -629,7 +624,7 @@ void CViewTabs::ActivateFirstView()
 		if (pView)
 		{
 			ASSERT_VALID(pView);
-			CFrameChild* pChild = (CFrameChild*) GetParentFrame();
+			CFrameChild* pChild = DYNAMIC_DOWNCAST(CFrameChild, GetParentFrame());
 			ASSERT_VALID(pChild);
 			pChild->SetActiveView(pView, TRUE);
 		}
@@ -690,7 +685,10 @@ void CViewTabs::ShowTab(int nTab)
 
 		// Send the hintSelect current object to the view to update it
 		//. test
-		BObject* pobjCurrent = ((CNeoDoc*) GetDocument())->GetCurrentObject();
+//x		BObject* pobjCurrent = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument())->GetCurrentObject();
+		CNeoDoc* pdoc = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument());
+		ASSERT_VALID(pdoc);
+		BObject* pobjCurrent = pdoc->GetCurrentObject();
 		pView->UpdateView(this, hintSelect, pobjCurrent);
 
 		// Save this as the current view
@@ -774,7 +772,10 @@ void CViewTabs::ShowTab(int nTab)
 
 			// Send the hintSelect current object to the view
 			//.test
-			BObject* pobjCurrent = ((CNeoDoc*) GetDocument())->GetCurrentObject();
+//x			BObject* pobjCurrent = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument())->GetCurrentObject();
+			CNeoDoc* pdoc = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument());
+			ASSERT_VALID(pdoc);
+			BObject* pobjCurrent = pdoc->GetCurrentObject();
 			pView->UpdateView(this, hintSelect, pobjCurrent);
 
 		}
@@ -833,9 +834,6 @@ void CViewTabs::ResetViews()
 	int nViews = m_aCurrentViews.GetSize();
 	for (int iView = 0; iView < nViews; iView++)
 	{
-//		CView* pView = (CView*) m_aCurrentViews[iView];
-//		CView* pView = DYNAMIC_DOWNCAST(CView, m_aCurrentViews[iView]);
-//		CView* pView = STATIC_DOWNCAST(CView, m_aCurrentViews[iView]);
 		CViewEx* pView = STATIC_DOWNCAST(CViewEx, m_aCurrentViews[iView]);
 		ASSERT_VALID(pView);
 		pView->ShowWindow(SW_HIDE);
@@ -847,10 +845,7 @@ void CViewTabs::ResetViews()
 
 	// Make sure the splitter window is hidden also
 	//. make sure array is dimensioned correctly
-	CSplitterWndEx* pSplitter = (CSplitterWndEx*) m_Splitters[m_nCurrentTab];
-	// Note: SplitterWnd can't use static or dynamic downcast macros
-//	CSplitterWndEx* pSplitter = DYNAMIC_DOWNCAST(CSplitterWndEx, m_Splitters[m_nCurrentTab];
-//	CSplitterWndEx* pSplitter = STATIC_DOWNCAST(CSplitterWndEx, m_Splitters[m_nCurrentTab]);
+	CSplitterWndEx* pSplitter = STATIC_DOWNCAST(CSplitterWndEx, m_Splitters[m_nCurrentTab]);
 	if (pSplitter) 
 	{
 		ASSERT_VALID(pSplitter);
@@ -885,7 +880,7 @@ CSplitterWndEx* CViewTabs::InitializeSplitter(int nTab, int nViews)
 		m_Splitters.SetSize(nTab + 1);
 
 	// If the splitter for this tab does not exist yet, create it now
-	CSplitterWndEx* pSplitter = (CSplitterWndEx*) m_Splitters[nTab];
+	CSplitterWndEx* pSplitter = DYNAMIC_DOWNCAST(CSplitterWndEx, m_Splitters[nTab]);
 	int nRows;
 	if (pSplitter)
 		nRows = pSplitter->GetRowCount();
@@ -1038,9 +1033,6 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 		// Bug: declared pView again in braces, which meant that it disappeared before the end.
 		CRect r;
 		r.SetRectEmpty();
-//		pView = CreateChildView(this, pClass, GetDocument(), r, 0);
-//		pView = STATIC_DOWNCAST(CViewEx, CreateChildView(this, pClass, GetDocument(), r, 0));
-//		pView = STATIC_DOWNCAST(CViewEx, CViewEx::CreateChildView(this, pClass, GetDocument(), r, 0));
 		pView = STATIC_DOWNCAST(CViewEx, CreateChildView(pClass, GetDocument(), r, 0));
 		ASSERT_VALID(pView);
 
@@ -1096,8 +1088,7 @@ CView* CViewTabs::GetNextView(CView *pviewCurrent)
 	// If passed 0, they just want the first view
 	if (pviewCurrent == NULL)
 	{
-		CView* pView = (CView*) m_aCurrentViews[0];
-//		CViewEx* pView = STATIC_DOWNCAST(CViewEx, m_aCurrentViews[0]);
+		CView* pView = STATIC_DOWNCAST(CView, m_aCurrentViews[0]);
 		ASSERT_VALID(pView);
 		return pView;
 	}
@@ -1105,8 +1096,7 @@ CView* CViewTabs::GetNextView(CView *pviewCurrent)
 	int nViews = m_aCurrentViews.GetSize();
 	for (int i = 0; i < nViews; i++)
 	{
-		CView* pView = (CView*) m_aCurrentViews[i];
-//		CViewEx* pView = STATIC_DOWNCAST(CViewEx, m_aCurrentViews[i]);
+		CView* pView = STATIC_DOWNCAST(CView, m_aCurrentViews[i]);
 		if (pviewCurrent == pView)
 		{
 			// If already at end of list, return -1
@@ -1116,8 +1106,7 @@ CView* CViewTabs::GetNextView(CView *pviewCurrent)
 			else
 			{
 				// Return pointer to next view in sequence
-				CView* pNextView = (CView*) m_aCurrentViews[i+1];
-//				CViewEx* pNextView = STATIC_DOWNCAST(CViewEx, m_aCurrentViews[i+1]);
+				CView* pNextView = STATIC_DOWNCAST(CView, m_aCurrentViews[i+1]);
 				ASSERT_VALID(pNextView);
 				return pNextView;
 			}				
@@ -1145,8 +1134,7 @@ CView* CViewTabs::GetPreviousView(CView *pviewCurrent)
 	// If passed 0, they just want the last view
 	if (pviewCurrent == NULL)
 	{
-		CView* pView = (CView*) m_aCurrentViews[nViews-1];
-//		CViewEx* pView = STATIC_DOWNCAST(CViewEx, m_aCurrentViews[nViews-1]);
+		CView* pView = STATIC_DOWNCAST(CView, m_aCurrentViews[nViews-1]);
 		ASSERT_VALID(pView);
 		return pView;
 	}
@@ -1154,8 +1142,7 @@ CView* CViewTabs::GetPreviousView(CView *pviewCurrent)
 	// Otherwise walk through list of views
 	for (int i = nViews - 1; i >= 0; i--)
 	{
-		CView* pView = (CView*) m_aCurrentViews[i];
-//		CViewEx* pView = STATIC_DOWNCAST(CViewEx, m_aCurrentViews[i]);
+		CView* pView = STATIC_DOWNCAST(CView, m_aCurrentViews[i]);
 		if (pviewCurrent == pView)
 		{
 			// If already at beginning of list, return -1
@@ -1165,8 +1152,7 @@ CView* CViewTabs::GetPreviousView(CView *pviewCurrent)
 			else
 			{
 				// Return pointer to previous view in sequence
-				CView* pPrevView = (CView*) m_aCurrentViews[i-1];
-//				CViewEx* pPrevView = STATIC_DOWNCAST(CViewEx, m_aCurrentViews[i-1]);
+				CView* pPrevView = STATIC_DOWNCAST(CView, m_aCurrentViews[i-1]);
 				ASSERT_VALID(pPrevView);
 				return pPrevView;
 			}				
@@ -1313,7 +1299,7 @@ void CViewTabs::OnSplitterResized()
 
 	// Get current tab and splitter window (if any)
 	int nTab = m_tbc.GetCurSel();
-	CSplitterWndEx* psw = (CSplitterWndEx*) m_Splitters[nTab];
+	CSplitterWndEx* psw = DYNAMIC_DOWNCAST(CSplitterWndEx, m_Splitters[nTab]);
 	if (psw)
 	{
 		ASSERT_VALID(psw);
@@ -1348,7 +1334,8 @@ void CViewTabs::OnSplitterPaneResized()
 {
 	// Get current tab and splitter window
 	int nTab = m_tbc.GetCurSel();
-	CSplitterWndEx* psw = (CSplitterWndEx*) m_Splitters[nTab];
+	CSplitterWndEx* psw = DYNAMIC_DOWNCAST(CSplitterWndEx, m_Splitters[nTab]);
+	ASSERT_VALID(psw);
 
 	//, Get height of first pane (that's all we need for v1)
 	m_bytViewHeight = psw->GetRowHeightPct(0);
@@ -1742,9 +1729,7 @@ void CViewTabs::PrepareToModifyViews()
 	// will be added to the new array
 	if (!m_bViewsCopied)
 	{
-//		BDataViews* pdatViews = new BDataViews(m_pdatViews);
-//		m_pdatViews = pdatViews;
-		m_pdatViews = STATIC_DOWNCAST(BDataViews, m_pdatViews->CreateCopy()); //, cast
+		m_pdatViews = STATIC_DOWNCAST(BDataViews, m_pdatViews->CreateCopy()); 
 		// Set flag
 		m_bViewsCopied = TRUE;
 	}

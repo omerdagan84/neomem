@@ -49,7 +49,7 @@ BOOL CPageClassSummary::OnInitDialog()
 	// Get document and parent sheet
 	m_pDoc = CNeoDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
-	m_psh = (CSheetWizard*) GetParent();
+	m_psh = DYNAMIC_DOWNCAST(CSheetWizard, GetParent());
 	ASSERT_VALID(m_psh);
 
 	// Subclass the rich edit control to use our ex class
@@ -171,7 +171,7 @@ void CPageClassSummary::DoDataExchange(CDataExchange* pDX)
 BOOL CPageClassSummary::OnSetActive() 
 {
 //	CPropertySheet* psheet = (CPropertySheet*) GetParent();
-	CSheetWizard* psheet = (CSheetWizard*) GetParent();
+	CSheetWizard* psheet = DYNAMIC_DOWNCAST(CSheetWizard, GetParent());
 	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_FINISH);	
 	psheet->SetClassWizardTitle();
 	return CPropertyPage::OnSetActive();

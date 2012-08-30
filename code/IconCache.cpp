@@ -83,7 +83,7 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 	HICON hIcon = 0;
 	int nIndex = -1;
 
-	CNeoDoc* pDoc = (CNeoDoc*) m_pDocument;
+	CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, m_pDocument);
 
 	// Use default if none specified
 	if (lngIconID == 0) lngIconID = iconDefault;

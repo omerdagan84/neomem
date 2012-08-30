@@ -74,7 +74,7 @@ BData* BDataLong::CreateCopy()
 {
 	BDataLong* pdat = new BDataLong();
 	pdat->m_lngValue = m_lngValue;
-	return (BData*) pdat;
+	return pdat;
 }
 
 

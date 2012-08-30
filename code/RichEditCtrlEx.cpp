@@ -84,8 +84,6 @@ END_MESSAGE_MAP()
 
 CRichEditCtrlEx::CRichEditCtrlEx()
 {
-	//. how is this safe? if we're casting from cricheditctrl to the ex version, won't this write over
-	// some random memory location?
 //	m_pRichEditOle = NULL;
 //	m_lpObject = NULL;
 //	m_lpStorage = NULL;

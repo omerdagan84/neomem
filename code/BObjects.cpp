@@ -52,7 +52,7 @@ BObjects::~BObjects()
 		int nItems = CObArray::GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) CObArray::GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, CObArray::GetAt(i));
 			ASSERT_VALID(pobj);
 			delete pobj; // Delete the object from memory
 		}
@@ -159,7 +159,7 @@ int BObjects::FindObject(const BObject* pobjFindThis, BOOL bRecursive /* = FALSE
 	int nItems = GetSize();
 	for (int i = 0; i < nItems; i++)
 	{
-		BObject* pobj = (BObject*) GetAt(i);
+		BObject* pobj = DYNAMIC_DOWNCAST(BObject, GetAt(i));
 		ASSERT_VALID(pobj);
 		if (pobj == pobjFindThis)
 			return i;

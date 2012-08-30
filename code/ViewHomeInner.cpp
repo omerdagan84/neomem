@@ -69,7 +69,8 @@ int CViewHomeInner::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	
 	// Get document
-	m_pDoc = (CNeoDoc*) GetDocument();
+	m_pDoc = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument());
+	ASSERT(m_pDoc);
 
 	// Set margins
 	m_rMargins.SetRect(20, 10, 20, 10); // left top right bottom
@@ -280,7 +281,7 @@ void CViewHomeInner::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				// Check if home object description changed.
 				// If so, modify m_lbldescription and resize and refresh display.
-				CHint* pobjHint = (CHint*) pHint;
+				CHint* pobjHint = DYNAMIC_DOWNCAST(CHint, pHint);
 				ASSERT_VALID(pobjHint);
 				
 				BObject* pobj = pobjHint->pobjObject;

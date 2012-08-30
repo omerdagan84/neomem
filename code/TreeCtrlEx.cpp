@@ -154,7 +154,7 @@ void CTreeCtrlEx::AddChildrenToTree(BObjects* paChildren, HTREEITEM htiParent,
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) paChildren->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
 			ASSERT_VALID(pobj);
 		
 			if (!(pobj->GetFlag(lngExcludeFlags)))
@@ -480,11 +480,12 @@ void CTreeCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 
 		// Depending on what information is being requested, return different info
 		if (nMask & TVIF_TEXT)
-			// Note const_cast removing const modifier!!
+			// Note const_cast removing const modifier from LPCTSTR - 
+			// this struct is used for sending and receiving strings, so 
+			// pszText is nonconst. But for sending data can treat it as const.
 			// Had been using GetBuffer which slowed the program down ENORMOUSLY, 
 			// as it wound up copying the strings.
-//			pTVITEM->pszText = (TCHAR*) pobj->GetPropertyText(propName);
-			pTVITEM->pszText = const_cast <TCHAR*> (pobj->GetPropertyText(propName));
+			pTVITEM->pszText = const_cast <LPSTR> (pobj->GetPropertyText(propName));
 
 		else if (nMask & TVIF_CHILDREN)
 			pTVITEM->cChildren = pobj->HasChildren();

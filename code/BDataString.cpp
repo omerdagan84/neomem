@@ -116,7 +116,7 @@ BData* BDataString::CreateCopy()
 	BDataString* pdatCopy = new BDataString();
 	ASSERT_VALID(pdatCopy);
 	pdatCopy->m_strText = m_strText;
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

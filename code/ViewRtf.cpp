@@ -175,19 +175,18 @@ int CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//. maybe would be better to create the view with Create, then call some function to add it
 	// to the document's list of views. it would be clearer code, anyway
 
-	// is it okay to cast like this? yes, and it'll return 0 if not. 
-	// it's okay because we know what the type of the object is - cricheditview2, so we can
+	// Is it okay to cast like this? yes, and it'll return 0 if not. 
+	// It's okay because we know what the type of the object is - cricheditview2, so we can
 	// safely cast to it, even though it's returned as a cview pointer. 
-	// dynamic cast will make sure it's valid to do so. 
-	// see http://www.cplusplus.com/doc/tutorial/typecasting/
+	// Dynamic cast will make sure it's valid to do so. 
+	// See http://www.cplusplus.com/doc/tutorial/typecasting/
 	CRect r;
 	GetClientRect(r);
-	m_pViewRtf = dynamic_cast<CRichEditView2*> (CreateChildView(RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF));
+	CView* pview = CreateChildView(RUNTIME_CLASS(CRichEditView2), m_pDoc, r, ID_RTF);
+	m_pViewRtf = DYNAMIC_DOWNCAST(CRichEditView2, pview);
 	if (m_pViewRtf) 
 	{
 		// Subclass the rtf control with our extended class (provides GetRtf and SetRtf methods)
-		//.. Not sure why this cast is valid - see definition of GetRichEditCtrlEx
-//		m_prtf = (CRichEditCtrlEx*) &(m_pViewRtf->GetRichEditCtrl());
 		m_prtf = &(m_pViewRtf->GetRichEditCtrlEx());
 		ASSERT_VALID(m_prtf);
 
@@ -387,7 +386,7 @@ void CViewRtf::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		case hintLoad:
 			{
 				// Display contents of BObject's .RtfText property
-				BObject* pobj = (BObject*) pHint;
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobj);
 
 				// Turn off drawing to prevent flickering during loading and setting cursor position
@@ -465,7 +464,7 @@ if (strlen(pszRtf) > 0)
 			{
 				// Save changes made to rtf, if any, and position of caret 
 
-				BObject* pobj = (BObject*) pHint;
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobj);
 
 				// Save insertion point
@@ -518,7 +517,7 @@ if (strlen(pszRtf) > 0)
 		case hintPropertyChange:
 			{
 				// Refresh display if text property changed (eg if user drag dropped text onto this object)
-				CHint* ph = (CHint*) pHint;
+				CHint* ph = DYNAMIC_DOWNCAST(CHint, pHint);
 				ASSERT_VALID(ph);
 				BObject* pobj = ph->pobjObject;
 				ASSERT_VALID(pobj);

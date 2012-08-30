@@ -42,36 +42,30 @@ IMPLEMENT_SERIAL(BObject, CObject, VERSIONABLE_SCHEMA | versionFileStructure)
 // better to use member initialization lists - copy and paste,
 // because calling another routine and assigning values would be so much slower
 
-BObject::BObject() :
-	m_bytViewHeight (50), // 50% default
-	m_lngClassID (0),
-	m_lngFlags (0),
-	m_lngIconID (0),
-	m_lngObjectID (0),
-	m_paChildren (NULL),
-	m_paProperties (NULL),
-	m_pdat (NULL),
-	m_pDoc (NULL),
-	m_pobjParent (NULL),
-	m_pdatTemp (NULL)
-{
+BObject::BObject() {
+	Init();
 }
 
 
-
-BObject::BObject(OBJID lngClassID) :
-	m_bytViewHeight (50), // 50% default
-	m_lngClassID (lngClassID),
-	m_lngFlags (0),
-	m_lngIconID (0),
-	m_lngObjectID (0),
-	m_paChildren (NULL),
-	m_paProperties (NULL),
-	m_pdat (NULL),
-	m_pDoc (NULL),
-	m_pobjParent (NULL)
-{
+BObject::BObject(OBJID lngClassID) {
+	Init();
+	m_lngClassID = lngClassID;
 }
+
+
+void BObject::Init() {
+	m_lngObjectID = 0;
+	m_lngClassID = 0;
+	m_lngFlags = 0;
+	m_lngIconID = 0;
+	m_paProperties = NULL;
+	m_paChildren = NULL;
+	m_pobjParent = NULL;
+	m_pdat = NULL;
+	m_pDoc = NULL;
+	m_bytViewHeight = 50; // 50% default
+}
+
 
 BObject::~BObject()
 {
@@ -90,13 +84,6 @@ BObject::~BObject()
 	{
 		ASSERT_VALID(m_paChildren);
 		delete m_paChildren;
-	}
-
-	// Delete the temporary bdata object, if any
-	if (m_pdatTemp) 
-	{
-		ASSERT_VALID(m_pdatTemp);
-		delete m_pdatTemp;
 	}
 
 	// Release property objects recursively (descructor recursively deletes property objects)
@@ -159,7 +146,8 @@ void BObject::Serialize(CArchive& ar)
 	// Read object from file
 	{
 		// Store pointer to document in this bobject
-		m_pDoc = (CNeoDoc*) ar.m_pDocument;
+		m_pDoc = DYNAMIC_DOWNCAST(CNeoDoc, ar.m_pDocument);
+		ASSERT_VALID(m_pDoc);
 
 		// Get version of object as stored in file
 		// (not actually necessary until the schema changes)
@@ -651,7 +639,7 @@ BOOL BObject::DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag /* = TRU
 			}
 
 			// Bug: Forgot to delete the bobject also! Caused memory leak
-			BObject* pobjProp = (BObject*) m_paProperties->GetAt(nIndex);
+			BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(nIndex));
 			ASSERT_VALID(pobjProp);
 
 			// Remove the item from the array
@@ -706,7 +694,7 @@ BObject* BObject::FindProperty(OBJID lngPropertyID, BOOL bAddIfNotFound)
 		int nItems = m_paProperties->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobjPropertyValue = (BObject*) m_paProperties->GetAt(i);
+			BObject* pobjPropertyValue = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobjPropertyValue);
 			if (pobjPropertyValue->GetClassID() == lngPropertyID)
 			{
@@ -1657,7 +1645,7 @@ ULONG BObject::GetMemoryUsed(BOOL bRecurse) const
 		int nProperties = m_paProperties->GetSize();
 		for (int i = 0; i < nProperties; i++)
 		{
-			BObject* pobjProperty = (BObject*) m_paProperties->GetAt(i);
+			BObject* pobjProperty = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobjProperty);
 			nBytes += pobjProperty->GetMemoryUsed(TRUE);
 		}
@@ -1673,7 +1661,7 @@ ULONG BObject::GetMemoryUsed(BOOL bRecurse) const
 			int nChildren = m_paChildren->GetSize();
 			for (int i = 0; i < nChildren; i++)
 			{
-				BObject* pobjChild = (BObject*) m_paChildren->GetAt(i);
+				BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 				ASSERT_VALID(pobjChild);
 				nBytes += pobjChild->GetMemoryUsed(TRUE);
 			}
@@ -1781,7 +1769,7 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 		for (int i = 0; i < nProps; i++)
 		{
 			// Get property value, then property def from it
-			BObject* pobjPropValue = (BObject*) m_paProperties->GetAt(i);
+			BObject* pobjPropValue = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobjPropValue);
 			OBJID lngPropertyID = pobjPropValue->GetClassID();
 			BObject* pobjPropDef = m_pDoc->GetObject(lngPropertyID);
@@ -1804,7 +1792,7 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 				BOOL bNotThere = TRUE;
 				for (int j = 0; j < nPropsTotal; j++)
 				{
-					if (aPropertyDefs.GetAt(j) == (CObject*) pobjPropDef)
+					if (aPropertyDefs.GetAt(j) == DYNAMIC_DOWNCAST(CObject, pobjPropDef))
 					{
 						bNotThere = FALSE;
 						break;
@@ -1940,7 +1928,7 @@ BOOL BObject::MoveUp()
 			if (nIndex > 0)
 			{
 				int nIndexOther = nIndex - 1;
-				BObject* pobjOther = (BObject*) pa->GetAt(nIndexOther);
+				BObject* pobjOther = DYNAMIC_DOWNCAST(BObject, pa->GetAt(nIndexOther));
 				ASSERT_VALID(pobjOther);
 				pa->SetAt(nIndexOther, this);
 				pa->SetAt(nIndex, pobjOther);
@@ -1984,7 +1972,7 @@ BOOL BObject::MoveDown()
 			if (nIndex < nItems - 1)
 			{
 				int nIndexOther = nIndex + 1;
-				BObject* pobjOther = (BObject*) pa->GetAt(nIndexOther);
+				BObject* pobjOther = DYNAMIC_DOWNCAST(BObject, pa->GetAt(nIndexOther));
 				ASSERT_VALID(pobjOther);
 				pa->SetAt(nIndexOther, this);
 				pa->SetAt(nIndex, pobjOther);
@@ -2259,7 +2247,7 @@ void BObject::SetFlag(ULONG lngFlag, BOOL bValue /*=TRUE*/, BOOL bRecurse /* = F
 		// Walk through children and call this routine recursively
 		int nChildren = GetChildCount(FALSE);
 		for (int i = 0; i < nChildren; i++) {
-			BObject* pobj = (BObject*) m_paChildren->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 			ASSERT_VALID(pobj);
 			pobj->SetFlag(lngFlag, bValue, bRecurse);
 		}
@@ -2318,7 +2306,7 @@ int BObject::SendMessage(ULONG lngMsg, BOOL bRecurse)
 		int nChildren = m_paChildren->GetSize();
 		for (int i = 0; i < nChildren; i++)
 		{
-			BObject* pobj = (BObject*) m_paChildren->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 			ASSERT_VALID(pobj);
 			pobj->SendMessage(lngMsg, bRecurse);
 		}
@@ -2371,7 +2359,7 @@ void BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass) {
 	BObjects aProps;
 	int nProps = pobjDefaultClass->GetPropertyDefs(aProps, FALSE, TRUE); // get props associated with class
 	for (int i = 0; i < nProps; i++) {
-		BObject* pobjProp = (BObject*) aProps.GetAt(i);
+		BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, aProps.GetAt(i));
 		ASSERT_VALID(pobjProp);
 		if (!(pobjProp->GetFlag(lngExcludeFlags))) {
 			OBJID lngPropertyID = pobjProp->GetObjectID();
@@ -2408,7 +2396,7 @@ void BObject::ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPrope
 		int nProperties = m_paProperties->GetSize();
 		for (int i = 0; i < nProperties; i++)
 		{
-			BObject* pobj = (BObject*) m_paProperties->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobj);
 			if (pobj->m_lngClassID == lngPropertyID)
 			{
@@ -2441,7 +2429,7 @@ void BObject::ChangePropertyType(BObject* pobjPropertyDef, BObject* pobjNewPrope
 		int nChildren = m_paChildren->GetSize();
 		for (int i = 0; i < nChildren; i++)
 		{
-			BObject* pobj = (BObject*) m_paChildren->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 			ASSERT_VALID(pobj);
 //			pobj->ChangePropertyType(pobjPropertyDef, lngPropertyID, lngNewPropertyTypeID);
 			pobj->ChangePropertyType(pobjPropertyDef, pobjNewPropertyDef, lngNewPropertyTypeID);
@@ -2488,7 +2476,7 @@ void BObject::ChangeNamePropertyType(OBJID lngClassID, OBJID lngNewPropertyTypeI
 		int nChildren = m_paChildren->GetSize();
 		for (int i = 0; i < nChildren; i++)
 		{
-			BObject* pobj = (BObject*) m_paChildren->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 			ASSERT_VALID(pobj);
 			pobj->ChangeNamePropertyType(lngClassID, lngNewPropertyTypeID);
 		}
@@ -2533,7 +2521,7 @@ int BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
 		ASSERT_VALID(m_paProperties);
 		int nProps = m_paProperties->GetSize();
 		for (int i = 0; i < nProps; i++) {
-			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
+			BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobjProp);
 			// Check if this property value is using the find object as its propertydef
 			if (pobjProp->GetClassID() == lngFindID) {
@@ -2559,7 +2547,7 @@ int BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
 		ASSERT_VALID(m_paChildren);
 		int nChildren = m_paChildren->GetSize();
 		for (int i = 0; i < nChildren; i++) {
-			BObject* pobjChild = (BObject*) m_paChildren->GetAt(i);
+			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 			ASSERT_VALID(pobjChild);
 			pobjChild->FindReferences(pobjFind, aRefs, bRecurse);
 		}
@@ -2638,7 +2626,7 @@ void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, B
 		int nProps = m_paProperties->GetSize();
 		for (int i = 0; i < nProps; i++)
 		{
-			BObject* pobjPropertyValue = (BObject*) m_paProperties->GetAt(i);
+			BObject* pobjPropertyValue = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobjPropertyValue);
 			// If the property def of this property value is the object we're looking for, delete the property value.
 			//, note this doesn't handle replace for property values yet - might need to adjust bdata objects also
@@ -2672,7 +2660,7 @@ void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, B
 		int nChildren = m_paChildren->GetSize();
 		for (int i = 0; i < nChildren; i++)
 		{
-			BObject* pobjChild = (BObject*) m_paChildren->GetAt(i);
+			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 			ASSERT_VALID(pobjChild);
 			pobjChild->ReplaceReferences(pobjFind, pobjNew, bRecurse);
 		}
@@ -3051,7 +3039,7 @@ void BObject::ConvertToSoftLinks(BOOL bRecurse)
 		int nProps = m_paProperties->GetSize();
 		for (int i = 0; i < nProps; i++)
 		{
-			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
+			BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobjProp);
 			BData* pdat = pobjProp->GetBData();
 			if (pdat)
@@ -3071,7 +3059,7 @@ void BObject::ConvertToSoftLinks(BOOL bRecurse)
 			int nItems = m_paChildren->GetSize();
 			for (int i = 0; i < nItems; i++)
 			{
-				BObject* pobj = (BObject*) m_paChildren->GetAt(i);
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 				ASSERT_VALID(pobj);
 				pobj->ConvertToSoftLinks(bRecurse);
 			}
@@ -3095,7 +3083,7 @@ void BObject::ConvertToHardLinks(BOOL bRecurse)
 		int nProps = m_paProperties->GetSize();
 		for (int i = 0; i < nProps; i++)
 		{
-			BObject* pobjProp = (BObject*) m_paProperties->GetAt(i);
+			BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobjProp);
 			BData* pdat = pobjProp->GetBData();
 			if (pdat)
@@ -3115,7 +3103,7 @@ void BObject::ConvertToHardLinks(BOOL bRecurse)
 			int nItems = m_paChildren->GetSize();
 			for (int i = 0; i < nItems; i++)
 			{
-				BObject* pobj = (BObject*) m_paChildren->GetAt(i);
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 				ASSERT_VALID(pobj);
 				pobj->ConvertToHardLinks(bRecurse);
 			}
@@ -3202,7 +3190,7 @@ AfxMessageBox("copyfrom!"); //x
 		int nProps = pobjSourceProps->GetSize();
 		for (int i = 0; i < nProps; i++)
 		{
-			BObject* pobjSourceProp = (BObject*) pobjSourceProps->GetAt(i);
+			BObject* pobjSourceProp = DYNAMIC_DOWNCAST(BObject, pobjSourceProps->GetAt(i));
 			ASSERT_VALID(pobjSourceProp);
 			OBJID lngPropertyID = pobjSourceProp->GetClassID();
 			BData* pdatSource = pobjSourceProp->GetBData();
@@ -3474,7 +3462,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 		int nChildren = m_paChildren->GetSize();
 		for (int i = 0; i < nChildren; i++)
 		{
-			BObject* pobjChild = (BObject*) m_paChildren->GetAt(i);
+			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 			ASSERT_VALID(pobjChild);
 //			pobjChild->Export(file, bRecurse, pobjProps);
 			pobjChild->Export(file, bRecurse, datProps);

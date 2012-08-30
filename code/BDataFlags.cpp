@@ -112,7 +112,7 @@ BData* BDataFlags::CreateCopy()
 {
 	BDataFlags* pdatCopy = new BDataFlags;
 	pdatCopy->m_lngFlags = m_lngFlags;
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

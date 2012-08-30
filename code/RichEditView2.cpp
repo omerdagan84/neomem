@@ -1761,8 +1761,9 @@ CNeoDoc* CRichEditView2::GetDocument() // non-debug version is inline
 //	return NULL;
 //. ole 	ASSERT(theApp.m_pRedoc->IsKindOf(RUNTIME_CLASS(CRichEditDoc)));
 //. ole 	return theApp.m_pRedoc;
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNeoDoc))); //`
-	return (CNeoDoc*)m_pDocument;
+	CNeoDoc* pdoc = DYNAMIC_DOWNCAST(CNeoDoc, m_pDocument);
+	ASSERT_VALID(pdoc);
+	return pdoc;
 }
 #endif //_DEBUG
 
@@ -1829,9 +1830,9 @@ void CRichEditView2::OnActivateView(BOOL bActivate, CView* pActivateView, CView*
 	if (bActivate)
 	{
 		xTRACE("  set CViewRtf to be the active view\n");
-		CFrameChild* pChild = (CFrameChild*) GetParentFrame();
+		CFrameChild* pChild = DYNAMIC_DOWNCAST(CFrameChild, GetParentFrame());
 		ASSERT_VALID(pChild);
-		CView* pParentView = (CView*) GetParent(); // cviewrtf
+		CView* pParentView = DYNAMIC_DOWNCAST(CView, GetParent()); // cviewrtf
 		pChild->SetActiveView(pParentView, TRUE);
 	}
 }
@@ -2825,7 +2826,7 @@ void CRichEditView2::ShowPopup(CPoint point, WORD seltyp)
 		pPopup->EnableMenuItem(ID_EDIT_REDO, MF_BYCOMMAND | (bRedo ? 0 : MF_GRAYED));
 
 		// Now display popup menu - command messages will go to pView (CViewRtf)
-		CView* pView = (CView*) GetParent();
+		CView* pView = DYNAMIC_DOWNCAST(CView, GetParent());
 		pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, pView);
 	}
 

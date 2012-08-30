@@ -112,7 +112,7 @@ BData* BDataEmail::CreateCopy()
 	BDataEmail* pdatCopy = new BDataEmail();
 	ASSERT_VALID(pdatCopy);
 	pdatCopy->m_strText = m_strText;
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

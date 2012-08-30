@@ -73,7 +73,7 @@ BData* BDataColumns::CreateCopy()
 {
 	// Use the copy constructor
 	BDataColumns* pdatCopy = new BDataColumns(this);
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

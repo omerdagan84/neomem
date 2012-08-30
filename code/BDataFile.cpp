@@ -118,7 +118,7 @@ BData* BDataFile::CreateCopy()
 	BDataFile* pdatCopy = new BDataFile();
 	ASSERT_VALID(pdatCopy);
 	pdatCopy->m_strText = m_strText;
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

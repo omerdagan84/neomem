@@ -286,7 +286,7 @@ BData* BDataPersonName::CreateCopy()
 	pdatCopy->m_strMiddle = m_strMiddle;
 	pdatCopy->m_strNickname = m_strNickname;
 	pdatCopy->m_strSuffix = m_strSuffix;
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

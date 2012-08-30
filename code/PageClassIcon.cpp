@@ -61,7 +61,7 @@ BOOL CPageClassIcon::OnInitDialog()
 {
 	// Get document and parent sheet
 	m_pDoc = CNeoDoc::GetDoc();
-	m_psh = (CSheetWizard*) GetParent(); //,cast
+	m_psh = STATIC_DOWNCAST(CSheetWizard, GetParent());
 	ASSERT_VALID(m_psh);
 
 	// Call base class (calls DoDataExchange)
@@ -149,7 +149,7 @@ void CPageClassIcon::DoDataExchange(CDataExchange* pDX)
 
 BOOL CPageClassIcon::OnSetActive() 
 {
-	CSheetWizard* psheet = (CSheetWizard*) GetParent();
+	CSheetWizard* psheet = DYNAMIC_DOWNCAST(CSheetWizard, GetParent());
 	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_NEXT);
 	psheet->SetClassWizardTitle();
 	return CPropertyPage::OnSetActive();

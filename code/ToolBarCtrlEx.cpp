@@ -545,6 +545,7 @@ void CToolBarCtrlEx::SetButtonStyle(int nIndex, UINT nStyle)
 
 void CToolBarCtrlEx::_GetButton(int nIndex, TBBUTTON* pButton) const
 {
+	//, why is this okay? casting a const pointer to a const object to a plain pointer? 
 	CToolBarCtrlEx* pBar = (CToolBarCtrlEx*)this;
 	VERIFY(pBar->DefWindowProc(TB_GETBUTTON, nIndex, (LPARAM)pButton));
 	// TBSTATE_ENABLED == TBBS_DISABLED so invert it
@@ -624,14 +625,9 @@ LRESULT CToolBarCtrlEx::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
 	{
 		// We should make the target the view containing the toolbar, not the child frame (duh!).
 		// MFC was built to only allow toolbars in frame windows, so modifying to allow them in cviews.
-//		CView* pTarget = (CView*) GetParent();
 		CView* pTarget = DYNAMIC_DOWNCAST(CView, GetParent());
 		ASSERT_VALID(pTarget); // will fail here if parent is not a cview
-		if (pTarget)
-		{
-			ASSERT_VALID(pTarget);
-			OnUpdateCmdUI(pTarget, (BOOL)wParam);
-		}
+		OnUpdateCmdUI(pTarget, (BOOL)wParam);
 	}
 	return 0L;
 }

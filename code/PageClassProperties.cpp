@@ -64,7 +64,7 @@ BOOL CPageClassProperties::OnInitDialog()
 	// Get document and parent sheet
 	m_pDoc = CNeoDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
-	m_psh = (CSheetWizard*) GetParent();
+	m_psh = DYNAMIC_DOWNCAST(CSheetWizard, GetParent());
 	ASSERT_VALID(m_psh);
 
 	// Call base class (required)
@@ -134,7 +134,7 @@ void CPageClassProperties::DoDataExchange(CDataExchange* pDX)
 BOOL CPageClassProperties::OnSetActive() 
 {
 //	CPropertySheet* psheet = (CPropertySheet*) GetParent();
-	CSheetWizard* psheet = (CSheetWizard*) GetParent();
+	CSheetWizard* psheet = DYNAMIC_DOWNCAST(CSheetWizard, GetParent());
 	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_NEXT);	
 	psheet->SetClassWizardTitle();
 	return CPropertyPage::OnSetActive();
@@ -237,7 +237,7 @@ void CPageClassProperties::LoadData()
 	int nPropDefs = m_pobj->GetPropertyDefs(aInheritedProps, TRUE, TRUE);
 	for (int i = 0; i < nPropDefs; i++)
 	{
-		BObject* pobjPropDef = (BObject*) aInheritedProps.GetAt(i);
+		BObject* pobjPropDef = DYNAMIC_DOWNCAST(BObject, aInheritedProps.GetAt(i));
 		ASSERT_VALID(pobjPropDef);
 		if (!(pobjPropDef->GetFlag(theApp.m_lngExcludeFlags)))
 		{
@@ -279,7 +279,7 @@ void CPageClassProperties::LoadData()
 	nPropDefs = paCopy->GetSize();
 	for (int i = 0; i < nPropDefs; i++)
 	{
-		BObject* pobjPropDef = (BObject*) paCopy->GetAt(i);
+		BObject* pobjPropDef = DYNAMIC_DOWNCAST(BObject, paCopy->GetAt(i));
 		ASSERT_VALID(pobjPropDef);
 		if (!(pobjPropDef->GetFlag(theApp.m_lngExcludeFlags)))
 		{

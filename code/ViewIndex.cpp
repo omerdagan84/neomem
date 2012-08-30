@@ -212,7 +212,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 	case hintSelect:
 		{
-			BObject* pobj = (BObject*) pHint;
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 			ASSERT_VALID(pobj);
 			int nItem = m_lvw.SelectItemData((LPARAM) pobj);
 //			m_lvw.EnsureVisible(nItem, TRUE);
@@ -222,7 +222,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	case hintPropertyChange:
 		{
 			// Find item and refresh it
-			CHint* ph = (CHint*) pHint;
+			CHint* ph = DYNAMIC_DOWNCAST(CHint, pHint);
 			ASSERT_VALID(ph);
 			BObject* pobj = ph->pobjObject;
 			ASSERT_VALID(pobj);
@@ -272,13 +272,13 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 	case hintDelete:
 		{
-			CHint* ph = (CHint*) pHint;
+			CHint* ph = DYNAMIC_DOWNCAST(CHint, pHint);
 			ASSERT_VALID(ph);
 			ASSERT_VALID(ph->paObjects);
 			int nObjects = ph->paObjects->GetSize();
 			for (int i = 0; i < nObjects; i++)
 			{
-				BObject* pobj = (BObject*) ph->paObjects->GetAt(i);
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, ph->paObjects->GetAt(i));
 				// Note: Object has already been deleted, so don't validate it
 //				ASSERT_VALID(pobj);
 				// delete from list
@@ -309,7 +309,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	case hintAdd:
 		{
 			// Add the specified object if not already in list
-			BObject* pobj = (BObject*) pHint;
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 			ASSERT_VALID(pobj);
 			int nItem = m_lvw.FindItemData((LPARAM) pobj);
 			if (nItem == -1)
@@ -356,7 +356,7 @@ void CViewIndex::AddChildrenToList(BObject* pobjStart)
 		int nItems = paChildren->GetSize();
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) paChildren->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
 			ASSERT_VALID(pobj);
 
 			// Only add this object if it's not a system object

@@ -169,7 +169,7 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 	case hintLoad:
 		{
-			BObject* pobj = (BObject*) pHint;
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 			ASSERT_VALID(pobj);
 
 //			this->LockWindowUpdate();
@@ -190,7 +190,7 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			// Walk through property defs and add them to the list
 			for (int i = 0; i < nPropertyDefs; i++)
 			{
-				BObject* pobjPropertyDef = (BObject*) aPropertyDefs.GetAt(i);
+				BObject* pobjPropertyDef = DYNAMIC_DOWNCAST(BObject, aPropertyDefs.GetAt(i));
 				ASSERT_VALID(pobjPropertyDef);
 
 				// Don't add property def if it should be excluded based on admin settings
@@ -216,7 +216,7 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 	case hintPropertyChange:
 		{
-			CHint* ph = (CHint*) pHint;
+			CHint* ph = DYNAMIC_DOWNCAST(CHint, pHint);
 			
 			// Exit if this hint refers to a different object
 			// actually, might affect some props anyway, eg. links to property name, class inherited props, etc.
@@ -236,13 +236,13 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 	case hintDelete:
 		{
-			CHint* ph = (CHint*) pHint;
+			CHint* ph = DYNAMIC_DOWNCAST(CHint, pHint);
 			ASSERT_VALID(ph);
 			ASSERT_VALID(ph->paObjects);
 			int nObjects = ph->paObjects->GetSize();
 			for (int i = 0; i < nObjects; i++)
 			{
-				BObject* pobj = (BObject*) ph->paObjects->GetAt(i);
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, ph->paObjects->GetAt(i));
 				// Note: Object has already been deleted, so don't validate it!
 //				ASSERT_VALID(pobj);
 				// If the object is a property def, this will remove it from the listview.
@@ -661,7 +661,7 @@ void CViewProperties::OnCmdAddProperty()
 	// Disable the properties
 	for (int i = 0; i < nProperties; i++)
 	{
-		BObject* pobjProp = (BObject*) aProperties.GetAt(i);
+		BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, aProperties.GetAt(i));
 		ASSERT_VALID(pobjProp);
 		pobjProp->SetFlag(flagDisabled, TRUE, FALSE);
 	}

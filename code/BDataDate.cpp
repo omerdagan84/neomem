@@ -347,7 +347,7 @@ void BDataDate::Serialize(CArchive &ar)
 	if (ar.IsStoring())
 	{
 		// Cast our flags struct to a long and write it
-		//,, this will cause problems with little-endian, or how struct gets stored, etc. 
+		//. this will cause problems with little-endian, or how struct gets stored with diff compilers, etc. 
 		// better to add a conversion method to the struct and do it explicitly
 //		ULONG lng = (ULONG) m_bitsFlags; // error: no operator that can perform this conversion
 //		ULONG* plng = (ULONG*) (&m_bitsFlags); // ok - cast pointer to struct to a pointer to a long
@@ -362,7 +362,7 @@ void BDataDate::Serialize(CArchive &ar)
 	else // loading
 	{
 		// Read in a long then cast it into our struct
-		//,, see above for saving
+		//,, see above comments on saving
 		ULONG lng;
 		ar >> lng;
 		*((ULONG*) (&m_bitsFlags)) = lng;
@@ -462,7 +462,7 @@ BData* BDataDate::CreateCopy()
 	pdatCopy->m_odt = m_odt;
 	pdatCopy->m_bitsFlags = m_bitsFlags; // bug: forgot this!
 	pdatCopy->m_strText = m_strText;
-	return (BData*) pdatCopy;
+	return pdatCopy;
 }
 
 

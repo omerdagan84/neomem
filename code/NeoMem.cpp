@@ -1425,8 +1425,10 @@ BOOL CNeoMem::SaveAllModified() {
 		while (pos) {
 			// Send hintSave to document - will set document modified flag if any
 			// changes are saved to the document.
-			CNeoDoc* pDoc = (CNeoDoc*) pDocTemplate->GetNextDoc(pos);
+			CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDocTemplate->GetNextDoc(pos));
+			ASSERT_VALID(pDoc);
 			BObject* pobjCurrent = pDoc->GetCurrentObject();
+			ASSERT_VALID(pobjCurrent);
 			pDoc->UpdateAllViewsEx(NULL, hintSave, pobjCurrent);
 		}
 	}
@@ -1785,7 +1787,7 @@ void CNeoMem::UpdateAllDocumentObjects(ULONG lngMsg, BOOL bRecurse /* = TRUE */)
 		// Walk through documents
 		POSITION posDoc = pDocTemplate->GetFirstDocPosition();
 		while (posDoc) {
-			CNeoDoc* pDoc = (CNeoDoc*) pDocTemplate->GetNextDoc(posDoc);
+			CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDocTemplate->GetNextDoc(posDoc));
 			ASSERT_VALID(pDoc);
 			// Send message to all bobjects
 			BObject* pobj = pDoc->GetRoot();
@@ -2186,7 +2188,8 @@ BOOL CNeoMem::SaveAllModifiedBackup(CString& strMsg) {
 			// Send hintSave to document - will set document modified flag if any
 			// changes are saved to the document.
 			try {
-				CNeoDoc* pDoc = (CNeoDoc*) pDocTemplate->GetNextDoc(pos);
+				CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDocTemplate->GetNextDoc(pos));
+				ASSERT_VALID(pDoc);
 				BObject* pobjCurrent = pDoc->GetCurrentObject();
 				pDoc->UpdateAllViewsEx(NULL, hintSave, pobjCurrent);
 
@@ -2256,7 +2259,7 @@ CFrameChild* CNeoMem::GetChildFrame() {
 
 // Get current main frame window
 CFrameMain* CNeoMem::GetMainFrame() {
-	CFrameMain* pmain = (CFrameMain*) m_pMainWnd; //cast
+	CFrameMain* pmain = STATIC_DOWNCAST(CFrameMain, m_pMainWnd); 
 	ASSERT_VALID(pmain);
 	return pmain;
 }
@@ -2281,6 +2284,7 @@ BOOL CNeoMem::IsMaximized() {
 // Overriding the base class version
 void CNeoMem::OnFileOpen() {
 	TRACE("CNeoMem::OnFileOpen\n");
+	// In InitInstance, m_pDocManager = new CDocManagerEx, so ok to cast.
 	CDocManagerEx* pDocMgr = STATIC_DOWNCAST(CDocManagerEx, m_pDocManager);
 	ASSERT_VALID(pDocMgr);
 	pDocMgr->OnFileOpen();
@@ -2518,7 +2522,8 @@ void CNeoMem::DoTests() {
 //		BObject* pobjProp = m_pDoc->GetObject(lngPropID);
 //		m_pdatColumns->RemoveColumn(nCol);
 		CFrameChild* pui = theApp.GetChildFrame();
-		CViewContents* pview = STATIC_DOWNCAST(CViewContents, pui->GetView(viewContents)); // in debug will assert if wrong type
+		CViewContents* pview = DYNAMIC_DOWNCAST(CViewContents, pui->GetView(viewContents));
+		ASSERT_VALID(pview);
 		pview->m_lvw.InsertColumnAsk(propPrice, 2);
 
 		// set plecy desc

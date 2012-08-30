@@ -48,7 +48,7 @@ BOOL CPageClassName::OnInitDialog()
 	// Get document and parent sheet
 	m_pDoc = CNeoDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
-	m_psh = (CSheetWizard*) GetParent();
+	m_psh = DYNAMIC_DOWNCAST(CSheetWizard, GetParent());
 	ASSERT_VALID(m_psh);
 
 	// Call base class (calls DoDataExchange)
@@ -101,7 +101,7 @@ void CPageClassName::DoDataExchange(CDataExchange* pDX)
 BOOL CPageClassName::OnSetActive() 
 {
 //	CPropertySheet* psheet = (CPropertySheet*) GetParent();
-	CSheetWizard* psheet = (CSheetWizard*) GetParent();
+	CSheetWizard* psheet = DYNAMIC_DOWNCAST(CSheetWizard, GetParent());
 	if (m_psh->m_nAddEditMode == CSheetWizard::modeAddOrEdit)
 		psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_NEXT);
 	else

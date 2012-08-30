@@ -410,7 +410,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 		case hintLoad: {
 
 				// Load the view for an object - set up columns and fill listview with contents
-				BObject* pobjStart = (BObject*) pHint;
+				BObject* pobjStart = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjStart);
 
 				// Column Info:
@@ -487,7 +487,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 //					if (m_pdatCopy->m_bModified)
 //					if (m_lvw.m_bColumnsChanged)
 //					{
-						BObject* pobj = (BObject*) pHint;
+						BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 						ASSERT_VALID(pobj);
 						m_lvw.SaveColumnInfo(pobj); // this saves the BDataColumns object to the pobj
 						// Set flag so we know that we don't own the BDataColumns object anymore, 
@@ -501,7 +501,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 		case hintAdd: {
 
 				// Add an item to the listview
-				BObject* pobjNew = (BObject*) pHint;
+				BObject* pobjNew = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjNew);
 				BObject* pobjParent = pobjNew->GetParent();
 				ASSERT_VALID(pobjParent);
@@ -525,12 +525,12 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 		case hintDelete: {
 
 				// Delete items from the listview and/or the column bdata (might be deleting a propertydef!)
-				CHint* pobjHint = (CHint*) pHint;
+				CHint* pobjHint = DYNAMIC_DOWNCAST(CHint, pHint);
 				BObjects* paObjects = pobjHint->paObjects;
 				ASSERT_VALID(paObjects);
 				int nItems = paObjects->GetSize();
 				for (int i = 0; i < nItems; i++) {
-					BObject* pobj = (BObject*) paObjects->GetAt(i);
+					BObject* pobj = DYNAMIC_DOWNCAST(BObject, paObjects->GetAt(i));
 					// Note: pobj may be invalid by this point because it's already been deleted,
 					// but we still need to remove it from the list, so DON'T ASSERT_VALID
 //					ASSERT_VALID(pobj);
@@ -564,7 +564,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				// because there you could check if the property has any dependent properties
 				// and then send property change hints for all those properties as well
 
-				CHint* pobjHint = (CHint*) pHint;
+				CHint* pobjHint = DYNAMIC_DOWNCAST(CHint, pHint);
 				ASSERT_VALID(pobjHint);
 				
 				BObject* pobj = pobjHint->pobjObject;
@@ -616,7 +616,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				// 1. if object is in this view, check the new parent. if new parent != current object, remove item
 				// 2. if object is not in this view, check the new parent. if new parent == current object, add item
 
-				BObject* pobj = (BObject*) pHint;
+				BObject* pobj = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobj);
 
 				// If the new parent for the objects is the current object, then objects are being moved here.
@@ -648,7 +648,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 
 				// Move item up or down
 				// Move pobjObject before or after pobjTarget, depending on bAfter flag.
-				CHint* ph = (CHint*) pHint;
+				CHint* ph = DYNAMIC_DOWNCAST(CHint, pHint);
 				BObject* pobjSource = ph->pobjObject;
 				BObject* pobjTarget = ph->pobjTarget;
 				BOOL bAfter = ph->bAfter;
@@ -684,7 +684,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 			}
 
 		case hintResortChildren: {
-				BObject* pobjParent = (BObject*) pHint;
+				BObject* pobjParent = DYNAMIC_DOWNCAST(BObject, pHint);
 				ASSERT_VALID(pobjParent);
 				// Resort this view if the parent object is the currently displayed object
 				if (pobjParent == m_pDoc->GetCurrentObject()) {

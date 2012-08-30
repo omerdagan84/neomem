@@ -57,9 +57,11 @@ void XComboBoxEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		ASSERT_VALID(pobj);
 
-		// Depending on what information is being requested, return different info
+		// Depending on what information is being requested, return different info.
+		// Note cast from LPCTSTR to LPSTR, ie const char* to char*
+		// see other instances of pszText
 		if (nMask & TVIF_TEXT)
-			rcbi.pszText = (TCHAR*) pobj->GetPropertyText(propName); //, Note cast to tchar from const!
+			rcbi.pszText = const_cast <LPSTR> (pobj->GetPropertyText(propName)); 
 	}
 
 	*pResult = 0;
@@ -221,7 +223,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 		int nAdded = 0;
 		for (int i = 0; i < nItems; i++)
 		{
-			BObject* pobj = (BObject*) paCopy->GetAt(i);
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, paCopy->GetAt(i));
 			ASSERT_VALID(pobj);
 
 			// Check that flags and class are valid

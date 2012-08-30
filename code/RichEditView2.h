@@ -276,7 +276,7 @@ inline CNeoDoc* CRichEditView2::GetDocument()
 
 // CRichEditView
 // This is MFC code, but how can you cast from CRichEditView to CRichEditCtrl?
-// they both derive from CWnd
+// they're siblings. but both derive from CWnd
 // CWnd has about 10 member variables - HWND is the first. 99% functions though.
 // CRichEditCtrl has NO member variables.
 // CRichEditView adds 10 vars
