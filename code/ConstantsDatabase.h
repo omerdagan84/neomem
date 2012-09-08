@@ -143,6 +143,12 @@ ULONG const propParentName = 3006; // name of parent (location)
 ULONG const propValue = 3007; // used in property view to obtain a property value of the current object
 ULONG const propSize = 3008; 
 ULONG const propParentID = 3009; // parent id (location) 
+ULONG const propLocationID = propParentID;
+
+// bobject versions of id properties for cmd interface
+//! update template file
+ULONG const propParent = 3020;
+ULONG const propLocation = propParent;
 //ULONG const propDateCreated = 3010; // see m_dateCreated
 //ULONG const propDateModified = 3011; 
 

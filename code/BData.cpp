@@ -67,7 +67,7 @@ BData::~BData() {
 // (I prefer making this method explicit, instead of using C++'s
 // copy constructor or assignment operator)
 BData* BData::CreateCopy() {
-	AfxMessageBox("Need to implement CreateCopy for this BData class");
+	AfxMessageBox(_T("Need to implement CreateCopy for this BData class"));
 	return NULL;
 }
 
@@ -75,7 +75,7 @@ BData* BData::CreateCopy() {
 
 // Returns True if can find any references to the specified object in this bdata
 BOOL BData::FindReferences(BObject* pobjFind) {
-	AfxMessageBox("Need FindReferences handler for this property type");
+	AfxMessageBox(_T("Need FindReferences handler for this property type"));
 	return FALSE;
 }
 
@@ -94,7 +94,7 @@ LPCTSTR BData::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVer
 // Parse the given text and store a data representation of it
 // Return True if was able to parse text
 BOOL BData::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0 */, BOOL bShowErrorMessage /* = TRUE */) {
-	AfxMessageBox("Need to implement SetBDataText for this BData class!");
+	AfxMessageBox(_T("Need to implement SetBDataText for this BData class!"));
 	return FALSE;
 }
 
@@ -137,7 +137,7 @@ BOOL BData::UIAddMenuItems(CMenu* pMenu, int nPos) {
 // The UIEditValue routine should set the document modified flag
 // and return TRUE if value was changed
 BOOL BData::UIEditValue(BObject* pobj, BObject* pobjPropertyDef) {
-	AfxMessageBox("Need EditValue handler for this property type");
+	AfxMessageBox(_T("Need EditValue handler for this property type"));
 	return FALSE;
 }
 

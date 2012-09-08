@@ -372,6 +372,12 @@ void CDialogEditObject::OnBtnNewClass2()
 // Add a new class and add it to all class controls in this dialog.
 BObject* CDialogEditObject::AddNewClass()
 {
+	//. refactor
+	// bring up dialog to get info for new class
+	// will return with data in a struct
+	// then call pdoc->addclass(all that info)
+	// get rid of uiaddnewclass
+
 	BObject* pobjNew = m_pDoc->UIAddNewClass();
 	if (pobjNew)
 	{

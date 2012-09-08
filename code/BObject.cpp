@@ -681,6 +681,7 @@ BOOL BObject::DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag /* = TRU
 // If bAddIfNotFound is True, then will add the property to this object's property collection. 
 // Also if the property is not already in this object's classdef's associated properties, then 
 // it will add it there also.
+//, what about pseudo properties?
 BObject* BObject::FindProperty(OBJID lngPropertyID, BOOL bAddIfNotFound)
 {
 	ASSERT_VALID(this);
@@ -1098,7 +1099,7 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 // Set the underlying data for a property.
 // Makes a copy of the BData object and saves it. 
 // Each property BObject stores its data in the m_pdat member, which is a pointer to a BData object.
-void BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, 
+BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, 
 										BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
 {
 	ASSERT_VALID(this);
@@ -1160,6 +1161,7 @@ void BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig,
 	}
 
 //	return bSavedBData;
+	return TRUE;
 }
 
 
@@ -1329,12 +1331,12 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 
 
 // Set long property value.
-void BObject::SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, 
+BOOL BObject::SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, 
 										BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
 {
 	ASSERT_VALID(this);
 
-	//, handle pseudo properties here?
+	//. handle pseudo properties here
 
 	// Find/create property
 	BObject* pobjPropertyValue = FindProperty(lngPropertyID, TRUE);
@@ -1365,6 +1367,8 @@ void BObject::SetPropertyLong(OBJID lngPropertyID, ULONG lngValue,
 		h.idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
+
+	return TRUE;
 }
 
 
@@ -1413,7 +1417,7 @@ ULONG BObject::GetPropertyLong(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 
 // Set object that the specified property links to.
 // Note: If pobj is zero, will delete the property bobject.
-void BObject::SetPropertyLink(OBJID lngPropertyID, 
+BOOL BObject::SetPropertyLink(OBJID lngPropertyID, 
 						 BObject* pobj, 
 						 BOOL bSetModifiedFlag /* = TRUE */, 
 						 BOOL bUpdateViews /* = TRUE */
@@ -1456,25 +1460,28 @@ void BObject::SetPropertyLink(OBJID lngPropertyID,
 		h.idProperty = lngPropertyID;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
+
+	return TRUE;
 }
 
 
 // Returns the BObject referred to by the specified Link property, or 0 if property
 // doesn't exist for this object.
-//, this assumes the link property only has one value, right?
+//, this assumes the link property only has one value
 //, Note: bCreateTempBDataIfNotFound is not handled
 BObject* BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
 
-//. handle pseudo properties (eg classid, parent, etc.)?
-//	switch (lngPropertyID)
-//	{
-//		case propIconID: // return the IconID associated with the object
-//			//. is it better to just make m_lng's public?
-//			return pobj->m_lngIconID;
-//	}
+//. handle pseudo properties (eg classid, parent, etc.)
+	switch (lngPropertyID)
+	{
+//		case propIconID:
+//			return m_pDoc->GetObject(m_lngIconID); // but...
+		case propLocation: 
+			return m_pobjParent;
+	}
 
 	BObject* pobjPropertyValue = FindProperty(lngPropertyID, FALSE);
 	if (pobjPropertyValue)

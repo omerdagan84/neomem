@@ -261,7 +261,8 @@ void CNeoDoc::Dump(CDumpContext& dc) const {
 
 // To get pointer to the current document from anywhere in application 
 // (eg dialog box) say CNeoDoc::GetDoc();
-/* static */ CNeoDoc* CNeoDoc::GetDoc() {
+// static
+CNeoDoc* CNeoDoc::GetDoc() {
 
 	CMDIFrameWnd* pFrame = DYNAMIC_DOWNCAST(CMDIFrameWnd, AfxGetApp()->m_pMainWnd);
 	if (!pFrame) return NULL;
@@ -805,6 +806,100 @@ BOOL CNeoDoc::AddObjectToIndex(HOBJECT hobj) {
 	ASSERT(m_mapObjects.Lookup(idObject, hobjTest));
 	return TRUE;
 }
+
+
+// New Object
+// Create and Add to the database
+// Location is optional - NULL to add to current object
+// Returns hobj of new object
+//xHOBJECT CNeoDoc::NewObject(const OBJID idClass, const CString& strName, HOBJECT hobjLocation) {
+OBJID CNeoDoc::NewObject(const OBJID idClass, const CString& strName, OBJID idLocation) {
+	ASSERT_VALID(this);
+
+	// if hobj not specified, use the default location for this class
+	HOBJECT hobjLocation = NULL;
+	if (idLocation == NULL) {
+		if (idClass == classClass)
+			hobjLocation = this->GetObject(folderClasses);
+//x			idLocation = folderClasses;
+		else
+			hobjLocation = this->GetCurrentObject();
+//x			idLocation = this->GetObjectID(this->GetCurrentObject());
+	}
+	else
+		hobjLocation = this->GetObject(idLocation);
+	ASSERT_VALID(hobjLocation);
+
+	HOBJECT hobj = this->CreateObject(idClass, strName, hobjLocation);
+	this->AddObject(hobj); // Add object to database (and tell views)
+	return this->GetObjectID(hobj);
+}
+
+
+OBJID CNeoDoc::NewProperty(const CString& strName, OBJID idPropType, const CString& strDescription) {
+	HOBJECT hobj = this->CreateProperty(strName, idPropType, strDescription);
+	this->AddObject(hobj);
+	return this->GetObjectID(hobj);
+}
+
+
+
+
+OBJID CNeoDoc::GetObjectID(HOBJECT hobj) {
+	BObject* pobj = (BObject*) hobj;
+	return pobj->GetObjectID();
+}
+
+
+
+
+//xHOBJECT CNeoDoc::GetPropertyLink(HOBJECT hobj, OBJID idProperty) {
+//x	BObject* pobj = (BObject*) hobj;
+//x	return pobj->GetPropertyLink(idProperty);
+//x}
+OBJID CNeoDoc::GetPropertyLink(OBJID id, OBJID idProperty) {
+	BObject* pobj = this->GetObject(id);
+	ASSERT_VALID(pobj);
+	BObject* pobjLink = pobj->GetPropertyLink(idProperty);
+	ASSERT_VALID(pobjLink);
+	return pobjLink->GetObjectID();
+}
+
+
+//! return a new cstring object?
+//xCString CNeoDoc::GetPropertyString(HOBJECT hobj, OBJID idProperty) {
+CString CNeoDoc::GetPropertyString(OBJID id, OBJID idProperty) {
+//	BObject* pobj = (BObject*) hobj;
+	BObject* pobj = this->GetObject(id);
+	ASSERT_VALID(pobj);
+	return pobj->GetPropertyText(idProperty); //, BOOL bCreateTempBDataIfNotFound = FALSE);
+}
+
+
+BOOL CNeoDoc::AddPropertyLink(OBJID id, OBJID idProperty, OBJID idValue) {
+	BObject* pobj = this->GetObject(id);
+	ASSERT_VALID(pobj);
+	BObject* pobjValue = this->GetObject(idValue);
+	ASSERT_VALID(pobjValue);
+	return pobj->SetPropertyLink(idProperty, pobjValue); //, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+}
+
+BOOL CNeoDoc::SetPropertyLink(OBJID id, OBJID idProperty, OBJID idValue) {
+	BObject* pobj = this->GetObject(id);
+	ASSERT_VALID(pobj);
+	BObject* pobjValue = this->GetObject(idValue);
+	ASSERT_VALID(pobjValue);
+	return pobj->SetPropertyLink(idProperty, pobjValue); //, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+}
+
+//xBOOL CNeoDoc::SetPropertyString(HOBJECT hobj, OBJID idProperty, const CString& strValue) {
+BOOL CNeoDoc::SetPropertyString(OBJID id, OBJID idProperty, const CString& strValue) {
+//x	BObject* pobj = (BObject*) hobj;
+	BObject* pobj = this->GetObject(id);
+	ASSERT_VALID(pobj);
+	return pobj->SetPropertyText(idProperty, strValue); //, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+}
+
 
 
 

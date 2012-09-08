@@ -94,7 +94,7 @@ LPCTSTR BDataColumns::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMac
 	for (int i = 0; i < m_nColumns; i++)
 	{
 		ColumnInfo& rci = m_aci[i];
-		str.Format("%d ", rci.m_lngPropertyID);
+		str.Format(_T("%d "), rci.m_lngPropertyID);
 		m_strText += str;
 	}
 	return m_strText;
@@ -440,7 +440,7 @@ BObject* BDataColumns::GetPropertyDef(int nCol, CNeoDoc* pDoc)
 		if (!pobjPropDef)
 		{
 			CString str;
-			str.Format("Missing PropertyID %d as specified in BDataColumns - replacing it with Name property", rci.m_lngPropertyID);
+			str.Format(_T("Missing PropertyID %d as specified in BDataColumns - replacing it with Name property"), rci.m_lngPropertyID);
 			AfxMessageBox(str);
 			rci.m_lngPropertyID = propName;
 			pobjPropDef = pDoc->GetObject(propName);

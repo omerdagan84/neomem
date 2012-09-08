@@ -47,7 +47,7 @@ BOOL BDataBoolean::SetBDataText(const CString& str, BObject* pobjPropertyDef /* 
 	else
 	{
 		if (bShowErrorMessage)
-			AfxMessageBox("Invalid boolean value. Should be \"yes\" or \"no\". Please try again.");
+			AfxMessageBox(_T("Invalid boolean value. Should be \"yes\" or \"no\". Please try again."));
 		return FALSE;
 	}
 	return TRUE;

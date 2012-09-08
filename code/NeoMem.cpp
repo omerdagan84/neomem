@@ -2425,6 +2425,10 @@ void CNeoMem::DoTests() {
 		// pdoc = CNeoDoc::Create(); //?
 		CNeoMem::OnFileNew();
 		CNeoDoc* pdoc = CNeoDoc::GetDoc();
+		ASSERT_VALID(pdoc);
+
+		CNeoDoc& doc = *pdoc;
+//		CNeoDoc& doc = CNeoDoc::GetDoc();
 
 //		CUI* pui = this;
 //		CNeoMem* pui = this;
@@ -2437,17 +2441,53 @@ void CNeoMem::DoTests() {
 		// it's pretty entwined in cneodoc though. 
 
 		// add folder for fish
-		HOBJECT hobjParent = pdoc->GetCurrentObject();
-		HOBJECT hobjFishFolder = pdoc->CreateObject(classFolder, "Fish", hobjParent);
-		pdoc->AddObject(hobjFishFolder); // Add object to database (and tell views)
+//		HOBJECT hobjParent = pdoc->GetCurrentObject();
+//		HOBJECT hobjFishFolder = pdoc->CreateObject(classFolder, "Fish", hobjParent);
+//		pdoc->AddObject(hobjFishFolder); // Add object to database (and tell views)
 
-//		HOBJECT hobjFishFolder = pdoc->CreateFolder("Fish", hobjParent);
+		// or
+		// return id or hobj? 
+		// can get hobj from id
+		// or viceversa
+		// but id is more lasting. mebbe.
+		// hobject is opaque - we can make what we want of it. 
+		// and not use it as a pointer. 
 
-		// should just be one of these? 
-//		HOBJECT hobjFishFolder = pdoc->AddObject(classFolder, "fish");
-//		HOBJECT hobjFishFolder = pdoc->AddFolder("Fish");
-//		HOBJECT hobjFishFolder = pdoc->CreateFolder("Fish");
-//		HOBJECT hobjFishFolder = BObject::CreateFolder("Fish");
+		// this is an object of class 'folder', not something in the 'class' folder. confusing. 
+//		HOBJECT hobjFishFolder = doc.NewObject(classFolder, "fish");
+		OBJID idFishFolder = doc.NewObject(classFolder, "fish");
+
+//		DObject dobjFishFolder = doc.NewObject(classFolder, "fish");
+
+//		HOBJECT hobj2 = doc.FindObject(classFolder, "fish");
+//		HOBJECT hobj2 = doc.GetObject(classFolder, "fish");
+//		assert(hobjFishFolder == hobj2);
+
+
+		// set description
+		// this would need a variant data type -
+//		doc.SetPropertyValue(hobjFishFolder, propDescription, "a thing that swims in the water");
+
+		CString strDesc("fish i'm thinking of getting");
+		doc.SetPropertyString(idFishFolder, propDescription, strDesc);
+
+		// check it
+		CString str = doc.GetPropertyString(idFishFolder, propDescription);
+		ASSERT(str==strDesc);
+
+
+		// higher level interface
+//		doc.New("folder","fish");
+//		doc.New("class","fish");
+//		doc.New("fish","plecy");
+
+		// higher
+//		doc.Parse("add folder fish");
+//		doc.Parse("add class fish");
+//		doc.Parse("goto fish folder");
+//		doc.Parse("add fish plecy");
+
+		// cf mkdir fish
 
 
 		// add a fish class
@@ -2456,10 +2496,42 @@ void CNeoMem::DoTests() {
 //		pdoc->AddObject(hobjFishClass); // ugh, have to add it also!
 //		OBJID classFish = hobjFishClass->GetObjectID();
 		
-		HOBJECT hobjFishClass = pdoc->CreateClass("Fish");
-		pdoc->AddObject(hobjFishClass); // ugh, have to add it also!
-		OBJID classFish = hobjFishClass->GetObjectID(); // ugh
+//x		HOBJECT hobjFishClass = doc.NewObject(classClass, "Fish");
+		OBJID idFishClass = doc.NewObject(classClass, "Fish");
 
+
+		{
+			// check location of new object
+//x			HOBJECT hobj = doc.GetPropertyLink(hobjFishClass, propLocation); 
+//x			HOBJECT hobj2 = doc.GetObject(folderClasses);
+//x			ASSERT(hobj == hobj2);
+			OBJID id = doc.GetPropertyLink(idFishClass, propLocation); 
+			ASSERT(id == folderClasses);
+
+			// double check id of location
+//x			OBJID id = doc.GetObjectID(hobj);
+//x			ASSERT(id == folderClasses);
+		}
+
+
+		{
+			// set description
+			CString strDesc("a thing that swims in the water");
+			doc.SetPropertyString(idFishClass, propDescription, strDesc);
+
+			// check it
+			CString str = doc.GetPropertyString(idFishClass, propDescription);
+			ASSERT(str==strDesc);
+		}
+
+
+		// add a fish to the fish folder
+//		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
+
+		OBJID idPlecy = doc.NewObject(idFishClass, "plecy", idFishFolder);
+		doc.SetPropertyString(idPlecy, propDescription, "plecostomus");
+
+/*
 		
 		// import a new icon
 
@@ -2481,13 +2553,7 @@ void CNeoMem::DoTests() {
 		// ie something to mimic the user command. 
 
 
-		// add a fish to the fish folder
-//		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
-		HOBJECT hobjPlecy = pdoc->CreateObject(classFish, "Plecy", hobjFishFolder);
-		pdoc->AddObject(hobjPlecy); // ugh
 
-		//. should just be
-//		HOBJECT hobjPlecy = pdoc->AddObject(classFish, "Plecy");
 
 		// pass it the ui, which is like the callback object. 
 		// it'll call the ui to get info from the user. 
@@ -2497,18 +2563,31 @@ void CNeoMem::DoTests() {
 		// like this one!
 //,		pdoc->UIAddNewObject2(gpgui);
 
+*/
 
 		// set folder default to fish class
-//		pdoc->UIChangeObjectContents(hobjFishClass);
 		// This will set document modified flag and update views
-		hobjFishFolder->SetPropertyLink(propDefaultClass, hobjFishClass);
+		doc.SetPropertyLink(idFishFolder, propDefaultClass, idFishClass);
+//			pdoc->UIChangeObjectContents(hobjFishClass);
+
+		{
+			OBJID id = doc.GetPropertyLink(idFishFolder, propDefaultClass);
+			ASSERT(id == idFishClass);
+		}
+
 
 		// add a new property 'price'
-//		pdoc->UIAddNewPropertyDef(); //, adapt this
-		HOBJECT hobjPrice = pdoc->CreateProperty("Price", proptypeCurrency, "how much it costs to buy");
-		pdoc->AddObject(hobjPrice); // Add object to database (and tell views)
-		OBJID propPrice = hobjPrice->GetObjectID();
 
+//		pdoc->UIAddNewPropertyDef(); //, adapt this
+
+		OBJID idPrice = doc.NewProperty("Price", proptypeCurrency, "how much it costs");
+
+
+		// add to fish class
+//		doc.SetPropertyLink(
+		doc.AddPropertyLink(idFishClass, propObjectProperties, idPrice);
+
+/*
 		// set plecy's price
 		hobjPlecy->SetPropertyText(propPrice, "$1.34");
 
@@ -2537,7 +2616,7 @@ void CNeoMem::DoTests() {
 		// convert the prop to a string
 //		hobjPrice->SetPropertyData(propPropType, proptypeString);
 
-
+*/
 
 	}
 	catch (CException* e) {

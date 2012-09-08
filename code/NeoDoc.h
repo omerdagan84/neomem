@@ -91,6 +91,7 @@ public:
 	// Operations
 	void AddObject(HOBJECT hobj, CView* pviewIgnore = NULL);
 	BOOL AddObjectToIndex(HOBJECT hobj);
+	BOOL AddPropertyLink(OBJID id, OBJID idProperty, OBJID idValue);
 	BData* CreateBData(OBJID idClassOrProperty);
 	BData* CreateBDataFromPropertyType(OBJID idPropertyType);
 	HOBJECT CreateObject(const OBJID idClass, const CString& strName, BObject* pobjParent = NULL, OBJID idObject = 0, OBJID idIcon = 0, ULONG lngFlags = 0);
@@ -109,7 +110,10 @@ public:
 	ULONG GetNextObjectID(); // get next available objectid
 	CString GetNumberOfObjectsString();
 	BObject* GetObject(OBJID idObject);
+	OBJID GetObjectID(HOBJECT hobj);
 	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
+	OBJID GetPropertyLink(OBJID id, OBJID idProperty);
+	CString GetPropertyString(OBJID id, OBJID idProperty);
 	BObject* GetRoot() { return m_pobjRoot; }; // get the root object of the document
 	ULONG GetSplitterPos() { return m_lngSplitterPos; };
 	BObject* GetTargetObject();
@@ -118,6 +122,9 @@ public:
 	BOOL IsBObjectValid(BObject* pobj);
 	BOOL IsSettingCurrentObject() { return m_bSettingCurrentObject; } ;
 	BOOL IsTargetSingle();
+//x	HOBJECT NewObject(const OBJID idClass, const CString& strName, HOBJECT hobjLocation = NULL);
+	OBJID NewObject(const OBJID idClass, const CString& strName, OBJID idLocation = NULL);
+	OBJID NewProperty(const CString& strName, OBJID idPropType, const CString& strDescription);
 	void RemoveObjectFromIndex(OBJID idObject);
 	BOOL SaveModifiedBackup();
 	int SearchForText(BObject* pobjStart, OBJID idProperty, CString strFindText, BObjects& aResults, 
@@ -125,6 +132,8 @@ public:
 					BOOL bSearchStartObject = FALSE, BOOL bOriginalCall = TRUE);
 	void SetCurrentObject(BObject* pobjCurrent, CView* pSender = 0, BOOL bNavigating = FALSE);
 	virtual void SetModifiedFlag(BOOL bModified = TRUE);
+	BOOL SetPropertyLink(OBJID id, OBJID idProperty, OBJID idValue);
+	BOOL SetPropertyString(OBJID id, OBJID idProperty, const CString& strValue);
 	void SetRoot(BObject* pobj);
 	void SetTargetObject(BObject* pobj);
 	void SetVersionDataModel(int n) { m_nVersionDataModel = n; };
@@ -205,7 +214,6 @@ public:
 
 	// Implementation
 private:
-//	BDataLink m_datTarget; // Object or objects which will be acted on by the object command handlers
 	BObject* m_pobjTarget; // Object which will be acted on by the object command handlers
 
 	BOOL OnOpenDocumentEx(LPCTSTR lpszPathName);
@@ -254,6 +262,7 @@ protected:
 	afx_msg void OnCmdEditClasses();
 	afx_msg void OnCmdPropertyWizard();
 	afx_msg void OnCmdFileDeleteAll();
+	afx_msg void OnFileSave();
 	afx_msg void OnNavigateBack();
 	afx_msg void OnNavigateForward();
 	afx_msg void OnUpdateNavigateBack(CCmdUI* pCmdUI);
@@ -288,8 +297,6 @@ protected:
 	afx_msg void OnFileSecurity();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-public:
-	afx_msg void OnFileSave();
 };
 
 
