@@ -11,7 +11,7 @@
 #pragma once
 
 
-#include "NeoDoc.h" //` for neodoc reference
+#include "BDoc.h" //` for neodoc reference
 
 
 // Windows 2000 version of OPENFILENAME.
@@ -45,7 +45,7 @@ public:
 // Attributes
 public:
 	int GetFilterIndex();
-	CNeoDoc* m_pDoc; //` pointer to document
+	BDoc* m_pDoc; //` pointer to document
 	BOOL m_bShowOptionButton; //` true if want to show option button in save mode (eg set false on export file)
 protected:
 	OPENFILENAMEEX m_ofnEx; // new Windows 2000 version of OPENFILENAME

@@ -10,7 +10,7 @@
 
 #include "BDataColumns.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 #ifdef _DEBUG
@@ -73,7 +73,7 @@ BOOL CDialogEditFolder::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// Get document
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
 
 	// Initialize listview

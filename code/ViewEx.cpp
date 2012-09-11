@@ -100,9 +100,9 @@ int CViewEx::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Get document pointer
 	// MFC presumably sets m_pDocument before calling this. 
-//	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNeoDoc)));
-//	m_pDoc = (CNeoDoc*) m_pDocument;
-	m_pDoc = DYNAMIC_DOWNCAST(CNeoDoc, m_pDocument);
+//	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(BDoc)));
+//	m_pDoc = (BDoc*) m_pDocument;
+	m_pDoc = DYNAMIC_DOWNCAST(BDoc, m_pDocument);
 
 	m_nTitleBarHeight = 20; //. how do we get this? base on text height
 //		CFont* pfontOld = pDC->SelectObject(&theApp.m_fontControls);
@@ -226,20 +226,20 @@ void CViewEx::Dump(CDumpContext& dc) const
 }
 
 /*
-CNeoDoc* CViewEx::GetDocument() // non-debug version is inline
+BDoc* CViewEx::GetDocument() // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNeoDoc)));
-	return (CNeoDoc*)m_pDocument;
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(BDoc)));
+	return (BDoc*)m_pDocument;
 }
 */
 
 #endif //_DEBUG
 
 /*
-CNeoDoc* CViewEx::GetDocument()
+BDoc* CViewEx::GetDocument()
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNeoDoc)));
-	return (CNeoDoc*)m_pDocument;
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(BDoc)));
+	return (BDoc*)m_pDocument;
 }
 */
 

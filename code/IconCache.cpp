@@ -9,7 +9,7 @@
 #include "IconCache.h"
 #include "NeoMem.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObject.h"
 #include "ConstantsDatabase.h"
 #include "BDataIcon.h"
@@ -83,7 +83,7 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 	HICON hIcon = 0;
 	int nIndex = -1;
 
-	CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, m_pDocument);
+	BDoc* pDoc = DYNAMIC_DOWNCAST(BDoc, m_pDocument);
 
 	// Use default if none specified
 	if (lngIconID == 0) lngIconID = iconDefault;

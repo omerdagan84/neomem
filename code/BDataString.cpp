@@ -5,7 +5,7 @@
 #include "precompiled.h"
 #include "BDataString.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 #include "NeoMem.h"
 #include "DialogEditString.h"
@@ -47,7 +47,7 @@ BOOL BDataString::SetBDataText(const CString& str, BObject* pobjPropertyDef /* =
 
 
 
-LPCTSTR BDataString::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataString::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	return m_strText;

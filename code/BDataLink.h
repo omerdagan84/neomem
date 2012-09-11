@@ -25,8 +25,8 @@ public:
 	virtual BData* CreateCopy();
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
-	virtual LPCTSTR GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
-	virtual BOOL IsValid(CNeoDoc* pDoc);
+	virtual LPCTSTR GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
+	virtual BOOL IsValid(BDoc* pDoc);
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
@@ -36,13 +36,13 @@ public:
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 
 public:
-	void ConvertToHardLinks(CNeoDoc* pDoc);
+	void ConvertToHardLinks(BDoc* pDoc);
 	void ConvertToSoftLinks();
 	void ClearMemory();
 	BOOL CreateCopyFrom(BDataLink* pdatSource);
 	void CreateMultipleArray();
 	int AddLink(BObject* pobj);
-	int AddLinkID(ULONG lngObjectID, CNeoDoc* pDoc);
+	int AddLinkID(ULONG lngObjectID, BDoc* pDoc);
 	BOOL FindReferences(ULONG lngObjectID);
 	BObject* GetLink();
 	BObject* GetLinkAt(int nIndex);
@@ -59,7 +59,7 @@ public:
 	void SetSingle();
 	void SetMultiple();
 
-	static bool Test(CNeoDoc* pdoc);
+	static bool Test(BDoc* pdoc);
 
 private:
 	// This will either store a pointer to a pobj, or a pointer to an array of pobjs.

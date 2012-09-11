@@ -358,7 +358,7 @@ void CFrameMain::OnSysChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 //DEL 	
 //DEL 	CString strFilename;
 //DEL 	CString strTitle = _T("NeoMem");
-//DEL 	CNeoDoc* pDoc = (CNeoDoc*) GetActiveDocument();
+//DEL 	BDoc* pDoc = (BDoc*) GetActiveDocument();
 //DEL 	if (pDoc)
 //DEL 	{
 //DEL 		strFilename = pDoc->GetTitle();
@@ -780,7 +780,7 @@ CDocument* CFrameMain::GetActiveDocumentMDI()
 	if (!pDoc)
 		return NULL;
 	// Fail if doc is of wrong kind
-//	if (!pDoc->IsKindOf(RUNTIME_CLASS(CNeoDoc)))
+//	if (!pDoc->IsKindOf(RUNTIME_CLASS(BDoc)))
 //		return NULL;
 	return pDoc;
 }

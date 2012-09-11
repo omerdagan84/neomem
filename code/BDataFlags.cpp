@@ -5,7 +5,7 @@
 #include "precompiled.h"
 #include "BDataFlags.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObject.h"
 
 #include "NeoMem.h"
@@ -52,7 +52,7 @@ BOOL BDataFlags::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 
 
 // Get text representation of data into string
 //, this could look for values in a system folder containing flag value objects
-LPCTSTR BDataFlags::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataFlags::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	// Show numbers if in admin, for now
 	if (theApp.m_bAdmin)

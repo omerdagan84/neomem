@@ -7,7 +7,7 @@
 #pragma once
 
 #include "ListCtrlEx.h"
-class CNeoDoc;
+class BDoc;
 
 
 class CDialogPrint : public CDialog
@@ -22,7 +22,7 @@ public:
 
 // Public Attributes
 public:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	ULONG m_lngSelectedViewID;
 	BOOL	m_bPrintHeaderFooter;
 

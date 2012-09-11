@@ -4,7 +4,7 @@
 
 #include "precompiled.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObject.h"
 #include "BObjects.h"
 #include "ConstantsDatabase.h"

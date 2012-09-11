@@ -4,7 +4,7 @@
 
 #include "precompiled.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BDataLink.h"
 #include "BDataPersonName.h"
 #include "BObject.h"
@@ -54,7 +54,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	ASSERT(IsHard());
 
 	// Get document
-	CNeoDoc* pDoc = pobjPropertyDef->GetDoc();
+	BDoc* pDoc = pobjPropertyDef->GetDoc();
 	ASSERT_VALID(pDoc);
 
 	// Get property we're editing
@@ -287,7 +287,7 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 // Get text representation of link(s) into a string, ie get list of objects linked to. 
 // Eg "Houston, Austin, Berkeley Heights"
 // pass true for bMachineVersion to get exportable version
-LPCTSTR BDataLink::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);
@@ -710,7 +710,7 @@ int BDataLink::AddLink(BObject *pobj)
 // Add a link to the specified object, assuming we're in multilink mode.
 // Returns the index of the new link in the array, or -1 if not added (e.g. if duplicate).
 // Doesn't allow adding duplicate objects!
-int BDataLink::AddLinkID(ULONG lngObjectID, CNeoDoc *pDoc)
+int BDataLink::AddLinkID(ULONG lngObjectID, BDoc *pDoc)
 {
 	ASSERT_VALID(this);
 	ASSERT(IsMultiple());
@@ -1031,7 +1031,7 @@ BOOL BDataLink::UIHandleCommand(UINT nCommandID)
 
 // Check if objects linked to are still valid.
 // Used by undo routines.
-BOOL BDataLink::IsValid(CNeoDoc* pDoc)
+BOOL BDataLink::IsValid(BDoc* pDoc)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);
@@ -1144,7 +1144,7 @@ void BDataLink::ConvertToSoftLinks()
 
 
 // Convert soft links to hard links. 
-void BDataLink::ConvertToHardLinks(CNeoDoc* pDoc)
+void BDataLink::ConvertToHardLinks(BDoc* pDoc)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);
@@ -1241,7 +1241,7 @@ void BDataLink::CreateMultipleArray()
 
 
 
-bool BDataLink::Test(CNeoDoc* pdoc)
+bool BDataLink::Test(BDoc* pdoc)
 {
 	// get some object to mess with
 //	BObject* pobj = pdoc->GetCurrentObject();

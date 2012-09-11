@@ -276,9 +276,6 @@
     <ClCompile Include="..\code\ModuleVersion.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\NeoDoc.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="..\code\NeoDocTemplate.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -460,6 +457,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\DSource.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\BDoc.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -734,9 +734,6 @@
     <ClInclude Include="..\code\ModuleVersion.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="..\code\NeoDoc.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\NeoDocTemplate.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -927,6 +924,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\DSource.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\BDoc.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

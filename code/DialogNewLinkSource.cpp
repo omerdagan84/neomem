@@ -12,7 +12,7 @@
 #include "HelpIDs.h"
 
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 
@@ -52,7 +52,7 @@ BOOL CDialogNewLinkSource::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// Get document
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 
 	// Set bold font
 	m_lblClass.SetFont(&theApp.m_fontControlsBold);

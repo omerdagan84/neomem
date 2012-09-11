@@ -11,7 +11,7 @@
 #include "DialogEditName.h"
 
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 #ifdef _DEBUG
@@ -195,13 +195,13 @@ void CPageFileGeneral::DisplayInfo()
 	// Encryption
 	switch (m_pDoc->GetEncryptionType())
 	{
-	case (CNeoDoc::encryptNone):
+	case (BDoc::encryptNone):
 		str = "None";
 		break;
-	case (CNeoDoc::encryptRC4):
+	case (BDoc::encryptRC4):
 		str = "RSA RC4 Encryption"; // 40bit
 		break;
-//	case (CNeoDoc::encryptAES):
+//	case (BDoc::encryptAES):
 //		str = "Strong Encryption (128 bit AES/Rijndael)";
 //		break;
 	default:

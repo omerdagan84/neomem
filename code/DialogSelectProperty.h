@@ -10,7 +10,7 @@
 #include "ListCtrlEx.h"
 #include "XComboBoxEx.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObject.h"
 
 
@@ -57,7 +57,7 @@ public:
 
 // Implementation
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	BObject* m_pobjClasses;
 	BObject* m_pobjProperties;
 

@@ -7,7 +7,7 @@
 #include "precompiled.h"
 #include "BDataPersonName.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 #include "NeoMem.h"
 #include "DialogEditPersonName.h"
@@ -98,7 +98,7 @@ BOOL BDataPersonName::SetBDataText(const CString& str, BObject* pobjPropertyDef 
 
 
 // Get text representation of data into string
-LPCTSTR BDataPersonName::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataPersonName::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);

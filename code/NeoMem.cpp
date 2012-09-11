@@ -37,7 +37,7 @@
 using namespace nsPath;
 
 #include "BDataPersonName.h" // for constants
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "ConstantsDatabase.h"
 
 
@@ -484,10 +484,10 @@ BOOL CNeoMem::InitInstance() {
 	// to create more than one view object
 //	CMultiDocTemplate* pDocTemplate;
 //	pDocTemplate = new CMultiDocTemplate(
-	CNeoDocTemplate* pDocTemplate;
-	pDocTemplate = new CNeoDocTemplate(
+	BDocTemplate* pDocTemplate;
+	pDocTemplate = new BDocTemplate(
 		IDR_NEOMEM_TYPE,
-		RUNTIME_CLASS(CNeoDoc),	// Document
+		RUNTIME_CLASS(BDoc),	// Document
 		RUNTIME_CLASS(CFrameChild),	// Custom MDI child frame
 		RUNTIME_CLASS(CViewTabs));	// View
 	AddDocTemplate(pDocTemplate);
@@ -1127,7 +1127,7 @@ void CNeoMem::OnCmdHelpAbout() {
 void CNeoMem::OnCmdViewOptions() {
 
 	// Before calling options, save any current data, if any
-	CNeoDoc* pDoc = CNeoDoc::GetDoc();
+	BDoc* pDoc = BDoc::GetDoc();
 	if (pDoc) {
 		ASSERT_VALID(pDoc);
 		pDoc->UpdateAllViewsEx(NULL, hintSave, pDoc->GetCurrentObject());
@@ -1349,7 +1349,7 @@ void CNeoMem::OnCmdViewHeader() {
 	m_bDisplayHeader = !m_bDisplayHeader;
 	// Refresh display
 	// mainly just need to resize the header view with repaint TRUE
-	CNeoDoc::GetDoc()->UpdateAllViewsEx(NULL, hintResize);
+	BDoc::GetDoc()->UpdateAllViewsEx(NULL, hintResize);
 }
 
 void CNeoMem::OnUpdateViewHeader(CCmdUI* pCmdUI) {
@@ -1374,9 +1374,9 @@ void CNeoMem::OnCmdViewHeaderFont() {
 //			m_pMainWnd->UpdateWindow();
 			// Refresh display
 //			CHint h;
-//			h.m_pobjObject = CNeoDoc::GetDoc()->GetCurrentObject();
+//			h.m_pobjObject = BDoc::GetDoc()->GetCurrentObject();
 //			h.m_lngPropertyID = propName;
-//			CNeoDoc::GetDoc()->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+//			BDoc::GetDoc()->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 			UpdateAllDocumentViews(hintRefresh);
 		}
 	}
@@ -1428,7 +1428,7 @@ BOOL CNeoMem::SaveAllModified() {
 		while (pos) {
 			// Send hintSave to document - will set document modified flag if any
 			// changes are saved to the document.
-			CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDocTemplate->GetNextDoc(pos));
+			BDoc* pDoc = DYNAMIC_DOWNCAST(BDoc, pDocTemplate->GetNextDoc(pos));
 			ASSERT_VALID(pDoc);
 			BObject* pobjCurrent = pDoc->GetCurrentObject();
 			ASSERT_VALID(pobjCurrent);
@@ -1790,7 +1790,7 @@ void CNeoMem::UpdateAllDocumentObjects(ULONG lngMsg, BOOL bRecurse /* = TRUE */)
 		// Walk through documents
 		POSITION posDoc = pDocTemplate->GetFirstDocPosition();
 		while (posDoc) {
-			CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDocTemplate->GetNextDoc(posDoc));
+			BDoc* pDoc = DYNAMIC_DOWNCAST(BDoc, pDocTemplate->GetNextDoc(posDoc));
 			ASSERT_VALID(pDoc);
 			// Send message to all bobjects
 			BObject* pobj = pDoc->GetRoot();
@@ -2191,7 +2191,7 @@ BOOL CNeoMem::SaveAllModifiedBackup(CString& strMsg) {
 			// Send hintSave to document - will set document modified flag if any
 			// changes are saved to the document.
 			try {
-				CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDocTemplate->GetNextDoc(pos));
+				BDoc* pDoc = DYNAMIC_DOWNCAST(BDoc, pDocTemplate->GetNextDoc(pos));
 				ASSERT_VALID(pDoc);
 				BObject* pobjCurrent = pDoc->GetCurrentObject();
 				pDoc->UpdateAllViewsEx(NULL, hintSave, pobjCurrent);
@@ -2413,7 +2413,7 @@ void CNeoMem::Export(BObject *pobj) {
 	// and clicked on export
 
 	// First make sure the current item's text is saved
-	CNeoDoc* pdoc = CNeoDoc::GetDoc();
+	BDoc* pdoc = BDoc::GetDoc();
 	BObject* pobjCurrent = pdoc->GetCurrentObject();
 	pdoc->UpdateAllViewsEx(NULL, hintSave, pobjCurrent);
 

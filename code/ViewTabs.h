@@ -14,7 +14,7 @@
 #include "TabCtrlEx.h"
 #include "ViewEx.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 class BDataViews;
 
 
@@ -62,7 +62,7 @@ public:
 public:
 	CObArray m_aCurrentViews; // array of current view objects
 	CTabCtrlEx m_tbc;
-//	CNeoDoc* m_pDoc;
+//	BDoc* m_pDoc;
 
 
 // Attributes

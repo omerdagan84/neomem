@@ -11,7 +11,7 @@
 #include "ListCtrlEx.h"
 
 #include "BDataViews.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 class CDialogViews : public CDialog
@@ -22,7 +22,7 @@ public:
 
 // Public Attributes
 public:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	BDataViews* m_pdatViews;
 	int m_nTab;
 

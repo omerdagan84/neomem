@@ -8,7 +8,7 @@
 #include "neomem.h"
 #include "DialogInsertLink.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 #ifdef _DEBUG

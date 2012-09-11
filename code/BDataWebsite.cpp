@@ -6,7 +6,7 @@
 
 #include "BDataWebsite.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 #include "NeoMem.h"
 #include "DialogEditString.h"
@@ -45,7 +45,7 @@ BOOL BDataWebsite::SetBDataText(const CString& str, BObject* pobjPropertyDef /* 
 
 
 
-LPCTSTR BDataWebsite::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataWebsite::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	return m_strText;

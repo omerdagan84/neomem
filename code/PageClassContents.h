@@ -15,7 +15,7 @@ class CSheetWizard;
 
 #include "BDataColumns.h"
 class BObject;
-class CNeoDoc;
+class BDoc;
 
 
 class CPageClassContents : public CPropertyPage
@@ -47,7 +47,7 @@ private:
 	//}}AFX_DATA
 
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;
 //	BDataColumns* m_pdatColumns;

@@ -50,7 +50,7 @@ CPageClassIntro::~CPageClassIntro() {
 BOOL CPageClassIntro::OnInitDialog() {
 
 	// Get document and parent sheet
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	m_psh = STATIC_DOWNCAST(CSheetWizard, GetParent());
 	ASSERT_VALID(m_psh);
 

@@ -5,13 +5,13 @@
 
 #pragma once
 
-// versionFileStructure: Version of the physical layout of the file - CNeoDoc and 
+// versionFileStructure: Version of the physical layout of the file - BDoc and 
 // BObject and BData member variables, etc.
 // The program should be able to read all versions up to the current version.
-// If there are any future changes to the file structure (CNeoDoc, BObject, BObjects, 
+// If there are any future changes to the file structure (BDoc, BObject, BObjects, 
 // BDatas, etc) then this version number should be increased by one and all 
 // serialization code equipped to handle it.
-// See also: versionDataModel = in NeoDoc.h, which describes the version of the system 
+// See also: versionDataModel = in BDoc.h, which describes the version of the system 
 // classes and properties, etc.
 //ULONG const versionFileStructure = 1;
 ULONG const versionFileStructure = 2; // added encryption, 
@@ -126,7 +126,7 @@ ULONG const proptypeRtf = 2021; // goes by "String (Formatted)" - propRtfText is
 ULONG const proptypeWebsite = 2022; 
 ULONG const proptypeFile = 2023; 
 ULONG const proptypeFolder = 2024;
-// Note: Be sure to add handler for any new property types in CNeoDoc::CreateBDataFromPropertyType!
+// Note: Be sure to add handler for any new property types in BDoc::CreateBDataFromPropertyType!
 
 
 

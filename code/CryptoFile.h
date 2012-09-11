@@ -10,7 +10,7 @@
 // track of which parts of the buffer to encrypt.
 
 
-// CNeoDoc   <->   CCryptoArchive   <->   CCryptoFile    <->   buffer   <->   disk
+// BDoc   <->   CCryptoArchive   <->   CCryptoFile    <->   buffer   <->   disk
 
 // what is the buffer size of the cfile??? we need our cfileex's to match it
 // 4096 bytes is default, specified in carchive creation

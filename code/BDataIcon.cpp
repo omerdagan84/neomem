@@ -81,7 +81,7 @@ BOOL BDataIcon::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 
 // Get text representation of data into string
-LPCTSTR BDataIcon::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataIcon::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	// Get number of images in file
 	//, could also say format of images (size, color depth)

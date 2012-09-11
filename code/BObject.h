@@ -70,7 +70,7 @@ public:
 	BObject* GetClassObject();
 	BData* GetBData() { return m_pdat; };
 	ULONG GetDefaultIconID();
-	CNeoDoc* GetDoc() { return m_pDoc; };
+	BDoc* GetDoc() { return m_pDoc; };
 	BOOL GetFlag(ULONG lngFlag);
 	ULONG GetFlags() { return m_lngFlags; };
 	OBJID GetIconID();
@@ -113,7 +113,7 @@ public:
 	BOOL SetClassID(OBJID lngNewClassID);
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
 	BOOL SetData(BData* pData);
-	void SetDoc(CNeoDoc* pdoc) { m_pDoc = pdoc; }; 
+	void SetDoc(BDoc* pdoc) { m_pDoc = pdoc; }; 
 	void SetFlag(ULONG lngFlag, BOOL bValue = TRUE, BOOL bRecurse = FALSE);
 	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; };
 	BOOL SetIconID(OBJID lngIconID);
@@ -159,7 +159,7 @@ private:
 
 
 	// These are not serialized
-	CNeoDoc* m_pDoc; // pointer to the document which stores this bobject
+	BDoc* m_pDoc; // pointer to the document which stores this bobject
 	CStringEx m_strTextCache; // This is a cache for the text-representation for this data object
 //	int m_bStringValid; // Flag indicating if string cache is valid. Set to false when data changes
 

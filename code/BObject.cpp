@@ -12,7 +12,7 @@
 #include "BDataString.h"
 #include "BObject.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 //. get rid of these dependencies
@@ -150,7 +150,7 @@ void BObject::Serialize(CArchive& ar)
 	// Read object from file
 	{
 		// Store pointer to document in this bobject
-		m_pDoc = DYNAMIC_DOWNCAST(CNeoDoc, ar.m_pDocument);
+		m_pDoc = DYNAMIC_DOWNCAST(BDoc, ar.m_pDocument);
 		ASSERT_VALID(m_pDoc);
 
 		// Get version of object as stored in file
@@ -1818,7 +1818,7 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 // Search through document, looking for links to this object.
 // Returns total number of links.
 //. add objects that link to this object to the array
-//, move this to cNeoDoc - like Search
+//, move this to BDoc - like Search
 int BObject::GetLinks(BObjects &aObjects, BObject* pobjStart)
 {
 	ASSERT_VALID(this);
@@ -3078,7 +3078,7 @@ void BObject::ConvertToHardLinks(BOOL bRecurse)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
-	CNeoDoc* pDoc = this->GetDoc();
+	BDoc* pDoc = this->GetDoc();
 
 	// Walk through all properties and convert to hard links.
 	// Note: Some properties may already be hard links. 

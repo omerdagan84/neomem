@@ -85,7 +85,7 @@ ULONG BData::GetMemoryUsed(BOOL bRecursive) {
 }
 
 
-LPCTSTR BData::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion) {
+LPCTSTR BData::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion) {
 	m_strText = "No GetBDataText for this BData class";
 	return m_strText;
 }
@@ -114,7 +114,7 @@ BOOL BData::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */) {
 
 
 
-BOOL BData::IsValid(CNeoDoc* pDoc) {
+BOOL BData::IsValid(BDoc* pDoc) {
 	// default: is valid
 	return TRUE;
 }
@@ -123,7 +123,7 @@ BOOL BData::IsValid(CNeoDoc* pDoc) {
 void BData::ConvertToSoftLinks() {
 }
 
-void BData::ConvertToHardLinks(CNeoDoc* pDoc) {
+void BData::ConvertToHardLinks(BDoc* pDoc) {
 }
 
 

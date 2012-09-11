@@ -8,7 +8,7 @@
 #include "NeoMem.h"
 #include "DialogGetLocation.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObject.h"
 
 
@@ -80,7 +80,7 @@ BOOL CDialogGetLocation::OnInitDialog()
 		m_lblInstructions.SetWindowText(m_strInstructions);
 
 	// Get document
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
 
 	// Initialize treeview

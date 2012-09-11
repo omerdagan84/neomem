@@ -17,7 +17,7 @@
 #include "BData.h"
 
 class BObject;
-class CNeoDoc;
+class BDoc;
 
 
 // ViewInfo
@@ -48,7 +48,7 @@ public:
 	virtual BData* CreateCopy();
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
-	virtual LPCTSTR GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
+	virtual LPCTSTR GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
@@ -61,7 +61,7 @@ public:
 	BOOL RemoveView(ULONG lngViewID);
 	int GetTabCount();
 	int GetTabIndex(int nTab);
-	BOOL GetTabName(int nTab, CString& strName, CNeoDoc* pDoc);
+	BOOL GetTabName(int nTab, CString& strName, BDoc* pDoc);
 	int GetViewCount(int nTab);
 	ViewInfo& GetViewInfo(int nIndex);
 	int GetViewTab(ULONG lngViewID);

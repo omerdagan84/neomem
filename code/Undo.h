@@ -11,7 +11,7 @@
 
 #include "BObject.h"
 #include "BData.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 class CUndo  
@@ -27,7 +27,7 @@ public:
 	BOOL SaveDeleteProperty(BObject* pobj, ULONG lngPropertyID);
 
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	BObject* m_pobj;
 	ULONG m_lngObjectID;
 	ULONG m_lngPropertyID;

@@ -17,7 +17,7 @@
 
 #include "BObject.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 
@@ -270,7 +270,7 @@ void CFrameChild::SetSplitterPos(ULONG lngSplitterPos)
 // Export the entire document or selected item(s) to a rtf, plain text, or NeoMem file
 void CFrameChild::OnCmdFileExport()
 {
-	CNeoDoc* pdoc = DYNAMIC_DOWNCAST(CNeoDoc, GetActiveDocument());
+	BDoc* pdoc = DYNAMIC_DOWNCAST(BDoc, GetActiveDocument());
 	BObject* pobj = pdoc->GetObject(rootUser);
 	theApp.Export(pobj);
 }
@@ -282,7 +282,7 @@ void CFrameChild::OnCmdFileExport()
 void CFrameChild::OnCmdFileImport() 
 {
 	// Document handles importing
-	CNeoDoc* pDoc = DYNAMIC_DOWNCAST(CNeoDoc, GetActiveDocument());
+	BDoc* pDoc = DYNAMIC_DOWNCAST(BDoc, GetActiveDocument());
 	pDoc->Import();
 }
 
@@ -394,7 +394,7 @@ void CFrameChild::OnCmdViewPrevious()
 void CFrameChild::OnCmdEditDelete() 
 {
 	// assume user wants to delete current item
-	CNeoDoc* pDoc = (CNeoDoc*) GetActiveDocument();
+	BDoc* pDoc = (BDoc*) GetActiveDocument();
 	ASSERT_VALID(pDoc);
 	BObject* pobj = pDoc->GetCurrentObject();
 	ASSERT_VALID(pobj);
@@ -900,7 +900,7 @@ CViewEx* CFrameChild::GetCurrentView()
 // This is the default ID_OBJ_ADD handler.
 void CFrameChild::OnCmdAddObject() 
 {
-	CNeoDoc* pdoc = (CNeoDoc*) GetActiveDocument(); //cast
+	BDoc* pdoc = (BDoc*) GetActiveDocument(); //cast
 	BObject* pobjTarget = pdoc->GetTargetObject();
 
 	if (pobjTarget)

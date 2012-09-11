@@ -12,7 +12,7 @@
 #include "resource.h"
 class CSheetWizard;
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 class BObject;
 class BDataColumns;
 
@@ -42,7 +42,7 @@ private:
 	//}}AFX_DATA
 
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;
 	BObject* m_pobjPropertiesFolder;

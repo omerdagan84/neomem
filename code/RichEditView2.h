@@ -12,7 +12,7 @@
 
 #include "richeditctrlex.h"
 
-class CNeoDoc;
+class BDoc;
 class _AFX_RICHEDIT_STATE;  // private to implementation
 
 
@@ -54,7 +54,7 @@ public:
 	CRichEditCtrlEx& GetRichEditCtrlEx() const; //`
 	CRichEditDoc* GetDocument() const;
 
-	CNeoDoc* GetDocument(); //`
+	BDoc* GetDocument(); //`
 	BOOL FindNext();
 
 	// other attributes
@@ -258,8 +258,8 @@ inline CRichEditDoc* CRichEditView2::GetDocument() const
 //	return &theApp.m_redoc; 
 }
 */
-inline CNeoDoc* CRichEditView2::GetDocument()
-   { return (CNeoDoc*)m_pDocument; }
+inline BDoc* CRichEditView2::GetDocument()
+   { return (BDoc*)m_pDocument; }
 #endif
 
 

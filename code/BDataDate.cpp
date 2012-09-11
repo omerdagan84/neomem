@@ -6,7 +6,7 @@
 
 #include "BDataDate.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 #include "NeoMem.h"
@@ -226,7 +226,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 
 // Get text representation of date into string, eg "January 15, 1988".
-LPCTSTR BDataDate::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	// Return string if string flag is set
 	if (m_bitsFlags.Type == flagString)

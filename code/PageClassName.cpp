@@ -46,7 +46,7 @@ CPageClassName::~CPageClassName()
 BOOL CPageClassName::OnInitDialog() 
 {
 	// Get document and parent sheet
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
 	m_psh = DYNAMIC_DOWNCAST(CSheetWizard, GetParent());
 	ASSERT_VALID(m_psh);

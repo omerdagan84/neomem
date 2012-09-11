@@ -17,7 +17,7 @@
 
 
 class BObject;
-class CNeoDoc;
+class BDoc;
 
 
 class BData : public CObject {
@@ -32,12 +32,12 @@ public:
 	// Operations
 public:
 	virtual void ConvertToSoftLinks();
-	virtual void ConvertToHardLinks(CNeoDoc* pDoc);
+	virtual void ConvertToHardLinks(BDoc* pDoc);
 	virtual BData* CreateCopy();
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
-	virtual LPCTSTR GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
-	virtual BOOL IsValid(CNeoDoc* pDoc);
+	virtual LPCTSTR GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
+	virtual BOOL IsValid(BDoc* pDoc);
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);
 	virtual void ResetData(); // use this to reset bdata's m_bCacheValid flag
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);

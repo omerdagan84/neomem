@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "NeoDoc.h" //`
+#include "BDoc.h" //`
 
 
 class CDocManagerEx : public CDocManager 
@@ -23,11 +23,11 @@ public:
 
 // Operations
 	virtual BOOL DoPromptFileName(CString& fileName, UINT nIDSTitle, DWORD lFlags, BOOL bOpenFileDialog, CDocTemplate* pTemplate);
-	virtual BOOL DoPromptFileName2(CString& fileName, UINT nIDSTitle, DWORD lFlags, BOOL bOpenFileDialog, CDocTemplate* pTemplate, CNeoDoc* pDoc);
+	virtual BOOL DoPromptFileName2(CString& fileName, UINT nIDSTitle, DWORD lFlags, BOOL bOpenFileDialog, CDocTemplate* pTemplate, BDoc* pDoc);
 
 // Attributes
 private:
-	CNeoDoc* m_pDoc; //` pointer to document, specified in call to DoPromptFileName2
+	BDoc* m_pDoc; //` pointer to document, specified in call to DoPromptFileName2
 
 };
 

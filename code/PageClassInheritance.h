@@ -11,7 +11,7 @@
 #include "SheetWizard.h"
 #include "TreeCtrlEx.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObject.h"
 
 
@@ -35,7 +35,7 @@ private:
 	//}}AFX_DATA
 
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;
 

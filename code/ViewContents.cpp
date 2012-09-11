@@ -16,7 +16,7 @@
 #include "BDataColumns.h"
 #include "BDataLink.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 
@@ -370,7 +370,7 @@ void CViewContents::OnInitialUpdate() {
 
 	// Store pointer to document
 	// bad to do this here because it gets called AFTER OnUpdate!!
-//	m_pDoc = (CNeoDoc*) GetDocument();
+//	m_pDoc = (BDoc*) GetDocument();
 
 	// Call base class
 	// just calls OnUpdate with 0 0

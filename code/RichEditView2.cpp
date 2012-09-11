@@ -12,7 +12,7 @@
 #include "RichEditCtrlEx.h"
 #include "PrintInfoMore.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "ConstantsDatabase.h"
 
 
@@ -1755,13 +1755,13 @@ void CRichEditView2::Dump(CDumpContext& dc) const
 
 
 //. ole  CRichEditDoc* CRichEditView2::GetDocument() const // non-debug version is inline
-CNeoDoc* CRichEditView2::GetDocument() // non-debug version is inline
+BDoc* CRichEditView2::GetDocument() // non-debug version is inline
 {
 //	ASSERT(FALSE);
 //	return NULL;
 //. ole 	ASSERT(theApp.m_pRedoc->IsKindOf(RUNTIME_CLASS(CRichEditDoc)));
 //. ole 	return theApp.m_pRedoc;
-	CNeoDoc* pdoc = DYNAMIC_DOWNCAST(CNeoDoc, m_pDocument);
+	BDoc* pdoc = DYNAMIC_DOWNCAST(BDoc, m_pDocument);
 	ASSERT_VALID(pdoc);
 	return pdoc;
 }
@@ -2000,7 +2000,7 @@ void CRichEditView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	// all the routine does is initialize the print info object...
 //	CViewEx::OnBeginPrinting(pDC, pInfo);
 	CPrintInfoMore& rpim = theApp.m_printinfo;
-	CNeoDoc* pDoc = CNeoDoc::GetDoc();
+	BDoc* pDoc = BDoc::GetDoc();
 	rpim.Initialize(pDC);
 	rpim.InitFonts(pDC);
 	rpim.m_strViewName = _T("Text View"); //. get from view object!

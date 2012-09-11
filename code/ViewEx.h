@@ -13,7 +13,7 @@
 #include "FontEx.h"
 #include "BCMenu.h" // bcmenu
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObjects.h"
 
 
@@ -50,7 +50,7 @@ public:
 // Attributes
 protected:
 	BCMenu m_popmenu;
-	CNeoDoc* m_pDoc; // pointer to document associated with this view
+	BDoc* m_pDoc; // pointer to document associated with this view
 
 	// Drag Drop
 	BObjects m_aDragObjects; // array of objects being dragged - derived class should fill this and call DragStart.

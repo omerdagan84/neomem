@@ -30,7 +30,7 @@
 class BDataColumns;
 class BDataLink;
 class BObjects;
-class CNeoDoc;
+class BDoc;
 #include "BData.h"
 #include "BObject.h"
 
@@ -153,7 +153,7 @@ public:
 	// Public Attributes - part of the interface
 	//, should have other than m_ prefix?
 public:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	
 	ULONG m_nMode; // an eMode - normal/select cell/select row, etc
 

@@ -8,7 +8,7 @@
 #include "XComboBoxEx.h"
 
 #include "BObject.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "ConstantsDatabase.h"
 
 
@@ -119,7 +119,7 @@ int XComboBoxEx::AddObject(BObject *pobj, BObject *pobjParent /* = 0 */)
 	ASSERT_VALID(pobj);
 
 	// Get document
-	CNeoDoc* pDoc = pobj->GetDoc();
+	BDoc* pDoc = pobj->GetDoc();
 	ASSERT_VALID(pDoc);
 
 	// If parent specified, find the parent item and get its indent level
@@ -170,7 +170,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 	ASSERT_VALID(pobjStart);
 
 	// Get document
-	CNeoDoc* pDoc = pobjStart->GetDoc();
+	BDoc* pDoc = pobjStart->GetDoc();
 	ASSERT_VALID(pDoc);
 
 	// Set up structure used to add items

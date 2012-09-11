@@ -10,7 +10,7 @@
 #include "DialogEditName.h"
 #include "NeoMem.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BDataIcon.h"
 #include "ConstantsDatabase.h"
 
@@ -60,7 +60,7 @@ CPageClassIcon::~CPageClassIcon()
 BOOL CPageClassIcon::OnInitDialog() 
 {
 	// Get document and parent sheet
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	m_psh = STATIC_DOWNCAST(CSheetWizard, GetParent());
 	ASSERT_VALID(m_psh);
 

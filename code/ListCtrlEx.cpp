@@ -18,7 +18,7 @@
 #include "BDataNumber.h"
 #include "BObject.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 
@@ -3199,7 +3199,7 @@ void CListCtrlEx::SortByProperty(ULONG lngPropertyID /* = 0 */, int iDir /* = 0 
 
 // Sort the listview by the specified column. 
 // Calls SortByProperty.
-//void CListCtrlEx::SortByColumn(int nCol, CNeoDoc* pDoc, int iDir /* = 0 */)
+//void CListCtrlEx::SortByColumn(int nCol, BDoc* pDoc, int iDir /* = 0 */)
 void CListCtrlEx::SortByColumn(int nCol, int iDir /* = 0 */)
 {
 	ULONG lngPropertyID = GetColumnPropertyID(nCol);

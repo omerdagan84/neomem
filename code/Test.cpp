@@ -5,7 +5,7 @@
 
 
 #include "NeoMem.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "ConstantsDatabase.h" //. should be part of neodoc
 
 #include "DSource.h"
@@ -37,7 +37,7 @@ void CTest::DoTests(CNeoMem& app) {
 		// each module could have a test routine
 		// the test command would know about these and call them explicitly
 		// could also do various integrative tests
-//		CNeoDoc* pdoc = CNeoDoc::GetDoc();
+//		BDoc* pdoc = BDoc::GetDoc();
 //		BDataBoolean::Test(pdoc);
 //		BDataDate::Test(pdoc);
 //		BDataHyperlink::Test(pdoc);
@@ -55,17 +55,17 @@ void CTest::DoTests(CNeoMem& app) {
 		app.CloseAllDocuments(FALSE);
 
 		// better - 
-		// pdoc = new CNeoDoc(); //?
-		// pdoc = CNeoDoc::Create(); //?
+		// pdoc = new BDoc(); //?
+		// pdoc = BDoc::Create(); //?
 		// if there's app-specific stuff do that separately. 
 		//, mfc weird doctemplate stuff in filenew handler? override it and simplify? 
 		// but also ties in with mru files etc. 
 		app.OnFileNew();
-		CNeoDoc* pdoc = CNeoDoc::GetDoc();
+		BDoc* pdoc = BDoc::GetDoc();
 		ASSERT_VALID(pdoc);
 
-		CNeoDoc& doc = *pdoc;
-//		CNeoDoc& doc = CNeoDoc::GetDoc();
+		BDoc& doc = *pdoc;
+//		BDoc& doc = BDoc::GetDoc();
 
 //		DSource& ds = DSource(pdoc);
 
@@ -77,7 +77,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 		//, should document really know about current object? no, that's a ui thing. 
 		// there could be multiple ui's looking at the db. 
-		// it's pretty entwined in cneodoc though. 
+		// it's pretty entwined in BDoc though. 
 
 		// add folder for fish
 //		HOBJECT hobjParent = pdoc->GetCurrentObject();

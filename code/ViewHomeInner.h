@@ -11,7 +11,7 @@
 #include "FontEx.h"
 #include "StaticEx.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 class CViewHomeInner : public CScrollView
@@ -30,7 +30,7 @@ public:
 
 // Public Attributes
 public:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	CRect m_rMargins;
 	CStaticEx m_lblDescription;
 	CStaticEx m_lblTip;

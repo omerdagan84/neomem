@@ -15,7 +15,7 @@
 #include "ListCtrlEx.h"
 #include "Resource.h"
 
-class CNeoDoc;
+class BDoc;
 class BObject;
 class BDataLink;
 
@@ -84,7 +84,7 @@ public:
 	UINT m_nHelpID; // determines which help topic will be brought up for the dialog, since it has so many different modes.
 
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	CBitmap m_bmpUp;
 	CBitmap m_bmpDown;
 

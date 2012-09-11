@@ -1,5 +1,5 @@
 
-// CNeoDocTemplate
+// BDocTemplate
 // Extension to CMultiDocTemplate class
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -9,13 +9,13 @@
 #include "FrameChild.h"
 
 
-class CNeoDocTemplate : public CMultiDocTemplate
+class BDocTemplate : public CMultiDocTemplate
 {
-	DECLARE_DYNAMIC(CNeoDocTemplate)
+	DECLARE_DYNAMIC(BDocTemplate)
 
 public:
-	CNeoDocTemplate::CNeoDocTemplate(UINT nIDResource, CRuntimeClass* pDocClass, CRuntimeClass* pFrameClass, CRuntimeClass* pViewClass);
-	virtual ~CNeoDocTemplate();
+	BDocTemplate::BDocTemplate(UINT nIDResource, CRuntimeClass* pDocClass, CRuntimeClass* pFrameClass, CRuntimeClass* pViewClass);
+	virtual ~BDocTemplate();
 
 // Attributes
 public:
@@ -26,7 +26,7 @@ public:
 
 // Overrides
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CNeoDocTemplate)
+	//{{AFX_VIRTUAL(BDocTemplate)
 	public:
 	virtual CDocument* OpenDocumentFile(LPCTSTR lpszPathName, BOOL bMakeVisible = TRUE);
 	virtual void InitialUpdateFrame(CFrameWnd* pFrame, CDocument* pDoc, BOOL bMakeVisible = TRUE);
@@ -41,7 +41,7 @@ public:
 
 	// Generated message map functions
 protected:
-	//{{AFX_MSG(CNeoDocTemplate)
+	//{{AFX_MSG(BDocTemplate)
 		// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

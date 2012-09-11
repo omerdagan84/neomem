@@ -6,7 +6,7 @@
 
 #include "BDataColumns.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 
@@ -87,7 +87,7 @@ BOOL BDataColumns::SetBDataText(const CString& str, BObject* pobjPropertyDef /* 
 
 
 // Get text representation of data into string
-LPCTSTR BDataColumns::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataColumns::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	m_strText = "PropertyIDs: ";
 	CString str;
@@ -185,7 +185,7 @@ const int BDataColumns::GetColumnCount()
 
 // Insert the specified PropertyID at the specified location, or at the end if none specified.
 // Returns a reference to the new ColumnInfo object.
-ColumnInfo& BDataColumns::InsertColumn(ULONG lngPropertyID, CNeoDoc* pDoc, int nWidth /* = 0 */, int nCol /* = -1 */)
+ColumnInfo& BDataColumns::InsertColumn(ULONG lngPropertyID, BDoc* pDoc, int nWidth /* = 0 */, int nCol /* = -1 */)
 {
 	ASSERT(lngPropertyID);
 	ASSERT_VALID(pDoc);
@@ -243,7 +243,7 @@ BOOL BDataColumns::RemoveColumn(int nCol)
 
 
 // Get the name for the specified column
-LPCTSTR BDataColumns::GetColumnName(int nCol, CNeoDoc* pDoc)
+LPCTSTR BDataColumns::GetColumnName(int nCol, BDoc* pDoc)
 {
 	ColumnInfo& rci = GetColumnInfo(nCol);
 	// Get pointer to object if don't have already
@@ -418,7 +418,7 @@ ULONG BDataColumns::GetPropertyID(int nCol)
 
 
 // Get the propertydef associated with the specified column, or 0 if not found.
-BObject* BDataColumns::GetPropertyDef(int nCol, CNeoDoc* pDoc)
+BObject* BDataColumns::GetPropertyDef(int nCol, BDoc* pDoc)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);
@@ -454,7 +454,7 @@ BObject* BDataColumns::GetPropertyDef(int nCol, CNeoDoc* pDoc)
 
 
 
-BOOL BDataColumns::IsValid(CNeoDoc* pDoc)
+BOOL BDataColumns::IsValid(BDoc* pDoc)
 {
 	//, not likely to want to undo deletion of column bdata
 	// could fill in code later though

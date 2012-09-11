@@ -50,7 +50,7 @@ BOOL BDataBinary::SetBDataText(const CString& str, BObject* pobjPropertyDef /* =
 
 
 // Get text representation of data into string
-LPCTSTR BDataBinary::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion) {
+LPCTSTR BDataBinary::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion) {
 	m_strText.Format(_T("[Binary Data - %d bytes]"), sizeof(m_nBytes));
 	return m_strText;
 }

@@ -12,7 +12,7 @@
 
 
 class BObject;
-class CNeoDoc;
+class BDoc;
 
 
 class CDialogEditProperty : public CDialog
@@ -47,7 +47,7 @@ public:
 
 // Implementation	
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 private:
 	void FillUnitsCombo();
 	void FillPropertyCombo();

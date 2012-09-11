@@ -16,7 +16,7 @@
 
 #include "BDataColumns.h"
 class BObject;
-class CNeoDoc;
+class BDoc;
 
 
 class CDialogEditObject2 : public CDialog
@@ -43,7 +43,7 @@ public:
 
 // Implementation
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	BOOL m_bAddMode; // Add mode or edit mode
 	BOOL m_bLocationComboFilled;
 	BOOL m_bNameChanged;

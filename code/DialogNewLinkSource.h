@@ -10,7 +10,7 @@
 
 #include "resource.h"
 #include "XComboBoxEx.h"
-class CNeoDoc;
+class BDoc;
 
 
 class CDialogNewLinkSource : public CDialog
@@ -21,7 +21,7 @@ public:
 
 // Public Attributes
 public:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 
 	ULONG m_lngClassID; // [out]
 	CString m_strFolderName; // [out]

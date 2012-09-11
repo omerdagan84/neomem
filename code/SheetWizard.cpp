@@ -125,7 +125,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 	AddPage(&pgSummary);
 
 	// Get document 
-	m_pdoc = CNeoDoc::GetDoc();
+	m_pdoc = BDoc::GetDoc();
 
 	BObject* pobjBaseClass = m_pdoc->GetObject(rootClass);
 

@@ -23,7 +23,7 @@
 
 
 
-#include "NeoDoc.h" //`
+#include "BDoc.h" //`
 
 
 #ifdef _DEBUG
@@ -171,7 +171,7 @@ BOOL CDocManagerEx::DoPromptFileName(CString& fileName, UINT nIDSTitle, DWORD lF
 
 
 BOOL CDocManagerEx::DoPromptFileName2(CString& fileName, UINT nIDSTitle, DWORD lFlags, 
-								   BOOL bOpenFileDialog, CDocTemplate* pTemplate, CNeoDoc* pDoc)
+								   BOOL bOpenFileDialog, CDocTemplate* pTemplate, BDoc* pDoc)
 {
 	ASSERT_VALID(pDoc);
 	m_pDoc = pDoc;

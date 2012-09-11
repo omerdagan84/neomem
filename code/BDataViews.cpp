@@ -6,7 +6,7 @@
 #include "BDataViews.h"
 #include "ConstantsDatabase.h"
 #include "BObject.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 #include "NeoMem.h"
 
@@ -77,7 +77,7 @@ BOOL BDataViews::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 
 }
 
 
-LPCTSTR BDataViews::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataViews::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);
@@ -178,7 +178,7 @@ ULONG BDataViews::GetMemoryUsed(BOOL bRecursive)
 
 // Get the name for the specified tab, made up of its view names (eg "Text, Contents")
 //, could also store custom name for tab
-BOOL BDataViews::GetTabName(int nTab, CString& strName, CNeoDoc* pDoc)
+BOOL BDataViews::GetTabName(int nTab, CString& strName, BDoc* pDoc)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);

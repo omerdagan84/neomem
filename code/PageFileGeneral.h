@@ -9,7 +9,7 @@
 #pragma once
 
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 class CPageFileGeneral : public CPropertyPage
@@ -43,7 +43,7 @@ private:
 	//}}AFX_DATA
 
 public:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 
 // Overrides
 	// ClassWizard generate virtual function overrides

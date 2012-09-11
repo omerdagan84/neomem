@@ -11,7 +11,7 @@
 #include "SheetWizard.h"
 #include "ListCtrlEx.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObject.h"
 #include "BDataColumns.h"
 
@@ -36,7 +36,7 @@ private:
 	//}}AFX_DATA
  
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;
 //	BDataColumns* m_pdatColumns;

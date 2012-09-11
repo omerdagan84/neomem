@@ -7,7 +7,7 @@
 #include "NeoMem.h"
 #include "DialogNewFile.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 #ifdef _DEBUG
@@ -41,7 +41,7 @@ BOOL CDialogNewFile::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// Get document
-//	m_pDoc = CNeoDoc::GetDoc();
+//	m_pDoc = BDoc::GetDoc();
 //	ASSERT_VALID(m_pDoc);
 
 	// Set image list

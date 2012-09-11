@@ -170,7 +170,7 @@
     <ClCompile Include="..\code\MDITrayFrame.cpp" />
     <ClCompile Include="..\code\MirrorFileEx.cpp" />
     <ClCompile Include="..\code\ModuleVersion.cpp" />
-    <ClCompile Include="..\code\NeoDoc.cpp" />
+    <ClCompile Include="..\code\BDoc.cpp" />
     <ClCompile Include="..\code\NeoDocTemplate.cpp" />
     <ClCompile Include="..\code\NeoMem.cpp" />
     <ClCompile Include="..\code\PageClassAdvanced.cpp" />
@@ -327,7 +327,7 @@
     <ClInclude Include="..\code\MDITrayFrame.h" />
     <ClInclude Include="..\code\MirrorFileEx.h" />
     <ClInclude Include="..\code\ModuleVersion.h" />
-    <ClInclude Include="..\code\NeoDoc.h" />
+    <ClInclude Include="..\code\BDoc.h" />
     <ClInclude Include="..\code\NeoDocTemplate.h" />
     <ClInclude Include="..\code\NeoMem.h" />
     <ClInclude Include="..\code\PageClassAdvanced.h" />

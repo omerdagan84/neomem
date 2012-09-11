@@ -7,7 +7,7 @@
 
 #include "TreeCtrlEx.h"
 
-class CNeoDoc;
+class BDoc;
 class BObject;
 #include "ConstantsDatabase.h"
 
@@ -45,7 +45,7 @@ private:
 
 // Implementation
 protected:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 
 protected:
 	// Generated message map functions

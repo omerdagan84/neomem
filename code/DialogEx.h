@@ -4,8 +4,8 @@
 #pragma once
 
 
-//#include "NeoDoc.h"
-class CNeoDoc;
+//#include "BDoc.h"
+class BDoc;
 
 
 class CDialogEx : public CDialog
@@ -17,7 +17,7 @@ public:
 
 // Attributes
 protected:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 
 // Dialog Data
 	//{{AFX_DATA(CDialogEx)

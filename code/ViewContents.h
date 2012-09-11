@@ -16,7 +16,7 @@
 #include "FontEx.h"
 
 #include "BObject.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 

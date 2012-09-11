@@ -15,7 +15,7 @@
 
 #include "BDataColumns.h"
 class BObject;
-class CNeoDoc;
+class BDoc;
 
 
 
@@ -35,7 +35,7 @@ public:
 
 // Attributes
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	BOOL m_bAddMode; // Add mode or edit mode
 	BOOL m_bLocationComboFilled;
 

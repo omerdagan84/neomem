@@ -7,7 +7,7 @@
 #include "NeoMem.h"
 #include "PrintInfoMore.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 #ifdef _DEBUG
@@ -193,7 +193,7 @@ void CPrintInfoMore::PrintFooter(CDC *pDC, CPrintInfo *pInfo)
 		UINT y = m_nOffsetToTop + m_nPageHeightWithinMargins - m_nPrintLineHeight;
 
 		// Filename
-		CNeoDoc* pDoc = CNeoDoc::GetDoc();
+		BDoc* pDoc = BDoc::GetDoc();
 		str = pDoc->GetPathName();
 		if (str.GetLength() == 0)
 			str = pDoc->GetTitle();

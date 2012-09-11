@@ -15,7 +15,7 @@
 #include "BDataIcon.h"
 #include "BDataLink.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 
@@ -80,7 +80,7 @@ CDialogEditLink::CDialogEditLink(CWnd* pParent /*=NULL*/)
 
 {
 	// Get document (used by domodal methods also)
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
 
 	//{{AFX_DATA_INIT(CDialogEditLink)

@@ -1,5 +1,5 @@
 
-// CNeoDocTemplate
+// BDocTemplate
 
 
 
@@ -8,7 +8,7 @@
 #include "NeoMem.h"
 #include "NeoDocTemplate.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "BObject.h"
 #include "ConstantsDatabase.h"
 
@@ -23,22 +23,22 @@ static char THIS_FILE[] = __FILE__;
 
 
 
-IMPLEMENT_DYNAMIC(CNeoDocTemplate, CMultiDocTemplate)
+IMPLEMENT_DYNAMIC(BDocTemplate, CMultiDocTemplate)
 
-BEGIN_MESSAGE_MAP(CNeoDocTemplate, CMultiDocTemplate)
-	//{{AFX_MSG_MAP(CNeoDocTemplate)
+BEGIN_MESSAGE_MAP(BDocTemplate, CMultiDocTemplate)
+	//{{AFX_MSG_MAP(BDocTemplate)
 		// NOTE - the ClassWizard will add and remove mapping macros here.
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
-CNeoDocTemplate::CNeoDocTemplate(UINT nIDResource, CRuntimeClass* pDocClass, 
+BDocTemplate::BDocTemplate(UINT nIDResource, CRuntimeClass* pDocClass, 
 			CRuntimeClass* pFrameClass, CRuntimeClass* pViewClass) : 
 	CMultiDocTemplate(nIDResource, pDocClass, pFrameClass, pViewClass)
 {
 }
 
-CNeoDocTemplate::~CNeoDocTemplate()
+BDocTemplate::~BDocTemplate()
 {
 }
 
@@ -48,12 +48,12 @@ CNeoDocTemplate::~CNeoDocTemplate()
 // Diagnostics
 
 #ifdef _DEBUG
-void CNeoDocTemplate::AssertValid() const
+void BDocTemplate::AssertValid() const
 {
 	CMultiDocTemplate::AssertValid();
 }
 
-void CNeoDocTemplate::Dump(CDumpContext& dc) const
+void BDocTemplate::Dump(CDumpContext& dc) const
 {
 	CMultiDocTemplate::Dump(dc);
 }
@@ -64,7 +64,7 @@ void CNeoDocTemplate::Dump(CDumpContext& dc) const
 
 
 
-CDocument* CNeoDocTemplate::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bMakeVisible)
+CDocument* BDocTemplate::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bMakeVisible)
 {
 	CDocument* pDoc = CMultiDocTemplate::OpenDocumentFile(lpszPathName, bMakeVisible);
 	return pDoc;
@@ -72,7 +72,7 @@ CDocument* CNeoDocTemplate::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bMakeVis
 
 
 
-void CNeoDocTemplate::InitialUpdateFrame(CFrameWnd* pFrame, CDocument* pDoc, BOOL bMakeVisible)
+void BDocTemplate::InitialUpdateFrame(CFrameWnd* pFrame, CDocument* pDoc, BOOL bMakeVisible)
 {
 	// Downcast to our class
 	// CFrameWnd:CMDIChildWnd:CFrameChild
@@ -83,7 +83,7 @@ void CNeoDocTemplate::InitialUpdateFrame(CFrameWnd* pFrame, CDocument* pDoc, BOO
 	pFrame->InitialUpdateFrame(pDoc, bMakeVisible);
 
 	// Now we can set the splitter position
-	CNeoDoc* pNeoDoc = DYNAMIC_DOWNCAST(CNeoDoc, pDoc);
+	BDoc* pNeoDoc = DYNAMIC_DOWNCAST(BDoc, pDoc);
 	ASSERT_VALID(pNeoDoc);
 	ULONG lngSplitterPos = pNeoDoc->GetSplitterPos();
 	if (lngSplitterPos)

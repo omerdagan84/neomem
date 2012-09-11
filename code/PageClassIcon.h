@@ -14,7 +14,7 @@
 
 #include "BDataColumns.h"
 class BObject;
-class CNeoDoc;
+class BDoc;
 
 
 class CPageClassIcon : public CPropertyPage
@@ -40,7 +40,7 @@ private:
 	//}}AFX_DATA
 
 private:
-	CNeoDoc* m_pDoc;
+	BDoc* m_pDoc;
 	CSheetWizard* m_psh;
 	BObject* m_pobj;
 	BObject* m_pobjIconFolder;

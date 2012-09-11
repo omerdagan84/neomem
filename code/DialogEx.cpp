@@ -8,7 +8,7 @@
 #include "neomem.h"
 #include "DialogEx.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 
@@ -32,7 +32,7 @@ CDialogEx::CDialogEx(UINT nTemplateID, CWnd* pParent /* = NULL*/)
 	: CDialog(nTemplateID, pParent)
 {
 	// Get document (used by domodal methods also)
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
 
 	//{{AFX_DATA_INIT(CDialogEx)

@@ -6,7 +6,7 @@
 
 #include "BDataEmail.h"
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 #include "NeoMem.h"
 #include "DialogEditString.h"
@@ -49,7 +49,7 @@ BOOL BDataEmail::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 
 
 
 
-LPCTSTR BDataEmail::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataEmail::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	return m_strText;

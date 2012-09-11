@@ -227,7 +227,7 @@ void CViewTabs::OnInitialUpdate()
 		// in the treeview, so it wasn't triggering the selchange event, and
 		// the other views weren't getting updated properly
 		// The solution was to set m_pobjCurrent to the docroot object instead of the root object
-		// in the OnNewDocument handler in CNeoDoc
+		// in the OnNewDocument handler in BDoc
 
 		// If in admin mode, start with main root, otherwise start with user root
 		//, this is also set in OnNewDocument - combine?
@@ -410,10 +410,10 @@ void CViewTabs::UpdateTabs()
 {
 	ASSERT_VALID(m_pdatViews);
 
-//	CNeoDoc* pDoc = (CNeoDoc*) GetDocument();
+//	BDoc* pDoc = (BDoc*) GetDocument();
 	//, lame!
 	if (m_pDoc == NULL)
-		m_pDoc = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument());
+		m_pDoc = DYNAMIC_DOWNCAST(BDoc, GetDocument());
 
 	// Clear tabs
 	m_tbc.DeleteAllItems();
@@ -685,8 +685,8 @@ void CViewTabs::ShowTab(int nTab)
 
 		// Send the hintSelect current object to the view to update it
 		//. test
-//x		BObject* pobjCurrent = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument())->GetCurrentObject();
-		CNeoDoc* pdoc = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument());
+//x		BObject* pobjCurrent = DYNAMIC_DOWNCAST(BDoc, GetDocument())->GetCurrentObject();
+		BDoc* pdoc = DYNAMIC_DOWNCAST(BDoc, GetDocument());
 		ASSERT_VALID(pdoc);
 		BObject* pobjCurrent = pdoc->GetCurrentObject();
 		pView->UpdateView(this, hintSelect, pobjCurrent);
@@ -772,8 +772,8 @@ void CViewTabs::ShowTab(int nTab)
 
 			// Send the hintSelect current object to the view
 			//.test
-//x			BObject* pobjCurrent = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument())->GetCurrentObject();
-			CNeoDoc* pdoc = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument());
+//x			BObject* pobjCurrent = DYNAMIC_DOWNCAST(BDoc, GetDocument())->GetCurrentObject();
+			BDoc* pdoc = DYNAMIC_DOWNCAST(BDoc, GetDocument());
 			ASSERT_VALID(pdoc);
 			BObject* pobjCurrent = pdoc->GetCurrentObject();
 			pView->UpdateView(this, hintSelect, pobjCurrent);
@@ -1053,7 +1053,7 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 		// Now tell the view to load itself
 		// Send the negative of the view we want to send the message to,
 		// in order to have the message received by only one view
-//		BObject* pobjCurrent = ((CNeoDoc*) GetDocument())->GetCurrentObject();
+//		BObject* pobjCurrent = ((BDoc*) GetDocument())->GetCurrentObject();
 //		GetDocument()->UpdateAllViewsEx(-pView, hintLoad, pobjCurrent);
 
 		// Store the ViewID in the view so it knows what it is

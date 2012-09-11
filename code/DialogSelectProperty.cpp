@@ -44,7 +44,7 @@ CDialogSelectProperty::CDialogSelectProperty(CWnd* pParent /*=NULL*/)
 	m_nMode(IDD_ADD_PROPERTY)
 {
 	// Get document (used by domodal methods also)
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
 	//{{AFX_DATA_INIT(CDialogSelectProperty)
 	//}}AFX_DATA_INIT

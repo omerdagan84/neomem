@@ -7,7 +7,7 @@
 #include "NeoMem.h"
 #include "TreeCtrlEx.h"
 
-#include "NeoDoc.h"
+#include "BDoc.h"
 #include "ConstantsDatabase.h"
 
 

@@ -8,7 +8,7 @@
 #include "DialogPrint.h"
 
 #include "ConstantsDatabase.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 #ifdef _DEBUG
@@ -44,7 +44,7 @@ BOOL CDialogPrint::OnInitDialog()
 	CDialog::OnInitDialog();
 	
 	// Get some pointers
-	m_pDoc = CNeoDoc::GetDoc();
+	m_pDoc = BDoc::GetDoc();
 	ASSERT_VALID(m_pDoc);
 
 	// Initialize listview

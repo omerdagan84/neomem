@@ -103,7 +103,7 @@ BOOL BDataNumber::SetBDataText(const CString& str, BObject* pobjPropertyDef /* =
 
 
 // Get text representation of data into string
-LPCTSTR BDataNumber::GetBDataText(CNeoDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+LPCTSTR BDataNumber::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 //	ASSERT_VALID(pDoc);

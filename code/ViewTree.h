@@ -26,7 +26,7 @@
 
 #include "BObject.h"
 #include "BObjects.h"
-#include "NeoDoc.h"
+#include "BDoc.h"
 
 
 

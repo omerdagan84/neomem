@@ -69,7 +69,7 @@ int CViewHomeInner::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	
 	// Get document
-	m_pDoc = DYNAMIC_DOWNCAST(CNeoDoc, GetDocument());
+	m_pDoc = DYNAMIC_DOWNCAST(BDoc, GetDocument());
 	ASSERT(m_pDoc);
 
 	// Set margins

@@ -51,7 +51,7 @@ public:
 
 // Public Attributes
 public: 
-	CNeoDoc* m_pdoc;
+	BDoc* m_pdoc;
 	BOOL m_bAddMode; // True if user picked Add option in first page
 
 	BObject* m_pobj; // Pointer to the object we're editing (add or edit)
