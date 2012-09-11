@@ -905,10 +905,6 @@ void CFrameMain::OnClose()
 // this is called by ctrl+shift+alt+T (hidden command)
 void CFrameMain::OnCmdViewTest() 
 {
-	//. hijacking this for running the big test, for now. 
-	theApp.DoTests();
-	return;
-
 
 	if (IDYES == AfxMessageBox("Run tests?", MB_YESNO))
 	{

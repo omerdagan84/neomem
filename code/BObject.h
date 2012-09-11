@@ -87,9 +87,12 @@ public:
 	CString GetPropertyDefMachineVersionName();
 	int GetPropertyDefWidth();
 	int GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly, BOOL bThisIsAClass);
+
+	// could use overloading for these, maybe...
 	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	LPCTSTR GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
+
 	BYTE GetViewHeight() { return m_bytViewHeight; };
 	int HasChildren() const;
 //	void InitToZero();
@@ -117,10 +120,13 @@ public:
 	void SetObjectID(OBJID lngObjectID) { m_lngObjectID = lngObjectID; };
 	void SetObjectText(const CString& strText);
 	void SetParent(BObject* pobjNewParent);
+	
+	// could use overloading for these, maybe...
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLink(OBJID lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);
+
 	void SetViewHeight(BYTE bytViewHeight) { m_bytViewHeight = bytViewHeight; };
 	BOOL SortChildren();
 

@@ -147,6 +147,7 @@
     <ClCompile Include="..\code\DialogViews.cpp" />
     <ClCompile Include="..\code\DialogWelcome.cpp" />
     <ClCompile Include="..\code\DocManagerEx.cpp" />
+    <ClCompile Include="..\code\DSource.cpp" />
     <ClCompile Include="..\code\EditEx.cpp" />
     <ClCompile Include="..\code\EditInPlace.cpp" />
     <ClCompile Include="..\code\Email.cpp" />
@@ -301,6 +302,7 @@
     <ClInclude Include="..\code\DialogViews.h" />
     <ClInclude Include="..\code\DialogWelcome.h" />
     <ClInclude Include="..\code\DocManagerEx.h" />
+    <ClInclude Include="..\code\DSource.h" />
     <ClInclude Include="..\code\EditEx.h" />
     <ClInclude Include="..\code\EditInPlace.h" />
     <ClInclude Include="..\code\Email.h" />

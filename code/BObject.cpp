@@ -41,6 +41,10 @@ IMPLEMENT_SERIAL(BObject, CObject, VERSIONABLE_SCHEMA | versionFileStructure)
 
 // better to use member initialization lists - copy and paste,
 // because calling another routine and assigning values would be so much slower
+// ^ oh, i see - i didn't see this text and changed them to an Init routine, 
+// because the init lists had gotten out of synch, and thought it was dangerous. 
+// you would want it fast because this is BObject. 
+
 
 BObject::BObject() {
 	Init();

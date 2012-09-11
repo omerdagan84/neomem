@@ -459,6 +459,9 @@
     <ClCompile Include="..\code\Strings.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="..\code\DSource.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\code\BCMenu.h">
@@ -921,6 +924,9 @@
       <Filter>HTML Help Files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\Strings.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\DSource.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1482,6 +1488,7 @@
     <None Include="..\resources\icons\Wallet.ico">
       <Filter>Resource files</Filter>
     </None>
+    <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />

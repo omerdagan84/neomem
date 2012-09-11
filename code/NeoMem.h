@@ -5,9 +5,8 @@
 // handling messages from Windows, including menu and toolbar commands, etc.
 // Date: November 1999
 //-----------------------------------------------------------------------------------------------------------------
-
-
 #pragma once
+
 
 #ifndef __AFXWIN_H__
 	#error "include 'precompiled.h' before including this file for PCH"
@@ -53,7 +52,6 @@ public:
 	BOOL ConvertRtfToPlain(LPCTSTR pszRtf, CString& strPlain);
 	BOOL CopyToClipboard(CString& str);
 	void DoAutoRecoverSave();
-	void DoTests();
 	void Export(BObject* pobj);
 	CImageList* GetAppImageList();
 	CFrameChild* GetChildFrame();
@@ -257,7 +255,8 @@ public:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
-
+	// friends
+	friend class CTest;
 };
 
 
