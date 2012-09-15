@@ -1028,22 +1028,24 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 			ULONG lngClassID = pobjClass->GetObjectID();
 			CString strName;
 			pobjClass->GetClassDefNewName(strName);
-			BObject* pobjNew = m_pDoc->CreateObject(lngClassID, strName, pobjParent);
-			
+
+//x			BObject* pobjNew = m_pDoc->CreateObject(lngClassID, strName, pobjParent);
+			BObject& objNew = BObject::New(*m_pDoc, lngClassID, strName, pobjParent->id);
+
 			// Set the property that the user was editing
 			ULONG lngPropertyID = m_lvw.GetColumnPropertyID(pLVITEM->iSubItem);
-			pobjNew->SetPropertyString(lngPropertyID, pLVITEM->pszText, FALSE, FALSE);
+			objNew.SetPropertyString(lngPropertyID, pLVITEM->pszText, FALSE, FALSE);
 
 			// Modify the dummy item to become the new object
-			int nImage = pobjNew->GetIconIndex();
-			m_lvw.SetItem(nItem, 0, LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM, LPSTR_TEXTCALLBACK, nImage, 0, 0, (LPARAM) pobjNew);
+			int nImage = objNew.GetIconIndex();
+			m_lvw.SetItem(nItem, 0, LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM, LPSTR_TEXTCALLBACK, nImage, 0, 0, (LPARAM) &objNew);
 
 			// Tell all _other_ views about new object also
 //			m_pDoc->UpdateAllViewsEx(this, hintAdd, pobjNew);
 
 			// Add object to database and tell _other_ views
 //			m_pDoc->AddObject(pobjNew);
-			m_pDoc->AddObject(pobjNew, this);
+//x			m_pDoc->AddObject(pobjNew, this);
 
 			// Now re-add the dummy row
 			m_lvw.AddDummyRow();
@@ -1674,7 +1676,8 @@ void CViewContents::OnObjEditInDialog()
 		ULONG lngClassID = pobjClass->GetObjectID();
 		CString strName;
 		pobjClass->GetClassDefNewName(strName);
-		pobj = m_pDoc->CreateObject(lngClassID, strName, pobjParent);
+//x		pobj = m_pDoc->CreateObject(lngClassID, strName, pobjParent);
+		BObject& obj = BObject::New(*m_pDoc, lngClassID, strName, pobjParent->id);
 
 		// Add new object to listview
 		//. lvw should handle removing and adding the dummy row
@@ -1686,7 +1689,7 @@ void CViewContents::OnObjEditInDialog()
 //		m_pDoc->UpdateAllViewsEx(this, hintAdd, pobj);
 
 		// Add object to database and tell views
-		m_pDoc->AddObject(pobj);
+//x		m_pDoc->AddObject(pobj);
 
 	}
 	ASSERT_VALID(pobj);

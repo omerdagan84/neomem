@@ -144,13 +144,16 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 	// edit an existing one.
 //	m_pobjAdd = m_pdoc->CreateObject(classClass, 
 //		_T("New Class"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
-	m_pobjAdd = m_pdoc->CreateClass(_T("New Class"), "", flagSystem | flagTemp);
+//x	m_pobjAdd = m_pdoc->CreateClass(_T("New Class"), "", flagSystem | flagTemp);
+	m_pobjAdd = &BObject::New(*m_pdoc, classClass, _T("New Class"), rootClass, 0, flagSystem | flagTemp);
+//,	m_pobjAdd = &BClass::New(*m_pdoc, _T("New Class"), "", flagSystem | flagTemp);
 
 	// Create a class object that will be a copy of an existing class object.
 	// Note: if we pick a class that's a child of another class we have to use move.
 //	m_pobjEdit = m_pdoc->CreateObject(classClass, 
 //		_T("@dummy edit class!"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
-	m_pobjEdit = m_pdoc->CreateClass(_T("@dummy edit class"), "", flagSystem | flagTemp);
+//x	m_pobjEdit = m_pdoc->CreateClass(_T("@dummy edit class"), "", flagSystem | flagTemp);
+	m_pobjEdit = &BObject::New(*m_pdoc, classClass, _T("@dummy edit class"), rootClass, 0, flagSystem | flagTemp);
 	
 	m_bAddMode = TRUE; // Default is to add a new class
 	m_pobj = m_pobjAdd;

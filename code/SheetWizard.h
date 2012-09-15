@@ -56,11 +56,13 @@ public:
 
 	BObject* m_pobj; // Pointer to the object we're editing (add or edit)
 	BObject* m_pobjAdd; // New object used in Add mode
+//x	BObject& m_objAdd; // New object used in Add mode
 	int m_nAddEditMode;
 
 // Private Attributes
 private:
 	BObject* m_pobjEdit; // New object used in Edit mode (copy of original item user picked)
+//x	BObject& m_objEdit; // New object used in Edit mode (copy of original item user picked)
 	BObject* m_pobjEditOriginal; // Item user picked to Edit in first page, if any
 //	BOOL m_bAddFolder; // True if user chose to add a folder in page 60
 //	CString m_strFolderName; // Name of folder to add
