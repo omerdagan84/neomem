@@ -198,9 +198,9 @@ void CListCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 			// Special case for Property View - need to display the value of the property for the
 			// document's current object. The Value column has a dummy property of propValue assigned to it.
 			if (lngPropertyID == propValue)
-				pLVITEM->pszText = const_cast <TCHAR*> (m_pDoc->GetCurrentObject()->GetPropertyText(pobj->GetObjectID()));
+				pLVITEM->pszText = const_cast <TCHAR*> (m_pDoc->GetCurrentObject()->GetPropertyString(pobj->GetObjectID()));
 			else
-				pLVITEM->pszText = const_cast <TCHAR*> (pobj->GetPropertyText(lngPropertyID));
+				pLVITEM->pszText = const_cast <TCHAR*> (pobj->GetPropertyString(lngPropertyID));
 		}
 	}
 	*pResult = 0;
@@ -2682,7 +2682,7 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 		// 1.1d make sure we actually have an object!
 		if (pobjPropDef)  {
 
-			LPCTSTR pszColumnName = pobjPropDef->GetPropertyText(propName);
+			LPCTSTR pszColumnName = pobjPropDef->GetPropertyString(propName);
 			int nColAlignment = pobjPropDef->GetPropertyDefAlignment();
 			int nColWidth = pobjPropDef->GetPropertyDefWidth();
 			int nItem = InsertColumn(nCol, pszColumnName, nColAlignment, nColWidth);
@@ -2706,7 +2706,7 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 			// only prob is if they add a folder and don't set up the class,
 			// they just add properties, then later they set up the class
 			// might wind up adding all these props to the paper class, for instance
-//			LPCTSTR szClassName = pobjDefaultClass->GetPropertyText(propName);
+//			LPCTSTR szClassName = pobjDefaultClass->GetPropertyString(propName);
 //			CString strMsg;
 //			strMsg.Format("Do you want to add this property to the %s definition class also?", szClassName);
 //			if (AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO) == IDYES) {
@@ -2858,7 +2858,7 @@ BOOL CListCtrlEx::RemoveColumn(int nCol /* = -1 */) {
 	CString strMsg;
 	BObject* pobjProp = m_pDoc->GetObject(lngPropID);
 	ASSERT_VALID(pobjProp);
-	strMsg.Format("Are you sure you want to remove the column \"%s\" from this view?\nNote: This will not delete the property from your file, nor will it remove any property values stored in this column.", pobjProp->GetPropertyText(propName));
+	strMsg.Format("Are you sure you want to remove the column \"%s\" from this view?\nNote: This will not delete the property from your file, nor will it remove any property values stored in this column.", pobjProp->GetPropertyString(propName));
 	if (AfxMessageBox(strMsg, MB_ICONQUESTION | MB_YESNO) == IDNO)
 		return FALSE;
 
@@ -2919,7 +2919,7 @@ int CListCtrlEx::InitializeColumns(BDataColumns* pdatColumns, BOOL bExpandLastCo
 
 		// Add the column
 		//, use macro for speed
-		InsertColumn(i, pobjPropDef->GetPropertyText(propName), nAlignment, rci.GetColWidth());
+		InsertColumn(i, pobjPropDef->GetPropertyString(propName), nAlignment, rci.GetColWidth());
 
 		//, header control DOES have itemdata, just not exposed through listview!
 		hdi.lParam = rci.GetPropertyID();
@@ -2955,7 +2955,7 @@ BOOL CListCtrlEx::UpdateColumn(int nCol, BObject* pobjPropertyDef)
 	ASSERT_VALID(phdr);
 
 	// Get propertydef properties
-	LPCTSTR szText = pobjPropertyDef->GetPropertyText(propName);
+	LPCTSTR szText = pobjPropertyDef->GetPropertyString(propName);
 	ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 	int nAlignment = pobjPropertyDef->GetPropertyDefAlignment();
 	
@@ -3086,8 +3086,8 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 			}
 		default: // (treat as strings)
 			{
-				LPCTSTR psz1 = pobj1->GetPropertyText(lngPropertyID);
-				LPCTSTR psz2 = pobj2->GetPropertyText(lngPropertyID);
+				LPCTSTR psz1 = pobj1->GetPropertyString(lngPropertyID);
+				LPCTSTR psz2 = pobj2->GetPropertyString(lngPropertyID);
 				iResult = lstrcmpi(psz1, psz2);
 				break;
 			}

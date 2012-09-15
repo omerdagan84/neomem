@@ -119,7 +119,7 @@ LPCTSTR BDataNumber::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachine
 	// could use these in parsing the text as well
 	//, handle commas for thousands separators, also periods if european, etc
 //	if (m_lngUnitID)
-//		m_strText.Format("%f %s", m_sngValue, (LPCTSTR) m_pobjUnit->GetPropertyText(propName));
+//		m_strText.Format("%f %s", m_sngValue, (LPCTSTR) m_pobjUnit->GetPropertyString(propName));
 //	else
 //		m_strText.Format("%f", m_sngValue);
 

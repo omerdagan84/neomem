@@ -2423,7 +2423,7 @@ void CNeoMem::Export(BObject *pobj) {
 
 	// Get first item name
 //	BObject* pobjFirst = DYNAMIC_DOWNCAST(BObject, datLink.GetLinkAt(0));
-//	CString strItemName = pobjFirst->GetPropertyText(propName);
+//	CString strItemName = pobjFirst->GetPropertyString(propName);
 	// Put object to export in a BDataLink array
 //	BDataLink datExportObjects;
 //	datExportObjects.SetMultiple();

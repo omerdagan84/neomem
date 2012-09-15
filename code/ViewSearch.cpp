@@ -676,7 +676,7 @@ void CViewSearch::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		BObject* pobj = (BObject*) m_lvw.GetItemData(nItem);
 		ASSERT_VALID(pobj);
 		
-		pobj->SetPropertyText(propName, pLVITEM->pszText);
+		pobj->SetPropertyString(propName, pLVITEM->pszText);
 
 		*pResult = TRUE;
 	}

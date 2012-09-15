@@ -254,7 +254,7 @@ LPCTSTR BDataColumns::GetColumnName(int nCol, BDoc* pDoc)
 		rci.m_pobjPropertyDef = pDoc->GetObject(rci.m_lngPropertyID);
 	}
 	ASSERT_VALID(rci.m_pobjPropertyDef);
-	return rci.m_pobjPropertyDef->GetPropertyText(propName);
+	return rci.m_pobjPropertyDef->GetPropertyString(propName);
 }
 
 

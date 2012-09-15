@@ -117,7 +117,7 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 			else
 			{
 				//.
-//				strFile = pobjIcon->GetPropertyText(propFileSource);
+//				strFile = pobjIcon->GetPropertyString(propFileSource);
 //				hIcon = (HICON) LoadImage(0, strFile, IMAGE_ICON, 16, 16, 
 //									LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 				return -1;

@@ -133,9 +133,9 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			BObject* pobjClass = pobjLinkSource->GetPropertyLink(propDefaultClass);
 			ASSERT_VALID(pobjClass);
 			ULONG lngClassID = pobjClass->GetObjectID();
-			CString strClassName = pobjClass->GetPropertyText(propName);
-			CString strLinkSourceClass = pobjLinkSource->GetPropertyText(propClassName);
-			CString strLinkSourceName = pobjLinkSource->GetPropertyText(propName);
+			CString strClassName = pobjClass->GetPropertyString(propName);
+			CString strLinkSourceClass = pobjLinkSource->GetPropertyString(propClassName);
+			CString strLinkSourceName = pobjLinkSource->GetPropertyString(propName);
 			strClassName.MakeLower();
 			strLinkSourceClass.MakeLower();
 			// Special case for classes - just give message for now
@@ -211,7 +211,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			{
 				BObject* pobj = DYNAMIC_DOWNCAST(BObject, aResults.GetAt(i));
 				ASSERT_VALID(pobj);
-				strName = pobj->GetPropertyText(propName);
+				strName = pobj->GetPropertyString(propName);
 				strName.MakeLower();
 				int nCheckSum2 = strName.GetCheckSum();
 				int nDifference = abs(nCheckSum2 - nCheckSum);
@@ -260,7 +260,7 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	}
 
 	TCHAR* pszCaption = _T("Edit Link");
-	CString strPropName = pobjPropertyDef->GetPropertyText(propName);
+	CString strPropName = pobjPropertyDef->GetPropertyString(propName);
 	CString strInstructions;
 	if (bMultiSelectEnabled)
 		strInstructions.Format("Select a new value or values for the %s property.", (LPCTSTR) strPropName);
@@ -318,7 +318,7 @@ LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 				// Just display the name of the link object if no other options specified
 				if (bDisplayLinkHierarchy == FALSE && pobjAdditionalProp == 0)
 				{
-					return pobj->GetPropertyText(propName);
+					return pobj->GetPropertyString(propName);
 				}
 
 				// Display Link Hierarchy
@@ -340,10 +340,10 @@ LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 					{
 						// If no more stuff to be added then just exit here with object name.
 						if (pobjAdditionalProp == 0)
-							return pobj->GetPropertyText(propName);
+							return pobj->GetPropertyString(propName);
 						else
 							// Otherwise, store in cstring and continue
-							m_strText = pobj->GetPropertyText(propName);
+							m_strText = pobj->GetPropertyString(propName);
 					}
 					else
 					{
@@ -365,9 +365,9 @@ LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 					ULONG lngAdditionalPropID = pobjAdditionalProp->GetObjectID();
 					// If display link hierarchy is false, then we haven't gotten the object name yet, so get it now.
 					if (bDisplayLinkHierarchy == FALSE)
-						m_strText = pobj->GetPropertyText(propName); // eg "Museum of Fine Arts"
+						m_strText = pobj->GetPropertyString(propName); // eg "Museum of Fine Arts"
 					// Only append it if it's not blank
-					LPCTSTR szAdditional = pobj->GetPropertyText(lngAdditionalPropID); 
+					LPCTSTR szAdditional = pobj->GetPropertyString(lngAdditionalPropID); 
 					if (*szAdditional != 0)
 						m_strText += g_strCommaSpace + szAdditional; // eg ", Canberra"
 				}
@@ -400,9 +400,9 @@ LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 			else
 			{
 				if (i == 0)
-					m_strText += pobj->GetPropertyText(propName);
+					m_strText += pobj->GetPropertyString(propName);
 				else
-					m_strText += g_strCommaSpace + pobj->GetPropertyText(propName);
+					m_strText += g_strCommaSpace + pobj->GetPropertyString(propName);
 			}
 		}
 		return m_strText;
@@ -974,7 +974,7 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 		{
 			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
 			{
-				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
+				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyString(propName)); //, wsprintf
 				pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, szBuffer);
 				pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
 			}
@@ -993,7 +993,7 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 			ASSERT_VALID(pobj);
 			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
 			{
-				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyText(propName)); //, wsprintf
+				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyString(propName)); //, wsprintf
 				pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, szBuffer);
 				nAdded++;
 			}

@@ -307,7 +307,7 @@ void CViewHome::GetFileDescription()
 	ASSERT_VALID(m_pDoc);
 	BObject* pobjHome = m_pDoc->GetObject(rootUser);
 	ASSERT_VALID(pobjHome);
-	m_strFileDescription = pobjHome->GetPropertyText(propDescription);
+	m_strFileDescription = pobjHome->GetPropertyString(propDescription);
 	// If description is blank and there are no objects, show an intro message
 	if (m_strFileDescription.GetLength() == 0)
 	{

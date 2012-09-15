@@ -74,8 +74,8 @@ void CPageClassName::DoDataExchange(CDataExchange* pDX)
 	if (!pDX->m_bSaveAndValidate) // Load
 	{
 		// Get name and description of object into cstrings
-		m_strName = m_pobj->GetPropertyText(propName);
-		m_strDescription = m_pobj->GetPropertyText(propDescription);
+		m_strName = m_pobj->GetPropertyString(propName);
+		m_strDescription = m_pobj->GetPropertyString(propDescription);
 	}
 
 	CPropertyPage::DoDataExchange(pDX);
@@ -90,8 +90,8 @@ void CPageClassName::DoDataExchange(CDataExchange* pDX)
 
 	if (pDX->m_bSaveAndValidate) // Save
 	{
-		m_pobj->SetPropertyText(propName, m_strName, FALSE, FALSE);
-		m_pobj->SetPropertyText(propDescription, m_strDescription, FALSE, FALSE);
+		m_pobj->SetPropertyString(propName, m_strName, FALSE, FALSE);
+		m_pobj->SetPropertyString(propDescription, m_strDescription, FALSE, FALSE);
 	}
 
 }

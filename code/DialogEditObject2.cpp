@@ -260,7 +260,7 @@ void CDialogEditObject2::OnClassChanged()
 		}
 		
 		// Update class description label also
-		LPCTSTR pszClassDescription = pobjClass->GetPropertyText(propDescription);
+		LPCTSTR pszClassDescription = pobjClass->GetPropertyString(propDescription);
 		m_txtDescription.SetWindowText(pszClassDescription);
 
 		// Enable default class controls if Folder selected

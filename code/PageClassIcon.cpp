@@ -194,11 +194,11 @@ void CPageClassIcon::OnBtnRename()
 		CDialogEditName dlg;
 		dlg.m_strCaption = "Rename Icon";
 		dlg.m_strInstructions = "Enter the new name for the icon:";
-		dlg.m_strName = pobj->GetPropertyText(propName);
+		dlg.m_strName = pobj->GetPropertyString(propName);
 		if (dlg.DoModal() == IDOK)
 		{
 			// This will set document modified flag and update views
-			pobj->SetPropertyText(propName, dlg.m_strName); 
+			pobj->SetPropertyString(propName, dlg.m_strName); 
 			int nItem = m_lvw.GetSelectedItem();
 			m_lvw.RedrawItems(nItem, nItem);
 		}

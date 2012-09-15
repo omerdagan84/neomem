@@ -107,7 +107,7 @@ HTREEITEM CTreeCtrlEx::AddObject(BObject *pobj, BObject *pobjParent)
 	// Add this bobject to the tree
 	HTREEITEM hti = InsertItem(
 				TVIF_PARAM | TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE,	// Mask
-//				pobj->GetPropertyText(propName),
+//				pobj->GetPropertyString(propName),
 				LPSTR_TEXTCALLBACK,		// Use callback to provide text (saves memory)
 				nImage,					// Image
 				nImage,					// Selected Image
@@ -165,7 +165,7 @@ void CTreeCtrlEx::AddChildrenToTree(BObjects* paChildren, HTREEITEM htiParent,
 				// Add this bobject to the tree
 //				HTREEITEM hti = InsertItem(
 //							TVIF_PARAM | TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE,	// Mask
-//							pobj->GetPropertyText(propName),
+//							pobj->GetPropertyString(propName),
 //							nImage,					// Image
 //							nImage,					// Selected Image
 //							0,						// State
@@ -485,7 +485,7 @@ void CTreeCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 			// pszText is nonconst. But for sending data can treat it as const.
 			// Had been using GetBuffer which slowed the program down ENORMOUSLY, 
 			// as it wound up copying the strings.
-			pTVITEM->pszText = const_cast <LPSTR> (pobj->GetPropertyText(propName));
+			pTVITEM->pszText = const_cast <LPSTR> (pobj->GetPropertyString(propName));
 
 		else if (nMask & TVIF_CHILDREN)
 			pTVITEM->cChildren = pobj->HasChildren();
@@ -545,8 +545,8 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		if (bDifferent) return (bFolder1 ? -1 : 1);
 */
 		// Compare strings
-		LPCTSTR psz1 = pobj1->GetPropertyText(propName);
-		LPCTSTR psz2 = pobj2->GetPropertyText(propName);
+		LPCTSTR psz1 = pobj1->GetPropertyString(propName);
+		LPCTSTR psz2 = pobj2->GetPropertyString(propName);
 		return lstrcmpi(psz1, psz2);
 	}
 	return 0;

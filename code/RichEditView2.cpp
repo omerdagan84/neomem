@@ -2004,7 +2004,7 @@ void CRichEditView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	rpim.Initialize(pDC);
 	rpim.InitFonts(pDC);
 	rpim.m_strViewName = _T("Text View"); //. get from view object!
-	rpim.m_strObjectName = pDoc->GetCurrentObject()->GetPropertyText(propName);
+	rpim.m_strObjectName = pDoc->GetCurrentObject()->GetPropertyString(propName);
 
 	// Get header and footer height - used by GetPrintRect() (convert pixels to twips)
 //	m_nHeaderHeightTwips = rpim.m_nHeaderLines * rpim.m_nPrintLineHeight * 1440 / rpim.m_nPixelsPerInchY;

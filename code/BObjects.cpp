@@ -137,9 +137,9 @@ LPCTSTR BObjects::GetText(ULONG lngExcludeFlags /* = 0 */)
 		if (!(pobj->GetFlag(lngExcludeFlags)))
 		{
 			if (iIndex == 0)
-				m_strTextCache = pobj->GetPropertyText(propName);
+				m_strTextCache = pobj->GetPropertyString(propName);
 			else
-				m_strTextCache += g_strCommaSpace + pobj->GetPropertyText(propName);
+				m_strTextCache += g_strCommaSpace + pobj->GetPropertyString(propName);
 			iIndex++; // used for figuring out commas
 		}
 	}
@@ -224,8 +224,8 @@ static int CompareObjects(BObject** ppobj1, BObject** ppobj2)
 	int iResult = 0;
 	if (pobj1 && pobj2)
 	{
-		LPCTSTR psz1 = pobj1->GetPropertyText(lngPropertyID);
-		LPCTSTR psz2 = pobj2->GetPropertyText(lngPropertyID);
+		LPCTSTR psz1 = pobj1->GetPropertyString(lngPropertyID);
+		LPCTSTR psz2 = pobj2->GetPropertyString(lngPropertyID);
 		iResult = lstrcmpi(psz1, psz2);
 	}
 	return iResult;
@@ -399,7 +399,7 @@ BOOL BObjects::IsDeleteValid()
 		ASSERT_VALID(pobj);
 
 		// Get object's class name (lowercase)
-		CString strClassName = pobj->GetPropertyText(propClassName);
+		CString strClassName = pobj->GetPropertyString(propClassName);
 		strClassName.MakeLower();
 
 		// Check flags
@@ -407,7 +407,7 @@ BOOL BObjects::IsDeleteValid()
 		{
 			strMsg.Format(_T("The %s \"%s\" cannot be deleted - it is marked as undeletable."), 
 									(LPCTSTR) strClassName, 
-									(LPCTSTR) pobj->GetPropertyText(propName));
+									(LPCTSTR) pobj->GetPropertyString(propName));
 			AfxMessageBox(strMsg);
 			return FALSE;
 		}

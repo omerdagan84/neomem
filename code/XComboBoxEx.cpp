@@ -61,7 +61,7 @@ void XComboBoxEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 		// Note cast from LPCTSTR to LPSTR, ie const char* to char*
 		// see other instances of pszText
 		if (nMask & TVIF_TEXT)
-			rcbi.pszText = const_cast <LPSTR> (pobj->GetPropertyText(propName)); 
+			rcbi.pszText = const_cast <LPSTR> (pobj->GetPropertyString(propName)); 
 	}
 
 	*pResult = 0;

@@ -551,7 +551,7 @@ void CViewIndex::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		ASSERT_VALID(pobj);
 
 		// This set doc modified and tells views
-		pobj->SetPropertyText(propName, pLVITEM->pszText);
+		pobj->SetPropertyString(propName, pLVITEM->pszText);
 
 		*pResult = TRUE;
 	}

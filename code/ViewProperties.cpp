@@ -311,7 +311,7 @@ void CViewProperties::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		ULONG lngPropertyID = pobjProperty->GetObjectID();
 
 		// Change property
-		m_pobjCurrent->SetPropertyText(lngPropertyID, pLVITEM->pszText);
+		m_pobjCurrent->SetPropertyString(lngPropertyID, pLVITEM->pszText);
 
 		*pResult = TRUE;
 	}
@@ -769,7 +769,7 @@ void CViewProperties::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	CViewEx::OnBeginPrinting(pDC, pInfo);
 
 	theApp.m_printinfo.m_strViewName = "Properties View";
-	theApp.m_printinfo.m_strObjectName = m_pDoc->GetCurrentObject()->GetPropertyText(propName);
+	theApp.m_printinfo.m_strObjectName = m_pDoc->GetCurrentObject()->GetPropertyString(propName);
 
 	// Get grid information etc
 	m_lvw.OnBeginPrinting(pDC, pInfo);

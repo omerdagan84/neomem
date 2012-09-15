@@ -277,7 +277,7 @@ void CViewContents::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) {
 	CViewEx::OnBeginPrinting(pDC, pInfo);
 
 	theApp.m_printinfo.m_strViewName = _T("Contents View");
-	theApp.m_printinfo.m_strObjectName = m_pDoc->GetCurrentObject()->GetPropertyText(propName);
+	theApp.m_printinfo.m_strObjectName = m_pDoc->GetCurrentObject()->GetPropertyString(propName);
 
 	// Get grid information etc
 	m_lvw.OnBeginPrinting(pDC, pInfo);
@@ -1032,7 +1032,7 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 			
 			// Set the property that the user was editing
 			ULONG lngPropertyID = m_lvw.GetColumnPropertyID(pLVITEM->iSubItem);
-			pobjNew->SetPropertyText(lngPropertyID, pLVITEM->pszText, FALSE, FALSE);
+			pobjNew->SetPropertyString(lngPropertyID, pLVITEM->pszText, FALSE, FALSE);
 
 			// Modify the dummy item to become the new object
 			int nImage = pobjNew->GetIconIndex();
@@ -1064,7 +1064,7 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 			// This will set document modified flag and update views
 			// Note: We need also to tell this view also because if classname or icon changes,
 			// then OnUpdate code will modify the icon also.
-			pobj->SetPropertyText(lngPropertyID, pLVITEM->pszText);
+			pobj->SetPropertyString(lngPropertyID, pLVITEM->pszText);
 		}
 
 

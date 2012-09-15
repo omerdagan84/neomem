@@ -145,12 +145,12 @@ void CPageClassSummary::DoDataExchange(CDataExchange* pDX)
 //						  "\\par %s \\par"
 						  "%s \\par \\par", 
 						  strHeader,
-						  m_pobj->GetPropertyText(propName), 
-						  m_pobj->GetPropertyText(propDescription),
-//						  m_pobj->m_pobjParent->GetPropertyText(propName),
-						  pobjIcon->GetPropertyText(propName),
+						  m_pobj->GetPropertyString(propName), 
+						  m_pobj->GetPropertyString(propDescription),
+//						  m_pobj->m_pobjParent->GetPropertyString(propName),
+						  pobjIcon->GetPropertyString(propName),
 						  strProps,
-						  pobjDefaultClass->GetPropertyText(propName),
+						  pobjDefaultClass->GetPropertyString(propName),
 						  bAutosort ? "On" : "Off",
 //						  strFolder,
 						  strFooter

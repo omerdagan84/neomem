@@ -392,7 +392,7 @@ void CViewRtf::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				// Turn off drawing to prevent flickering during loading and setting cursor position
 				m_prtf->SetRedraw(FALSE);
 
-//				CString strRtf = pobj->GetPropertyText(propRtfText);
+//				CString strRtf = pobj->GetPropertyString(propRtfText);
 //				if (strRtf.GetLength() > 0)
 //					m_prtf->SetRtf(strRtf, FALSE);
 //				else
@@ -400,7 +400,7 @@ void CViewRtf::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 
 				// Get rtf text
-				LPCTSTR pszRtf = pobj->GetPropertyText(propRtfText);
+				LPCTSTR pszRtf = pobj->GetPropertyString(propRtfText);
 				m_prtf->SetRtf(pszRtf, FALSE);
 
 /*
@@ -487,7 +487,7 @@ if (strlen(pszRtf) > 0)
 				{
 					SaveOleObjects();
 					CString strRtf = m_prtf->GetRtf(FALSE);
-					pobj->SetPropertyText(propRtfText, strRtf, TRUE, FALSE);
+					pobj->SetPropertyString(propRtfText, strRtf, TRUE, FALSE);
 				}
 
 				// Clear the control's modified flag
@@ -525,7 +525,7 @@ if (strlen(pszRtf) > 0)
 				// Check if this event refers to the current object and rtf text property
 				if ((ph->idProperty == propRtfText) && (pobj == pobjCurrent))
 				{
-					LPCTSTR pszRtf = pobj->GetPropertyText(propRtfText);
+					LPCTSTR pszRtf = pobj->GetPropertyString(propRtfText);
 					m_prtf->SetRtf(pszRtf, FALSE);
 
 					// Set the default font if it's blank

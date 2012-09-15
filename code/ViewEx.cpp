@@ -1007,10 +1007,10 @@ CView* CViewEx::ShowView(ULONG lngViewID, BOOL bSetActive, BOOL bAskAddIfNotFoun
 		if ((pview == 0) && (bAskAddIfNotFound))
 		{
 			BObject* pobjView = m_pDoc->GetObject(lngViewID);
-//			CString strView = pobjView->GetPropertyText(propName);
-			CString strView = pobjView->GetPropertyText(propCaption);
+//			CString strView = pobjView->GetPropertyString(propName);
+			CString strView = pobjView->GetPropertyString(propCaption);
 			if (strView.IsEmpty())
-				strView = pobjView->GetPropertyText(propName); // use name if caption is blank
+				strView = pobjView->GetPropertyString(propName); // use name if caption is blank
 			strView.Remove('&');
 			CString strMsg;
 			strMsg.Format("The %s View is not visible for this object - search results cannot be displayed without it. "
@@ -1111,10 +1111,10 @@ void CViewEx::OnViewHide()
 	ASSERT_VALID(pobjView);
 
 /*
-	CString strViewName = pobjView->GetPropertyText(propName);
+	CString strViewName = pobjView->GetPropertyString(propName);
 	strViewName.Remove('&');
 	BObject* pobj = m_pDoc->GetCurrentObject();
-	CString strClassName = pobj->GetPropertyText(propClassName);
+	CString strClassName = pobj->GetPropertyString(propClassName);
 	CString strMsg;
 	strMsg.Format("This will remove the %s View for this object and all other objects of the same class (%s). To restore it, you can right click on the tab containing this view. Continue?",
 		(LPCTSTR) strViewName,

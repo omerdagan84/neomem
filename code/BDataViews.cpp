@@ -209,9 +209,9 @@ BOOL BDataViews::GetTabName(int nTab, CString& strName, BDoc* pDoc)
 		ASSERT_VALID(pobjView);
 
 		// Get view caption
-		CString strView = pobjView->GetPropertyText(propCaption);
+		CString strView = pobjView->GetPropertyString(propCaption);
 		if (strView.IsEmpty()) // if caption property is empty, just use the name
-			strView = pobjView->GetPropertyText(propName);
+			strView = pobjView->GetPropertyString(propName);
 
 		if (nViews > 0)
 		{

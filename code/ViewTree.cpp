@@ -671,7 +671,7 @@ void CViewTree::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		HTREEITEM hti = pTVITEM->hItem;
 		BObject* pobj = (BObject*) m_tvw.GetItemData(hti);
 		ASSERT_VALID (pobj);
-		pobj->SetPropertyText(propName, pTVITEM->pszText);
+		pobj->SetPropertyString(propName, pTVITEM->pszText);
 
 		// Resort siblings if autosort is on for this item's parent
 		if (pobj->IsParentSorted())
@@ -728,7 +728,7 @@ void CViewTree::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 	// Depending on what information is being requested, return different info
 	if (intMask & TVIF_TEXT)
 		// had been using GetBuffer which slowed the program down ENORMOUSLY, as it wound up copying the strings
-		pTVITEM->pszText = (TCHAR*) pobj->GetPropertyText(propName); //, note cast to tchar from const
+		pTVITEM->pszText = (TCHAR*) pobj->GetPropertyString(propName); //, note cast to tchar from const
 
 	else if (intMask & TVIF_CHILDREN)
 		pTVITEM->cChildren = pobj->HasChildren();

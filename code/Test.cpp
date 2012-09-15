@@ -51,26 +51,28 @@ void CTest::DoTests(CNeoMem& app) {
 		// throw ALL commands at it (esp flaky/suspicious ones), 
 		// then check that it's in proper state.
 
-		// this won't be necessary - just create new doc and use it
+		//, this won't be necessary - just create new doc and use it
 		app.CloseAllDocuments(FALSE);
 
-		// better - 
-		// pdoc = new BDoc(); //?
-		// pdoc = BDoc::Create(); //?
+
+
+		//, switch to this - 
+//		BDoc& doc = BDoc::New();
+//		BDoc& doc = BDoc::New(pui);
+
 		// if there's app-specific stuff do that separately. 
 		//, mfc weird doctemplate stuff in filenew handler? override it and simplify? 
 		// but also ties in with mru files etc. 
 		app.OnFileNew();
-		BDoc* pdoc = BDoc::GetDoc();
+		BDoc* pdoc = BDoc::GetDoc(); // get rid of this fn, if possible? but i think mfc uses it?
 		ASSERT_VALID(pdoc);
-
 		BDoc& doc = *pdoc;
-//		BDoc& doc = BDoc::GetDoc();
 
-//		DSource& ds = DSource(pdoc);
-
+		// get pointer to UI, to pass to doc
 //		CUI* pui = this;
 //		CNeoMem* pui = this;
+//		doc.pui = pui;
+
 
 		//, should take and return handles, not pointers. 
 		//, all props should be optional. have a default location, class, name. 
@@ -78,6 +80,9 @@ void CTest::DoTests(CNeoMem& app) {
 		//, should document really know about current object? no, that's a ui thing. 
 		// there could be multiple ui's looking at the db. 
 		// it's pretty entwined in BDoc though. 
+
+
+
 
 		// add folder for fish
 //		HOBJECT hobjParent = pdoc->GetCurrentObject();
@@ -93,27 +98,38 @@ void CTest::DoTests(CNeoMem& app) {
 		// and not use it as a pointer. 
 
 		// this is an object of class 'folder', not something in the 'class' folder. confusing. 
+//		BObject* pobjFishFolder = doc.NewObject(classFolder, "fish");
 //		HOBJECT hobjFishFolder = doc.NewObject(classFolder, "fish");
-		OBJID idFishFolder = doc.NewObject(classFolder, "fish");
+//		OBJID idFishFolder = doc.NewObject(classFolder, "fish");
+//		BObject& objFishFolder = doc.NewObject(classFolder, "fish");
+//		DObject& dobjFishFolder = ds.NewObject(classFolder, "fish");
+//		BObject& objFolder = doc.NewObject(classFolder, "fish");
+
+//		BObject& objFolder = BObject::New(doc);
+//		BObject& objFolder = BObject::New(doc, classFolder);
+		BObject& objFolder = BObject::New(doc, classFolder, "fish");
 
 
-//		DObject dobjFishFolder = ds.NewObject(classFolder, "fish");
 
-//		HOBJECT hobj2 = doc.FindObject(classFolder, "fish");
-//		HOBJECT hobj2 = doc.GetObject(classFolder, "fish");
-//		assert(hobjFishFolder == hobj2);
+/*
+
+		// check class
+		// check location
 
 
 		// set description
 
 		CString strDesc("fish i'm thinking of getting");
-		doc.SetPropertyString(idFishFolder, propDescription, strDesc);
+//x		doc.SetPropertyString(idFishFolder, propDescription, strDesc);
+//x		pobjFolder->SetPropertyString(propDescription, strDesc);
+		objFolder.SetPropertyString(propDescription, strDesc);
 
 		// check it
-		CString str = doc.GetPropertyString(idFishFolder, propDescription);
+//x		CString str = doc.GetPropertyString(idFishFolder, propDescription);
+//x		CString str = pobjFolder->GetPropertyString(propDescription);
+		CString str = objFolder.GetPropertyString(propDescription);
 		ASSERT(str==strDesc);
 
-/*
 
 		// higher level interface
 //		doc.New("folder","fish");
@@ -136,7 +152,10 @@ void CTest::DoTests(CNeoMem& app) {
 //		OBJID classFish = hobjFishClass->GetObjectID();
 		
 //x		HOBJECT hobjFishClass = doc.NewObject(classClass, "Fish");
-		OBJID idFishClass = doc.NewObject(classClass, "Fish");
+//x		OBJID idFishClass = doc.NewObject(classClass, "Fish");
+//x		BObject* pobjClass = doc.GetObject(idFishClass);
+
+		BObject& objClass = doc.NewObject(classClass, "Fish");
 
 
 		{
@@ -144,8 +163,9 @@ void CTest::DoTests(CNeoMem& app) {
 //x			HOBJECT hobj = doc.GetPropertyLink(hobjFishClass, propLocation); 
 //x			HOBJECT hobj2 = doc.GetObject(folderClasses);
 //x			ASSERT(hobj == hobj2);
-			OBJID id = doc.GetPropertyLink(idFishClass, propLocation); 
-			ASSERT(id == folderClasses);
+//			OBJID id = doc.GetPropertyLink(idFishClass, propLocation); 
+//////////			OBJID id = pobjClass->GetPropertyLink(propLocation);
+///			ASSERT(id == folderClasses);
 
 			// double check id of location
 //x			OBJID id = doc.GetObjectID(hobj);
@@ -156,10 +176,12 @@ void CTest::DoTests(CNeoMem& app) {
 		{
 			// set description
 			CString strDesc("a thing that swims in the water");
-			doc.SetPropertyString(idFishClass, propDescription, strDesc);
+//			doc.SetPropertyString(idFishClass, propDescription, strDesc);
+			objClass.SetPropertyString(propDescription, strDesc);
 
 			// check it
-			CString str = doc.GetPropertyString(idFishClass, propDescription);
+//			CString str = doc.GetPropertyString(idFishClass, propDescription);
+			CString str = objClass.GetPropertyString(propDescription);
 			ASSERT(str==strDesc);
 		}
 
@@ -167,10 +189,24 @@ void CTest::DoTests(CNeoMem& app) {
 		// add a fish to the fish folder
 //		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
 
-		OBJID idPlecy = doc.NewObject(idFishClass, "plecy", idFishFolder);
-		doc.SetPropertyString(idPlecy, propDescription, "plecostomus");
-*/
+//x		OBJID idPlecy = doc.NewObject(idFishClass, "plecy", idFishFolder);
+//x		doc.SetPropertyString(idPlecy, propDescription, "plecostomus");
+//x		BObject* pobjPlecy = doc.GetObject(idPlecy);
+//x		pobjPlecy->SetPropertyString(propDescription, "plecostomus");
+
+
+		// read-only id variable
+//		OBJID idfoo = objClass.id;
+//		objClass.id = 2; // fails
+
+
+		BObject& objPlecy = doc.NewObject(objClass.id, "plecy", objFolder.id);
+		objPlecy.SetPropertyString(propDescription, "plecostomus");
+
+*/		
 /*
+
+
 		
 		// import a new icon
 
@@ -216,7 +252,12 @@ void CTest::DoTests(CNeoMem& app) {
 			OBJID id = doc.GetPropertyLink(idFishFolder, propDefaultClass);
 			ASSERT(id == idFishClass);
 		}
+*/
 
+
+
+
+/*
 
 		// add a new property 'price'
 
@@ -225,15 +266,22 @@ void CTest::DoTests(CNeoMem& app) {
 		OBJID idPrice = doc.NewProperty("Price", proptypeCurrency, "how much it costs");
 
 
+
+
 		// add to fish class
 //		doc.SetPropertyLink(
 		doc.AddPropertyLink(idFishClass, propObjectProperties, idPrice);
 
+
+
 */
+
+
+
 
 /*
 		// set plecy's price
-		hobjPlecy->SetPropertyText(propPrice, "$1.34");
+		hobjPlecy->SetPropertyString(propPrice, "$1.34");
 
 		// select the fish folder
 		pdoc->SetCurrentObject(hobjFishFolder);
@@ -250,7 +298,7 @@ void CTest::DoTests(CNeoMem& app) {
 		pview->m_lvw.InsertColumnAsk(propPrice, 2);
 
 		// set plecy desc
-		hobjPlecy->SetPropertyText(propDescription, "plecostomus catfish");
+		hobjPlecy->SetPropertyString(propDescription, "plecostomus catfish");
 //		hobjPlecy->SetDescription("plecostomus catfish");
 
 		// add another fish
@@ -262,12 +310,21 @@ void CTest::DoTests(CNeoMem& app) {
 
 */
 
+
+		//, pass filename here
+		//, pass pui for interactive / saveas
+//		doc.Save();
+
+
+
+
 	}
 	catch (CException* e) {
 		//?
 		const MSG msg = {0};
 		AfxGetThread()->ProcessWndProcException(e, &msg);
 	}
+
 
 //, beeps too loud		AfxMessageBox("All tests done.");
 

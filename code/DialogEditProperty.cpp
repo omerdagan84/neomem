@@ -368,7 +368,7 @@ void CDialogEditProperty::OnSelChangeCboType()
 		ULONG lngTypeID = pobjType->GetObjectID();
 
 		// Get type description
-		m_txtTypeDescription.SetWindowText(pobjType->GetPropertyText(propDescription));
+		m_txtTypeDescription.SetWindowText(pobjType->GetPropertyString(propDescription));
 
 		// Enable/disable various controls based on selection
 //		BOOL bLinkSource = (lngTypeID == proptypeLink || lngTypeID == proptypeLinks);

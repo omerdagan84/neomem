@@ -737,12 +737,12 @@ void CViewTabs::ShowTab(int nTab)
 			{
 				BObject* pobjView = m_pDoc->GetObject(lngViewID);
 				ASSERT_VALID(pobjView);
-//				pView->m_strTitleBar = pobjView->GetPropertyText(propName);
-//				pView->SetTitleBarName(pobjView->GetPropertyText(propName));
+//				pView->m_strTitleBar = pobjView->GetPropertyString(propName);
+//				pView->SetTitleBarName(pobjView->GetPropertyString(propName));
 				//,,, bad - this is the third place this code exists - encapsulate it!
-				CString strView = pobjView->GetPropertyText(propCaption);
+				CString strView = pobjView->GetPropertyString(propCaption);
 				if (strView.IsEmpty())
-					strView = pobjView->GetPropertyText(propName); // use name if caption is blank
+					strView = pobjView->GetPropertyString(propName); // use name if caption is blank
 				pView->SetTitleBarName(strView);
 			}
 
@@ -1474,7 +1474,7 @@ void CViewTabs::OnTabRightClick(NMHDR* pNotify, LRESULT* result)
 				ASSERT_VALID(pobjView);
 				if (!(pobjView->GetFlag(theApp.m_lngExcludeFlags)))
 				{
-					CString strName = CString("Show ") + pobjView->GetPropertyText(propName) + CString(" View");
+					CString strName = CString("Show ") + pobjView->GetPropertyString(propName) + CString(" View");
 					ULONG lngViewID = pobjView->GetObjectID();
 					//, make macros to convert back and forth!
 					UINT nCommandID = lngViewID - viewData + ID_VIEW_DATA;
@@ -1514,7 +1514,7 @@ void CViewTabs::OnTabRightClick(NMHDR* pNotify, LRESULT* result)
 						ASSERT(lngViewID);
 						BObject* pobjView = m_pDoc->GetObject(lngViewID);
 						ASSERT_VALID(pobjView);
-						CString strName = CString("Hide ") + pobjView->GetPropertyText(propName) + CString(" View");
+						CString strName = CString("Hide ") + pobjView->GetPropertyString(propName) + CString(" View");
 						//, make macros to convert back and forth!
 						UINT nCommandID = lngViewID - viewData + ID_VIEW_DATA;
 						// Remove the show version for this view
@@ -1610,7 +1610,7 @@ void CViewTabs::OnTabHide()
 {
 	BObject* pobj = m_pDoc->GetCurrentObject();
 	ASSERT_VALID(pobj);
-	CString strClassName = pobj->GetPropertyText(propClassName);
+	CString strClassName = pobj->GetPropertyString(propClassName);
 
 	CString strMsg;
 	strMsg.Format("This will hide this tab and any views it contains for this object and all other objects of the same class (%s). Continue?",

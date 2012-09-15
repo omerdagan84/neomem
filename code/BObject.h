@@ -44,6 +44,10 @@ public:
 //	const BObject& operator=( const BObject& a ); // Assignment operator
 //	BOOL operator==(BObject a); // Equivalence operator
 
+//x	static BObject& New();
+	static BObject& New(BDoc& doc, OBJID idClass = 0, LPCTSTR pszName = NULL, OBJID idParent = 0, 
+						OBJID idIcon = 0, ULONG lngFlags = 0);
+
 	// Operations
 	BOOL AddChild(BObject* pobjChild, BOOL bCheckForDuplicates);
 	BOOL AddProperty(BObject* pobjProperty);
@@ -91,7 +95,7 @@ public:
 	// could use overloading for these, maybe...
 	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
-	LPCTSTR GetPropertyText(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
+	LPCTSTR GetPropertyString(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
 
 	BYTE GetViewHeight() { return m_bytViewHeight; };
 	int HasChildren() const;
@@ -125,7 +129,7 @@ public:
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLink(OBJID lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
-	BOOL SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);
+	BOOL SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);
 
 	void SetViewHeight(BYTE bytViewHeight) { m_bytViewHeight = bytViewHeight; };
 	BOOL SortChildren();
@@ -133,7 +137,12 @@ public:
 	BOOL UIEditValue(OBJID lngPropertyID);
 
 
-private:
+public:
+	// read-only reference to m_lngObjectID, so can say obj.id
+	// see http://stackoverflow.com/questions/5424042/class-variables-public-access-read-only-but-private-access-read-write
+	// answer by Rob
+	const OBJID& id;
+
 	// Attributes
 	// These are serialized
 private:

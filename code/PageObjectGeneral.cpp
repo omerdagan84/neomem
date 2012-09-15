@@ -79,10 +79,10 @@ BOOL CPageObjectGeneral::OnInitDialog()
 
 	ASSERT_VALID(m_pobj);
 
-	m_txtName.SetWindowText(m_pobj->GetPropertyText(propName));
-	m_txtClass.SetWindowText(m_pobj->GetPropertyText(propClassName));
-	m_txtLocation.SetWindowText(m_pobj->GetPropertyText(propParentName));
-	m_txtDescription.SetWindowText(m_pobj->GetPropertyText(propDescription));
+	m_txtName.SetWindowText(m_pobj->GetPropertyString(propName));
+	m_txtClass.SetWindowText(m_pobj->GetPropertyString(propClassName));
+	m_txtLocation.SetWindowText(m_pobj->GetPropertyString(propParentName));
+	m_txtDescription.SetWindowText(m_pobj->GetPropertyString(propDescription));
 
 	CStringEx str;
 
@@ -162,7 +162,7 @@ BOOL CPageObjectGeneral::OnApply()
 		CString str;
 		m_txtName.GetWindowText(str);
 //		m_pobj->SetObjectText(str); //. this broadcasts hintPropertyChanged
-		m_pobj->SetPropertyText(propName, str); // this updates all views
+		m_pobj->SetPropertyString(propName, str); // this updates all views
 		m_bNameChanged = FALSE;
 	}
 
@@ -170,7 +170,7 @@ BOOL CPageObjectGeneral::OnApply()
 	{
 		CString str;
 		m_txtDescription.GetWindowText(str);
-		m_pobj->SetPropertyText(propDescription, str); // this updates all views
+		m_pobj->SetPropertyString(propDescription, str); // this updates all views
 		m_bDescriptionChanged = FALSE;
 	}
 

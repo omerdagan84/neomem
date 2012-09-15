@@ -225,8 +225,8 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 			//, use a CreateCopy or CopyFrom method
 
 			// Copy edit object properties
-			m_pobjEditOriginal->SetPropertyText(propName, m_pobj->GetPropertyText(propName), FALSE, FALSE);
-			m_pobjEditOriginal->SetPropertyText(propDescription, m_pobj->GetPropertyText(propDescription), FALSE, FALSE);
+			m_pobjEditOriginal->SetPropertyString(propName, m_pobj->GetPropertyString(propName), FALSE, FALSE);
+			m_pobjEditOriginal->SetPropertyString(propDescription, m_pobj->GetPropertyString(propDescription), FALSE, FALSE);
 
 			BOOL bIconChanged = (m_pobjEditOriginal->GetIconID() != m_pobj->GetIconID());
 //			m_pobjEditOriginal->m_lngIconID = m_pobj->m_lngIconID;
@@ -378,8 +378,8 @@ void CSheetWizard::SetEditClass(BObject *pobjClass)
 	m_pobj = m_pobjEdit;
 
 	// Now copy all of this item's properties to the copy that we'll be modifying in the wizard
-	m_pobj->SetPropertyText(propName, pobjClass->GetPropertyText(propName), FALSE, FALSE);
-	m_pobj->SetPropertyText(propDescription, pobjClass->GetPropertyText(propDescription), FALSE, FALSE);
+	m_pobj->SetPropertyString(propName, pobjClass->GetPropertyString(propName), FALSE, FALSE);
+	m_pobj->SetPropertyString(propDescription, pobjClass->GetPropertyString(propDescription), FALSE, FALSE);
 
 	// Copy flags
 	// Note: If NoDelete is set, then wouldn't be able to delete the temp object if user hit cancel, so...
@@ -430,8 +430,8 @@ void CSheetWizard::SetClassWizardTitle()
 //	if (m_pobj)
 	if ((nPage > 1) && (m_pobj != NULL))
 	{
-//		strClass.Format(_T(" [Class: %s]"), m_pobj->GetPropertyText(propName));
-		strClass.Format(_T(" [%s]"), m_pobj->GetPropertyText(propName));
+//		strClass.Format(_T(" [Class: %s]"), m_pobj->GetPropertyString(propName));
+		strClass.Format(_T(" [%s]"), m_pobj->GetPropertyString(propName));
 		str += strClass;
 	}
 	SetWindowText(str);

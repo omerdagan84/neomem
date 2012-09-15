@@ -45,13 +45,14 @@ IMPLEMENT_SERIAL(BObject, CObject, VERSIONABLE_SCHEMA | versionFileStructure)
 // because the init lists had gotten out of synch, and thought it was dangerous. 
 // you would want it fast because this is BObject. 
 
+// 
 
-BObject::BObject() {
+BObject::BObject() : m_lngObjectID(0), id(m_lngObjectID) {
 	Init();
 }
 
 
-BObject::BObject(OBJID lngClassID) {
+BObject::BObject(OBJID lngClassID) : m_lngObjectID(0), id(m_lngObjectID) {
 	Init();
 	m_lngClassID = lngClassID;
 }
@@ -114,6 +115,82 @@ BOOL BObject::operator==(BObject a)
     return m_years == a.m_years;
 }
 */
+
+
+
+// BObject factory
+// Only doc is required
+// static
+BObject& BObject::New(BDoc& doc, OBJID idClass, LPCTSTR pszName, OBJID idParent, OBJID idIcon, ULONG lngFlags) {
+
+	BObject* pobj = new BObject();
+	ASSERT(pobj);
+	BObject& obj = *pobj;
+
+	// set doc
+	obj.m_pDoc = &doc;
+
+	// default class
+	if (idClass == 0)
+		idClass = classPaper;
+
+	// default name
+	//. "New ....."
+
+	// default location
+	if (idParent == 0) {
+		//, should be a classdef property. just do a switch here for now
+		if (idClass == classClass)
+			idParent = folderClasses;
+		else
+			idParent = doc.GetCurrentObject()->id;
+	}
+
+	// default flags
+	// The default flags come from the classdef.
+//	ULONG lngFlags = GetObjectPropLong(idClass, propObjectFlags); 
+	HOBJECT hobjClassDef = doc.GetObject(idClass);
+	if (lngFlags == 0) {
+
+		//, wow, yuck api code... should be
+//		lngFlags = objClassDef.GetPropertyLong(propObjectFlags);
+		// or something
+//,		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
+		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, hobjClassDef->GetPropertyData(propObjectFlags));
+		if (pdatFlags) {
+			lngFlags = pdatFlags->GetFlags();
+			delete pdatFlags;
+		}
+	}
+
+
+
+
+	// set properties
+	obj.m_lngClassID = idClass;
+	
+	//.. make it SetName - why was it not?
+	//, use lpctstr. or call it PSZ
+	obj.SetObjectText(pszName);
+
+	BObject* pobjParent = doc.GetObject(idParent);
+	ASSERT_VALID(pobjParent);
+	obj.SetParent(pobjParent); //, api should take id not pobj
+
+	obj.SetFlags(lngFlags);
+	obj.SetIconID(idIcon); //, leave as direct ref for now (too confusing yet!)
+
+
+	// Validate object
+	ASSERT_VALID(&obj);
+
+	// Add object to database (and tell views)
+	doc.AddObject(&obj); 
+
+	return obj;
+}
+
+
 
 
 
@@ -359,7 +436,7 @@ void BObject::Serialize(CArchive& ar)
 		}
 
 		if (m_lngObjectID)
-			xTRACE("    Read ObjectID %d: \"%s\"\n", m_lngObjectID, (LPCTSTR) GetPropertyText(propName));
+			xTRACE("    Read ObjectID %d: \"%s\"\n", m_lngObjectID, (LPCTSTR) GetPropertyString(propName));
 
 		// Update progress bar
 		theApp.GetProgressBar().StepIt();
@@ -630,7 +707,7 @@ BOOL BObject::DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag /* = TRU
 			if (bAskUser)
 			{
 				CString str;
-				CString strValue = GetPropertyText(lngPropertyID);
+				CString strValue = GetPropertyString(lngPropertyID);
 				strValue.Remove('\n');
 				strValue.Remove('\r');
 				if (strValue.GetLength() > 40)
@@ -811,7 +888,7 @@ BObject* BObject::FindProperty(OBJID lngPropertyID, BOOL bAddIfNotFound)
 // Returns True if property value set successfully or False if not.
 // (Eg might be parsing something and format is invalid, so returns False).
 // Return False for read-only properties. 
-BOOL BObject::SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText, 
+BOOL BObject::SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText, 
 					BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
 {
 	ASSERT_VALID(this);
@@ -934,7 +1011,7 @@ BOOL BObject::SetPropertyText(OBJID lngPropertyID, LPCTSTR pszText,
 
 /*
 BOOL BObject::SetDescription(LPCTSTR pszText) {
-	return this->SetPropertyText(propDescription, pszText);
+	return this->SetPropertyString(propDescription, pszText);
 }
 */
 
@@ -945,7 +1022,7 @@ BOOL BObject::SetDescription(LPCTSTR pszText) {
 // Warning: Since this uses m_strTextCache, you can't string a bunch of these calls 
 // on one line, eg in a CString Format call
 //, Note: bCreateTempBDataIfNotFound is not handled here
-LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+LPCTSTR BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -998,7 +1075,7 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 				ASSERT (m_lngClassID);
 				BObject* pobjClassDef = m_pDoc->GetObject(m_lngClassID);
 				ASSERT_VALID(pobjClassDef);
-				return pobjClassDef->GetPropertyText(propName);
+				return pobjClassDef->GetPropertyString(propName);
 //			}
 //			else
 //				return "ClassID is 0";
@@ -1028,7 +1105,7 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 			if (pobjParent)
 			{
 				ASSERT_VALID(pobjParent);
-				return pobjParent->GetPropertyText(propName);
+				return pobjParent->GetPropertyString(propName);
 			}
 			else
 				// Return reference to an empty string (can't return "" because would 
@@ -1056,7 +1133,7 @@ LPCTSTR BObject::GetPropertyText(OBJID lngPropertyID, BOOL bCreateTempBDataIfNot
 	case propPlainText:
 		{
 			// get plain text version of rtf text contents
-			LPCTSTR pszRtf = GetPropertyText(propRtfText);
+			LPCTSTR pszRtf = GetPropertyString(propRtfText);
 			theApp.ConvertRtfToPlain(pszRtf, m_strTextCache);
 			return m_strTextCache;
 		}
@@ -1178,7 +1255,7 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
 
-	//.. bad - this same code is in GetPropertyText - put in FindProperty?
+	//.. bad - this same code is in GetPropertyString - put in FindProperty?
 //	BObject* pobjPropertyValue = FindProperty(lngPropertyID, FALSE);
 
 	// Handle pseudo properties first
@@ -1225,8 +1302,8 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			// and hits F2
 			// types in a new class name, say "Tape"
 			// hits enter
-			// ui code calls SetPropertyText(propClassName, "Tape")
-			// setpropertytext code will pass the string to the appropriate bdata object for parsing
+			// ui code calls SetPropertyString(propClassName, "Tape")
+			// SetPropertyString code will pass the string to the appropriate bdata object for parsing
 
 			// Create a temporary BData object appropriate for the propertydef (based on its property type)
 			BData* pdat = m_pDoc->CreateBData(lngPropertyID);
@@ -1293,7 +1370,7 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			ASSERT_VALID(pdat);
 
 			// get plain text version of rtf text contents, and store it in the bdata
-			LPCTSTR pszRtf = GetPropertyText(propRtfText);
+			LPCTSTR pszRtf = GetPropertyString(propRtfText);
 			theApp.ConvertRtfToPlain(pszRtf, m_strTextCache);
 			pdat->SetBDataText(m_strTextCache, 0, FALSE);
 //			theApp.ConvertRtfToPlain(pszRtf, pdat->m_strText); // protected member
@@ -1576,7 +1653,7 @@ void BObject::DisplayProperties()
 	CPageObjectGeneral pg;
 	sh.m_psh.dwFlags |= PSH_NOAPPLYNOW; // turn off apply button
 	sh.AddPage(&pg);
-	LPCTSTR pszName = GetPropertyText(propName);
+	LPCTSTR pszName = GetPropertyString(propName);
 	sh.SetTitle(pszName, PSH_PROPTITLE);
 	pg.m_pobj = this;
 	if (sh.DoModal() == IDOK)
@@ -2072,7 +2149,7 @@ int BObject::GetPropertyDefWidth()
 //, might make a property eventually (ie you could use something different for some classes).
 BOOL BObject::GetClassDefNewName(CString& strName)
 {
-	strName = CString(_T("New ")) + GetPropertyText(propName);
+	strName = CString(_T("New ")) + GetPropertyString(propName);
 	return TRUE;
 }
 
@@ -2719,7 +2796,7 @@ BOOL BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews
 	if (nLinks) {
 
 		// Get object's class name (lowercase)
-		CString strClassName = GetPropertyText(propClassName);
+		CString strClassName = GetPropertyString(propClassName);
 		strClassName.MakeLower();
 
 		// Ask the user if they want to remove all references to the object and delete it
@@ -2727,7 +2804,7 @@ BOOL BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews
 		strMsg.Format(_T("The %s \"%s\" is referenced by the following object(s): %s. "
 						"Do you want to remove all references to the object and then delete it?"), 
 						(LPCTSTR) strClassName, 
-						(LPCTSTR) GetPropertyText(propName), 
+						(LPCTSTR) GetPropertyString(propName), 
 						(LPCTSTR) aReferences.GetText()
 						);
 		if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION | MB_YESNO)) {
@@ -2964,18 +3041,18 @@ LPCTSTR BObject::GetName(BOOL bIncludeClassName)
 //	ASSERT(bIncludeClassName); //, for now
 	if (bIncludeClassName)
 	{
-		CString strClassName = GetPropertyText(propClassName);
+		CString strClassName = GetPropertyString(propClassName);
 		strClassName.MakeLower();
 		m_strTextCache.Format("%s \"%s\"", 
-//					(LPCTSTR) GetPropertyText(propClassName), 
+//					(LPCTSTR) GetPropertyString(propClassName), 
 					(LPCTSTR) strClassName, 
-					(LPCTSTR) GetPropertyText(propName)
+					(LPCTSTR) GetPropertyString(propName)
 					);
 	}
 	else
 	{
 		m_strTextCache.Format("%s", 
-					(LPCTSTR) GetPropertyText(propName)
+					(LPCTSTR) GetPropertyString(propName)
 					);
 	}
 	return m_strTextCache;
@@ -2996,7 +3073,7 @@ BOOL BObject::AddRtf(OBJID lngPropertyID, CString& strRtf)
 	ASSERT_VALID(this);
 
 	// Get text (rtf) of target object.
-	LPCTSTR pszOldText = GetPropertyText(lngPropertyID);
+	LPCTSTR pszOldText = GetPropertyString(lngPropertyID);
 
 	// Add existing text (rtf) to the dummy rtf control.
 	theApp.m_rtf.SetRtf(pszOldText);
@@ -3018,7 +3095,7 @@ BOOL BObject::AddRtf(OBJID lngPropertyID, CString& strRtf)
 
 	// Assign new text (rtf) back to object.
 	// Set doc modified flag and tell all views.
-	SetPropertyText(lngPropertyID, (LPCTSTR) strNewText, TRUE, TRUE);
+	SetPropertyString(lngPropertyID, (LPCTSTR) strNewText, TRUE, TRUE);
 
 	// Clear rtf contents to save memory.
 	theApp.m_rtf.SetWindowText("");
@@ -3213,7 +3290,7 @@ AfxMessageBox("copyfrom!"); //x
 
 
 // Set the parent for this object.
-// See also MoveTo
+// See also MoveTo, AddChild
 void BObject::SetParent(BObject *pobjNewParent)
 {
 	ASSERT_VALID(this);
@@ -3274,7 +3351,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 				BObject* pobjProp = datProps.GetLinkAt(i);
 				ASSERT_VALID(pobjProp);
 				OBJID lngPropertyID = pobjProp->GetObjectID();
-		//		LPCTSTR psz = this->GetPropertyText(lngPropertyID);
+		//		LPCTSTR psz = this->GetPropertyString(lngPropertyID);
 		//		file.WriteValue(psz); // will add quotes, etc
 				BData* pdat = this->GetPropertyData(lngPropertyID);
 				if (pdat)
@@ -3319,7 +3396,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 				);
 			file.WriteString(str);
 			// contents
-			CStringEx strText = this->GetPropertyText(propPlainText);
+			CStringEx strText = this->GetPropertyString(propPlainText);
 			strText.Trim();
 			if (!strText.IsEmpty())
 			{
@@ -3352,7 +3429,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			str.Format("%s%s\r\n\r\n",
 //				(LPCTSTR) strIndent,
 				"",
-				(LPCTSTR) this->GetPropertyText(propPlainText)
+				(LPCTSTR) this->GetPropertyString(propPlainText)
 				);
 			file.WriteString(str);
 		}
@@ -3367,11 +3444,11 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			str.Format("%s<outline text=\"%s\" type=\"%s\">\r\n",
 				(LPCTSTR) strIndent,
 				(LPCTSTR) this->GetName(FALSE),
-				(LPCTSTR) this->GetPropertyText(propClassName)
+				(LPCTSTR) this->GetPropertyString(propClassName)
 				);
 			file.WriteString(str);
 			// get plain text, and convert all linefeeds to &#10;
-			CStringEx strText = this->GetPropertyText(propPlainText);
+			CStringEx strText = this->GetPropertyString(propPlainText);
 			strText.Trim();
 			if (!strText.IsEmpty())
 				strText.Replace("\r\n","&#10;");
@@ -3400,7 +3477,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			file.WriteString(str);
 
 /*			// get plain text
-			CStringEx strText = this->GetPropertyText(propPlainText);
+			CStringEx strText = this->GetPropertyString(propPlainText);
 			str.Format("    <text><![CDATA[%s]]></text>\r\n",
 				(LPCTSTR) strText
 				);
