@@ -8,7 +8,7 @@
 #include "BDoc.h"
 #include "ConstantsDatabase.h" //. should be part of neodoc
 
-#include "DSource.h"
+//#include "DSource.h"
 
 
 
@@ -104,21 +104,30 @@ void CTest::DoTests(CNeoMem& app) {
 //		BObject& objFishFolder = doc.NewObject(classFolder, "fish");
 //		DObject& dobjFishFolder = ds.NewObject(classFolder, "fish");
 //		BObject& objFolder = doc.NewObject(classFolder, "fish");
-
 //		BObject& objFolder = BObject::New(doc);
 //		BObject& objFolder = BObject::New(doc, classFolder);
+
+
+
+
+
+
+
+
+
 		BObject& objFolder = BObject::New(doc, classFolder, "fish");
 
-
-
-/*
-
 		// check class
+		//, yuck - classID?
+		BObject* pobjClass = objFolder.GetPropertyLink(propClassID);
+		ASSERT(pobjClass->id == classFolder);
+
 		// check location
+		BObject* pobjParent = objFolder.GetPropertyLink(propParent);
+		ASSERT(pobjParent->id == doc.GetCurrentObject()->id);
 
 
 		// set description
-
 		CString strDesc("fish i'm thinking of getting");
 //x		doc.SetPropertyString(idFishFolder, propDescription, strDesc);
 //x		pobjFolder->SetPropertyString(propDescription, strDesc);
@@ -131,20 +140,16 @@ void CTest::DoTests(CNeoMem& app) {
 		ASSERT(str==strDesc);
 
 
-		// higher level interface
-//		doc.New("folder","fish");
-//		doc.New("class","fish");
-//		doc.New("fish","plecy");
-
-		// higher
-//		doc.Parse("add folder fish");
-//		doc.Parse("add class fish");
-//		doc.Parse("goto fish folder");
-//		doc.Parse("add fish plecy");
-
-		// cf mkdir fish
 
 
+
+
+
+
+
+
+
+/*
 		// add a fish class
 //		hobjParent = pdoc->GetObject(rootClass);
 //		HOBJECT hobjFishClass = pdoc->CreateObject(classClass, "Fish", hobjParent);

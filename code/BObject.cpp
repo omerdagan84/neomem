@@ -1550,16 +1550,18 @@ BOOL BObject::SetPropertyLink(OBJID lngPropertyID,
 // doesn't exist for this object.
 //, this assumes the link property only has one value
 //, Note: bCreateTempBDataIfNotFound is not handled
+//, return id instead of pointer
 BObject* BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
 
-//. handle pseudo properties (eg classid, parent, etc.)
 	switch (lngPropertyID)
 	{
-//		case propIconID:
-//			return m_pDoc->GetObject(m_lngIconID); // but...
+		case propClassID:
+			return m_pDoc->GetObject(m_lngClassID);
+//,		case propIconID:
+//			return m_pDoc->GetObject(m_lngIconID); // but could be zero
 		case propLocation: 
 			return m_pobjParent;
 	}
