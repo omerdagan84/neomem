@@ -1023,14 +1023,13 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 
 			// Add new object of default class
 			BObject* pobjParent = m_pDoc->GetCurrentObject();
-			BObject* pobjClass = pobjParent->GetPropertyLink(propDefaultClass);
+			OBJID idClass = pobjParent->GetPropertyLink(propDefaultClass);
+			BObject* pobjClass = m_pDoc->GetObject(idClass);
 			ASSERT_VALID(pobjClass);
-			ULONG lngClassID = pobjClass->GetObjectID();
 			CString strName;
 			pobjClass->GetClassDefNewName(strName);
 
-//x			BObject* pobjNew = m_pDoc->CreateObject(lngClassID, strName, pobjParent);
-			BObject& objNew = BObject::New(*m_pDoc, lngClassID, strName, pobjParent->id);
+			BObject& objNew = BObject::New(*m_pDoc, idClass, strName, pobjParent->id);
 
 			// Set the property that the user was editing
 			ULONG lngPropertyID = m_lvw.GetColumnPropertyID(pLVITEM->iSubItem);
@@ -1039,13 +1038,6 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 			// Modify the dummy item to become the new object
 			int nImage = objNew.GetIconIndex();
 			m_lvw.SetItem(nItem, 0, LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM, LPSTR_TEXTCALLBACK, nImage, 0, 0, (LPARAM) &objNew);
-
-			// Tell all _other_ views about new object also
-//			m_pDoc->UpdateAllViewsEx(this, hintAdd, pobjNew);
-
-			// Add object to database and tell _other_ views
-//			m_pDoc->AddObject(pobjNew);
-//x			m_pDoc->AddObject(pobjNew, this);
 
 			// Now re-add the dummy row
 			m_lvw.AddDummyRow();
@@ -1671,25 +1663,18 @@ void CViewContents::OnObjEditInDialog()
 		
 		// Add new object of default class
 		BObject* pobjParent = m_pDoc->GetCurrentObject();
-		BObject* pobjClass = pobjParent->GetPropertyLink(propDefaultClass);
+		OBJID idClass = pobjParent->GetPropertyLink(propDefaultClass);
+		BObject* pobjClass = m_pDoc->GetObject(idClass);
 		ASSERT_VALID(pobjClass);
-		ULONG lngClassID = pobjClass->GetObjectID();
 		CString strName;
 		pobjClass->GetClassDefNewName(strName);
-//x		pobj = m_pDoc->CreateObject(lngClassID, strName, pobjParent);
-		BObject& obj = BObject::New(*m_pDoc, lngClassID, strName, pobjParent->id);
+		BObject& obj = BObject::New(*m_pDoc, idClass, strName, pobjParent->id);
 
 		// Add new object to listview
 		//. lvw should handle removing and adding the dummy row
 		m_lvw.RemoveDummyRow();
 		m_lvw.AddObject(pobj);
 		m_lvw.AddDummyRow();
-
-		// Tell all views about new object
-//		m_pDoc->UpdateAllViewsEx(this, hintAdd, pobj);
-
-		// Add object to database and tell views
-//x		m_pDoc->AddObject(pobj);
 
 	}
 	ASSERT_VALID(pobj);

@@ -119,23 +119,19 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// check class
 		//, yuck - classID?
-		BObject* pobjClass = objFolder.GetPropertyLink(propClassID);
-		ASSERT(pobjClass->id == classFolder);
+		OBJID idClass = objFolder.GetPropertyLink(propClassID);
+		ASSERT(idClass == classFolder);
 
 		// check location
-		BObject* pobjParent = objFolder.GetPropertyLink(propParent);
-		ASSERT(pobjParent->id == doc.GetCurrentObject()->id);
+		OBJID idParent = objFolder.GetPropertyLink(propParent);
+		ASSERT(idParent == doc.GetCurrentObject()->id);
 
 
 		// set description
 		CString strDesc("fish i'm thinking of getting");
-//x		doc.SetPropertyString(idFishFolder, propDescription, strDesc);
-//x		pobjFolder->SetPropertyString(propDescription, strDesc);
 		objFolder.SetPropertyString(propDescription, strDesc);
 
 		// check it
-//x		CString str = doc.GetPropertyString(idFishFolder, propDescription);
-//x		CString str = pobjFolder->GetPropertyString(propDescription);
 		CString str = objFolder.GetPropertyString(propDescription);
 		ASSERT(str==strDesc);
 

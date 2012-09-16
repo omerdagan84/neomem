@@ -43,15 +43,11 @@ BOOL BDataNumber::SetBDataText(const CString& str, BObject* pobjPropertyDef /* =
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjPropertyDef);
 
-	ULONG lngPropertyTypeID = proptypeNumber;
-	BObject* pobjPropType = pobjPropertyDef->GetPropertyLink(propPropertyType);
-	if (pobjPropType)
-	{
-		ASSERT_VALID(pobjPropType);
-		lngPropertyTypeID = pobjPropType->GetObjectID();
-	}
+	OBJID idPropertyType = pobjPropertyDef->GetPropertyLink(propPropertyType);
+	if (idPropertyType == 0)
+		idPropertyType = proptypeNumber;
 
-	switch (lngPropertyTypeID)
+	switch (idPropertyType)
 	{
 		case proptypeCurrency:
 			{

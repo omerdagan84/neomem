@@ -142,17 +142,11 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 	// Note: We create this with flagTemp, but remove this flag if user 
 	// opts to create a new class, then set it back if they choose to 
 	// edit an existing one.
-//	m_pobjAdd = m_pdoc->CreateObject(classClass, 
-//		_T("New Class"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
-//x	m_pobjAdd = m_pdoc->CreateClass(_T("New Class"), "", flagSystem | flagTemp);
 	m_pobjAdd = &BObject::New(*m_pdoc, classClass, _T("New Class"), rootClass, 0, flagSystem | flagTemp);
 //,	m_pobjAdd = &BClass::New(*m_pdoc, _T("New Class"), "", flagSystem | flagTemp);
 
 	// Create a class object that will be a copy of an existing class object.
 	// Note: if we pick a class that's a child of another class we have to use move.
-//	m_pobjEdit = m_pdoc->CreateObject(classClass, 
-//		_T("@dummy edit class!"), pobjBaseClass, 0, 0, flagSystem | flagTemp);
-//x	m_pobjEdit = m_pdoc->CreateClass(_T("@dummy edit class"), "", flagSystem | flagTemp);
 	m_pobjEdit = &BObject::New(*m_pdoc, classClass, _T("@dummy edit class"), rootClass, 0, flagSystem | flagTemp);
 	
 	m_bAddMode = TRUE; // Default is to add a new class
@@ -244,13 +238,12 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 
 			// If the name property type changes, we need to tell all 
 			// objects to change their bdata's!
-			BObject* pobjNewPropType = m_pobj->GetPropertyLink(propObjectNamePropertyType);
-			BObject* pobjOldPropType = m_pobjEditOriginal->GetPropertyLink(propObjectNamePropertyType);
-			if (pobjNewPropType != pobjOldPropType)
+			OBJID idNewPropType = m_pobj->GetPropertyLink(propObjectNamePropertyType);
+			OBJID idOldPropType = m_pobjEditOriginal->GetPropertyLink(propObjectNamePropertyType);
+			if (idNewPropType != idOldPropType)
 			{
-				ULONG lngClassID = m_pobjEditOriginal->GetObjectID();
-				ULONG lngNewPropertyTypeID = pobjNewPropType->GetObjectID();
-				m_pdoc->GetRoot()->ChangeNamePropertyType(lngClassID, lngNewPropertyTypeID);
+				OBJID idClass = m_pobjEditOriginal->id;
+				m_pdoc->GetRoot()->ChangeNamePropertyType(idClass, idNewPropType);
 			}
 
 			// Copy property bdata objects, if any

@@ -44,7 +44,6 @@ public:
 //	const BObject& operator=( const BObject& a ); // Assignment operator
 //	BOOL operator==(BObject a); // Equivalence operator
 
-//x	static BObject& New();
 	static BObject& New(BDoc& doc, OBJID idClass = 0, LPCTSTR pszName = NULL, OBJID idParent = 0, 
 						OBJID idIcon = 0, ULONG lngFlags = 0);
 
@@ -93,7 +92,8 @@ public:
 	int GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly, BOOL bThisIsAClass);
 
 	// could use overloading for these, maybe...
-	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+//	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+	OBJID GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	LPCTSTR GetPropertyString(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
 
@@ -125,7 +125,7 @@ public:
 	void SetObjectText(const CString& strText);
 	void SetParent(BObject* pobjNewParent);
 	
-	// could use overloading for these, maybe...
+	// could use overloading for these, maybe... (but then not for the get props. darn)
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLink(OBJID lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);

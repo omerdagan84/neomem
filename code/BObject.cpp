@@ -1187,8 +1187,6 @@ BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig,
 	ASSERT_VALID(m_pDoc);
 	ASSERT_VALID(pdatOrig);
 
-//x	BOOL bSavedBData = TRUE;
-
 	// Make copy of the BData object
 	BData* pdat = pdatOrig->CreateCopy();
 
@@ -1214,7 +1212,6 @@ BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig,
 //			m_lngClassID = pdatLink->GetLinkObjectID();
 			OBJID lngNewClassID = pdatLink->GetLinkObjectID();
 			SetClassID(lngNewClassID);
-//x			bSavedBData = FALSE; // pdat not saved to bobject!
 			break;
 		}
 	default:
@@ -1241,7 +1238,6 @@ BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig,
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 
-//	return bSavedBData;
 	return TRUE;
 }
 
@@ -1551,6 +1547,7 @@ BOOL BObject::SetPropertyLink(OBJID lngPropertyID,
 //, this assumes the link property only has one value
 //, Note: bCreateTempBDataIfNotFound is not handled
 //, return id instead of pointer
+/*
 BObject* BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
@@ -1575,6 +1572,41 @@ BObject* BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNo
 		{
 			ASSERT_VALID(pdat);
 			return pdat->GetLink();
+		}
+	}
+	return 0; 
+}
+*/
+
+
+OBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+{
+	ASSERT_VALID(this);
+	ASSERT(lngPropertyID);
+
+	switch (lngPropertyID)
+	{
+		case propClassID:
+			return m_lngClassID;
+//,		case propIconID:
+//			return m_lngIconID; // but could be zero...
+		case propLocation: 
+			return m_pobjParent->id;
+	}
+
+	BObject* pobjPropertyValue = FindProperty(lngPropertyID, FALSE);
+	if (pobjPropertyValue)
+	{
+		ASSERT_VALID(pobjPropertyValue);
+		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetBData());
+		if (pdat)
+		{
+			ASSERT_VALID(pdat);
+			BObject* pobjLink = pdat->GetLink();
+			if (pobjLink) {
+				ASSERT_VALID(pobjLink);
+				return pobjLink->id;
+			}
 		}
 	}
 	return 0; 
@@ -1950,22 +1982,18 @@ int BObject::GetLinks(BObjects &aObjects, BObject* pobjStart)
 int BObject::GetPropertyDefAlignment()
 {
 	ASSERT_VALID(this);
-	BObject* pobjPropType = GetPropertyLink(propPropertyType);
+	OBJID idPropType = GetPropertyLink(propPropertyType);
+	ASSERT(idPropType);
 	int nAlignment = LVCFMT_LEFT; // default is left-aligned
-	if (pobjPropType)
+	switch (idPropType)
 	{
-		ASSERT_VALID(pobjPropType);
-		OBJID lngPropTypeID = pobjPropType->GetObjectID();
-		switch (lngPropTypeID)
-		{
-			case proptypeNumber:
-			case proptypeCurrency:
-			case proptypeTimeInterval:
-			case proptypeCalculated:
-			case proptypeLong:
-				nAlignment = LVCFMT_RIGHT;
-				break;
-		}
+		case proptypeNumber:
+		case proptypeCurrency:
+		case proptypeTimeInterval:
+		case proptypeCalculated:
+		case proptypeLong:
+			nAlignment = LVCFMT_RIGHT;
+			break;
 	}
 	return nAlignment;
 }
@@ -3586,19 +3614,14 @@ BOOL BObject::PropertyDefHasMachineVersion()
 	ASSERT_VALID(this);
 	ASSERT(m_lngClassID == classProperty);
 
-	BObject* pobjPropType = GetPropertyLink(propPropertyType);
-	if (pobjPropType)
+	OBJID idPropType = GetPropertyLink(propPropertyType);
+	switch (idPropType)
 	{
-		ASSERT_VALID(pobjPropType);
-		OBJID lngPropTypeID = pobjPropType->GetObjectID();
-		switch (lngPropTypeID)
-		{
 		case proptypeLink:
 		case proptypeDate:
 		case proptypeCurrency:
 			return TRUE;
 			break;
-		}
 	}
 	return FALSE;
 }

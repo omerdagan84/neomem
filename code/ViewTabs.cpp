@@ -686,9 +686,7 @@ void CViewTabs::ShowTab(int nTab)
 		// Send the hintSelect current object to the view to update it
 		//. test
 //x		BObject* pobjCurrent = DYNAMIC_DOWNCAST(BDoc, GetDocument())->GetCurrentObject();
-		BDoc* pdoc = DYNAMIC_DOWNCAST(BDoc, GetDocument());
-		ASSERT_VALID(pdoc);
-		BObject* pobjCurrent = pdoc->GetCurrentObject();
+		BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 		pView->UpdateView(this, hintSelect, pobjCurrent);
 
 		// Save this as the current view
@@ -773,9 +771,7 @@ void CViewTabs::ShowTab(int nTab)
 			// Send the hintSelect current object to the view
 			//.test
 //x			BObject* pobjCurrent = DYNAMIC_DOWNCAST(BDoc, GetDocument())->GetCurrentObject();
-			BDoc* pdoc = DYNAMIC_DOWNCAST(BDoc, GetDocument());
-			ASSERT_VALID(pdoc);
-			BObject* pobjCurrent = pdoc->GetCurrentObject();
+			BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 			pView->UpdateView(this, hintSelect, pobjCurrent);
 
 		}

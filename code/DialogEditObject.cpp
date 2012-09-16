@@ -340,8 +340,9 @@ void CDialogEditObject::OnSelchangeCboLocation()
 	BObject* pobjParent = (BObject*) m_cboLocation.GetSelectedItemData();
 	if (pobjParent)
 	{
-		BObject* pobjClass = pobjParent->GetPropertyLink(propDefaultClass);
-		ASSERT_VALID(pobjClass);
+		OBJID idClass = pobjParent->GetPropertyLink(propDefaultClass);
+		BObject* pobjClass = m_pDoc->GetObject(idClass);
+		ASSERT(pobjClass);
 		// This will trigger listview selchange event
 		m_lvw.SelectItemData((LPARAM) pobjClass);
 	}

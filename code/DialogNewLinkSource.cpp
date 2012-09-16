@@ -123,12 +123,6 @@ void CDialogNewLinkSource::OnBtnNewClass()
 
 //,		objClass.SetPropertyString(propDescription, strDescription, FALSE, FALSE);
 
-		// Tell views about new class
-//x		m_pDoc->UpdateAllViewsEx(NULL, hintAdd, pobjNewClass);
-
-		// Add object to database and tell views
-//x		m_pDoc->AddObject(hobjNewClass);
-
 		// Add to combo and select it
 		//. test
 		BObject* pobjParent = objClass.GetParent();

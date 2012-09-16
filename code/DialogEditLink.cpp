@@ -313,10 +313,7 @@ BOOL CDialogEditLink::OnInitDialog()
 	AddObjects();
 
 	// Get default class to determine which dialogs to use, etc.
-	ASSERT_VALID(m_pobjStart);
-	BObject* pobjClass = m_pobjStart->GetPropertyLink(propDefaultClass);
-	ASSERT_VALID(pobjClass);
-	m_lngDefaultClassID = pobjClass->GetObjectID();
+	m_lngDefaultClassID = m_pobjStart->GetPropertyLink(propDefaultClass);
 
 	// Show buttons, etc.
 	UpdateControls();

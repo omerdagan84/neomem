@@ -84,12 +84,10 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 	// Get the Link Source object, or use root as default.
 	// e.g. this might be an Authors folder.
-	BObject* pobjLinkSource = pobjPropertyDef->GetPropertyLink(propLinkSource);
-	if (!pobjLinkSource)
-	{
-		// Get root object
-		pobjLinkSource = pDoc->GetObject(theApp.GetTopObjectID());
-	}
+	OBJID idLinkSource = pobjPropertyDef->GetPropertyLink(propLinkSource);
+	if (idLinkSource == 0) 
+		idLinkSource = theApp.GetTopObjectID(); // get root object
+	BObject* pobjLinkSource = pDoc->GetObject(idLinkSource);
 	ASSERT_VALID(pobjLinkSource);
 
 	// First check if text is blank, in which case this property value should be deleted
@@ -130,9 +128,9 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 		if (nObjects == 0)
 		{
 			CString strMsg;
-			BObject* pobjClass = pobjLinkSource->GetPropertyLink(propDefaultClass);
-			ASSERT_VALID(pobjClass);
-			ULONG lngClassID = pobjClass->GetObjectID();
+			OBJID idClass = pobjLinkSource->GetPropertyLink(propDefaultClass);
+			BObject* pobjClass = pDoc->GetObject(idClass);
+			ASSERT(pobjClass);
 			CString strClassName = pobjClass->GetPropertyString(propName);
 			CString strLinkSourceClass = pobjLinkSource->GetPropertyString(propClassName);
 			CString strLinkSourceName = pobjLinkSource->GetPropertyString(propName);
@@ -140,7 +138,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			strLinkSourceClass.MakeLower();
 			// Special case for classes - just give message for now
 			//, bring up class wizard if user says yes
-			if (lngClassID == classClass)
+			if (idClass == classClass)
 			{
 				strMsg.Format("No match was found for \"%s\" in the %s %s. Hit F4 to see a list of possible values.",
 					(LPCTSTR) strCopy, (LPCTSTR) strLinkSourceClass, (LPCTSTR) strLinkSourceName);
@@ -151,17 +149,8 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 				(LPCTSTR) strCopy, (LPCTSTR) strLinkSourceClass, (LPCTSTR) strLinkSourceName, (LPCTSTR) strClassName, (LPCTSTR) str);
 			if (IDYES == AfxMessageBox(strMsg, MB_YESNO + MB_ICONQUESTION))
 			{
-				// Add the new object
-				ULONG lngClassID = pobjClass->GetObjectID();
-
-//x				HOBJECT hobjNew = pDoc->CreateObject(lngClassID, strCopy, pobjLinkSource);
-//x				pDoc->AddObject(hobjNew);
-				// Link to it
-//x				SetLink(hobjNew);
-
-				BObject& objNew = BObject::New(*pDoc, lngClassID, strCopy, pobjLinkSource->id);
+				BObject& objNew = BObject::New(*pDoc, idClass, strCopy, pobjLinkSource->id);
 				SetLink(&objNew);
-
 				return TRUE;
 			}
 			else
@@ -254,13 +243,9 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	BOOL bMultiSelectOn = IsMultiple();
 
 	// Get link source from propertydef
-	ULONG lngStartID = theApp.GetTopObjectID(); // default is root object
-	BObject* pobjLinkSource = pobjPropertyDef->GetPropertyLink(propLinkSource);
-	if (pobjLinkSource)
-	{
-		ASSERT_VALID(pobjLinkSource);
-		lngStartID = pobjLinkSource->GetObjectID();
-	}
+	OBJID idStart = pobjPropertyDef->GetPropertyLink(propLinkSource);
+	if (idStart == 0)
+		idStart = theApp.GetTopObjectID(); // default is root object
 
 	TCHAR* pszCaption = _T("Edit Link");
 	CString strPropName = pobjPropertyDef->GetPropertyString(propName);
@@ -274,7 +259,7 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_EDIT_LINK; //, use sethelpid
 	if (dlg.DoModalLink(pszCaption, strInstructions, bMultiSelectVisible, bMultiSelectEnabled, bMultiSelectOn, 
-									lngStartID, this, theApp.m_lngExcludeFlags) == IDOK)
+									idStart, this, theApp.m_lngExcludeFlags) == IDOK)
 	{
 		// Note: Link(s) has already been saved to this bdata object by the dialog
 		//, don't want UI to have code like that
@@ -316,10 +301,11 @@ LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 
 				LPCTSTR pszText = 0;
 				BOOL bDisplayLinkHierarchy = pobjPropertyDef->GetPropertyLong(propDisplayLinkHierarchy);
-				BObject* pobjAdditionalProp = pobjPropertyDef->GetPropertyLink(propAdditionalDisplayProperty);
+				OBJID idAdditionalProp = pobjPropertyDef->GetPropertyLink(propAdditionalDisplayProperty);
+				BObject* pobjAdditionalProp = pDoc->GetObject(idAdditionalProp);
 
 				// Just display the name of the link object if no other options specified
-				if (bDisplayLinkHierarchy == FALSE && pobjAdditionalProp == 0)
+				if (bDisplayLinkHierarchy == FALSE && idAdditionalProp == 0)
 				{
 					return pobj->GetPropertyString(propName);
 				}
@@ -333,16 +319,17 @@ LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 				{
 					// Get the Link Source, which is where the GetParents method will stop.
 					// If none specified, use the root object (shouldn't ever happen).
-					BObject* pobjLinkSource = pobjPropertyDef->GetPropertyLink(propLinkSource);
-					if (!pobjLinkSource)
-						pobjLinkSource = pDoc->GetObject(rootMain);
+					OBJID idLinkSource = pobjPropertyDef->GetPropertyLink(propLinkSource);
+					if (!idLinkSource)
+						idLinkSource = pDoc->GetObject(rootMain)->id;
+					BObject* pobjLinkSource = pDoc->GetObject(idLinkSource);
 					ASSERT_VALID(pobjLinkSource);
 
 					// If the link object is a direct child of the link source, then don't bother with getting the parents.
-					if (pobj->GetParent() == pobjLinkSource)
+					if (pobj->GetParent()->id == idLinkSource)
 					{
 						// If no more stuff to be added then just exit here with object name.
-						if (pobjAdditionalProp == 0)
+						if (idAdditionalProp == 0)
 							return pobj->GetPropertyString(propName);
 						else
 							// Otherwise, store in cstring and continue

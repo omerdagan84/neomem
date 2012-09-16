@@ -148,7 +148,8 @@ void CPageClassContents::LoadData()
 	ASSERT_VALID(pobjStart);
 	m_cboClass.DeleteAllItems();
 	m_cboClass.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE);
-	BObject* pobjDefaultClass = m_pobj->GetPropertyLink(propObjectDefaultClass);
+	OBJID idDefaultClass = m_pobj->GetPropertyLink(propObjectDefaultClass);
+	BObject* pobjDefaultClass = m_pDoc->GetObject(idDefaultClass);
 	ASSERT_VALID(pobjDefaultClass);
 	m_cboClass.SelectItemData((LPARAM) pobjDefaultClass);
 

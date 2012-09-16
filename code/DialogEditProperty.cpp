@@ -272,14 +272,9 @@ void CDialogEditProperty::OnBtnNewLinkSource()
 //		BObject* pobjParent = m_pDoc->GetObject(folderLookup); // add to lookup folder
 		BObject* pobjParent = m_pDoc->GetObject(rootUser); // add to home folder
 
-//x		HOBJECT hobjNewFolder = m_pDoc->CreateObject(classFolder, strFolderName, pobjParent);
 		BObject& objNewFolder = BObject::New(*m_pDoc, classFolder, strFolderName, pobjParent->id);
 		BObject* pobjClass = m_pDoc->GetObject(lngClassID);
 		objNewFolder.SetPropertyLink(propDefaultClass, pobjClass, FALSE, FALSE);
-
-		// Tell views about new folder
-//		m_pDoc->UpdateAllViewsEx(NULL, hintAdd, pobjNewFolder);
-//x		m_pDoc->AddObject(hobjNewFolder);
 
 		// Add the new folder to the combo and select it
 		int nIndex = m_cboLinkSource.AddObject(&objNewFolder, pobjParent);

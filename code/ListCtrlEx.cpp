@@ -545,8 +545,8 @@ CEdit* CListCtrlEx::EditCurrentCell(LPCTSTR pszEditText /* = 0 */)
 			pobjPropertyDef = m_pDoc->GetObject(lngPropertyID);
 		ASSERT_VALID(pobjPropertyDef);
 		BOOL bDisplayLinkHierarchy = pobjPropertyDef->GetPropertyLong(propDisplayLinkHierarchy);
-		BObject* pobjAdditionalProp = pobjPropertyDef->GetPropertyLink(propAdditionalDisplayProperty);
-		if (bDisplayLinkHierarchy || (pobjAdditionalProp != 0))
+		OBJID idAdditionalProp = pobjPropertyDef->GetPropertyLink(propAdditionalDisplayProperty);
+		if (bDisplayLinkHierarchy || (idAdditionalProp != 0))
 		{
 			AfxMessageBox("Because this property displays a link hierarchy and/or an additional\n"
 				"display property, you must edit this value using Edit Value in Dialog (F4).", MB_ICONINFORMATION);
@@ -722,27 +722,18 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pobjPropertyDef)
 			{
 				ASSERT_VALID(pobjPropertyDef);
-				BObject* pobjPropType = pobjPropertyDef->GetPropertyLink(propPropertyType);
-				if (pobjPropType)
+				OBJID idPropertyType = pobjPropertyDef->GetPropertyLink(propPropertyType);
+				xTRACE("     custom draw proptypeid %d\n", idPropertyType);
+				switch (idPropertyType) 
 				{
-					ASSERT_VALID(pobjPropType);
-					ULONG lngPropertyTypeID = pobjPropType->GetObjectID();
-					xTRACE("     custom draw proptypeid %d\n", lngPropertyTypeID);
-/*					if (lngPropertyTypeID == proptypeHyperlink)
-					{
+					case proptypeHyperlink:
 						//, make underline also
-						clrFore = g_clrHyperlinkText;
-					}
-*/
-					switch (lngPropertyTypeID) 
-					{
-						case proptypeHyperlink:
-						case proptypeEmail:
-						case proptypeWebsite:
-						case proptypeFile:
-						case proptypeFolder:
-							clrFore = Library::clrHyperlinkText;
-					}
+//						clrFore = Library::clrHyperlinkText;
+					case proptypeEmail:
+					case proptypeWebsite:
+					case proptypeFile:
+					case proptypeFolder:
+						clrFore = Library::clrHyperlinkText;
 				}
 			}
 
@@ -2645,16 +2636,16 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 	int nNewCol = -1;
 
 	// Get default class (eg if we're on a folder, it can have a default class associated with it)
-	BObject* pobjDefaultClass = NULL;
-	if (pobjParent)
-		pobjDefaultClass = pobjParent->GetPropertyLink(propDefaultClass);
-	if (pobjDefaultClass == NULL)
-		pobjDefaultClass = m_pDoc->GetObject(classPaper);
+
+	//, this info should be in brooklyn, not here (default as paper)
+	OBJID idDefaultClass = pobjParent->GetPropertyLink(propDefaultClass);
+	if (idDefaultClass == 0)
+		idDefaultClass = classPaper;
 
 	// Let user pick a property if not specified
 	if (idProperty == 0) {
 		CDialogSelectProperty dlg;
-		dlg.m_pobjDefaultClass = pobjDefaultClass;
+		dlg.m_pobjDefaultClass = m_pDoc->GetObject(idDefaultClass);
 		if (dlg.DoModal() == IDCANCEL)
 			return -1;
 		idProperty = dlg.m_lngSelectedID;
@@ -3135,16 +3126,22 @@ void CListCtrlEx::SortByProperty(ULONG lngPropertyID /* = 0 */, int iDir /* = 0 
 	RemoveDummyRow();
 
 	// Get property type
-	ULONG lngPropertyTypeID = proptypeString; // default is string
+	OBJID idPropertyType = proptypeString; // default is string
 	BObject* pobjPropDef = m_pDoc->GetObject(lngPropertyID);
 	if (pobjPropDef)
 	{
 		ASSERT_VALID(pobjPropDef);
-		BObject* pobjPropType = pobjPropDef->GetPropertyLink(propPropertyType);
-		if (pobjPropType)
-		{
-			ASSERT_VALID(pobjPropType);
-			lngPropertyTypeID = pobjPropType->GetObjectID();
+//x		BObject* pobjPropType = pobjPropDef->GetPropertyLink(propPropertyType);
+//		if (pobjPropType)
+//		{
+//			ASSERT_VALID(pobjPropType);
+//			lngPropertyTypeID = pobjPropType->GetObjectID();
+//		}
+//x		lngPropertyTypeID = pobjPropDef->GetPropertyLink(propPropertyType);
+		OBJID idPropType = pobjPropDef->GetPropertyLink(propPropertyType);
+		if (idPropType) {
+			BObject* pobjPropType = m_pDoc->GetObject(idPropType);
+			idPropertyType = pobjPropType->id;
 		}
 	}
 
@@ -3163,7 +3160,7 @@ void CListCtrlEx::SortByProperty(ULONG lngPropertyID /* = 0 */, int iDir /* = 0 
 	// Create an object that includes sort props and directions, and proptype too
 	CSortObject so;
 	so.m_lngPropertyID = lngPropertyID;
-	so.m_lngPropertyTypeID = lngPropertyTypeID;
+	so.m_lngPropertyTypeID = idPropertyType;
 	so.m_iSortDirection = iDir;
 
 	// Sort items using our comparison function

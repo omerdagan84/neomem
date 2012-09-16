@@ -78,15 +78,12 @@ void CPageClassType::DoDataExchange(CDataExchange* pDX)
 
 	if (!pDX->m_bSaveAndValidate) // Load
 	{
-		ULONG lngPropTypeID = proptypeString; // default is regular string
-		BObject* pobjPropType = m_pobj->GetPropertyLink(propObjectNamePropertyType);
-		if (pobjPropType)
-		{
-			lngPropTypeID = pobjPropType->GetObjectID();
-		}
+		OBJID idPropType = m_pobj->GetPropertyLink(propObjectNamePropertyType);
+		if (!idPropType)
+			idPropType = proptypeString; // default is regular string
 		// Get combo box index based on property type
 		int nSel = 0;
-		switch (lngPropTypeID)
+		switch (idPropType)
 		{
 			case proptypeString: nSel = 0; break;
 			case proptypePersonName: nSel = 1; break;
