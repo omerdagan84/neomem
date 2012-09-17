@@ -127,8 +127,8 @@ public:
 	
 	// could use overloading for these, maybe... (but then not for the get props. darn)
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
-//x	BOOL SetPropertyLink(OBJID lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+	BOOL SetPropertyLinksAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);
 

@@ -1493,7 +1493,7 @@ ULONG BObject::GetPropertyLong(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 
 
 // Set object that the specified property links to.
-// Note: If pobj is zero, will delete the property bobject.
+// Note: If idObj is zero, will delete the property bobject.
 BOOL BObject::SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag, BOOL bUpdateViews) {
 	ASSERT_VALID(this);
 	ASSERT(idProperty);
@@ -1537,6 +1537,50 @@ BOOL BObject::SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFl
 
 	return TRUE;
 }
+
+
+
+// Add an object to a multilink property
+BOOL BObject::SetPropertyLinksAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag, BOOL bUpdateViews) {
+	ASSERT_VALID(this);
+	ASSERT(idProperty);
+	ASSERT(idObj);
+
+	// Find/create property value bobject
+	//, make a BPropValue class? 
+	BObject* pobjPropertyValue = FindProperty(idProperty, TRUE);
+	ASSERT_VALID(pobjPropertyValue);
+
+	// similarly the bdata may or may not exist yet, but there's
+	// no similar function to get/add one?
+
+//	pobjPropertyValue->SetPropertyData(idProperty, pdat
+	BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetBData());
+	if (!pdat) {
+		pdat = DYNAMIC_DOWNCAST(BDataLink, m_pDoc->CreateBData(idProperty));
+		pdat->SetMultiple();
+	}
+	ASSERT(pdat);
+	ASSERT(pdat->IsMultiple());
+
+	pdat->AddLinkID(idObj, m_pDoc);
+
+	// Set document modified flag if specified
+	if (bSetModifiedFlag)
+		m_pDoc->SetModifiedFlag(TRUE);
+
+	// Update all views if specified
+	if (bUpdateViews) {
+		CHint h;
+		h.pobjObject = this;
+		h.idProperty = idProperty;
+		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+	}
+
+	return TRUE;
+}
+
+
 
 
 OBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)

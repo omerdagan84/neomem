@@ -172,37 +172,35 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-
 		// set folder default to fish class
 		// This will set document modified flag and update views?
-//		pdoc->UIChangeObjectContents(hobjFishClass);
+//,		pdoc->UIChangeObjectContents(hobjFishClass);
 		objFolder.SetPropertyLink(propDefaultClass, classFish);
 		{
-			OBJID id = objFolder.GetPropertyLink(propDefaultClass);
-			ASSERT(id == classFish);
+		OBJID id = objFolder.GetPropertyLink(propDefaultClass);
+		ASSERT(id == classFish);
 		}
 
 
 
-
-/*
-
 		// add a new property 'price'
-
 //		pdoc->UIAddNewPropertyDef(); //, adapt this
-
-		OBJID idPrice = doc.NewProperty("Price", proptypeCurrency, "how much it costs");
-
-
-
-
-		// add to fish class
-//		doc.SetPropertyLink(
-		doc.AddPropertyLink(idFishClass, propObjectProperties, idPrice);
+//,		BObject& objPrice = BPropDef::New(doc, "price", proptypeCurrency, "how much it costs");
+		BObject& objPrice = BObject::New(doc, classProperty, "price", folderProperties);
+		objPrice.SetPropertyLink(propPropertyType, proptypeCurrency);
+		objPrice.SetPropertyString(propDescription, "how much it costs");
 
 
+		// add to fish class		
+//		[array of ids] = objClass.GetPropertyLinks(propObjectProperties);
+		objClass.SetPropertyLinksAdd(propObjectProperties, objPrice.id);
+//		[array of ids] = objClass.GetPropertyLinks(propObjectProperties);
+//		compare arrays
 
-*/
+
+
+		// add another property (will exercise different code)
+
 
 
 

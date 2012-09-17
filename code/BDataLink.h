@@ -5,7 +5,7 @@
 // In single reference mode, it just stores a pointer to the bobject.
 // In multiple reference mode, it stores an array of pointers to the bobjects. 
 // Call SetMultiple after creation to switch it to that mode (default is single). 
-// Maybe better to just store all refs as arrays, to simplify code...
+//,,,,, Maybe better to just store all refs as arrays, to simplify code...
 //-----------------------------------------------------------------------------------------------------------------
 
 
