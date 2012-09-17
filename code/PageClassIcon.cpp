@@ -160,7 +160,8 @@ BOOL CPageClassIcon::OnSetActive()
 // Import an .ico file and create a new icon from it
 void CPageClassIcon::OnBtnImport()
 {
-	BObject* pobjIcon = m_pDoc->UIImportIcon(gpgui);
+//x	BObject* pobjIcon = m_pDoc->UIImportIcon(gpgui);
+	BObject* pobjIcon = theApp.UIImportIcon(*m_pDoc);
 	if (pobjIcon)
 	{
 		// Add new icon to this listview and select it

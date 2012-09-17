@@ -34,7 +34,7 @@
 class CFrameChild;
 class CFrameMain;
 class BObject;
-
+class BDoc;
 
 
 class CNeoMem : public CWinApp
@@ -79,6 +79,11 @@ public:
 	void UpdateAllDocumentViews(LPARAM lHint, CObject* pHint = 0);
 	BOOL UpdateCommonControls();
 	virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
+
+
+//x	BObject* UIImportIcon(CUI* pui, CString strFilename = "", CString strIconname = "");
+//x	BObject* UIImportIcon(CString strFilename = "", CString strIconname = "");
+	BObject* UIImportIcon(BDoc& doc, CString strFilename = "", CString strIconname = "");
 
 private:
 	void LoadImageList();

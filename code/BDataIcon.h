@@ -26,6 +26,8 @@ public:
 	virtual LPCTSTR GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
+	virtual BData* CreateCopy();
+
 	BOOL VerifyData();
 
 	HICON GetIcon(int x, int y);

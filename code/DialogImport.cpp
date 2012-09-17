@@ -78,7 +78,8 @@ void CDialogImport::OnBtnSelectFile()
 
 	m_txtFile.GetWindowText(m_strFilename);
 
-	CFileDialogEx dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, 
+//x	CFileDialogEx dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, 
+	CFileDialog dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, 
 		theApp.m_strImportFilter, AfxGetMainWnd());
 	dlg.m_ofn.lpstrTitle = _T("Import File");
 	if (dlg.DoModal() == IDOK)

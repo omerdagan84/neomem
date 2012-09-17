@@ -567,7 +567,7 @@ void BObject::SetObjectText(const CString& strText)
 BOOL BObject::SetData(BData* pdat)
 {
 	ASSERT_VALID(this);
-	ASSERT_VALID(pdat);
+	ASSERT_VALID(pdat); //x fails
 
 	// Delete any existing data object first.
 	// But note: if user is passing the same data as already exists, we don't want to delete it!

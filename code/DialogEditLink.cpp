@@ -527,6 +527,7 @@ void CDialogEditLink::UpdateControls()
 		m_lblInstructions.SetWindowText(m_strInstructions);
 
 	// Change Add to Import if default class is icon!
+	//, kludgy
 	if (m_lngDefaultClassID == classIcon)
 		m_btnAdd.SetWindowText("&Import...");
 
@@ -685,7 +686,9 @@ void CDialogEditLink::AddObject(BOOL bAddAsChild)
 		break;
 	case classIcon:
 		// Import new icon from .ico file
-		pobjNew = m_pDoc->UIImportIcon(gpgui);
+//		pobjNew = m_pDoc->UIImportIcon();
+//		pobjNew = m_pDoc->UIImportIcon(gpgui);
+		pobjNew = theApp.UIImportIcon(*m_pDoc);
 		break;
 	default:
 		{

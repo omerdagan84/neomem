@@ -416,12 +416,14 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				// Column Info:
 				// all folders have unique column layout
 				// so if we're on a folder, should write to the object
-				// all tape objects have the same column layout
+				// eg all tape objects have the same column layout
 				// in that case, we would get from the tape classdef
 				// and write to the tape classdef
+
 				// so in writing the value, we need to check the class of the object
 				// if it's a folder, write directly to the object
 				// if it's not, get the object's classdef and write the changes there
+
 				// create copy of the column information only on change
 				// actually only need to copy it if it was inherited from a base class
 				// ie if we got the data directly from the object's class, then we wouldn't need

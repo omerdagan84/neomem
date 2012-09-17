@@ -39,7 +39,8 @@ using namespace nsPath;
 #include "BDataPersonName.h" // for constants
 #include "BDoc.h"
 #include "ConstantsDatabase.h"
-
+#include "BDataIcon.h"
+#include "DialogEditName.h"
 
 #include "ViewContents.h" // for testing
 #include "Test.h"
@@ -2497,6 +2498,7 @@ void CNeoMem::Export(BObject *pobj) {
 	CString strFilename = path;
 
 	// Initialize file dialog
+//, switch to cfiledialog, or fix ex
 	CFileDialogEx dlg(FALSE, strExtension, strFilename, 
 		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, (LPCTSTR) theApp.m_strExportFilter);
 	CString strCaption = _T("Export to file");
@@ -2527,6 +2529,91 @@ void CNeoMem::Export(BObject *pobj) {
 	}
 
 }
+
+
+
+
+
+
+
+
+// Import an .ico file and create a new icon bobject to store it.
+// Returns a pointer to the new icon bobject, or 0 if failed.
+//. move most of this to the dialog! or the ui object!
+//xBObject* CNeoMem::UIImportIcon(CUI* pui, CString strFilename /* ="" */, CString strIconname /* ="" */) {
+//xBObject* CNeoMem::UIImportIcon(CString strFilename /* ="" */, CString strIconname /* ="" */) {
+BObject* CNeoMem::UIImportIcon(BDoc& doc, CString strFilename /* ="" */, CString strIconname /* ="" */) {
+
+//	HOBJECT hobjIcon = NULL;
+
+	// Get filename if not specified
+	if (strFilename.IsEmpty()) {
+//,		// Ask user for icon file
+//		if (!pui->GetFileName("Import Icon", "ico", Strings::szIconFilter, strFilename))
+//			return NULL;
+		// Bring up file open dialog to choose .ico file
+//x		CFileDialogEx dlg(TRUE, _T("ico"), _T(""), OFN_HIDEREADONLY, Strings::szIconFilter, AfxGetMainWnd());
+		CFileDialog dlg(TRUE, _T("ico"), _T(""), OFN_HIDEREADONLY, Strings::szIconFilter, AfxGetMainWnd());
+		dlg.m_ofn.lpstrTitle = _T("Import Icon");
+		if (dlg.DoModal() == IDCANCEL)
+			return NULL;
+		strFilename = dlg.GetPathName();
+	}
+
+	// Try to import the icon file
+//x	BDataIcon* pdat = new BDataIcon;
+	BDataIcon dat;
+	if (!dat.LoadFile(strFilename)) {
+		AfxMessageBox(_T("Unable to load file as an icon."), MB_ICONEXCLAMATION);
+//x		delete pdat;
+		return NULL;
+	}
+
+	// Get iconname if not specified
+	if (strIconname.IsEmpty()) {
+		strIconname = CPath(strFilename).GetTitle();
+
+		// Ask user for icon name
+//,		if (!pui->GetString("Import Icon", "Enter the name for the new icon:", strIconname)) {
+//			delete pdat;
+//			return NULL;
+//		}
+		CDialogEditName dlg;
+		dlg.m_strCaption = _T("Import Icon");
+		dlg.m_strInstructions = _T("Enter the name for the new icon:");
+		dlg.m_strName = strIconname;
+		if (dlg.DoModal() == IDCANCEL) {
+//x			delete pdat;
+			return NULL;
+		}
+		strIconname = dlg.m_strName;
+	}
+
+	// Create the new icon bobject
+	BObject& objIcon = BObject::New(doc, classIcon, strIconname, folderIcons);
+
+//x	objIcon.SetPropertyData(propIconData, pdat, false, false); // makes a copy of dat
+	objIcon.SetPropertyData(propIconData, &dat, false, false); // makes a copy of dat
+//x	delete pdat;
+
+	//, Set its file source property
+//	hobjIcon->SetPropertyString(propSourceFile, strFilename, FALSE, FALSE);
+
+	// objIcon is a reference to a bobject. basically, a pointer that's guaranteed to be zero. 
+	// because New bombs rather than return zero. 
+	// so the bobject is floating around in memory. 
+	// and we return a pointer to it here.
+//x	return hobjIcon;
+	return &objIcon;
+}
+
+
+
+
+
+
+
+
 
 
 

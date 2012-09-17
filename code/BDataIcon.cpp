@@ -258,3 +258,16 @@ BOOL BDataIcon::FindReferences(BObject* pobjFind)
 	return FALSE;
 }
 
+
+
+// Create a copy of this bdata object
+BData* BDataIcon::CreateCopy()
+{
+	BDataIcon* pdat = new BDataIcon;
+//	void* m_pData; // pointer to raw icon data (taken directly from .ico file)
+//	UINT m_nBytes; // number of bytes of data
+	pdat->m_nBytes = m_nBytes;
+	pdat->m_pData = new char[m_nBytes];
+	memcpy_s(pdat->m_pData, pdat->m_nBytes, this->m_pData, this->m_nBytes);
+	return pdat; // upcast is automatic
+}

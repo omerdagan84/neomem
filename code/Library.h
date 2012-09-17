@@ -62,10 +62,10 @@ extern NUMBERFMT g_nf;
 // Note: The # is the stringizing operator, which returns the parameter in double quotes
 //.#ifndef _DEBUG
 
-#undef ASSERT
-#undef ASSERT_VALID
-#define ASSERT(f) if (!(f)) { Library::ThrowAssertion(THIS_FILE, __LINE__, #f); }
-#define ASSERT_VALID(p) if (!(p)) { Library::ThrowAssertion(THIS_FILE, __LINE__, #p); }
+//!#undef ASSERT
+//#undef ASSERT_VALID
+//#define ASSERT(f) if (!(f)) { Library::ThrowAssertion(THIS_FILE, __LINE__, #f); }
+//#define ASSERT_VALID(p) if (!(p)) { Library::ThrowAssertion(THIS_FILE, __LINE__, #p); }
 
 //#endif
 

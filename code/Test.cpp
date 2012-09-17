@@ -197,7 +197,7 @@ void CTest::DoTests(CNeoMem& app) {
 		objClass.SetPropertyLinksAdd(propObjectProperties, objPrice.id);
 
 
-		// get list of properties
+		// get list of property values
 		ObjIDArray a;
 		objClass.GetPropertyLinks(propObjectProperties, a);
 
@@ -222,56 +222,38 @@ void CTest::DoTests(CNeoMem& app) {
 		ASSERT(a.GetAt(1) == objSize.id);
 
 
-/*
 		// set plecy's price
-		hobjPlecy->SetPropertyString(propPrice, "$1.34");
+		objPlecy.SetPropertyString(objPrice.id, "$1.34");
+
 
 		// select the fish folder
-		pdoc->SetCurrentObject(hobjFishFolder);
+		doc.SetCurrentObject(&objFolder);
 
-		// add price to the contents view
-//		nCol = GetColumnCount();
-//		m_pdatColumns->InsertColumn(lngPropertyID, m_pDoc, 0, nCol);
-		// remove a column
-//		BObject* pobjProp = m_pDoc->GetObject(lngPropID);
-//		m_pdatColumns->RemoveColumn(nCol);
-		CFrameChild* pui = theApp.GetChildFrame();
-		CViewContents* pview = DYNAMIC_DOWNCAST(CViewContents, pui->GetView(viewContents));
-		ASSERT_VALID(pview);
-		pview->m_lvw.InsertColumnAsk(propPrice, 2);
-
-		// set plecy desc
-		hobjPlecy->SetPropertyString(propDescription, "plecostomus catfish");
-//		hobjPlecy->SetDescription("plecostomus catfish");
 
 		// add another fish
-		HOBJECT hobjGlassfish = pdoc->CreateObject(classFish, "glassfish", hobjFishFolder);
-		pdoc->AddObject(hobjGlassfish);
+		BObject& objGlassfish = BObject::New(doc, classFish, "glassfish", objFolder.id);
 
-		// convert the prop to a string
-//		hobjPrice->SetPropertyData(propPropType, proptypeString);
-
-*/
+		// convert the price prop to a string
+//		objPrice.SetPropertyData(propPropType, proptypeString);
+//		objGlassfish.SetPropertyString(objPrice.id, "$2.54");
 
 
 
-
-/*
 		// import a new icon
 
 		// get Test folder with .ico files
-		CStringEx strTestFolder = m_strApplicationFolder + "\\..\\..\\..\\Test\\";
+		CStringEx strTestFolder = theApp.m_strApplicationFolder + "\\..\\test\\files\\";
 
 		HOBJECT hobjIcon = NULL;
 //		hobjIcon = pdoc->UIImportIcon(gpgui, "foo.ico"); // nonexistent file
 //		hobjIcon = pdoc->UIImportIcon(gpgui, "neomem.cnt"); // bad file
 //		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico");
-		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico", "Fish");
+//		hobjIcon = doc.UIImportIcon(gpgui, strTestFolder + "Fish.ico", "Fish");
 //		hobjIcon = pdoc->UIImportIcon(gpgui);
 
 		// attach the icon to fish class
-//		hobjFishClass->SetPropertyLink(propClassDefIcon
-		hobjFishClass->SetIconID(hobjIcon->GetObjectID()); // is this right? 
+//		objFishClass.SetPropertyLink(propClassDefIcon
+//		objFishClass.SetIconID(hobjIcon->id); // is this right? 
 		// apparently. but maybe a command would be better. 
 		// eg hobjFishClass->SetObjectIcon or something. 
 		// ie something to mimic the user command. 
@@ -284,7 +266,27 @@ void CTest::DoTests(CNeoMem& app) {
 		// like this one!
 //,		pdoc->UIAddNewObject2(gpgui);
 
+
+
+
+/*
+		// add price to the contents view
+//		nCol = GetColumnCount();
+//		m_pdatColumns->InsertColumn(lngPropertyID, m_pDoc, 0, nCol);
+		// remove a column
+//		BObject* pobjProp = m_pDoc->GetObject(lngPropID);
+//		m_pdatColumns->RemoveColumn(nCol);
+
+		CFrameChild* pui = theApp.GetChildFrame();
+		CViewContents* pview = DYNAMIC_DOWNCAST(CViewContents, pui->GetView(viewContents));
+		ASSERT_VALID(pview);
+		pview->m_lvw.InsertColumnAsk(objPrice, 2);
+
+		objFolder.GetPropertyLinks(propColumns, a);
 */
+		
+
+
 
 
 		//, pass filename here

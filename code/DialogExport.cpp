@@ -138,6 +138,7 @@ void CDialogExport::OnBtnChooseFile()
 	// Initialize file dialog
 //	CFileDialogEx dlg(FALSE, _T("rtf"), m_strFilename, 
 	CFileDialogEx dlg(FALSE, ff->m_strExtension, m_strFilename, 
+//,	CFileDialog dlg(FALSE, ff->m_strExtension, m_strFilename, 
 //		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szExportFilter);
 		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, (LPCTSTR) theApp.m_strExportFilter);
 	CString strCaption = _T("Export to file");

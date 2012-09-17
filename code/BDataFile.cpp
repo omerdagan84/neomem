@@ -94,7 +94,9 @@ BOOL BDataFile::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	ASSERT_VALID(this);
 
 	// Initialize file dialog
+	//. switch to cfiledialog or fix ex
 	CFileDialogEx dlg(FALSE, "", m_strText, NULL);
+//	CFileDialog dlg(FALSE, "", m_strText, NULL);
 	CString strCaption = _T("Select file to link to");
 	dlg.m_ofn.lpstrTitle = strCaption;
 	dlg.m_bShowOptionButton = FALSE; // because exporting, don't need save options!

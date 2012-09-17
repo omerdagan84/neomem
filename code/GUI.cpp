@@ -23,7 +23,8 @@ CGUI::~CGUI() {
 bool CGUI::GetFileName(LPCTSTR strTitle, LPCTSTR strExtension, LPCTSTR strFilter, CString& strFilename) {
 
 	// Bring up file open dialog to choose file
-	CFileDialogEx dlg(TRUE, strExtension, _T(""), OFN_HIDEREADONLY, strFilter, AfxGetMainWnd());
+//x	CFileDialogEx dlg(TRUE, strExtension, _T(""), OFN_HIDEREADONLY, strFilter, AfxGetMainWnd());
+	CFileDialog dlg(TRUE, strExtension, _T(""), OFN_HIDEREADONLY, strFilter, AfxGetMainWnd());
 	dlg.m_ofn.lpstrTitle = strTitle;
 	if (dlg.DoModal() == IDCANCEL)
 		return false;
@@ -44,4 +45,6 @@ bool CGUI::GetString(LPCTSTR strTitle, LPCTSTR strInstructions, CString& strStri
 	strString = dlg.m_strName;
 	return true;
 }
+
+
 
