@@ -1494,19 +1494,14 @@ ULONG BObject::GetPropertyLong(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 
 // Set object that the specified property links to.
 // Note: If pobj is zero, will delete the property bobject.
-BOOL BObject::SetPropertyLink(OBJID lngPropertyID, 
-						 BObject* pobj, 
-						 BOOL bSetModifiedFlag /* = TRUE */, 
-						 BOOL bUpdateViews /* = TRUE */
-						 ) {
+BOOL BObject::SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag, BOOL bUpdateViews) {
 	ASSERT_VALID(this);
-	ASSERT(lngPropertyID);
+	ASSERT(idProperty);
 
-	if (pobj) {
-		ASSERT_VALID(pobj);
+	if (idObj) {
 
 		// Find/create property value bobject
-		BObject* pobjPropertyValue = FindProperty(lngPropertyID, TRUE);
+		BObject* pobjPropertyValue = FindProperty(idProperty, TRUE);
 		ASSERT_VALID(pobjPropertyValue);
 
 		// Create new data object to hold data and initialize it
@@ -1516,6 +1511,8 @@ BOOL BObject::SetPropertyLink(OBJID lngPropertyID,
 //		}
 		BDataLink* pdat = new BDataLink;
 		ASSERT_VALID(pdat);
+
+		BObject* pobj = m_pDoc->GetObject(idObj);
 		pdat->SetLink(pobj);
 
 		// Store the data in the property object
@@ -1523,7 +1520,7 @@ BOOL BObject::SetPropertyLink(OBJID lngPropertyID,
 	}
 	else {
 		// Link object is zero, so delete the property bobject.
-		DeleteProperty(lngPropertyID, FALSE, FALSE);
+		DeleteProperty(idProperty, FALSE, FALSE);
 	}
 
 	// Set document modified flag if specified
@@ -1534,49 +1531,12 @@ BOOL BObject::SetPropertyLink(OBJID lngPropertyID,
 	if (bUpdateViews) {
 		CHint h;
 		h.pobjObject = this;
-		h.idProperty = lngPropertyID;
+		h.idProperty = idProperty;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
 
 	return TRUE;
 }
-
-
-// Returns the BObject referred to by the specified Link property, or 0 if property
-// doesn't exist for this object.
-//, this assumes the link property only has one value
-//, Note: bCreateTempBDataIfNotFound is not handled
-//, return id instead of pointer
-/*
-BObject* BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
-{
-	ASSERT_VALID(this);
-	ASSERT(lngPropertyID);
-
-	switch (lngPropertyID)
-	{
-		case propClassID:
-			return m_pDoc->GetObject(m_lngClassID);
-//,		case propIconID:
-//			return m_pDoc->GetObject(m_lngIconID); // but could be zero
-		case propLocation: 
-			return m_pobjParent;
-	}
-
-	BObject* pobjPropertyValue = FindProperty(lngPropertyID, FALSE);
-	if (pobjPropertyValue)
-	{
-		ASSERT_VALID(pobjPropertyValue);
-		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetBData());
-		if (pdat)
-		{
-			ASSERT_VALID(pdat);
-			return pdat->GetLink();
-		}
-	}
-	return 0; 
-}
-*/
 
 
 OBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)

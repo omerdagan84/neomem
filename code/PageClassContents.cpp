@@ -105,7 +105,7 @@ void CPageClassContents::DoDataExchange(CDataExchange* pDX)
 		// Save default class
 		BObject* pobjDefaultClass = (BObject*) m_cboClass.GetSelectedItemData();
 		ASSERT_VALID(pobjDefaultClass);
-		m_pobj->SetPropertyLink(propObjectDefaultClass, pobjDefaultClass, FALSE, FALSE);
+		m_pobj->SetPropertyLink(propObjectDefaultClass, pobjDefaultClass->id, FALSE, FALSE);
 
 		// Save autosort
 		BOOL bNoAutosort = m_optSortNo.GetCheck();

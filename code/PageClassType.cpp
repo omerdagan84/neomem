@@ -101,8 +101,7 @@ void CPageClassType::DoDataExchange(CDataExchange* pDX)
 			case 1: lngPropTypeID = proptypePersonName; break;
 			case 2: lngPropTypeID = proptypeDate; break;
 		}
-		BObject* pobjPropType = m_pDoc->GetObject(lngPropTypeID);
-		m_pobj->SetPropertyLink(propObjectNamePropertyType, pobjPropType, FALSE, FALSE);
+		m_pobj->SetPropertyLink(propObjectNamePropertyType, lngPropTypeID, FALSE, FALSE);
 	}
 
 }

@@ -146,8 +146,10 @@ ULONG const propParentID = 3009; // parent id (location)
 ULONG const propLocationID = propParentID;
 
 // bobject versions of id properties for cmd interface
-//!!! update template file (add this to it)
-ULONG const propParent = 3020;
+// update template file (add this to it)
+//, why not same as parentID?
+//ULONG const propParent = 3020; //, why??
+ULONG const propParent = propParentID;
 ULONG const propLocation = propParent;
 //ULONG const propDateCreated = 3010; // see m_dateCreated
 //ULONG const propDateModified = 3011; 

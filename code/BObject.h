@@ -92,7 +92,7 @@ public:
 	int GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly, BOOL bThisIsAClass);
 
 	// could use overloading for these, maybe...
-//	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+//x	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	OBJID GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	LPCTSTR GetPropertyString(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
@@ -127,7 +127,8 @@ public:
 	
 	// could use overloading for these, maybe... (but then not for the get props. darn)
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
-	BOOL SetPropertyLink(OBJID lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+//x	BOOL SetPropertyLink(OBJID lngPropertyID, BObject* pobj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+	BOOL SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);
 

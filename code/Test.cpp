@@ -130,130 +130,57 @@ void CTest::DoTests(CNeoMem& app) {
 		// set description
 		CString strDesc("fish i'm thinking of getting");
 		objFolder.SetPropertyString(propDescription, strDesc);
-
-		// check it
 		CString str = objFolder.GetPropertyString(propDescription);
 		ASSERT(str==strDesc);
 
 
+		// set name
+		CString strName("my fish");
+		objFolder.SetPropertyString(propName, strName);
+		ASSERT(objFolder.GetPropertyString(propName) == strName);
 
 
 
 
-
-
-
-
-
-/*
-		// add a fish class
-//		hobjParent = pdoc->GetObject(rootClass);
-//		HOBJECT hobjFishClass = pdoc->CreateObject(classClass, "Fish", hobjParent);
-//		pdoc->AddObject(hobjFishClass); // ugh, have to add it also!
-//		OBJID classFish = hobjFishClass->GetObjectID();
 		
-//x		HOBJECT hobjFishClass = doc.NewObject(classClass, "Fish");
-//x		OBJID idFishClass = doc.NewObject(classClass, "Fish");
-//x		BObject* pobjClass = doc.GetObject(idFishClass);
+		// add a fish class
+		BObject& objClass = BObject::New(doc, classClass, "Fish", rootClass);
+		OBJID classFish = objClass.id;
 
-		BObject& objClass = doc.NewObject(classClass, "Fish");
+		// check location
+		OBJID idLoc = objClass.GetPropertyLink(propParent);
+		ASSERT(idLoc == rootClass);
 
 
+		// set description
 		{
-			// check location of new object
-//x			HOBJECT hobj = doc.GetPropertyLink(hobjFishClass, propLocation); 
-//x			HOBJECT hobj2 = doc.GetObject(folderClasses);
-//x			ASSERT(hobj == hobj2);
-//			OBJID id = doc.GetPropertyLink(idFishClass, propLocation); 
-//////////			OBJID id = pobjClass->GetPropertyLink(propLocation);
-///			ASSERT(id == folderClasses);
-
-			// double check id of location
-//x			OBJID id = doc.GetObjectID(hobj);
-//x			ASSERT(id == folderClasses);
+		CString strDesc("a thing that swims in the water");
+		objClass.SetPropertyString(propDescription, strDesc);
+		CString str = objClass.GetPropertyString(propDescription);
+		ASSERT(str==strDesc);
 		}
 
 
-		{
-			// set description
-			CString strDesc("a thing that swims in the water");
-//			doc.SetPropertyString(idFishClass, propDescription, strDesc);
-			objClass.SetPropertyString(propDescription, strDesc);
-
-			// check it
-//			CString str = doc.GetPropertyString(idFishClass, propDescription);
-			CString str = objClass.GetPropertyString(propDescription);
-			ASSERT(str==strDesc);
-		}
-
-
-		// add a fish to the fish folder
-//		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
-
-//x		OBJID idPlecy = doc.NewObject(idFishClass, "plecy", idFishFolder);
-//x		doc.SetPropertyString(idPlecy, propDescription, "plecostomus");
-//x		BObject* pobjPlecy = doc.GetObject(idPlecy);
-//x		pobjPlecy->SetPropertyString(propDescription, "plecostomus");
-
-
-		// read-only id variable
+		// id is a read-only variable!
 //		OBJID idfoo = objClass.id;
 //		objClass.id = 2; // fails
 
-
-		BObject& objPlecy = doc.NewObject(objClass.id, "plecy", objFolder.id);
+		// add a fish to the fish folder
+//		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
+		BObject& objPlecy = BObject::New(doc, classFish, "plecy", objFolder.id);
 		objPlecy.SetPropertyString(propDescription, "plecostomus");
 
-*/		
-/*
-
-
-		
-		// import a new icon
-
-		// get Test folder with .ico files
-		CStringEx strTestFolder = m_strApplicationFolder + "\\..\\..\\..\\Test\\";
-
-		HOBJECT hobjIcon = NULL;
-//		hobjIcon = pdoc->UIImportIcon(gpgui, "foo.ico"); // nonexistent file
-//		hobjIcon = pdoc->UIImportIcon(gpgui, "neomem.cnt"); // bad file
-//		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico");
-		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico", "Fish");
-//		hobjIcon = pdoc->UIImportIcon(gpgui);
-
-		// attach the icon to fish class
-//		hobjFishClass->SetPropertyLink(propClassDefIcon
-		hobjFishClass->SetIconID(hobjIcon->GetObjectID()); // is this right? 
-		// apparently. but maybe a command would be better. 
-		// eg hobjFishClass->SetObjectIcon or something. 
-		// ie something to mimic the user command. 
 
 
 
-
-		// pass it the ui, which is like the callback object. 
-		// it'll call the ui to get info from the user. 
-		// the ui interface will be defined in the database module.
-		// the ui will need to implement that interface. 
-		// ie derive a class from it, and pass an object of that class to the db fns. 
-		// like this one!
-//,		pdoc->UIAddNewObject2(gpgui);
-
-*/
-
-
-
-/*
 		// set folder default to fish class
-		// This will set document modified flag and update views
-		doc.SetPropertyLink(idFishFolder, propDefaultClass, idFishClass);
-//			pdoc->UIChangeObjectContents(hobjFishClass);
-
+		// This will set document modified flag and update views?
+//		pdoc->UIChangeObjectContents(hobjFishClass);
+		objFolder.SetPropertyLink(propDefaultClass, classFish);
 		{
-			OBJID id = doc.GetPropertyLink(idFishFolder, propDefaultClass);
-			ASSERT(id == idFishClass);
+			OBJID id = objFolder.GetPropertyLink(propDefaultClass);
+			ASSERT(id == classFish);
 		}
-*/
 
 
 
@@ -308,6 +235,39 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// convert the prop to a string
 //		hobjPrice->SetPropertyData(propPropType, proptypeString);
+
+*/
+
+
+
+
+/*
+		// import a new icon
+
+		// get Test folder with .ico files
+		CStringEx strTestFolder = m_strApplicationFolder + "\\..\\..\\..\\Test\\";
+
+		HOBJECT hobjIcon = NULL;
+//		hobjIcon = pdoc->UIImportIcon(gpgui, "foo.ico"); // nonexistent file
+//		hobjIcon = pdoc->UIImportIcon(gpgui, "neomem.cnt"); // bad file
+//		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico");
+		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico", "Fish");
+//		hobjIcon = pdoc->UIImportIcon(gpgui);
+
+		// attach the icon to fish class
+//		hobjFishClass->SetPropertyLink(propClassDefIcon
+		hobjFishClass->SetIconID(hobjIcon->GetObjectID()); // is this right? 
+		// apparently. but maybe a command would be better. 
+		// eg hobjFishClass->SetObjectIcon or something. 
+		// ie something to mimic the user command. 
+
+		// pass it the ui, which is like the callback object. 
+		// it'll call the ui to get info from the user. 
+		// the ui interface will be defined in the database module.
+		// the ui will need to implement that interface. 
+		// ie derive a class from it, and pass an object of that class to the db fns. 
+		// like this one!
+//,		pdoc->UIAddNewObject2(gpgui);
 
 */
 
