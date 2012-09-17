@@ -28,6 +28,9 @@ typedef BObject* HOBJECT;
 // Windows uses OBJECTID for OLE
 typedef ULONG OBJID;
 
+typedef CArray<OBJID> ObjIDArray;
+
+
 
 class BObject : public CObject {
 
@@ -94,6 +97,8 @@ public:
 	// could use overloading for these, maybe...
 //x	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	OBJID GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+//	ObjIDArray GetPropertyLinks(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+	void GetPropertyLinks(ULONG lngPropertyID, ObjIDArray& aIDs);
 	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	LPCTSTR GetPropertyString(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
 

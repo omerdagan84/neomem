@@ -165,7 +165,9 @@ void CTest::DoTests(CNeoMem& app) {
 //		OBJID idfoo = objClass.id;
 //		objClass.id = 2; // fails
 
-		// add a fish to the fish folder
+
+
+		// create a fish object, add it to fish folder
 //		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
 		BObject& objPlecy = BObject::New(doc, classFish, "plecy", objFolder.id);
 		objPlecy.SetPropertyString(propDescription, "plecostomus");
@@ -191,18 +193,33 @@ void CTest::DoTests(CNeoMem& app) {
 		objPrice.SetPropertyString(propDescription, "how much it costs");
 
 
-		// add to fish class		
-//		[array of ids] = objClass.GetPropertyLinks(propObjectProperties);
+		// add to fish class
 		objClass.SetPropertyLinksAdd(propObjectProperties, objPrice.id);
-//		[array of ids] = objClass.GetPropertyLinks(propObjectProperties);
-//		compare arrays
 
+
+		// get list of properties
+		ObjIDArray a;
+		objClass.GetPropertyLinks(propObjectProperties, a);
+
+		// check it
+		int x = a.GetSize();
+		ASSERT(a.GetSize() == 1);
+		ASSERT(a.GetAt(0) == objPrice.id);
+//		ASSERT(a.GetAt(1) == objSize.id);
 
 
 		// add another property (will exercise different code)
+		BObject& objSize = BObject::New(doc, classProperty, "size", folderProperties);
+		objSize.SetPropertyLink(propPropertyType, proptypeNumber);
+		objSize.SetPropertyString(propDescription, "size in inches");
 
+		objClass.SetPropertyLinksAdd(propObjectProperties, objSize.id);
 
-
+		// check it
+		objClass.GetPropertyLinks(propObjectProperties, a);
+		ASSERT(a.GetSize() == 2);
+		ASSERT(a.GetAt(0) == objPrice.id);
+		ASSERT(a.GetAt(1) == objSize.id);
 
 
 /*

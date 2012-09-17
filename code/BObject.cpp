@@ -1559,6 +1559,8 @@ BOOL BObject::SetPropertyLinksAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifi
 	if (!pdat) {
 		pdat = DYNAMIC_DOWNCAST(BDataLink, m_pDoc->CreateBData(idProperty));
 		pdat->SetMultiple();
+		// store in pobj
+		pobjPropertyValue->SetData(pdat);
 	}
 	ASSERT(pdat);
 	ASSERT(pdat->IsMultiple());
@@ -1587,6 +1589,7 @@ OBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
+	ASSERT(bCreateTempBDataIfNotFound == FALSE); // not used
 
 	switch (lngPropertyID)
 	{
@@ -1616,6 +1619,35 @@ OBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 	return 0; 
 }
 
+
+
+//ObjIDArray BObject::GetPropertyLinks(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+void BObject::GetPropertyLinks(OBJID lngPropertyID, ObjIDArray& a)
+{
+	ASSERT_VALID(this);
+	ASSERT(lngPropertyID);
+//x	ASSERT(bCreateTempBDataIfNotFound == FALSE); // not used
+
+	BObject* pobjPropertyValue = FindProperty(lngPropertyID, FALSE);
+	if (pobjPropertyValue)
+	{
+		ASSERT_VALID(pobjPropertyValue);
+		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetBData());
+		if (pdat)
+		{
+			ASSERT_VALID(pdat);
+			ASSERT(pdat->IsMultiple());
+
+			CUIntArray b;
+			int nObjs = pdat->GetObjectIDArray(b);
+
+			a.SetSize(b.GetSize());
+			for (int i = 0; i < b.GetSize(); i++)
+				a.SetAt(i, b.GetAt(i));
+//			return a;
+		}
+	}
+}
 
 
 

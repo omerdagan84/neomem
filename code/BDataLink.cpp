@@ -1207,6 +1207,8 @@ CObArray* BDataLink::GetLinkArray()
 
 
 
+
+
 // Create new link array if none exists yet, store in m_p. 
 void BDataLink::CreateMultipleArray()
 {
@@ -1217,9 +1219,9 @@ void BDataLink::CreateMultipleArray()
 	CObArray* pa = 0;
 	if (m_p)
 	{
-		// Get existing array
-		pa = STATIC_DOWNCAST(CObArray, m_p);
-		ASSERT_VALID(pa);
+//x		// Get existing array
+//x		pa = STATIC_DOWNCAST(CObArray, m_p);
+//x		ASSERT_VALID(pa);
 	}
 	else // need to create array
 	{
