@@ -326,6 +326,7 @@ BOOL CNeoMem::InitInstance() {
 	CString strOldTemplate = m_strApplicationFolder + _T("\\Template1.1.neo");
 	if (Library::FileExists(strOldTemplate))
 		_tremove(strOldTemplate);
+
 	// 1.1 if app is in debug or release folder, use the main documents folder to find template file
 	// (prevents having 3 copies of it lying around...)
 	// Just go up one folder to main project folder then down to files folder (was Documents)

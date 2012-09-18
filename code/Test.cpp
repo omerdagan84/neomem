@@ -8,6 +8,9 @@
 #include "BDoc.h"
 #include "ConstantsDatabase.h" //. should be part of neodoc
 
+#include "BDataIcon.h"
+
+
 //#include "DSource.h"
 
 
@@ -113,7 +116,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-
+//,		BFolder& objFolder = BFolder::New(doc, "fish");
 
 		BObject& objFolder = BObject::New(doc, classFolder, "fish");
 
@@ -167,7 +170,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-		// create a fish object, add it to fish folder
+		// create a fish, add it to fish folder
 //		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
 		BObject& objPlecy = BObject::New(doc, classFish, "plecy", objFolder.id);
 		objPlecy.SetPropertyString(propDescription, "plecostomus");
@@ -240,53 +243,63 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// import a new icon
-
-		// get Test folder with .ico files
 		CStringEx strTestFolder = theApp.m_strApplicationFolder + "\\..\\test\\files\\";
+		CStringEx strFilename = strTestFolder + "fish.ico";
 
-		HOBJECT hobjIcon = NULL;
+		BObject& objIcon = BObject::New(doc, classIcon, "Fish", folderIcons);
+		BDataIcon* pdatIcon = new BDataIcon();
+		pdatIcon->LoadFile(strFilename);
+		objIcon.SetPropertyData(propIconData, pdatIcon);
+
+		// set fish class icon
+		objClass.SetIconID(objIcon.id);
+		//, this is right, but maybe a command would be better. 
+		// eg objClass.SetObjectIcon or something. 
+		// ie something to mimic the user command. 
+
+		//, next
+//		BIcon& objIcon = BIcon::New(doc, "Fish", strFilename);
+//		objClass.SetIconID(objIcon.id);
+
+		//, old ideas
 //		hobjIcon = pdoc->UIImportIcon(gpgui, "foo.ico"); // nonexistent file
 //		hobjIcon = pdoc->UIImportIcon(gpgui, "neomem.cnt"); // bad file
 //		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico");
 //		hobjIcon = doc.UIImportIcon(gpgui, strTestFolder + "Fish.ico", "Fish");
 //		hobjIcon = pdoc->UIImportIcon(gpgui);
 
-		// attach the icon to fish class
-//		objFishClass.SetPropertyLink(propClassDefIcon
-//		objFishClass.SetIconID(hobjIcon->id); // is this right? 
-		// apparently. but maybe a command would be better. 
-		// eg hobjFishClass->SetObjectIcon or something. 
-		// ie something to mimic the user command. 
-
-		// pass it the ui, which is like the callback object. 
-		// it'll call the ui to get info from the user. 
-		// the ui interface will be defined in the database module.
-		// the ui will need to implement that interface. 
-		// ie derive a class from it, and pass an object of that class to the db fns. 
-		// like this one!
-//,		pdoc->UIAddNewObject2(gpgui);
 
 
 
+		// add price column to the contents view
+		// this is something the ui would need to do
+		// but good to test it here also
 
-/*
-		// add price to the contents view
 //		nCol = GetColumnCount();
 //		m_pdatColumns->InsertColumn(lngPropertyID, m_pDoc, 0, nCol);
 		// remove a column
 //		BObject* pobjProp = m_pDoc->GetObject(lngPropID);
 //		m_pdatColumns->RemoveColumn(nCol);
 
-		CFrameChild* pui = theApp.GetChildFrame();
-		CViewContents* pview = DYNAMIC_DOWNCAST(CViewContents, pui->GetView(viewContents));
-		ASSERT_VALID(pview);
-		pview->m_lvw.InsertColumnAsk(objPrice, 2);
+//		CFrameChild* pui = theApp.GetChildFrame();
+//		CViewContents* pview = DYNAMIC_DOWNCAST(CViewContents, pui->GetView(viewContents));
+//		ASSERT_VALID(pview);
+//		pview->m_lvw.InsertColumnAsk(objPrice, 2);
 
-		objFolder.GetPropertyLinks(propColumns, a);
-*/
+//		objFolder.GetPropertyLinks(propColumns, a);
+
+	
+		// Get column information from object or from object's classdef
+		// this is a copy so we're responsible for it
+//		BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
+
+
+		// want to say, at highest level
+		// objFolder.AddColumn(objPrice.id);
+
+		// which you could do if you make a Folder class
 		
-
-
+//		BObj
 
 
 		//, pass filename here

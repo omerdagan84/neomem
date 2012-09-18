@@ -420,7 +420,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				// in that case, we would get from the tape classdef
 				// and write to the tape classdef
 
-				// so in writing the value, we need to check the class of the object
+				// * so in writing the value, we need to check the class of the object
 				// if it's a folder, write directly to the object
 				// if it's not, get the object's classdef and write the changes there
 
@@ -455,7 +455,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				// not owned by any bobject).
 //				m_bColumnsSaved = FALSE;
 
-				// Initialize listview columns
+				// Initialize listview columns - see ListCtrlEx.cpp
 //				m_lvw.InitializeColumns(m_pdatCopy);
 				m_lvw.InitializeColumns(pdatColumns);
 				delete pdatColumns;
