@@ -441,8 +441,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 //				}
 
 				// Get column information from object or from object's classdef
-				BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, pobjStart->GetPropertyData(propColumnInfoArray));
-				ASSERT_VALID(pdatColumns);
+				BDataColumns& cols = pobjStart->GetColumns();
 
 				// Invoke copy constructor to create copy of the array
 				// We need to copy the data because it might be coming from the object's classdef,
@@ -457,8 +456,10 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 
 				// Initialize listview columns - see ListCtrlEx.cpp
 //				m_lvw.InitializeColumns(m_pdatCopy);
-				m_lvw.InitializeColumns(pdatColumns);
-				delete pdatColumns;
+//x				m_lvw.InitializeColumns(pdatColumns);
+//x				delete pdatColumns;
+				m_lvw.InitializeColumns(&cols);
+				delete &cols;
 
 				// Add the children of the start object to the list, with no recursion
 				m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, FALSE, 0, TRUE);
@@ -577,12 +578,11 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 //					AfxMessageBox ("hi!");
 
 					// Get column information from object or from object's classdef
-					BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, pobj->GetPropertyData(propColumnInfoArray));
-					ASSERT_VALID(pdatColumns);
+					BDataColumns& cols = pobj->GetColumns();
 
 					// Initialize listview columns - see ListCtrlEx.cpp
-					m_lvw.InitializeColumns(pdatColumns);
-					delete pdatColumns;
+					m_lvw.InitializeColumns(&cols);
+					delete &cols;
 
 				}
 				else {

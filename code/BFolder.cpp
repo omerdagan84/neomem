@@ -22,11 +22,3 @@ BFolder& BFolder::New(BDoc& doc, LPCTSTR pszName, OBJID idParent, OBJID idIcon, 
 	return *pf;
 }
 
-
-//, any object can have column info, so move to bobject.
-BDataColumns& BFolder::GetColumns() {
-	BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, this->GetPropertyData(propColumnInfoArray));
-	ASSERT(pdatColumns);
-	return *pdatColumns;
-}
-

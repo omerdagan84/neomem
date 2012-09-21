@@ -61,6 +61,7 @@ public:
 	ColumnInfo& GetColumnInfo(int nCol);
 	LPCTSTR GetColumnName(int nCol, BDoc* pDoc);
 	LPINT GetColumnOrder();
+	int GetColumnWidth(int nCol);
 	BObject* GetPropertyDef(int nCol, BDoc* pDoc);
 	ULONG GetPropertyID(int nCol);
 	ColumnInfo& InsertColumn(ULONG lngPropertyID, BDoc* pDoc, int nWidth = 0, int nCol = -1);

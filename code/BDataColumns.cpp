@@ -230,6 +230,16 @@ BOOL BDataColumns::SetColumnWidth(int nCol, int nWidth)
 
 
 
+// Get the width for the specified column
+int BDataColumns::GetColumnWidth(int nCol)
+{
+	ASSERT(nCol >= 0 && nCol < m_nColumns);
+	ColumnInfo& rci = GetColumnInfo(nCol);
+	return rci.m_nColWidth;
+}
+
+
+
 // Remove the specified column
 BOOL BDataColumns::RemoveColumn(int nCol)
 {

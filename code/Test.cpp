@@ -267,18 +267,13 @@ void CTest::DoTests(CNeoMem& app) {
 		BObject& objOctopus = BObject::New(doc, classFish);
 		ASSERT(objOctopus.GetName() == CString("New Fish")); // default name
 		ASSERT(objOctopus.GetPropertyString(propName) == CString("New Fish"));
+//,bombs		ASSERT(objOctopus.GetPropertyString(propName) == objOctopus.GetName()); //, note getname is slower though...
 		objOctopus.SetName("octopus");
 		ASSERT(objOctopus.GetName(true) == CString("fish \"octopus\"")); // extended name
-
-		//, change all gps(propname) to getname? 
 
 
 
 		// add price column
-
-		//, should be one line...
-//		objFolder.GetColumns().AddColumn(objPrice.id);
-
 		// Get column information from object or from object's classdef
 		// this is a copy so we're responsible for it
 		BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
@@ -286,21 +281,51 @@ void CTest::DoTests(CNeoMem& app) {
 		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
 		delete pdatColumns;
 
+		//, should be one line...
+//		objFolder.GetColumns().AddColumn(objPrice.id);
 		// want to say, at highest level
 		// objFolder.AddColumn(objPrice.id);
-		// which you could do if you make a Folder class
+
+		// narrow description column (old api)
+		pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
+		int nCol = pdatColumns->GetColumnIndex(propDescription);
+		int nWidth = pdatColumns->GetColumnWidth(nCol);
+		pdatColumns->SetColumnWidth(nCol, nWidth * 0.60);
+		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // sends hint
+		delete pdatColumns;
+
+		// narrow price column (nicer api)
+		BDataColumns& cols = objFolder.GetColumns();
+		nCol = cols.GetColumnIndex(objPrice.id);
+		nWidth = cols.GetColumnWidth(nCol);
+		cols.SetColumnWidth(nCol, nWidth * 0.6);
+		objFolder.SetColumns(cols); // sends hint, deletes cols? sets to 0. yeah
+
+		// int nWidth = obj.GetColumns().GetColumnWidth(nCol);
+		// obj.GetColumns().SetColumnWidth(nCol, nWidth*0.6);
+
+
+
 
 		// cool, this works!
+		// as long as you don't add more vars etc to the subclasses!
 //		BFolder* folder = (BFolder*) &objFolder;
 //		BFolder& f2 = (BFolder&) objFolder;
-		// so does that! holy crap cool. 
-		// as long as you don't add more vars etc to the subclasses!!
 
 		//, not working
 //		folder.GetColumns().AddColumn(objPrice.id);
-		BFolder& folder = (BFolder&) objFolder; //, move getcols to bobject
-		BDataColumns& cols = folder.GetColumns();
-		cols.InsertColumn(objSize.id,&doc);
+//		BFolder& folder = (BFolder&) objFolder; //, move getcols to bobject
+//		BDataColumns& cols = folder.GetColumns();
+//		cols.InsertColumn(objSize.id,&doc);
+//		folder.PutColumns(cols); //, ugh will delete cols
+
+		// that's hideous.
+		
+		// objFolder.GetColumns().InsertColumn(objSize.id,&doc).PutColumns();
+		// better but still ugh
+
+
+
 
 
 

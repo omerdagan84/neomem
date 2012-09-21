@@ -32,6 +32,9 @@ typedef CArray<OBJID> ObjIDArray;
 
 
 
+class BDataColumns;
+
+
 class BObject : public CObject {
 
     DECLARE_SERIAL(BObject)
@@ -77,6 +80,7 @@ public:
 	BOOL GetClassDefNewName(CString& strName);
 	OBJID GetClassID() { return m_lngClassID; }; 
 	BObject* GetClassObject();
+	BDataColumns& GetColumns();
 	BData* GetBData() { return m_pdat; };
 	ULONG GetDefaultIconID();
 	BDoc* GetDoc() { return m_pDoc; };
@@ -123,6 +127,7 @@ public:
 	int SendMessage(ULONG lngMsg, BOOL bRecurse = TRUE);
     virtual void Serialize( CArchive& ar);
 	BOOL SetClassID(OBJID lngNewClassID);
+	BOOL SetColumns(BDataColumns& cols);
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
 	BOOL SetData(BData* pData);
 	void SetDoc(BDoc* pdoc) { m_pDoc = pdoc; }; 

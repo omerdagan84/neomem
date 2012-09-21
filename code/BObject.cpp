@@ -2510,9 +2510,15 @@ BOOL BObject::SetIconID(OBJID lngIconID)
 }
 
 
+BOOL BObject::SetColumns(BDataColumns& cols) {
+	ASSERT_VALID(this);
+	BOOL bResult = this->SetPropertyData(propColumnInfoArray, &cols); // sends hint
+	delete &cols;
+	return bResult;
+}
 
 
-//, move to BFolder
+
 // For this folder object, initialize the column array (propColumnInfoArray) 
 // to reflect the properties used by the default class.
 void BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass) {
@@ -2983,6 +2989,20 @@ BObject* BObject::GetClassObject()
 }
 
 
+// user must delete returned object
+// eg 
+// BDataColumns& cols = obj.GetColumns();
+//..
+// delete &cols;
+//, crummy - fix this
+BDataColumns& BObject::GetColumns() {
+	ASSERT_VALID(this);
+	BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, this->GetPropertyData(propColumnInfoArray));
+	ASSERT_VALID(pdatColumns);
+	return *pdatColumns;
+}
+
+
 
 // Move this BObject to a new parent if possible.
 // This will handle removing from old parent list, adding to new parent list. 
@@ -3116,6 +3136,7 @@ BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 // Get the name for this object, optionally including its class name 
 // eg:      book "The Lord of the Rings" 
 //, trim to reasonable # chars, add ... if necess
+//, why does this use m_strTextCache? slows it down. eg can't use it to replace GetPropertyString(propName)
 LPCTSTR BObject::GetName(BOOL bIncludeClassName)
 {
 	ASSERT_VALID(this);
