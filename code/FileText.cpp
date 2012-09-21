@@ -102,7 +102,7 @@ void CFileText::WriteHeader(BDataLink& datProps)
 				for (int i = 0; i < nProps; i++)
 				{
 					BObject* pobjProp = datProps.GetLinkAt(i);
-					LPCTSTR psz = pobjProp->GetName(FALSE);
+					LPCTSTR psz = pobjProp->GetName();
 					this->WriteValue(psz);
 					// handle _value props
 					if (pobjProp->PropertyDefHasMachineVersion())

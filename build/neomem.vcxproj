@@ -83,6 +83,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\code\BClass.cpp" />
     <ClCompile Include="..\code\BCMenu.cpp" />
     <ClCompile Include="..\code\BData.cpp" />
     <ClCompile Include="..\code\BDataBinary.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="..\code\BDataString.cpp" />
     <ClCompile Include="..\code\BDataViews.cpp" />
     <ClCompile Include="..\code\BDataWebsite.cpp" />
+    <ClCompile Include="..\code\BFolder.cpp" />
     <ClCompile Include="..\code\BObject.cpp" />
     <ClCompile Include="..\code\BObjects.cpp" />
     <ClCompile Include="..\code\Clock.cpp" />
@@ -235,6 +237,8 @@
     <ClCompile Include="..\code\XComboBoxEx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Brooklyn.h" />
+    <ClInclude Include="..\code\BClass.h" />
     <ClInclude Include="..\code\BCMenu.h" />
     <ClInclude Include="..\code\BData.h" />
     <ClInclude Include="..\code\BDataBinary.h" />

@@ -459,6 +459,12 @@
     <ClCompile Include="..\code\BDoc.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="..\code\BFolder.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\BClass.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\code\BCMenu.h">
@@ -921,6 +927,12 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\BDoc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\BClass.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Brooklyn.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1482,6 +1494,7 @@
     <None Include="..\resources\icons\Wallet.ico">
       <Filter>Resource files</Filter>
     </None>
+    <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />

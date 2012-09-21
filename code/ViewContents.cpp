@@ -573,41 +573,56 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 				ASSERT_VALID(pobj);
 				OBJID idProperty = pobjHint->idProperty;
 
-				// Look for object in list
-				int nItem = m_lvw.FindItemData((LPARAM) pobj);
-				if (nItem != -1) {
+				if ((pobj == m_pDoc->GetCurrentObject()) && (idProperty == propColumnInfoArray)) {
+//					AfxMessageBox ("hi!");
 
-					// Get new icon if icon or class changed
-					if (idProperty == propIconID || idProperty == propClassID 
-							|| idProperty == propClassName) {
-						// Get the new index of the icon in the image list
-						int nImage = pobj->GetIconIndex();
-						m_lvw.SetItem(nItem, 0, LVIF_IMAGE, 0, nImage, 0, 0, 0);
-					}
+					// Get column information from object or from object's classdef
+					BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, pobj->GetPropertyData(propColumnInfoArray));
+					ASSERT_VALID(pdatColumns);
 
-					// Look for property in columns
-					int nCol = m_lvw.FindColumn(pobjHint->idProperty);
-					if (nCol != -1) {
-						// Update the item's row
-						m_lvw.Update(nItem);
-					}
+					// Initialize listview columns - see ListCtrlEx.cpp
+					m_lvw.InitializeColumns(pdatColumns);
+					delete pdatColumns;
+
 				}
+				else {
 
-				// If the object that is changing is a property, see if it's in the columns.
-				// Note: When you edit a property, several properties get changed so this might get
-				// called several times.
-				if (pobj->GetClassID() == classProperty) {
-					// Only concerned with name and property type right now
-					if ((idProperty == propName) || (idProperty == propPropertyType)) {
-						OBJID idObject = pobj->GetObjectID();
-						int nCol = m_lvw.FindColumn(idObject);
+					// Look for object in list
+					int nItem = m_lvw.FindItemData((LPARAM) pobj);
+					if (nItem != -1) {
+
+						// Get new icon if icon or class changed
+						if (idProperty == propIconID || idProperty == propClassID 
+								|| idProperty == propClassName) {
+							// Get the new index of the icon in the image list
+							int nImage = pobj->GetIconIndex();
+							m_lvw.SetItem(nItem, 0, LVIF_IMAGE, 0, nImage, 0, 0, 0);
+						}
+
+						// Look for property in columns
+						int nCol = m_lvw.FindColumn(pobjHint->idProperty);
 						if (nCol != -1) {
-							// Found it, so update the column info now
-							m_lvw.UpdateColumn(nCol, pobj);
+							// Update the item's row
+							m_lvw.Update(nItem);
+						}
+					}
+
+					// If the object that is changing is a property, see if it's in the columns.
+					// Note: When you edit a property, several properties get changed so this might get
+					// called several times.
+					if (pobj->GetClassID() == classProperty) {
+						// Only concerned with name and property type right now
+						if ((idProperty == propName) || (idProperty == propPropertyType)) {
+							OBJID idObject = pobj->GetObjectID();
+							int nCol = m_lvw.FindColumn(idObject);
+							if (nCol != -1) {
+								// Found it, so update the column info now
+								m_lvw.UpdateColumn(nCol, pobj);
+							}
 						}
 					}
 				}
-				
+
 				break;
 			}
 

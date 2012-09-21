@@ -2421,7 +2421,7 @@ void CNeoMem::Export(BObject *pobj) {
 
 /*
 	// get current item name
-	CString strItem = pobj->GetName(FALSE);
+	CString strItem = pobj->GetName();
 
 	// Get first item name
 //	BObject* pobjFirst = DYNAMIC_DOWNCAST(BObject, datLink.GetLinkAt(0));
@@ -2489,7 +2489,7 @@ void CNeoMem::Export(BObject *pobj) {
 	if (pobj->GetObjectID() == rootUser)
 		strTitle = pdoc->GetTitle(); // eg test.neo
 	else {
-		strTitle = pobj->GetName(FALSE);
+		strTitle = pobj->GetName();
 		strTitle.Trim();
 		strTitle = ReplaceInvalid(strTitle, '_');
 	}

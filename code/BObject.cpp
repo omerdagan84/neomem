@@ -39,22 +39,100 @@ IMPLEMENT_SERIAL(BObject, CObject, VERSIONABLE_SCHEMA | versionFileStructure)
 // Construction/Destruction
 //--------------------------------------------------------------------------
 
+
+
+BObject::BObject(BDoc& doc, OBJID idClass, LPCTSTR pszName, OBJID idParent, OBJID idIcon, ULONG lngFlags) :
+	m_lngObjectID(0), id(m_lngObjectID)
+{
+	ASSERT_VALID(&doc);
+
+	Init();
+
+	// set doc
+	m_pDoc = &doc;
+
+	// default class
+	if (idClass == 0)
+		idClass = classPaper;
+
+	BObject* pobjClassDef = doc.GetObject(idClass);
+
+	// default name, eg "New Fish"
+	CString strName; // don't move into brackets - needs to stay alive till end
+	if (pszName == 0) {
+		pobjClassDef->GetClassDefNewName(strName);
+		pszName = (LPCTSTR) strName; 
+	}
+
+	// default location - current object, with exceptions
+	if (idParent == 0) {
+		//, should be a classdef property. just do a switch here for now
+		if (idClass == classClass)
+			idParent = folderClasses;
+		else
+			idParent = doc.GetCurrentObject()->id;
+	}
+
+	// default flags
+	// The default flags come from the classdef.
+//	ULONG lngFlags = GetObjectPropLong(idClass, propObjectFlags); 
+	if (lngFlags == 0) {
+
+		//, wow, yuck api code... should be
+//		lngFlags = objClassDef.GetPropertyLong(propObjectFlags);
+		// or something
+//,		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
+		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, pobjClassDef->GetPropertyData(propObjectFlags));
+		if (pdatFlags) {
+			lngFlags = pdatFlags->GetFlags();
+			delete pdatFlags;
+		}
+	}
+
+
+
+	// set properties
+	m_lngClassID = idClass;
+	
+	//, use lpctstr. 
+	//, make #define PSZ and PCSZ
+	SetName(pszName);
+
+	BObject* pobjParent = doc.GetObject(idParent);
+	ASSERT_VALID(pobjParent);
+	SetParent(pobjParent); //, api should take id not pobj
+
+	SetFlags(lngFlags);
+	SetIconID(idIcon); //, leave as direct ref for now (too confusing yet!)
+
+
+	// Validate object
+//	ASSERT_VALID(&obj);
+
+	// Add object to database (and tell views)
+	doc.AddObject(this); 
+
+}
+
+
+
 // better to use member initialization lists - copy and paste,
 // because calling another routine and assigning values would be so much slower
 // ^ oh, i see - i didn't see this text and changed them to an Init routine, 
-// because the init lists had gotten out of synch, and thought it was dangerous. 
+// because the init lists had gotten out of sync, and thought it was dangerous. 
 // you would want it fast because this is BObject. 
-
-// 
-
-BObject::BObject() : m_lngObjectID(0), id(m_lngObjectID) {
+BObject::BObject() : 
+	m_lngObjectID(0), id(m_lngObjectID) 
+{
 	Init();
 }
 
 
-BObject::BObject(OBJID lngClassID) : m_lngObjectID(0), id(m_lngObjectID) {
+BObject::BObject(OBJID idClass) : 
+	m_lngObjectID(0), id(m_lngObjectID) 
+{
 	Init();
-	m_lngClassID = lngClassID;
+	m_lngClassID = idClass;
 }
 
 
@@ -70,6 +148,17 @@ void BObject::Init() {
 	m_pDoc = NULL;
 	m_bytViewHeight = 50; // 50% default
 }
+
+
+// BObject factory
+// Only doc is required
+// static
+BObject& BObject::New(BDoc& doc, OBJID idClass, LPCTSTR pszName, OBJID idParent, OBJID idIcon, ULONG lngFlags) {
+	BObject* pobj = new BObject(doc, idClass, pszName, idParent, idIcon, lngFlags);
+	ASSERT(pobj);
+	return *pobj;
+}
+
 
 
 BObject::~BObject()
@@ -115,81 +204,6 @@ BOOL BObject::operator==(BObject a)
     return m_years == a.m_years;
 }
 */
-
-
-
-// BObject factory
-// Only doc is required
-// static
-BObject& BObject::New(BDoc& doc, OBJID idClass, LPCTSTR pszName, OBJID idParent, OBJID idIcon, ULONG lngFlags) {
-
-	BObject* pobj = new BObject();
-	ASSERT(pobj);
-	BObject& obj = *pobj;
-
-	// set doc
-	obj.m_pDoc = &doc;
-
-	// default class
-	if (idClass == 0)
-		idClass = classPaper;
-
-	// default name
-	//. "New ....."
-
-	// default location
-	if (idParent == 0) {
-		//, should be a classdef property. just do a switch here for now
-		if (idClass == classClass)
-			idParent = folderClasses;
-		else
-			idParent = doc.GetCurrentObject()->id;
-	}
-
-	// default flags
-	// The default flags come from the classdef.
-//	ULONG lngFlags = GetObjectPropLong(idClass, propObjectFlags); 
-	HOBJECT hobjClassDef = doc.GetObject(idClass);
-	if (lngFlags == 0) {
-
-		//, wow, yuck api code... should be
-//		lngFlags = objClassDef.GetPropertyLong(propObjectFlags);
-		// or something
-//,		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
-		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, hobjClassDef->GetPropertyData(propObjectFlags));
-		if (pdatFlags) {
-			lngFlags = pdatFlags->GetFlags();
-			delete pdatFlags;
-		}
-	}
-
-
-
-
-	// set properties
-	obj.m_lngClassID = idClass;
-	
-	//.. make it SetName - why was it not?
-	//, use lpctstr. or call it PSZ
-	obj.SetObjectText(pszName);
-
-	BObject* pobjParent = doc.GetObject(idParent);
-	ASSERT_VALID(pobjParent);
-	obj.SetParent(pobjParent); //, api should take id not pobj
-
-	obj.SetFlags(lngFlags);
-	obj.SetIconID(idIcon); //, leave as direct ref for now (too confusing yet!)
-
-
-	// Validate object
-	ASSERT_VALID(&obj);
-
-	// Add object to database (and tell views)
-	doc.AddObject(&obj); 
-
-	return obj;
-}
-
 
 
 
@@ -540,7 +554,7 @@ int BObject::GetIconIndex()
 // Set the bobject's text representation (name)
 // Different objects may use different properties to represent their text name 
 // (eg person object parses this text into first middle last names, etc, stored in bdatapersonname object)
-void BObject::SetObjectText(const CString& strText)
+void BObject::SetName(const CString& strText)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -909,7 +923,7 @@ BOOL BObject::SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText,
 	{
 		case propName:
 			// Set the name (text representation) of the object
-			SetObjectText(pszText);
+			SetName(pszText);
 			break;
 
 		case propObjectID:
@@ -985,7 +999,7 @@ BOOL BObject::SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText,
 				{
 					BObject* pobjPropertyValue = FindProperty(lngPropertyID, TRUE);
 					ASSERT_VALID(pobjPropertyValue);
-					pobjPropertyValue->SetObjectText(pszText);
+					pobjPropertyValue->SetName(pszText);
 				}
 				break;
 			}
@@ -1178,7 +1192,7 @@ LPCTSTR BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfN
 
 
 // Set the underlying data for a property.
-// Makes a copy of the BData object and saves it. 
+// Makes a COPY of the BData object and saves it. 
 // Each property BObject stores its data in the m_pdat member, which is a pointer to a BData object.
 BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, 
 										BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
@@ -2011,6 +2025,7 @@ int BObject::GetLinks(BObjects &aObjects, BObject* pobjStart)
 
 
 
+//, move to BProperty
 // Get the alignment (left, right, center) associated with this propertydef bobject.
 // Numbers are right aligned, strings are left aligned.
 // Returns LVCFMT_LEFT, LVCFMT_RIGHT, or LVCFMT_CENTER.
@@ -2497,7 +2512,7 @@ BOOL BObject::SetIconID(OBJID lngIconID)
 
 
 
-
+//, move to BFolder
 // For this folder object, initialize the column array (propColumnInfoArray) 
 // to reflect the properties used by the default class.
 void BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass) {
@@ -3059,6 +3074,7 @@ BOOL BObject::IsMoveValid(BObject *pobjTarget, BOOL bDisplayMessages)
 // Add the specified property to this classdef's list of associated properties, checking
 // first if the property is already included in the class chain.
 // Returns True if successful.
+//, just objClass.SetPropertyLinksAdd(propObjectProperties, objPrice.id);?
 BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
@@ -3458,7 +3474,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			file.WriteString(str);
 			// name
 			str.Format("%s\r\n\\par \r\n\r\n",
-				(LPCTSTR) this->GetName(FALSE)
+				(LPCTSTR) this->GetName()
 				);
 			file.WriteString(str);
 			// contents
@@ -3483,7 +3499,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			str.Format("%s%s\r\n",
 //				(LPCTSTR) strIndent,
 				"",
-				(LPCTSTR) this->GetName(FALSE)
+				(LPCTSTR) this->GetName()
 				);
 			file.WriteString(str);
 			str.Format("%s%s\r\n",
@@ -3509,7 +3525,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			
 			str.Format("%s<outline text=\"%s\" type=\"%s\">\r\n",
 				(LPCTSTR) strIndent,
-				(LPCTSTR) this->GetName(FALSE),
+				(LPCTSTR) this->GetName(),
 				(LPCTSTR) this->GetPropertyString(propClassName)
 				);
 			file.WriteString(str);
@@ -3558,7 +3574,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 			{
 				BObject* pobjProp = datProps.GetLinkAt(i);
 				ASSERT_VALID(pobjProp);
-				strPropName = pobjProp->GetName(FALSE);
+				strPropName = pobjProp->GetName();
 				OBJID lngPropertyID = pobjProp->GetObjectID();
 				BData* pdat = this->GetPropertyData(lngPropertyID);
 				if (pdat)
@@ -3676,7 +3692,7 @@ CString BObject::GetPropertyDefMachineVersionName()
 		return _T("ParentID");
 	}
 	// else
-	CString s = this->GetName(FALSE);
+	CString s = this->GetName();
 	s += _T("_value");
 	return s;
 }

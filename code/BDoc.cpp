@@ -3328,7 +3328,8 @@ BObject* BDoc::UIMoveObjectTo() {
 //		if (IDOK == dlg.DoModalSelect("Move Object to New Location", strMsg, rootUser, lngOldParentID, lngOldParentID, theApp.m_lngExcludeFlags, TRUE))
 		CDialogGetLocation dlg;
 		CString strMsg;
-		strMsg.Format("Select the new location for the %s and hit OK. Use right and left arrows to expand and collapse items.", (LPCTSTR) m_pobjTarget->GetName(TRUE));
+		strMsg.Format("Select the new location for the %s and hit OK. "
+			"Use right and left arrows to expand and collapse items.", (LPCTSTR) m_pobjTarget->GetName(TRUE));
 		dlg.m_strInstructions = strMsg;
 		dlg.m_strCaption = "Move Object To...";
 		dlg.m_pobj = pobjParent;

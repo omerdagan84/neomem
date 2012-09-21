@@ -161,8 +161,8 @@ BOOL CPageObjectGeneral::OnApply()
 	{
 		CString str;
 		m_txtName.GetWindowText(str);
-//		m_pobj->SetObjectText(str); //. this broadcasts hintPropertyChanged
-		m_pobj->SetPropertyString(propName, str); // this updates all views
+//		m_pobj->SetName(str); //. this broadcasts hintPropertyChanged
+		m_pobj->SetPropertyString(propName, str); // this updates all views also
 		m_bNameChanged = FALSE;
 	}
 

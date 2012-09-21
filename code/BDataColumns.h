@@ -17,15 +17,15 @@ class ColumnInfo
 {
 public:
 	ColumnInfo();
+public:
+	ULONG GetPropertyID() { return m_lngPropertyID; };
+	int GetColWidth() { return m_nColWidth; };
+
 private:
 	ULONG m_lngPropertyID;
 	BObject* m_pobjPropertyDef; // Note: This is not serialized, just the ID is!
 	int m_nColWidth;
 	int m_nColAlignment;
-
-public:
-	ULONG GetPropertyID() { return m_lngPropertyID; };
-	int GetColWidth() { return m_nColWidth; };
 
 friend class BDataColumns;
 
@@ -33,6 +33,7 @@ friend class BDataColumns;
 
 
 typedef CArray<ColumnInfo, ColumnInfo&> CColumnInfoArray;
+
 
 class BDataColumns : public BData  
 {
@@ -54,7 +55,6 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
 public:
-	void RemoveColumns();
 	const int GetColumnCount();
 	int GetColumnIndex(ULONG lngPropertyID);
 	int GetColumnIndex(BObject* pobjPropertyDef);
@@ -65,6 +65,7 @@ public:
 	ULONG GetPropertyID(int nCol);
 	ColumnInfo& InsertColumn(ULONG lngPropertyID, BDoc* pDoc, int nWidth = 0, int nCol = -1);
 	BOOL RemoveColumn(int nCol);
+	void RemoveColumns();
 	void SetColumnOrder(LPINT anOrder, int nColumns);
 	BOOL SetColumnWidth(int nCol, int nWidth);
 

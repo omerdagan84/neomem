@@ -41,14 +41,17 @@ public:
 	// Construction
 	void Init();
 	BObject(); // create from serialization only
-	BObject(OBJID lngClassID); // so can set class id from neodoc. 
+	BObject(OBJID idClass); // so can set class id from neodoc. 
+	BObject(BDoc& doc, OBJID idClass = 0, LPCTSTR pszName = NULL, OBJID idParent = 0, 
+						OBJID idIcon = 0, ULONG lngFlags = 0);
+	static BObject& New(BDoc& doc, OBJID idClass = 0, LPCTSTR pszName = NULL, OBJID idParent = 0, 
+						OBJID idIcon = 0, ULONG lngFlags = 0);
+
 	virtual ~BObject();
 //	BObject( const BObject& a ); // Copy constructor
 //	const BObject& operator=( const BObject& a ); // Assignment operator
 //	BOOL operator==(BObject a); // Equivalence operator
 
-	static BObject& New(BDoc& doc, OBJID idClass = 0, LPCTSTR pszName = NULL, OBJID idParent = 0, 
-						OBJID idIcon = 0, ULONG lngFlags = 0);
 
 	// Operations
 	BOOL AddChild(BObject* pobjChild, BOOL bCheckForDuplicates);
@@ -83,7 +86,7 @@ public:
 	int GetIconIndex();
 //	int GetLinks(BObjects& aObjects, BObject* pobjStart);
 	ULONG GetMemoryUsed(BOOL bRecurse) const;
-	LPCTSTR GetName(BOOL bIncludeClassName);
+	LPCTSTR GetName(BOOL bIncludeClassName = FALSE);
 	OBJID GetObjectID() { return m_lngObjectID; };
 	BObject* GetParent() { return m_pobjParent; };
 	int GetParents(BObjects& aParents, BObject* pobjStopAt, BOOL bIncludeThisObject = TRUE, BOOL bIncludeStopObject = FALSE);
@@ -127,7 +130,7 @@ public:
 	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; };
 	BOOL SetIconID(OBJID lngIconID);
 	void SetObjectID(OBJID lngObjectID) { m_lngObjectID = lngObjectID; };
-	void SetObjectText(const CString& strText);
+	void SetName(const CString& strText);
 	void SetParent(BObject* pobjNewParent);
 	
 	// could use overloading for these, maybe... (but then not for the get props. darn)

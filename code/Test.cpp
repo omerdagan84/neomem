@@ -9,6 +9,8 @@
 #include "ConstantsDatabase.h" //. should be part of neodoc
 
 #include "BDataIcon.h"
+#include "BFolder.h"
+#include "BClass.h"
 
 
 //#include "DSource.h"
@@ -111,14 +113,7 @@ void CTest::DoTests(CNeoMem& app) {
 //		BObject& objFolder = BObject::New(doc, classFolder);
 
 
-
-
-
-
-
-//,		BFolder& objFolder = BFolder::New(doc, "fish");
-
-		BObject& objFolder = BObject::New(doc, classFolder, "fish");
+		BFolder& objFolder = BFolder::New(doc, "fish");
 
 		// check class
 		//, yuck - classID?
@@ -147,7 +142,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 		
 		// add a fish class
-		BObject& objClass = BObject::New(doc, classClass, "Fish", rootClass);
+		BClass& objClass = BClass::New(doc, "Fish");
 		OBJID classFish = objClass.id;
 
 		// check location
@@ -208,7 +203,6 @@ void CTest::DoTests(CNeoMem& app) {
 		int x = a.GetSize();
 		ASSERT(a.GetSize() == 1);
 		ASSERT(a.GetAt(0) == objPrice.id);
-//		ASSERT(a.GetAt(1) == objSize.id);
 
 
 		// add another property (will exercise different code)
@@ -269,44 +263,52 @@ void CTest::DoTests(CNeoMem& app) {
 //		hobjIcon = pdoc->UIImportIcon(gpgui);
 
 
+		// test name functions
+		BObject& objOctopus = BObject::New(doc, classFish);
+		ASSERT(objOctopus.GetName() == CString("New Fish")); // default name
+		ASSERT(objOctopus.GetPropertyString(propName) == CString("New Fish"));
+		objOctopus.SetName("octopus");
+		ASSERT(objOctopus.GetName(true) == CString("fish \"octopus\"")); // extended name
+
+		//, change all gps(propname) to getname? 
 
 
-		// add price column to the contents view
-		// this is something the ui would need to do
-		// but good to test it here also
 
-//		nCol = GetColumnCount();
-//		m_pdatColumns->InsertColumn(lngPropertyID, m_pDoc, 0, nCol);
-		// remove a column
-//		BObject* pobjProp = m_pDoc->GetObject(lngPropID);
-//		m_pdatColumns->RemoveColumn(nCol);
+		// add price column
 
-//		CFrameChild* pui = theApp.GetChildFrame();
-//		CViewContents* pview = DYNAMIC_DOWNCAST(CViewContents, pui->GetView(viewContents));
-//		ASSERT_VALID(pview);
-//		pview->m_lvw.InsertColumnAsk(objPrice, 2);
+		//, should be one line...
+//		objFolder.GetColumns().AddColumn(objPrice.id);
 
-//		objFolder.GetPropertyLinks(propColumns, a);
-
-	
 		// Get column information from object or from object's classdef
 		// this is a copy so we're responsible for it
-//		BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
-
+		BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
+		pdatColumns->InsertColumn(objPrice.id, &doc);
+		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
+		delete pdatColumns;
 
 		// want to say, at highest level
 		// objFolder.AddColumn(objPrice.id);
-
 		// which you could do if you make a Folder class
-		
-//		BObj
+
+		// cool, this works!
+//		BFolder* folder = (BFolder*) &objFolder;
+//		BFolder& f2 = (BFolder&) objFolder;
+		// so does that! holy crap cool. 
+		// as long as you don't add more vars etc to the subclasses!!
+
+		//, not working
+//		folder.GetColumns().AddColumn(objPrice.id);
+		BFolder& folder = (BFolder&) objFolder; //, move getcols to bobject
+		BDataColumns& cols = folder.GetColumns();
+		cols.InsertColumn(objSize.id,&doc);
 
 
+
+
+		// save doc
 		//, pass filename here
 		//, pass pui for interactive / saveas
 //		doc.Save();
-
-
 
 
 	}

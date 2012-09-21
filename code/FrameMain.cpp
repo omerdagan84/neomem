@@ -911,7 +911,7 @@ void CFrameMain::OnCmdViewTest()
 //		AfxThrowMemoryException();
 
 		BObject* pobj = 0;
-//		pobj->GetName(FALSE); // just does ASSERT_VALID(pobj) in here
+//		pobj->GetName(); // just does ASSERT_VALID(pobj) in here
 		ASSERT_VALID(pobj);
 		ULONG lngX = pobj->GetObjectID(); // will throw an unhandled exception. 
 
