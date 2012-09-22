@@ -2785,6 +2785,7 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 			xTRACE("  save to object\n");
 			// Save column info to the object
 			pobj->SetPropertyData(propColumnInfoArray, pdatColumns, TRUE, FALSE);
+//,			pobj->SetColumns(*pdatColumns, 
 		}
 		else
 		{

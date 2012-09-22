@@ -1187,7 +1187,7 @@ BOOL BDoc::UIEditPropertyDef(BObject* pobjPropertyDef) {
 	BOOL bSystemProperty = (pobjPropertyDef->GetFlag(flagNoModify)); 
 
 	BObject* pobjPropertyType = this->GetObject(idPropertyType);
-	ASSERT(pobjPropertyType);
+	ASSERT(pobjPropertyType); //, "Must have a property type");
 	BObject* pobjLinkSource = this->GetObject(idLinkSource); // may be zero
 	BObject* pobjAdditionalProperty = this->GetObject(idAdditionalProperty); // may be zero
 
@@ -1227,7 +1227,7 @@ BOOL BDoc::UIEditPropertyDef(BObject* pobjPropertyDef) {
 
 			objTemp.SetPropertyLink(propPropertyType, dlg.m_pobjPropertyType->id, FALSE, FALSE);
 			objTemp.SetPropertyLink(propLinkSource, dlg.m_pobjLinkSource->id, FALSE, FALSE);
-			objTemp.SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty->id, FALSE, FALSE);
+			objTemp.SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty->id, FALSE, FALSE); //, what if zero?
 			if (dlg.m_bLimitLinks) objTemp.SetPropertyLong(propLimitNumberOfLinks, 1, FALSE, FALSE);
 			if (dlg.m_bDisplayHierarchy) objTemp.SetPropertyLong(propDisplayLinkHierarchy, 1, FALSE, FALSE);
 			OBJID idNewPropertyType = dlg.m_pobjPropertyType->GetObjectID();
@@ -1251,7 +1251,8 @@ BOOL BDoc::UIEditPropertyDef(BObject* pobjPropertyDef) {
 		// Note: If you set link with 0, it will delete the property bobject (which is what we want).
 		pobjPropertyDef->SetPropertyLink(propPropertyType, dlg.m_pobjPropertyType->id);
 		pobjPropertyDef->SetPropertyLink(propLinkSource, dlg.m_pobjLinkSource->id);
-		pobjPropertyDef->SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty->id);
+		if (dlg.m_pobjAdditionalProperty) //x added this - okay? 
+			pobjPropertyDef->SetPropertyLink(propAdditionalDisplayProperty, dlg.m_pobjAdditionalProperty->id); //x bombed here
 
 //		ULONG lngLinks = dlg.m_bLimitLinks ? 1 : 0;
 //		pobjPropertyDef->SetPropertyLong(propLimitNumberOfLinks, lngLinks);

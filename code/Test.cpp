@@ -90,29 +90,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// add folder for fish
-//		HOBJECT hobjParent = pdoc->GetCurrentObject();
-//		HOBJECT hobjFishFolder = pdoc->CreateObject(classFolder, "Fish", hobjParent);
-//		pdoc->AddObject(hobjFishFolder); // Add object to database (and tell views)
-
-		// or
-		// return id or hobj? 
-		// can get hobj from id
-		// or viceversa
-		// but id is more lasting. mebbe.
-		// hobject is opaque - we can make what we want of it. 
-		// and not use it as a pointer. 
-
 		// this is an object of class 'folder', not something in the 'class' folder. confusing. 
-//		BObject* pobjFishFolder = doc.NewObject(classFolder, "fish");
-//		HOBJECT hobjFishFolder = doc.NewObject(classFolder, "fish");
-//		OBJID idFishFolder = doc.NewObject(classFolder, "fish");
-//		BObject& objFishFolder = doc.NewObject(classFolder, "fish");
-//		DObject& dobjFishFolder = ds.NewObject(classFolder, "fish");
-//		BObject& objFolder = doc.NewObject(classFolder, "fish");
-//		BObject& objFolder = BObject::New(doc);
-//		BObject& objFolder = BObject::New(doc, classFolder);
-
-
 		BFolder& objFolder = BFolder::New(doc, "fish");
 
 		// check class
@@ -139,35 +117,32 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-
-		
 		// add a fish class
-		BClass& objClass = BClass::New(doc, "Fish");
-		OBJID classFish = objClass.id;
+		BClass& classFish = BClass::New(doc, "Fish");
 
 		// check location
-		OBJID idLoc = objClass.GetPropertyLink(propParent);
+		OBJID idLoc = classFish.GetPropertyLink(propParent);
 		ASSERT(idLoc == rootClass);
 
 
 		// set description
 		{
 		CString strDesc("a thing that swims in the water");
-		objClass.SetPropertyString(propDescription, strDesc);
-		CString str = objClass.GetPropertyString(propDescription);
+		classFish.SetPropertyString(propDescription, strDesc);
+		CString str = classFish.GetPropertyString(propDescription);
 		ASSERT(str==strDesc);
 		}
 
 
 		// id is a read-only variable!
-//		OBJID idfoo = objClass.id;
-//		objClass.id = 2; // fails
+//		OBJID idfoo = classFish.id;
+//		classFish.id = 2; // fails
 
 
 
 		// create a fish, add it to fish folder
 //		pdoc->UIAddNewObject(); //, adapt this so can pass params to it...
-		BObject& objPlecy = BObject::New(doc, classFish, "plecy", objFolder.id);
+		BObject& objPlecy = BObject::New(doc, classFish.id, "plecy", objFolder.id);
 		objPlecy.SetPropertyString(propDescription, "plecostomus");
 
 
@@ -175,10 +150,10 @@ void CTest::DoTests(CNeoMem& app) {
 		// set folder default to fish class
 		// This will set document modified flag and update views?
 //,		pdoc->UIChangeObjectContents(hobjFishClass);
-		objFolder.SetPropertyLink(propDefaultClass, classFish);
+		objFolder.SetPropertyLink(propDefaultClass, classFish.id);
 		{
 		OBJID id = objFolder.GetPropertyLink(propDefaultClass);
-		ASSERT(id == classFish);
+		ASSERT(id == classFish.id);
 		}
 
 
@@ -192,12 +167,12 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// add to fish class
-		objClass.SetPropertyLinksAdd(propObjectProperties, objPrice.id);
+		classFish.SetPropertyLinksAdd(propObjectProperties, objPrice.id);
 
 
 		// get list of property values
 		ObjIDArray a;
-		objClass.GetPropertyLinks(propObjectProperties, a);
+		classFish.GetPropertyLinks(propObjectProperties, a);
 
 		// check it
 		int x = a.GetSize();
@@ -210,10 +185,10 @@ void CTest::DoTests(CNeoMem& app) {
 		objSize.SetPropertyLink(propPropertyType, proptypeNumber);
 		objSize.SetPropertyString(propDescription, "size in inches");
 
-		objClass.SetPropertyLinksAdd(propObjectProperties, objSize.id);
+		classFish.SetPropertyLinksAdd(propObjectProperties, objSize.id);
 
 		// check it
-		objClass.GetPropertyLinks(propObjectProperties, a);
+		classFish.GetPropertyLinks(propObjectProperties, a);
 		ASSERT(a.GetSize() == 2);
 		ASSERT(a.GetAt(0) == objPrice.id);
 		ASSERT(a.GetAt(1) == objSize.id);
@@ -228,7 +203,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// add another fish
-		BObject& objGlassfish = BObject::New(doc, classFish, "glassfish", objFolder.id);
+		BObject& objGlassfish = BObject::New(doc, classFish.id, "glassfish", objFolder.id);
 
 		// convert the price prop to a string
 //		objPrice.SetPropertyData(propPropType, proptypeString);
@@ -246,14 +221,14 @@ void CTest::DoTests(CNeoMem& app) {
 		objIcon.SetPropertyData(propIconData, pdatIcon);
 
 		// set fish class icon
-		objClass.SetIconID(objIcon.id);
+		classFish.SetIconID(objIcon.id);
 		//, this is right, but maybe a command would be better. 
-		// eg objClass.SetObjectIcon or something. 
+		// eg classFish.SetObjectIcon or something. 
 		// ie something to mimic the user command. 
 
 		//, next
 //		BIcon& objIcon = BIcon::New(doc, "Fish", strFilename);
-//		objClass.SetIconID(objIcon.id);
+//		classFish.SetIconID(objIcon.id);
 
 		//, old ideas
 //		hobjIcon = pdoc->UIImportIcon(gpgui, "foo.ico"); // nonexistent file
@@ -264,12 +239,16 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// test name functions
-		BObject& objOctopus = BObject::New(doc, classFish);
+		BObject& objOctopus = BObject::New(doc, classFish.id);
 		ASSERT(objOctopus.GetName() == CString("New Fish")); // default name
 		ASSERT(objOctopus.GetPropertyString(propName) == CString("New Fish"));
 //,bombs		ASSERT(objOctopus.GetPropertyString(propName) == objOctopus.GetName()); //, note getname is slower though...
 		objOctopus.SetName("octopus");
 		ASSERT(objOctopus.GetName(true) == CString("fish \"octopus\"")); // extended name
+
+
+
+
 
 
 
@@ -281,30 +260,15 @@ void CTest::DoTests(CNeoMem& app) {
 		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
 		delete pdatColumns;
 
+
+
+
+		// add size column (new api)
+
 		//, should be one line...
 //		objFolder.GetColumns().AddColumn(objPrice.id);
 		// want to say, at highest level
 		// objFolder.AddColumn(objPrice.id);
-
-		// narrow description column (old api)
-		pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
-		int nCol = pdatColumns->GetColumnIndex(propDescription);
-		int nWidth = pdatColumns->GetColumnWidth(nCol);
-		pdatColumns->SetColumnWidth(nCol, nWidth * 0.60);
-		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // sends hint
-		delete pdatColumns;
-
-		// narrow price column (nicer api)
-		BDataColumns& cols = objFolder.GetColumns();
-		nCol = cols.GetColumnIndex(objPrice.id);
-		nWidth = cols.GetColumnWidth(nCol);
-		cols.SetColumnWidth(nCol, nWidth * 0.6);
-		objFolder.SetColumns(cols); // sends hint, deletes cols? sets to 0. yeah
-
-		// int nWidth = obj.GetColumns().GetColumnWidth(nCol);
-		// obj.GetColumns().SetColumnWidth(nCol, nWidth*0.6);
-
-
 
 
 		// cool, this works!
@@ -324,8 +288,69 @@ void CTest::DoTests(CNeoMem& app) {
 		// objFolder.GetColumns().InsertColumn(objSize.id,&doc).PutColumns();
 		// better but still ugh
 
+		// a little better api. still confusing w/ delete &cols hidden
+
+		BDataColumns& cols = objFolder.GetColumns();
+		cols.InsertColumn(objSize.id, &doc);
+		objFolder.SetColumns(cols); // will delete cols
 
 
+
+
+
+
+		// narrow description column (old api)
+		pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
+		int nCol = pdatColumns->GetColumnIndex(propDescription);
+		int nWidth = pdatColumns->GetColumnWidth(nCol);
+		pdatColumns->SetColumnWidth(nCol, nWidth * 0.60);
+		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // sends hint
+		delete pdatColumns;
+
+		// narrow price column (nicer api)
+		{
+//		cols = objFolder.GetColumns(); //, bombs - redefining a ref? apparently so, but really weird message about =( operator in bdata
+		BDataColumns& cols = objFolder.GetColumns(); 
+		nCol = cols.GetColumnIndex(objPrice.id);
+		nWidth = cols.GetColumnWidth(nCol);
+		cols.SetColumnWidth(nCol, nWidth * 0.6);
+		objFolder.SetColumns(cols); // sends hint, deletes cols? sets to 0. yeah
+		}
+
+
+		// int nWidth = obj.GetColumns().GetColumnWidth(nCol);
+		// obj.GetColumns().SetColumnWidth(nCol, nWidth*0.6);
+
+		//, but search SetPropertyData(propObjectColumnInfoArray
+
+
+
+
+		// make a category for fish
+		BClass& classCategory = BClass::New(doc, "Category (Fish)");
+		BFolder& folderCategories = BFolder::New(doc, "Categories", rootUser);
+		BObject& objCatSaltwater = BObject::New(doc, classCategory.id, "Saltwater", folderCategories.id);
+		BObject& objCatFreshwater = BObject::New(doc, classCategory.id, "Freshwater", folderCategories.id);
+		
+
+		BObject& propCategory = BObject::New(doc, classProperty, "Category", folderProperties);
+		propCategory.SetPropertyLink(propPropertyType, proptypeLink); //, note, this is REQUIRED, but not enforced here... should be
+		propCategory.SetPropertyString(propDescription, "oh, fish category you know");
+		propCategory.SetPropertyLink(propLinkSource, folderCategories.id);
+
+		//,
+//		classFish.AddProperty(&propCategory);
+		// vs
+		classFish.SetPropertyLinksAdd(propObjectProperties, propCategory.id);
+
+		// oh because addproperty is to add a property to the properties collection for that object, in this case a class.
+		// but it's not what determines what properties an object has - that's the propObjectProperties. 
+		// ok, so addproperty should be hidden?
+
+
+
+		// point the category property to the categories folder
+//		propCategory.SetProperty
 
 
 

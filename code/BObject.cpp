@@ -671,11 +671,10 @@ BOOL BObject::RemoveChild(BObject* pobjChild)
 // Routines
 //-----------------------------------------------------------------------------------
 
-
 // Add a property to the list of properties for this BObject.
 // Will create a property list if none exists.
 // Returns True if successful, False if not.
-// Note: This should only be called by SetProperty.
+// Note: This is only called by FindProperty.
 //, could pass parameters here so can specify position to add new property at
 BOOL BObject::AddProperty(BObject *pobjProperty)
 {
@@ -2994,7 +2993,7 @@ BObject* BObject::GetClassObject()
 // BDataColumns& cols = obj.GetColumns();
 //..
 // delete &cols;
-//, crummy - fix this
+//, crummy - fix that
 BDataColumns& BObject::GetColumns() {
 	ASSERT_VALID(this);
 	BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, this->GetPropertyData(propColumnInfoArray));
