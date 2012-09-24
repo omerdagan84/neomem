@@ -400,8 +400,8 @@ void CViewRtf::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 
 				// Get rtf text
-				LPCTSTR pszRtf = pobj->GetPropertyString(propRtfText);
-				m_prtf->SetRtf(pszRtf, FALSE);
+				CString strRtf = pobj->GetPropertyString(propRtfText);
+				m_prtf->SetRtf(strRtf, FALSE);
 
 /*
 //.. test - trying to track down weird insertion of blank lines!
@@ -525,8 +525,8 @@ if (strlen(pszRtf) > 0)
 				// Check if this event refers to the current object and rtf text property
 				if ((ph->idProperty == propRtfText) && (pobj == pobjCurrent))
 				{
-					LPCTSTR pszRtf = pobj->GetPropertyString(propRtfText);
-					m_prtf->SetRtf(pszRtf, FALSE);
+					CString strRtf = pobj->GetPropertyString(propRtfText);
+					m_prtf->SetRtf(strRtf, FALSE);
 
 					// Set the default font if it's blank
 					if (m_prtf->GetWindowTextLength() == 0)

@@ -198,9 +198,9 @@ void CListCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 			// Special case for Property View - need to display the value of the property for the
 			// document's current object. The Value column has a dummy property of propValue assigned to it.
 			if (lngPropertyID == propValue)
-				pLVITEM->pszText = const_cast <TCHAR*> (m_pDoc->GetCurrentObject()->GetPropertyString(pobj->GetObjectID()));
+				pLVITEM->pszText = const_cast <TCHAR*> ((LPCTSTR) m_pDoc->GetCurrentObject()->GetPropertyString(pobj->GetObjectID()));
 			else
-				pLVITEM->pszText = const_cast <TCHAR*> (pobj->GetPropertyString(lngPropertyID));
+				pLVITEM->pszText = const_cast <TCHAR*> ((LPCTSTR) pobj->GetPropertyString(lngPropertyID));
 		}
 	}
 	*pResult = 0;
@@ -2673,10 +2673,10 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 		// 1.1d make sure we actually have an object!
 		if (pobjPropDef)  {
 
-			LPCTSTR pszColumnName = pobjPropDef->GetPropertyString(propName);
+			CString strColumnName = pobjPropDef->GetPropertyString(propName);
 			int nColAlignment = pobjPropDef->GetPropertyDefAlignment();
 			int nColWidth = pobjPropDef->GetPropertyDefWidth();
-			int nItem = InsertColumn(nCol, pszColumnName, nColAlignment, nColWidth);
+			int nItem = InsertColumn(nCol, strColumnName, nColAlignment, nColWidth);
 
 			// Set column item data
 			CHeaderCtrl* phdr = GetHeaderCtrl();
@@ -2697,9 +2697,9 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 			// only prob is if they add a folder and don't set up the class,
 			// they just add properties, then later they set up the class
 			// might wind up adding all these props to the paper class, for instance
-//			LPCTSTR szClassName = pobjDefaultClass->GetPropertyString(propName);
+//			CString strClassName = pobjDefaultClass->GetPropertyString(propName);
 //			CString strMsg;
-//			strMsg.Format("Do you want to add this property to the %s definition class also?", szClassName);
+//			strMsg.Format("Do you want to add this property to the %s definition class also?", strClassName);
 //			if (AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO) == IDYES) {
 //				pobjDefaultClass->GetPropertyData(propColumn
 //			}
@@ -2947,7 +2947,7 @@ BOOL CListCtrlEx::UpdateColumn(int nCol, BObject* pobjPropertyDef)
 	ASSERT_VALID(phdr);
 
 	// Get propertydef properties
-	LPCTSTR szText = pobjPropertyDef->GetPropertyString(propName);
+	CString strText = pobjPropertyDef->GetPropertyString(propName);
 	ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 	int nAlignment = pobjPropertyDef->GetPropertyDefAlignment();
 	
@@ -2958,7 +2958,7 @@ BOOL CListCtrlEx::UpdateColumn(int nCol, BObject* pobjPropertyDef)
 	lvc.mask = LVCF_TEXT | LVCF_FMT;
 	// note cast - const char* to char* - this is okay because pszText has
 	// two functions - read and write, and for this it's just reading the string. 
-	lvc.pszText = (LPTSTR) szText; 
+	lvc.pszText = (LPTSTR) (LPCTSTR) strText; 
 	lvc.fmt = nAlignment;
 	SetColumn(nCol, &lvc);
 
@@ -3078,9 +3078,9 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 			}
 		default: // (treat as strings)
 			{
-				LPCTSTR psz1 = pobj1->GetPropertyString(lngPropertyID);
-				LPCTSTR psz2 = pobj2->GetPropertyString(lngPropertyID);
-				iResult = lstrcmpi(psz1, psz2);
+				CString str1 = pobj1->GetPropertyString(lngPropertyID);
+				CString str2 = pobj2->GetPropertyString(lngPropertyID);
+				iResult = lstrcmpi(str1, str2);
 				break;
 			}
 		}

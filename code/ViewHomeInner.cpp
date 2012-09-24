@@ -87,9 +87,9 @@ int CViewHomeInner::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Description
 //	BObject* pobjHome = m_pDoc->GetObject(rootUser);
-//	LPCTSTR pszDescription = pobjHome->GetPropertyString(propDescription);
+//	CString strDescription = pobjHome->GetPropertyString(propDescription);
 //	// If description is blank and there are no objects, show an intro message
-//	if (_tcslen(pszDescription) == 0)
+//	if (_tcslen(strDescription) == 0)
 //	{
 //		BObject* pobj = m_pDoc->GetObject(rootUser);
 //		ASSERT_VALID(pobj);
@@ -289,8 +289,8 @@ void CViewHomeInner::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				BObject* pobjHome = m_pDoc->GetObject(rootUser);
 				if ((lngPropertyID == propDescription) && (pobj == pobjHome))
 				{
-//					LPCTSTR pszDescription = pobjHome->GetPropertyString(propDescription);
-//					m_lblDescription.SetWindowText(pszDescription);
+//					CString strDescription = pobjHome->GetPropertyString(propDescription);
+//					m_lblDescription.SetWindowText(strDescription);
 					GetFileDescription();
 					RecalculateLayout();
 					Invalidate();

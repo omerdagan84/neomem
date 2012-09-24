@@ -56,7 +56,7 @@ BOOL BDataBoolean::SetBDataText(const CString& str, BObject* pobjPropertyDef /* 
 
 
 // Get text representation of data into string
-LPCTSTR BDataBoolean::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataBoolean::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	if (m_nValue == 0)
 		m_strText = "No";

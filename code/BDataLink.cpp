@@ -275,7 +275,8 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 // Get text representation of link(s) into a string, ie get list of objects linked to. 
 // Eg "Houston, Austin, Berkeley Heights"
 // pass true for bMachineVersion to get exportable version
-LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+//xLPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);
@@ -357,9 +358,11 @@ LPCTSTR BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 					if (bDisplayLinkHierarchy == FALSE)
 						m_strText = pobj->GetPropertyString(propName); // eg "Museum of Fine Arts"
 					// Only append it if it's not blank
-					LPCTSTR szAdditional = pobj->GetPropertyString(lngAdditionalPropID); 
-					if (*szAdditional != 0)
-						m_strText += g_strCommaSpace + szAdditional; // eg ", Canberra"
+//x					LPCTSTR szAdditional = pobj->GetPropertyString(lngAdditionalPropID); 
+					CString strAdditional = pobj->GetPropertyString(lngAdditionalPropID); 
+//x					if (*szAdditional != 0)
+					if (strAdditional.IsEmpty() == FALSE)
+						m_strText += g_strCommaSpace + strAdditional; // eg ", Canberra"
 				}
 
 				return m_strText;

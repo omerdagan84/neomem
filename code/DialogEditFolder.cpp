@@ -255,8 +255,8 @@ void CDialogEditFolder::OnClassChanged()
 		}
 		
 		// Update class description label also
-		LPCTSTR pszClassDescription = pobjClass->GetPropertyString(propDescription);
-		m_txtDescription.SetWindowText(pszClassDescription);
+		CString strClassDescription = pobjClass->GetPropertyString(propDescription);
+		m_txtDescription.SetWindowText(strClassDescription);
 
 		// Enable default class controls if Folder selected
 		BOOL bFolder = (pobjClass->GetObjectID() == classFolder);

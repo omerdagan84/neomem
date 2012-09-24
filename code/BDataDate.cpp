@@ -226,7 +226,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 
 // Get text representation of date into string, eg "January 15, 1988".
-LPCTSTR BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	// Return string if string flag is set
 	if (m_bitsFlags.Type == flagString)

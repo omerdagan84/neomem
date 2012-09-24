@@ -98,7 +98,7 @@ BOOL BDataPersonName::SetBDataText(const CString& str, BObject* pobjPropertyDef 
 
 
 // Get text representation of data into string
-LPCTSTR BDataPersonName::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataPersonName::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDoc);

@@ -48,7 +48,7 @@ public:
 	virtual BData* CreateCopy();
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
-	virtual LPCTSTR GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
+	virtual CString GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	virtual BOOL IsValid(BDoc* pDoc);
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);
 	virtual void Serialize(CArchive &ar);
@@ -59,7 +59,8 @@ public:
 	int GetColumnIndex(ULONG lngPropertyID);
 	int GetColumnIndex(BObject* pobjPropertyDef);
 	ColumnInfo& GetColumnInfo(int nCol);
-	LPCTSTR GetColumnName(int nCol, BDoc* pDoc);
+//x	LPCTSTR GetColumnName(int nCol, BDoc* pDoc);
+	CString GetColumnName(int nCol, BDoc* pDoc);
 	LPINT GetColumnOrder();
 	int GetColumnWidth(int nCol);
 	BObject* GetPropertyDef(int nCol, BDoc* pDoc);

@@ -7,7 +7,7 @@
 
 
 //, don't actually need this class, as bobject can act as a folder for any object. meh.
-
+// could still use it though, to group the folder fns together
 
 
 class BDataColumns;

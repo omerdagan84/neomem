@@ -49,7 +49,7 @@ BOOL BDataEmail::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 
 
 
 
-LPCTSTR BDataEmail::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataEmail::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	return m_strText;

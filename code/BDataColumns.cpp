@@ -87,7 +87,7 @@ BOOL BDataColumns::SetBDataText(const CString& str, BObject* pobjPropertyDef /* 
 
 
 // Get text representation of data into string
-LPCTSTR BDataColumns::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataColumns::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	m_strText = "PropertyIDs: ";
 	CString str;
@@ -253,7 +253,8 @@ BOOL BDataColumns::RemoveColumn(int nCol)
 
 
 // Get the name for the specified column
-LPCTSTR BDataColumns::GetColumnName(int nCol, BDoc* pDoc)
+//xLPCTSTR BDataColumns::GetColumnName(int nCol, BDoc* pDoc)
+CString BDataColumns::GetColumnName(int nCol, BDoc* pDoc)
 {
 	ColumnInfo& rci = GetColumnInfo(nCol);
 	// Get pointer to object if don't have already

@@ -126,8 +126,10 @@ void CViewHeader::OnDraw(CDC* pDC)
 
 	// Draw text of currently selected item
 	CRect rectText(intBorder + 16 + intBorder, 1, r.right, m_nHeight-1); // 16 is icon width
-	LPCTSTR pszText = pobj->GetPropertyString(propName);
-	pDC->DrawText(pszText, -1, rectText, DT_LEFT | DT_NOPREFIX | DT_SINGLELINE | DT_VCENTER);
+//x	LPCTSTR pszText = pobj->GetPropertyString(propName);
+//x	pDC->DrawText(pszText, -1, rectText, DT_LEFT | DT_NOPREFIX | DT_SINGLELINE | DT_VCENTER);
+	CString strText = pobj->GetPropertyString(propName);
+	pDC->DrawText(strText, -1, rectText, DT_LEFT | DT_NOPREFIX | DT_SINGLELINE | DT_VCENTER);
 	
 	//. Validate region where child controls go?
 

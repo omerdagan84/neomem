@@ -45,7 +45,7 @@ BOOL BDataFolder::SetBDataText(const CString& str, BObject* pobjPropertyDef /* =
 
 
 
-LPCTSTR BDataFolder::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataFolder::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	return m_strText;

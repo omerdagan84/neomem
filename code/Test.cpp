@@ -164,20 +164,25 @@ void CTest::DoTests(CNeoMem& app) {
 		BObject& objPrice = BObject::New(doc, classProperty, "price", folderProperties);
 		objPrice.SetPropertyLink(propPropertyType, proptypeCurrency);
 		objPrice.SetPropertyString(propDescription, "how much it costs");
+		// check
+		BObject* pobj = doc.GetObject(objPrice.id);
+		ASSERT(pobj->GetPropertyLink(propPropertyType) == proptypeCurrency);
 
 
 		// add to fish class
 		classFish.SetPropertyLinksAdd(propObjectProperties, objPrice.id);
-
-
+		// check
 		// get list of property values
 		ObjIDArray a;
 		classFish.GetPropertyLinks(propObjectProperties, a);
-
-		// check it
+		// check first value
 		int x = a.GetSize();
 		ASSERT(a.GetSize() == 1);
 		ASSERT(a.GetAt(0) == objPrice.id);
+		//, check (add FindItem)
+//		ObjIDArray a;
+//		classFish.GetPropertyLinks(propObjectProperties, a);
+//		ASSERT(a.FindItem(objPrice.id));
 
 
 		// add another property (will exercise different code)
@@ -187,7 +192,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 		classFish.SetPropertyLinksAdd(propObjectProperties, objSize.id);
 
-		// check it
+		// check
 		classFish.GetPropertyLinks(propObjectProperties, a);
 		ASSERT(a.GetSize() == 2);
 		ASSERT(a.GetAt(0) == objPrice.id);
@@ -196,16 +201,32 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// set plecy's price
 		objPlecy.SetPropertyString(objPrice.id, "$1.34");
+		// check
+		//,, hmm, gps returns a lpctstr, so need to wrap a cstring around it. yuck
+//		ASSERT(objPlecy.GetPropertyString(objPrice.id) == "$1.34"); // fails
+//		ASSERT(objPlecy.GetPropertyString(objPrice.id) == CString("$1.34")); // fails
+		ASSERT(CString(objPlecy.GetPropertyString(objPrice.id)) == CString("$1.34"));
+
+		CString strPrice = objPlecy.GetPropertyString(objPrice.id);
+
+
+
 
 
 		// select the fish folder
 		doc.SetCurrentObject(&objFolder);
+		// check
+		ASSERT(doc.GetCurrentObject() == &objFolder);
 
 
 		// add another fish
 		BObject& objGlassfish = BObject::New(doc, classFish.id, "glassfish", objFolder.id);
 
-		// convert the price prop to a string
+		//, check count of fish in db
+		//, no way to do a simple query like that
+
+
+		// convert the price prop to a numbber (instead of currency)
 //		objPrice.SetPropertyData(propPropType, proptypeString);
 //		objGlassfish.SetPropertyString(objPrice.id, "$2.54");
 
@@ -242,7 +263,7 @@ void CTest::DoTests(CNeoMem& app) {
 		BObject& objOctopus = BObject::New(doc, classFish.id);
 		ASSERT(objOctopus.GetName() == CString("New Fish")); // default name
 		ASSERT(objOctopus.GetPropertyString(propName) == CString("New Fish"));
-//,bombs		ASSERT(objOctopus.GetPropertyString(propName) == objOctopus.GetName()); //, note getname is slower though...
+		ASSERT(objOctopus.GetPropertyString(propName) == objOctopus.GetName()); //, note getname is slower though... //,bombed
 		objOctopus.SetName("octopus");
 		ASSERT(objOctopus.GetName(true) == CString("fish \"octopus\"")); // extended name
 
@@ -342,10 +363,11 @@ void CTest::DoTests(CNeoMem& app) {
 //		classFish.AddProperty(&propCategory);
 		// vs
 		classFish.SetPropertyLinksAdd(propObjectProperties, propCategory.id);
-
 		// oh because addproperty is to add a property to the properties collection for that object, in this case a class.
 		// but it's not what determines what properties an object has - that's the propObjectProperties. 
 		// ok, so addproperty should be hidden?
+
+		//, test reading propLinkSource
 
 
 

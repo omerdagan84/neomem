@@ -47,7 +47,7 @@ BOOL BDataString::SetBDataText(const CString& str, BObject* pobjPropertyDef /* =
 
 
 
-LPCTSTR BDataString::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataString::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	return m_strText;

@@ -52,7 +52,7 @@ BOOL BDataFlags::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 
 
 // Get text representation of data into string
 //, this could look for values in a system folder containing flag value objects
-LPCTSTR BDataFlags::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataFlags::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	// Show numbers if in admin, for now
 	if (theApp.m_bAdmin)
@@ -144,7 +144,7 @@ ULONG BDataFlags::StringToFlags(LPCTSTR pszText) {
 
 // Convert a numeric representation of flags to a string
 // static
-LPCTSTR BDataFlags::FlagsToString(ULONG lngFlags) {
+CString BDataFlags::FlagsToString(ULONG lngFlags) {
 	static BDataFlags dat;
 	dat.SetFlags(lngFlags);
 	LPCTSTR pszFlags = dat.GetBDataText(NULL, 0);

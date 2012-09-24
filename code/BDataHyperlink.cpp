@@ -44,7 +44,7 @@ BOOL BDataHyperlink::SetBDataText(const CString& str, BObject* pobjPropertyDef /
 
 
 
-LPCTSTR BDataHyperlink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataHyperlink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	ASSERT_VALID(this);
 	return m_strText;

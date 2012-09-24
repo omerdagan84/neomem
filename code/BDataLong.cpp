@@ -45,7 +45,7 @@ BOOL BDataLong::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 
 // Get text representation of data into string
-LPCTSTR BDataLong::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
+CString BDataLong::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	m_strText.Format("%d", m_lngValue);
 	return m_strText;

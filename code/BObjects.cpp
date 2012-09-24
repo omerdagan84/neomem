@@ -224,9 +224,9 @@ static int CompareObjects(BObject** ppobj1, BObject** ppobj2)
 	int iResult = 0;
 	if (pobj1 && pobj2)
 	{
-		LPCTSTR psz1 = pobj1->GetPropertyString(lngPropertyID);
-		LPCTSTR psz2 = pobj2->GetPropertyString(lngPropertyID);
-		iResult = lstrcmpi(psz1, psz2);
+		CString str1 = pobj1->GetPropertyString(lngPropertyID);
+		CString str2 = pobj2->GetPropertyString(lngPropertyID);
+		iResult = lstrcmpi(str1, str2);
 	}
 	return iResult;
 }

@@ -85,7 +85,7 @@ ULONG BData::GetMemoryUsed(BOOL bRecursive) {
 }
 
 
-LPCTSTR BData::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion) {
+CString BData::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion) {
 	m_strText = "No GetBDataText for this BData class";
 	return m_strText;
 }

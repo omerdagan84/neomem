@@ -485,7 +485,7 @@ void CTreeCtrlEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 			// pszText is nonconst. But for sending data can treat it as const.
 			// Had been using GetBuffer which slowed the program down ENORMOUSLY, 
 			// as it wound up copying the strings.
-			pTVITEM->pszText = const_cast <LPSTR> (pobj->GetPropertyString(propName));
+			pTVITEM->pszText = const_cast <LPSTR> ((LPCTSTR) pobj->GetPropertyString(propName));
 
 		else if (nMask & TVIF_CHILDREN)
 			pTVITEM->cChildren = pobj->HasChildren();
@@ -545,9 +545,9 @@ static int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 		if (bDifferent) return (bFolder1 ? -1 : 1);
 */
 		// Compare strings
-		LPCTSTR psz1 = pobj1->GetPropertyString(propName);
-		LPCTSTR psz2 = pobj2->GetPropertyString(propName);
-		return lstrcmpi(psz1, psz2);
+		CString str1 = pobj1->GetPropertyString(propName);
+		CString str2 = pobj2->GetPropertyString(propName);
+		return lstrcmpi(str1, str2);
 	}
 	return 0;
 }

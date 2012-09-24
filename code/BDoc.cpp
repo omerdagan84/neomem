@@ -2186,14 +2186,14 @@ void BDoc::OnViewToggleContents() {
 	if (pframe) {
 		ASSERT_VALID(pframe);
 		BOOL bViewVisible = pframe->IsViewVisible(idView);
-		LPCTSTR pszShowHide = bViewVisible ? "hide" : "show";
-		LPCTSTR pszViewName = "Contents";
-		LPCTSTR pszClassName = m_pobjCurrent->GetPropertyString(propClassName);
+		CString strShowHide = bViewVisible ? "hide" : "show";
+		CString strViewName = "Contents";
+		CString strClassName = m_pobjCurrent->GetPropertyString(propClassName);
 		CString strMsg;
 		strMsg.Format("This will %s the %s View for all objects of this class (%s). Continue?",
-					pszShowHide,
-					pszViewName,
-					pszClassName
+					strShowHide,
+					strViewName,
+					strClassName
 					);
 		if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO)) {
 			BObject* pobjView = GetObject(idView);

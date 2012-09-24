@@ -1035,7 +1035,8 @@ BOOL BObject::SetDescription(LPCTSTR pszText) {
 // Warning: Since this uses m_strTextCache, you can't string a bunch of these calls 
 // on one line, eg in a CString Format call
 //, Note: bCreateTempBDataIfNotFound is not handled here
-LPCTSTR BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+//xLPCTSTR BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+CString BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -1146,8 +1147,8 @@ LPCTSTR BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfN
 	case propPlainText:
 		{
 			// get plain text version of rtf text contents
-			LPCTSTR pszRtf = GetPropertyString(propRtfText);
-			theApp.ConvertRtfToPlain(pszRtf, m_strTextCache);
+			CString strRtf = GetPropertyString(propRtfText);
+			theApp.ConvertRtfToPlain(strRtf, m_strTextCache);
 			return m_strTextCache;
 		}
 		break;
@@ -1379,8 +1380,8 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 			ASSERT_VALID(pdat);
 
 			// get plain text version of rtf text contents, and store it in the bdata
-			LPCTSTR pszRtf = GetPropertyString(propRtfText);
-			theApp.ConvertRtfToPlain(pszRtf, m_strTextCache);
+			CString strRtf = GetPropertyString(propRtfText);
+			theApp.ConvertRtfToPlain(strRtf, m_strTextCache);
 			pdat->SetBDataText(m_strTextCache, 0, FALSE);
 //			theApp.ConvertRtfToPlain(pszRtf, pdat->m_strText); // protected member
 			
@@ -1736,8 +1737,8 @@ void BObject::DisplayProperties()
 	CPageObjectGeneral pg;
 	sh.m_psh.dwFlags |= PSH_NOAPPLYNOW; // turn off apply button
 	sh.AddPage(&pg);
-	LPCTSTR pszName = GetPropertyString(propName);
-	sh.SetTitle(pszName, PSH_PROPTITLE);
+	CString strName = GetPropertyString(propName);
+	sh.SetTitle(strName, PSH_PROPTITLE);
 	pg.m_pobj = this;
 	if (sh.DoModal() == IDOK)
 	{
@@ -3175,10 +3176,10 @@ BOOL BObject::AddRtf(OBJID lngPropertyID, CString& strRtf)
 	ASSERT_VALID(this);
 
 	// Get text (rtf) of target object.
-	LPCTSTR pszOldText = GetPropertyString(lngPropertyID);
+	CString strOldText = GetPropertyString(lngPropertyID);
 
 	// Add existing text (rtf) to the dummy rtf control.
-	theApp.m_rtf.SetRtf(pszOldText);
+	theApp.m_rtf.SetRtf(strOldText);
 //TRACESTRING("%s\n", pszOldText);
 //TRACETOFILE("_1.rtf", pszOldText);
 
@@ -3453,8 +3454,8 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 				BObject* pobjProp = datProps.GetLinkAt(i);
 				ASSERT_VALID(pobjProp);
 				OBJID lngPropertyID = pobjProp->GetObjectID();
-		//		LPCTSTR psz = this->GetPropertyString(lngPropertyID);
-		//		file.WriteValue(psz); // will add quotes, etc
+		//		CString str = this->GetPropertyString(lngPropertyID);
+		//		file.WriteValue(str); // will add quotes, etc
 				BData* pdat = this->GetPropertyData(lngPropertyID);
 				if (pdat)
 					psz = pdat->GetBDataText(m_pDoc, lngPropertyID);
