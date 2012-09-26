@@ -286,7 +286,8 @@ BDoc* BDoc::GetDoc() {
 //, doesn't work
 // static
 BDoc& BDoc::New() {
-//	AfxGetApp()->OnFileNew(); //, can't access it
+	//, cannot access protected member declared in class 'CWinApp'
+//	theApp.OnFileNew();
 	BDoc* pdoc = BDoc::GetDoc(); // get rid of this fn, if possible? but i think mfc uses it?
 	ASSERT_VALID(pdoc);
 	return *pdoc;
@@ -549,6 +550,13 @@ BObject* BDoc::GetObject(OBJID idObject) {
 		TRACE("! BDoc GetObject - Couldn't find ObjectID %d in document map\n", idObject);
 		return NULL;
 	}
+}
+
+
+//, placeholder for general query fn
+BObjects* BDoc::GetObjects() {
+	BObjects* pobjs = new BObjects();
+	return pobjs;
 }
 
 

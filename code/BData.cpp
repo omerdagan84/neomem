@@ -7,7 +7,8 @@
 #include "BData.h"
 #include "ConstantsDatabase.h"
 
-
+//, bleh
+#include "BDataColumns.h" 
 
 
 #ifdef _DEBUG
@@ -157,3 +158,15 @@ void BData::UIOnMouseMove() {
 	// default: do nothing
 }
 
+
+
+//xBDataColumns* BData::ToColumns() {
+//xBDataColumns BData::ToColumns() {
+BDataColumns& BData::ToColumns() {
+	BDataColumns* pcols = DYNAMIC_DOWNCAST(BDataColumns, this);
+	ASSERT_VALID(pcols);
+//x	BDataColumns cols = *pcols;
+//x	return pcols;
+	return *pcols;
+//x	return cols;
+}

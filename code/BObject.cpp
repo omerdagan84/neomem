@@ -75,18 +75,13 @@ BObject::BObject(BDoc& doc, OBJID idClass, LPCTSTR pszName, OBJID idParent, OBJI
 
 	// default flags
 	// The default flags come from the classdef.
-//	ULONG lngFlags = GetObjectPropLong(idClass, propObjectFlags); 
 	if (lngFlags == 0) {
-
-		//, wow, yuck api code... should be
-//		lngFlags = objClassDef.GetPropertyLong(propObjectFlags);
-		// or something
-//,		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
-		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, pobjClassDef->GetPropertyData(propObjectFlags));
-		if (pdatFlags) {
-			lngFlags = pdatFlags->GetFlags();
-			delete pdatFlags;
-		}
+//x		BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, pobjClassDef->GetPropertyData(propObjectFlags));
+//		if (pdatFlags) {
+//			lngFlags = pdatFlags->GetFlags();
+//			delete pdatFlags;
+//		}
+		lngFlags = pobjClassDef->GetPropertyFlags(propObjectFlags);
 	}
 
 
@@ -1191,6 +1186,57 @@ CString BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfN
 
 
 
+
+
+ULONG BObject::GetPropertyFlags(OBJID idProperty, BOOL bCreateTempBDataIfNotFound)
+{
+	ASSERT_VALID(this);
+	ASSERT_VALID(m_pDoc);
+	
+	// Handle pseudo properties first
+	switch (idProperty)
+	{
+
+	case propFlags:
+		{
+//			return BDataFlags::FlagsToString(m_lngFlags);
+			return m_lngFlags;
+		}
+		break;
+
+
+	default:
+		{
+			// Find the specified property in the property collection, and return its flag value.
+			// For some properties, we want to get a pointer to the class or base class's property object,
+			// ie get the inherited (default) value.
+			BObject* pobjPropertyValue = FindProperty(idProperty, FALSE);
+			if (pobjPropertyValue)
+			{
+				// Rather than calling this routine again, could duplicate the code here.
+				// Also, that way we could pass lngpropid to the bdata gettext, which sometimes needs it.
+				ASSERT_VALID(pobjPropertyValue);
+				if (pobjPropertyValue->GetBData() == NULL)
+				{
+					// No bdata object exists yet - we need to create one appropriate for this class
+					pobjPropertyValue->m_pdat = m_pDoc->CreateBData(pobjPropertyValue->GetClassID());
+				}
+				BDataFlags* pdat = DYNAMIC_DOWNCAST(BDataFlags, pobjPropertyValue->GetBData());
+				ASSERT_VALID(pdat);
+				ULONG lngFlags = pdat->GetFlags();
+				return lngFlags;
+
+			}
+			else
+				// Property was not found
+				return 0;
+		}
+		break;
+	}
+}
+
+
+
 // Set the underlying data for a property.
 // Makes a COPY of the BData object and saves it. 
 // Each property BObject stores its data in the m_pdat member, which is a pointer to a BData object.
@@ -1257,10 +1303,10 @@ BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig,
 
 
 
-// Get a copy of the underlying data object associated with a property.
+// Get a COPY of the underlying data object associated with a property.
 // Be sure to delete the bdata object when done with it. 
 // To modify a value, write it back to the object with SetPropertyData.
-BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound/*=FALSE*/)
+BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -1655,6 +1701,7 @@ void BObject::GetPropertyLinks(OBJID lngPropertyID, ObjIDArray& a)
 			CUIntArray b;
 			int nObjs = pdat->GetObjectIDArray(b);
 
+			//, better way
 			a.SetSize(b.GetSize());
 			for (int i = 0; i < b.GetSize(); i++)
 				a.SetAt(i, b.GetAt(i));
@@ -1899,6 +1946,9 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 	{
 		pobjClass = DYNAMIC_DOWNCAST(BObject, apClasses.GetAt(i));
 		ASSERT_VALID(pobjClass);
+		//, use GetPropertyLinks
+		// hmm, diff syntax though
+		// BDataLink* pdatLinks != pobjClass->GetPropertyLinks(lngpropid, objidarray& a);
 		BDataLink* pdatLink = DYNAMIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 		if (pdatLink)
 		{

@@ -80,14 +80,14 @@ public:
 	// Construction
 	BDoc();
 	virtual ~BDoc();
-
+	static BDoc& New();
+	
 	// Enums
 	enum EncryptionTypes {encryptNone = 0, encryptRC4 = 1};
 	enum CompressionTypes {compressNone = 0, compressLZH = 1};
 
 	// Static (class) methods
 	static BDoc* GetDoc(); // class method used to get pointer to current document object
-	static BDoc& New();
 
 
 	// Operations
@@ -109,6 +109,7 @@ public:
 	ULONG GetNextObjectID(); // get next available objectid
 	CString GetNumberOfObjectsString();
 	BObject* GetObject(OBJID idObject);
+	BObjects* GetObjects();
 	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
 	BObject* GetRoot() { return m_pobjRoot; }; // get the root object of the document
 	ULONG GetSplitterPos() { return m_lngSplitterPos; };

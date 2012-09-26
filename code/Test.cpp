@@ -56,18 +56,12 @@ void CTest::DoTests(CNeoMem& app) {
 		// throw ALL commands at it (esp flaky/suspicious ones), 
 		// then check that it's in proper state.
 
-		//, this won't be necessary - just create new doc and use it
-		app.CloseAllDocuments(FALSE);
-
-
-
-		//, switch to this - 
-//		BDoc& doc = BDoc::New();
-//		BDoc& doc = BDoc::New(pui);
 
 		// if there's app-specific stuff do that separately. 
 		//, mfc weird doctemplate stuff in filenew handler? override it and simplify? 
 		// but also ties in with mru files etc. 
+
+		//, BDoc& doc = BDoc::New(); //, not working because of access to onfilenew
 		app.OnFileNew();
 		BDoc* pdoc = BDoc::GetDoc(); // get rid of this fn, if possible? but i think mfc uses it?
 		ASSERT_VALID(pdoc);
@@ -79,14 +73,9 @@ void CTest::DoTests(CNeoMem& app) {
 //		doc.pui = pui;
 
 
-		//, should take and return handles, not pointers. 
-		//, all props should be optional. have a default location, class, name. 
-
 		//, should document really know about current object? no, that's a ui thing. 
 		// there could be multiple ui's looking at the db. 
 		// it's pretty entwined in BDoc though. 
-
-
 
 
 		// add folder for fish
@@ -94,7 +83,7 @@ void CTest::DoTests(CNeoMem& app) {
 		BFolder& objFolder = BFolder::New(doc, "fish");
 
 		// check class
-		//, yuck - classID?
+		//, propClassID vs propClass??
 		OBJID idClass = objFolder.GetPropertyLink(propClassID);
 		ASSERT(idClass == classFolder);
 
@@ -162,7 +151,7 @@ void CTest::DoTests(CNeoMem& app) {
 //		pdoc->UIAddNewPropertyDef(); //, adapt this
 //,		BObject& objPrice = BPropDef::New(doc, "price", proptypeCurrency, "how much it costs");
 		BObject& objPrice = BObject::New(doc, classProperty, "price", folderProperties);
-		objPrice.SetPropertyLink(propPropertyType, proptypeCurrency);
+		objPrice.SetPropertyLink(propPropertyType, proptypeCurrency);// reqd
 		objPrice.SetPropertyString(propDescription, "how much it costs");
 		// check
 		BObject* pobj = doc.GetObject(objPrice.id);
@@ -173,6 +162,7 @@ void CTest::DoTests(CNeoMem& app) {
 		classFish.SetPropertyLinksAdd(propObjectProperties, objPrice.id);
 		// check
 		// get list of property values
+		//,, should be bobjects, or some lightweight recordset
 		ObjIDArray a;
 		classFish.GetPropertyLinks(propObjectProperties, a);
 		// check first value
@@ -187,7 +177,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// add another property (will exercise different code)
 		BObject& objSize = BObject::New(doc, classProperty, "size", folderProperties);
-		objSize.SetPropertyLink(propPropertyType, proptypeNumber);
+		objSize.SetPropertyLink(propPropertyType, proptypeNumber);//reqd
 		objSize.SetPropertyString(propDescription, "size in inches");
 
 		classFish.SetPropertyLinksAdd(propObjectProperties, objSize.id);
@@ -202,22 +192,23 @@ void CTest::DoTests(CNeoMem& app) {
 		// set plecy's price
 		objPlecy.SetPropertyString(objPrice.id, "$1.34");
 		// check
-		//,, hmm, gps returns a lpctstr, so need to wrap a cstring around it. yuck
-//		ASSERT(objPlecy.GetPropertyString(objPrice.id) == "$1.34"); // fails
-//		ASSERT(objPlecy.GetPropertyString(objPrice.id) == CString("$1.34")); // fails
-		ASSERT(CString(objPlecy.GetPropertyString(objPrice.id)) == CString("$1.34"));
+		ASSERT(objPlecy.GetPropertyString(objPrice.id) == "$1.34"); // works? why? must have good == method
+		ASSERT(objPlecy.GetPropertyString(objPrice.id) == CString("$1.34")); 
 
-		CString strPrice = objPlecy.GetPropertyString(objPrice.id);
-
-
-
-
+		
 
 		// select the fish folder
 		doc.SetCurrentObject(&objFolder);
 		// check
 		ASSERT(doc.GetCurrentObject() == &objFolder);
 
+		// add some text to it
+		{
+		CString str("what am i going to do with all these fish?");
+		//, can't use propPlainText - not symmetric. fix it. 
+		objFolder.SetPropertyString(propRtfText, str);
+		ASSERT(objFolder.GetPropertyString(propRtfText) == str);
+		}
 
 		// add another fish
 		BObject& objGlassfish = BObject::New(doc, classFish.id, "glassfish", objFolder.id);
@@ -225,11 +216,11 @@ void CTest::DoTests(CNeoMem& app) {
 		//, check count of fish in db
 		//, no way to do a simple query like that
 
+		objGlassfish.SetPropertyString(objPrice.id, "$2.54");
 
-		// convert the price prop to a numbber (instead of currency)
-//		objPrice.SetPropertyData(propPropType, proptypeString);
-//		objGlassfish.SetPropertyString(objPrice.id, "$2.54");
-
+		//, convert the price prop to a numbber (instead of currency)
+//		objPrice.SetPropertyLink(propPropType, proptypeNumber); // link or long?
+//		ASSERT(objGlassFish.GetPropertyData();
 
 
 		// import a new icon
@@ -240,6 +231,7 @@ void CTest::DoTests(CNeoMem& app) {
 		BDataIcon* pdatIcon = new BDataIcon();
 		pdatIcon->LoadFile(strFilename);
 		objIcon.SetPropertyData(propIconData, pdatIcon);
+		delete pdatIcon;
 
 		// set fish class icon
 		classFish.SetIconID(objIcon.id);
@@ -251,19 +243,15 @@ void CTest::DoTests(CNeoMem& app) {
 //		BIcon& objIcon = BIcon::New(doc, "Fish", strFilename);
 //		classFish.SetIconID(objIcon.id);
 
-		//, old ideas
-//		hobjIcon = pdoc->UIImportIcon(gpgui, "foo.ico"); // nonexistent file
-//		hobjIcon = pdoc->UIImportIcon(gpgui, "neomem.cnt"); // bad file
-//		hobjIcon = pdoc->UIImportIcon(gpgui, strTestFolder + "Fish.ico");
-//		hobjIcon = doc.UIImportIcon(gpgui, strTestFolder + "Fish.ico", "Fish");
-//		hobjIcon = pdoc->UIImportIcon(gpgui);
-
 
 		// test name functions
+		//, note getname is slower though...
 		BObject& objOctopus = BObject::New(doc, classFish.id);
 		ASSERT(objOctopus.GetName() == CString("New Fish")); // default name
+//		ASSERT(objOctopus.GetName() == "New Fish"); //, bombs - fix
 		ASSERT(objOctopus.GetPropertyString(propName) == CString("New Fish"));
-		ASSERT(objOctopus.GetPropertyString(propName) == objOctopus.GetName()); //, note getname is slower though... //,bombed
+		ASSERT(objOctopus.GetPropertyString(propName) == "New Fish");
+		ASSERT(objOctopus.GetPropertyString(propName) == objOctopus.GetName()); 
 		objOctopus.SetName("octopus");
 		ASSERT(objOctopus.GetName(true) == CString("fish \"octopus\"")); // extended name
 
@@ -276,10 +264,30 @@ void CTest::DoTests(CNeoMem& app) {
 		// add price column
 		// Get column information from object or from object's classdef
 		// this is a copy so we're responsible for it
-		BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
-		pdatColumns->InsertColumn(objPrice.id, &doc);
-		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
-		delete pdatColumns;
+		//, this code is gross - fix in add size column code below
+		// what if gpd().ToColumns() <- does ddcast and assertvalid
+		// BDataColumns* pdatColumns = objFolder.GetPropertyData(propColumnInfoArray).ToColumns();
+		// much nicer
+//		BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
+//		ASSERT_VALID(pdatColumns);
+//		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
+//		delete pdatColumns;
+
+		/*
+		BDataColumns* pdatColumns = objFolder.GetPropertyData(propColumnInfoArray)->ToColumns();
+//		BDataColumns datColumns(*pdatColumns); // bad and weird compile errors
+		BDataColumns& datColumns(*pdatColumns);
+		datColumns.InsertColumn(objPrice.id, &doc);
+		objFolder.SetPropertyData(propColumnInfoArray, &datColumns); // will send hint
+		*/
+
+		// so tc could return a reference to the *pointer
+		//, make GetPropertyColumns
+		BDataColumns& datColumns = objFolder.GetPropertyData(propColumnInfoArray)->ToColumns();
+		datColumns.InsertColumn(objPrice.id, &doc);
+		objFolder.SetPropertyData(propColumnInfoArray, &datColumns); // will send hint
+		//, but need to delete &datColumns? yep. bleh.
+		delete &datColumns;
 
 
 
@@ -304,7 +312,7 @@ void CTest::DoTests(CNeoMem& app) {
 //		cols.InsertColumn(objSize.id,&doc);
 //		folder.PutColumns(cols); //, ugh will delete cols
 
-		// that's hideous.
+		// that's hideous. fix it below
 		
 		// objFolder.GetColumns().InsertColumn(objSize.id,&doc).PutColumns();
 		// better but still ugh
@@ -313,7 +321,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 		BDataColumns& cols = objFolder.GetColumns();
 		cols.InsertColumn(objSize.id, &doc);
-		objFolder.SetColumns(cols); // will delete cols
+		objFolder.SetColumns(cols); //, will delete cols - kindof creepy
 
 
 
@@ -321,6 +329,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// narrow description column (old api)
+		BDataColumns* pdatColumns;
 		pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
 		int nCol = pdatColumns->GetColumnIndex(propDescription);
 		int nWidth = pdatColumns->GetColumnWidth(nCol);
@@ -337,6 +346,10 @@ void CTest::DoTests(CNeoMem& app) {
 		cols.SetColumnWidth(nCol, nWidth * 0.6);
 		objFolder.SetColumns(cols); // sends hint, deletes cols? sets to 0. yeah
 		}
+
+		// don't like using a ref like that - seems weird - better to do BDataColumns?
+		// but then would need to write it back.
+
 
 
 		// int nWidth = obj.GetColumns().GetColumnWidth(nCol);
@@ -370,9 +383,21 @@ void CTest::DoTests(CNeoMem& app) {
 		//, test reading propLinkSource
 
 
-
 		// point the category property to the categories folder
 //		propCategory.SetProperty
+
+
+
+
+
+		// test making copies of bobjects etc
+//		BObject* pobj = doc.GetObject(objPlecy.id);
+//		pobj->GetPropertyLong(
+
+
+
+
+
 
 
 

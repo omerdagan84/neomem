@@ -95,13 +95,14 @@ public:
 	BObject* GetParent() { return m_pobjParent; };
 	int GetParents(BObjects& aParents, BObject* pobjStopAt, BOOL bIncludeThisObject = TRUE, BOOL bIncludeStopObject = FALSE);
 	BObjects* GetProperties() { return m_paProperties; };
-	BData* GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	int GetPropertyDefAlignment();
 	CString GetPropertyDefMachineVersionName();
 	int GetPropertyDefWidth();
 	int GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly, BOOL bThisIsAClass);
 
 	// could use overloading for these, maybe...
+	BData* GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+	ULONG GetPropertyFlags(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 //x	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	OBJID GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 //	ObjIDArray GetPropertyLinks(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const

@@ -19,6 +19,10 @@
 class BObject;
 class BDoc;
 
+//, don't like having these here, but makes other code nicer
+class BDataColumns; //,
+
+
 
 class BData : public CObject {
 
@@ -48,6 +52,13 @@ public:
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 	virtual void UIOnClick();
 	virtual void UIOnMouseMove();
+
+
+//x	BDataColumns* ToColumns();
+//x	BDataColumns ToColumns();
+	BDataColumns& ToColumns();
+
+
 
 	// Attributes
 protected:

@@ -113,10 +113,13 @@ void CPageClassContents::DoDataExchange(CDataExchange* pDX)
 		// If new value <> 0 then set the property value, otherwise leave null to save space!
 		if (bNoAutosort)
 		{
-			BDataFlags* pdatFlags = new BDataFlags;
-			pdatFlags->SetFlags(bNoAutosort ? flagNoAutosort : 0);
-			m_pobj->SetPropertyData(propObjectFlags, pdatFlags, FALSE, FALSE);
-			delete pdatFlags;
+//x			BDataFlags* pdatFlags = new BDataFlags;
+//			pdatFlags->SetFlags(bNoAutosort ? flagNoAutosort : 0);
+//			m_pobj->SetPropertyData(propObjectFlags, pdatFlags, FALSE, FALSE);
+//			delete pdatFlags;
+			BDataFlags datFlags;
+			datFlags.SetFlags(bNoAutosort ? flagNoAutosort : 0);
+			m_pobj->SetPropertyData(propObjectFlags, &datFlags, false, false);
 		}
 	}
 }
@@ -154,13 +157,15 @@ void CPageClassContents::LoadData()
 	m_cboClass.SelectItemData((LPARAM) pobjDefaultClass);
 
 	// Get autosort
-	//, make method
-	BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, m_pobj->GetPropertyData(propObjectFlags));
-	BOOL bNoAutosort = FALSE;
-	if (pdatFlags) {
-		bNoAutosort = pdatFlags->GetFlags() & flagNoAutosort;
-		delete pdatFlags;
-	}
+//x	BDataFlags* pdatFlags = DYNAMIC_DOWNCAST(BDataFlags, m_pobj->GetPropertyData(propObjectFlags));
+//	BOOL bNoAutosort = FALSE;
+//	if (pdatFlags) {
+//		bNoAutosort = pdatFlags->GetFlags() & flagNoAutosort;
+//		delete pdatFlags;
+//	}
+	ULONG lngFlags = m_pobj->GetPropertyFlags(propObjectFlags);
+	BOOL bNoAutosort = lngFlags & flagNoAutosort;
+
 
 	// Since this form gets reloaded, you might wind up with both checks on unless you explicitly set both!
 	m_optSortNo.SetCheck(bNoAutosort ? 1 : 0);
