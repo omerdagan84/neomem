@@ -28,7 +28,7 @@ typedef BObject* HOBJECT;
 // Windows uses OBJECTID for OLE
 typedef ULONG OBJID;
 
-typedef CArray<OBJID> ObjIDArray;
+//xtypedef CArray<OBJID> ObjIDArray;
 
 
 
@@ -100,6 +100,8 @@ public:
 	int GetPropertyDefWidth();
 	int GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly, BOOL bThisIsAClass);
 
+	BDataColumns* GetPropertyColumns(OBJID lngPropertyID);
+
 	// could use overloading for these, maybe...
 	BData* GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	ULONG GetPropertyFlags(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
@@ -107,8 +109,8 @@ public:
 //x	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	OBJID GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 
-//	ObjIDArray GetPropertyLinks(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
-	void GetPropertyLinks(ULONG lngPropertyID, ObjIDArray& aIDs); //, delete this
+//x	ObjIDArray GetPropertyLinks(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+//x	void GetPropertyLinks(ULONG lngPropertyID, ObjIDArray& aIDs); //, delete this
 //	ObjIDArray* GetPropertyLinks(OBJID lngPropertyID);
 	CObArray* GetPropertyLinks(ULONG lngPropertyID);
 
@@ -136,7 +138,7 @@ public:
 	BOOL SetClassID(OBJID lngNewClassID);
 	BOOL SetColumns(BDataColumns& cols);
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
-	BOOL SetData(BData* pData);
+	BOOL SetBData(BData* pData);
 	void SetDoc(BDoc* pdoc) { m_pDoc = pdoc; }; 
 	void SetFlag(ULONG lngFlag, BOOL bValue = TRUE, BOOL bRecurse = FALSE);
 	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; };
@@ -148,6 +150,7 @@ public:
 	// could use overloading for these, maybe... (but then not for the get props. darn)
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+	BOOL SetPropertyLinks(OBJID idProperty, CObArray* pa, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLinksAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLong(OBJID lngPropertyID, ULONG lngValue, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE); //, BOOL bUpdateViews = FALSE);

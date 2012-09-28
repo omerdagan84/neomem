@@ -558,7 +558,7 @@ void BObject::SetName(const CString& strText)
 	if (m_pdat == NULL)
 	{
 		BData* pData = m_pDoc->CreateBData(m_lngClassID);
-		SetData(pData);
+		SetBData(pData);
 	}
 	ASSERT_VALID(m_pdat);
 
@@ -573,7 +573,7 @@ void BObject::SetName(const CString& strText)
 // Sets object's underlying data, i.e. transfer ownership of the BData object to this BObject. 
 // So don't delete pdat after calling this routine!
 // Will dispose of any existing BData object attached to this BObject. 
-BOOL BObject::SetData(BData* pdat)
+BOOL BObject::SetBData(BData* pdat)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pdat); //x fails
@@ -670,6 +670,8 @@ BOOL BObject::RemoveChild(BObject* pobjChild)
 // Will create a property list if none exists.
 // Returns True if successful, False if not.
 // Note: This is only called by FindProperty.
+// Note: If you want to add a property to the class of an object, use something like 
+//   classFish.SetPropertyLinksAdd(propObjectProperties, propCategory.id);
 //, could pass parameters here so can specify position to add new property at
 BOOL BObject::AddProperty(BObject *pobjProperty)
 {
@@ -1237,6 +1239,40 @@ ULONG BObject::GetPropertyFlags(OBJID idProperty, BOOL bCreateTempBDataIfNotFoun
 
 
 
+BDataColumns* BObject::GetPropertyColumns(OBJID idProperty) {
+	ASSERT_VALID(this);
+	ASSERT_VALID(m_pDoc);
+	
+	// Find the specified property in the property collection, and return its value.
+	// For some properties, we want to get a pointer to the class or base class's property object,
+	// ie get the inherited (default) value.
+	BObject* pobjPropertyValue = FindProperty(idProperty, FALSE);
+	if (pobjPropertyValue)
+	{
+		// Rather than calling this routine again, could duplicate the code here.
+		// Also, that way we could pass lngpropid to the bdata gettext, which sometimes needs it.
+		ASSERT_VALID(pobjPropertyValue);
+		if (pobjPropertyValue->GetBData() == NULL)
+		{
+			// No bdata object exists yet - we need to create one appropriate for this class
+			pobjPropertyValue->m_pdat = m_pDoc->CreateBData(pobjPropertyValue->GetClassID());
+		}
+		//, sheesh. anyway to clear this up?
+		BDataColumns* pdat = DYNAMIC_DOWNCAST(BDataColumns, pobjPropertyValue->GetBData());
+		ASSERT_VALID(pdat);
+		BData* pcopy = pdat->CreateCopy();
+		ASSERT_VALID(pcopy);
+		BDataColumns* pcopy2 = DYNAMIC_DOWNCAST(BDataColumns, pcopy);
+		ASSERT_VALID(pcopy2);
+		return pcopy2;
+	}
+	else
+		// Property was not found
+		return NULL;
+}
+
+
+
 // Set the underlying data for a property.
 // Makes a COPY of the BData object and saves it. 
 // Each property BObject stores its data in the m_pdat member, which is a pointer to a BData object.
@@ -1280,7 +1316,7 @@ BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig,
 			// If property doesn't already exist, it will be created.
 			BObject* pobjPropertyValue = FindProperty(lngPropertyID, TRUE);
 			ASSERT_VALID(pobjPropertyValue);
-			pobjPropertyValue->SetData(pdat);
+			pobjPropertyValue->SetBData(pdat);
 			break;
 		}
 	}
@@ -1490,7 +1526,7 @@ BOOL BObject::SetPropertyLong(OBJID lngPropertyID, ULONG lngValue,
 	pdat->SetValue(lngValue);
 
 	// Store the data in the property object
-	pobjPropertyValue->SetData(pdat);
+	pobjPropertyValue->SetBData(pdat);
 
 	// Set document modified flag if specified
 	if (bSetModifiedFlag)
@@ -1573,15 +1609,67 @@ BOOL BObject::SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFl
 		ASSERT_VALID(pdat);
 
 		BObject* pobj = m_pDoc->GetObject(idObj);
-		pdat->SetLink(pobj);
+		pdat->SetLink(pobj); //,, memory leak, no? need to delete what's already there
 
 		// Store the data in the property object
-		pobjPropertyValue->SetData(pdat);
+		pobjPropertyValue->SetBData(pdat);
 	}
 	else {
 		// Link object is zero, so delete the property bobject.
 		DeleteProperty(idProperty, FALSE, FALSE);
 	}
+
+	// Set document modified flag if specified
+	if (bSetModifiedFlag)
+		m_pDoc->SetModifiedFlag(TRUE);
+
+	// Update all views if specified
+	if (bUpdateViews) {
+		CHint h;
+		h.pobjObject = this;
+		h.idProperty = idProperty;
+		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
+	}
+
+	return TRUE;
+}
+
+
+BOOL BObject::SetPropertyLinks(OBJID idProperty, CObArray* pa, BOOL bSetModifiedFlag, BOOL bUpdateViews) {
+	ASSERT_VALID(this);
+	ASSERT(idProperty);
+
+	if (pa) {
+		ASSERT_VALID(pa);
+
+		// Find/create property value bobject
+		BObject* pobjPropertyValue = FindProperty(idProperty, TRUE);
+		ASSERT_VALID(pobjPropertyValue);
+
+
+		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetBData());
+		if (!pdat) {
+			// Create new data object to hold data and initialize it
+			pdat = DYNAMIC_DOWNCAST(BDataLink, m_pDoc->CreateBData(idProperty));
+			pdat->SetMultiple();
+			// store in pobj
+			pobjPropertyValue->SetBData(pdat);
+		}
+		ASSERT(pdat);
+		ASSERT(pdat->IsMultiple()); //, eh
+
+		//, ugh merge bdatalink with bobjects and standardize all this
+		CObArray* paObject = pdat->GetLinkArray();
+		ASSERT_VALID(paObject); // always true? 
+		paObject->Append(*pa);
+
+	}
+	else {
+		// Link object is zero, so delete the property bobject.
+		DeleteProperty(idProperty, FALSE, FALSE);
+	}
+
+
 
 	// Set document modified flag if specified
 	if (bSetModifiedFlag)
@@ -1620,7 +1708,7 @@ BOOL BObject::SetPropertyLinksAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifi
 		pdat = DYNAMIC_DOWNCAST(BDataLink, m_pDoc->CreateBData(idProperty));
 		pdat->SetMultiple();
 		// store in pobj
-		pobjPropertyValue->SetData(pdat);
+		pobjPropertyValue->SetBData(pdat);
 	}
 	ASSERT(pdat);
 	ASSERT(pdat->IsMultiple());
@@ -1680,7 +1768,8 @@ OBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 }
 
 
-
+//x
+/*
 //ObjIDArray BObject::GetPropertyLinks(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 void BObject::GetPropertyLinks(OBJID lngPropertyID, ObjIDArray& a)
 //ObjIDArray* BObject::GetPropertyLinks(OBJID lngPropertyID)
@@ -1721,6 +1810,8 @@ void BObject::GetPropertyLinks(OBJID lngPropertyID, ObjIDArray& a)
 		}
 	}
 }
+*/
+
 
 
 
@@ -3195,6 +3286,7 @@ BOOL BObject::IsMoveValid(BObject *pobjTarget, BOOL bDisplayMessages)
 // Add the specified property to this classdef's list of associated properties, checking
 // first if the property is already included in the class chain.
 // Returns True if successful.
+//, This function is not finished - doesn't look up the class chain etc. 
 BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
@@ -3213,13 +3305,14 @@ BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 		return TRUE;
 	}
 
-	//, duplicate code in 3 places
+	// Note: Add will not add duplicate objects
+
+	SetPropertyLinksAdd(propObjectProperties, lngPropertyID);
+//x
+/*
+	// duplicate code in 3 places
 	// Note: pdat might be zero if class has no properties assigned to it
 	// Note: AddLinkID will not add duplicate objects (just returns -1 if already there)
-	//, just objClass.SetPropertyLinksAdd(propObjectProperties, objPrice.id);?
-//	SetPropertyLinksAdd(propObjectProperties, lngPropertyID);
-
-
 	BDataLink* pdatLinks = DYNAMIC_DOWNCAST(BDataLink, GetPropertyData(propObjectProperties));
 	if (pdatLinks)
 	{
@@ -3235,6 +3328,7 @@ BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 	}
 	SetPropertyData(propObjectProperties, pdatLinks);
 	delete pdatLinks;
+*/
 
 	return TRUE;
 }
@@ -3463,7 +3557,7 @@ AfxMessageBox("copyfrom!"); //x
 	// Copy BData (usually contains name of this BObject)
 	if (pobjSource->GetBData())
 	{
-		this->SetData(pobjSource->GetBData()->CreateCopy());
+		this->SetBData(pobjSource->GetBData()->CreateCopy());
 	}
 
 	// Delete all existing property subobjects in case this object has some that the new object doesn't. 

@@ -295,6 +295,7 @@ void CPageClassProperties::LoadData()
 	delete paCopy;
 
 	// Now check off all propertydefs included in this class, if any
+	//, CObArray* pa = m_pobj->GetPropertyLinks(propObjectProperties);  // pass this to m_lvw. or better, an id array
 	BDataLink* pdatLink = DYNAMIC_DOWNCAST(BDataLink, m_pobj->GetPropertyData(propObjectProperties));
 	if (pdatLink)
 	{

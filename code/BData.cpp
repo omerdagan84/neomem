@@ -8,7 +8,7 @@
 #include "ConstantsDatabase.h"
 
 //, bleh
-#include "BDataColumns.h" 
+//x#include "BDataColumns.h" 
 
 
 #ifdef _DEBUG
@@ -159,7 +159,8 @@ void BData::UIOnMouseMove() {
 }
 
 
-
+//x
+/*
 //xBDataColumns* BData::ToColumns() {
 //xBDataColumns BData::ToColumns() {
 BDataColumns& BData::ToColumns() {
@@ -170,3 +171,4 @@ BDataColumns& BData::ToColumns() {
 	return *pcols;
 //x	return cols;
 }
+*/

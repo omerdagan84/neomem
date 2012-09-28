@@ -168,8 +168,9 @@ void CTest::DoTests(CNeoMem& app) {
 		// check
 		// get list of property values
 		//,, should be bobjects, or some lightweight recordset
-		ObjIDArray a;
-		classFish.GetPropertyLinks(propObjectProperties, a);
+//		ObjIDArray a;
+//		classFish.GetPropertyLinks(propObjectProperties, a);
+		CObArray* pa = classFish.GetPropertyLinks(propObjectProperties);
 
 		// should be ..& a = classFish.GetPropertyLinks(..);
 		// with the reference being to the m_a
@@ -177,9 +178,9 @@ void CTest::DoTests(CNeoMem& app) {
 		// so have to return a pointer. right? 
 
 		// check first value
-		int x = a.GetSize();
-		ASSERT(a.GetSize() == 1);
-		ASSERT(a.GetAt(0) == objPrice.id);
+		int x = pa->GetSize();
+		ASSERT(pa->GetSize() == 1);
+		ASSERT(pa->GetAt(0) == &objPrice);
 		//, check (add FindItem)
 //		ObjIDArray a;
 //		classFish.GetPropertyLinks(propObjectProperties, a);
@@ -193,20 +194,15 @@ void CTest::DoTests(CNeoMem& app) {
 
 		classFish.SetPropertyLinksAdd(propObjectProperties, objSize.id);
 
-		// check
-		a.RemoveAll();
-		classFish.GetPropertyLinks(propObjectProperties, a);
-		ASSERT(a.GetSize() == 2);
-		ASSERT(a.GetAt(0) == objPrice.id);
-		ASSERT(a.GetAt(1) == objSize.id);
+		pa->RemoveAll();
+		delete pa;
 
-		// check again - newer interface
-		CObArray* pa = classFish.GetPropertyLinks(propObjectProperties);
+		// check
+		pa = classFish.GetPropertyLinks(propObjectProperties);
 		ASSERT(pa->GetSize() == 2);
 		ASSERT(pa->GetAt(0) == &objPrice);
 		ASSERT(pa->GetAt(1) == &objSize);
 		delete pa;
-
 
 
 		// set plecy's price
@@ -238,7 +234,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 		objGlassfish.SetPropertyString(objPrice.id, "$2.54");
 
-		//, convert the price prop to a numbber (instead of currency)
+		//, convert the price prop to a number (instead of currency)
 //		objPrice.SetPropertyLink(propPropType, proptypeNumber); // link or long?
 //		ASSERT(objGlassFish.GetPropertyData();
 
@@ -259,7 +255,7 @@ void CTest::DoTests(CNeoMem& app) {
 		// eg classFish.SetObjectIcon or something. 
 		// ie something to mimic the user command. 
 
-		//, next
+		//, next?
 //		BIcon& objIcon = BIcon::New(doc, "Fish", strFilename);
 //		classFish.SetIconID(objIcon.id);
 
@@ -301,6 +297,8 @@ void CTest::DoTests(CNeoMem& app) {
 		objFolder.SetPropertyData(propColumnInfoArray, &datColumns); // will send hint
 		*/
 
+//x
+/*
 		// so tc could return a reference to the *pointer
 		//, make GetPropertyColumns
 		BDataColumns& datColumns = objFolder.GetPropertyData(propColumnInfoArray)->ToColumns();
@@ -308,14 +306,21 @@ void CTest::DoTests(CNeoMem& app) {
 		objFolder.SetPropertyData(propColumnInfoArray, &datColumns); // will send hint
 		//, but need to delete &datColumns? yep. bleh.
 		delete &datColumns;
+*/
 
-
-
+		//, hmm, but will always be the same propertyid? hence GetColumns fn?
+		{
+		BDataColumns* pdatColumns = objFolder.GetPropertyColumns(propColumnInfoArray);
+		pdatColumns->InsertColumn(objPrice.id, &doc);
+		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
+		delete pdatColumns;
+		}
 
 		// add size column (new api)
 
 		//, should be one line...
 //		objFolder.GetColumns().AddColumn(objPrice.id);
+
 		// want to say, at highest level
 		// objFolder.AddColumn(objPrice.id);
 
@@ -337,34 +342,43 @@ void CTest::DoTests(CNeoMem& app) {
 		// objFolder.GetColumns().InsertColumn(objSize.id,&doc).PutColumns();
 		// better but still ugh
 
+//x
 		// a little better api. still confusing w/ delete &cols hidden
+//		{
+//		BDataColumns& cols = objFolder.GetColumns();
+//		cols.InsertColumn(objSize.id, &doc);
+//		objFolder.SetColumns(cols); //, will delete cols - kindof creepy
+//		}
 
-		BDataColumns& cols = objFolder.GetColumns();
-		cols.InsertColumn(objSize.id, &doc);
-		objFolder.SetColumns(cols); //, will delete cols - kindof creepy
-
-
+		{
+		BDataColumns* pdatColumns = objFolder.GetPropertyColumns(propColumnInfoArray);
+		pdatColumns->InsertColumn(objSize.id, &doc, 100);
+		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
+		delete pdatColumns;
+		}
 
 
 
 
 		// narrow description column (old api)
+		{
 		BDataColumns* pdatColumns;
 		pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, objFolder.GetPropertyData(propColumnInfoArray));
 		int nCol = pdatColumns->GetColumnIndex(propDescription);
 		int nWidth = pdatColumns->GetColumnWidth(nCol);
-		pdatColumns->SetColumnWidth(nCol, nWidth * 0.60);
+		pdatColumns->SetColumnWidth(nCol, int(nWidth * 0.60));
 		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // sends hint
 		delete pdatColumns;
+		}
 
-		// narrow price column (nicer api)
+		// narrow price column (nicer api, but...)
 		{
 //		cols = objFolder.GetColumns(); //, bombs - redefining a ref? apparently so, but really weird message about =( operator in bdata
 		BDataColumns& cols = objFolder.GetColumns(); 
-		nCol = cols.GetColumnIndex(objPrice.id);
-		nWidth = cols.GetColumnWidth(nCol);
-		cols.SetColumnWidth(nCol, nWidth * 0.6);
-		objFolder.SetColumns(cols); // sends hint, deletes cols? sets to 0. yeah
+		int nCol = cols.GetColumnIndex(objPrice.id);
+		int nWidth = cols.GetColumnWidth(nCol);
+		cols.SetColumnWidth(nCol, int(nWidth * 0.6));
+		objFolder.SetColumns(cols); // sends hint, deletes cols? sets to 0. yeah  //, eh, creepy
 		}
 
 		// don't like using a ref like that - seems weird - better to do BDataColumns?
@@ -381,26 +395,52 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// make a category for fish
-		BClass& classCategory = BClass::New(doc, "Category (Fish)");
+		BClass& classCategory = BClass::New(doc, "Category");
 		BFolder& folderCategories = BFolder::New(doc, "Categories", rootUser);
-		BObject& objCatSaltwater = BObject::New(doc, classCategory.id, "Saltwater", folderCategories.id);
-		BObject& objCatFreshwater = BObject::New(doc, classCategory.id, "Freshwater", folderCategories.id);
+		BObject& objSalt = BObject::New(doc, classCategory.id, "Saltwater", folderCategories.id);
+		BObject& objFresh = BObject::New(doc, classCategory.id, "Freshwater", folderCategories.id);
 		
-
+		// make category property
 		BObject& propCategory = BObject::New(doc, classProperty, "Category", folderProperties);
 		propCategory.SetPropertyLink(propPropertyType, proptypeLink); //, note, this is REQUIRED, but not enforced here... should be
 		propCategory.SetPropertyString(propDescription, "oh, fish category you know");
-		propCategory.SetPropertyLink(propLinkSource, folderCategories.id);
+		propCategory.SetPropertyLink(propLinkSource, folderCategories.id); // where to find values
 
-
-
-		//,
-//		classFish.AddProperty(&propCategory);
-		// vs
+		// add property to the fish class
 		classFish.SetPropertyLinksAdd(propObjectProperties, propCategory.id);
-		// oh because addproperty is to add a property to the properties collection for that object, in this case a class.
-		// but it's not what determines what properties an object has - that's the propObjectProperties. 
-		// ok, so addproperty should be hidden?
+		// note, there is 
+//		objTest.ClassDefAddProperty(objSize.id);
+		// which does the same thing, because it's not finished. contains just:
+//		SetPropertyLinksAdd(propObjectProperties, lngPropertyID);
+
+
+		// add property to fish folder
+		{
+		BDataColumns* pdatColumns = objFolder.GetPropertyColumns(propColumnInfoArray);
+		pdatColumns->InsertColumn(propCategory.id, &doc, 0, 2);
+		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
+		delete pdatColumns; //, bombs
+		}
+
+		// add squid
+		BObject& objSquid = BObject::New(doc, classFish.id, "squid", objFolder.id);
+
+		// set single and multiple values 
+		{
+		objPlecy.SetPropertyLink(propCategory.id, objFresh.id);
+		objGlassfish.SetPropertyLink(propCategory.id, objFresh.id);
+
+		CObArray a;
+		a.Add(&objFresh);
+		a.Add(&objSalt);
+		objOctopus.SetPropertyLinks(propCategory.id, &a);
+
+//,		objSquid.SetPropertyLinksAdd(propCategory.id, objFresh.id);
+//,		objSquid.SetPropertyLinksAdd(propCategory.id, objSalt.id);
+		}
+
+
+
 
 
 		// check GetPropertyLinks and SetPropertyLinksAdd
@@ -415,6 +455,7 @@ void CTest::DoTests(CNeoMem& app) {
 		ASSERT(pa->GetCount() == 1);
 		ASSERT(pa->GetAt(0) == &objSize);
 		delete pa;
+		objTest.DeleteObject();
 		}
 
 
@@ -429,15 +470,12 @@ void CTest::DoTests(CNeoMem& app) {
 		ASSERT(pa->GetCount() == 1);
 		ASSERT(pa->GetAt(0) == &objSize);
 		delete pa;
+		objTest.DeleteObject();
 		}
 
 
 
-		//, test reading propLinkSource
 
-
-		// point the category property to the categories folder
-//		propCategory.SetProperty
 
 
 

@@ -680,12 +680,10 @@ void CViewProperties::OnCmdAddProperty()
 		ASSERT_VALID(pobjProperty);
 
 		// Add the selected property to the object's classdef
-//		BDataLink* pdat = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
-//		BDataLink* pdatCopy = STATIC_DOWNCAST(BDataLink, pdat->CreateCopy());
-//		pdatCopy->AddLink(pobjProperty);
-//		pobjClass->SetPropertyData(propObjectProperties, pdatCopy);
-//		delete pdatCopy;
-		//, duplicate code in 3 places
+		pobjClass->SetPropertyLinksAdd(propObjectProperties, lngPropertyID);
+//x
+/*
+		// duplicate code in 3 places
 		BDataLink* pdatLinks = STATIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 		if (pdatLinks)
 		{
@@ -701,6 +699,7 @@ void CViewProperties::OnCmdAddProperty()
 		}
 		pobjClass->SetPropertyData(propObjectProperties, pdatLinks);
 		delete pdatLinks;
+*/
 
 		// Redisplay this view using CViewEx's single view update method
 		UpdateView(NULL, hintLoad, m_pobjCurrent);

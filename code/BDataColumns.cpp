@@ -184,7 +184,7 @@ const int BDataColumns::GetColumnCount()
 
 
 // Insert the specified PropertyID at the specified location, or at the end if none specified.
-// Returns a reference to the new ColumnInfo object.
+// Returns a reference to the new ColumnInfo object, as stored in the array. 
 ColumnInfo& BDataColumns::InsertColumn(ULONG lngPropertyID, BDoc* pDoc, int nWidth /* = 0 */, int nCol /* = -1 */)
 {
 	ASSERT(lngPropertyID);

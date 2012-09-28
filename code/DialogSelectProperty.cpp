@@ -196,8 +196,11 @@ void CDialogSelectProperty::OnBtnAdd()
 			BObject* pobjClass = (BObject*) m_cboClass.GetSelectedItemData();
 			if (pobjClass)
 			{
+				pobjClass->SetPropertyLinksAdd(propObjectProperties, pobjNew->id);
+//x
+/*
 				// this will not compile if not bdatalink ? 
-				//, duplicate code in 3 places!
+				// duplicate code in 3 places!
 				BDataLink* pdatLinks = DYNAMIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
 				if (pdatLinks)
 				{
@@ -213,6 +216,7 @@ void CDialogSelectProperty::OnBtnAdd()
 				}
 				pobjClass->SetPropertyData(propObjectProperties, pdatLinks);
 				delete pdatLinks;
+*/
 			}
 		}
 

@@ -41,8 +41,10 @@ public:
 	void ClearMemory();
 	BOOL CreateCopyFrom(BDataLink* pdatSource);
 	void CreateMultipleArray();
+
 	int AddLink(BObject* pobj);
 	int AddLinkID(ULONG lngObjectID, BDoc* pDoc);
+//,	Append
 	BOOL FindReferences(ULONG lngObjectID);
 	BObject* GetLink();
 	BObject* GetLinkAt(int nIndex);

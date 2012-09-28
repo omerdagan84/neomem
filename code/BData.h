@@ -20,7 +20,7 @@ class BObject;
 class BDoc;
 
 //, don't like having these here, but makes other code nicer
-class BDataColumns; //,
+//xclass BDataColumns; //,
 
 
 
@@ -56,7 +56,7 @@ public:
 
 //x	BDataColumns* ToColumns();
 //x	BDataColumns ToColumns();
-	BDataColumns& ToColumns();
+//x	BDataColumns& ToColumns();
 
 
 
