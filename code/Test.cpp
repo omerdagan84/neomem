@@ -13,6 +13,11 @@
 #include "BClass.h"
 
 
+
+#include <iostream>
+using namespace std;
+
+
 //#include "DSource.h"
 
 
@@ -165,6 +170,12 @@ void CTest::DoTests(CNeoMem& app) {
 		//,, should be bobjects, or some lightweight recordset
 		ObjIDArray a;
 		classFish.GetPropertyLinks(propObjectProperties, a);
+
+		// should be ..& a = classFish.GetPropertyLinks(..);
+		// with the reference being to the m_a
+		// but... we want COPIES of data, not the original.
+		// so have to return a pointer. right? 
+
 		// check first value
 		int x = a.GetSize();
 		ASSERT(a.GetSize() == 1);
@@ -173,7 +184,7 @@ void CTest::DoTests(CNeoMem& app) {
 //		ObjIDArray a;
 //		classFish.GetPropertyLinks(propObjectProperties, a);
 //		ASSERT(a.FindItem(objPrice.id));
-
+//		delete pa;
 
 		// add another property (will exercise different code)
 		BObject& objSize = BObject::New(doc, classProperty, "size", folderProperties);
@@ -183,10 +194,19 @@ void CTest::DoTests(CNeoMem& app) {
 		classFish.SetPropertyLinksAdd(propObjectProperties, objSize.id);
 
 		// check
+		a.RemoveAll();
 		classFish.GetPropertyLinks(propObjectProperties, a);
 		ASSERT(a.GetSize() == 2);
 		ASSERT(a.GetAt(0) == objPrice.id);
 		ASSERT(a.GetAt(1) == objSize.id);
+
+		// check again - newer interface
+		CObArray* pa = classFish.GetPropertyLinks(propObjectProperties);
+		ASSERT(pa->GetSize() == 2);
+		ASSERT(pa->GetAt(0) == &objPrice);
+		ASSERT(pa->GetAt(1) == &objSize);
+		delete pa;
+
 
 
 		// set plecy's price
@@ -372,6 +392,8 @@ void CTest::DoTests(CNeoMem& app) {
 		propCategory.SetPropertyString(propDescription, "oh, fish category you know");
 		propCategory.SetPropertyLink(propLinkSource, folderCategories.id);
 
+
+
 		//,
 //		classFish.AddProperty(&propCategory);
 		// vs
@@ -379,6 +401,37 @@ void CTest::DoTests(CNeoMem& app) {
 		// oh because addproperty is to add a property to the properties collection for that object, in this case a class.
 		// but it's not what determines what properties an object has - that's the propObjectProperties. 
 		// ok, so addproperty should be hidden?
+
+
+		// check GetPropertyLinks and SetPropertyLinksAdd
+		{
+		BObject& objTest = BObject::New(doc, classClass, "test", objFolder.id);
+		CObArray* pa = objTest.GetPropertyLinks(propObjectProperties); // could be null
+		ASSERT(pa == NULL);
+		delete pa;
+		objTest.SetPropertyLinksAdd(propObjectProperties, objSize.id);
+		pa = objTest.GetPropertyLinks(propObjectProperties);
+		ASSERT(pa);
+		ASSERT(pa->GetCount() == 1);
+		ASSERT(pa->GetAt(0) == &objSize);
+		delete pa;
+		}
+
+
+		// check ClassDefAddProperty method
+		{
+		BObject& objTest = BObject::New(doc, classClass, "test", objFolder.id);
+		CObArray* pa = objTest.GetPropertyLinks(propObjectProperties); // could be null
+		ASSERT(pa == NULL);
+		delete pa;
+		objTest.ClassDefAddProperty(objSize.id);
+		pa = objTest.GetPropertyLinks(propObjectProperties);
+		ASSERT(pa->GetCount() == 1);
+		ASSERT(pa->GetAt(0) == &objSize);
+		delete pa;
+		}
+
+
 
 		//, test reading propLinkSource
 

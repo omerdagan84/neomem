@@ -103,10 +103,15 @@ public:
 	// could use overloading for these, maybe...
 	BData* GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	ULONG GetPropertyFlags(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+
 //x	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 	OBJID GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
+
 //	ObjIDArray GetPropertyLinks(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
-	void GetPropertyLinks(ULONG lngPropertyID, ObjIDArray& aIDs);
+	void GetPropertyLinks(ULONG lngPropertyID, ObjIDArray& aIDs); //, delete this
+//	ObjIDArray* GetPropertyLinks(OBJID lngPropertyID);
+	CObArray* GetPropertyLinks(ULONG lngPropertyID);
+
 	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 //x	LPCTSTR GetPropertyString(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
 	CString GetPropertyString(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);

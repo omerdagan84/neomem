@@ -1607,14 +1607,14 @@ BOOL BObject::SetPropertyLinksAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifi
 	ASSERT(idObj);
 
 	// Find/create property value bobject
-	//, make a BPropValue class? 
+	//,, make a BPropValue class? 
 	BObject* pobjPropertyValue = FindProperty(idProperty, TRUE);
 	ASSERT_VALID(pobjPropertyValue);
 
 	// similarly the bdata may or may not exist yet, but there's
 	// no similar function to get/add one?
 
-//	pobjPropertyValue->SetPropertyData(idProperty, pdat
+//x	pobjPropertyValue->SetPropertyData(idProperty, pdat
 	BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetBData());
 	if (!pdat) {
 		pdat = DYNAMIC_DOWNCAST(BDataLink, m_pDoc->CreateBData(idProperty));
@@ -1683,6 +1683,7 @@ OBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFo
 
 //ObjIDArray BObject::GetPropertyLinks(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
 void BObject::GetPropertyLinks(OBJID lngPropertyID, ObjIDArray& a)
+//ObjIDArray* BObject::GetPropertyLinks(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
@@ -1698,17 +1699,60 @@ void BObject::GetPropertyLinks(OBJID lngPropertyID, ObjIDArray& a)
 			ASSERT_VALID(pdat);
 			ASSERT(pdat->IsMultiple());
 
+//			ObjIDArray* pida = new ObjIDArray();
+//			CObArray* pp = pdat->GetLinkArray();
+
 			CUIntArray b;
 			int nObjs = pdat->GetObjectIDArray(b);
+			//, use this and delete the above method
+//			CObArray* pp = pdat->GetLinkArray();
 
-			//, better way
+			//, better way?
 			a.SetSize(b.GetSize());
 			for (int i = 0; i < b.GetSize(); i++)
 				a.SetAt(i, b.GetAt(i));
+
+//			pida->SetSize(pp->GetSize());
+//			for (int i = 0; i < pp->GetSize(); i++)
+//				pida->SetAt(i, pp->GetAt(i));
+
+//			return pida;
 //			return a;
 		}
 	}
 }
+
+
+
+// Returns COPY of link array - caller must delete it
+CObArray* BObject::GetPropertyLinks(ULONG lngPropertyID) {
+	ASSERT_VALID(this);
+	ASSERT(lngPropertyID);
+//x	ASSERT(bCreateTempBDataIfNotFound == FALSE); // not used
+
+	BObject* pobjPropertyValue = FindProperty(lngPropertyID, FALSE);
+	if (pobjPropertyValue) {
+		ASSERT_VALID(pobjPropertyValue);
+		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobjPropertyValue->GetBData());
+		if (pdat) {
+			ASSERT_VALID(pdat);
+			ASSERT(pdat->IsMultiple());
+
+			CObArray* plocal = pdat->GetLinkArray();
+			ASSERT_VALID(plocal);
+
+			// MFC: no copy constructor? gives weird cobject errors
+//			CObArray* pcopy = new CObArray(*plocal);
+			CObArray* pcopy = new CObArray();
+			pcopy->Append(*plocal);
+			return pcopy;
+		}
+	}
+	return NULL;
+}
+
+
+
 
 
 
@@ -1946,10 +1990,14 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 	{
 		pobjClass = DYNAMIC_DOWNCAST(BObject, apClasses.GetAt(i));
 		ASSERT_VALID(pobjClass);
-		//, use GetPropertyLinks
-		// hmm, diff syntax though
-		// BDataLink* pdatLinks != pobjClass->GetPropertyLinks(lngpropid, objidarray& a);
+
+		CObArray* pa = pobjClass->GetPropertyLinks(propObjectProperties);
+		if (pa)
+			aPropertyDefs.Append(*pa);
+//x
+/*
 		BDataLink* pdatLink = DYNAMIC_DOWNCAST(BDataLink, pobjClass->GetPropertyData(propObjectProperties));
+//		CObArray* pa = pobjClass->GetPropertyLinks(propObjectProperties);
 		if (pdatLink)
 		{
 			ASSERT_VALID(pdatLink);
@@ -1964,6 +2012,7 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 			}
 			delete pdatLink;
 		}
+		*/
 	}
 
 	// Add any custom properties not in the preceding collections to the end.
@@ -3039,12 +3088,14 @@ BObject* BObject::GetClassObject()
 }
 
 
+//x provisional
 // user must delete returned object
 // eg 
 // BDataColumns& cols = obj.GetColumns();
 //..
 // delete &cols;
 //, crummy - fix that
+// at least convert to pointer return
 BDataColumns& BObject::GetColumns() {
 	ASSERT_VALID(this);
 	BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, this->GetPropertyData(propColumnInfoArray));
@@ -3144,14 +3195,15 @@ BOOL BObject::IsMoveValid(BObject *pobjTarget, BOOL bDisplayMessages)
 // Add the specified property to this classdef's list of associated properties, checking
 // first if the property is already included in the class chain.
 // Returns True if successful.
-//, just objClass.SetPropertyLinksAdd(propObjectProperties, objPrice.id);?
 BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
-	// First see if the property is associated with any parent classes - if so we don't need to add it to
+
+	//, First see if the property is associated with any parent classes - if so we don't need to add it to
 	// the object's classdef.
 //	CObArray aProps;
 //	int nProps = GetPropertyDefs(aProps, TRUE, TRUE);
+
 	//,, temporary - just hardcode the inherited props for now - simpler and faster at the moment.
 	switch (lngPropertyID)
 	{
@@ -3164,6 +3216,10 @@ BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 	//, duplicate code in 3 places
 	// Note: pdat might be zero if class has no properties assigned to it
 	// Note: AddLinkID will not add duplicate objects (just returns -1 if already there)
+	//, just objClass.SetPropertyLinksAdd(propObjectProperties, objPrice.id);?
+//	SetPropertyLinksAdd(propObjectProperties, lngPropertyID);
+
+
 	BDataLink* pdatLinks = DYNAMIC_DOWNCAST(BDataLink, GetPropertyData(propObjectProperties));
 	if (pdatLinks)
 	{
@@ -3179,6 +3235,7 @@ BOOL BObject::ClassDefAddProperty(OBJID lngPropertyID)
 	}
 	SetPropertyData(propObjectProperties, pdatLinks);
 	delete pdatLinks;
+
 	return TRUE;
 }
 
