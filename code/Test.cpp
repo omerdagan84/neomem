@@ -18,7 +18,23 @@
 using namespace std;
 
 
+
 //#include "DSource.h"
+
+
+
+
+
+
+
+//, ui stuff
+#include "FrameChild.h"
+
+
+
+
+
+
 
 
 
@@ -430,16 +446,16 @@ void CTest::DoTests(CNeoMem& app) {
 		objPlecy.SetPropertyLink(propCategory.id, objFresh.id);
 		objGlassfish.SetPropertyLink(propCategory.id, objFresh.id);
 
+		// add array
 		CObArray a;
 		a.Add(&objFresh);
 		a.Add(&objSalt);
 		objOctopus.SetPropertyLinks(propCategory.id, &a);
 
-//,		objSquid.SetPropertyLinksAdd(propCategory.id, objFresh.id);
-//,		objSquid.SetPropertyLinksAdd(propCategory.id, objSalt.id);
+		// simpler
+		objSquid.SetPropertyLinksAdd(propCategory.id, objFresh.id);
+		objSquid.SetPropertyLinksAdd(propCategory.id, objSalt.id);
 		}
-
-
 
 
 
@@ -476,6 +492,20 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
+		//, search!
+		// keep taking code out of ui into bdoc
+
+		// select the search view
+		CFrameChild* pframe = theApp.GetChildFrame();
+		pframe->ShowView(viewSearch);
+//,?		theApp.ShowView(viewSearch);
+		//. move query/search code into bdoc.
+
+
+
+		// (moving code from ui down to bdoc)
+
+
 
 
 
@@ -484,14 +514,6 @@ void CTest::DoTests(CNeoMem& app) {
 		// test making copies of bobjects etc
 //		BObject* pobj = doc.GetObject(objPlecy.id);
 //		pobj->GetPropertyLong(
-
-
-
-
-
-
-
-
 
 		// save doc
 		//, pass filename here

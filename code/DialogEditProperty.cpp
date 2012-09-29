@@ -312,7 +312,6 @@ void CDialogEditProperty::FillLinkSourceCombo()
 		datValidClasses.AddLinkID(classFolder, m_pDoc);
 		datValidClasses.AddLinkID(classHome, m_pDoc);
 		BObject* pobjStart = m_pDoc->GetObject(rootMain);
-		ASSERT_VALID(pobjStart);
 		BOOL bIncludeStart = theApp.m_bAdmin ? TRUE : FALSE;
 		m_cboLinkSource.AddObjects(pobjStart, theApp.m_lngExcludeFlags, bIncludeStart, TRUE, 0, &datValidClasses);
 	}

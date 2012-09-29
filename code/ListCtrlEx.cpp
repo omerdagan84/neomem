@@ -714,7 +714,7 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 				pobjPropertyDef = (BObject*) GetItemData(lplvcd->nmcd.dwItemSpec);
 			else
 				// Normal contents view
-				pobjPropertyDef = m_pDoc->GetObject(lngPropertyID);
+				pobjPropertyDef = m_pDoc->GetObjectNull(lngPropertyID);
 
 			// Note: Had to put this if statement here because if property view wasn't entirely visible,
 			// getitemdata was returning 0!
@@ -2645,7 +2645,7 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 	// Let user pick a property if not specified
 	if (idProperty == 0) {
 		CDialogSelectProperty dlg;
-		dlg.m_pobjDefaultClass = m_pDoc->GetObject(idDefaultClass);
+		dlg.m_pobjDefaultClass = m_pDoc->GetObjectNull(idDefaultClass);
 		if (dlg.DoModal() == IDCANCEL)
 			return -1;
 		idProperty = dlg.m_lngSelectedID;
@@ -2669,7 +2669,7 @@ int CListCtrlEx::InsertColumnAsk(OBJID idProperty /*=0*/, int nCol /*=-1*/, BObj
 		m_bColumnsChanged = TRUE;
 
 		// Add column to header/listview control
-		BObject* pobjPropDef = m_pDoc->GetObject(idProperty);
+		BObject* pobjPropDef = m_pDoc->GetObjectNull(idProperty);
 		// 1.1d make sure we actually have an object!
 		if (pobjPropDef)  {
 
@@ -2849,7 +2849,6 @@ BOOL CListCtrlEx::RemoveColumn(int nCol /* = -1 */) {
 	// blam - the name column is gone!
 	CString strMsg;
 	BObject* pobjProp = m_pDoc->GetObject(lngPropID);
-	ASSERT_VALID(pobjProp);
 	strMsg.Format("Are you sure you want to remove the column \"%s\" from this view?\nNote: This will not delete the property from your file, nor will it remove any property values stored in this column.", pobjProp->GetPropertyString(propName));
 	if (AfxMessageBox(strMsg, MB_ICONQUESTION | MB_YESNO) == IDNO)
 		return FALSE;
@@ -3128,7 +3127,7 @@ void CListCtrlEx::SortByProperty(ULONG lngPropertyID /* = 0 */, int iDir /* = 0 
 
 	// Get property type
 	OBJID idPropertyType = proptypeString; // default is string
-	BObject* pobjPropDef = m_pDoc->GetObject(lngPropertyID);
+	BObject* pobjPropDef = m_pDoc->GetObjectNull(lngPropertyID);
 	if (pobjPropDef)
 	{
 		ASSERT_VALID(pobjPropDef);
@@ -3312,7 +3311,6 @@ void CListCtrlEx::EnableAllProperties() {
 
 	// Clear all properties' flags
 	BObject* pobjProperties = m_pDoc->GetObject(folderProperties);
-	ASSERT_VALID(pobjProperties);
 	pobjProperties->SetFlag(flagDisabled, FALSE, TRUE);
 }
 
@@ -3331,7 +3329,6 @@ void CListCtrlEx::DisableVisibleProperties() {
 	for (int i = 0; i < nColumns; i++) {
 		ULONG lngPropertyID = GetColumnPropertyID(i);
 		BObject* pobjProp = m_pDoc->GetObject(lngPropertyID);
-		ASSERT_VALID(pobjProp);
 		pobjProp->SetFlag(flagDisabled, TRUE, FALSE);
 	}	
 }

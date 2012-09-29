@@ -237,7 +237,6 @@ void CViewTabs::OnInitialUpdate()
 //		else
 //			pobjStart = pDoc->GetObject(rootUser);
 		pobjStart = m_pDoc->GetRoot();
-		ASSERT_VALID(pobjStart);
 
 		// Load the treeview with the specified root item.
 		// The hintLoadTree handler also selects the current object (pdoc->m_pobjCurrent).
@@ -334,7 +333,6 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 						// Save view info to the object's class
 						ULONG lngClassID = pobj->GetClassID();
 						BObject* pobjClass = m_pDoc->GetObject(lngClassID);
-						ASSERT_VALID(pobjClass);
 						pobjClass->SetPropertyData(propObjectViewArrangement, m_pdatViews, FALSE, FALSE);
 //					}
 
@@ -684,8 +682,6 @@ void CViewTabs::ShowTab(int nTab)
 		pView->EnableWindow(TRUE); //. test
 
 		// Send the hintSelect current object to the view to update it
-		//. test
-//x		BObject* pobjCurrent = DYNAMIC_DOWNCAST(BDoc, GetDocument())->GetCurrentObject();
 		BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 		pView->UpdateView(this, hintSelect, pobjCurrent);
 
@@ -734,7 +730,6 @@ void CViewTabs::ShowTab(int nTab)
 			if (iView != 0)
 			{
 				BObject* pobjView = m_pDoc->GetObject(lngViewID);
-				ASSERT_VALID(pobjView);
 //				pView->m_strTitleBar = pobjView->GetPropertyString(propName);
 //				pView->SetTitleBarName(pobjView->GetPropertyString(propName));
 				//,,, bad - this is the third place this code exists - encapsulate it!
@@ -1457,7 +1452,6 @@ void CViewTabs::OnTabRightClick(NMHDR* pNotify, LRESULT* result)
 
 			// Add show menu items for all views available
 			BObject* pobjViews = m_pDoc->GetObject(folderViews);
-			ASSERT_VALID(pobjViews);
 			BObjects* paChildren = pobjViews->m_paChildren->CreateCopy();
 			ASSERT_VALID(paChildren);
 			paChildren->Sort(propName);
@@ -1509,7 +1503,6 @@ void CViewTabs::OnTabRightClick(NMHDR* pNotify, LRESULT* result)
 					{
 						ASSERT(lngViewID);
 						BObject* pobjView = m_pDoc->GetObject(lngViewID);
-						ASSERT_VALID(pobjView);
 						CString strName = CString("Hide ") + pobjView->GetPropertyString(propName) + CString(" View");
 						//, make macros to convert back and forth!
 						UINT nCommandID = lngViewID - viewData + ID_VIEW_DATA;

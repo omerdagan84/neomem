@@ -192,7 +192,6 @@ ColumnInfo& BDataColumns::InsertColumn(ULONG lngPropertyID, BDoc* pDoc, int nWid
 
 	// Look up the property def object
 	BObject* pobjPropDef = pDoc->GetObject(lngPropertyID);
-	ASSERT_VALID(pobjPropDef);
 
 	// Create a new ColumnInfo object
 	ColumnInfo ci;
@@ -444,7 +443,7 @@ BObject* BDataColumns::GetPropertyDef(int nCol, BDoc* pDoc)
 		{
 			ULONG lngPropertyID = rci.m_lngPropertyID;
 			ASSERT(lngPropertyID);
-			rci.m_pobjPropertyDef = pDoc->GetObject(lngPropertyID);
+			rci.m_pobjPropertyDef = pDoc->GetObjectNull(lngPropertyID);
 		}
 		pobjPropDef = rci.m_pobjPropertyDef;
 		// In case we screwed up and the property is missing

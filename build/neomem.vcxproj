@@ -237,7 +237,6 @@
     <ClCompile Include="..\code\XComboBoxEx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Brooklyn.h" />
     <ClInclude Include="..\code\BClass.h" />
     <ClInclude Include="..\code\BCMenu.h" />
     <ClInclude Include="..\code\BData.h" />
@@ -260,6 +259,7 @@
     <ClInclude Include="..\code\BDataWebsite.h" />
     <ClInclude Include="..\code\BObject.h" />
     <ClInclude Include="..\code\BObjects.h" />
+    <ClInclude Include="..\code\Brooklyn.h" />
     <ClInclude Include="..\code\Clock.h" />
     <ClInclude Include="..\code\Color.h" />
     <ClInclude Include="..\code\ColorButton.h" />

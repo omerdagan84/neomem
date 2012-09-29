@@ -266,7 +266,6 @@ void CPageClassProperties::LoadData()
 	// Add all PropertyDefs to list
 	// Get array of all properties, sort it, then walk through add prop if not in listview
 	m_pobjPropertiesFolder = m_pDoc->GetObject(folderProperties);
-	ASSERT_VALID(m_pobjPropertiesFolder);
 	BObjects* paChildren = m_pobjPropertiesFolder->GetChildren();
 	ASSERT_VALID(paChildren);
 	BObjects* paCopy = paChildren->CreateCopy();

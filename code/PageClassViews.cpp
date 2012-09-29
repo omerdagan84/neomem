@@ -129,7 +129,6 @@ void CPageClassViews::LoadData()
 
 	// Fill with View objects
 	BObject* pobjStart = m_pDoc->GetObject(folderViews);
-	ASSERT_VALID(pobjStart);
 	m_lvw.AddObjects(pobjStart, flagAdminOnly, FALSE, FALSE);
 
 /*	// Add inherited properties to list first
@@ -165,7 +164,6 @@ void CPageClassViews::LoadData()
 	// Add all PropertyDefs to list
 	// Get array of all properties, sort it, then walk through add prop if not in listview
 	m_pobjPropertiesFolder = m_pDoc->GetObject(folderProperties);
-	ASSERT_VALID(m_pobjPropertiesFolder);
 	BObjects* paChildren = m_pobjPropertiesFolder->m_paChildren;
 	ASSERT_VALID(paChildren);
 	BObjects* paCopy = paChildren->CreateCopy();

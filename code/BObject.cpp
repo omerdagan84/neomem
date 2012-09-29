@@ -94,7 +94,6 @@ BObject::BObject(BDoc& doc, OBJID idClass, LPCTSTR pszName, OBJID idParent, OBJI
 	SetName(pszName);
 
 	BObject* pobjParent = doc.GetObject(idParent);
-	ASSERT_VALID(pobjParent);
 	SetParent(pobjParent); //, api should take id not pobj
 
 	SetFlags(lngFlags);
@@ -507,7 +506,6 @@ OBJID BObject::GetDefaultIconID()
 	{
 		// First look to the object's classdef
 		pobjClassDef = m_pDoc->GetObject(m_lngClassID);
-		ASSERT_VALID(pobjClassDef);
 		if (pobjClassDef->m_lngIconID) // leave these as direct refs, not method calls. 
 			return pobjClassDef->m_lngIconID; // found icon, return it
 	}
@@ -564,7 +562,6 @@ void BObject::SetName(const CString& strText)
 
 	// Pass the property def of the name property so the BData object will know how to handle parsing.
 	BObject* pobjPropDef = m_pDoc->GetObject(m_lngClassID);
-	ASSERT_VALID(pobjPropDef);
 	m_pdat->SetBDataText(strText, pobjPropDef);
 }
 
@@ -837,7 +834,6 @@ BObject* BObject::FindProperty(OBJID lngPropertyID, BOOL bAddIfNotFound)
 			{
 				// Get the object's classdef initially
 				BObject* pobjClass = m_pDoc->GetObject(m_lngClassID);
-				ASSERT_VALID(pobjClass);
 				if (pobjClass)
 					return pobjClass->FindProperty(lngPropertyID, bAddIfNotFound);
 			}
@@ -906,7 +902,6 @@ BOOL BObject::SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText,
 
 	// Check if property is read-only and give message.
 	BObject* pobjPropertyDef = m_pDoc->GetObject(lngPropertyID);
-	ASSERT_VALID(pobjPropertyDef);
 	if (pobjPropertyDef->GetFlag(flagPropValueReadOnly))
 	{
 		AfxMessageBox("This property value is read-only and cannot be changed.", MB_ICONINFORMATION);
@@ -955,7 +950,6 @@ BOOL BObject::SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText,
 
 				// The propertydef will tell the BDataLink object where to start searching for matches
 //				BObject* pobjPropertyDef = m_pDoc->GetObject(propClassName);
-//				ASSERT_VALID(pobjPropertyDef);
 				if (pdatLink->SetBDataText(pszText, pobjPropertyDef))
 				{
 					// Bug: Was setting m_lngClassID instead of calling SetClassID!
@@ -1085,7 +1079,6 @@ CString BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfN
 //			{
 				ASSERT (m_lngClassID);
 				BObject* pobjClassDef = m_pDoc->GetObject(m_lngClassID);
-				ASSERT_VALID(pobjClassDef);
 				return pobjClassDef->GetPropertyString(propName);
 //			}
 //			else
@@ -1405,7 +1398,6 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 
 			// Set link to point to this object's classdef
 			BObject* pobjClass = m_pDoc->GetObject(m_lngClassID);
-			ASSERT_VALID(pobjClass);
 			pdatLink->SetLink(pobjClass);
 
 			// Return a pointer to the temporary bdata object
@@ -2128,7 +2120,7 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 			BObject* pobjPropValue = DYNAMIC_DOWNCAST(BObject, m_paProperties->GetAt(i));
 			ASSERT_VALID(pobjPropValue);
 			OBJID lngPropertyID = pobjPropValue->GetClassID();
-			BObject* pobjPropDef = m_pDoc->GetObject(lngPropertyID);
+			BObject* pobjPropDef = m_pDoc->GetObjectNull(lngPropertyID);
 			if (!pobjPropDef)
 			{
 				CString str;
@@ -2365,7 +2357,6 @@ BOOL BObject::UIEditValue(OBJID lngPropertyID)
 
 	// Get propertydef object for the property
 	BObject* pobjPropertyDef = m_pDoc->GetObject(lngPropertyID);
-	ASSERT_VALID(pobjPropertyDef);
 
 	// Check if property is read-only
 	if (pobjPropertyDef->GetFlag(flagPropValueReadOnly))
@@ -3550,7 +3541,7 @@ AfxMessageBox("copyfrom!"); //x
 	// This will handle moving the object if its parent has changed for some reason
 	// (ie remove from old parent list, add to new parent list). 
 	// Use setparent instead of moveto because moveto assumes that the object already has a valid parent.
-	BObject* pobjThisParent = m_pDoc->GetObject(nSourceParentID);
+	BObject* pobjThisParent = m_pDoc->GetObjectNull(nSourceParentID);
 //	this->MoveTo(pobjThisParent, TRUE, TRUE, FALSE); 
 	this->SetParent(pobjThisParent);
 

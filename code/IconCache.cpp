@@ -99,7 +99,6 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 
 		// Get the icon object so we can get the raw data for the icon
 		BObject* pobjIcon = pDoc->GetObject(lngIconID);
-		ASSERT_VALID(pobjIcon);
 
 		//, note - getpropertydata might return wrong type, or 0, so fix below. 
 		BDataIcon* pData = DYNAMIC_DOWNCAST(BDataIcon, pobjIcon->GetPropertyData(propIconData));

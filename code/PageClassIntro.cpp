@@ -67,7 +67,6 @@ BOOL CPageClassIntro::OnInitDialog() {
 	// Include root class if we're in admin mode
 	BOOL bIncludeRoot = theApp.m_bAdmin ? TRUE : FALSE;
 	BObject* pobjStart = m_pDoc->GetObject(rootClass);
-	ASSERT_VALID(pobjStart);
 	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, bIncludeRoot, TRUE);
 	m_lvw.SortByProperty(propName, 1);
 

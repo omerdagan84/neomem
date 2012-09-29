@@ -116,7 +116,6 @@ int CViewIndex::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 			// Get classdef icon
 			BObject* pobj = m_pDoc->GetObject(classClass);
-			ASSERT_VALID(pobj);
 			int nImage = pobj->GetIconIndex(); 
 
 			// Add "All Classes"

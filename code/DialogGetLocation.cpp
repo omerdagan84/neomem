@@ -88,7 +88,6 @@ BOOL CDialogGetLocation::OnInitDialog()
 
 	// Add all objects to list
 	BObject* pobjStart = m_pDoc->GetObject(rootUser);
-	ASSERT_VALID(pobjStart);
 	m_tvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, TRUE, TRUE, FALSE);
 
 	// Select current object

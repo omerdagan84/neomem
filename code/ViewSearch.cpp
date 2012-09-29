@@ -167,7 +167,6 @@ int CViewSearch::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 			// Get propertydef icon
 			BObject* pobj = m_pDoc->GetObject(classProperty);
-			ASSERT_VALID(pobj);
 			int nImage = pobj->GetIconIndex(); 
 
 			// Add "All Properties"
@@ -701,8 +700,7 @@ void CViewSearch::OnBtnGo()
 	CWaitCursor wc;
 
 	// Send hintSave message so any current changes get saved
-	BObject* pobjCurrent = m_pDoc->GetCurrentObject();
-	ASSERT_VALID(pobjCurrent);
+	BObject* pobjCurrent = m_pDoc->GetCurrentObject(); // nonnull
 	m_pDoc->UpdateAllViewsEx(this, hintSave, pobjCurrent);
 
 	// Clear any sort memory from listview
@@ -738,7 +736,7 @@ void CViewSearch::OnBtnGo()
 	ULONG lngExcludeFlags = theApp.m_lngSearchExcludeFlags; 
 	BObject* pobjStart = m_pDoc->GetRoot();
 	ASSERT_VALID(pobjStart);
-	int nItems = m_pDoc->SearchForText(pobjStart, m_lngPropertyID, m_strFindText, aResults, lngExcludeFlags, m_bMatchCase, m_bWholeWord);
+	int nItems = m_pDoc->GetObjects(pobjStart, m_lngPropertyID, m_strFindText, aResults, lngExcludeFlags, m_bMatchCase, m_bWholeWord);
 
 	// Set results label
 //	CString strResults;

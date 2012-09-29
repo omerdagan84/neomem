@@ -108,8 +108,18 @@ public:
 	CString GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText);
 	ULONG GetNextObjectID(); // get next available objectid
 	CString GetNumberOfObjectsString();
+
+	//, both these would return copies of objects, so would need to delete them
 	BObject* GetObject(OBJID idObject);
-	BObjects* GetObjects();
+	BObject* GetObjectNull(OBJID idObject);
+	BObjects* GetObjects(); //, placeholder
+	int GetObjects(BObject* pobjStart, OBJID idProperty, CString strFindText, BObjects& aResults, 
+					ULONG lngExcludeFlags = 0, BOOL bMatchCase = FALSE, BOOL bWholeWord = FALSE,
+					BOOL bSearchStartObject = FALSE, BOOL bOriginalCall = TRUE);
+
+	BObject* GetObject2(OBJID idObject);
+
+
 	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
 	BObject* GetRoot() { return m_pobjRoot; }; // get the root object of the document
 	ULONG GetSplitterPos() { return m_lngSplitterPos; };
@@ -124,9 +134,6 @@ public:
 	void RemoveObjectFromIndex(OBJID idObject);
 	void Save();
 	BOOL SaveModifiedBackup();
-	int SearchForText(BObject* pobjStart, OBJID idProperty, CString strFindText, BObjects& aResults, 
-					ULONG lngExcludeFlags = 0, BOOL bMatchCase = FALSE, BOOL bWholeWord = FALSE,
-					BOOL bSearchStartObject = FALSE, BOOL bOriginalCall = TRUE);
 	void SetCurrentObject(BObject* pobjCurrent, CView* pSender = 0, BOOL bNavigating = FALSE);
 	virtual void SetModifiedFlag(BOOL bModified = TRUE);
 	void SetRoot(BObject* pobj);

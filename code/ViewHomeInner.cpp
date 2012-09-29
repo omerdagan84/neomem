@@ -92,7 +92,6 @@ int CViewHomeInner::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //	if (_tcslen(strDescription) == 0)
 //	{
 //		BObject* pobj = m_pDoc->GetObject(rootUser);
-//		ASSERT_VALID(pobj);
 //		if (pobj->GetChildCount(FALSE, FALSE) == 0)
 //			pszDescription = _T("To get started, add a new object by selecting \"New Object...\" from the Object menu.");
 //	}
@@ -343,7 +342,6 @@ void CViewHomeInner::GetFileDescription()
 {
 	ASSERT_VALID(m_pDoc);
 	BObject* pobjHome = m_pDoc->GetObject(rootUser);
-	ASSERT_VALID(pobjHome);
 	LPCTSTR pszDescription = pobjHome->GetPropertyString(propDescription);
 	// If description is blank and there are no objects, show an intro message
 	if (_tcslen(pszDescription) == 0)

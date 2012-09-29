@@ -83,7 +83,6 @@ BOOL CDialogEditObject::OnInitDialog()
 
 	// Add classes to list
 	BObject* pobjStart = m_pDoc->GetObject(rootClass);
-	ASSERT_VALID(pobjStart);
 	// 1.1 exclude folder class 
 //	BObject* pobjClassFolder = m_pDoc->GetObject(classFolder);
 //	pobjClassFolder->SetFlag(flagTemp, TRUE);
@@ -342,7 +341,6 @@ void CDialogEditObject::OnSelchangeCboLocation()
 	{
 		OBJID idClass = pobjParent->GetPropertyLink(propDefaultClass);
 		BObject* pobjClass = m_pDoc->GetObject(idClass);
-		ASSERT(pobjClass);
 		// This will trigger listview selchange event
 		m_lvw.SelectItemData((LPARAM) pobjClass);
 	}

@@ -84,7 +84,6 @@ BOOL CDialogEditFolder::OnInitDialog()
 
 	// Add classes to list
 	BObject* pobjStart = m_pDoc->GetObject(rootClass);
-	ASSERT_VALID(pobjStart);
 	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE);
 	m_lvw.SortByProperty(propName, 1);
 
@@ -317,7 +316,6 @@ void CDialogEditFolder::OnDropdownCboLocation()
 		datValidClasses.AddLinkID(classFolder, m_pDoc);
 		datValidClasses.AddLinkID(classHome, m_pDoc);
 		BObject* pobjHome = m_pDoc->GetObject(rootUser);
-		ASSERT_VALID(pobjHome);
 		m_cboLocation.AddObjects(pobjHome, theApp.m_lngExcludeFlags, TRUE, TRUE, 0, &datValidClasses);
 		if (m_pobjParent)
 			m_cboLocation.SelectItemData((DWORD) m_pobjParent);

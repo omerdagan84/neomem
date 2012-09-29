@@ -92,7 +92,7 @@ public:
 	ULONG GetMemoryUsed(BOOL bRecurse) const;
 	LPCTSTR GetName(BOOL bIncludeClassName = FALSE);
 	OBJID GetObjectID() { return m_lngObjectID; };
-	BObject* GetParent() { return m_pobjParent; };
+	BObject* GetParent() { return m_pobjParent; }; // may be zero
 	int GetParents(BObjects& aParents, BObject* pobjStopAt, BOOL bIncludeThisObject = TRUE, BOOL bIncludeStopObject = FALSE);
 	BObjects* GetProperties() { return m_paProperties; };
 	int GetPropertyDefAlignment();

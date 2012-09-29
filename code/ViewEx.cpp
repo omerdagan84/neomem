@@ -1108,7 +1108,6 @@ void CViewEx::OnViewHide()
 {
 	ASSERT(m_lngViewID);
 	BObject* pobjView = m_pDoc->GetObject(m_lngViewID);
-	ASSERT_VALID(pobjView);
 
 /*
 	CString strViewName = pobjView->GetPropertyString(propName);
@@ -1135,7 +1134,6 @@ void CViewEx::OnViewMoveUp()
 {
 	ASSERT(m_lngViewID);
 	BObject* pobjView = m_pDoc->GetObject(m_lngViewID);
-	ASSERT_VALID(pobjView);
 	m_pDoc->UpdateAllViewsEx(0, hintMoveViewUp, pobjView);
 }
 

@@ -206,7 +206,6 @@ BOOL BDataViews::GetTabName(int nTab, CString& strName, BDoc* pDoc)
 		ASSERT(lngViewID);
 
 		BObject* pobjView = pDoc->GetObject(lngViewID);
-		ASSERT_VALID(pobjView);
 
 		// Get view caption
 		CString strView = pobjView->GetPropertyString(propCaption);

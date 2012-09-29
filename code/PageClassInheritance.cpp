@@ -92,7 +92,6 @@ CPageClassInheritance::DoDataExchange(CDataExchange* pDX)
 	{
 		// Fill tree with classes
 		BObject* pobjStart = m_pDoc->GetObject(rootClass);
-		ASSERT_VALID(pobjStart);
 		m_tvw.DeleteAllItems();
 		m_tvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, TRUE, TRUE);
 //		m_tvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE); //. bug if you don't include start item

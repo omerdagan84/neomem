@@ -77,8 +77,6 @@ BOOL CDialogSelectProperty::OnInitDialog()
 	// Get start objects
 	m_pobjClasses = m_pDoc->GetObject(rootClass);
 	m_pobjProperties = m_pDoc->GetObject(folderProperties);
-	ASSERT_VALID(m_pobjClasses);
-	ASSERT_VALID(m_pobjProperties);
 
 	// Initialize class list
 	m_cboClass.SetImageList(m_pDoc->GetImageList());
@@ -105,7 +103,6 @@ BOOL CDialogSelectProperty::OnInitDialog()
 //		m_cboClass.SetCurSel(0);
 	if (m_pobjDefaultClass == 0)
 		m_pobjDefaultClass = m_pDoc->GetObject(classPaper);
-	ASSERT_VALID(m_pobjDefaultClass);
 	m_cboClass.SelectItemData((DWORD) m_pobjDefaultClass);
 	
 	// Fill properties list if still empty

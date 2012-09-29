@@ -82,7 +82,6 @@ BOOL CPageClassIcon::OnInitDialog()
 
 	// Add icons to list
 	m_pobjIconFolder = m_pDoc->GetObject(folderIcons);
-	ASSERT_VALID(m_pobjIconFolder);
 	m_lvw.AddObjects(m_pobjIconFolder, theApp.m_lngExcludeFlags, FALSE, FALSE);
 	m_lvw.SortByProperty(propName, 1);
 
@@ -92,7 +91,6 @@ BOOL CPageClassIcon::OnInitDialog()
 	// Select icon
 	ULONG lngIconID = m_pobj->GetIconID();
 	BObject* pobjIcon = m_pDoc->GetObject(lngIconID);
-	ASSERT_VALID(pobjIcon);
 	m_lvw.SelectItemData((LPARAM) pobjIcon);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -127,7 +125,7 @@ void CPageClassIcon::DoDataExchange(CDataExchange* pDX)
 
 			// Get current icon and select it
 			ULONG lngIconID = m_pobj->GetIconID();
-			BObject* pobjIcon = m_pDoc->GetObject(lngIconID);
+			BObject* pobjIcon = m_pDoc->GetObjectNull(lngIconID);
 			m_lvw.SelectItemData((LPARAM) pobjIcon);
 		}
 	}
@@ -233,7 +231,6 @@ void CPageClassIcon::OnBtnDelete()
 void CPageClassIcon::OnBtnDefault() 
 {
 	BObject* pobjIcon = m_pDoc->GetObject(m_lngDefaultIconID);
-	ASSERT_VALID(pobjIcon);
 	m_lvw.SelectItemData((LPARAM) pobjIcon);
 	m_lvw.SetFocus();
 }

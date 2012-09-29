@@ -35,7 +35,7 @@ public:
 	CView* GetView(ULONG lngViewID);
 	BOOL IsViewVisible(ULONG lngViewID);
 	void SetSplitterPos(ULONG lngSplitterPos);
-	CView* ShowView(ULONG lngViewID, BOOL bSetActive);
+	CView* ShowView(ULONG lngViewID, BOOL bSetActive = TRUE);
 
 	CViewHeader* GetViewHeader() { return m_pviewHeader; };
 

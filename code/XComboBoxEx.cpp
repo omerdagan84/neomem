@@ -4,12 +4,9 @@
 
 #include "precompiled.h"
 
-#include "NeoMem.h"
 #include "XComboBoxEx.h"
 
-#include "BObject.h"
-#include "BDoc.h"
-#include "ConstantsDatabase.h"
+#include "Brooklyn.h"
 
 
 #ifdef _DEBUG
@@ -61,7 +58,7 @@ void XComboBoxEx::OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 		// Note cast from LPCTSTR to LPSTR, ie const char* to char*
 		// see other instances of pszText
 		if (nMask & TVIF_TEXT)
-			rcbi.pszText = const_cast <LPSTR> ((LPCTSTR) pobj->GetPropertyString(propName)); 
+			rcbi.pszText = const_cast <LPSTR> ((LPCTSTR) pobj->GetPropertyString(propName)); //, propName
 	}
 
 	*pResult = 0;
@@ -113,14 +110,11 @@ void XComboBoxEx::SelectNone()
 
 
 // Add a new object as a child of the specified parent object.
+// pobjParent is optional
 // Returns index to new item, or -1 if failed.
-int XComboBoxEx::AddObject(BObject *pobj, BObject *pobjParent /* = 0 */)
+int XComboBoxEx::AddObject(BObject *pobj, BObject *pobjParent)
 {
 	ASSERT_VALID(pobj);
-
-	// Get document
-	BDoc* pDoc = pobj->GetDoc();
-	ASSERT_VALID(pDoc);
 
 	// If parent specified, find the parent item and get its indent level
 	int nParent = 0;
@@ -132,46 +126,36 @@ int XComboBoxEx::AddObject(BObject *pobj, BObject *pobjParent /* = 0 */)
 		nIndent = GetItemIndent(nParent);
 	}	
 
-//	BOOL bValidFlags = !(pobjStart->GetFlag(lngExcludeFlags));
-//	if (bValidFlags)
-//	{
-		// Get index of icon associated with this object
-		int nImage = pobj->GetIconIndex();
+	// Get index of icon associated with this object
+	int nImage = pobj->GetIconIndex();
 	
-		// Get the new item number
-//		int nItem = GetCount(); // always add to end of the list because of recursion
+	// Add this BObject to the combo
+	COMBOBOXEXITEM cbi;
+	cbi.mask = CBEIF_IMAGE | CBEIF_INDENT | CBEIF_LPARAM | CBEIF_SELECTEDIMAGE | CBEIF_TEXT;
+	cbi.pszText = LPSTR_TEXTCALLBACK;
+//	cbi.iItem = nItem;
+	cbi.iItem = nParent;
+	cbi.iImage = nImage;
+	cbi.iSelectedImage = nImage;
+	cbi.iIndent = nIndent;
+	cbi.lParam = (LPARAM) pobj;
 
-		// Add this BObject to the combo
-		COMBOBOXEXITEM cbi;
-		cbi.mask = CBEIF_IMAGE | CBEIF_INDENT | CBEIF_LPARAM | CBEIF_SELECTEDIMAGE | CBEIF_TEXT;
-		cbi.pszText = LPSTR_TEXTCALLBACK;
-//		cbi.iItem = nItem;
-		cbi.iItem = nParent;
-		cbi.iImage = nImage;
-		cbi.iSelectedImage = nImage;
-		cbi.iIndent = nIndent;
-		cbi.lParam = (LPARAM) pobj;
-		int nIndex = InsertItem(&cbi);
-		ASSERT (nIndex != -1);
+	int nIndex = InsertItem(&cbi);
+	ASSERT (nIndex != -1);
 
-//	}
 	return nIndex;
-
 }
 
 
 
 // Add children of specified object to the combobox
+// includestart, recurse, indent, pdatvalidclasses are optional
 void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags, 
-								BOOL bIncludeStart /* = FALSE */, BOOL bRecurse /* = FALSE */, int nIndent /* = 0 */,
-								BDataLink* pdatValidClasses /* = 0 */) //, BOOL bAddNone /* = FALSE */)
+								BOOL bIncludeStart, BOOL bRecurse, int nIndent,
+								BDataLink* pdatValidClasses) //, BOOL bAddNone)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjStart);
-
-	// Get document
-	BDoc* pDoc = pobjStart->GetDoc();
-	ASSERT_VALID(pDoc);
 
 	// Set up structure used to add items
 	COMBOBOXEXITEM cbi;
@@ -197,6 +181,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 			cbi.iSelectedImage = nImage;
 			cbi.iIndent = nIndent;
 			cbi.lParam = (LPARAM) pobjStart;
+
 			int nIndex = InsertItem(&cbi);
 			ASSERT (nIndex != -1);
 
@@ -243,6 +228,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 				cbi.iSelectedImage = nImage;
 				cbi.iIndent = nIndent;
 				cbi.lParam = (LPARAM) pobj;
+
 				int nIndex = InsertItem(&cbi);
 				ASSERT (nIndex != -1);
 
@@ -266,6 +252,7 @@ void XComboBoxEx::AddObjects(BObject* pobjStart, ULONG lngExcludeFlags,
 
 
 // Find the item with the specified item data and return index to it, or -1 if not found.
+// Search linearly through combobox data.
 int XComboBoxEx::FindItemData(DWORD dwData)
 {
 	// Walk through all items, comparing their item data
@@ -290,6 +277,7 @@ int XComboBoxEx::GetItemIndent(int nIndex)
 	COMBOBOXEXITEM cbi;
 	cbi.mask = CBEIF_INDENT;
 	cbi.iItem = nIndex;
+
 	GetItem(&cbi);
 	return cbi.iIndent;
 }
@@ -307,6 +295,7 @@ int XComboBoxEx::AddNone(int nImage)
 	cbi.iSelectedImage = nImage;
 	cbi.iIndent = nIndent;
 	cbi.lParam = 0; //(LPARAM) pobj;
+
 	int nIndex = InsertItem(&cbi);
 	ASSERT (nIndex != -1);
 	return nIndex;	
@@ -333,6 +322,7 @@ void XComboBoxEx::SetItemIcon(int nItem, int nImage)
 	cbei.iItem = nItem;
 	cbei.iImage = nImage;
 	cbei.iSelectedImage = nImage;
+
 	this->SetItem(&cbei);
 }
 

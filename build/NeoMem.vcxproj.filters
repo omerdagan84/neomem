@@ -932,7 +932,7 @@
     <ClInclude Include="..\code\BClass.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Brooklyn.h">
+    <ClInclude Include="..\code\Brooklyn.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1494,6 +1494,7 @@
     <None Include="..\resources\icons\Wallet.ico">
       <Filter>Resource files</Filter>
     </None>
+    <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />
     <None Include="..\resources\Resource.hm" />

@@ -1042,7 +1042,6 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 			BObject* pobjParent = m_pDoc->GetCurrentObject();
 			OBJID idClass = pobjParent->GetPropertyLink(propDefaultClass);
 			BObject* pobjClass = m_pDoc->GetObject(idClass);
-			ASSERT_VALID(pobjClass);
 			CString strName;
 			pobjClass->GetClassDefNewName(strName);
 
@@ -1625,7 +1624,6 @@ void CViewContents::DisableVisibleProperties()
 	{
 		ULONG lngPropertyID = m_lvw.GetColumnPropertyID(i);
 		BObject* pobjProp = m_pDoc->GetObject(lngPropertyID);
-		ASSERT_VALID(pobjProp);
 		pobjProp->SetFlag(flagDisabled, TRUE, FALSE);
 	}	
 }
@@ -1638,7 +1636,6 @@ void CViewContents::EnableAllProperties()
 
 	// Clear all properties' flags
 	BObject* pobjProperties = m_pDoc->GetObject(folderProperties);
-	ASSERT_VALID(pobjProperties);
 	pobjProperties->SetFlag(flagDisabled, FALSE, TRUE);
 }
 */
@@ -1682,7 +1679,6 @@ void CViewContents::OnObjEditInDialog()
 		BObject* pobjParent = m_pDoc->GetCurrentObject();
 		OBJID idClass = pobjParent->GetPropertyLink(propDefaultClass);
 		BObject* pobjClass = m_pDoc->GetObject(idClass);
-		ASSERT_VALID(pobjClass);
 		CString strName;
 		pobjClass->GetClassDefNewName(strName);
 		BObject& obj = BObject::New(*m_pDoc, idClass, strName, pobjParent->id);
@@ -1799,7 +1795,7 @@ void CViewContents::OnColumnSortDescending()
 void CViewContents::OnColumnEditProperty() 
 {
 	ULONG lngPropertyID = m_lvw.GetColumnPropertyID(m_nTargetColumn);
-	BObject* pobjPropertyDef = m_pDoc->GetObject(lngPropertyID);
+	BObject* pobjPropertyDef = m_pDoc->GetObjectNull(lngPropertyID);
 	m_pDoc->UIEditPropertyDef(pobjPropertyDef);
 }
 

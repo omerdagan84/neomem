@@ -127,7 +127,7 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 	// Get document 
 	m_pdoc = BDoc::GetDoc();
 
-	BObject* pobjBaseClass = m_pdoc->GetObject(rootClass);
+	BObject* pobjBaseClass = m_pdoc->GetObjectNull(rootClass);
 
 	// Save document modified flag so can restore if user hits cancel in wizard.
 	BOOL bSaveDocModified = m_pdoc->IsModified();
@@ -162,7 +162,6 @@ int CSheetWizard::DoModalParameters(int nAddEditMode, BObject* pobjClass /* = 0 
 //	m_strFolderName = _T("New Folder");
 //	m_strFolderName.Empty();
 //	BObject* pobjUserRoot = m_pdoc->GetObject(rootUser);
-//	ASSERT_VALID(pobjUserRoot);
 //	m_pobjFolderLocation = pobjUserRoot;
 //	m_bAutosort = TRUE;
 

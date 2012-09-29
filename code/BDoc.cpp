@@ -531,11 +531,35 @@ BObject* BDoc::GetCurrentObject() {
 }
 
 
-// Return a pointer to the specified object, or NULL if not found in index
+// Return a pointer to the specified object.
+// If object not found, will assert. 
+BObject* BDoc::GetObject(OBJID idObject) {
+	BObject* pobj = GetObjectNull(idObject);
+	ASSERT(pobj); // "BDoc GetObject - Couldn't find ObjectID %d in document map\n", idObject
+	return pobj;
+}
+
+
+// Lookup an object - may return NULL
+BObject* BDoc::GetObjectNull(OBJID idObject) {
+	ASSERT_VALID(this);
+	ASSERT_VALID(&m_mapObjects);
+	BObject* pobj;
+	m_mapObjects.Lookup(idObject, pobj);
+	if (pobj)
+		ASSERT_VALID(pobj);
+	return pobj;
+}
+
+
+
+
+
+// Return a pointer to a COPY of the specified object, or NULL if not found in index
 // Be sure to check result for NULL
 //, hmm, so null, couldn't return reference, unless had a null object?
 //, or... why allow it to return a null at all? could throw an error
-BObject* BDoc::GetObject(OBJID idObject) {
+BObject* BDoc::GetObject2(OBJID idObject) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(&m_mapObjects);
 	BObject* pobj;
@@ -553,11 +577,181 @@ BObject* BDoc::GetObject(OBJID idObject) {
 }
 
 
+
 //, placeholder for general query fn
 BObjects* BDoc::GetObjects() {
 	BObjects* pobjs = new BObjects();
 	return pobjs;
 }
+
+
+
+// Search through the document starting at the specified object, looking in the 
+// specified properties. Adds pointers to matching objects to array aResults.
+// To search in all properties, pass 0 for idProperty.
+// lngExcludeFlags of 0 includes all objects. You can exclude system objects by passing flagSystem.
+// Returns total number of hits.
+//. try to avoid using cstrings in this code
+// Currently only used 3 times - in viewsearch and bdatalink
+int BDoc::GetObjects(
+						BObject* pobjStart, 
+						OBJID idProperty, 
+						CString strFindText, 
+						BObjects& aResults, 
+						ULONG lngExcludeFlags /* = 0 */, 
+						BOOL bMatchCase /* = FALSE */, 
+						BOOL bWholeWord /* = FALSE */, 
+						BOOL bSearchStartObject /* = FALSE */,
+						BOOL bOriginalCall /* = TRUE */
+						) {
+
+	// Search for the specified text, adding results to collection
+	// search recursively starting at the root object
+	ASSERT_VALID(this);
+	ASSERT_VALID(&aResults);
+	ASSERT_VALID(pobjStart);
+
+	xTRACE("BDoc::SearchForText - Search in %s, property %d for %s\n", 
+		pobjStart->GetPropertyString(propName), idProperty, (LPCTSTR) strFindText);
+
+	CString strPropertyValue;
+	BOOL bFoundInObject = FALSE;
+
+	// If this object has any of the bits set as specified in lngExcludeFlags, then exclude this object
+	// from the search results
+	// Bug:: Used && instead of & and screwed up results! Be careful of this! & is bitwise and && is logical!
+	BOOL bExcludeThisObject = pobjStart->GetFlag(lngExcludeFlags);
+
+	// Convert search string to lower case for case insensitive sort.
+	// unbelievable - there is no case-insensitive search in either cstring or the run-time library!
+	// for now, copy string and make it all lower-case and do same for search string
+	//, this is getting executed each time cause it's recursive!!
+	// Note: We only do this once because bOriginalCall will be false for any recursive calls.
+	if (bMatchCase == FALSE && bOriginalCall)
+		strFindText.MakeLower();
+
+	// Search in start object if specified and it's not excluded
+	if (bSearchStartObject && !bExcludeThisObject) {
+		// Search in name first
+		// Since name is not included in the paProperties array, we must handle it as a special case,
+		// since it is the only pseudo property requiring searching through.
+		if ((idProperty == 0) || (idProperty == propName)) {
+			strPropertyValue = pobjStart->GetPropertyString(propName);
+			if (!bMatchCase)
+				strPropertyValue.MakeLower();
+			xTRACE("  Searching in ObjectID %d's name \"%s\"\n", pobjStart->GetObjectID(), (LPCTSTR) strPropertyValue);
+			int nPos = strPropertyValue.Find(strFindText, 0);
+			if (nPos != -1) {
+				xTRACE("    Found in name!\n");
+				// Found in object name, so add object to collection
+				aResults.Add(pobjStart);
+				// Set flag so rest of code doesn't execute unnecessarily
+				bFoundInObject = TRUE;
+			}
+		}
+
+		// If the text was not found in the name and the property we need to search in is not propName, then 
+		// continue...
+		// The bFoundInObject flag just saves us from searching through other properties when the 
+		// text was already found in the name.
+		if ((!bFoundInObject) && (idProperty != propName)) {
+			// Search in classname manually, since it's not included in the m_paProperties collection.
+			if ((idProperty == 0) || (idProperty == propClassName)) {
+				strPropertyValue = pobjStart->GetPropertyString(propClassName);
+				if (!bMatchCase)
+					strPropertyValue.MakeLower();
+				xTRACE("  Searching in classname \"%s\"\n", strPropertyValue);
+				int nPos = strPropertyValue.Find(strFindText, 0);
+				if (nPos != -1) {
+					xTRACE("      Found in classname!\n");
+					// Found in class name, so add object to collection
+					aResults.Add(pobjStart);
+					// Set flag so rest of code doesn't execute unnecessarily
+					bFoundInObject = TRUE;
+				}
+			}
+
+			// If not found in classname, continue
+			if (!bFoundInObject) {
+				xTRACE("  Searching in property collection\n");
+				BObjects* paProperties = pobjStart->GetProperties();
+				if (paProperties) {
+					ASSERT_VALID(paProperties);
+					// Walk through all properties, searching through text of each.
+					int nItems = paProperties->GetSize();
+					for (int i = 0; i < nItems; i++) {
+						// Search through property text
+						BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, paProperties->GetAt(i));
+						ASSERT_VALID(pobjProp);
+
+						// Exclude property if it's a system prop, etc.
+						// Special case for rtf text - it's a system prop but we still want to search it
+						if ((!(pobjProp->GetFlag(lngExcludeFlags))) || pobjProp->GetClassID() == propRtfText) {
+							// Search through this property only if we're interested in all properties,
+							// or it's the property we're interested in.
+							if ((idProperty == 0) || (idProperty == pobjProp->GetClassID())) {
+								xTRACE("    Searching in property %d\n", pobjProp->GetClassID());
+								strPropertyValue = pobjProp->GetPropertyString(propName);
+								// this trace bombs because of string length!
+//								xTRACE("    Searching in property %d value \"%s\"\n", pobjProp->GetClassID(), strPropertyValue);
+
+								// If this is an rtf text property, search through it with the app's hidden rtf control
+								// Bug: Used idProperty instead of pobj->m_lngClassID! wound up
+								// searching rtf text as if it were plain text.
+//								if (idProperty == propRtfText)
+								if (pobjProp->GetClassID() == propRtfText) {
+									// Assign to invisible rtf control so we can use its searching capabilities.
+									long nPos = theApp.SearchRtfString(strPropertyValue, strFindText, bMatchCase, bWholeWord);
+									if (nPos != -1) {
+										xTRACE("      Found in rtf string!\n");
+										aResults.Add(pobjStart);
+										break;
+									}
+								}
+								else {
+									// This is a plain text property, so search through it using CString method.
+									// No case insensitive option, so must convert to lower case! lame!
+									//, add option to stringex to compare case-insensitive
+									//    would need to walk through string character by character, etc.
+									if (!bMatchCase)
+										strPropertyValue.MakeLower();
+									int nPos = strPropertyValue.Find(strFindText, 0);
+									if (nPos != -1) {
+										xTRACE("      Found in regular string!\n");
+										aResults.Add(pobjStart);
+										break;
+									}
+								}
+							}					
+						}
+					}
+				}
+			}
+		}
+	} // if (!bExcludeThisObject)
+
+	// Now search through children by calling this routine recursively.
+	BObjects* paChildren = pobjStart->GetChildren();
+	if (paChildren) {
+		ASSERT_VALID(paChildren);
+		int nItems = paChildren->GetSize();
+		for (int i = 0; i < nItems; i++) {
+			BObject* pobj = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
+			ASSERT_VALID(pobj);
+			// Search recursively through children
+			GetObjects(pobj, idProperty, strFindText, aResults, lngExcludeFlags, bMatchCase, bWholeWord, TRUE, FALSE);
+			// Note: We pass FALSE for match case because we've already converted to 
+//			Search(pobj, idProperty, strFindText, aResults, lngExcludeFlags, FALSE, bWholeWord, TRUE);
+		}
+	}
+
+	// Clear the invisible rtf to save memory
+	theApp.m_rtf.SetWindowText("");
+
+	return aResults.GetSize();
+}
+
+
 
 
 
@@ -1194,10 +1388,9 @@ BOOL BDoc::UIEditPropertyDef(BObject* pobjPropertyDef) {
 	BOOL bDisplayHierarchy = pobjPropertyDef->GetPropertyLong(propDisplayLinkHierarchy);
 	BOOL bSystemProperty = (pobjPropertyDef->GetFlag(flagNoModify)); 
 
-	BObject* pobjPropertyType = this->GetObject(idPropertyType);
-	ASSERT(pobjPropertyType); //, "Must have a property type");
-	BObject* pobjLinkSource = this->GetObject(idLinkSource); // may be zero
-	BObject* pobjAdditionalProperty = this->GetObject(idAdditionalProperty); // may be zero
+	BObject* pobjPropertyType = this->GetObject(idPropertyType); // Must have a property type
+	BObject* pobjLinkSource = this->GetObjectNull(idLinkSource); // may be zero
+	BObject* pobjAdditionalProperty = this->GetObjectNull(idAdditionalProperty); // may be zero
 
 	// Set up and show dialog
 	CDialogEditProperty dlg;
@@ -1309,7 +1502,7 @@ BData* BDoc::CreateBData(OBJID idClassOrProperty) {
 
 	// Get the property type associated with this classdef or propertydef
 	// Note: pobjClassDef is either the classdef or propertydef
-	BObject* pobjClassDef = GetObject(idClassOrProperty);
+	BObject* pobjClassDef = GetObjectNull(idClassOrProperty);
 	OBJID idPropertyType = 0;
 	if (pobjClassDef) {
 //x		OBJID idPropType = 0;
@@ -1442,170 +1635,6 @@ ULONG BDoc::GetNextObjectID() {
 
 
 
-// Search through the document starting at the specified object, looking in the 
-// specified properties. Adds pointers to matching objects to array aResults.
-// To search in all properties, pass 0 for idProperty.
-// lngExcludeFlags of 0 includes all objects. You can exclude system objects by passing flagSystem.
-// Returns total number of hits.
-//. try to avoid using cstrings in this code
-int BDoc::SearchForText(
-						BObject* pobjStart, 
-						OBJID idProperty, 
-						CString strFindText, 
-						BObjects& aResults, 
-						ULONG lngExcludeFlags /* = 0 */, 
-						BOOL bMatchCase /* = FALSE */, 
-						BOOL bWholeWord /* = FALSE */, 
-						BOOL bSearchStartObject /* = FALSE */,
-						BOOL bOriginalCall /* = TRUE */
-						) {
-
-	// Search for the specified text, adding results to collection
-	// search recursively starting at the root object
-	ASSERT_VALID(this);
-	ASSERT_VALID(&aResults);
-	ASSERT_VALID(pobjStart);
-
-	xTRACE("BDoc::SearchForText - Search in %s, property %d for %s\n", 
-		pobjStart->GetPropertyString(propName), idProperty, (LPCTSTR) strFindText);
-
-	CString strPropertyValue;
-	BOOL bFoundInObject = FALSE;
-
-	// If this object has any of the bits set as specified in lngExcludeFlags, then exclude this object
-	// from the search results
-	// Bug:: Used && instead of & and screwed up results! Be careful of this! & is bitwise and && is logical!
-	BOOL bExcludeThisObject = pobjStart->GetFlag(lngExcludeFlags);
-
-	// Convert search string to lower case for case insensitive sort.
-	// unbelievable - there is no case-insensitive search in either cstring or the run-time library!
-	// for now, copy string and make it all lower-case and do same for search string
-	//, this is getting executed each time cause it's recursive!!
-	// Note: We only do this once because bOriginalCall will be false for any recursive calls.
-	if (bMatchCase == FALSE && bOriginalCall)
-		strFindText.MakeLower();
-
-	// Search in start object if specified and it's not excluded
-	if (bSearchStartObject && !bExcludeThisObject) {
-		// Search in name first
-		// Since name is not included in the paProperties array, we must handle it as a special case,
-		// since it is the only pseudo property requiring searching through.
-		if ((idProperty == 0) || (idProperty == propName)) {
-			strPropertyValue = pobjStart->GetPropertyString(propName);
-			if (!bMatchCase)
-				strPropertyValue.MakeLower();
-			xTRACE("  Searching in ObjectID %d's name \"%s\"\n", pobjStart->GetObjectID(), (LPCTSTR) strPropertyValue);
-			int nPos = strPropertyValue.Find(strFindText, 0);
-			if (nPos != -1) {
-				xTRACE("    Found in name!\n");
-				// Found in object name, so add object to collection
-				aResults.Add(pobjStart);
-				// Set flag so rest of code doesn't execute unnecessarily
-				bFoundInObject = TRUE;
-			}
-		}
-
-		// If the text was not found in the name and the property we need to search in is not propName, then 
-		// continue...
-		// The bFoundInObject flag just saves us from searching through other properties when the 
-		// text was already found in the name.
-		if ((!bFoundInObject) && (idProperty != propName)) {
-			// Search in classname manually, since it's not included in the m_paProperties collection.
-			if ((idProperty == 0) || (idProperty == propClassName)) {
-				strPropertyValue = pobjStart->GetPropertyString(propClassName);
-				if (!bMatchCase)
-					strPropertyValue.MakeLower();
-				xTRACE("  Searching in classname \"%s\"\n", strPropertyValue);
-				int nPos = strPropertyValue.Find(strFindText, 0);
-				if (nPos != -1) {
-					xTRACE("      Found in classname!\n");
-					// Found in class name, so add object to collection
-					aResults.Add(pobjStart);
-					// Set flag so rest of code doesn't execute unnecessarily
-					bFoundInObject = TRUE;
-				}
-			}
-
-			// If not found in classname, continue
-			if (!bFoundInObject) {
-				xTRACE("  Searching in property collection\n");
-				BObjects* paProperties = pobjStart->GetProperties();
-				if (paProperties) {
-					ASSERT_VALID(paProperties);
-					// Walk through all properties, searching through text of each.
-					int nItems = paProperties->GetSize();
-					for (int i = 0; i < nItems; i++) {
-						// Search through property text
-						BObject* pobjProp = DYNAMIC_DOWNCAST(BObject, paProperties->GetAt(i));
-						ASSERT_VALID(pobjProp);
-
-						// Exclude property if it's a system prop, etc.
-						// Special case for rtf text - it's a system prop but we still want to search it
-						if ((!(pobjProp->GetFlag(lngExcludeFlags))) || pobjProp->GetClassID() == propRtfText) {
-							// Search through this property only if we're interested in all properties,
-							// or it's the property we're interested in.
-							if ((idProperty == 0) || (idProperty == pobjProp->GetClassID())) {
-								xTRACE("    Searching in property %d\n", pobjProp->GetClassID());
-								strPropertyValue = pobjProp->GetPropertyString(propName);
-								// this trace bombs because of string length!
-//								xTRACE("    Searching in property %d value \"%s\"\n", pobjProp->GetClassID(), strPropertyValue);
-
-								// If this is an rtf text property, search through it with the app's hidden rtf control
-								// Bug: Used idProperty instead of pobj->m_lngClassID! wound up
-								// searching rtf text as if it were plain text.
-//								if (idProperty == propRtfText)
-								if (pobjProp->GetClassID() == propRtfText) {
-									// Assign to invisible rtf control so we can use its searching capabilities.
-									long nPos = theApp.SearchRtfString(strPropertyValue, strFindText, bMatchCase, bWholeWord);
-									if (nPos != -1) {
-										xTRACE("      Found in rtf string!\n");
-										aResults.Add(pobjStart);
-										break;
-									}
-								}
-								else {
-									// This is a plain text property, so search through it using CString method.
-									// No case insensitive option, so must convert to lower case! lame!
-									//, add option to stringex to compare case-insensitive
-									//    would need to walk through string character by character, etc.
-									if (!bMatchCase)
-										strPropertyValue.MakeLower();
-									int nPos = strPropertyValue.Find(strFindText, 0);
-									if (nPos != -1) {
-										xTRACE("      Found in regular string!\n");
-										aResults.Add(pobjStart);
-										break;
-									}
-								}
-							}					
-						}
-					}
-				}
-			}
-		}
-	} // if (!bExcludeThisObject)
-
-	// Now search through children by calling this routine recursively.
-	BObjects* paChildren = pobjStart->GetChildren();
-	if (paChildren) {
-		ASSERT_VALID(paChildren);
-		int nItems = paChildren->GetSize();
-		for (int i = 0; i < nItems; i++) {
-			BObject* pobj = DYNAMIC_DOWNCAST(BObject, paChildren->GetAt(i));
-			ASSERT_VALID(pobj);
-			// Search recursively through children
-			SearchForText(pobj, idProperty, strFindText, aResults, lngExcludeFlags, bMatchCase, bWholeWord, TRUE, FALSE);
-			// Note: We pass FALSE for match case because we've already converted to 
-//			Search(pobj, idProperty, strFindText, aResults, lngExcludeFlags, FALSE, bWholeWord, TRUE);
-		}
-	}
-
-	// Clear the invisible rtf to save memory
-	theApp.m_rtf.SetWindowText("");
-
-	return aResults.GetSize();
-}
-
 
 
 
@@ -1667,11 +1696,11 @@ void BDoc::OnCmdFileProperties() {
 // Find references to the specified Find object, starting at the start object and recursing downwards.
 // Will fill array with objects that reference the Find object, and return the number of references.
 // If no Start object is passed, will start at rootMain
+//, rename to GetObjectReferences
 int BDoc::FindReferences(BObject *pobjFind, CObArray &aRefs, BObject *pobjStart /* = 0 */, BOOL bRecurse /* = TRUE */) {
 	ASSERT_VALID(pobjFind);
 	if (pobjStart == 0)
 		pobjStart = GetObject(rootMain);
-	ASSERT_VALID(pobjStart);
 
 	return pobjStart->FindReferences(pobjFind, aRefs, bRecurse);
 }
@@ -1770,7 +1799,6 @@ BObject* BDoc::UIAddNewObject(
 	// This will check the object for this property - if not there, will look up the class chain.
 	OBJID idClass = pobjParent->GetPropertyLink(propDefaultClass);
 	BObject* pobjClass = this->GetObject(idClass);
-	ASSERT_VALID(pobjClass);
 
 	// Get name of new object from the default class (eg "New Book")
 	//, (or could be a classdef property if need to customize more)
@@ -1861,9 +1889,9 @@ BOOL BDoc::UIEditObject(BObject *pobj) {
 
 	// Get object properties
 	CString strName = pobj->GetPropertyString(propName);
-	BObject* pobjClass = GetObject(idClass);
+	BObject* pobjClass = GetObjectNull(idClass);
 	OBJID idDefaultClass = pobj->GetPropertyLink(propDefaultClass);
-	BObject* pobjDefaultClass = this->GetObject(idDefaultClass);
+	BObject* pobjDefaultClass = this->GetObjectNull(idDefaultClass);
 	BObject* pobjParent = pobj->GetParent();
 
 	// Initialize dialog
@@ -2204,7 +2232,7 @@ void BDoc::OnViewToggleContents() {
 					strClassName
 					);
 		if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO)) {
-			BObject* pobjView = GetObject(idView);
+			BObject* pobjView = GetObjectNull(idView);
 			ULONG lngHint = bViewVisible ? hintRemoveView : hintAddView;
 			UpdateAllViewsEx(NULL, lngHint, pobjView);
 		}
@@ -2455,7 +2483,7 @@ BOOL BDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 
 	// Give message if no root object (if it's a zero length file, OnOpenDocument skips serialization
 	// so you don't get the archive exception)
-	BObject* pobj = GetObject(rootMain);
+	BObject* pobj = GetObjectNull(rootMain);
 	if (pobj == 0) {
 		AfxMessageBox("Invalid file format - no root object found.", MB_ICONEXCLAMATION);
 		return FALSE;
@@ -2469,24 +2497,22 @@ BOOL BDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 
 	// Don't let user modify home object's class
 //	BObject* pobjHome = GetObject(rootUser);
-//	ASSERT_VALID(pobjHome);
 //	pobjHome->m_lngFlags |= flagNoModifyClass;
 
 	// Walk through entire document recursively, converting old types to new ones
 //	BObject* pobjStart = GetObject(rootMain);
-//	ASSERT_VALID(pobjStart);
 //	UpdateDocument(pobjStart);
 
 /*
 	// Change the property type for propColumnInfoArray and propObjectColumnInfoArray from
 	// proptypeArray to proptypeColumns
 	// Add the new proptype first
-	BObject* pobj = GetObject(folderPropertyTypes);
+	BObject* pobj = GetObjectNull(folderPropertyTypes);
 	HOBJECT* hobjPropType = CreateObject(classPropertyType, "Columns", pobj, proptypeColumns, 0, flagSystem | flagNoDelete | flagAdminOnly);
 	AddObject(hobjPropType);
 
 	pobj = GetObject(propColumnInfoArray);
-	BObject* pobjPropTypeColumns = GetObject(proptypeColumns);
+	BObject* pobjPropTypeColumns = GetObjectNull(proptypeColumns);
 	pobj->SetPropertyLink(propPropertyType, pobjPropTypeColumns);
 	pobj = GetObject(propObjectColumnInfoArray);
 	pobj->SetPropertyLink(propPropertyType, pobjPropTypeColumns);
@@ -2676,7 +2702,7 @@ BObject* BDoc::UIAddNewFolder(BObject* pobjParent /* = 0 */,
 	if (pobjParent == 0) {
 		// Doc remembers the last location for adding a folder
 		if (m_idDefaultFolderLocation != 0) {
-			pobjParent = GetObject(m_idDefaultFolderLocation);
+			pobjParent = GetObjectNull(m_idDefaultFolderLocation);
 		}
 		// If location is unspecified or no longer valid, use the root object as add location
 		if (pobjParent == 0) {
@@ -2690,7 +2716,6 @@ BObject* BDoc::UIAddNewFolder(BObject* pobjParent /* = 0 */,
 	// Get name of new object from the default class (eg "New Book")
 	//. (or could be a classdef property if need to customize more)
 	BObject* pobjClass = GetObject(classFolder);
-	ASSERT_VALID(pobjClass);
 	pobjClass->GetClassDefNewName(strName); // eg "New Folder"
 	pobjDefaultClass = GetObject(classPaper);
 
@@ -3627,7 +3652,6 @@ void BDoc::Synchronize(BDoc* pdocTemplate) {
 
 	// Get template file's system object
 	BObject* pobjTemplate = pdocTemplate->GetObject(rootSystem);
-	ASSERT_VALID(pobjTemplate);
 
 	//, get number of system objects so can update progress bar
 
@@ -3642,7 +3666,6 @@ void BDoc::Synchronize(BDoc* pdocTemplate) {
 
 	// Now get this document's system object
 	BObject* pobjThis = GetObject(rootSystem);
-	ASSERT_VALID(pobjThis);
 
 	// Now check for objects to delete
 	// Walk through this file's system objects and see if they exist in the template file - if not there 
@@ -3672,7 +3695,7 @@ void BDoc::SynchronizeRecurse(BObject* pobjTemplate) {
 	// See if this object exists in this file already
 	ULONG nID = pobjTemplate->GetObjectID();
 	ASSERT(nID < lngUserIDStart); // should be a system object
-	BObject* pobjThis = this->GetObject(nID);
+	BObject* pobjThis = this->GetObjectNull(nID);
 	if (pobjThis == NULL) {
 		// Doesn't exist - we need to add it
 		pobjThis = new BObject();
@@ -3742,7 +3765,7 @@ void BDoc::SynchronizeDelete(BObject *pobjThis, BDoc* pdocTemplate) {
 	ASSERT_VALID(pdocTemplate);
 
 	ULONG nID = pobjThis->GetObjectID();
-	BObject* pobjTemplate = pdocTemplate->GetObject(nID);
+	BObject* pobjTemplate = pdocTemplate->GetObjectNull(nID);
 	if (pobjTemplate == NULL) {
 		// This object is no longer in the template file, so we need to delete it
 		TRACE("Deleting system object that is no longer in template file: %s\n", pobjThis->GetName(TRUE));
@@ -3873,7 +3896,6 @@ int BDoc::GetProperties(BDataLink &datProps, BObject* pobj/*=NULL*/) {
 	// get list of all properties, and add them to the list 
 	// (duplicates will be ignored)
 	BObject* pobjProps = this->GetObject(folderProperties);
-	ASSERT_VALID(pobjProps);
 	ASSERT_VALID(pobjProps->GetChildren());
 	int nProps = pobjProps->GetChildren()->GetSize();
 	for (int i = 0; i < nProps; i++) {

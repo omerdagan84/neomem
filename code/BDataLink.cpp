@@ -88,7 +88,6 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	if (idLinkSource == 0) 
 		idLinkSource = theApp.GetTopObjectID(); // get root object
 	BObject* pobjLinkSource = pDoc->GetObject(idLinkSource);
-	ASSERT_VALID(pobjLinkSource);
 
 	// First check if text is blank, in which case this property value should be deleted
 	//, for now, just delete link info
@@ -113,14 +112,14 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	// Note: We need to exclude hidden objects, because otherwise user could type in "View" for
 	// classname and it would be accepted.
 	BObjects aResults;
-	int nObjects = pDoc->SearchForText(pobjLinkSource, propName, strCopy, aResults, theApp.m_lngExcludeFlags);
+	int nObjects = pDoc->GetObjects(pobjLinkSource, propName, strCopy, aResults, theApp.m_lngExcludeFlags);
 	if (nObjects == 0)
 	{
 		// No matches found, so try parsing the search string as a person name and try again...
 		BDataPersonName datPerson;
 		datPerson.SetBDataText(str, 0, FALSE);
 		CString strPerson = datPerson.GetBDataText(pDoc, 0);
-		nObjects = pDoc->SearchForText(pobjLinkSource, propName, strPerson, aResults, theApp.m_lngExcludeFlags);
+		nObjects = pDoc->GetObjects(pobjLinkSource, propName, strPerson, aResults, theApp.m_lngExcludeFlags);
 
 		// Still no matches found, so ask user if they want to add a new object of the default class to the 
 		// link source.
@@ -130,7 +129,6 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 			CString strMsg;
 			OBJID idClass = pobjLinkSource->GetPropertyLink(propDefaultClass);
 			BObject* pobjClass = pDoc->GetObject(idClass);
-			ASSERT(pobjClass);
 			CString strClassName = pobjClass->GetPropertyString(propName);
 			CString strLinkSourceClass = pobjLinkSource->GetPropertyString(propClassName);
 			CString strLinkSourceName = pobjLinkSource->GetPropertyString(propName);
@@ -298,12 +296,11 @@ CString BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 
 				// Get property def
 				BObject* pobjPropertyDef = pDoc->GetObject(lngPropertyID);
-				ASSERT_VALID(pobjPropertyDef);
 
 				LPCTSTR pszText = 0;
 				BOOL bDisplayLinkHierarchy = pobjPropertyDef->GetPropertyLong(propDisplayLinkHierarchy);
 				OBJID idAdditionalProp = pobjPropertyDef->GetPropertyLink(propAdditionalDisplayProperty);
-				BObject* pobjAdditionalProp = pDoc->GetObject(idAdditionalProp);
+				BObject* pobjAdditionalProp = pDoc->GetObjectNull(idAdditionalProp);
 
 				// Just display the name of the link object if no other options specified
 				if (bDisplayLinkHierarchy == FALSE && idAdditionalProp == 0)
@@ -324,7 +321,6 @@ CString BDataLink::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 					if (!idLinkSource)
 						idLinkSource = pDoc->GetObject(rootMain)->id;
 					BObject* pobjLinkSource = pDoc->GetObject(idLinkSource);
-					ASSERT_VALID(pobjLinkSource);
 
 					// If the link object is a direct child of the link source, then don't bother with getting the parents.
 					if (pobj->GetParent()->id == idLinkSource)
@@ -710,7 +706,6 @@ int BDataLink::AddLinkID(ULONG lngObjectID, BDoc *pDoc)
 	ASSERT(lngObjectID);
 	ASSERT_VALID(pDoc);
 	BObject* pobj = pDoc->GetObject(lngObjectID);
-	ASSERT_VALID(pobj);
 	return AddLink(pobj);
 }
 
@@ -1168,7 +1163,6 @@ void BDataLink::ConvertToHardLinks(BDoc* pDoc)
 			ASSERT(nItems == 1);
 			UINT nID = paIDs->GetAt(0);
 			BObject* pobj = pDoc->GetObject(nID);
-			ASSERT_VALID(pobj);
 			m_p = pobj;
 		}
 	}

@@ -130,7 +130,6 @@ int CDialogEditLink::DoModalLinkSimple(CString strCaption, CString strInstructio
 	if (lngSelectedID)
 	{
 		BObject* pobj = m_pDoc->GetObject(lngSelectedID);
-		ASSERT_VALID(pobj);
 		pdatLink->SetLink(pobj);
 	}
 	m_pdatLink = pdatLink;
@@ -233,7 +232,6 @@ int CDialogEditLink::DoModalSelect(CString strCaption, CString strInstructions, 
 	if (lngSelectedID)
 	{
 		BObject* pobj = m_pDoc->GetObject(lngSelectedID);
-		ASSERT_VALID(pobj);
 		pdatLink->SetLink(pobj);
 	}
 	m_pdatLink = pdatLink;
@@ -263,7 +261,6 @@ BOOL CDialogEditLink::OnInitDialog()
 
 	// Get start object
 	m_pobjStart = m_pDoc->GetObject(m_lngStartID);
-	ASSERT_VALID(m_pobjStart);
 
 	// Initialize listview
 	// bug:: Copied from treeview so had TVSIL_NORMAL instead of LVSIL_SMALL so no icons would show up
@@ -482,7 +479,7 @@ void CDialogEditLink::OnBtnUseDefault()
 {
 	if (m_lngDefaultID)
 	{
-		BObject* pobj = m_pDoc->GetObject(m_lngDefaultID);
+		BObject* pobj = m_pDoc->GetObjectNull(m_lngDefaultID);
 		m_lvw.SelectItemData((DWORD) pobj);
 	}
 

@@ -66,7 +66,6 @@ BOOL CDialogViews::OnInitDialog()
 	m_lvw.InitializeColumns(&(m_pDoc->m_datColumnsViewFolder), FALSE, TRUE);
 
 	BObject* pobjStart = m_pDoc->GetObject(folderViews);
-	ASSERT_VALID(pobjStart);
 	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags);
 
 	// Check off views that are visible in this tab

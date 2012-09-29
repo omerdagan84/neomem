@@ -184,7 +184,6 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 			// Get propertydef class and get icon from that
 			BObject* pobjClassPropertyDef = m_pDoc->GetObject(classProperty);
-			ASSERT_VALID(pobjClassPropertyDef);
 			int nImage = pobjClassPropertyDef->GetIconIndex();
 
 			// Walk through property defs and add them to the list
@@ -224,7 +223,7 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 //			if (m_pobjCurrent != ph->m_pobjObject)
 //				break;
 			// Find property in listview
-//			BObject* pobjProp = m_pDoc->GetObject(ph->m_lngPropertyID);
+//			BObject* pobjProp = m_pDoc->GetObjectNull(ph->m_lngPropertyID);
 //			int nItem = m_lvw.FindItemData((LPARAM) pobjProp);
 //			if (nItem != -1)
 //				m_lvw.Update(nItem);
@@ -649,7 +648,6 @@ void CViewProperties::OnCmdAddProperty()
 
 	// Get Properties folder object
 	BObject* pobjProperties = m_pDoc->GetObject(folderProperties);
-	ASSERT_VALID(pobjProperties);
 
 	// Enable all properties
 	pobjProperties->SetFlag(flagDisabled, FALSE, TRUE);
@@ -677,7 +675,6 @@ void CViewProperties::OnCmdAddProperty()
 		// Get the selected property
 		ULONG lngPropertyID = dlg.m_lngSelectedID;
 		BObject* pobjProperty = m_pDoc->GetObject(lngPropertyID);
-		ASSERT_VALID(pobjProperty);
 
 		// Add the selected property to the object's classdef
 		pobjClass->SetPropertyLinksAdd(propObjectProperties, lngPropertyID);

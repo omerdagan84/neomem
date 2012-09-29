@@ -90,7 +90,6 @@ void CPageClassSummary::DoDataExchange(CDataExchange* pDX)
 	ASSERT_VALID(m_pobj);
 	ASSERT_VALID(m_pobj->GetParent());
 	BObject* pobjIcon = m_pDoc->GetObject(m_pobj->GetIconID());
-	ASSERT_VALID(pobjIcon);
 
 /*
 
