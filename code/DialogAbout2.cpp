@@ -3,10 +3,9 @@
 
 
 #include "precompiled.h"
-
-#include "NeoMem.h"
 #include "DialogAbout2.h"
 
+#include "NeoMem.h"
 #include "HelpIDs.h"
 
 
@@ -191,7 +190,7 @@ void CDialogAbout2::DoDataExchange(CDataExchange* pDX)
 
 void CDialogAbout2::OnBtnClose() 
 {
-	// bug: beeping after this routine - in call to ::DestroyWindow
+	//. bug: beeping after this routine - in call to ::DestroyWindow
 	//		sends WM_DESTROY message, received here alright (OnDestroy),
 	//		but then after return, some windows code beeps on an int 2bh instruction, which
 	//		apparently is called on return from a callback function, which should be a normal
@@ -218,13 +217,10 @@ void CDialogAbout2::OnSelchangeTbs(NMHDR* pNMHDR, LRESULT* pResult)
 
 BOOL CDialogAbout2::PreTranslateMessage(MSG* pMsg) 
 {
-
 	// Handle accelerators
-	if (m_hAccel) 
-	{
-		if (::TranslateAccelerator(m_hWnd, m_hAccel, pMsg)) 
-		{
-			return (TRUE);
+	if (m_hAccel) {
+		if (::TranslateAccelerator(m_hWnd, m_hAccel, pMsg)) {
+			return TRUE;
 		}
 	}
 

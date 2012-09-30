@@ -1,11 +1,10 @@
-
 // CDialogEditDate
 
 
 
 #include "precompiled.h"
-
 #include "DialogEditDate.h"
+
 #include "NeoMem.h"
 #include "HelpIDs.h"
 

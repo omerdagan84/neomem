@@ -544,7 +544,7 @@ BObject* BDoc::GetObject(OBJID idObject) {
 BObject* BDoc::GetObjectNull(OBJID idObject) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(&m_mapObjects);
-	BObject* pobj;
+	BObject* pobj = 0;
 	m_mapObjects.Lookup(idObject, pobj);
 	if (pobj)
 		ASSERT_VALID(pobj);
@@ -586,7 +586,7 @@ BObjects* BDoc::GetObjects() {
 
 
 
-// Search through the document starting at the specified object, looking in the 
+// Search through the document recursively starting at the specified object, looking in the 
 // specified properties. Adds pointers to matching objects to array aResults.
 // To search in all properties, pass 0 for idProperty.
 // lngExcludeFlags of 0 includes all objects. You can exclude system objects by passing flagSystem.
@@ -674,7 +674,7 @@ int BDoc::GetObjects(
 			// If not found in classname, continue
 			if (!bFoundInObject) {
 				xTRACE("  Searching in property collection\n");
-				BObjects* paProperties = pobjStart->GetProperties();
+				BObjects* paProperties = pobjStart->GetProperties(); //, add asserts etc to fn
 				if (paProperties) {
 					ASSERT_VALID(paProperties);
 					// Walk through all properties, searching through text of each.
@@ -691,6 +691,7 @@ int BDoc::GetObjects(
 							// or it's the property we're interested in.
 							if ((idProperty == 0) || (idProperty == pobjProp->GetClassID())) {
 								xTRACE("    Searching in property %d\n", pobjProp->GetClassID());
+								//, confusing, but gps(propName) will get the string version of the propvalue, right? 
 								strPropertyValue = pobjProp->GetPropertyString(propName);
 								// this trace bombs because of string length!
 //								xTRACE("    Searching in property %d value \"%s\"\n", pobjProp->GetClassID(), strPropertyValue);

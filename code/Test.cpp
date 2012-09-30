@@ -490,20 +490,30 @@ void CTest::DoTests(CNeoMem& app) {
 		}
 
 
+		// GetObject / GetObjectNull
+		ASSERT(doc.GetObject(objPlecy.id) == &objPlecy);
+//		doc.GetObject(832427); // should bomb - not found
+		ASSERT(doc.GetObjectNull(832427) == 0); // okay
 
 
-		//, search!
-		// keep taking code out of ui into bdoc
+
+		// search
 
 		// select the search view
 		CFrameChild* pframe = theApp.GetChildFrame();
 		pframe->ShowView(viewSearch);
 //,?		theApp.ShowView(viewSearch);
-		//. move query/search code into bdoc.
+
+		BObjects a;
+		doc.GetObjects(&objFolder, 0, "plec", a);
+		ASSERT(a.GetCount() == 1);
+		ASSERT(a.GetAt(0) == &objPlecy);
 
 
 
-		// (moving code from ui down to bdoc)
+		// keep taking code out of ui into bdoc
+		// fix memory leak
+
 
 
 
