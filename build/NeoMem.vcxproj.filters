@@ -105,12 +105,6 @@
     <ClCompile Include="..\code\CryptoFile.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="..\code\DialogAbout.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\code\DialogAbout2.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="..\code\DialogEditDate.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -465,6 +459,9 @@
     <ClCompile Include="..\code\BClass.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="..\code\DialogAbout.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\code\BCMenu.h">
@@ -558,12 +555,6 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\CryptoFile.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\code\DialogAbout.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\code\DialogAbout2.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\DialogEditDate.h">
@@ -933,6 +924,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\Brooklyn.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\DialogAbout.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

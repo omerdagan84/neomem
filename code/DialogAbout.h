@@ -1,5 +1,5 @@
 
-// CDialogAbout2
+// CDialogAbout
 // uses rtf control
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -8,15 +8,15 @@
 
 #pragma once
 
+#include "resource.h"
 
 #include "RichEditCtrlEx.h"
 
-
-class CDialogAbout2 : public CDialog
+class CDialogAbout : public CDialog
 {
 // Construction
 public:
-	CDialogAbout2(CWnd* pParent = NULL);   // standard constructor
+	CDialogAbout(CWnd* pParent = NULL);   // standard constructor
 
 // Operations
 public:
@@ -33,15 +33,15 @@ protected:
 
 // Dialog Data
 private: 
-	//{{AFX_DATA(CDialogAbout2)
-	enum { IDD = IDD_ABOUT2 };
+	//{{AFX_DATA(CDialogAbout)
+	enum { IDD = IDD_ABOUT };
 	CTabCtrl	m_tbc;
 	CButton	m_btnClose;
 	//}}AFX_DATA
 
 // Overrides
 	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CDialogAbout2)
+	//{{AFX_VIRTUAL(CDialogAbout)
 	public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	protected:
@@ -51,7 +51,7 @@ private:
 // Implementation
 protected:
 	// Generated message map functions
-	//{{AFX_MSG(CDialogAbout2)
+	//{{AFX_MSG(CDialogAbout)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBtnClose();
 	afx_msg void OnBtnCredits();

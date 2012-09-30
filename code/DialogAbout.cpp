@@ -1,9 +1,9 @@
 
-// CDialogAbout2
+// CDialogAbout
 
 
 #include "precompiled.h"
-#include "DialogAbout2.h"
+#include "DialogAbout.h"
 
 #include "NeoMem.h"
 #include "HelpIDs.h"
@@ -18,8 +18,8 @@ static char THIS_FILE[] = __FILE__;
 
 
 
-BEGIN_MESSAGE_MAP(CDialogAbout2, CDialog)
-	//{{AFX_MSG_MAP(CDialogAbout2)
+BEGIN_MESSAGE_MAP(CDialogAbout, CDialog)
+	//{{AFX_MSG_MAP(CDialogAbout)
 	ON_BN_CLICKED(IDC_BTN_CLOSE, OnBtnClose)
 	ON_BN_CLICKED(IDC_BTN_CREDITS, OnBtnCredits)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TBC, OnSelchangeTbs)
@@ -32,13 +32,13 @@ END_MESSAGE_MAP()
 
 
 
-CDialogAbout2::CDialogAbout2(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogAbout2::IDD, pParent)
+CDialogAbout::CDialogAbout(CWnd* pParent /*=NULL*/)
+	: CDialog(CDialogAbout::IDD, pParent)
 {
 	// Get accelerators
 	m_hAccel = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_DIALOG_ABOUT2)); 
 
-	//{{AFX_DATA_INIT(CDialogAbout2)
+	//{{AFX_DATA_INIT(CDialogAbout)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
@@ -46,7 +46,7 @@ CDialogAbout2::CDialogAbout2(CWnd* pParent /*=NULL*/)
 
 
 
-BOOL CDialogAbout2::OnInitDialog() 
+BOOL CDialogAbout::OnInitDialog() 
 {
 	// Call base class
 	CDialog::OnInitDialog();
@@ -174,10 +174,10 @@ BOOL CDialogAbout2::OnInitDialog()
 
 
 
-void CDialogAbout2::DoDataExchange(CDataExchange* pDX)
+void CDialogAbout::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDialogAbout2)
+	//{{AFX_DATA_MAP(CDialogAbout)
 	DDX_Control(pDX, IDC_TBC, m_tbc);
 	DDX_Control(pDX, IDC_BTN_CLOSE, m_btnClose);
 	DDX_Control(pDX, IDC_RTF, m_rtf);
@@ -188,7 +188,7 @@ void CDialogAbout2::DoDataExchange(CDataExchange* pDX)
 
 
 
-void CDialogAbout2::OnBtnClose() 
+void CDialogAbout::OnBtnClose() 
 {
 	//. bug: beeping after this routine - in call to ::DestroyWindow
 	//		sends WM_DESTROY message, received here alright (OnDestroy),
@@ -202,12 +202,12 @@ void CDialogAbout2::OnBtnClose()
 }
 
 
-void CDialogAbout2::OnBtnCredits() 
+void CDialogAbout::OnBtnCredits() 
 {
 }
 
 
-void CDialogAbout2::OnSelchangeTbs(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDialogAbout::OnSelchangeTbs(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	LoadTab();
 	*pResult = 0;
@@ -215,7 +215,7 @@ void CDialogAbout2::OnSelchangeTbs(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 
-BOOL CDialogAbout2::PreTranslateMessage(MSG* pMsg) 
+BOOL CDialogAbout::PreTranslateMessage(MSG* pMsg) 
 {
 	// Handle accelerators
 	if (m_hAccel) {
@@ -228,13 +228,13 @@ BOOL CDialogAbout2::PreTranslateMessage(MSG* pMsg)
 }
 
 
-void CDialogAbout2::OnTabAbout() 
+void CDialogAbout::OnTabAbout() 
 {
 	m_tbc.SetCurSel(0);
 	LoadTab();
 }
 
-void CDialogAbout2::OnTabCredits() 
+void CDialogAbout::OnTabCredits() 
 {
 	m_tbc.SetCurSel(1);
 	LoadTab();
@@ -242,7 +242,7 @@ void CDialogAbout2::OnTabCredits()
 
 
 
-void CDialogAbout2::LoadTab()
+void CDialogAbout::LoadTab()
 {
 	int nTab = m_tbc.GetCurSel();
 	switch (nTab)
@@ -258,7 +258,7 @@ void CDialogAbout2::LoadTab()
 
 
 
-void CDialogAbout2::OnDestroy() 
+void CDialogAbout::OnDestroy() 
 {
 	CDialog::OnDestroy();
 }

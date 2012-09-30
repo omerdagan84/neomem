@@ -115,7 +115,6 @@
     <ClCompile Include="..\code\CryptoArchive.cpp" />
     <ClCompile Include="..\code\CryptoFile.cpp" />
     <ClCompile Include="..\code\DialogAbout.cpp" />
-    <ClCompile Include="..\code\DialogAbout2.cpp" />
     <ClCompile Include="..\code\DialogEditDate.cpp" />
     <ClCompile Include="..\code\DialogEditFolder.cpp" />
     <ClCompile Include="..\code\DialogEditLink.cpp" />
@@ -271,7 +270,6 @@
     <ClInclude Include="..\code\CryptoArchive.h" />
     <ClInclude Include="..\code\CryptoFile.h" />
     <ClInclude Include="..\code\DialogAbout.h" />
-    <ClInclude Include="..\code\DialogAbout2.h" />
     <ClInclude Include="..\code\DialogEditDate.h" />
     <ClInclude Include="..\code\DialogEditFolder.h" />
     <ClInclude Include="..\code\DialogEditLink.h" />

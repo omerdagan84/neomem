@@ -10,7 +10,6 @@
 #include "CommandLineInfoEx.h"
 #include "Constants.h"
 #include "DialogAbout.h"
-#include "DialogAbout2.h"
 #include "DialogError.h"
 #include "DialogNotice.h"
 #include "DialogWelcome.h"
@@ -1119,7 +1118,7 @@ void CNeoMem::LoadImageList() {
 // App command to run the dialog
 void CNeoMem::OnCmdHelpAbout() {
 	CWaitCursor wc;
-	CDialogAbout2 dlg;
+	CDialogAbout dlg;
 	dlg.DoModal();
 }
 

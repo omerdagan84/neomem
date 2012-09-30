@@ -245,14 +245,12 @@
  
 // Dialogs (IDD_*) 
 #define HIDD_ABOUT                              0x20064
-#define HIDD_ABOUT_OLD                          0x20064
 #define HIDD_EDIT_LINK                          0x20065
 #define HIDD_OPTIONS_GENERAL                    0x20066
 #define HIDD_OPTIONS_DISPLAY                    0x20066
 #define HIDD_EDIT_OBJECT                        0x20067
 #define HIDD_OBJECT_GENERAL                     0x20068
 #define HIDD_PREVIEW_TOOLBAR                    0x20069
-#define HIDD_ABOUT2                             0x2006A
 #define HIDD_ERROR                              0x2006B
 #define HIDD_TIP                                0x2006C
 #define HIDD_FILE_GENERAL                       0x2006D

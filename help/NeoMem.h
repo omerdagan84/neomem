@@ -245,14 +245,12 @@ HIDR_OPTIONS                            0x203C0
   
 // Dialogs (IDD_*)  
 HIDD_ABOUT                              0x20064
-HIDD_ABOUT_OLD                          0x20064
 HIDD_EDIT_LINK                          0x20065
 HIDD_OPTIONS_GENERAL                    0x20066
 HIDD_OPTIONS_DISPLAY                    0x20066
 HIDD_EDIT_OBJECT                        0x20067
 HIDD_OBJECT_GENERAL                     0x20068
 HIDD_PREVIEW_TOOLBAR                    0x20069
-HIDD_ABOUT2                             0x2006A
 HIDD_ERROR                              0x2006B
 HIDD_TIP                                0x2006C
 HIDD_FILE_GENERAL                       0x2006D

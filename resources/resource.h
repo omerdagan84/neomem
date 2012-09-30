@@ -8,14 +8,12 @@
 #define IDC_BTN_HELP                    3
 #define IDC_BTN_ADVANCED                4
 #define IDD_ABOUT                       100
-#define IDD_ABOUT_OLD                   100
 #define IDD_EDIT_LINK                   101
 #define IDD_OPTIONS_GENERAL             102
 #define IDD_OPTIONS_DISPLAY             102
 #define IDD_EDIT_OBJECT                 103
 #define IDD_OBJECT_GENERAL              104
 #define IDD_PREVIEW_TOOLBAR             105
-#define IDD_ABOUT2                      106
 #define IDD_ERROR                       107
 #define IDD_TIP                         108
 #define IDD_FILE_GENERAL                109
