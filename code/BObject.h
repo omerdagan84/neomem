@@ -28,7 +28,8 @@ typedef BObject* HOBJECT;
 // Windows uses OBJECTID for OLE
 typedef ULONG OBJID;
 
-//xtypedef CArray<OBJID> ObjIDArray;
+//, this should replace CObArray of BObject pointers
+//typedef CArray<OBJID> ObIDArray;
 
 
 
@@ -100,23 +101,18 @@ public:
 	int GetPropertyDefWidth();
 	int GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly, BOOL bThisIsAClass);
 
-	BDataColumns* GetPropertyColumns(OBJID lngPropertyID);
-
 	// could use overloading for these, maybe...
 	BData* GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
-	ULONG GetPropertyFlags(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 
-//x	BObject* GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
-	OBJID GetPropertyLink(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
-
-//x	ObjIDArray GetPropertyLinks(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
-//x	void GetPropertyLinks(ULONG lngPropertyID, ObjIDArray& aIDs); //, delete this
-//	ObjIDArray* GetPropertyLinks(OBJID lngPropertyID);
+	BDataColumns* GetPropertyColumns(OBJID lngPropertyID);
+	ULONG GetPropertyFlags(OBJID lngPropertyID); // not const
+//x	BObject* GetPropertyLink(ULONG lngPropertyID); // not const
+	OBJID GetPropertyLink(ULONG lngPropertyID); // not const
+//	ObjidArray* GetPropertyLinks(OBJID lngPropertyID);
 	CObArray* GetPropertyLinks(ULONG lngPropertyID);
-
-	ULONG GetPropertyLong(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
-//x	LPCTSTR GetPropertyString(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
-	CString GetPropertyString(ULONG lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE);
+	ULONG GetPropertyLong(ULONG lngPropertyID); // not const
+//x	LPCTSTR GetPropertyString(ULONG lngPropertyID);
+	CString GetPropertyString(ULONG lngPropertyID); //, check efficiency of cstring vs lpctstr
 
 	BYTE GetViewHeight() { return m_bytViewHeight; };
 	int HasChildren() const;

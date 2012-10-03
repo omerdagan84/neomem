@@ -529,12 +529,13 @@ void CTest::DoTests(CNeoMem& app) {
 		}
 
 		// set a value
-		// first time i've run into the need to create a temporary bdata object. 
-		//,, a hassle. why not always create one? 
+
 //		objPlecy.SetPropertyDate(propid, 2012,10,2);
 //		objPlecy.SetValue(propid, new BDataDate(2012,10,2));
 
 		{
+		// first time i've run into the need to create a temporary bdata object. 
+		//,, a hassle. why not always create one? 
 //		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id));
 //		ASSERT(pdat); // failed - propvalue didn't exist!
 		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id, TRUE));

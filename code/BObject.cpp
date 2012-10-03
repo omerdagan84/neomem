@@ -1025,9 +1025,8 @@ BOOL BObject::SetDescription(LPCTSTR pszText) {
 // pass true for bMachineValue to get machine-readable version of data. used by export. 
 // Warning: Since this uses m_strTextCache, you can't string a bunch of these calls 
 // on one line, eg in a CString Format call
-//, Note: bCreateTempBDataIfNotFound is not handled here
 //xLPCTSTR BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
-CString BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+CString BObject::GetPropertyString(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -1183,7 +1182,8 @@ CString BObject::GetPropertyString(OBJID lngPropertyID, BOOL bCreateTempBDataIfN
 
 
 
-ULONG BObject::GetPropertyFlags(OBJID idProperty, BOOL bCreateTempBDataIfNotFound)
+//xULONG BObject::GetPropertyFlags(OBJID idProperty, BOOL bCreateTempBDataIfNotFound)
+ULONG BObject::GetPropertyFlags(OBJID idProperty)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -1539,12 +1539,12 @@ BOOL BObject::SetPropertyLong(OBJID lngPropertyID, ULONG lngValue,
 
 // GetPropertyLong
 //, how do we return NULL? need a variant type?
-// Note: bCreateTempBDataIfNotFound is not handled.
-ULONG BObject::GetPropertyLong(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+//xULONG BObject::GetPropertyLong(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+ULONG BObject::GetPropertyLong(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
-	ASSERT(bCreateTempBDataIfNotFound == FALSE); // for now
+//x	ASSERT(bCreateTempBDataIfNotFound == FALSE); // for now
 
 	// Handle pseudo properties first
 	switch (lngPropertyID)
@@ -1725,11 +1725,12 @@ BOOL BObject::SetPropertyLinksAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifi
 
 
 
-OBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+//xOBJID BObject::GetPropertyLink(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound)
+OBJID BObject::GetPropertyLink(OBJID lngPropertyID)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
-	ASSERT(bCreateTempBDataIfNotFound == FALSE); // not used
+//x	ASSERT(bCreateTempBDataIfNotFound == FALSE); // not used
 
 	switch (lngPropertyID)
 	{
@@ -1811,7 +1812,6 @@ void BObject::GetPropertyLinks(OBJID lngPropertyID, ObjIDArray& a)
 CObArray* BObject::GetPropertyLinks(ULONG lngPropertyID) {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
-//x	ASSERT(bCreateTempBDataIfNotFound == FALSE); // not used
 
 	BObject* pobjPropertyValue = FindProperty(lngPropertyID, FALSE);
 	if (pobjPropertyValue) {
