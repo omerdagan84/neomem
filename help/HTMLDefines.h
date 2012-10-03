@@ -240,7 +240,7 @@
 #define HIDR_TOOLBAR_OTHER                      0x203AE
 #define HIDR_SYSTRAY                            0x203B3
 #define HIDR_FORV2                              0x203B4
-#define HIDR_DIALOG_ABOUT2                      0x203BF
+#define HIDR_DIALOG_ABOUT                       0x203BF
 #define HIDR_OPTIONS                            0x203C0
  
 // Dialogs (IDD_*) 

@@ -8,9 +8,11 @@
 #include "BDoc.h"
 #include "ConstantsDatabase.h" //. should be part of neodoc
 
-#include "BDataIcon.h"
-#include "BFolder.h"
-#include "BClass.h"
+#include "Brooklyn.h"
+//#include "BDataDate.h"
+//#include "BDataIcon.h"
+//#include "BFolder.h"
+//#include "BClass.h"
 
 
 
@@ -230,7 +232,7 @@ void CTest::DoTests(CNeoMem& app) {
 		
 
 		// select the fish folder
-		doc.SetCurrentObject(&objFolder);
+		doc.SetCurrentObject(&objFolder); //, memory leak - carray 40bytes and bdataviews.createcopy
 		// check
 		ASSERT(doc.GetCurrentObject() == &objFolder);
 
@@ -505,9 +507,52 @@ void CTest::DoTests(CNeoMem& app) {
 //,?		theApp.ShowView(viewSearch);
 
 		BObjects a;
-		doc.GetObjects(&objFolder, 0, "plec", a);
+		doc.GetObjects(&objFolder, 0, "plec", a); // a query! rather simple
 		ASSERT(a.GetCount() == 1);
 		ASSERT(a.GetAt(0) == &objPlecy);
+
+
+
+		// add a date property
+		BObject& propDate = BObject::New(doc, classProperty, "Date Discovered", folderProperties);
+		propDate.SetPropertyLink(propPropertyType, proptypeDate);
+
+		// add to class
+		classFish.SetPropertyLinksAdd(propObjectProperties, propDate.id);
+
+		// add to folder
+		{
+		BDataColumns* pdatColumns = objFolder.GetPropertyColumns(propColumnInfoArray);
+		pdatColumns->InsertColumn(propDate.id, &doc, 100);
+		objFolder.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
+		delete pdatColumns;
+		}
+
+		// set a value
+		// first time i've run into the need to create a temporary bdata object. 
+		//,, a hassle. why not always create one? 
+//		objPlecy.SetPropertyDate(propid, 2012,10,2);
+//		objPlecy.SetValue(propid, new BDataDate(2012,10,2));
+
+		{
+//		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id));
+//		ASSERT(pdat); // failed - propvalue didn't exist!
+		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id, TRUE));
+
+		pdat->SetDate(2012,10,2,19,39,23);
+		objPlecy.SetPropertyData(propDate.id, pdat);
+		delete pdat; //, yuck
+		}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -515,7 +560,11 @@ void CTest::DoTests(CNeoMem& app) {
 		// fix memory leak
 
 
-
+		// ui
+		CUI& ui = theApp.ui;
+		// this will do a switch on proptype, bring up appropriate dialog, 
+		// write the new value back to the object
+		ui.EditValue(&objPlecy, propDescription);
 
 
 

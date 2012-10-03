@@ -96,12 +96,6 @@ BData* BDataBoolean::CreateCopy()
 }
 
 
-BOOL BDataBoolean::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
-{
-	return FALSE;
-}
-
-
 
 // Returns True if can find any references to the specified object in this bdata
 BOOL BDataBoolean::FindReferences(BObject* pobjFind)

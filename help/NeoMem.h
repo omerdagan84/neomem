@@ -240,7 +240,7 @@ HIDR_POPUP_HYPERLINK                    0x203A9
 HIDR_TOOLBAR_OTHER                      0x203AE
 HIDR_SYSTRAY                            0x203B3
 HIDR_FORV2                              0x203B4
-HIDR_DIALOG_ABOUT2                      0x203BF
+HIDR_DIALOG_ABOUT                       0x203BF
 HIDR_OPTIONS                            0x203C0
   
 // Dialogs (IDD_*)  

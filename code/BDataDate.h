@@ -46,6 +46,28 @@ public:
 	BOOL operator== (const BDataDate& that) { return (m_odt == that.m_odt); };
 
 	BOOL IsStringDate() {return (m_bitsFlags.Type == BDataDate::flagString);};
+	void SetDate(int Year, int Month, int Day, int Hour, int Min, int Sec, 
+		int nType = 0, int nRelationship = 0, int nModifiers = 0, int nSeason = 0);
+
+public: 
+	// Type: Only one type allowed. 4 bits = 16 values
+	enum eDateTypes {flagYear = 1, flagMonthYear, flagSeasonYear, flagString, flagUnknown, flagBlank};
+
+	// Relationship: Only one type allowed. 3 bits = 8 values
+	enum eDateRelationships {flagRange = 1, flagPlusOrMinus, flagAnd, flagOr};
+
+	// Modifiers: may be combined. 10 bits = 10 values 
+	// Note: Want to leave room for more modifiers in string table, so make usetime, plural and uncertain last.
+	enum eDateModifiers {flagAfter = 1, flagBefore = 2, flagCirca = 4, 
+										flagUseTime = 128, flagPlural = 256, flagUncertain = 512}; // (2^10 is 1024)
+
+	// Seasons: Only one season allowed. 15 bits = 32768 values
+	// Note: Season enums must match order of strings in string table!
+	// Had to switch spring break and spring because parsing "spring" was chopping off "spring" from
+	// "spring break" - longer entries must come first!
+	enum eDateSeasons {flagSpringBreak = 1, flagSummer, flagAutumn, flagWinter, flagNewYearsEve,
+										flagNewYearsDay, flagEaster, flagChristmas, flagThanksgiving,
+										flagSpring, flagHalloween};
 
 
 private:
@@ -59,25 +81,6 @@ private:
 
 	sDateFlags m_bitsFlags;
 
-	// Only one type allowed. 4 bits = 16 values
-	enum eDateTypes {flagYear = 1, flagMonthYear, flagSeasonYear, flagString, flagUnknown, flagBlank};
-
-	// Only one relationship type allowed. 3 bits = 8 values
-	enum eDateRelationships {flagRange = 1, flagPlusOrMinus, flagAnd, flagOr};
-
-	// Modifiers may be combined. 10 bits = 10 values 
-	// Note: Want to leave room for more modifiers in string table, so make usetime, plural and uncertain last.
-	enum eDateModifiers {flagAfter = 1, flagBefore = 2, flagCirca = 4, 
-										flagUseTime = 128, flagPlural = 256, flagUncertain = 512}; // (2^10 is 1024)
-
-	// Only one season allowed. 15 bits = 32768 values
-	// Note: Season enums must match order or strings in string table!!!
-	// Had to switch spring break and spring because parsing "spring" was chopping off "spring" from
-	// "spring break" - longer entries must come first!!
-	enum eDateSeasons {flagSpringBreak = 1, flagSummer, flagAutumn, flagWinter, flagNewYearsEve,
-										flagNewYearsDay, flagEaster, flagChristmas, flagThanksgiving,
-										flagSpring, flagHalloween};
-	
 	//, we could use our own format like this...
 	// Note: Float stores 3.4E–38 to 3.4E+38, 6 – 7 significant digits
 //	float m_sngYear; // Offset from fictional year 0 A.D., truncate to integer portion

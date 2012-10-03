@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "resource.h"
+
 #include "EditEx.h"
 
 

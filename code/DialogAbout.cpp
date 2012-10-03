@@ -36,7 +36,7 @@ CDialogAbout::CDialogAbout(CWnd* pParent /*=NULL*/)
 	: CDialog(CDialogAbout::IDD, pParent)
 {
 	// Get accelerators
-	m_hAccel = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_DIALOG_ABOUT2)); 
+	m_hAccel = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_DIALOG_ABOUT)); 
 
 	//{{AFX_DATA_INIT(CDialogAbout)
 		// NOTE: the ClassWizard will add member initialization here

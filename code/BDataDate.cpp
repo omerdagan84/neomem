@@ -33,6 +33,7 @@ IMPLEMENT_SERIAL(BDataDate, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 
 BDataDate::BDataDate() 
 //:
+//m_odt()
 {
 	//, move into initializer - give the struct a constructor? 
 	m_bitsFlags.Type = 0;
@@ -453,6 +454,20 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	return FALSE;
 }
 
+
+
+
+void BDataDate::SetDate(int Year, int Month, int Day, int Hour, int Min, int Sec, 
+		int nType, int nRelationship, int nModifiers, int nSeason) {
+
+	int nRet = m_odt.SetDateTime(Year, Month, Day, Hour, Min, Sec);
+
+	m_bitsFlags.Type = nType;
+	m_bitsFlags.Relationship = nRelationship;
+	m_bitsFlags.Modifiers = nModifiers;
+	m_bitsFlags.Season = nSeason;
+
+}
 
 
 // Create a copy of this object

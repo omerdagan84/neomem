@@ -341,6 +341,7 @@ void CViewProperties::OnObjEditInDialog()
 		// Edit the property value in an appropriate dialog
 		ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 		m_pobjCurrent->UIEditValue(lngPropertyID);
+//		theApp.ui.EditValue(m_pobjCurrent, lngPropertyID);
 	}
 }
 

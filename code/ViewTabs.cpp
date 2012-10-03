@@ -110,7 +110,8 @@ CViewTabs::~CViewTabs()
 	DeleteCopiedViewInfo();
 
 	// Delete BData object
-	delete m_pdatViews;
+	if (m_pdatViews) 
+		delete m_pdatViews;
 }
 
 
@@ -1749,10 +1750,12 @@ void CViewTabs::ViewsModified()
 void CViewTabs::DeleteCopiedViewInfo()
 {
 	// If m_pdatViews was copied but not saved, delete it now
+	//, leak here? logic too complex - fix it
 	if (m_bViewsCopied && !m_bViewsSaved)
 	{
 		ASSERT_VALID(m_pdatViews);
 		delete m_pdatViews;
+		m_pdatViews = 0;
 	}
 }
 

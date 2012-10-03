@@ -164,7 +164,8 @@ public:
 	BOOL m_bIgnoreLoadHint; // set to true during setcurrentobject hintselect so hintLoad will be ignored during tab select
 //	CLogFile* m_plogfile; // for debugging to logfile
 
-	CGUI m_gui; // the ui interface used by the database for callbacks
+	CUI ui; // the ui interface used by the database for callbacks
+//	CGUI m_gui; // the ui interface used by the database for callbacks
 
 	// File formats, initialized in InitInstance
 	CFileFormat m_ffCsv;

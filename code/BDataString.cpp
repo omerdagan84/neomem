@@ -4,11 +4,12 @@
 
 #include "precompiled.h"
 #include "BDataString.h"
+
 #include "ConstantsDatabase.h"
 #include "BDoc.h"
 
 #include "NeoMem.h"
-#include "DialogEditString.h"
+//x#include "DialogEditString.h"
 
 
 #ifdef _DEBUG
@@ -83,19 +84,13 @@ void BDataString::Serialize(CArchive &ar)
 
 
 
-
+//x
+/*
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
 BOOL BDataString::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
-	//, will want to say the object we're editing and the property name
-	// Object: System
-	// Property: Description
-	// eg Enter the new value for the "Description" property of the object "System".
-	//, for most string properties, we should use cdialogeditname
-	// for description, etc. use the bigger one.
-	// for now leave like this
 	CDialogEditString dlg;
 	dlg.m_strValue = m_strText;
 	if (dlg.DoModal() == IDOK)
@@ -106,7 +101,7 @@ BOOL BDataString::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	}
 	return FALSE;
 }
-
+*/
 
 
 // Create a copy of this object

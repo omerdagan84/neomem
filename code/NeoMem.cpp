@@ -2872,7 +2872,7 @@ BOOL CNeoMem::ShowError(CString strMsg) {
 // The one and only CNeoMem object
 CNeoMem theApp;
 
-CGUI* gpgui = &theApp.m_gui;
+//xCGUI* gpgui = &theApp.m_gui;
 
 
 // Globally available cstring objects

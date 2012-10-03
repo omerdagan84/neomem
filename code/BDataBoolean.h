@@ -29,7 +29,6 @@ public:
 	virtual CString GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
-	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
 private:
 	int m_nValue; // 0 for no, -1 for yes

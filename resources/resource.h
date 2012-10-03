@@ -249,7 +249,7 @@
 #define IDD_CLASS_ADVANCED              949
 #define IDD_MESSAGE2                    954
 #define IDD_GET_LOCATION                956
-#define IDR_DIALOG_ABOUT2               959
+#define IDR_DIALOG_ABOUT                959
 #define IDR_OPTIONS                     960
 #define IDI_WALLET                      961
 #define IDI_DRIVERSLICENSE              962
