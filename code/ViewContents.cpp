@@ -6,17 +6,17 @@
 #include "precompiled.h"
 
 #include "ViewContents.h"
+
+#include "NeoMem.h"
 #include "Constants.h"
+
 #include "DialogEditLink.h"
 #include "FrameChild.h"
 #include "Hint.h"
 #include "ListCtrlEx.h"
-#include "NeoMem.h"
 
-#include "BDataColumns.h"
-#include "BDataLink.h"
-#include "ConstantsDatabase.h"
-#include "BDoc.h"
+
+#include "Brooklyn.h"
 
 
 
@@ -1695,8 +1695,11 @@ void CViewContents::OnObjEditInDialog()
 	// Get property to edit
 	ULONG lngPropertyID = m_lvw.GetColumnPropertyID();
 
-	// Edit the property value in an appropriate dialog. See BObject::UIEditValue
-	pobj->UIEditValue(lngPropertyID);
+	// Edit the property value in an appropriate dialog.
+//x	pobj->UIEditValue(lngPropertyID);
+
+	theApp.ui.EditValue(pobj, lngPropertyID);
+//	ui.EditValue(pobj, lngPropertyID); //, 
 
 }
 

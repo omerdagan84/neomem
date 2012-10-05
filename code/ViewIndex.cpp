@@ -450,6 +450,7 @@ void CViewIndex::OnObjEditInDialog()
 	{
 		ASSERT_VALID(pobj);
 		pobj->UIEditValue(propName);
+		theApp.ui.EditValue(pobj, propName);
 	}		
 }
 */
@@ -598,7 +599,7 @@ void CViewIndex::OnPopupEditInDialog()
 	// Edit value in dialog
 	BObject* pobj = (BObject*) m_lvw.GetItemData(m_nPopupItem);
 	ASSERT_VALID (pobj);
-	m_pDoc->UIRenameObject(pobj);
+	m_pDoc->UIRenameObject(pobj); // was just theApp.ui.EditValue(pobj, propName);
 }
 */
 

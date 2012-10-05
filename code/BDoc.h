@@ -163,7 +163,7 @@ public:
 	void Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nFormat, CFilename strFilename);
 	void Import();
 	BObject* UIMoveObjectTo();
-	BOOL UIRenameObject(BObject* pobj);
+//x	BOOL UIRenameObject(BObject* pobj);
 	void UISetEncryption();
 	void UITest();
 

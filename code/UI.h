@@ -27,17 +27,20 @@
 class CUI {
 
 public:
-
 	CUI();
 	virtual ~CUI();
 
 
 //	virtual bool GetFileName(LPCTSTR strTitle, LPCTSTR strExtension, LPCTSTR strFilter, CString& strFilename) = 0;
 //	virtual bool GetString(LPCTSTR strTitle, LPCTSTR strInstructions, CString& strString) = 0;
-	
-	BOOL EditValue(BObject* pobj, OBJID lngPropertyID);
+
+public: 
+	BOOL EditValue(BObject* pobj, OBJID idProperty);
 
 
+private:
+	BOOL EditDate(BObject* pobj, OBJID idProperty);
+	BOOL EditString(BObject* pobj, OBJID idProperty);
 
 };
 

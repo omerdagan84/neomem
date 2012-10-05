@@ -4,42 +4,50 @@
 
 #include "precompiled.h"
 
+
+// Application
 #include "NeoMem.h"
 #include <eh.h> // for set_terminate
-
 #include "CommandLineInfoEx.h"
 #include "Constants.h"
-#include "DialogAbout.h"
-#include "DialogError.h"
-#include "DialogNotice.h"
-#include "DialogWelcome.h"
 #include "DocManagerEx.h"
 #include "Email.h"
 #include "FileFormat.h"
-#include "FrameMain.h"
-#include "FrameChild.h"
 #include "FileDialogEx.h"
 #include "Hint.h"
 #include "IconCache.h"
 #include "NeoDocTemplate.h"
-#include "PageOptionsDisplay.h"
-#include "PageOptionsFile.h"
 #include "PropertySheetEx2.h"
 #include "Strings.h"
-#include "ViewRtf.h"
-#include "ViewTabs.h"
-#include "DialogMessage2.h"
-#include "SheetOptions.h"
 #include "HelpIDs.h"
 
 #include "Path.h"
 using namespace nsPath;
 
+// Database
+//,#include "Brooklyn.h"
 #include "BDataPersonName.h" // for constants
 #include "BDoc.h"
 #include "ConstantsDatabase.h"
 #include "BDataIcon.h"
+
+
+// UI
+//,#include "Gui.h"
+#include "DialogAbout.h"
 #include "DialogEditName.h"
+#include "DialogError.h"
+#include "DialogMessage2.h"
+#include "DialogNotice.h"
+#include "DialogWelcome.h"
+#include "FrameMain.h"
+#include "FrameChild.h"
+#include "PageOptionsDisplay.h"
+#include "PageOptionsFile.h"
+#include "SheetOptions.h"
+#include "ViewRtf.h"
+#include "ViewTabs.h"
+
 
 #include "ViewContents.h" // for testing
 #include "Test.h"
@@ -2862,37 +2870,6 @@ BOOL CNeoMem::ShowError(CString strMsg) {
 }
 
 
-
-// Global objects
-//-----------------------------------------------------------------------------------------------------------------
-
-//. cleanup
-
-
-// The one and only CNeoMem object
-CNeoMem theApp;
-
-//xCGUI* gpgui = &theApp.m_gui;
-
-
-// Globally available cstring objects
-// When modifying a variable or function at file scope, the static keyword specifies 
-// that the variable or function has internal linkage (its name is not visible 
-// from outside the file in which it is declared). 
-// Each static data member must be initialized once (and only once) 
-// at file scope (i.e., not in the body of the class definition).
-// define and initialize static data member at file scope 
-//
-// so even if moved these into app class as static members, this code
-// would still be here. eg CString CNeoMem::g_strSpace = _T(" ");
-CString g_strSpace = _T(" ");
-CString g_strCommaSpace = _T(", ");
-CString g_strQuote = _T("\"");
-CString g_strQuoteSpace = _T("\" ");
-
-
-
-
 void CNeoMem::WinHelp(DWORD dwData, UINT nCmd)
 {
 	CWinApp::WinHelp(dwData, nCmd);
@@ -2908,3 +2885,31 @@ void CNeoMem::WinHelp(DWORD dwData, UINT nCmd)
 	}
 */
 }
+
+
+
+
+
+
+// Globals
+//-----------------------------------------------------------------------------------------------------------------
+
+
+// The one and only CNeoMem object
+CNeoMem theApp;
+
+// ui alias 
+CUI& ui(theApp.ui); 
+
+
+// Globally available cstring objects
+// even if moved these into app class as static members, this code
+// would still be here. eg CString CNeoMem::g_strSpace = _T(" ");
+CString g_strSpace = _T(" ");
+CString g_strCommaSpace = _T(", ");
+CString g_strQuote = _T("\"");
+CString g_strQuoteSpace = _T("\" ");
+
+
+
+

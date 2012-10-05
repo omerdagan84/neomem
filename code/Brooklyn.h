@@ -12,4 +12,5 @@
 #include "BDataColumns.h"
 #include "BDataDate.h"
 #include "BDataIcon.h"
+#include "BDataLink.h"
 

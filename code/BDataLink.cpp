@@ -1254,8 +1254,8 @@ bool BDataLink::Test(BDoc* pdoc)
 	// Get property to edit
 	ULONG lngPropertyID = idAuthor;
 
-	// Edit the property value in an appropriate dialog. See BObject::UIEditValue
-	if (pobj->UIEditValue(lngPropertyID))
+	// Edit the property value in an appropriate dialog. 
+	if (theApp.ui.EditValue(pobj, lngPropertyID))
 	{
 		// verify object
 		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobj->GetPropertyData(lngPropertyID));

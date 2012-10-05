@@ -1,40 +1,28 @@
-// Test.cpp: implementation of the CTest class.
 
 #include "precompiled.h"
+
 #include "Test.h"
 
 
 #include "NeoMem.h"
-#include "BDoc.h"
-#include "ConstantsDatabase.h" //. should be part of neodoc
 
 #include "Brooklyn.h"
+#include "ConstantsDatabase.h" //. should be part of brooklyn, mostly
+//#include "BDoc.h"
 //#include "BDataDate.h"
 //#include "BDataIcon.h"
 //#include "BFolder.h"
 //#include "BClass.h"
 
-
-
-#include <iostream>
-using namespace std;
-
-
-
-//#include "DSource.h"
-
-
-
-
-
-
-
 //, ui stuff
+//#include "GUI.h"
 #include "FrameChild.h"
 
 
 
 
+#include <iostream>
+using namespace std;
 
 
 
@@ -528,26 +516,56 @@ void CTest::DoTests(CNeoMem& app) {
 		delete pdatColumns;
 		}
 
-		// set a value
+
+		// set a date value
 
 //		objPlecy.SetPropertyDate(propid, 2012,10,2);
 //		objPlecy.SetValue(propid, new BDataDate(2012,10,2));
 
-		{
+
+		// 1. bdata
+
+		{	
+
 		// first time i've run into the need to create a temporary bdata object. 
-		//,, a hassle. why not always create one? 
+		//,, a hassle. why not always create one? ie in getpropertydata
 //		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id));
 //		ASSERT(pdat); // failed - propvalue didn't exist!
+
 		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id, TRUE));
 
 		pdat->SetDate(2012,10,2,19,39,23);
 		objPlecy.SetPropertyData(propDate.id, pdat);
 		delete pdat; //, yuck
+
+		// check
+		pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id, TRUE));
+		COleDateTime odt;
+		odt.SetDateTime(2012, 10, 2, 19, 39, 23);
+		COleDateTime odtPlecy = pdat->GetDate();
+		ASSERT(odt == odtPlecy);
+//		ASSERT(pdat->GetDate() == odt.SetDateTime(2012, 10, 2, 19, 39, 23)); // why crash? same as above
+
 		}
 
 
+		// 2. string date
+		//, brings up ui dialog - bad
+		//, also asserts oddly
+
+		{
+		objGlassfish.SetPropertyDate(propDate.id, "ktbday");
+		//, return a variant type? string or odt? or the bdata? which is sort of a variant
+//		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objGlassfish.GetPropertyDate(propDate.id));
+//		ASSERT(pdat->IsStringDate());
+//		ASSERT(pdat->GetBDataText(&doc, propDate.id) == "ktbday");
+		}
 
 
+		// 3. numeric date
+		{
+//		objSquid.SetPropertyDate(propDate.id, 1995, 03, 25);
+		}
 
 
 
@@ -559,13 +577,14 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// keep taking code out of ui into bdoc
 		// fix memory leak
-
+		
 
 		// ui
 		CUI& ui = theApp.ui;
 		// this will do a switch on proptype, bring up appropriate dialog, 
 		// write the new value back to the object
-		ui.EditValue(&objPlecy, propDescription);
+//		ui.EditValue(&objPlecy, propDescription);
+//		ui.EditValue(&objPlecy, propDate.id);
 
 
 

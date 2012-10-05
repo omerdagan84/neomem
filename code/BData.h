@@ -41,6 +41,7 @@ public:
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
 //x	virtual LPCTSTR GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
+	//, pDoc and lngPropID are not used in BDataDate, for instance. make them optional here
 	virtual CString GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	virtual BOOL IsValid(BDoc* pDoc);
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);

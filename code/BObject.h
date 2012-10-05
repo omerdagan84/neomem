@@ -82,7 +82,7 @@ public:
 	OBJID GetClassID() { return m_lngClassID; }; 
 	BObject* GetClassObject();
 	BDataColumns& GetColumns();
-	BData* GetBData() { return m_pdat; };
+	BData* GetData() { return m_pdat; };
 	ULONG GetDefaultIconID();
 	BDoc* GetDoc() { return m_pDoc; };
 	BOOL GetFlag(ULONG lngFlag);
@@ -101,10 +101,12 @@ public:
 	int GetPropertyDefWidth();
 	int GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly, BOOL bThisIsAClass);
 
-	// could use overloading for these, maybe...
+	//, having a single GetProperty(idProperty) would be nice, but how?
+
 	BData* GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 
 	BDataColumns* GetPropertyColumns(OBJID lngPropertyID);
+	COleDateTime& GetPropertyDate(OBJID lngPropertyID);
 	ULONG GetPropertyFlags(OBJID lngPropertyID); // not const
 //x	BObject* GetPropertyLink(ULONG lngPropertyID); // not const
 	OBJID GetPropertyLink(ULONG lngPropertyID); // not const
@@ -134,7 +136,7 @@ public:
 	BOOL SetClassID(OBJID lngNewClassID);
 	BOOL SetColumns(BDataColumns& cols);
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
-	BOOL SetBData(BData* pData);
+	BOOL SetData(BData* pData);
 	void SetDoc(BDoc* pdoc) { m_pDoc = pdoc; }; 
 	void SetFlag(ULONG lngFlag, BOOL bValue = TRUE, BOOL bRecurse = FALSE);
 	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; };
@@ -145,6 +147,7 @@ public:
 	
 	// could use overloading for these, maybe... (but then not for the get props. darn)
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+	BOOL SetPropertyDate(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLinks(OBJID idProperty, CObArray* pa, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLinksAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
@@ -154,7 +157,7 @@ public:
 	void SetViewHeight(BYTE bytViewHeight) { m_bytViewHeight = bytViewHeight; };
 	BOOL SortChildren();
 
-	BOOL UIEditValue(OBJID lngPropertyID);
+//x	BOOL UIEditValue(OBJID lngPropertyID);
 
 
 public:

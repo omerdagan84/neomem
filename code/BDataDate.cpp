@@ -53,6 +53,10 @@ BDataDate::~BDataDate() {
 }
 
 
+BDataDate::BDataDate(LPCTSTR pszText) {
+	SetBDataText(pszText);
+}
+
 
 // Set date via text parser
 // Check modifiers first (abt, bef, ca)
@@ -204,6 +208,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	}
 
 	// See if user wants to store the 'date' as a string
+	//, eh get rid of this msg? 
 	if (bShowErrorMessage)
 	{
 		CString strMsg;
@@ -227,8 +232,13 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 
 // Get text representation of date into string, eg "January 15, 1988".
+// Don't need pdoc or lngpropertyid - pass zero
 CString BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
+	// not used
+//x	ASSERT(pDoc == NULL);
+//x	ASSERT(lngPropertyID == 0);
+
 	// Return string if string flag is set
 	if (m_bitsFlags.Type == flagString)
 	{
@@ -337,6 +347,7 @@ CString BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 
 	return m_strText;
 }
+
 
 
 
@@ -456,6 +467,13 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 
 
 
+COleDateTime& BDataDate::GetDate() {
+	return m_odt;
+}
+
+void BDataDate::SetDate(COleDateTime& odt) {
+	m_odt = odt;
+}
 
 void BDataDate::SetDate(int Year, int Month, int Day, int Hour, int Min, int Sec, 
 		int nType, int nRelationship, int nModifiers, int nSeason) {
@@ -466,7 +484,6 @@ void BDataDate::SetDate(int Year, int Month, int Day, int Hour, int Min, int Sec
 	m_bitsFlags.Relationship = nRelationship;
 	m_bitsFlags.Modifiers = nModifiers;
 	m_bitsFlags.Season = nSeason;
-
 }
 
 

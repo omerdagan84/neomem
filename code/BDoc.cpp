@@ -1204,14 +1204,17 @@ BOOL BDoc::UIChangeClassContents(BObject *pobj) {
 }
 
 
-
+//x
+/*
 // Rename the current object, bringing up the appropriate dialog.
 // Returns True if user hit OK, False if Cancel.
 // This is called by F4 handlers.
 BOOL BDoc::UIRenameObject(BObject* pobj) {
 	//, we don't really need this routine...
-	return pobj->UIEditValue(propName);
+//x	return pobj->UIEditValue(propName);
+	return theApp.ui.EditValue(pobj, propName);
 }
+*/
 
 
 // Export the objects specified in the BDataLink object to a file
@@ -1519,7 +1522,9 @@ BData* BDoc::CreateBData(OBJID idClassOrProperty) {
 
 	// Create BData object and return pointer to it.
 	// If prop type is zero will create string bdata.
-	return CreateBDataFromPropertyType(idPropertyType);
+	BData* pdat = CreateBDataFromPropertyType(idPropertyType);
+	ASSERT_VALID(pdat);
+	return pdat;
 }
 
 
@@ -1529,7 +1534,9 @@ BData* BDoc::CreateBData(OBJID idClassOrProperty) {
 // E.g. a number property type gets a BDataNumber object.
 // If prop type is zero, will return a string object.
 BData* BDoc::CreateBDataFromPropertyType(OBJID idPropertyType) {
-	BData* pdat = 0;
+	// idproptype can be zero
+
+	BData* pdat = NULL;
 
 	switch (idPropertyType) {
 		case 0: // string is the default if no property type specified
@@ -1863,20 +1870,20 @@ BObject* BDoc::UIAddNewObject(
 BOOL BDoc::UIEditObject(BObject *pobj) {	
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobj);
-	ASSERT_VALID(pobj->GetBData());
+	ASSERT_VALID(pobj->GetData());
 
 	// Check if object has a person name, in which case, just bring up the edit person name dialog.
 	// If editing an icon, just let user modify name!
 	ULONG idClass = pobj->GetClassID();
 	BOOL bIcon = (idClass == classIcon);
-	BOOL bPersonName = (pobj->GetBData()->IsKindOf(RUNTIME_CLASS(BDataPersonName)));
+	BOOL bPersonName = (pobj->GetData()->IsKindOf(RUNTIME_CLASS(BDataPersonName)));
 //	ULONG idClass = pobj->GetClassID();
 //	BObject* pobjClass = m_pDoc->GetObject(idClass);
 //	BObject* pobjNamePropType = pobjClass->GetPropertyLink(propObjectNamePropertyType);
 //	OBJID idNamePropType = pobjNamePropType->GetObjectID();
 //	if (lngNamePropTypeID == proptypePersonName)
 	if (bPersonName || bIcon) {
-		if (pobj->GetBData()->UIEditValue(pobj, 0)) {
+		if (pobj->GetData()->UIEditValue(pobj, 0)) {
 			CHint h;
 			h.pobjObject = pobj;
 			h.idProperty = propName;
@@ -2014,7 +2021,8 @@ BObject* BDoc::GetTargetObject() {
 void BDoc::OnObjEditInDialog() {
 	// First make sure there's just one object for the target
 	if (IsTargetSingle()) {
-		UIRenameObject(m_pobjTarget);
+//x		UIRenameObject(m_pobjTarget);
+		theApp.ui.EditValue(m_pobjTarget, propName);
 	}	
 }
 

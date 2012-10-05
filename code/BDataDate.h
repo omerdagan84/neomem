@@ -30,6 +30,7 @@ class BDataDate : public BData {
 
 public:
 	BDataDate();
+	BDataDate(LPCTSTR pszText);
 	virtual ~BDataDate();
 
 public:
@@ -45,7 +46,21 @@ public:
 	BOOL operator< (const BDataDate& that) { return (m_odt < that.m_odt); };
 	BOOL operator== (const BDataDate& that) { return (m_odt == that.m_odt); };
 
-	BOOL IsStringDate() {return (m_bitsFlags.Type == BDataDate::flagString);};
+	BOOL AreFlagsSet() { return 
+		(m_bitsFlags.Modifiers != 0 && m_bitsFlags.Modifiers != flagUseTime) || 
+		((m_bitsFlags.Type != 0) && (m_bitsFlags.Type != flagBlank)); };
+	BOOL IsStringDate() { return (m_bitsFlags.Type == BDataDate::flagString); };
+	BOOL IsValid() { return (m_odt.GetStatus() == COleDateTime::valid); };
+	BOOL UseTime() { return (m_bitsFlags.Modifiers && flagUseTime); };
+
+	void ResetFlags(BOOL bUseTime) { 
+						m_bitsFlags.Type = 0;
+						m_bitsFlags.Relationship = 0;
+						m_bitsFlags.Modifiers = bUseTime ? flagUseTime : 0;
+						m_bitsFlags.Season = 0; };
+
+	COleDateTime& GetDate();
+	void SetDate(COleDateTime& odt);
 	void SetDate(int Year, int Month, int Day, int Hour, int Min, int Sec, 
 		int nType = 0, int nRelationship = 0, int nModifiers = 0, int nSeason = 0);
 
