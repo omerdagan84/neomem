@@ -22,15 +22,11 @@ CUI::~CUI() {
 
 
 
-
+//----------------------------------
 
 
 // The code in the case stmts used to be spread out through the BData classes,
 // but in separating the db from the ui needed to remove it here.
-
-
-
-
 
 
 BOOL CUI::EditDate(BObject* pobj, OBJID idProperty) {
@@ -124,9 +120,28 @@ BOOL CUI::EditDate(BObject* pobj, OBJID idProperty) {
 		}
 		AfxMessageBox("Error in setting date. Please try again.", MB_ICONINFORMATION);
 	}
-
 	return FALSE;
+}
 
+
+
+
+
+// Bring up dialog to edit string value.
+// Updates value and returns TRUE if user hit OK in dialog.
+BOOL CUI::EditEmail(BObject* pobj, OBJID idProperty) {
+
+	CDialogEditString dlg;
+//x	dlg.m_strValue = m_strText;
+	dlg.m_strValue = pobj->GetPropertyString(idProperty); //,   ,TRUE!
+	if (dlg.DoModal() == IDOK)
+	{
+		// Save new string value
+//x		m_strText = dlg.m_strValue;
+		pobj->SetPropertyString(idProperty, dlg.m_strValue);
+		return TRUE;
+	}
+	return FALSE;
 }
 
 
@@ -176,11 +191,14 @@ BOOL CUI::EditValue(BObject* pobj, OBJID idProperty) {
 	OBJID idProptype = pobjPropdef->GetPropertyLink(propPropertyType);
 
 	switch (idProptype) {
-		case proptypeString:
-			return EditString(pobj, idProperty);
-			break;
 		case proptypeDate:
 			return EditDate(pobj, idProperty);
+			break;
+		case proptypeEmail:
+			return EditEmail(pobj, idProperty);
+			break;
+		case proptypeString:
+			return EditString(pobj, idProperty);
 			break;
 		default:
 			AfxMessageBox("missing case stmt");

@@ -704,6 +704,9 @@ BOOL BObject::DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag /* = TRU
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
 
+	//, fall out if a pseudoprop
+
+
 	if (m_paProperties)
 	{
 		ASSERT_VALID(m_paProperties);
@@ -1011,6 +1014,7 @@ BOOL BObject::SetPropertyString(OBJID lngPropertyID, LPCTSTR pszText,
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
+	ASSERT(pszText); // 2012-10 new
 
 	// Check if property is read-only and give message.
 	BObject* pobjPropertyDef = m_pDoc->GetObject(lngPropertyID);

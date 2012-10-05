@@ -10,15 +10,21 @@
 #include "Brooklyn.h"
 
 
-BFolder::BFolder(BDoc& doc, LPCTSTR pszName, OBJID idParent, OBJID idIcon, ULONG lngFlags) : 
+// 'new' handler - create a BObject
+BFolder::BFolder(BDoc& doc, LPCTSTR pszName, OBJID idParent, OBJID idDefaultClass, OBJID idIcon, ULONG lngFlags) : 
+	// this is an object of class 'folder', not something in the 'class' folder. confusing. 
 	BObject(doc, classFolder, pszName, idParent, idIcon, lngFlags) // put overrides here
 {
+	if (idDefaultClass)
+		SetPropertyLink(propDefaultClass, idDefaultClass);
 }
 
 
-BFolder& BFolder::New(BDoc& doc, LPCTSTR pszName, OBJID idParent, OBJID idIcon, ULONG lngFlags) {
-	BFolder* pf = new BFolder(doc, pszName, idParent, idIcon, lngFlags);
-	ASSERT_VALID(pf);
-	return *pf;
+// static
+BFolder& BFolder::New(BDoc& doc, LPCTSTR pszName, OBJID idParent, OBJID idDefaultClass, OBJID idIcon, ULONG lngFlags) {
+	BFolder* p = new BFolder(doc, pszName, idParent, idDefaultClass, idIcon, lngFlags);
+	ASSERT_VALID(p);
+	return *p;
 }
+
 

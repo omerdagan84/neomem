@@ -9,7 +9,7 @@
 #include "BDoc.h"
 
 #include "NeoMem.h"
-#include "DialogEditString.h"
+//#include "DialogEditString.h"
 
 
 #ifdef _DEBUG
@@ -84,7 +84,8 @@ void BDataEmail::Serialize(CArchive &ar)
 }
 
 
-
+//x
+/*
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
@@ -103,6 +104,7 @@ BOOL BDataEmail::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	return FALSE;
 }
 
+*/
 
 
 // Create a copy of this object

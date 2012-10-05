@@ -256,6 +256,7 @@
     <ClInclude Include="..\code\BDataString.h" />
     <ClInclude Include="..\code\BDataViews.h" />
     <ClInclude Include="..\code\BDataWebsite.h" />
+    <ClInclude Include="..\code\BFolder.h" />
     <ClInclude Include="..\code\BObject.h" />
     <ClInclude Include="..\code\BObjects.h" />
     <ClInclude Include="..\code\Brooklyn.h" />

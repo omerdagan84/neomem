@@ -90,7 +90,6 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// add folder for fish
-		// this is an object of class 'folder', not something in the 'class' folder. confusing. 
 		BFolder& objFolder = BFolder::New(doc, "fish");
 
 		// check class
@@ -519,14 +518,13 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// set a date value
 
+		//, should be
 //		objPlecy.SetPropertyDate(propid, 2012,10,2);
 //		objPlecy.SetValue(propid, new BDataDate(2012,10,2));
 
 
 		// 1. bdata
-
 		{	
-
 		// first time i've run into the need to create a temporary bdata object. 
 		//,, a hassle. why not always create one? ie in getpropertydata
 //		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id));
@@ -538,13 +536,23 @@ void CTest::DoTests(CNeoMem& app) {
 		objPlecy.SetPropertyData(propDate.id, pdat);
 		delete pdat; //, yuck
 
-		// check
-		pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id, TRUE));
-		COleDateTime odt;
-		odt.SetDateTime(2012, 10, 2, 19, 39, 23);
-		COleDateTime odtPlecy = pdat->GetDate();
-		ASSERT(odt == odtPlecy);
-//		ASSERT(pdat->GetDate() == odt.SetDateTime(2012, 10, 2, 19, 39, 23)); // why crash? same as above
+			// check
+			// too verbose
+			{
+			pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id, TRUE));
+			COleDateTime odt;
+			odt.SetDateTime(2012, 10, 2, 19, 39, 23);
+			COleDateTime odtPlecy = pdat->GetDate();
+			ASSERT(odt == odtPlecy);
+	//		ASSERT(pdat->GetDate() == odt.SetDateTime(2012, 10, 2, 19, 39, 23)); // why crash? odt.setdt returns an int
+			}
+
+			// better
+			{
+			COleDateTime odtPlecy = objPlecy.GetPropertyDate(propDate.id);
+			COleDateTime odt = BDataDate::NewDate(2012, 10, 2, 19, 39, 23);
+			ASSERT(odtPlecy == odt);
+			}
 
 		}
 
@@ -559,6 +567,9 @@ void CTest::DoTests(CNeoMem& app) {
 //		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objGlassfish.GetPropertyDate(propDate.id));
 //		ASSERT(pdat->IsStringDate());
 //		ASSERT(pdat->GetBDataText(&doc, propDate.id) == "ktbday");
+		//, if had overloading based on return type...
+//		CString strFish = objGlassfish.GetPropertyDate(propDate.id);
+//		ASSERT(strFish == "ktbday");
 		}
 
 
@@ -568,12 +579,52 @@ void CTest::DoTests(CNeoMem& app) {
 		}
 
 
+		//, eh, this is all a bit extraneous to the main goal. 
+		// ie adding GetPropertyXXX for missing types, etc.
+		// good for api ultimately, and testing, 
+		// but not for immediate goal of cleaning up the existing code. 
 
 
 
 
 
+		// add class
+		BClass& classPerson = BClass::New(doc, "Person", "a homo sapiens");
+		ASSERT(classPerson.GetPropertyString(propDescription) == "a homo sapiens");
 
+		// add folder
+		BFolder& folderPeople = BFolder::New(doc, "people", rootUser, classPerson.id);
+		ASSERT(folderPeople.GetPropertyLink(propDefaultClass) == classPerson.id);
+
+		// add a person
+		BObject& objKate = BObject::New(doc, classPerson.id, "Kate", folderPeople.id);
+
+
+		// add email property
+		//,
+//		BProperty& propEmail = BProperty::New(doc, "Email", "email address", proptypeString);
+		BObject& propEmail = BObject::New(doc, classProperty, "Email", folderProperties);
+		propEmail.SetPropertyLink(propPropertyType, proptypeEmail);// reqd
+		propEmail.SetPropertyString(propDescription, "email address");
+
+
+		// add it to person class
+		classPerson.SetPropertyLinksAdd(propObjectProperties, propEmail.id);
+
+		// add it to folder
+//,		folderPeople.SetPropertyLinksAdd(propColumns, propEmail.id);
+
+		// ugh
+		BDataColumns* pdatColumns = folderPeople.GetPropertyColumns(propColumnInfoArray);
+		pdatColumns->InsertColumn(propEmail.id, &doc, 0, 2);
+		folderPeople.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
+		delete pdatColumns;
+
+		// set email
+		objKate.SetPropertyString(propEmail.id, "kateb@gmail.com");
+
+		// switch to people folder
+		doc.SetCurrentObject(&folderPeople);
 
 		// keep taking code out of ui into bdoc
 		// fix memory leak

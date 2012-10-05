@@ -40,6 +40,7 @@ public:
 
 private:
 	BOOL EditDate(BObject* pobj, OBJID idProperty);
+	BOOL EditEmail(BObject* pobj, OBJID idProperty);
 	BOOL EditString(BObject* pobj, OBJID idProperty);
 
 };

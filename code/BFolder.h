@@ -1,22 +1,17 @@
 
 
-
 #pragma once
 
 #include "BObject.h"
 
 
-//, don't actually need this class, as bobject can act as a folder for any object. meh.
-// could still use it though, to group the folder fns together
-
-
 class BDataColumns;
+
 
 class BFolder : public BObject {
 
 public:
-	BFolder(BDoc& doc, LPCTSTR pszName = 0, OBJID idParent = 0, OBJID idIcon = 0, ULONG lngFlags = 0);
-	static BFolder& New(BDoc& doc, LPCTSTR pszName = NULL, OBJID idParent = 0, OBJID idIcon = 0, ULONG lngFlags = 0);
+	BFolder(BDoc& doc, LPCTSTR pszName = 0, OBJID idParent = 0, OBJID idDefaultClass = 0, OBJID idIcon = 0, ULONG lngFlags = 0);
+	static BFolder& New(BDoc& doc, LPCTSTR pszName = NULL, OBJID idParent = 0, OBJID idDefaultClass = 0, OBJID idIcon = 0, ULONG lngFlags = 0);
 
-public:
 };

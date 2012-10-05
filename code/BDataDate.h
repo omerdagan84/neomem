@@ -23,6 +23,8 @@ struct sDateFlags {
 };
 
 
+//----------------------------
+
 
 class BDataDate : public BData {
 
@@ -40,7 +42,7 @@ public:
 	virtual CString GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
-	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
+//x	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 
 public:
 	BOOL operator< (const BDataDate& that) { return (m_odt < that.m_odt); };
@@ -63,6 +65,8 @@ public:
 	void SetDate(COleDateTime& odt);
 	void SetDate(int Year, int Month, int Day, int Hour, int Min, int Sec, 
 		int nType = 0, int nRelationship = 0, int nModifiers = 0, int nSeason = 0);
+
+	static COleDateTime NewDate(int Year, int Month, int Day, int Hour, int Min, int Sec);
 
 public: 
 	// Type: Only one type allowed. 4 bits = 16 values

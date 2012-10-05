@@ -4,15 +4,17 @@
 
 #include "precompiled.h"
 
+
+#include "BDoc.h"
 #include "BDataDate.h"
 #include "ConstantsDatabase.h"
-#include "BDoc.h"
 
 
-#include "NeoMem.h"
-#include "DialogEditDate.h"
-#include "DialogEditString.h"
+#include "NeoMem.h" // string constants
 #include "StringEx.h"
+
+//x#include "DialogEditDate.h"
+//x#include "DialogEditString.h"
 
 
 
@@ -386,6 +388,8 @@ void BDataDate::Serialize(CArchive &ar)
 }
 
 
+//x
+/*
 
 // Bring up dialog to enter date/time
 // Updates value and returns TRUE if user hit OK in dialog
@@ -465,6 +469,8 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	return FALSE;
 }
 
+*/
+
 
 
 COleDateTime& BDataDate::GetDate() {
@@ -514,4 +520,12 @@ ULONG BDataDate::GetMemoryUsed(BOOL bRecursive)
 	return nBytes;
 }
 
+
+// Just a way to make it easier to get an ODT. 
+// static 
+COleDateTime BDataDate::NewDate(int Year, int Month, int Day, int Hour, int Min, int Sec) {
+	COleDateTime odt;
+	odt.SetDateTime(Year, Month, Day, Hour, Min, Sec);
+	return odt;
+}
 
