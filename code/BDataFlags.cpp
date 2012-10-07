@@ -99,12 +99,13 @@ void BDataFlags::Serialize(CArchive &ar)
 
 
 
-
+//x
+/*
 BOOL BDataFlags::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 {
 	return FALSE;
 }
-
+*/
 
 
 

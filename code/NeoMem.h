@@ -47,7 +47,7 @@ public:
 
 // Operations
 public:
-	BOOL BrowseFolder(LPCTSTR szInstructions, CString &strFolder);
+//x	BOOL BrowseFolder(LPCTSTR szInstructions, CString &strFolder);
 	BOOL ConvertPlainToRtf(CString& strPlain, CString& strRtf);
 	BOOL ConvertRtfToPlain(LPCTSTR pszRtf, CString& strPlain);
 	BOOL CopyToClipboard(CString& str);

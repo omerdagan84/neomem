@@ -35,13 +35,14 @@ public:
 //	virtual bool GetString(LPCTSTR strTitle, LPCTSTR strInstructions, CString& strString) = 0;
 
 public: 
+	BOOL BrowseFolder(LPCTSTR pszInstructions, CString& strFolder);
 	BOOL EditValue(BObject* pobj, OBJID idProperty);
-
 
 private:
 	BOOL EditDate(BObject* pobj, OBJID idProperty);
 	BOOL EditEmail(BObject* pobj, OBJID idProperty);
 	BOOL EditFile(BObject* pobj, OBJID idProperty);
+	BOOL EditFolder(BObject* pobj, OBJID idProperty);
 	BOOL EditString(BObject* pobj, OBJID idProperty);
 
 };

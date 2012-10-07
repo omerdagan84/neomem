@@ -128,7 +128,8 @@ void CPageOptionsFile::OnBtnBrowse()
 	CWaitCursor wc;
 	CString strFolder;
 	m_txtFolder.GetWindowText(strFolder);
-	if (theApp.BrowseFolder(_T("Select the Document Folder"), strFolder))
+//x	if (theApp.BrowseFolder(_T("Select the Document Folder"), strFolder))
+	if (theApp.ui.BrowseFolder(_T("Select the Document Folder"), strFolder))
 	{
 		// Set current directory here so that browse for startup file will use this folder.
 		// Note - this is also set after dialog is finished.

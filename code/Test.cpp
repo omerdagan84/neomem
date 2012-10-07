@@ -624,7 +624,11 @@ void CTest::DoTests(CNeoMem& app) {
 		folderPeople.SetPropertyColumnsAdd(propColumnInfoArray, propFile.id);
 		objJack.SetPropertyString(propFile.id, "jack.txt");
 
-		// 
+		// add folder property
+		BProperty& propFolder = BProperty::New(doc, "Folder", "folder", proptypeFolder);
+		folderPeople.SetPropertyColumnsAdd(propColumnInfoArray, propFolder.id);
+		objJack.SetPropertyString(propFolder.id, "C:\\Test\\");
+
 
 
 

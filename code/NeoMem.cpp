@@ -2056,7 +2056,8 @@ void CNeoMem::LoadTips() {
 
 
 
-
+//x
+/*
 // Callback used by CNeoMem::BrowseFolder
 int CALLBACK BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData) {
 	TCHAR szDir[MAX_PATH];
@@ -2082,7 +2083,10 @@ int CALLBACK BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpDa
 	}
 	return 0;
 }
+*/
 
+//x
+/*
 // Browse for a folder. 
 // Returns True if user hit OK, with name of folder in cstring.
 // See also Browse for a Folder the Non-COM Way Brian Hart in MSDN
@@ -2127,7 +2131,7 @@ BOOL CNeoMem::BrowseFolder(LPCTSTR szInstructions, CString &strFolder) {
 	return bOK;
 }
 
-
+*/
 
 
 

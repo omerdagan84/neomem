@@ -27,7 +27,7 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
 	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
-	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
+//x	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 	virtual void UIOnClick();
 	virtual void UIOnMouseMove();

@@ -10,6 +10,7 @@
 #include "DialogEditString.h"
 
 #include "FileDialogEx.h"
+#include "NeoMem.h" // m_pmainwnd
 
 
 
@@ -177,6 +178,23 @@ BOOL CUI::EditFile(BObject* pobj, OBJID idProperty)
 
 
 
+BOOL CUI::EditFolder(BObject* pobj, OBJID idProperty)
+{
+	CString strPath = pobj->GetPropertyString(idProperty);
+	if (BrowseFolder(_T("Select folder to link to:"), strPath))
+	{
+		if (!strPath.IsEmpty())
+		{
+//x			m_strText = strPath;
+			pobj->SetPropertyString(idProperty, strPath);
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+
+
 
 BOOL CUI::EditString(BObject* pobj, OBJID idProperty) {
 	//, will want to say the object we're editing and the property name
@@ -232,6 +250,10 @@ BOOL CUI::EditValue(BObject* pobj, OBJID idProperty) {
 		case proptypeFile:
 			return EditFile(pobj, idProperty);
 			break;
+		// flags - no
+		case proptypeFolder:
+			return EditFolder(pobj, idProperty);
+			break;
 		case proptypeString:
 			return EditString(pobj, idProperty);
 			break;
@@ -242,5 +264,83 @@ BOOL CUI::EditValue(BObject* pobj, OBJID idProperty) {
 	}
 
 	return FALSE;
+}
+
+
+
+
+
+// Callback used by BrowseFolder
+int CALLBACK BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData) {
+	TCHAR pszDir[MAX_PATH];
+	switch (uMsg) {
+		// Indicates the browse dialog box has finished initializing. The lParam value is zero. 
+		case BFFM_INITIALIZED:
+			// BFFM_SETSELECTION selects the specified folder. 
+			// To use a PIDL to specify the folder, set the message's lParam to the PIDL, 
+			// and set wParam to FALSE. 
+			// To specify the folder's path, set the message's lParam value to point to a 
+			// NULL-terminated string with the path, and set wParam to TRUE. 
+			if (::GetCurrentDirectory (sizeof(pszDir) / sizeof(TCHAR), pszDir))
+			{
+				::SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM) pszDir);
+			}
+			break;
+                  
+		// Indicates the selection has changed. The lParam parameter points to the item identifier list for the newly selected item. 
+		case BFFM_SELCHANGED: 
+			break;
+		default:
+			break;
+	}
+	return 0;
+}
+
+
+
+// Browse for a folder. 
+// Returns True if user hit OK, with name of folder in cstring.
+// See also Browse for a Folder the Non-COM Way Brian Hart in MSDN
+// Note callback fn above
+BOOL CUI::BrowseFolder(LPCTSTR pszInstructions, CString& strFolder) {
+	BOOL bOK = FALSE;
+
+	LPMALLOC pMalloc;
+	// Get the Shell's default allocator
+	if (::SHGetMalloc(&pMalloc) == NOERROR) {
+		BROWSEINFO bi;
+		char pszBuffer[MAX_PATH];
+
+		// this doesn't work - how do you have it select a folder?
+//		LPTSTR szFolder = strFolder.GetBuffer(0);
+//		strcpy(pszBuffer, szFolder);
+//		strFolder.ReleaseBuffer();
+
+		LPITEMIDLIST pidl;
+		// Get help on BROWSEINFO struct - it's got all the bit settings.
+//		bi.hwndOwner = GetSafeHwnd();
+//		bi.hwndOwner = m_pMainWnd->GetSafeHwnd();
+		bi.hwndOwner = theApp.m_pMainWnd->GetSafeHwnd();
+		bi.pidlRoot = NULL;
+		bi.pszDisplayName = pszBuffer;
+		bi.lpszTitle = pszInstructions;
+		bi.ulFlags = BIF_RETURNFSANCESTORS | BIF_RETURNONLYFSDIRS;
+//		bi.lpfn = NULL;
+		bi.lpfn = BrowseCallbackProc;
+		bi.lParam = 0;
+		// This next call issues the dialog box
+		if ((pidl = ::SHBrowseForFolder(&bi)) != NULL) {
+			if (::SHGetPathFromIDList(pidl, pszBuffer)) { 
+				// At this point pszBuffer contains the selected path
+				strFolder = pszBuffer;
+				bOK = TRUE;
+			}
+			// Free the PIDL allocated by SHBrowseForFolder
+			pMalloc->Free(pidl);
+		}
+		// Release the shell's allocator
+		pMalloc->Release();
+	}
+	return bOK;
 }
 

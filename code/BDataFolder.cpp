@@ -80,8 +80,8 @@ void BDataFolder::Serialize(CArchive &ar)
 }
 
 
-
-
+//x
+/*
 // Bring up dialog to select a Folder
 // Updates value and returns TRUE if user hit OK in dialog.
 BOOL BDataFolder::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
@@ -98,10 +98,8 @@ BOOL BDataFolder::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 		}
 	}
 	return FALSE;
-
-
 }
-
+*/
 
 
 // Create a copy of this object
