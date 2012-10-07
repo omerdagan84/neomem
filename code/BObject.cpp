@@ -1005,6 +1005,7 @@ BOOL BObject::SetPropertyDate(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetMod
 
 
 
+
 // Set a property value, adding a property object if necessary.
 // Returns True if property value set successfully or False if not.
 // (Eg might be parsing something and format is invalid, so returns False).
@@ -1812,6 +1813,22 @@ BOOL BObject::SetPropertyLinks(OBJID idProperty, CObArray* pa, BOOL bSetModified
 		h.idProperty = idProperty;
 		m_pDoc->UpdateAllViewsEx(NULL, hintPropertyChange, &h);
 	}
+
+	return TRUE;
+}
+
+
+
+BOOL BObject::SetPropertyColumnsAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag, BOOL bUpdateViews) {
+	ASSERT_VALID(this);
+	ASSERT(idProperty);
+	ASSERT(idObj);
+
+	BDataColumns* pdatColumns = this->GetPropertyColumns(idProperty);
+//x	pdatColumns->InsertColumn(idObj, &doc);
+	pdatColumns->InsertColumn(idObj, m_pDoc);
+	this->SetPropertyData(idProperty, pdatColumns, bSetModifiedFlag, bUpdateViews);
+	delete pdatColumns;
 
 	return TRUE;
 }

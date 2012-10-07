@@ -146,6 +146,7 @@ public:
 	void SetParent(BObject* pobjNewParent);
 	
 	// could use overloading for these, maybe... (but then not for the get props. darn)
+	BOOL SetPropertyColumnsAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyDate(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);

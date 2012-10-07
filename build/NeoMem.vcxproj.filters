@@ -462,6 +462,9 @@
     <ClCompile Include="..\code\DialogAbout.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="..\code\BProperty.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\code\BCMenu.h">
@@ -930,6 +933,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="..\code\BFolder.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\BProperty.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -106,6 +106,7 @@
     <ClCompile Include="..\code\BFolder.cpp" />
     <ClCompile Include="..\code\BObject.cpp" />
     <ClCompile Include="..\code\BObjects.cpp" />
+    <ClCompile Include="..\code\BProperty.cpp" />
     <ClCompile Include="..\code\Clock.cpp" />
     <ClCompile Include="..\code\Color.cpp" />
     <ClCompile Include="..\code\ColorButton.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="..\code\BFolder.h" />
     <ClInclude Include="..\code\BObject.h" />
     <ClInclude Include="..\code\BObjects.h" />
+    <ClInclude Include="..\code\BProperty.h" />
     <ClInclude Include="..\code\Brooklyn.h" />
     <ClInclude Include="..\code\Clock.h" />
     <ClInclude Include="..\code\Color.h" />

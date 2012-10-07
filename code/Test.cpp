@@ -487,12 +487,6 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// search
-
-		// select the search view
-		CFrameChild* pframe = theApp.GetChildFrame();
-		pframe->ShowView(viewSearch);
-//,?		theApp.ShowView(viewSearch);
-
 		BObjects a;
 		doc.GetObjects(&objFolder, 0, "plec", a); // a query! rather simple
 		ASSERT(a.GetCount() == 1);
@@ -586,7 +580,8 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-
+		// add people so can test email props etc
+		//--------------------------------------------
 
 		// add class
 		BClass& classPerson = BClass::New(doc, "Person", "a homo sapiens");
@@ -601,22 +596,16 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// add email property
-		//,
-//		BProperty& propEmail = BProperty::New(doc, "Email", "email address", proptypeString);
-		BObject& propEmail = BObject::New(doc, classProperty, "Email", folderProperties);
-		propEmail.SetPropertyLink(propPropertyType, proptypeEmail);// reqd
-		propEmail.SetPropertyString(propDescription, "email address");
-
+		BProperty& propEmail = BProperty::New(doc, "Email", "email address", proptypeEmail);
 
 		// add it to person class
 		classPerson.SetPropertyLinksAdd(propObjectProperties, propEmail.id);
 
 		// add it to folder
 //,		folderPeople.SetPropertyLinksAdd(propColumns, propEmail.id);
-
 		// ugh
 		BDataColumns* pdatColumns = folderPeople.GetPropertyColumns(propColumnInfoArray);
-		pdatColumns->InsertColumn(propEmail.id, &doc, 0, 2);
+		pdatColumns->InsertColumn(propEmail.id, &doc);
 		folderPeople.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
 		delete pdatColumns;
 
@@ -626,8 +615,22 @@ void CTest::DoTests(CNeoMem& app) {
 		// switch to people folder
 		doc.SetCurrentObject(&folderPeople);
 
-		// keep taking code out of ui into bdoc
-		// fix memory leak
+
+		// add another person 
+		BObject& objJack = BObject::New(doc, classPerson.id, "Jack", folderPeople.id);
+
+		// add file property
+		BProperty& propFile = BProperty::New(doc, "File", "file", proptypeFile);
+		folderPeople.SetPropertyColumnsAdd(propColumnInfoArray, propFile.id);
+		objJack.SetPropertyString(propFile.id, "jack.txt");
+
+		// 
+
+
+
+
+		//, keep taking code out of ui into bdoc
+		//, fix memory leak
 		
 
 		// ui
@@ -637,6 +640,10 @@ void CTest::DoTests(CNeoMem& app) {
 //		ui.EditValue(&objPlecy, propDescription);
 //		ui.EditValue(&objPlecy, propDate.id);
 
+		// select the search view
+//		CFrameChild* pframe = theApp.GetChildFrame();
+//		pframe->ShowView(viewSearch);
+//,?	theApp.ShowView(viewSearch);
 
 
 
@@ -649,6 +656,11 @@ void CTest::DoTests(CNeoMem& app) {
 		//, pass filename here
 		//, pass pui for interactive / saveas
 //		doc.Save();
+
+
+
+
+
 
 
 	}

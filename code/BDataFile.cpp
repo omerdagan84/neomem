@@ -8,8 +8,8 @@
 #include "BDoc.h"
 
 #include "NeoMem.h"
-#include "DialogEditString.h"
-#include "FileDialogEx.h"
+//#include "DialogEditString.h"
+//#include "FileDialogEx.h"
 
 
 
@@ -82,33 +82,6 @@ void BDataFile::Serialize(CArchive &ar)
 	{
 		ar >> m_strText;
 	}
-}
-
-
-
-
-// Bring up dialog to select a file
-// Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataFile::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
-{
-	ASSERT_VALID(this);
-
-	// Initialize file dialog
-	//. switch to cfiledialog or fix ex
-	CFileDialogEx dlg(FALSE, "", m_strText, NULL);
-//	CFileDialog dlg(FALSE, "", m_strText, NULL);
-	CString strCaption = _T("Select file to link to");
-	dlg.m_ofn.lpstrTitle = strCaption;
-	dlg.m_bShowOptionButton = FALSE; // because exporting, don't need save options!
-
-	// Get export filename
-	if (dlg.DoModal() == IDOK)
-	{
-		m_strText = dlg.GetPathName(); // full/path/test.rtf
-		return TRUE;
-	}
-	
-	return FALSE;
 }
 
 

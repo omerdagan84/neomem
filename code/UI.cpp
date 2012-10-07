@@ -9,6 +9,8 @@
 #include "DialogEditDate.h"
 #include "DialogEditString.h"
 
+#include "FileDialogEx.h"
+
 
 
 CUI::CUI() {
@@ -146,6 +148,36 @@ BOOL CUI::EditEmail(BObject* pobj, OBJID idProperty) {
 
 
 
+
+
+// Bring up dialog to select a file
+// Updates value and returns TRUE if user hit OK in dialog.
+BOOL CUI::EditFile(BObject* pobj, OBJID idProperty)
+{
+	// Initialize file dialog
+	CString strText = pobj->GetPropertyString(idProperty);
+
+	//, ex version not working
+//	CFileDialogEx dlg(FALSE, "", strText, NULL);
+	CFileDialog dlg(FALSE, "", strText, NULL);
+	CString strCaption = _T("Select file to link to");
+	dlg.m_ofn.lpstrTitle = strCaption;
+//x	dlg.m_bShowOptionButton = FALSE; // because exporting, don't need save options!
+
+	// Get export filename
+	if (dlg.DoModal() == IDOK) {
+//x		m_strText = dlg.GetPathName(); // full/path/test.rtf
+		strText = dlg.GetPathName(); // full/path/test.rtf
+		pobj->SetPropertyString(idProperty, strText);
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+
+
+
 BOOL CUI::EditString(BObject* pobj, OBJID idProperty) {
 	//, will want to say the object we're editing and the property name
 	// Object: System
@@ -197,11 +229,14 @@ BOOL CUI::EditValue(BObject* pobj, OBJID idProperty) {
 		case proptypeEmail:
 			return EditEmail(pobj, idProperty);
 			break;
+		case proptypeFile:
+			return EditFile(pobj, idProperty);
+			break;
 		case proptypeString:
 			return EditString(pobj, idProperty);
 			break;
 		default:
-			AfxMessageBox("missing case stmt");
+			AfxMessageBox("missing case stmt in cui.editvalue");
 			ASSERT(0);
 			return FALSE;
 	}
