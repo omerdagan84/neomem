@@ -8,6 +8,8 @@
 //, #include "Dialogs.h"  ?
 #include "DialogEditDate.h"
 #include "DialogEditString.h"
+#include "DialogEditLink.h"
+#include "DialogEditPersonName.h"
 
 #include "FileDialogEx.h"
 #include "NeoMem.h" // m_pmainwnd
@@ -28,8 +30,16 @@ CUI::~CUI() {
 //----------------------------------
 
 
+
+
+
+//x
+/*
+
+
 // The code in the case stmts used to be spread out through the BData classes,
 // but in separating the db from the ui needed to remove it here.
+
 
 
 BOOL CUI::EditDate(BObject* pobj, OBJID idProperty) {
@@ -266,6 +276,7 @@ BOOL CUI::EditValue(BObject* pobj, OBJID idProperty) {
 	return FALSE;
 }
 
+*/
 
 
 
@@ -344,3 +355,111 @@ BOOL CUI::BrowseFolder(LPCTSTR pszInstructions, CString& strFolder) {
 	return bOK;
 }
 
+
+
+BOOL CUI::EditString(CString& str) {
+	CDialogEditString dlg;
+	dlg.m_strValue = str;
+	if (dlg.DoModal() == IDOK)
+	{
+		// Save new string value
+		str = dlg.m_strValue;
+		return TRUE;
+	}
+	return FALSE;
+}
+
+
+int CUI::MessageBox(CString& str, UINT nType) {
+	return AfxMessageBox(str, nType);
+}
+
+
+BOOL CUI::GetDate(COleDateTime& odt, BOOL& bUseTime) {
+
+	CDialogEditDate dlg;
+	dlg.m_dtDate = odt;
+	dlg.m_dtTime = odt;
+	dlg.m_bUseTime = bUseTime;
+
+	if (dlg.DoModal() == IDOK) {
+		// Save new date and time
+		COleDateTime& dtDate = dlg.m_dtDate;
+		COleDateTime& dtTime = dlg.m_dtTime;
+		COleDateTime odtDialog;
+		int nRet = odtDialog.SetDateTime(dtDate.GetYear(), dtDate.GetMonth(), dtDate.GetDay(),
+									dtTime.GetHour(), dtTime.GetMinute(), dtTime.GetSecond());
+		if (nRet == 0) {
+			odt = odtDialog;
+			bUseTime = dlg.m_bUseTime;
+//x			// Set flags?
+//			m_bitsFlags.Type = 0;
+//			m_bitsFlags.Relationship = 0;
+//			m_bitsFlags.Modifiers = dlg.m_bUseTime ? flagUseTime : 0;
+//			m_bitsFlags.Season = 0;
+			return TRUE;
+		}
+		AfxMessageBox("Error in setting date. Please try again.", MB_ICONINFORMATION);
+		return FALSE;
+	}
+	// user hit cancel
+	return FALSE;
+}
+
+
+
+BOOL CUI::EditLink(CString strCaption, CString strInstructions, BOOL bMultiSelectVisible, 
+								 BOOL bMultiSelectEnabled, BOOL bMultiSelectOn, ULONG lngStartID, 
+								 BDataLink* pdatLink, ULONG lngExcludeFlags /* = 0 */, 
+								 BOOL bIncludeStart /* = FALSE */) {
+
+	CDialogEditLink dlg;
+	dlg.m_nHelpID = IDD_EDIT_LINK; //, use sethelpid
+	if (dlg.DoModalLink(strCaption, strInstructions, bMultiSelectVisible, bMultiSelectEnabled, bMultiSelectOn, 
+									lngStartID, pdatLink, theApp.m_lngExcludeFlags) == IDOK)
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
+
+
+// Edit a numeric value. Just bring up calculator for now. 
+//, 
+BOOL CUI::EditNumber() {
+	CWaitCursor wc;
+	HINSTANCE h = ::ShellExecute(NULL, "open", "Calc.exe", NULL, NULL, SW_SHOWNORMAL);
+	Library::HandleShellExecuteError(h);
+	return FALSE;
+}
+
+
+
+BOOL CUI::EditName(CString& strTitle, CString& strFirst, CString& strMiddle, 
+					CString& strNickname, CString& strLast, CString& strSuffix) {
+
+	CDialogEditPersonName dlg;
+
+	dlg.m_strTitle = strTitle;
+	dlg.m_strFirst = strFirst;
+	dlg.m_strMiddle = strMiddle;
+	dlg.m_strNickname = strNickname;
+	dlg.m_strLast = strLast;
+	dlg.m_strSuffix = strSuffix;
+
+	// Bring up simple dialog to edit name parts
+	if (dlg.DoModal() == IDOK)
+	{
+		// Save new string values
+		strTitle = dlg.m_strTitle;
+		strFirst = dlg.m_strFirst;
+		strMiddle = dlg.m_strMiddle;
+		strNickname = dlg.m_strNickname;
+		strLast = dlg.m_strLast;
+		strSuffix = dlg.m_strSuffix;
+
+		return TRUE;
+	}
+	return FALSE;
+}

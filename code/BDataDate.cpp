@@ -234,12 +234,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 
 // Get text representation of date into string, eg "January 15, 1988".
-// Don't need pdoc or lngpropertyid - pass zero
-CString BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
-{
-	// not used
-//x	ASSERT(pDoc == NULL);
-//x	ASSERT(lngPropertyID == 0);
+CString BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion) {
 
 	// Return string if string flag is set
 	if (m_bitsFlags.Type == flagString)
@@ -388,12 +383,10 @@ void BDataDate::Serialize(CArchive &ar)
 }
 
 
-//x
-/*
 
 // Bring up dialog to enter date/time
 // Updates value and returns TRUE if user hit OK in dialog
-BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 {
 	// Check assumptions
 	ASSERT_VALID(this);
@@ -404,7 +397,9 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	// If storing a string bring up edit string dialog
 	if (m_bitsFlags.Type == flagString)
 	{
-		CDialogEditString dlg;
+
+//x
+		/*		CDialogEditString dlg;
 		dlg.m_strValue = m_strText;
 		if (dlg.DoModal() == IDOK)
 		{
@@ -412,7 +407,9 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 			m_strText = dlg.m_strValue;
 			return TRUE;
 		}
-		return FALSE;
+		*/
+		return ui.EditString(m_strText);
+//x		return FALSE;
 	}
 
 	// Get current date/time if date is empty or invalid
@@ -424,10 +421,17 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	// Check if year is before 1753
 	if (m_odt.GetYear() < 1753)
 	{
-		if (IDNO == AfxMessageBox("Warning: The calendar control does not handle dates before \n"
-									"September 1, 1752 due to the change from the Julian to the Gregorian \n"
-									"calendar. You can still use the date dialog but you won't be able to select \n"
-									"dates prior to this date. Continue?", MB_YESNO + MB_ICONQUESTION))
+//x		if (IDNO == AfxMessageBox("Warning: The calendar control does not handle dates before \n"
+//									"September 1, 1752 due to the change from the Julian to the Gregorian \n"
+//									"calendar. You can still use the date dialog but you won't be able to select \n"
+//									"dates prior to this date. Continue?", MB_YESNO + MB_ICONQUESTION))
+//		, MB_YESNO + MB_ICONQUESTION))
+//			return FALSE;
+		CString str = "Warning: The calendar control does not handle dates before \n"
+						"September 1, 1752 due to the change from the Julian to the Gregorian \n"
+						"calendar. You can still use the date dialog but you won't be able to select \n"
+						"dates prior to this date. Continue?";
+		if (IDNO == ui.MessageBox(str, MB_YESNO + MB_ICONQUESTION))
 			return FALSE;
 	}
 	// Check if any flags are set
@@ -441,11 +445,15 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 			return FALSE;
 	}
 
+
+//x
+/*
 	CDialogEditDate dlg;
 	dlg.m_dtDate = m_odt;
 	dlg.m_dtTime = m_odt;
 //	dlg.m_bUseTime = FALSE; // default is to just enter date
 	dlg.m_bUseTime = m_bitsFlags.Modifiers && flagUseTime;
+
 	if (dlg.DoModal() == IDOK)
 	{
 		// Save new date and time
@@ -467,9 +475,23 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 		AfxMessageBox("Error in setting date. Please try again.", MB_ICONINFORMATION);
 	}
 	return FALSE;
+*/
+
+	BOOL bUseTime = m_bitsFlags.Modifiers && flagUseTime;
+	if (ui.GetDate(m_odt, bUseTime)) {
+//		AfxMessageBox("HI");
+		m_bitsFlags.Type = 0;
+		m_bitsFlags.Relationship = 0;
+		m_bitsFlags.Modifiers = bUseTime ? flagUseTime : 0;
+		m_bitsFlags.Season = 0;
+		// Note: BObject's UIEditValue will set document modified flag and update all views
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
-*/
+
 
 
 

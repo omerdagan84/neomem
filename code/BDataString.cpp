@@ -8,7 +8,7 @@
 #include "ConstantsDatabase.h"
 #include "BDoc.h"
 
-#include "NeoMem.h"
+//x#include "NeoMem.h"
 //x#include "DialogEditString.h"
 
 
@@ -84,13 +84,13 @@ void BDataString::Serialize(CArchive &ar)
 
 
 
-//x
-/*
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataString::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataString::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 {
 	ASSERT_VALID(this);
+//x
+/*
 	CDialogEditString dlg;
 	dlg.m_strValue = m_strText;
 	if (dlg.DoModal() == IDOK)
@@ -100,8 +100,10 @@ BOOL BDataString::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 		return TRUE;
 	}
 	return FALSE;
-}
 */
+	return ui.EditString(m_strText);
+}
+
 
 
 // Create a copy of this object

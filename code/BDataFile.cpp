@@ -152,3 +152,13 @@ BOOL BDataFile::UIHandleCommand(UINT nCommandID)
 
 
 
+// Bring up dialog to edit string value.
+// Updates value and returns TRUE if user hit OK in dialog.
+BOOL BDataFile::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+{
+	ASSERT_VALID(this);
+	return ui.EditString(m_strText);
+}
+
+
+

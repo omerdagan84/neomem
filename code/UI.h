@@ -31,19 +31,32 @@ public:
 	virtual ~CUI();
 
 
-//	virtual bool GetFileName(LPCTSTR strTitle, LPCTSTR strExtension, LPCTSTR strFilter, CString& strFilename) = 0;
-//	virtual bool GetString(LPCTSTR strTitle, LPCTSTR strInstructions, CString& strString) = 0;
 
 public: 
 	BOOL BrowseFolder(LPCTSTR pszInstructions, CString& strFolder);
-	BOOL EditValue(BObject* pobj, OBJID idProperty);
+//	virtual bool GetFileName(LPCTSTR strTitle, LPCTSTR strExtension, LPCTSTR strFilter, CString& strFilename) = 0;
+//	virtual bool GetString(LPCTSTR strTitle, LPCTSTR strInstructions, CString& strString) = 0;
+	BOOL EditString(CString& str);
+	BOOL GetDate(COleDateTime& odt, BOOL& bUseTime);
+	int MessageBox(CString& str, UINT nType = 0);
+	BOOL EditLink(CString strCaption, CString strInstructions, BOOL bMultiSelectVisible, 
+								 BOOL bMultiSelectEnabled, BOOL bMultiSelectOn, ULONG lngStartID, 
+								 BDataLink* pdatLink, ULONG lngExcludeFlags = 0, 
+								 BOOL bIncludeStart = FALSE);
+	BOOL EditNumber();
+	BOOL EditName(CString& strTitle, CString& strFirst, CString& strMiddle, CString& strNickname, CString& strLast, CString& strSuffix);
 
+
+//x	BOOL EditValue(BObject* pobj, OBJID idProperty);
+/*
 private:
 	BOOL EditDate(BObject* pobj, OBJID idProperty);
 	BOOL EditEmail(BObject* pobj, OBJID idProperty);
 	BOOL EditFile(BObject* pobj, OBJID idProperty);
 	BOOL EditFolder(BObject* pobj, OBJID idProperty);
 	BOOL EditString(BObject* pobj, OBJID idProperty);
+*/
+
 
 };
 

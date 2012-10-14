@@ -137,7 +137,8 @@ BOOL BData::UIAddMenuItems(CMenu* pMenu, int nPos) {
 
 // The UIEditValue routine should set the document modified flag
 // and return TRUE if value was changed
-BOOL BData::UIEditValue(BObject* pobj, BObject* pobjPropertyDef) {
+//BOOL BData::UIEditValue(BObject* pobj, BObject* pobjPropertyDef) {
+BOOL BData::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui) {
 	AfxMessageBox(_T("Need EditValue handler for this property type"));
 	return FALSE;
 }

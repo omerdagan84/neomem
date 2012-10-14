@@ -146,7 +146,7 @@ public:
 	void SetParent(BObject* pobjNewParent);
 	
 	// could use overloading for these, maybe... (but then not for the get props. darn)
-	BOOL SetPropertyColumnsAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
+//x	BOOL SetPropertyColumnsAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyDate(OBJID lngPropertyID, LPCTSTR pszText, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
 	BOOL SetPropertyLink(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE);
@@ -159,6 +159,7 @@ public:
 	BOOL SortChildren();
 
 //x	BOOL UIEditValue(OBJID lngPropertyID);
+	BOOL UIEditValue(OBJID lngPropertyID, CUI& ui);
 
 
 public:
@@ -192,6 +193,8 @@ private:
 
 
 	// These are not serialized
+	// mpdoc made protected so bfolder etc can access it
+protected:
 	BDoc* m_pDoc; // pointer to the document which stores this bobject
 	CStringEx m_strTextCache; // This is a cache for the text-representation for this data object
 //	int m_bStringValid; // Flag indicating if string cache is valid. Set to false when data changes

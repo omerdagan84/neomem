@@ -21,6 +21,8 @@ class BDoc;
 
 //, don't like having these here, but makes other code nicer
 //xclass BDataColumns; //,
+class CUI;
+
 
 
 
@@ -42,14 +44,16 @@ public:
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
 //x	virtual LPCTSTR GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	//, pDoc and lngPropID are not used in BDataDate, for instance. make them optional here
-	virtual CString GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
+//x	virtual CString GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
+	virtual CString GetBDataText(BDoc* pDoc = NULL, ULONG lngPropertyID = 0, BOOL bMachineVersion=FALSE);
 	virtual BOOL IsValid(BDoc* pDoc);
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);
 	virtual void ResetData(); // use this to reset bdata's m_bCacheValid flag
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
 	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
-	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
+//x	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
+	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui);
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 	virtual void UIOnClick();
 	virtual void UIOnMouseMove();

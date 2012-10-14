@@ -16,7 +16,7 @@
 #include "ListCtrlEx.h"
 
 
-#include "Brooklyn.h"
+//#include "Brooklyn.h"
 
 
 
@@ -569,6 +569,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 
 				CHint* pobjHint = DYNAMIC_DOWNCAST(CHint, pHint);
 				ASSERT_VALID(pobjHint);
+//				CHint* pobjHint = CHint::ToHint(pHint);
 				
 				BObject* pobj = pobjHint->pobjObject;
 				ASSERT_VALID(pobj);
@@ -1697,9 +1698,8 @@ void CViewContents::OnObjEditInDialog()
 
 	// Edit the property value in an appropriate dialog.
 //x	pobj->UIEditValue(lngPropertyID);
-
-	theApp.ui.EditValue(pobj, lngPropertyID);
-//	ui.EditValue(pobj, lngPropertyID); //, 
+//x	theApp.ui.EditValue(pobj, lngPropertyID);
+	pobj->UIEditValue(lngPropertyID, theApp.ui);
 
 }
 

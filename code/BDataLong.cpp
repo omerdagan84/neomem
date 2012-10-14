@@ -102,11 +102,12 @@ ULONG BDataLong::GetMemoryUsed(BOOL bRecursive)
 // enter amount and select units from combo.
 // for now bring up windows calculator
 // (same as bdatanumber)
-BOOL BDataLong::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataLong::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 {
-	CWaitCursor wc;
-	HINSTANCE h = ::ShellExecute(NULL, "open", "Calc.exe", NULL, NULL, SW_SHOWNORMAL);
-	Library::HandleShellExecuteError(h);
-	return FALSE;
+	return ui.EditNumber();
+//x	CWaitCursor wc;
+//	HINSTANCE h = ::ShellExecute(NULL, "open", "Calc.exe", NULL, NULL, SW_SHOWNORMAL);
+//	Library::HandleShellExecuteError(h);
+//	return FALSE;
 }
 

@@ -8,6 +8,8 @@
 #include "ConstantsDatabase.h"
 
 
+#include "NeoMem.h" // cui
+
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -108,5 +110,27 @@ ULONG BDataBoolean::GetMemoryUsed(BOOL bRecursive)
 {
 	ULONG nBytes = sizeof(BDataBoolean);
 	return nBytes;
+}
+
+
+
+
+// Bring up dialog to enter value
+// Updates value and returns TRUE if user hit OK in dialog
+BOOL BDataBoolean::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+{
+	// Check assumptions
+	ASSERT_VALID(this);
+//	ASSERT_VALID(pobj); // compile error?
+//	ASSERT_VALID(pobjPropertyDef); // ditto
+
+//	return ui.EditString(m_strText);
+
+	CString str = this->GetBDataText();
+	if (ui.EditString(str)) {
+		this->SetBDataText(str);
+		return TRUE;
+	}
+	return FALSE;
 }
 

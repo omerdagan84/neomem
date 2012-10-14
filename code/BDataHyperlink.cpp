@@ -8,7 +8,7 @@
 #include "BDoc.h"
 
 #include "NeoMem.h"
-#include "DialogEditString.h"
+//x#include "DialogEditString.h"
 
 
 #ifdef _DEBUG
@@ -83,7 +83,7 @@ void BDataHyperlink::Serialize(CArchive &ar)
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataHyperlink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataHyperlink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 {
 	ASSERT_VALID(this);
 	
@@ -115,8 +115,8 @@ BOOL BDataHyperlink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 //	note: pobjPropertyDef->m_lngClassID = 4 (classProperty)
 
 
-
-	CDialogEditString dlg;
+//x
+/*	CDialogEditString dlg;
 	dlg.m_strValue = m_strText;
 	if (dlg.DoModal() == IDOK)
 	{
@@ -125,6 +125,9 @@ BOOL BDataHyperlink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 		return TRUE;
 	}
 	return FALSE;
+*/
+
+	return ui.EditString(m_strText);
 }
 
 

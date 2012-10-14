@@ -9,16 +9,22 @@
 
 class BObject;
 class BObjects;
+class CHint; // for ToHint
 
-
-struct CHint : public CObject {
+class CHint : public CObject {
+public:
 	BObject* pobjObject;
 	BObject* pobjParent; // not used?
 	BObjects* paObjects;
 	ULONG idProperty; // for property change notifications
 	BObject* pobjTarget; // for move up and move down
 	BOOL bAfter; // for move up and move down - true if move after target, false if move before
+	static CHint* ToHint(CObject* pcobj) { CHint* phint = DYNAMIC_DOWNCAST(CHint, pcobj); ASSERT_VALID(phint); return phint; };
+
 };
+
+
+
 
 
 

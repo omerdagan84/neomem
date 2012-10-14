@@ -132,7 +132,7 @@ public:
 	BObject& NewObject(const OBJID idClass, const CString& strName, OBJID idLocation = NULL);
 	OBJID NewProperty(const CString& strName, OBJID idPropType, const CString& strDescription);
 	void RemoveObjectFromIndex(OBJID idObject);
-	void Save();
+	void Save(LPCTSTR pszFilename = NULL, BOOL bReplace = TRUE);
 	BOOL SaveModifiedBackup();
 	void SetCurrentObject(BObject* pobjCurrent, CView* pSender = 0, BOOL bNavigating = FALSE);
 	virtual void SetModifiedFlag(BOOL bModified = TRUE);

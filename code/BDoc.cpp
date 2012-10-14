@@ -1883,7 +1883,8 @@ BOOL BDoc::UIEditObject(BObject *pobj) {
 //	OBJID idNamePropType = pobjNamePropType->GetObjectID();
 //	if (lngNamePropTypeID == proptypePersonName)
 	if (bPersonName || bIcon) {
-		if (pobj->GetData()->UIEditValue(pobj, 0)) {
+//x		if (pobj->GetData()->UIEditValue(pobj, 0)) {
+		if (pobj->GetData()->UIEditValue(pobj, 0, theApp.ui)) {
 			CHint h;
 			h.pobjObject = pobj;
 			h.idProperty = propName;
@@ -2022,7 +2023,8 @@ void BDoc::OnObjEditInDialog() {
 	// First make sure there's just one object for the target
 	if (IsTargetSingle()) {
 //x		UIRenameObject(m_pobjTarget);
-		theApp.ui.EditValue(m_pobjTarget, propName);
+//x		theApp.ui.EditValue(m_pobjTarget, propName);
+		m_pobjTarget->UIEditValue(propName, theApp.ui);
 	}	
 }
 
@@ -2263,11 +2265,6 @@ void BDoc::OnUpdateViewToggleContents(CCmdUI* pCmdUI) {
 
 
 
-
-
-void BDoc::Save() {
-	OnFileSave();
-}
 
 
 // Virtual function called by framework before a modified document is to be closed. 
@@ -3958,8 +3955,18 @@ void BDoc::RemoveObjectFromIndex(OBJID idObject)
 
 
 
+// Prompt user for filename if not specified
+void BDoc::Save(LPCTSTR pszFilename, BOOL bReplace) {
+	if (pszFilename)
+		DoSave(pszFilename, bReplace);
+	else
+		OnFileSave();
+}
+
+
 void BDoc::OnFileSave()
 {
 	CDocument::OnFileSave();
 }
+
 

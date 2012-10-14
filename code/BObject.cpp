@@ -1818,7 +1818,8 @@ BOOL BObject::SetPropertyLinks(OBJID idProperty, CObArray* pa, BOOL bSetModified
 }
 
 
-
+//x
+/*
 BOOL BObject::SetPropertyColumnsAdd(OBJID idProperty, OBJID idObj, BOOL bSetModifiedFlag, BOOL bUpdateViews) {
 	ASSERT_VALID(this);
 	ASSERT(idProperty);
@@ -1832,7 +1833,7 @@ BOOL BObject::SetPropertyColumnsAdd(OBJID idProperty, OBJID idObj, BOOL bSetModi
 
 	return TRUE;
 }
-
+*/
 
 
 // Add an object to a multilink property
@@ -2499,12 +2500,11 @@ BOOL BObject::MoveDown()
 
 
 
-//x
-/*
 // Edit the value associated with the given property in a dialog.
 // Returns True if user hit OK.
 // Note: This will set document modified flag and tell all views about any property change also.
-BOOL BObject::UIEditValue(OBJID lngPropertyID)
+//xBOOL BObject::UIEditValue(OBJID lngPropertyID)
+BOOL BObject::UIEditValue(OBJID lngPropertyID, CUI& ui)
 {
 	ASSERT_VALID(this);
 	ASSERT(lngPropertyID);
@@ -2532,7 +2532,8 @@ BOOL BObject::UIEditValue(OBJID lngPropertyID)
 		// UIEditValue will bring up a dialog box that lets user modify the value stored in the BData object.
 		// Need to pass object and property so it knows the context.
 		// It will return True if user said OK in dialog.
-		ret = pdat->UIEditValue(this, pobjPropertyDef);
+//x		ret = pdat->UIEditValue(this, pobjPropertyDef);
+		ret = pdat->UIEditValue(this, pobjPropertyDef, ui);
 		if (ret) {
 			// User said OK, so let's set the BData copy with the new value to the object.
 			// This also sets the document modified flag and updates views.
@@ -2542,7 +2543,6 @@ BOOL BObject::UIEditValue(OBJID lngPropertyID)
 	}
 	return ret;
 }
-*/
 
 
 
@@ -2847,6 +2847,7 @@ BOOL BObject::SetIconID(OBJID lngIconID)
 }
 
 
+//, move to bfolder
 BOOL BObject::SetColumns(BDataColumns& cols) {
 	ASSERT_VALID(this);
 	BOOL bResult = this->SetPropertyData(propColumnInfoArray, &cols); // sends hint
@@ -2858,6 +2859,7 @@ BOOL BObject::SetColumns(BDataColumns& cols) {
 
 // For this folder object, initialize the column array (propColumnInfoArray) 
 // to reflect the properties used by the default class.
+//, move to bfolder
 void BObject::SetColumnsBasedOnClass(BObject *pobjDefaultClass) {
 	
 	BDataColumns* pdatCols = new BDataColumns;

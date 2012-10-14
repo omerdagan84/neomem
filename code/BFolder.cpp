@@ -28,3 +28,28 @@ BFolder& BFolder::New(BDoc& doc, LPCTSTR pszName, OBJID idParent, OBJID idDefaul
 }
 
 
+
+
+void BFolder::RemoveColumn(OBJID idProperty) {
+	BData* pdat = GetPropertyData(propColumnInfoArray);
+	if (!pdat) return;
+	BDataColumns* pdatCols = DYNAMIC_DOWNCAST(BDataColumns, pdat);
+	if (!pdatCols) return;
+	int nCol = pdatCols->GetColumnIndex(idProperty);
+	if (nCol==-1) return;
+	pdatCols->RemoveColumn(nCol);
+	SetPropertyData(propColumnInfoArray, pdatCols);
+}
+
+
+void BFolder::AddColumn(OBJID idProperty, int nWidth, int nCol) {
+	BData* pdat = GetPropertyData(propColumnInfoArray);
+	if (!pdat) return;
+	BDataColumns* pdatCols = DYNAMIC_DOWNCAST(BDataColumns, pdat);
+	if (!pdatCols) return;
+	pdatCols->InsertColumn(idProperty, m_pDoc, nWidth, nCol);
+	SetPropertyData(propColumnInfoArray, pdatCols);	
+}
+
+
+

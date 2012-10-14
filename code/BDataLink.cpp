@@ -12,7 +12,7 @@
 
 #include "NeoMem.h"
 #include "Constants.h"
-#include "DialogEditLink.h"
+//x#include "DialogEditLink.h"
 #include "StringEx.h"
 
 
@@ -225,7 +225,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 // Bring up dialog to select object(s) to refer to for this link.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
+BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 {
 	// Check assumptions
 	ASSERT_VALID(this);
@@ -253,7 +253,9 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	else
 		strInstructions.Format("Select a new value for the %s property.", (LPCTSTR) strPropName);
 
+
 	// Bring up the Edit Link dialog, which allows user to modify the links and their order. 
+/*
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_EDIT_LINK; //, use sethelpid
 	if (dlg.DoModalLink(pszCaption, strInstructions, bMultiSelectVisible, bMultiSelectEnabled, bMultiSelectOn, 
@@ -265,7 +267,14 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 		return TRUE;
 	}
 	return FALSE;
+*/
+
+	return ui.EditLink(pszCaption, strInstructions, bMultiSelectVisible, bMultiSelectEnabled, bMultiSelectOn, 
+			idStart, this, theApp.m_lngExcludeFlags);
 }
+
+
+
 
 
 
@@ -1235,6 +1244,8 @@ bool BDataLink::Test(BDoc* pdoc)
 	// get some object to mess with
 //	BObject* pobj = pdoc->GetCurrentObject();
 
+//x
+/*
 	ULONG idHobo = 500865;
 	ULONG idAuthor = 500862;
 	ULONG idJulia = 500864;
@@ -1269,6 +1280,7 @@ bool BDataLink::Test(BDoc* pdoc)
 		// would do notifies here
 
 	}
+*/
 
 	return true;
 }
