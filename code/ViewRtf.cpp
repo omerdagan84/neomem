@@ -138,7 +138,7 @@ END_MESSAGE_MAP()
 
 CViewRtf::CViewRtf()
 {
-	xTRACE("CViewRtf Constructor\n");
+	//trace("CViewRtf Constructor\n");
 	m_pViewRtf = 0;
 	m_prtf = 0;
 	m_bMatchCase = FALSE;
@@ -151,7 +151,7 @@ CViewRtf::CViewRtf()
 
 CViewRtf::~CViewRtf()
 {
-	xTRACE("cviewrtf destructor\n");
+	//trace("cviewrtf destructor\n");
 //	m_wndMini.DestroyWindow(); // delete
 }
 
@@ -159,7 +159,7 @@ CViewRtf::~CViewRtf()
 
 int CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	xTRACE("CViewRtf OnCreate - create toolbar and rtf child view\n");
+	//trace("CViewRtf OnCreate - create toolbar and rtf child view\n");
 	
 	// Putting this in constructor doesn't work cause g_ haven't been initialized yet
 //	m_clrForecolor = g_clrWindowText;
@@ -194,7 +194,7 @@ int CViewRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		SetChildView(m_pViewRtf);
 
 		// Set the default font in the RTF control
-		SetDefaultFont(theApp.m_fontRtfDefault);
+		SetDefaultFont(app.m_fontRtfDefault);
 
 		// Set default color
 		SetDefaultColor();
@@ -267,7 +267,7 @@ BOOL CViewRtf::OnEraseBkgnd(CDC* pDC)
 
 BOOL CViewRtf::DoPrint(BOOL bPreview)
 {
-	xTRACE("CViewRtf::DoPrint - send message to m_pViewRtf\n");
+	//trace("CViewRtf::DoPrint - send message to m_pViewRtf\n");
 	if (bPreview)
 		m_pViewRtf->SendMessage(WM_COMMAND, ID_FILE_PRINT_PREVIEW, 0);
 	else
@@ -287,14 +287,14 @@ BOOL CViewRtf::DoPrint(BOOL bPreview)
 /*
 void CViewRtf::OnFilePrint()
 {
-	xTRACE("CViewRtf OnFilePrint - send message to m_pViewRtf\n");
+	//trace("CViewRtf OnFilePrint - send message to m_pViewRtf\n");
 	m_pViewRtf->SendMessage(WM_COMMAND, ID_FILE_PRINT, 0);
 }
 
 // This gets called from CFrameMain ID_FILE_PRINT_PREVIEW handler
 void CViewRtf::OnFilePrintPreview()
 {
-	xTRACE("CViewRtf OnFilePrintPreview - send message to m_pViewRtf\n");
+	//trace("CViewRtf OnFilePrintPreview - send message to m_pViewRtf\n");
 	// Hand to CRichEditView
 	// Note: Can't call OnFilePrintPreview directly since it's protected
 	// Therefore, we made our own function
@@ -306,7 +306,7 @@ void CViewRtf::OnFilePrintPreview()
 
 BOOL CViewRtf::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	xTRACE("CViewRtf OnPreparePrinting\n");
+	//trace("CViewRtf OnPreparePrinting\n");
 	// default preparation
 	// If you don't call SetMaxPage the framework assumes the document is only one page long
 //	pInfo->SetMaxPage(10);
@@ -316,7 +316,7 @@ BOOL CViewRtf::OnPreparePrinting(CPrintInfo* pInfo)
 // Override to allocate fonts and other resources required for printing
 void CViewRtf::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
-	xTRACE("CViewRtf OnBeginPrinting\n");
+	//trace("CViewRtf OnBeginPrinting\n");
 	// TODO: add extra initialization before printing
 //	m_pViewRtf->OnBeginPrinting(pDC, pInfo);
 }
@@ -328,7 +328,7 @@ void CViewRtf::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 // to TRUE or FALSE each time it's called. FALSE terminates the print job.
 void CViewRtf::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) 
 {
-	xTRACE("CViewRtf OnPrepareDC\n");
+	//trace("CViewRtf OnPrepareDC\n");
 	CViewEx::OnPrepareDC(pDC, pInfo);
 //	if (pDC->IsPrinting())
 //	{
@@ -342,7 +342,7 @@ void CViewRtf::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
 // Note: This doesn't get called because we let CRichEditView2 handle printing.
 void CViewRtf::OnPrint(CDC* pDC, CPrintInfo* pInfo) 
 {
-	xTRACE("CViewRtf OnPrint\n");
+	//trace("CViewRtf OnPrint\n");
 
 	// Call base class (verifies DC and calls OnDraw)
 //	CViewEx::OnPrint(pDC, pInfo);
@@ -357,7 +357,7 @@ void CViewRtf::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 // Deallocate resources allocated in OnBeginPrinting
 void CViewRtf::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
-	xTRACE("CViewRtf OnEndPrinting\n");
+	//trace("CViewRtf OnEndPrinting\n");
 	// TODO: add cleanup after printing
 //	m_pViewRtf->OnEndPrinting(pDC, pInfo);
 }
@@ -372,7 +372,7 @@ void CViewRtf::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 
 void CViewRtf::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-	TRACE("    CViewRtf::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewRtf::OnUpdate %s\n", app.GetHintName(lHint));
 
 	switch (lHint)
 	{
@@ -412,7 +412,7 @@ if (strlen(pszRtf) > 0)
 	CString str1;
 	CString str2;
 	m_prtf->GetWindowText(str1);
-	theApp.ConvertRtfToPlain(pszRtf, str2);
+	app.ConvertRtfToPlain(pszRtf, str2);
 	if (str1.Compare(str2) != 0)
 	{
 		ASSERT(0);
@@ -424,7 +424,7 @@ if (strlen(pszRtf) > 0)
 				// Bug: This wasn't returning 0 even for new items because of blanks that got in it in SetRtf
 				//    Caused screwy behaviour with default fonts - took forever to track down
 				if (m_prtf->GetWindowTextLength() == 0)
-					SetDefaultFont(theApp.m_fontRtfDefault);
+					SetDefaultFont(app.m_fontRtfDefault);
 
 				// Set the default color (black)
 				SetDefaultColor();
@@ -500,7 +500,7 @@ if (strlen(pszRtf) > 0)
 			{
 				// Update the rtf control's default font if it's blank
 				if (m_prtf->GetWindowTextLength() == 0)
-					SetDefaultFont(theApp.m_fontRtfDefault);
+					SetDefaultFont(app.m_fontRtfDefault);
 				break;
 			}
 
@@ -509,7 +509,7 @@ if (strlen(pszRtf) > 0)
 				// Bug: This was a pain - the rtf control wasn't refreshing in some instances, finally
 				// got it to redraw using SetRect, which according to the documentation, will force
 				// a redraw of the text. 
-				xTRACE("CViewRtf::OnUpdate hintSelect - redraw window\n");
+				//trace("CViewRtf::OnUpdate hintSelect - redraw window\n");
 				AdjustWindow();
 				break;
 			}
@@ -530,7 +530,7 @@ if (strlen(pszRtf) > 0)
 
 					// Set the default font if it's blank
 					if (m_prtf->GetWindowTextLength() == 0)
-						SetDefaultFont(theApp.m_fontRtfDefault);
+						SetDefaultFont(app.m_fontRtfDefault);
 				}
 				break;
 			}
@@ -546,7 +546,7 @@ if (strlen(pszRtf) > 0)
 
 void CViewRtf::OnSize(UINT nType, int cx, int cy) 
 {
-	xTRACE("CViewRtf OnSize\n"); 
+	//trace("CViewRtf OnSize\n"); 
 
 	// This will position the toolbar and child view correctly
 	CViewEx::OnSize(nType, cx, cy);
@@ -585,7 +585,7 @@ void CViewRtf::OnCmdEditPasteFormatted()
 	
 	// Paste the data from the clipboard
 //	m_prtf->Paste();
-//	m_prtf->PasteSpecial(theApp.m_cfRtf);
+//	m_prtf->PasteSpecial(app.m_cfRtf);
 //	m_prtf->PasteSpecial(CF_TEXT);
 
 	// this didn't work
@@ -605,7 +605,7 @@ void CViewRtf::OnCmdEditPasteFormatted()
 	m_prtf->Paste();
 
 	/*
-	BOOL bRtf = ::IsClipboardFormatAvailable(theApp.m_cfRtf);
+	BOOL bRtf = ::IsClipboardFormatAvailable(app.m_cfRtf);
 	if (bRtf)
 	{
 		// Can we get the raw rtf data and parse it to remove the objects?
@@ -617,7 +617,7 @@ void CViewRtf::OnCmdEditPasteFormatted()
 		if (odo.AttachClipboard())
 		{
 			// Get global memory block
-			HGLOBAL hGlobal = odo.GetGlobalData(theApp.m_cfRtf);
+			HGLOBAL hGlobal = odo.GetGlobalData(app.m_cfRtf);
 			if (hGlobal)
 			{
 				// Get text from global memory into a cstring object
@@ -977,7 +977,7 @@ long CViewRtf::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWholeWord)
 	long nPos = m_prtf->FindNext(strFindText, bMatchCase, bWholeWord);
 	if (nPos != -1) // found text!
 	{	
-		xTRACE("CViewRtf::FindNext - found text!!\n");
+		//trace("CViewRtf::FindNext - found text!!\n");
 		// Try to center the text vertically (otherwise it's usually at the bottom of the screen)
 		m_prtf->CenterSelectionVertically();
 		// Make sure selection is highlighted if this is being called from the search view
@@ -1004,12 +1004,12 @@ void CViewRtf::OnUpdateEditFindNext(CCmdUI* pCmdUI)
 
 void CViewRtf::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CViewRtf OnActivateView %d\n", bActivate);
+	//trace("CViewRtf OnActivateView %d\n", bActivate);
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	// If this view is being activated, set the focus to the child control
 	if (bActivate)
 	{
-		xTRACE("  set focus to CRichEditView2 window\n");
+		//trace("  set focus to CRichEditView2 window\n");
 		m_pViewRtf->SetFocus();
 	}
 }
@@ -1017,7 +1017,7 @@ void CViewRtf::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeac
 
 void CViewRtf::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CViewRtf OnSetFocus - set focus to CRichEditView2 window\n");
+	//trace("CViewRtf OnSetFocus - set focus to CRichEditView2 window\n");
 	CViewEx::OnSetFocus(pOldWnd);	
 	if (m_pViewRtf)
 	{
@@ -1031,7 +1031,7 @@ void CViewRtf::OnSetFocus(CWnd* pOldWnd)
 
 void CViewRtf::OnKillFocus(CWnd* pNewWnd) 
 {
-	xTRACE("CViewRtf OnKillFocus - do nothing\n");
+	//trace("CViewRtf OnKillFocus - do nothing\n");
 	CViewEx::OnKillFocus(pNewWnd);
 }
 
@@ -1052,7 +1052,7 @@ void CViewRtf::OnEditDelete()
 
 void CViewRtf::OnCmdEditSelectAll() 
 {
-	xTRACE("CViewRtf::SelectAll\n");
+	//trace("CViewRtf::SelectAll\n");
 	// Select all text
 //	m_pViewRtf->GetRichEditCtrl().SetSel(0, -1);
 	m_prtf->SetSel(0, -1);
@@ -1110,8 +1110,8 @@ void CViewRtf::OnTest()
 
 		// get page rect
 		CRect r2;
-		CSize szPaper = theApp.m_sizePaper; // twips
-		CRect rMargin = theApp.m_rectPageMargins; // twips
+		CSize szPaper = app.m_sizePaper; // twips
+		CRect rMargin = app.m_rectPageMargins; // twips
 		r2.SetRect(rMargin.left, rMargin.top, szPaper.cx - rMargin.right, szPaper.cy - rMargin.bottom);
 
 		FORMATRANGE fr;
@@ -1275,7 +1275,7 @@ inline void CViewRtf::SetFormat(CHARRANGE& cr, CHARFORMAT& cf)
 // Save any attached ole objects as hidden subobjects and remove them
 void CViewRtf::SaveOleObjects()
 {
-	xTRACE("CViewRtf::SaveOleObjects()\n");
+	//trace("CViewRtf::SaveOleObjects()\n");
 
 	// Calls to the IStorage::EnumElements method supplies a pointer to IEnumSTATSTG. 
 	// The caller allocates an array of STATSTG structures and the IEnumSTATSTG methods fill in 
@@ -1290,7 +1290,7 @@ void CViewRtf::SaveOleObjects()
 	{
 		int nObjects = preo->GetObjectCount();
 		
-		xTRACE("\nRichedit has %u objects....\n", nObjects);
+		//trace("\nRichedit has %u objects....\n", nObjects);
 		REOBJECT reo;
 		::ZeroMemory(&reo, sizeof(REOBJECT));
 		reo.cbStruct = sizeof(REOBJECT);
@@ -1301,7 +1301,7 @@ void CViewRtf::SaveOleObjects()
 //			if (SUCCEEDED(preo->GetObject(i, &reo, REO_GETOBJ_POLESITE)))
 //			if (SUCCEEDED(preo->GetObject(i, &reo, REO_GETOBJ_POLEOBJ)))
 			{
-				xTRACE("  Object %u: charpos %u, cx %u, cy %u\n", i, reo.cp, reo.sizel.cx, reo.sizel.cy);
+				//trace("  Object %u: charpos %u, cx %u, cy %u\n", i, reo.cp, reo.sizel.cx, reo.sizel.cy);
 /*
 				if (reo.poleobj)
 				{
@@ -1347,7 +1347,7 @@ void CViewRtf::SaveOleObjects()
 					STATSTG ss;
 					if (SUCCEEDED(reo.pstg->Stat(&ss, STATFLAG_DEFAULT)))
 					{
-						xTRACE("    Storage: %S, size %u\n", ss.pwcsName, ss.cbSize.LowPart);
+						//trace("    Storage: %S, size %u\n", ss.pwcsName, ss.cbSize.LowPart);
 						CoTaskMemFree(ss.pwcsName);
 					}
 
@@ -1360,7 +1360,7 @@ void CViewRtf::SaveOleObjects()
 						while (S_OK == pEnum->Next(1, &ss, &nFetched))
 						{
 							ASSERT(ss.type < 5);
-							xTRACE("      %s %S, size %u\n", szTypes[ss.type], ss.pwcsName, ss.cbSize.LowPart);
+							//trace("      %s %S, size %u\n", szTypes[ss.type], ss.pwcsName, ss.cbSize.LowPart);
 //							if (ss.type == STGTY_STREAM)
 //							{
 //								TRACE("      Stream: %S, size %u\n", ss.pwcsName, ss.cbSize.LowPart);
@@ -1422,7 +1422,7 @@ BOOL CViewRtf::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 	NMHDR* pnm = (NMHDR*) lParam;
 //	UINT nIDFrom = pnm->idFrom;
 //	UINT nCode = pnm->code;
-//	CString str = theApp.GetNotifyCodeString(nCode);
+//	CString str = app.GetNotifyCodeString(nCode);
 //	TRACE("Cviewrtf OnNotify id %d, code %d %s\n", nIDFrom, nCode, (LPCTSTR) str);
 
 	if (nCode == TBN_DROPDOWN)
@@ -1478,8 +1478,8 @@ void CViewRtf::OnFormatApplyForecolor()
 	cf2.cbSize = sizeof(CHARFORMAT2);
 	cf2.dwMask = CFM_COLOR;
 	cf2.dwEffects = 0;
-	cf2.crTextColor = theApp.m_clrTextViewForecolor;
-	if (theApp.m_clrTextViewForecolor == CLR_DEFAULT)
+	cf2.crTextColor = app.m_clrTextViewForecolor;
+	if (app.m_clrTextViewForecolor == CLR_DEFAULT)
 		cf2.dwEffects = CFE_AUTOCOLOR;
 	m_pViewRtf->SetCharFormat2(cf2);
 
@@ -1506,8 +1506,8 @@ void CViewRtf::OnFormatApplyBackcolor()
 	cf2.cbSize = sizeof(CHARFORMAT2);
 	cf2.dwMask = CFM_BACKCOLOR;
 	cf2.dwEffects = 0;
-	cf2.crBackColor = theApp.m_clrTextViewBackcolor;
-	if (theApp.m_clrTextViewBackcolor == CLR_DEFAULT)
+	cf2.crBackColor = app.m_clrTextViewBackcolor;
+	if (app.m_clrTextViewBackcolor == CLR_DEFAULT)
 		cf2.dwEffects = CFE_AUTOBACKCOLOR;
 	m_pViewRtf->SetCharFormat2(cf2); 
 }
@@ -1522,7 +1522,7 @@ void CViewRtf::OnFormatForecolor()
 	ASSERT_VALID(m_pViewRtf);
 
 //	CColorDialog dlg(m_clrForecolor);
-//	dlg.m_cc.lpCustColors = &theApp.m_clrCustomColors[0];
+//	dlg.m_cc.lpCustColors = &app.m_clrCustomColors[0];
 //	if (dlg.DoModal() == IDOK)
 //	{
 //		m_clrForecolor = dlg.GetColor();
@@ -1538,7 +1538,7 @@ void CViewRtf::OnFormatForecolor()
 	CString strCustomText = "More Colors...";
 
 	// Control will send CPN_SELENDOK message on click
-	new CColourPopup(CPoint(r.left, r.bottom), theApp.m_clrTextViewForecolor, this, strDefaultText, strCustomText);
+	new CColourPopup(CPoint(r.left, r.bottom), app.m_clrTextViewForecolor, this, strDefaultText, strCustomText);
 */
 }
 
@@ -1549,11 +1549,11 @@ void CViewRtf::OnFormatBackcolor()
 	m_tbrRtf.m_ctlBackcolor.DropDown(FALSE);
 
 //	ASSERT_VALID(m_pViewRtf);
-//	CColorDialog dlg(theApp.m_clrTextViewBackcolor);
-//	dlg.m_cc.lpCustColors = &theApp.m_clrCustomColors[0];
+//	CColorDialog dlg(app.m_clrTextViewBackcolor);
+//	dlg.m_cc.lpCustColors = &app.m_clrCustomColors[0];
 //	if (dlg.DoModal() == IDOK)
 //	{
-//		theApp.m_clrTextViewBackcolor = dlg.GetColor();
+//		app.m_clrTextViewBackcolor = dlg.GetColor();
 //		OnFormatBackcolor();
 //	}
 }
@@ -1570,24 +1570,24 @@ LRESULT CViewRtf::OnSelEndOK(WPARAM wParam, LPARAM lParam)
 //	if (uID == ID_FORMAT_FORECOLOR)
 	if (uID == ID_FORMAT_APPLY_FORECOLOR)
 	{
-		if (clr != theApp.m_clrTextViewForecolor)
+		if (clr != app.m_clrTextViewForecolor)
 		{
 			if (clr == CLR_DEFAULT)
-				theApp.m_clrTextViewForecolor = Library::clrWindowText;
+				app.m_clrTextViewForecolor = Library::clrWindowText;
 			else
-				theApp.m_clrTextViewForecolor = clr;
+				app.m_clrTextViewForecolor = clr;
 			OnFormatApplyForecolor();
 		}
 	}
 //	else if (uID == ID_FORMAT_BACKCOLOR)
 	else if (uID == ID_FORMAT_APPLY_BACKCOLOR)
 	{
-		if (clr != theApp.m_clrTextViewBackcolor)
+		if (clr != app.m_clrTextViewBackcolor)
 		{
 //			if (clr == CLR_DEFAULT)
-//				theApp.m_clrTextViewBackcolor = g_clrWindow;
+//				app.m_clrTextViewBackcolor = g_clrWindow;
 //			else
-				theApp.m_clrTextViewBackcolor = clr;
+				app.m_clrTextViewBackcolor = clr;
 			OnFormatApplyBackcolor();
 		}
 	}
@@ -1610,16 +1610,16 @@ LRESULT CViewRtf::OnColorButtonClick(WPARAM wParam, LPARAM lParam)
 	{
 /*
 		case ID_FORMAT_FORECOLOR:
-			if (clr != theApp.m_clrTextViewForecolor)
+			if (clr != app.m_clrTextViewForecolor)
 			{
-				theApp.m_clrTextViewForecolor = clr;
+				app.m_clrTextViewForecolor = clr;
 				OnFormatApplyForecolor();
 			}
 			break;
 		case ID_FORMAT_BACKCOLOR:
-			if (clr != theApp.m_clrTextViewBackcolor)
+			if (clr != app.m_clrTextViewBackcolor)
 			{
-				theApp.m_clrTextViewBackcolor = clr;
+				app.m_clrTextViewBackcolor = clr;
 				OnFormatApplyBackcolor();
 			}
 			break;
@@ -1648,7 +1648,7 @@ void CViewRtf::OnEditClearFormat()
 
 	// Get default font and apply it to the selection
 	CHARFORMAT2 cf2;
-	theApp.m_fontRtfDefault.GetCharFormat2(cf2);
+	app.m_fontRtfDefault.GetCharFormat2(cf2);
 	m_pViewRtf->SetCharFormat2(cf2);
 }
 
@@ -1790,7 +1790,7 @@ void CViewRtf::OnRtfLink(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	ENLINK* pLink = (ENLINK*) pNMHDR;
 
-	xTRACE("CViewRtf::OnRtfLink(msg=0x%x)\n", pLink->msg);
+	//trace("CViewRtf::OnRtfLink(msg=0x%x)\n", pLink->msg);
 	
 	// If you return zero, the control proceeds with its normal handling of the message.
 	// If you return a nonzero value, the control does not handle the message.
@@ -1989,7 +1989,7 @@ void CViewRtf::OnCmdEditShiftLeft()
 // See CRichEditView2::OnRButtonDown
 void CViewRtf::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
-	xTRACE("CViewRtf OnContextMenu %d %d\n", point.x, point.y);		
+	//trace("CViewRtf OnContextMenu %d %d\n", point.x, point.y);		
 }
 
 
@@ -2146,7 +2146,7 @@ void CViewRtf::OnEditMoveTo()
 		if (pobjNew)
 		{
 			ASSERT_VALID(pobjNew);
-			xTRACE("Move text to %s\n", pobjNew->GetName(TRUE));
+			//trace("Move text to %s\n", pobjNew->GetName(TRUE));
 			CString strRtf;
 			strRtf = m_prtf->GetRtf(TRUE); // get current selection
 			m_prtf->Clear(); // clear current selection

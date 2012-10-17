@@ -501,7 +501,8 @@ void CInfo::LoadMemoryInfo()
 	// The difference between total vm and avail vm is the amount of memory reserved by the 
 	//     process. 
 
-	xTRACE("Memory usage: \n"
+	/*
+	//trace("Memory usage: \n"
 		"    Load %d pct\n"
 		"    Physical Memory (Physical RAM minus upper memory area (UMA) used by adapters) %d bytes\n"
 		"    Physical Memory Available %d bytes\n"
@@ -517,7 +518,7 @@ void CInfo::LoadMemoryInfo()
 		m_ms.dwAvailVirtual,
 		m_ms.dwTotalVirtual - m_ms.dwAvailVirtual
 		);
-
+	*/
 }
 
 

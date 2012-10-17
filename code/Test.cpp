@@ -44,6 +44,16 @@ CTest::~CTest() {
 // Run all Unit Tests
 // this is called from InitInstance if in test mode (ie run with /t option).
 //. and for now, by ctrl+alt+shift+T command. 
+
+// to turn on nm testing,
+// project / properties...
+// configuration properties / debugging
+// command arguments: /test
+
+
+
+
+
 // static
 void CTest::DoTests(CNeoMem& app) {
 
@@ -63,25 +73,39 @@ void CTest::DoTests(CNeoMem& app) {
 //		CRichEditCtrlEx::Test();
 
 
+		// trace macro
+	
+		// trace("CViewTabs");
+		// gives output something like - 
+		// [..\code\ViewTabs.cpp(80):] CViewTabs
+		// (vs doesn't like the [] though)
+//		#define trace(str) TRACE("%s(%d): " str "\n", __FILE__, __LINE__)
+
+		// test 
+//		trace("hi");
+//		trace("say %s alfie", "frog!");
+
+//		trace("here is %d cows", 5);
+//		becomes
+//		TRACE("[%s(%d):] " 
+//			"say %s alfie", "frog!"
+//			"\n",
+//			__FILE__, __LINE__);
+//
+//		want nested evaluation
+//			maybe a fn
+//		ie fn uses printf to get string, then calls TRACE with that string
+
+
+
+
 		// maybe simplest to create a new document, 
 		// throw ALL commands at it (esp flaky/suspicious ones), 
 		// then check that it's in proper state.
 
 
-		// if there's app-specific stuff do that separately. 
-		//, mfc weird doctemplate stuff in filenew handler? override it and simplify? 
-		// but also ties in with mru files etc. 
 
-		//, BDoc& doc = BDoc::New(); //, not working because of access to onfilenew
-		app.OnFileNew();
-		BDoc* pdoc = BDoc::GetDoc(); // get rid of this fn, if possible? but i think mfc uses it?
-		ASSERT_VALID(pdoc);
-		BDoc& doc = *pdoc;
-
-		// get pointer to UI, to pass to doc
-//		CUI* pui = this;
-//		CNeoMem* pui = this;
-//		doc.pui = pui;
+		BDoc& doc = BDoc::New(); 
 
 
 		//, should document really know about current object? no, that's a ui thing. 
@@ -172,10 +196,11 @@ void CTest::DoTests(CNeoMem& app) {
 		// add to fish class
 		classFish.SetPropertyLinksAdd(propObjectProperties, objPrice.id);
 		
-		// check
+		// see if the new property is in the fish class properties
 		{
 		// get list of property values
 		//,, should be bobjects, or some lightweight recordset
+		//, and not need to delete pa at end!
 //		ObjIDArray a;
 //		classFish.GetPropertyLinks(propObjectProperties, a);
 		CObArray* pa = classFish.GetPropertyLinks(propObjectProperties);
@@ -224,12 +249,10 @@ void CTest::DoTests(CNeoMem& app) {
 
 		
 
-		// select the fish folder
-		doc.SetCurrentObject(&folderFish); //, memory leak - carray 40bytes and bdataviews.createcopy
-		// check
-		ASSERT(doc.GetCurrentObject() == &folderFish);
 
-		// add some text to it
+
+
+		// add some text to fish folder
 		{
 		CString str("what am i going to do with all these fish?");
 		//, can't use propPlainText - not symmetric. fix it. 
@@ -241,7 +264,7 @@ void CTest::DoTests(CNeoMem& app) {
 		BObject& objGlassfish = BObject::New(doc, classFish.id, "glassfish", folderFish.id);
 
 		//, check count of fish in db
-		//, no way to do a simple query like that
+		//, no way to do a simple query like that!
 
 		objGlassfish.SetPropertyString(objPrice.id, "$2.54");
 
@@ -251,9 +274,13 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// import a new icon
-		CStringEx strTestFolder = theApp.m_strApplicationFolder + "\\..\\test\\files\\";
+		CStringEx strTestFolder = app.m_strApplicationFolder + "\\..\\test\\files\\";
 		CStringEx strFilename = strTestFolder + "fish.ico";
 
+		//, this should be cleaner
+		// put in a BIcon class? ie pass filename to new etc
+//,		BIcon& iconFish = BIcon::New(doc, "Fish", strFilename);
+		{
 		BObject& objIcon = BObject::New(doc, classIcon, "Fish", folderIcons);
 		BDataIcon* pdatIcon = new BDataIcon();
 		pdatIcon->LoadFile(strFilename);
@@ -262,6 +289,8 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// set fish class icon
 		classFish.SetIconID(objIcon.id);
+		}
+
 		//, this is right, but maybe a command would be better. 
 		// eg classFish.SetObjectIcon or something. 
 		// ie something to mimic the user command. 
@@ -271,9 +300,11 @@ void CTest::DoTests(CNeoMem& app) {
 //		classFish.SetIconID(objIcon.id);
 
 
+
+
 		// test name functions
 		//, note getname is slower though...
-		BObject& objOctopus = BObject::New(doc, classFish.id);
+		BObject& objOctopus = BObject::New(doc, classFish.id, NULL, folderFish.id);
 		ASSERT(objOctopus.GetName() == CString("New Fish")); // default name
 //		ASSERT(objOctopus.GetName() == "New Fish"); //, bombs - fix
 		ASSERT(objOctopus.GetPropertyString(propName) == CString("New Fish"));
@@ -329,17 +360,20 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// add size column (old fashioned way)
+/*
 		{
 		BDataColumns* pdatColumns = folderFish.GetPropertyColumns(propColumnInfoArray);
 		pdatColumns->InsertColumn(objSize.id, &doc, 100);
 		folderFish.SetPropertyData(propColumnInfoArray, pdatColumns); // will send hint
 		delete pdatColumns;
 		}
+*/
+		folderFish.AddColumn(objSize.id, 100);
 
 
 
 
-		// narrow description column (old api)
+		// narrow description column
 		{
 		BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, folderFish.GetPropertyData(propColumnInfoArray));
 		int nCol = pdatColumns->GetColumnIndex(propDescription);
@@ -349,32 +383,30 @@ void CTest::DoTests(CNeoMem& app) {
 		delete pdatColumns;
 		}
 
-		// narrow price column (nicer api, but...)
+		// narrow price column
 		{
-		BDataColumns& cols = folderFish.GetColumns(); 
-		int nCol = cols.GetColumnIndex(objPrice.id);
-		int nWidth = cols.GetColumnWidth(nCol);
-		cols.SetColumnWidth(nCol, int(nWidth * 0.6));
-		folderFish.SetColumns(cols); // sends hint, deletes cols? sets to 0. yeah  //, eh, creepy
+		BDataColumns* pdat = DYNAMIC_DOWNCAST(BDataColumns, folderFish.GetPropertyData(propColumnInfoArray));
+		int nCol = pdat->GetColumnIndex(objPrice.id);
+		int nWidth = pdat->GetColumnWidth(nCol);
+		pdat->SetColumnWidth(nCol, int(nWidth * 0.6));
+		folderFish.SetPropertyData(propColumnInfoArray, pdat); // sends hint
+		delete pdat;
 		}
-
-		// don't like using a ref like that - seems weird - better to do BDataColumns?
-		// but then would need to write it back.
 
 		// int nWidth = obj.GetColumns().GetColumnWidth(nCol);
 		// obj.GetColumns().SetColumnWidth(nCol, nWidth*0.6);
 
 		//, but search SetPropertyData(propObjectColumnInfoArray
-
 		
 //		folderFish.SetColumnWidth();
-		//, well, you could end up duplicating the entire bdatacolumns interface
-		// in the bfolder interface. that would be silly.
-		// we need a better way. 
+		//,, but you could end up duplicating the entire bdatacolumns interface
+		// in the bfolder interface. 
+		// need a better way. 
+		// save for phase two
 
 
 
-
+return;
 
 
 		// make a category for fish
@@ -429,7 +461,7 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-		// check GetPropertyLinks and SetPropertyLinksAdd
+		// test GetPropertyLinks and SetPropertyLinksAdd
 		{
 		BObject& objTest = BObject::New(doc, classClass, "test", folderFish.id);
 		CObArray* pa = objTest.GetPropertyLinks(propObjectProperties); // could be null
@@ -445,7 +477,7 @@ void CTest::DoTests(CNeoMem& app) {
 		}
 
 
-		// check ClassDefAddProperty method
+		// test ClassDefAddProperty method
 		//, move to bclass
 		{
 		BObject& objTest = BObject::New(doc, classClass, "test", folderFish.id);
@@ -468,7 +500,8 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-		// search
+		// ** search
+		//, do lots more, after adding a bunch of fish with random specs and names
 		BObjects a;
 		doc.GetObjects(&folderFish, 0, "plec", a); // a query! rather simple
 		ASSERT(a.GetCount() == 1);
@@ -500,16 +533,14 @@ void CTest::DoTests(CNeoMem& app) {
 //		objPlecy.SetPropertyDate(propid, 2012,10,2);
 //		objPlecy.SetValue(propid, new BDataDate(2012,10,2));
 
-
-		// 1. bdata
+		// 1. by bdata
 		{	
 		// first time i've run into the need to create a temporary bdata object. 
 		//,, a hassle. why not always create one? ie in getpropertydata
 //		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id));
 //		ASSERT(pdat); // failed - propvalue didn't exist!
 
-		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id, TRUE));
-
+		BDataDate* pdat = DYNAMIC_DOWNCAST(BDataDate, objPlecy.GetPropertyData(propDate.id, TRUE)); // note TRUE
 		pdat->SetDate(2012,10,2,19,39,23);
 		objPlecy.SetPropertyData(propDate.id, pdat);
 		delete pdat; //, yuck
@@ -535,7 +566,7 @@ void CTest::DoTests(CNeoMem& app) {
 		}
 
 
-		// 2. string date
+		// 2. by string date
 		//, brings up ui dialog - bad
 		//, also asserts oddly
 
@@ -551,11 +582,10 @@ void CTest::DoTests(CNeoMem& app) {
 		}
 
 
-		// 3. numeric date
+		// 3. by numeric date
 		{
 //		objSquid.SetPropertyDate(propDate.id, 1995, 03, 25);
 		}
-
 
 		//, eh, this is all a bit extraneous to the main goal. 
 		// ie adding GetPropertyXXX for missing types, etc.
@@ -564,14 +594,15 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-		// add people so can test email props etc
-		//--------------------------------------------
+		// test various properties: email, website, file, folder, hyperlink
+		//, very overkill to have all those
+		//------------------------------------------------------------------
 
 		// add class
 		BClass& classPerson = BClass::New(doc, "Person", "a homo sapiens");
 		ASSERT(classPerson.GetPropertyString(propDescription) == "a homo sapiens");
 
-		//, um bleh?
+		//, have to set this property to get a person name. weird api. descend from classPerson instead? 
 		classPerson.SetPropertyLink(propObjectNamePropertyType, proptypePersonName);
 
 		// add folder
@@ -610,19 +641,16 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// add file property
 		BProperty& propFile = BProperty::New(doc, "File", "file", proptypeFile);
-//x		folderPeople.SetPropertyColumnsAdd(propColumnInfoArray, propFile.id);
 		folderPeople.AddColumn(propFile.id);
 		objJack.SetPropertyString(propFile.id, "jack.txt");
 
 		// add folder property
 		BProperty& propFolder = BProperty::New(doc, "Folder", "folder", proptypeFolder);
-//x		folderPeople.SetPropertyColumnsAdd(propColumnInfoArray, propFolder.id);
 		folderPeople.AddColumn(propFolder.id);
 		objJack.SetPropertyString(propFolder.id, "C:\\Test\\");
 
 		// add hyperlink property
 		BProperty& propHyperlink = BProperty::New(doc, "Hyperlink", "a hyperlink", proptypeHyperlink);
-//x		folderPeople.SetPropertyColumnsAdd(propColumnInfoArray, propHyperlink.id);
 		folderPeople.AddColumn(propHyperlink.id);
 		objKate.SetPropertyString(propHyperlink.id, "http://go.co");
 
@@ -632,54 +660,65 @@ void CTest::DoTests(CNeoMem& app) {
 		folderPeople.AddColumn(propWebsite.id);
 		objJack.SetPropertyString(propWebsite.id, "www.eww.com");
 
-		//, email, file, folder, hyperlink, and website proptypes? overkill. cut down to one
-
 
 		// hide description column
-//		folderPeople.SetPropertyColumnsRemove(propColumnInfoArray, propDescription);
 		folderPeople.RemoveColumn(propDescription);
-
-
 
 
 		// add boolean property
 		BProperty& propBoolean = BProperty::New(doc, "Alien?", "is he/she from mars?", proptypeBoolean);
-//		folderPeople.SetPropertyColumnsAdd(propColumnInfoArray, propBoolean.id);
 		folderPeople.AddColumn(propBoolean.id, 100, 2);
 		objJack.SetPropertyString(propBoolean.id, "yes");
-
-
-
 
 
 //		folderPeople.AddColumn(propDescription);
 
 
+		// test file compression - oh not there yet
+
+		// fix memory leaks
+
+
+		// test bobject.setpropertydata
+//		BObject& obj = objPlecy;
+//		BData* pdat = obj.GetPropertyData(propClassName);
+//		obj.SetPropertyData(propClassName, pdat);
 
 
 
 
+
+
+
+		//, test file compression, password function
 		//, keep taking code out of ui into bdoc
-		//, fix memory leak
-		//, want better api for getting/setting/saving objects (records)
-
-
+		//, and out of ui into cui eg standard dialogs
+		//, try to clean up api - getting/setting/saving values - use templates? 
+		//, better query api
+		//, figure out unicode stuff
+		//, check file upgrade process
 
 
 		// ui stuff - put into ui level
+/*
+		CUI& ui = app.ui;
 
-		CUI& ui = theApp.ui;
+
+		// select the fish folder
+		doc.SetCurrentObject(&folderFish); //, memory leak - carray 40bytes and bdataviews.createcopy
+		// check
+		ASSERT(doc.GetCurrentObject() == &folderFish);
 
 		// this will do a switch on proptype, bring up appropriate dialog, 
 		// write the new value back to the object
-//		ui.EditValue(&objPlecy, propDescription);
-//		ui.EditValue(&objPlecy, propDate.id);
+		ui.EditValue(&objPlecy, propDescription);
+		ui.EditValue(&objPlecy, propDate.id);
 
 		// select the search view
-//		CFrameChild* pframe = theApp.GetChildFrame();
-//		pframe->ShowView(viewSearch);
-//,?	theApp.ShowView(viewSearch);
-
+		CFrameChild* pframe = app.GetChildFrame();
+		pframe->ShowView(viewSearch);
+//,?	app.ShowView(viewSearch);
+*/
 
 
 

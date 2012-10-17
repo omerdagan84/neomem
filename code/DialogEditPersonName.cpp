@@ -64,5 +64,5 @@ void CDialogEditPersonName::DoDataExchange(CDataExchange* pDX)
 
 void CDialogEditPersonName::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_PERSON_NAME);
+	app.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_PERSON_NAME);
 }

@@ -163,7 +163,8 @@ void CViewProperties::OnInitialUpdate()
 
 void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-	TRACE("    CViewProperties::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewProperties::OnUpdate %s\n", app.GetHintName(lHint));
+
 	switch (lHint)
 	{
 
@@ -193,7 +194,7 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				ASSERT_VALID(pobjPropertyDef);
 
 				// Don't add property def if it should be excluded based on admin settings
-				if (!(pobjPropertyDef->GetFlag(theApp.m_lngExcludeFlags)))
+				if (!(pobjPropertyDef->GetFlag(app.m_lngExcludeFlags)))
 				{
 					// Add the propertydef to the list
 					int nIndex = m_lvw.InsertItem(i, LPSTR_TEXTCALLBACK, nImage);
@@ -270,7 +271,7 @@ void CViewProperties::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 void CViewProperties::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CViewProperties OnActivateView %d\n", bActivate);
+	//trace("CViewProperties OnActivateView %d\n", bActivate);
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
 
 	// If this view is being activated, set the focus to the child control
@@ -341,8 +342,8 @@ void CViewProperties::OnObjEditInDialog()
 		// Edit the property value in an appropriate dialog
 		ULONG lngPropertyID = pobjPropertyDef->GetObjectID();
 //x		m_pobjCurrent->UIEditValue(lngPropertyID);
-		m_pobjCurrent->UIEditValue(lngPropertyID, theApp.ui);
-//x		theApp.ui.EditValue(m_pobjCurrent, lngPropertyID);
+		m_pobjCurrent->UIEditValue(lngPropertyID, app.ui);
+//x		app.ui.EditValue(m_pobjCurrent, lngPropertyID);
 	}
 }
 
@@ -752,7 +753,7 @@ BOOL CViewProperties::DoPrint(BOOL bPreview)
 
 BOOL CViewProperties::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	xTRACE("CViewProperties OnPreparePrinting\n");
+	//trace("CViewProperties OnPreparePrinting\n");
 	return DoPreparePrinting(pInfo); // default preparation - brings up dialog
 }
 
@@ -766,8 +767,8 @@ void CViewProperties::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	// Initialize fonts margins etc
 	CViewEx::OnBeginPrinting(pDC, pInfo);
 
-	theApp.m_printinfo.m_strViewName = "Properties View";
-	theApp.m_printinfo.m_strObjectName = m_pDoc->GetCurrentObject()->GetPropertyString(propName);
+	app.m_printinfo.m_strViewName = "Properties View";
+	app.m_printinfo.m_strObjectName = m_pDoc->GetCurrentObject()->GetPropertyString(propName);
 
 	// Get grid information etc
 	m_lvw.OnBeginPrinting(pDC, pInfo);
@@ -776,7 +777,7 @@ void CViewProperties::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 
 void CViewProperties::OnPrint(CDC* pDC, CPrintInfo* pInfo) 
 {
-	CPrintInfoMore& rpim = theApp.m_printinfo;
+	CPrintInfoMore& rpim = app.m_printinfo;
 
 	rpim.PrintHeader(pDC, pInfo);
 	m_lvw.PrintPage(pDC, pInfo);
@@ -788,7 +789,7 @@ void CViewProperties::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 // Free any fonts and other resources allocated in OnBeginPrinting.
 void CViewProperties::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
-	xTRACE("CViewContents OnEndPrinting\n");
+	//trace("CViewContents OnEndPrinting\n");
 	// call base class to delete gdi objects
 	CViewEx::OnEndPrinting(pDC, pInfo);
 }

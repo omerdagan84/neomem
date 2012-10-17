@@ -63,7 +63,7 @@ BOOL CDialogError::OnInitDialog()
 	// Call base class
 	CDialog::OnInitDialog();
 
-	m_lblTitle.SetFont(&theApp.m_fontControlsBold);
+	m_lblTitle.SetFont(&app.m_fontControlsBold);
 
 	// Enable/disable send email button
 	m_btnSend.EnableWindow(m_bEnableSendButton);
@@ -73,7 +73,7 @@ BOOL CDialogError::OnInitDialog()
 	m_txtErrorMessage.SetWindowText(str);
 
 	// Show the Continue button if we're in admin mode
-//	m_btnContinue.ShowWindow(theApp.m_bAdmin ? SW_SHOW : SW_HIDE);
+//	m_btnContinue.ShowWindow(app.m_bAdmin ? SW_SHOW : SW_HIDE);
 
 	// Return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
@@ -130,7 +130,7 @@ void CDialogError::OnBtnCopy()
 	CWaitCursor wc;
 	UpdateDescription();
 	CString str = m_pe->GetReportText();
-	theApp.CopyToClipboard(str);	
+	app.CopyToClipboard(str);	
 }
 
 

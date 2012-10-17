@@ -41,14 +41,14 @@ CEditInPlace::CEditInPlace(CListCtrlEx* plvw, int iItem, int iSubItem, CString s
 
 CEditInPlace::~CEditInPlace()
 {
-	xTRACE("CEditInPlace Destructor reached\n");
+	//trace("CEditInPlace Destructor reached\n");
 }
 
 
 // The OnCreate() function creates the edit control and initializes it with the proper values. 
 int CEditInPlace::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	xTRACE("CEditInPlace::OnCreate\n");
+	//trace("CEditInPlace::OnCreate\n");
 
 	if (CEdit::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -80,7 +80,7 @@ int CEditInPlace::OnCreate(LPCREATESTRUCT lpCreateStruct)
 // Ctrl-C, Ctrl-V and Ctrl-X get forwarded to the edit control. 
 BOOL CEditInPlace::PreTranslateMessage(MSG* pMsg) 
 {
-	xTRACE("CEditInPlace::PreTranslateMessage\n");
+	//trace("CEditInPlace::PreTranslateMessage\n");
 	if (pMsg->message == WM_KEYDOWN)
 	{
 		if (pMsg->wParam == VK_RETURN
@@ -105,7 +105,7 @@ BOOL CEditInPlace::PreTranslateMessage(MSG* pMsg)
 // send a NULL string. 
 void CEditInPlace::OnKillFocus(CWnd* pNewWnd) 
 {
-	xTRACE("CEditInPlace::OnKillFocus\n");
+	//trace("CEditInPlace::OnKillFocus\n");
 
 	// Call base class
 	CEdit::OnKillFocus(pNewWnd);
@@ -125,30 +125,30 @@ void CEditInPlace::OnKillFocus(CWnd* pNewWnd)
 	nmdi.item.pszText = m_bEscape ? NULL : LPTSTR((LPCTSTR)str); // Note cast removing const!!
 	nmdi.item.cchTextMax = str.GetLength();
 
-	xTRACE("   OnKillFocus: send LVN_ENDLABELEDIT to parent\n");
+	//trace("   OnKillFocus: send LVN_ENDLABELEDIT to parent\n");
 	GetParent()->GetParent()->SendMessage(WM_NOTIFY, GetParent()->GetDlgCtrlID(), (LPARAM)&nmdi);
 
-	xTRACE("  OnKillFocus: call DestroyWindow\n");
+	//trace("  OnKillFocus: call DestroyWindow\n");
 	DestroyWindow();
 
-	xTRACE("  OnKillFocus: exit onkillfocus\n");
+	//trace("  OnKillFocus: exit onkillfocus\n");
 }
 
 
 // The OnNcDestroy() function is the appropriate place to destroy the C++ object. 
 void CEditInPlace::OnNcDestroy() 
 {
-	xTRACE("CEditInPlace::OnNcDestroy\n");
+	//trace("CEditInPlace::OnNcDestroy\n");
 	
 	// Call base class
-	xTRACE("  ond: call CEdit::OnNcDestroy\n");
+	//trace("  ond: call CEdit::OnNcDestroy\n");
 	CEdit::OnNcDestroy();
 
 	// Delete this CEditInPlace object
-	xTRACE("  ond: delete this\n");
+	//trace("  ond: delete this\n");
 	delete this;
 
-	xTRACE("  ond: exit onncdestroy\n");
+	//trace("  ond: exit onncdestroy\n");
 }
 
 

@@ -145,7 +145,7 @@ int CViewContents::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		// Set extended style (or could call CreateEx I guess)
 		//, is this overridden too?
-		DWORD dwGridStyle = theApp.m_bDisplayGridlines ? LVS_EX_GRIDLINES : 0;
+		DWORD dwGridStyle = app.m_bDisplayGridlines ? LVS_EX_GRIDLINES : 0;
 		m_lvw.SetExtendedStyle(
 						dwGridStyle | 
 //						LVS_EX_GRIDLINES |
@@ -164,7 +164,7 @@ int CViewContents::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		m_lvw.SetImageList(m_pDoc->GetImageList(), LVSIL_SMALL);
 
 		// Set header attributes
-		m_lvw.GetHeaderCtrl()->SetImageList(theApp.GetAppImageList());
+		m_lvw.GetHeaderCtrl()->SetImageList(app.GetAppImageList());
 
 		// Tell CViewEx about the view
 		SetChildView(&m_lvw);
@@ -236,121 +236,6 @@ void CViewContents::Dump(CDumpContext& dc) const {
 
 
 
-// Printing
-//---------------------------------------------------------------------------
-
-BOOL CViewContents::DoPrint(BOOL bPreview) {
-	if (bPreview)
-		CViewEx::OnFilePrintPreview(); // in cviewex
-	else
-		CViewEx::OnFilePrint(); // in file viewprnt.cpp
-	return TRUE;
-}
-
-
-
-BOOL CViewContents::OnPreparePrinting(CPrintInfo* pInfo) {
-
-	xTRACE("CViewContents::OnPreparePrinting\n");
-	
-	// If your application knows how many pages the document contains when OnPreparePrinting
-	// is called, it should inform MFC by calling CPrintInfo::SetMaxPage before calling
-	// DoPreparePrinting. MFC displays the maximum page number in the To box of the Print dialog.
-	// If you don't set the maximum page number in OnPreparePrinting, you should set it in
-	// OnBeginPrinting if possible. (better there because at this point you don't know what
-	// printer the user has chosen)
-//	pInfo->SetMaxPage(nMaxPage);
-
-	// A nonzero return from OnPreparePrinting begins the printing process, and a 0 return
-	// cancels the print job before it begins. 
-	return DoPreparePrinting(pInfo); // default preparation - brings up dialog
-}
-
-
-// At this point the printer has been selected so we can calculate the max number of pages. 
-// Consider printing a spreadsheet. When overriding OnPreparePrinting, you must calculate 
-// how many sheets of paper will be required to print the entire spreadsheet and then 
-// use that value when calling the SetMaxPage member function of CPrintInfo. 
-void CViewContents::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) {
-
-	// Initialize fonts margins etc
-	CViewEx::OnBeginPrinting(pDC, pInfo);
-
-	theApp.m_printinfo.m_strViewName = _T("Contents View");
-	theApp.m_printinfo.m_strObjectName = m_pDoc->GetCurrentObject()->GetPropertyString(propName);
-
-	// Get grid information etc
-	m_lvw.OnBeginPrinting(pDC, pInfo);
-}
-
-
-/*
-// As a rule, you need to override OnPrepareDC only if you use OnDraw to draw to both the screen 
-// and the printed page. If you do all your printing from OnPrint, there's no need to override OnPrepareDC.
-// When overriding OnPrepareDC, you must translate m_nCurPage into the range of rows 
-// and columns that will appear on that particular sheet and then adjust the viewport origin accordingly.
-// After each call to OnPrepareDC, the framework checks a member of the CPrintInfo structure 
-// called m_bContinuePrinting. Its default value is TRUE. As long as it remains so, the framework 
-// continues the print loop. If it is set to FALSE, the framework stops. To perform print-time pagination, 
-// override OnPrepareDC to check whether the end of the document has been reached, and 
-// set m_bContinuePrinting to FALSE when it has. 
-// The default implementation of OnPrepareDC sets m_bContinuePrinting to FALSE if the current page 
-// is greater than 1. This means that if the length of the document wasn’t specified, the framework 
-// assumes the document is one page long. One consequence of this is that you must be careful if you 
-// call the base class version of OnPrepareDC. Do not assume that m_bContinuePrinting will be TRUE 
-// after calling the base class version. 
-void CViewContents::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)  {
-	// TODO: Add your specialized code here and/or call the base class	
-	CViewEx::OnPrepareDC(pDC, pInfo);
-}
-*/
-
-
-// This is where we draw the actual text, since we're not using OnDraw to draw to both
-// the screen and the printer. 
-// Note: The default implementation of OnPrint just calls OnDraw.
-// To determine which page OnPrint has been called to print, check CPrintInfo::m_nCurPage.
-// If you need to discriminate between real printing and print preview, check the m_bPreview
-// data member of pInfo. 
-// If you need a GDI object for several consecutive pages, Windows requires that you select it 
-// into the device context each time OnPrint is called.
-// TheOnPrint member function is the appropriate place to print headers or footers because it 
-// is called for each page, and because it is called only for printing, not for screen display. You 
-// can define a separate function to print a header or footer, and pass it the printer device 
-// context from OnPrint. 
-void CViewContents::OnPrint(CDC* pDC, CPrintInfo* pInfo) {
-
-	CPrintInfoMore& rpim = theApp.m_printinfo;
-
-	rpim.PrintHeader(pDC, pInfo);
-	m_lvw.PrintPage(pDC, pInfo);
-	rpim.PrintFooter(pDC, pInfo);
-	rpim.DrawMargins(pDC, pInfo);
-}
-
-
-/*
-// When the user closes the print preview window, the framework calls OnEndPrintPreview
-// to notify the application that print preview is about to end. The default implementation
-// calls OnEndPrinting, reactivates the original view, and destroys the print preview window. 
-void CViewContents::OnEndPrintPreview(CDC* pDC, CPrintInfo* pInfo, POINT point, CPreviewView* pView) {
-	// TODO: Add your specialized code here and/or call the base class	
-	CViewEx::OnEndPrintPreview(pDC, pInfo, point, pView);
-}
-*/
-
-// Free any fonts and other resources allocated in OnBeginPrinting.
-void CViewContents::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) {
-	xTRACE("CViewContents::OnEndPrinting\n");
-	// call base class to delete gdi objects
-	CViewEx::OnEndPrinting(pDC, pInfo);
-}
-
-
-
-
-
-
 // Routines
 //---------------------------------------------------------------------------
 
@@ -366,7 +251,7 @@ void CViewContents::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) {
 // documents, use OnUpdate to update the scrolling limits every time the document changes.
 void CViewContents::OnInitialUpdate() {
 
-	xTRACE("CViewContents::OnInitialUpdate\n");
+	//trace("CViewContents::OnInitialUpdate\n");
 
 	// Store pointer to document
 	// bad to do this here because it gets called AFTER OnUpdate!!
@@ -400,7 +285,7 @@ void CViewContents::OnInitialUpdate() {
 // Update the view
 void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 
-	TRACE("    CViewContents::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewContents::OnUpdate %s\n", app.GetHintName(lHint));
 //	TRACE("CViewContents::OnUpdate(lHint=%d, pHint=0x%pL)\n", lHint, pHint);
 //	CWaitCursor cw;
 
@@ -441,7 +326,8 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 //				}
 
 				// Get column information from object or from object's classdef
-				BDataColumns& cols = pobjStart->GetColumns();
+//x				BDataColumns& cols = pobjStart->GetColumns();
+				BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, pobjStart->GetPropertyData(propColumnInfoArray));
 
 				// Invoke copy constructor to create copy of the array
 				// We need to copy the data because it might be coming from the object's classdef,
@@ -456,13 +342,13 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 
 				// Initialize listview columns - see ListCtrlEx.cpp
 //				m_lvw.InitializeColumns(m_pdatCopy);
-//x				m_lvw.InitializeColumns(pdatColumns);
-//x				delete pdatColumns;
-				m_lvw.InitializeColumns(&cols);
-				delete &cols;
+				m_lvw.InitializeColumns(pdatColumns);
+				delete pdatColumns;
+//x				m_lvw.InitializeColumns(&cols);
+//x				delete &cols;
 
 				// Add the children of the start object to the list, with no recursion
-				m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, FALSE, 0, TRUE);
+				m_lvw.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, FALSE, 0, TRUE);
 
 				// Add dummy new row
 				m_lvw.AddDummyRow();
@@ -579,11 +465,12 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 //					AfxMessageBox ("hi!");
 
 					// Get column information from object or from object's classdef
-					BDataColumns& cols = pobj->GetColumns();
+//x					BDataColumns& cols = pobj->GetColumns();
+					BDataColumns* pdat = DYNAMIC_DOWNCAST(BDataColumns, pobj->GetPropertyData(propColumnInfoArray));
 
 					// Initialize listview columns - see ListCtrlEx.cpp
-					m_lvw.InitializeColumns(&cols);
-					delete &cols;
+					m_lvw.InitializeColumns(pdat);
+					delete pdat;
 
 				}
 				else {
@@ -773,7 +660,7 @@ void CViewContents::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) {
 // Note: See OnHeaderRClick for header popup menu.
 void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen) {
 
-	xTRACE("CViewContents::OnContextMenu(ptscreen.x,y=%d,%d)\n", ptScreen.x, ptScreen.y);
+	//trace("CViewContents::OnContextMenu(ptscreen.x,y=%d,%d)\n", ptScreen.x, ptScreen.y);
 
 	// Set flag if user pressed context key (x and y will be -1)
 	BOOL bContextKey = ((ptScreen.x == -1) && (ptScreen.y == -1));
@@ -978,7 +865,7 @@ void CViewContents::OnCmdViewGridlines() {
 	dwStyle ^= LVS_EX_GRIDLINES;
 	m_lvw.SetExtendedStyle(dwStyle);
 	// Update app variable
-	theApp.m_bDisplayGridlines = (dwStyle & LVS_EX_GRIDLINES) ? TRUE : FALSE;
+	app.m_bDisplayGridlines = (dwStyle & LVS_EX_GRIDLINES) ? TRUE : FALSE;
 }
 
 
@@ -1009,7 +896,7 @@ void CViewContents::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 	if (pEdit)
 	{
 		UINT nMax = pEdit->GetLimitText();
-		xTRACE("nmax=%d\n", nMax);
+		//trace("nmax=%d\n", nMax);
 		pEdit->SetLimitText(0); // sets to UINT_MAX 
 	}
 */
@@ -1022,7 +909,7 @@ void CViewContents::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 //, move this to clistctrlex also?
 void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 
-	xTRACE("CViewContents::OnEndLabelEdit\n");
+	//trace("CViewContents::OnEndLabelEdit\n");
 	
 	// Update CDocument and other views
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
@@ -1096,7 +983,7 @@ void CViewContents::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) {
 // Copy the selected items to the clipboard
 void CViewContents::OnCmdEditCopy() {
 
-	xTRACE("CViewContents::OnCmdEditCopy\n");
+	//trace("CViewContents::OnCmdEditCopy\n");
 	
 	// Exit if on new row (nothing there)
 	BObject* pobj = GetSelectedObject();
@@ -1117,13 +1004,13 @@ void CViewContents::OnCmdEditCopy() {
 	if (!hGlobal) return;
 
 	CString strItems = aObjects.GetText();
-	xTRACE("  Copy the following objects to the clipboard: %s\n", (LPCTSTR) strItems);
+	//trace("  Copy the following objects to the clipboard: %s\n", (LPCTSTR) strItems);
 
 	// Put the data on the clipboard
 	//.. memory leak - when is this supposed to get deleted?
 	// maybe the operating system takes care of it?
 	COleDataSource* pds = new COleDataSource;
-	pds->CacheGlobalData(theApp.m_cfObjects, hGlobal);
+	pds->CacheGlobalData(app.m_cfObjects, hGlobal);
 	pds->SetClipboard();
 */
 }
@@ -1155,13 +1042,13 @@ void CViewContents::OnCmdEditCut()
 // if copied, then paste will need to create duplicates of the items and put them in the new location
 void CViewContents::OnCmdEditPasteFormatted() 
 {
-	xTRACE("CViewContents::OnPasteFormatted\n");
+	//trace("CViewContents::OnPasteFormatted\n");
 
 	m_lvw.PasteClipboardToCurrentCell();
 	
-/*	if (odo.IsDataAvailable(theApp.m_cfObjects))
+/*	if (odo.IsDataAvailable(app.m_cfObjects))
 	{
-		HGLOBAL hGlobal = odo.GetGlobalData(theApp.m_cfObjects);
+		HGLOBAL hGlobal = odo.GetGlobalData(app.m_cfObjects);
 
 		// Recreate bobjects array from global memory object
 		//. note: this won't work if coming from another instance (right?) as we won't have
@@ -1175,7 +1062,7 @@ void CViewContents::OnCmdEditPasteFormatted()
 		BObject* pobjParent = m_pDoc->GetCurrentObject();
 
 		CString strItems = aObjects.GetText();
-		xTRACE("  Paste the following items as children of %s: %s\n", (LPCTSTR) pobjParent->GetText(), (LPCTSTR) strItems);
+		//trace("  Paste the following items as children of %s: %s\n", (LPCTSTR) pobjParent->GetText(), (LPCTSTR) strItems);
 
 	}
 */	
@@ -1263,7 +1150,7 @@ void CViewContents::OnUpdateEditUndo(CCmdUI* pCmdUI)
 // the left mouse button is being initiated. 
 void CViewContents::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewContents::OnBeginDrag\n");
+	//trace("CViewContents::OnBeginDrag\n");
 
 	// Get drag object(s) into array
 	m_lvw.GetSelectedItemsArray(m_aDragObjects);
@@ -1275,7 +1162,7 @@ void CViewContents::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 
 BObject* CViewContents::DragGetDropTarget(CPoint ptClient)
 {
-	xTRACE("CViewContents::DragGetDropTarget\n");
+	//trace("CViewContents::DragGetDropTarget\n");
 	
 	// All we need is the top left coord of the child window within the view
 	CRect rView;
@@ -1303,7 +1190,7 @@ BObject* CViewContents::DragGetDropTarget(CPoint ptClient)
 
 DROPEFFECT CViewContents::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point) 
 {
-	xTRACE("CViewContents::OnDragOver\n");
+	//trace("CViewContents::OnDragOver\n");
 
 	// Call base class
 	CViewEx::OnDragOver(pDataObject, dwKeyState, point);
@@ -1365,7 +1252,7 @@ DROPEFFECT CViewContents::OnDragOver(COleDataObject* pDataObject, DWORD dwKeySta
 
 void CViewContents::OnDragLeave()
 {
-	xTRACE("CViewContents::OnDragLeave\n");
+	//trace("CViewContents::OnDragLeave\n");
 
 	// Clear the drop target
 //	m_lvw.SelectDropTarget(NULL);
@@ -1386,7 +1273,7 @@ void CViewContents::OnNotifyKeyDown(NMHDR* pNMHDR, LRESULT* pResult)
 {
 /*
 	NMLVKEYDOWN* pkd = (NMLVKEYDOWN*) pNMHDR;
-	xTRACE("CViewContents OnNotifyKeyDown %d\n", pkd->wVKey);
+	//trace("CViewContents OnNotifyKeyDown %d\n", pkd->wVKey);
 	if (pkd->wVKey == VK_DELETE)
 	{
 		// If user is not editing a label, translate the delete to an ID_EDIT_CLEAR command
@@ -1537,15 +1424,18 @@ BObject* CViewContents::GetSelectedObject()
 
 
 
-// DON'T DELETE THIS CODE!!! good for debugging
+// Don't delete this code! good for debugging!
 #ifdef _DEBUG
 BOOL CViewContents::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
 {
+	// unpack contents and print them
 	NMHDR* pnm = (NMHDR*) lParam;
 	UINT nIDFrom = pnm->idFrom;
 	UINT nCode = pnm->code;
-	CString str = theApp.GetNotifyCodeString(nCode);
-	TRACE("CViewContents OnNotify id %d, code %d %s\n", nIDFrom, nCode, (LPCTSTR) str);
+	CString str = app.GetNotifyCodeString(nCode);
+	//trace("CViewContents OnNotify id %d, code %d %s\n", nIDFrom, nCode, (LPCTSTR) str);
+
+	// as you were
 	return CViewEx::OnNotify(wParam, lParam, pResult);
 }
 #endif
@@ -1588,7 +1478,7 @@ void CViewContents::OnUpdateObjMoveDown(CCmdUI* pCmdUI)
 
 void CViewContents::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CViewContents::OnActivateView(bActivate=%d) - if true set focus to m_lvw\n", bActivate);
+	//trace("CViewContents::OnActivateView(bActivate=%d) - if true set focus to m_lvw\n", bActivate);
 
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
 
@@ -1604,7 +1494,7 @@ void CViewContents::OnActivateView(BOOL bActivate, CView* pActivateView, CView* 
 
 void CViewContents::OnCmdEditPastePlain() 
 {
-	xTRACE("CViewContents::OnPastePlain\n");
+	//trace("CViewContents::OnPastePlain\n");
 	m_lvw.PasteClipboardToCurrentCell();
 }
 
@@ -1647,7 +1537,7 @@ void CViewContents::EnableAllProperties()
 // New item selected - notify document of the command target, and save current column. 
 LRESULT CViewContents::OnLvwItemSelected(WPARAM wParam, LPARAM lParam)
 {
-	xTRACE("CViewContents::OnLvwItemSelected - set target object\n");
+	//trace("CViewContents::OnLvwItemSelected - set target object\n");
 	// Only do this if this view is the active view - otherwise leads to problems moving items in the
 	// treeview, etc. 
 	if (this->IsActiveView())
@@ -1662,7 +1552,7 @@ LRESULT CViewContents::OnLvwItemSelected(WPARAM wParam, LPARAM lParam)
 // This is the F4 handler.
 void CViewContents::OnObjEditInDialog() 
 {
-	xTRACE("CViewContents::OnObjEditInDialog\n");
+	//trace("CViewContents::OnObjEditInDialog\n");
 
 	// Get command target
 	BObject* pobj = m_pDoc->GetTargetObject();
@@ -1698,8 +1588,8 @@ void CViewContents::OnObjEditInDialog()
 
 	// Edit the property value in an appropriate dialog.
 //x	pobj->UIEditValue(lngPropertyID);
-//x	theApp.ui.EditValue(pobj, lngPropertyID);
-	pobj->UIEditValue(lngPropertyID, theApp.ui);
+//x	app.ui.EditValue(pobj, lngPropertyID);
+	pobj->UIEditValue(lngPropertyID, app.ui);
 
 }
 
@@ -1708,7 +1598,7 @@ void CViewContents::OnObjEditInDialog()
 // Set command targets on gaining focus
 void CViewContents::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CViewContents::OnSetFocus - set target object\n");
+	//trace("CViewContents::OnSetFocus - set target object\n");
 	CViewEx::OnSetFocus(pOldWnd);
 	m_lvw.SetFocus(); // this will ensure that some cell is selected. // 1.1 added this so ctrl+enter would work right
 	SetTargetObject();
@@ -1806,7 +1696,7 @@ void CViewContents::OnColumnEditProperty()
 // Insert a new column
 void CViewContents::OnColumnInsert() 
 {
-	xTRACE("CViewContents OnColumnInsert\n");
+	//trace("CViewContents OnColumnInsert\n");
 	BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 	// First we want to disable all the currently visible properties
 	DisableVisibleProperties();
@@ -1841,7 +1731,7 @@ void CViewContents::OnColumnSortClear()
 	// Add the children of the start object to the list, with no recursion
 	m_lvw.DeleteAllItems();
 	BObject* pobjStart = m_pDoc->GetCurrentObject();
-	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, FALSE, 0, TRUE);
+	m_lvw.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, FALSE, 0, TRUE);
 
 	// Add dummy new row
 	m_lvw.AddDummyRow();
@@ -1875,7 +1765,7 @@ void CViewContents::OnUpdateColumnSortClear(CCmdUI* pCmdUI)
 // This is the CM_COLUMNS_CHANGED handler, sent by clistctrlex
 LRESULT CViewContents::OnLvwColumnsChanged(WPARAM wParam, LPARAM lParam)
 {
-	xTRACE("CViewContents CM_COLUMNS_CHANGED handler - save column info\n");
+	//trace("CViewContents CM_COLUMNS_CHANGED handler - save column info\n");
 	BObject* pobj = m_pDoc->GetCurrentObject();
 	ASSERT_VALID(pobj);
 	m_lvw.SaveColumnInfo(pobj); // this saves the BDataColumns object to the current pobj
@@ -1984,4 +1874,118 @@ BOOL CViewContents::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERIN
 	return CViewEx::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
 
+
+
+
+
+
+// Printing
+//---------------------------------------------------------------------------
+
+BOOL CViewContents::DoPrint(BOOL bPreview) {
+	if (bPreview)
+		CViewEx::OnFilePrintPreview(); // in cviewex
+	else
+		CViewEx::OnFilePrint(); // in file viewprnt.cpp
+	return TRUE;
+}
+
+
+
+BOOL CViewContents::OnPreparePrinting(CPrintInfo* pInfo) {
+
+	//trace("CViewContents::OnPreparePrinting\n");
+	
+	// If your application knows how many pages the document contains when OnPreparePrinting
+	// is called, it should inform MFC by calling CPrintInfo::SetMaxPage before calling
+	// DoPreparePrinting. MFC displays the maximum page number in the To box of the Print dialog.
+	// If you don't set the maximum page number in OnPreparePrinting, you should set it in
+	// OnBeginPrinting if possible. (better there because at this point you don't know what
+	// printer the user has chosen)
+//	pInfo->SetMaxPage(nMaxPage);
+
+	// A nonzero return from OnPreparePrinting begins the printing process, and a 0 return
+	// cancels the print job before it begins. 
+	return DoPreparePrinting(pInfo); // default preparation - brings up dialog
+}
+
+
+// At this point the printer has been selected so we can calculate the max number of pages. 
+// Consider printing a spreadsheet. When overriding OnPreparePrinting, you must calculate 
+// how many sheets of paper will be required to print the entire spreadsheet and then 
+// use that value when calling the SetMaxPage member function of CPrintInfo. 
+void CViewContents::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) {
+
+	// Initialize fonts margins etc
+	CViewEx::OnBeginPrinting(pDC, pInfo);
+
+	app.m_printinfo.m_strViewName = _T("Contents View");
+	app.m_printinfo.m_strObjectName = m_pDoc->GetCurrentObject()->GetPropertyString(propName);
+
+	// Get grid information etc
+	m_lvw.OnBeginPrinting(pDC, pInfo);
+}
+
+
+/*
+// As a rule, you need to override OnPrepareDC only if you use OnDraw to draw to both the screen 
+// and the printed page. If you do all your printing from OnPrint, there's no need to override OnPrepareDC.
+// When overriding OnPrepareDC, you must translate m_nCurPage into the range of rows 
+// and columns that will appear on that particular sheet and then adjust the viewport origin accordingly.
+// After each call to OnPrepareDC, the framework checks a member of the CPrintInfo structure 
+// called m_bContinuePrinting. Its default value is TRUE. As long as it remains so, the framework 
+// continues the print loop. If it is set to FALSE, the framework stops. To perform print-time pagination, 
+// override OnPrepareDC to check whether the end of the document has been reached, and 
+// set m_bContinuePrinting to FALSE when it has. 
+// The default implementation of OnPrepareDC sets m_bContinuePrinting to FALSE if the current page 
+// is greater than 1. This means that if the length of the document wasn’t specified, the framework 
+// assumes the document is one page long. One consequence of this is that you must be careful if you 
+// call the base class version of OnPrepareDC. Do not assume that m_bContinuePrinting will be TRUE 
+// after calling the base class version. 
+void CViewContents::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)  {
+	// TODO: Add your specialized code here and/or call the base class	
+	CViewEx::OnPrepareDC(pDC, pInfo);
+}
+*/
+
+
+// This is where we draw the actual text, since we're not using OnDraw to draw to both
+// the screen and the printer. 
+// Note: The default implementation of OnPrint just calls OnDraw.
+// To determine which page OnPrint has been called to print, check CPrintInfo::m_nCurPage.
+// If you need to discriminate between real printing and print preview, check the m_bPreview
+// data member of pInfo. 
+// If you need a GDI object for several consecutive pages, Windows requires that you select it 
+// into the device context each time OnPrint is called.
+// TheOnPrint member function is the appropriate place to print headers or footers because it 
+// is called for each page, and because it is called only for printing, not for screen display. You 
+// can define a separate function to print a header or footer, and pass it the printer device 
+// context from OnPrint. 
+void CViewContents::OnPrint(CDC* pDC, CPrintInfo* pInfo) {
+
+	CPrintInfoMore& rpim = app.m_printinfo;
+
+	rpim.PrintHeader(pDC, pInfo);
+	m_lvw.PrintPage(pDC, pInfo);
+	rpim.PrintFooter(pDC, pInfo);
+	rpim.DrawMargins(pDC, pInfo);
+}
+
+
+/*
+// When the user closes the print preview window, the framework calls OnEndPrintPreview
+// to notify the application that print preview is about to end. The default implementation
+// calls OnEndPrinting, reactivates the original view, and destroys the print preview window. 
+void CViewContents::OnEndPrintPreview(CDC* pDC, CPrintInfo* pInfo, POINT point, CPreviewView* pView) {
+	// TODO: Add your specialized code here and/or call the base class	
+	CViewEx::OnEndPrintPreview(pDC, pInfo, point, pView);
+}
+*/
+
+// Free any fonts and other resources allocated in OnBeginPrinting.
+void CViewContents::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) {
+	//trace("CViewContents::OnEndPrinting\n");
+	// call base class to delete gdi objects
+	CViewEx::OnEndPrinting(pDC, pInfo);
+}
 

@@ -205,7 +205,7 @@ void CSplitterWndEx::StopTracking(BOOL bAccept)
 
 void CSplitterWndEx::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	xTRACE("CSplitterWndEx::OnLButtonDown\n");
+	//trace("CSplitterWndEx::OnLButtonDown\n");
 
 	// Call base class handler
 	CSplitterWnd::OnLButtonDown(nFlags, point);
@@ -219,7 +219,7 @@ void CSplitterWndEx::OnLButtonDown(UINT nFlags, CPoint point)
 // This gets called after user resizes a splitter pane
 void CSplitterWndEx::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	xTRACE("CSplitterWndEx::OnLButtonUp\n");
+	//trace("CSplitterWndEx::OnLButtonUp\n");
 
 	// Call base class handler
 	CSplitterWnd::OnLButtonUp(nFlags,point);
@@ -256,7 +256,7 @@ void CSplitterWndEx::OnSize(UINT nType, int cx, int cy)
 	// Now tell parent that splitter was resized
 	if (m_lngMode == modeSplitterContents)
 	{
-		xTRACE("CSplitterWndEx::OnSize cx %d  cy %d\n", cx, cy);
+		//trace("CSplitterWndEx::OnSize cx %d  cy %d\n", cx, cy);
 
 		// Note: This splitter window is contained in a tab control which is contained in the cviewtabs window
 		// so get the parent of the parent
@@ -305,7 +305,7 @@ void CSplitterWndEx::SetRowHeightPct(int nRow, int nHeightPct, BOOL bRecalcLayou
 	if (nTotalHeight != 0)
 	{
 		int nPaneHeight = nHeightPct * nTotalHeight / 100;
-		xTRACE("CSplitterWndEx::SetRowHeightPct nRow %d  nHeightPct %d  nPaneHeight %d\n", nRow, nHeightPct, nPaneHeight);
+		//trace("CSplitterWndEx::SetRowHeightPct nRow %d  nHeightPct %d  nPaneHeight %d\n", nRow, nHeightPct, nPaneHeight);
 		SetRowInfo(nRow, nPaneHeight, 0);
 		// Now recalculate the layout!
 		if (bRecalcLayout) RecalcLayout();

@@ -67,7 +67,7 @@ void CEditEx::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 // Ctrl-C, Ctrl-V and Ctrl-X get forwarded to the edit control. 
 BOOL CEditEx::PreTranslateMessage(MSG* pMsg) 
 {
-	xTRACE("CEditInPlace::PreTranslateMessage\n");
+	//trace("CEditInPlace::PreTranslateMessage\n");
 //	if (m_bSwallowReturn && pMsg->message == WM_KEYDOWN)
 	if (pMsg->message == WM_KEYDOWN)
 	{

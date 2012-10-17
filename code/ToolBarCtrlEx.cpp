@@ -761,7 +761,7 @@ void CToolBarCtrlEx::OnUpdateCmdUI(CView* pTarget, BOOL bDisableIfNoHndler)
 /*
 void CToolBarCtrlEx::OnToolTipText(NMHDR* pnm, LRESULT* result)
 {
-	xTRACE("provide tooltip text!\n");
+	//trace("provide tooltip text!\n");
 
 	*result = 0;
 }

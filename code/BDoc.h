@@ -84,7 +84,7 @@ public:
 	
 	// Enums
 	enum EncryptionTypes {encryptNone = 0, encryptRC4 = 1};
-	enum CompressionTypes {compressNone = 0, compressLZH = 1};
+	enum CompressionTypes {compressNone = 0, compressLZH = 1}; // not used yet
 
 	// Static (class) methods
 	static BDoc* GetDoc(); // class method used to get pointer to current document object
@@ -173,6 +173,7 @@ private:
 	// These get serialized
 	BOOL m_bUnicode; // If true then document is/was serialized using unicode characters rather than ansi
 	int m_nEncryptionType; // whether file is encrypted, how it's encrypted, etc.
+	int m_nCompressionType; // not used yet
 	CString m_strSessionKeyHash; // hash of session key based on password (hexascii string) - used to verify password
 	BObject* m_pobjRoot;			// Pointer to the root object, allocated on the heap
 	BObject* m_pobjCurrent;		// Pointer to currently selected object

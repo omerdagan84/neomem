@@ -132,7 +132,7 @@ int CStatusBarEx::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CStatusBarEx::OnSize(UINT nType, int cx, int cy) 
 {
-	xTRACE("CStatusBarEx::OnSize\n");
+	//trace("CStatusBarEx::OnSize\n");
 
 	CStatusBar::OnSize(nType, cx, cy);
 	

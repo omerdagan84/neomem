@@ -88,7 +88,7 @@ BOOL CDialogGetLocation::OnInitDialog()
 
 	// Add all objects to list
 	BObject* pobjStart = m_pDoc->GetObject(rootUser);
-	m_tvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, TRUE, TRUE, FALSE);
+	m_tvw.AddObjects(pobjStart, app.m_lngExcludeFlags, TRUE, TRUE, FALSE);
 
 	// Select current object
 	ASSERT_VALID(m_pobj);
@@ -126,7 +126,7 @@ void CDialogGetLocation::OnBtnHelp()
 {
 	// Caller should set m_nHelpID to the appropriate resource:
 	// IDD_MOVE_OBJECT_TO, IDD_MOVE_TEXT_TO, IDD_GOTO_OBJECT, etc.
-	theApp.WinHelp(HID_BASE_RESOURCE + m_nHelpID); 	
+	app.WinHelp(HID_BASE_RESOURCE + m_nHelpID); 	
 }
 
 

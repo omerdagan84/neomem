@@ -76,7 +76,7 @@ int CViewHomeInner::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_rMargins.SetRect(20, 10, 20, 10); // left top right bottom
 
 	// Goto next available tip of the day
-	theApp.GotoNextTip();
+	app.GotoNextTip();
 
 	// Create labels
 	CString str;
@@ -96,15 +96,15 @@ int CViewHomeInner::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //			pszDescription = _T("To get started, add a new object by selecting \"New Object...\" from the Object menu.");
 //	}
 	m_lblDescription.SetFontEx("Arial", 9.0);
-	m_lblDescription.m_clrText = theApp.m_clrHomeDescriptionFore;
+	m_lblDescription.m_clrText = app.m_clrHomeDescriptionFore;
 //	m_lblDescription.Create(pszDescription, r, this, 0, TRUE, nFormatMultiline);
 	m_lblDescription.Create("", r, this, 0, TRUE, nFormatMultiline);
 	GetFileDescription(); // set label's text
 
 	// Create buttons
-	m_lblPrevTip.m_clrText = theApp.m_clrHomeMiddleFore2;
-	m_lblDot.m_clrText = theApp.m_clrHomeMiddleFore2;
-	m_lblNextTip.m_clrText = theApp.m_clrHomeMiddleFore2;
+	m_lblPrevTip.m_clrText = app.m_clrHomeMiddleFore2;
+	m_lblDot.m_clrText = app.m_clrHomeMiddleFore2;
+	m_lblNextTip.m_clrText = app.m_clrHomeMiddleFore2;
 	m_lblPrevTip.Create("previous", r, this, IDC_LBL_PREV, TRUE, DT_CENTER | DT_BOTTOM);
 	m_lblDot.Create(" · ", r, this, 0, TRUE, DT_CENTER | DT_BOTTOM);
 	m_lblNextTip.Create("next", r, this, IDC_LBL_NEXT, TRUE, DT_CENTER | DT_BOTTOM);
@@ -112,7 +112,7 @@ int CViewHomeInner::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Tip of the day
 	m_lblTip.SetFontEx("Arial", 9.0, TRUE, FALSE);
 	m_lblTip.Create("Tip of the Day", r, this, 0, TRUE, nFormat, CStaticEx::flagUnderline);
-	LPCTSTR pszTip = theApp.GetTip();
+	LPCTSTR pszTip = app.GetTip();
 	m_lblTip2.SetFontEx("Arial", 9.0);
 	m_lblTip2.Create(pszTip, r, this, 0, TRUE, nFormatMultiline);
 
@@ -136,7 +136,7 @@ void CViewHomeInner::OnInitialUpdate()
 
 void CViewHomeInner::OnSize(UINT nType, int cx, int cy) 
 {
-	xTRACE("CViewHomeInner::OnSize\n");
+	//trace("CViewHomeInner::OnSize\n");
 	// Call base class
 //	CScrollView::OnSize(nType, cx, cy);
 	if ((cx == 0) || (cy == 0)) return;
@@ -156,7 +156,7 @@ void CViewHomeInner::OnDraw(CDC* pDC)
 void CViewHomeInner::OnMouseMove(UINT nFlags, CPoint point) 
 {
 	// Clear status bar text, because some labels in this view have status text associated with them.
-	theApp.SetStatusBarText();
+	app.SetStatusBarText();
 	CScrollView::OnMouseMove(nFlags, point);
 }
 
@@ -245,7 +245,7 @@ void CViewHomeInner::RecalculateLayout(int cx /* = 0 */, int cy /* = 0 */)
 
 BOOL CViewHomeInner::OnEraseBkgnd(CDC* pDC) 
 {
-	xTRACE("CViewHomeInner::OnEraseBkgnd\n");
+	//trace("CViewHomeInner::OnEraseBkgnd\n");
 
 	// Call base class	
 	// The default implementation erases the background using the window class background brush 
@@ -272,7 +272,7 @@ BOOL CViewHomeInner::OnEraseBkgnd(CDC* pDC)
 
 void CViewHomeInner::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-	TRACE("    CViewHomeInner::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewHomeInner::OnUpdate %s\n", app.GetHintName(lHint));
 
 	switch (lHint)
 	{
@@ -315,10 +315,10 @@ void CViewHomeInner::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 void CViewHomeInner::OnLblPrev() 
 {
-	xTRACE("CViewHomeInner::OnLblPrev\n");
+	//trace("CViewHomeInner::OnLblPrev\n");
 	CWaitCursor wc;
-	theApp.GotoPreviousTip();
-	m_lblTip2.SetWindowText(theApp.GetTip());
+	app.GotoPreviousTip();
+	m_lblTip2.SetWindowText(app.GetTip());
 	RecalculateLayout();
 	Invalidate();
 }
@@ -326,10 +326,10 @@ void CViewHomeInner::OnLblPrev()
 
 void CViewHomeInner::OnLblNext() 
 {
-	xTRACE("CViewHomeInner::OnLblNext\n");
+	//trace("CViewHomeInner::OnLblNext\n");
 	CWaitCursor wc;
-	theApp.GotoNextTip();
-	m_lblTip2.SetWindowText(theApp.GetTip());
+	app.GotoNextTip();
+	m_lblTip2.SetWindowText(app.GetTip());
 	RecalculateLayout();
 	Invalidate();
 }

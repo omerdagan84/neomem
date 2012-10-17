@@ -105,8 +105,8 @@ int CViewEx::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pDoc = DYNAMIC_DOWNCAST(BDoc, m_pDocument);
 
 	m_nTitleBarHeight = 20; //. how do we get this? base on text height
-//		CFont* pfontOld = pDC->SelectObject(&theApp.m_fontControls);
-//	SetFont(&theApp.m_fontControls, FALSE);
+//		CFont* pfontOld = pDC->SelectObject(&app.m_fontControls);
+//	SetFont(&app.m_fontControls, FALSE);
 	
 	return 0;
 }
@@ -137,7 +137,7 @@ void CViewEx::SetToolBar(CToolBarCtrl* pWnd)
 //CViewEx::CreateChildView(CWnd* pParent, CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID)
 CView* CViewEx::CreateChildView(CRuntimeClass* pViewClass, CDocument* pDoc, CRect rPos, UINT nControlID)
 {
-	xTRACE("CViewEx::CreateChildView of Class %s\n", pViewClass->m_lpszClassName);
+	//trace("CViewEx::CreateChildView of Class %s\n", pViewClass->m_lpszClassName);
 
 	// Check assumptions
 	ASSERT_VALID(this);
@@ -251,7 +251,7 @@ BDoc* CViewEx::GetDocument()
 // Reposition child view and toolbar (if any)
 void CViewEx::OnSize(UINT nType, int cx, int cy) 
 {
-	xTRACE("CViewEx::OnSize\n");
+	//trace("CViewEx::OnSize\n");
 
 	// Call base class
 	CView::OnSize(nType, cx, cy);
@@ -289,7 +289,7 @@ void CViewEx::OnSize(UINT nType, int cx, int cy)
 
 BOOL CViewEx::OnEraseBkgnd(CDC* pDC) 
 {
-	xTRACE("CViewEx::OnEraseBkgnd\n");
+	//trace("CViewEx::OnEraseBkgnd\n");
 
 	// The default implementation erases the background using the window class background brush 
 	// specified by the hbrBackground member of the window class structure. 
@@ -344,7 +344,7 @@ BOOL CViewEx::OnEraseBkgnd(CDC* pDC)
 // Draw border around client area and toolbar if any, and titlebar if visible.
 void CViewEx::OnDraw(CDC* pDC)
 {
-	xTRACE("CViewEx::OnDraw - draw border around client area and toolbar (if any)\n");
+	//trace("CViewEx::OnDraw - draw border around client area and toolbar (if any)\n");
 
 	CRect r;
 
@@ -362,7 +362,7 @@ void CViewEx::OnDraw(CDC* pDC)
 
 		pDC->SetTextColor(Library::clrWindowText);
 		pDC->SetBkColor(Library::clr3dFace);
-		CFont* pfontOld = pDC->SelectObject(&theApp.m_fontControls);
+		CFont* pfontOld = pDC->SelectObject(&app.m_fontControls);
 		r.left = 6; // pixels?
 //		pDC->SetBkMode(TRANSPARENT); // transparent background for text
 //		int nFormat = DT_LEFT | DT_SINGLELINE | DT_BOTTOM;
@@ -484,7 +484,7 @@ void CViewEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 //	CView::OnBeginPrinting(pDC, pInfo);
 
 	// Initialize extra print info
-	CPrintInfoMore& rpim = theApp.m_printinfo;
+	CPrintInfoMore& rpim = app.m_printinfo;
 	rpim.Initialize(pDC);
 }
 
@@ -494,7 +494,7 @@ void CViewEx::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 //	CView::OnEndPrinting(pDC, pInfo);
 
 	// Delete gdi objects
-	CPrintInfoMore& rpim = theApp.m_printinfo;
+	CPrintInfoMore& rpim = app.m_printinfo;
 	rpim.Terminate();
 }
 
@@ -645,7 +645,7 @@ void CViewEx::DragRegister(CWnd* pwndDropTarget)
 /*
 void CViewEx::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewEx::OnBeginDrag\n");
+	//trace("CViewEx::OnBeginDrag\n");
 
 	// Get array of selected objects from derived view to start drag operation with
 	BObjects aObjects;
@@ -659,7 +659,7 @@ void CViewEx::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		// Wrap global memory block in data source object
 		COleDataSource ods;
-		ods.CacheGlobalData(theApp.m_cfObjects, hGlobal);
+		ods.CacheGlobalData(app.m_cfObjects, hGlobal);
 
 		// Do Drag Drop
 		DWORD dwEffects = DROPEFFECT_COPY | DROPEFFECT_MOVE;
@@ -667,13 +667,13 @@ void CViewEx::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 		switch (de)
 		{
 			case DROPEFFECT_MOVE:
-				xTRACE("  Dropeffect move\n");
+				//trace("  Dropeffect move\n");
 				break;
 			case DROPEFFECT_COPY:
-				xTRACE("  Dropeffect copy\n");
+				//trace("  Dropeffect copy\n");
 				break;
 			case DROPEFFECT_NONE:
-				xTRACE("  Dropeffect none\n");
+				//trace("  Dropeffect none\n");
 				break;
 		}
 		// Free global memory here
@@ -688,7 +688,7 @@ void CViewEx::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 // Derived class should fill m_aDragObjects with objects to be dragged and then call this routine.
 void CViewEx::DragStart()
 {
-	xTRACE("CViewEx::DragStart\n");
+	//trace("CViewEx::DragStart\n");
 
 	// Exit if no drag objects
 	if (m_aDragObjects.GetSize() == 0)
@@ -700,7 +700,7 @@ void CViewEx::DragStart()
 	{
 		// Wrap global memory block in data source object
 		COleDataSource ods;
-		ods.CacheGlobalData(theApp.m_cfObjects, hGlobal);
+		ods.CacheGlobalData(app.m_cfObjects, hGlobal);
 
 		// Do Drag Drop
 		DWORD dwEffects = DROPEFFECT_COPY | DROPEFFECT_MOVE;
@@ -708,13 +708,13 @@ void CViewEx::DragStart()
 		switch (de)
 		{
 			case DROPEFFECT_MOVE:
-				xTRACE("  Dropeffect move\n");
+				//trace("  Dropeffect move\n");
 				break;
 			case DROPEFFECT_COPY:
-				xTRACE("  Dropeffect copy\n");
+				//trace("  Dropeffect copy\n");
 				break;
 			case DROPEFFECT_NONE:
-				xTRACE("  Dropeffect none\n");
+				//trace("  Dropeffect none\n");
 				break;
 		}
 		// Free global memory here
@@ -741,11 +741,11 @@ DROPEFFECT CViewEx::OnDragEnter(COleDataObject* pDataObject, DWORD dwKeyState, C
 	//. cviewex could store array of formats we're interested in
 	// so could automatically do this
 	// or have flags for each one (predefined flags)
-	// theApp could supply the format given a flag
+	// app could supply the format given a flag
 	// for now, let's just move this to cviewex
 	m_bInterestedInData = pDataObject->IsDataAvailable(CF_TEXT) || 
-			pDataObject->IsDataAvailable(theApp.m_cfRtf) ||
-			pDataObject->IsDataAvailable(theApp.m_cfObjects);
+			pDataObject->IsDataAvailable(app.m_cfRtf) ||
+			pDataObject->IsDataAvailable(app.m_cfObjects);
 
 	// If we're interested in the data, return move or copy depending on status of control key
 	if (m_bInterestedInData)
@@ -794,7 +794,7 @@ DROPEFFECT CViewEx::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CP
 // This will scroll the window specified in DragRegister, for instance a treeview window.
 DROPEFFECT CViewEx::OnDragScroll(DWORD dwKeyState, CPoint point)
 {
-	xTRACE("CViewEx::OnDragScroll\n");
+	//trace("CViewEx::OnDragScroll\n");
 
 	ASSERT_VALID(m_pwndDropTarget);
 
@@ -832,7 +832,7 @@ DROPEFFECT CViewEx::OnDragScroll(DWORD dwKeyState, CPoint point)
 // dropped at the specified point.
 BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint ptClient) 
 {
-	xTRACE("CViewEx::OnDrop\n");
+	//trace("CViewEx::OnDrop\n");
 	
 	// Call OnDragLeave to clean up
 	OnDragLeave();
@@ -850,7 +850,7 @@ BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint 
 	FORMATETC fe = {NULL, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL};
 
 	// Check for Rich Text Format 
-	fe.cfFormat = theApp.m_cfRtf;
+	fe.cfFormat = app.m_cfRtf;
 	BOOL bText = pDataObject->IsDataAvailable(fe.cfFormat, &fe);
 	if (!bText)
 	{
@@ -862,7 +862,7 @@ BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint 
 	// If text is available, retrieve it and add it to the target object
 	if (bText)
 	{
-		xTRACE("  Text is available!\n");
+		//trace("  Text is available!\n");
 
 		// Get global memory block
 		HGLOBAL hGlobal = pDataObject->GetGlobalData(fe.cfFormat, &fe);
@@ -890,10 +890,10 @@ BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint 
 
 
 	// Check for collection of objects being copied or moved
-	fe.cfFormat = theApp.m_cfObjects;
+	fe.cfFormat = app.m_cfObjects;
 	if (pDataObject->IsDataAvailable(fe.cfFormat, &fe))
 	{
-		xTRACE("  NeoMem objects are available!\n");
+		//trace("  NeoMem objects are available!\n");
 		HGLOBAL hGlobal = pDataObject->GetGlobalData(fe.cfFormat);
 		if (!hGlobal) return FALSE;
 		
@@ -915,19 +915,19 @@ BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint 
 
 		// for TRACE...
 		CString strItems = aObjects.GetText();
-		xTRACE("   Objects: %s\n", (LPCTSTR) strItems);
+		//trace("   Objects: %s\n", (LPCTSTR) strItems);
 
 		// Handle copy
 		if (dropEffect == DROPEFFECT_COPY)
 		{
 			// If this is a copy operation, create copies of the selected objects
 			AfxMessageBox("Copying objects not available.");
-//			xTRACE("  Copy %s and add them to %s's child collection\n", (LPCTSTR) strItems, (LPCTSTR) strTarget);
+//			//trace("  Copy %s and add them to %s's child collection\n", (LPCTSTR) strItems, (LPCTSTR) strTarget);
 //			aObjectsCopy = aObjects.Copy();
 //			aObjectsCopy.SetParent(pobjTarget);
 //			GetDocument()->SetModifiedFlag();
 			// Now tell all views about the move
-//			xTRACE("  Now update the views\n");
+//			//trace("  Now update the views\n");
 //			CHint objHint;
 //			objHint.m_paObjects = &aObjects;
 //			objHint.m_pobjParent = pobjTarget;
@@ -946,7 +946,7 @@ BOOL CViewEx::OnDrop(COleDataObject* pDataObject, DROPEFFECT dropEffect, CPoint 
 
 			// Move the items to the new location by changing their parent.
 			// This will set the doc modified flag and update the views
-//			xTRACE("  Move %s to %s\n", (LPCTSTR) strItems, (LPCTSTR) strTarget);
+//			//trace("  Move %s to %s\n", (LPCTSTR) strItems, (LPCTSTR) strTarget);
 			aObjects.MoveTo(pobjTarget);
 
 			return TRUE;
@@ -1228,7 +1228,7 @@ void CViewEx::OnRButtonDown(UINT nFlags, CPoint point)
 //		if (m_lngViewID == viewHome)
 //			pPopup->EnableMenuItem(ID_VIEW_HIDE, MF_BYCOMMAND | MF_GRAYED);
 
-//		// let main window handle commands since theApp handles them
+//		// let main window handle commands since app handles them
 //		pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, AfxGetMainWnd());
 		pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 	}
@@ -1373,7 +1373,7 @@ BOOL CViewEx::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pH
 	// if the view and the doc didn't handle it, try the child/doc frame. 
 	if (!bHandled) {
 		//. this is bombing because there's no childframe yet! so check. 
-		CFrameChild* pframe = theApp.GetChildFrame();
+		CFrameChild* pframe = app.GetChildFrame();
 		if (pframe)
 			bHandled = pframe->OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 	}

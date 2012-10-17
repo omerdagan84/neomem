@@ -479,7 +479,7 @@ void CColorButton::OnMouseMove(UINT nFlags, CPoint ptClient)
 	TRACKMOUSEEVENT tme;
 	if (m_bDrawEdge == FALSE)
 	{
-		xTRACE("OnMouseEnter\n");
+		//trace("OnMouseEnter\n");
 		tme.cbSize = sizeof(TRACKMOUSEEVENT);
 		tme.dwFlags = TME_LEAVE;
 		tme.hwndTrack = m_hWnd;
@@ -509,7 +509,7 @@ void CColorButton::OnMouseMove(UINT nFlags, CPoint ptClient)
 // If an application processes this message, it should return zero. 
 LPARAM CColorButton::OnMouseLeave(WPARAM wParam, LPARAM lParam)
 {
-	xTRACE("OnMouseLeave\n");
+	//trace("OnMouseLeave\n");
 	m_bDrawEdge = FALSE;
 	RedrawWindow();
 	return 0;

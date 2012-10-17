@@ -48,11 +48,11 @@ BOOL CDialogNewFile::OnInitDialog()
 //	CImageList* pImageList = m_pDoc->GetImageList();
 //	ASSERT_VALID(pImageList);
 //	m_lvw.SetImageList(pImageList, LVSIL_SMALL);
-//	m_lvw.SetImageList(theApp.GetImageList(), LVSIL_NORMAL);
+//	m_lvw.SetImageList(app.GetImageList(), LVSIL_NORMAL);
 
 	// Create image list containing file icon
 	m_iml.Create(32, 32, ILC_MASK | ILC_COLOR24, 1, 1);
-	int nImage = m_iml.Add(theApp.LoadIcon(IDR_NEOMEM_TYPE));
+	int nImage = m_iml.Add(app.LoadIcon(IDR_NEOMEM_TYPE));
 
 	m_lvw.SetImageList(&m_iml, LVSIL_NORMAL);
 

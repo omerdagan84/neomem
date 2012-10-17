@@ -80,7 +80,7 @@ BOOL CDialogSelectProperty::OnInitDialog()
 
 	// Initialize class list
 	m_cboClass.SetImageList(m_pDoc->GetImageList());
-	m_cboClass.AddObjects(m_pobjClasses, theApp.m_lngExcludeFlags, FALSE, TRUE);
+	m_cboClass.AddObjects(m_pobjClasses, app.m_lngExcludeFlags, FALSE, TRUE);
 
 	// Initialize listview
 	m_lvw.SetImageList(m_pDoc->GetImageList(), LVSIL_SMALL);
@@ -163,7 +163,7 @@ void CDialogSelectProperty::DoDataExchange(CDataExchange* pDX)
 
 void CDialogSelectProperty::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + m_nMode); // IDD_ADD_PROPERTY or IDD_PROPERTY_WIZARD
+	app.WinHelp(HID_BASE_RESOURCE + m_nMode); // IDD_ADD_PROPERTY or IDD_PROPERTY_WIZARD
 }
 
 
@@ -326,8 +326,8 @@ void CDialogSelectProperty::AddProperties()
 		}
 	}
 	
-//	ULONG lngExcludeFlags = theApp.m_lngExcludeFlags | flagFilter;
-	ULONG lngExcludeFlags = theApp.m_lngExcludeFlags;
+//	ULONG lngExcludeFlags = app.m_lngExcludeFlags | flagFilter;
+	ULONG lngExcludeFlags = app.m_lngExcludeFlags;
 	if (!m_bShowAll)
 		lngExcludeFlags |= flagFilter;
 	m_lvw.DeleteAllItems();

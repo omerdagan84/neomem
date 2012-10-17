@@ -81,7 +81,7 @@ public:
 	BOOL GetClassDefNewName(CString& strName);
 	OBJID GetClassID() { return m_lngClassID; }; 
 	BObject* GetClassObject();
-	BDataColumns& GetColumns();
+//x	BDataColumns& GetColumns();
 	BData* GetData() { return m_pdat; };
 	ULONG GetDefaultIconID();
 	BDoc* GetDoc() { return m_pDoc; };
@@ -105,7 +105,7 @@ public:
 
 	BData* GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotFound = FALSE); // not const
 
-	BDataColumns* GetPropertyColumns(OBJID lngPropertyID);
+//x	BDataColumns* GetPropertyColumns(OBJID lngPropertyID);
 	COleDateTime& GetPropertyDate(OBJID lngPropertyID);
 	ULONG GetPropertyFlags(OBJID lngPropertyID); // not const
 //x	BObject* GetPropertyLink(ULONG lngPropertyID); // not const
@@ -134,7 +134,7 @@ public:
 	int SendMessage(ULONG lngMsg, BOOL bRecurse = TRUE);
     virtual void Serialize( CArchive& ar);
 	BOOL SetClassID(OBJID lngNewClassID);
-	BOOL SetColumns(BDataColumns& cols);
+//x	BOOL SetColumns(BDataColumns& cols);
 	void SetColumnsBasedOnClass(BObject* pobjDefaultClass);
 	BOOL SetData(BData* pData);
 	void SetDoc(BDoc* pdoc) { m_pDoc = pdoc; }; 

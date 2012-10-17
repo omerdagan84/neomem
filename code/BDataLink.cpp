@@ -86,7 +86,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	// e.g. this might be an Authors folder.
 	OBJID idLinkSource = pobjPropertyDef->GetPropertyLink(propLinkSource);
 	if (idLinkSource == 0) 
-		idLinkSource = theApp.GetTopObjectID(); // get root object
+		idLinkSource = app.GetTopObjectID(); // get root object
 	BObject* pobjLinkSource = pDoc->GetObject(idLinkSource);
 
 	// First check if text is blank, in which case this property value should be deleted
@@ -112,14 +112,14 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	// Note: We need to exclude hidden objects, because otherwise user could type in "View" for
 	// classname and it would be accepted.
 	BObjects aResults;
-	int nObjects = pDoc->GetObjects(pobjLinkSource, propName, strCopy, aResults, theApp.m_lngExcludeFlags);
+	int nObjects = pDoc->GetObjects(pobjLinkSource, propName, strCopy, aResults, app.m_lngExcludeFlags);
 	if (nObjects == 0)
 	{
 		// No matches found, so try parsing the search string as a person name and try again...
 		BDataPersonName datPerson;
 		datPerson.SetBDataText(str, 0, FALSE);
 		CString strPerson = datPerson.GetBDataText(pDoc, 0);
-		nObjects = pDoc->GetObjects(pobjLinkSource, propName, strPerson, aResults, theApp.m_lngExcludeFlags);
+		nObjects = pDoc->GetObjects(pobjLinkSource, propName, strPerson, aResults, app.m_lngExcludeFlags);
 
 		// Still no matches found, so ask user if they want to add a new object of the default class to the 
 		// link source.
@@ -243,7 +243,7 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 	// Get link source from propertydef
 	OBJID idStart = pobjPropertyDef->GetPropertyLink(propLinkSource);
 	if (idStart == 0)
-		idStart = theApp.GetTopObjectID(); // default is root object
+		idStart = app.GetTopObjectID(); // default is root object
 
 	TCHAR* pszCaption = _T("Edit Link");
 	CString strPropName = pobjPropertyDef->GetPropertyString(propName);
@@ -259,7 +259,7 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_EDIT_LINK; //, use sethelpid
 	if (dlg.DoModalLink(pszCaption, strInstructions, bMultiSelectVisible, bMultiSelectEnabled, bMultiSelectOn, 
-									idStart, this, theApp.m_lngExcludeFlags) == IDOK)
+									idStart, this, app.m_lngExcludeFlags) == IDOK)
 	{
 		// Note: Link(s) has already been saved to this bdata object by the dialog
 		//, don't want UI to have code like that
@@ -270,7 +270,7 @@ BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 */
 
 	return ui.EditLink(pszCaption, strInstructions, bMultiSelectVisible, bMultiSelectEnabled, bMultiSelectOn, 
-			idStart, this, theApp.m_lngExcludeFlags);
+			idStart, this, app.m_lngExcludeFlags);
 }
 
 
@@ -969,7 +969,7 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 		BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_p);
 		if (pobj)
 		{
-			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
+			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags)))
 			{
 				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyString(propName)); //, wsprintf
 				pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, szBuffer);
@@ -988,7 +988,7 @@ BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
 		{
 			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 			ASSERT_VALID(pobj);
-			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
+			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags)))
 			{
 				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyString(propName)); //, wsprintf
 				pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, szBuffer);
@@ -1266,7 +1266,7 @@ bool BDataLink::Test(BDoc* pdoc)
 	ULONG lngPropertyID = idAuthor;
 
 	// Edit the property value in an appropriate dialog. 
-	if (theApp.ui.EditValue(pobj, lngPropertyID))
+	if (app.ui.EditValue(pobj, lngPropertyID))
 	{
 		// verify object
 		BDataLink* pdat = DYNAMIC_DOWNCAST(BDataLink, pobj->GetPropertyData(lngPropertyID));

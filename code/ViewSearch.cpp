@@ -62,7 +62,7 @@ END_MESSAGE_MAP()
 
 CViewSearch::CViewSearch()
 {
-	xTRACE("CViewSearch Constructor\n");
+	//trace("CViewSearch Constructor\n");
 	
 	m_lngPropertyID = 0;
 	m_bMatchCase = FALSE;
@@ -93,7 +93,7 @@ int CViewSearch::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CViewEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	
-	SetFont(&(theApp.m_fontControls)); // set default font for this window and all children (right?)
+	SetFont(&(app.m_fontControls)); // set default font for this window and all children (right?)
 
 	// Create list control
 	CRect r;
@@ -160,7 +160,7 @@ int CViewSearch::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		if (m_cboSearchIn.Create(WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST, r, &m_tbr, IDC_CBO_SEARCH_IN))
 		{
 			// Initialize comboboxex
-			m_cboSearchIn.SetFont(&(theApp.m_fontControls));
+			m_cboSearchIn.SetFont(&(app.m_fontControls));
 			m_cboSearchIn.SetImageList(m_pDoc->GetImageList());
 
 			//, make methods to do all this stuff..
@@ -192,7 +192,7 @@ int CViewSearch::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 			// Now add all individual properties in alpha order
 			BObject* pobjProperties = m_pDoc->GetObject(folderProperties);
-			m_cboSearchIn.AddObjects(pobjProperties, theApp.m_lngExcludeFlags);
+			m_cboSearchIn.AddObjects(pobjProperties, app.m_lngExcludeFlags);
 
 			// Remove "Class" and "Icon" properties because we don't search through those currently.
 //			pobj = m_pDoc->GetObject(propClassName);
@@ -212,7 +212,7 @@ int CViewSearch::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //		strLabel = "Search For";
 //		if (m_lblSearchFor.Create(strLabel, WS_CHILD | WS_VISIBLE | SS_SIMPLE, r, &m_tbr))
 //		{
-//			m_lblSearchFor.SetFont(&(theApp.m_fontControls));
+//			m_lblSearchFor.SetFont(&(app.m_fontControls));
 //			CDC* pdc = GetDC();
 //			CSize sz = pdc->GetTextExtent(strLabel);
 //			m_nSearchForLabelWidth = sz.cx;
@@ -229,7 +229,7 @@ int CViewSearch::OnCreate(LPCREATESTRUCT lpCreateStruct)
 			m_txtSearchFor.m_bHighlightOnEntry = TRUE; // highlight text on entry
 			m_txtSearchFor.m_bWantReturn = FALSE;
 			m_txtSearchFor.ModifyStyleEx(0, WS_EX_CLIENTEDGE);
-			m_txtSearchFor.SetFont(&theApp.m_fontControls);			
+			m_txtSearchFor.SetFont(&app.m_fontControls);			
 			m_txtSearchFor.SetWindowText("Enter search text here");
 		}
 		else return -1;
@@ -426,7 +426,7 @@ void CViewSearch::RecalculateLayout(int cx /* = 0 */, int cy /* = 0 */)
 
 void CViewSearch::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-	TRACE("    CViewSearch::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewSearch::OnUpdate %s\n", app.GetHintName(lHint));
 
 	switch (lHint)
 	{
@@ -517,7 +517,7 @@ void CViewSearch::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 void CViewSearch::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CViewSearch OnActivateView %d\n", bActivate);
+	//trace("CViewSearch OnActivateView %d\n", bActivate);
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	// If this view is being activated, set the focus to the child control
 	if (bActivate)
@@ -551,7 +551,7 @@ void CViewSearch::OnSelectSearch()
 // Handler for return key accelerator ID_KEY_RETURN
 void CViewSearch::OnKeyReturn() 
 {
-	xTRACE("CViewSearch OnKeyReturn\n");
+	//trace("CViewSearch OnKeyReturn\n");
 	// If in listview window, it's as if user double clicked on item
 //	if (::GetFocus() == m_lvw.m_hWnd)
 //		OnObjOpen();
@@ -647,7 +647,7 @@ void CViewSearch::OnObjOpen()  // ok
 
 void CViewSearch::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewSearch OnBeginLabelEdit\n");
+	//trace("CViewSearch OnBeginLabelEdit\n");
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
 	
 	// Clear accelerators so edit control will receive Returns!
@@ -657,7 +657,7 @@ void CViewSearch::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CViewSearch::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewSearch::OnEndLabelEdit\n");
+	//trace("CViewSearch::OnEndLabelEdit\n");
 
 	//, do data validation, return FALSE if you don't like it
  
@@ -733,7 +733,7 @@ void CViewSearch::OnBtnGo()
 
 	// Do search, starting at the root object so that reference folders, etc. get included in search.
 	BObjects aResults;
-	ULONG lngExcludeFlags = theApp.m_lngSearchExcludeFlags; 
+	ULONG lngExcludeFlags = app.m_lngSearchExcludeFlags; 
 	BObject* pobjStart = m_pDoc->GetRoot();
 	ASSERT_VALID(pobjStart);
 	int nItems = m_pDoc->GetObjects(pobjStart, m_lngPropertyID, m_strFindText, aResults, lngExcludeFlags, m_bMatchCase, m_bWholeWord);
@@ -802,7 +802,7 @@ void CViewSearch::OnBtnGo()
 // Want to highlight the search text on the right in the appropriate view (rtf or properties).
 void CViewSearch::OnNotifyItemChanged(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewSearch OnNotifyItemChanged\n");
+	//trace("CViewSearch OnNotifyItemChanged\n");
 
 	*pResult = 0;
 	NMLISTVIEW* plv = (NMLISTVIEW*) pNMHDR;
@@ -981,7 +981,7 @@ void CViewSearch::SelectNextObject()
 
 void CViewSearch::OnObjEditInPlace()  // ok
 {
-	xTRACE("CViewSearch::OnObjEditInPlace\n");
+	//trace("CViewSearch::OnObjEditInPlace\n");
 //	int nItem = m_lvw.GetSelectedItem();
 	BObject* pobjTarget = m_pDoc->GetTargetObject();
 	int nItem = m_lvw.FindItemData((LPARAM) pobjTarget);
@@ -1006,7 +1006,7 @@ BOOL CViewSearch::PressKey(UINT nVK)
 // Set target on gaining focus
 void CViewSearch::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CViewSearch::OnSetFocus - set target object\n");
+	//trace("CViewSearch::OnSetFocus - set target object\n");
 	CViewEx::OnSetFocus(pOldWnd);
 	
 	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();

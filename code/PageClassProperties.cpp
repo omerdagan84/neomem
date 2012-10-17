@@ -71,7 +71,7 @@ BOOL CPageClassProperties::OnInitDialog()
 	CPropertyPage::OnInitDialog();
 	
 	// Set font for title
-	m_lblTitle.SetFont(&theApp.m_fontControlsBold);
+	m_lblTitle.SetFont(&app.m_fontControlsBold);
 
 	// Set context sensitive help
 	SetHelpID(IDD_CLASS_PROPERTIES);
@@ -239,7 +239,7 @@ void CPageClassProperties::LoadData()
 	{
 		BObject* pobjPropDef = DYNAMIC_DOWNCAST(BObject, aInheritedProps.GetAt(i));
 		ASSERT_VALID(pobjPropDef);
-		if (!(pobjPropDef->GetFlag(theApp.m_lngExcludeFlags)))
+		if (!(pobjPropDef->GetFlag(app.m_lngExcludeFlags)))
 		{
 			int nItem = m_lvw.AddObject(pobjPropDef);
 			m_lvw.SetCheck(nItem, TRUE);
@@ -280,7 +280,7 @@ void CPageClassProperties::LoadData()
 	{
 		BObject* pobjPropDef = DYNAMIC_DOWNCAST(BObject, paCopy->GetAt(i));
 		ASSERT_VALID(pobjPropDef);
-		if (!(pobjPropDef->GetFlag(theApp.m_lngExcludeFlags)))
+		if (!(pobjPropDef->GetFlag(app.m_lngExcludeFlags)))
 		{
 			// Add it if it's not in the list already
 			if (m_lvw.FindItemData((LPARAM) pobjPropDef) == -1)

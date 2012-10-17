@@ -356,7 +356,7 @@ void Library::ThrowAssertion(LPCSTR lpszFilename, int nLine,
 //	afxDump << (LPCTSTR) strNewText;
 //	afxDump.OutputString(strNewText);
 //	AfxOutputDebugString(strNewText);
-void TRACESTRING(LPCTSTR szFormat, LPCTSTR szString)
+void traceString(LPCTSTR szFormat, LPCTSTR szString)
 {
 	CString strString = szString;
 	int nLen = strString.GetLength();
@@ -374,7 +374,7 @@ void TRACESTRING(LPCTSTR szFormat, LPCTSTR szString)
 
 // Output the given string to the given file.
 // Good for rtf debugging.
-void TRACETOFILE(LPCTSTR szFilename, LPCTSTR szString)
+void traceToFile(LPCTSTR szFilename, LPCTSTR szString)
 {
 	TRACE("Writing string to file %s...", szFilename);
 	CStdioFile f(szFilename, CFile::modeCreate | CFile::modeWrite | CFile::typeText);

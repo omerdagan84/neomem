@@ -39,8 +39,8 @@ public:
 };
 
 
-void TRACESTRING(LPCTSTR szFormat, LPCTSTR szString);
-void TRACETOFILE(LPCTSTR szFilename, LPCTSTR szString);
+void traceString(LPCTSTR szFormat, LPCTSTR szString);
+void traceToFile(LPCTSTR szFilename, LPCTSTR szString);
 
 
 // Get number of elements in an array - taken from Afxisapi.h
@@ -98,12 +98,12 @@ extern NUMBERFMT g_nf;
 
 // To turn off trace statement just put an x in front of it - makes it easier to track down trace's also.
 // This is how MFC turns off TRACE for the release compilation - 
-#define xTRACE     1 ? (void)0 : ::AfxTrace
+//#define tracex     1 ? (void)0 : ::AfxTrace
+
 
 // This makes it easier to track down which trace statements are turned on -
-// ie if you use yTRACE instead of TRACE, then you can search on yTRACE to find them all.
-#define yTRACE TRACE
-
+// ie if you use trace instead of TRACE, then you can search on trace to find them all.
+//#define trace TRACE
 
 
 

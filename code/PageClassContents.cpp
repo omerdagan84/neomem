@@ -57,7 +57,7 @@ BOOL CPageClassContents::OnInitDialog()
 	CPropertyPage::OnInitDialog();
 
 	// Set font for title
-	m_lblTitle.SetFont(&theApp.m_fontControlsBold);
+	m_lblTitle.SetFont(&app.m_fontControlsBold);
 
 	// Set context sensitive help
 	SetHelpID(IDD_CLASS_CONTENTS);
@@ -149,7 +149,7 @@ void CPageClassContents::LoadData()
 	// Fill cbo with classes and select default
 	BObject* pobjStart = m_pDoc->GetObject(rootClass);
 	m_cboClass.DeleteAllItems();
-	m_cboClass.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE);
+	m_cboClass.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, TRUE);
 	OBJID idDefaultClass = m_pobj->GetPropertyLink(propObjectDefaultClass);
 	BObject* pobjDefaultClass = m_pDoc->GetObject(idDefaultClass);
 	m_cboClass.SelectItemData((LPARAM) pobjDefaultClass);

@@ -128,7 +128,7 @@ END_MESSAGE_MAP()
 
 //,mil
 BDoc::BDoc() {
-	TRACE("BDoc Constructor\n");
+	//trace("BDoc Constructor\n");
 
 	// Initialize variables
 	
@@ -158,7 +158,7 @@ BDoc::BDoc() {
 
 
 BDoc::~BDoc() {
-	xTRACE("BDoc Destructor\n");
+	//trace("BDoc Destructor\n");
 
 	// The root object should have been deleted and its pointer set to
 	// zero by the time this destructor is called - just verify that it happened.
@@ -287,8 +287,9 @@ BDoc* BDoc::GetDoc() {
 // static
 BDoc& BDoc::New() {
 	//, cannot access protected member declared in class 'CWinApp'
-//	theApp.OnFileNew();
-	BDoc* pdoc = BDoc::GetDoc(); // get rid of this fn, if possible? but i think mfc uses it?
+//	app.OnFileNew();
+	app.NewFile(); // calls onfilenew
+	BDoc* pdoc = BDoc::GetDoc(); //, get rid of this fn, if possible, because it uses app, and we don't want that connection. but i think mfc uses it?
 	ASSERT_VALID(pdoc);
 	return *pdoc;
 }
@@ -306,7 +307,7 @@ BDoc& BDoc::New() {
 // Returns True if successful.
 BOOL BDoc::OnNewDocument() {
 
-	TRACE("BDoc::OnNewDocument\n");
+	//trace("BDoc::OnNewDocument\n");
 
 	m_bLoadingFile = TRUE;
 
@@ -329,9 +330,9 @@ BOOL BDoc::OnNewDocument() {
 //,	CDialogNewFile dlg;
 //	dlg.DoModal()
 //	CreateTemplate();
-//	CString strTemplateFile = theApp.m_strApplicationFolder + _T("\\") + theApp.m_strTemplateFileName;
+//	CString strTemplateFile = app.m_strApplicationFolder + _T("\\") + app.m_strTemplateFileName;
 //	if (!OnOpenDocument(strTemplateFile))
-	//	if (!OnOpenDocument(theApp.m_strTemplatePath))
+	//	if (!OnOpenDocument(app.m_strTemplatePath))
 	//		return FALSE;
 	if (!CreateTemplate())
 		return FALSE;
@@ -347,9 +348,9 @@ BOOL BDoc::OnNewDocument() {
 	// it being there
 
 	//, Clear status bar
-//	theApp.SetStatusBarText();
+//	app.SetStatusBarText();
 
-	xTRACE("  exiting OnNewDocument\n");
+	//trace("  exiting OnNewDocument\n");
 
 	m_bLoadingFile = FALSE;
 
@@ -497,9 +498,9 @@ void BDoc::SetCurrentObject(BObject *pobjCurrent, CView* pSender /* = NULL */,
 		// child views, select one as the current one, and send hintLoad to that view. But we call
 		// hintLoad down below, so it gets triggered twice. We don't want to change how the tab view
 		// operates because it works that way for when the user clicks on a tab with the mouse. 2003-04-06.
-		theApp.m_bIgnoreLoadHint = TRUE;
+		app.m_bIgnoreLoadHint = TRUE;
 		UpdateAllViewsEx(pSender, hintSelect, pobjCurrent);
-		theApp.m_bIgnoreLoadHint = FALSE;
+		app.m_bIgnoreLoadHint = FALSE;
 
 		// Load is handled by the child views - actually loads the data
 		UpdateAllViewsEx(pSender, hintLoad, pobjCurrent);
@@ -611,8 +612,8 @@ int BDoc::GetObjects(
 	ASSERT_VALID(&aResults);
 	ASSERT_VALID(pobjStart);
 
-	xTRACE("BDoc::SearchForText - Search in %s, property %d for %s\n", 
-		pobjStart->GetPropertyString(propName), idProperty, (LPCTSTR) strFindText);
+	//trace("BDoc::SearchForText - Search in %s, property %d for %s\n", 
+	//	pobjStart->GetPropertyString(propName), idProperty, (LPCTSTR) strFindText);
 
 	CString strPropertyValue;
 	BOOL bFoundInObject = FALSE;
@@ -639,10 +640,10 @@ int BDoc::GetObjects(
 			strPropertyValue = pobjStart->GetPropertyString(propName);
 			if (!bMatchCase)
 				strPropertyValue.MakeLower();
-			xTRACE("  Searching in ObjectID %d's name \"%s\"\n", pobjStart->GetObjectID(), (LPCTSTR) strPropertyValue);
+			//trace("  Searching in ObjectID %d's name \"%s\"\n", pobjStart->GetObjectID(), (LPCTSTR) strPropertyValue);
 			int nPos = strPropertyValue.Find(strFindText, 0);
 			if (nPos != -1) {
-				xTRACE("    Found in name!\n");
+				//trace("    Found in name!\n");
 				// Found in object name, so add object to collection
 				aResults.Add(pobjStart);
 				// Set flag so rest of code doesn't execute unnecessarily
@@ -660,10 +661,10 @@ int BDoc::GetObjects(
 				strPropertyValue = pobjStart->GetPropertyString(propClassName);
 				if (!bMatchCase)
 					strPropertyValue.MakeLower();
-				xTRACE("  Searching in classname \"%s\"\n", strPropertyValue);
+				//trace("  Searching in classname \"%s\"\n", strPropertyValue);
 				int nPos = strPropertyValue.Find(strFindText, 0);
 				if (nPos != -1) {
-					xTRACE("      Found in classname!\n");
+					//trace("      Found in classname!\n");
 					// Found in class name, so add object to collection
 					aResults.Add(pobjStart);
 					// Set flag so rest of code doesn't execute unnecessarily
@@ -673,7 +674,7 @@ int BDoc::GetObjects(
 
 			// If not found in classname, continue
 			if (!bFoundInObject) {
-				xTRACE("  Searching in property collection\n");
+				//trace("  Searching in property collection\n");
 				BObjects* paProperties = pobjStart->GetProperties(); //, add asserts etc to fn
 				if (paProperties) {
 					ASSERT_VALID(paProperties);
@@ -690,11 +691,11 @@ int BDoc::GetObjects(
 							// Search through this property only if we're interested in all properties,
 							// or it's the property we're interested in.
 							if ((idProperty == 0) || (idProperty == pobjProp->GetClassID())) {
-								xTRACE("    Searching in property %d\n", pobjProp->GetClassID());
+								//trace("    Searching in property %d\n", pobjProp->GetClassID());
 								//, confusing, but gps(propName) will get the string version of the propvalue, right? 
 								strPropertyValue = pobjProp->GetPropertyString(propName);
 								// this trace bombs because of string length!
-//								xTRACE("    Searching in property %d value \"%s\"\n", pobjProp->GetClassID(), strPropertyValue);
+//								//trace("    Searching in property %d value \"%s\"\n", pobjProp->GetClassID(), strPropertyValue);
 
 								// If this is an rtf text property, search through it with the app's hidden rtf control
 								// Bug: Used idProperty instead of pobj->m_lngClassID! wound up
@@ -702,9 +703,9 @@ int BDoc::GetObjects(
 //								if (idProperty == propRtfText)
 								if (pobjProp->GetClassID() == propRtfText) {
 									// Assign to invisible rtf control so we can use its searching capabilities.
-									long nPos = theApp.SearchRtfString(strPropertyValue, strFindText, bMatchCase, bWholeWord);
+									long nPos = app.SearchRtfString(strPropertyValue, strFindText, bMatchCase, bWholeWord);
 									if (nPos != -1) {
-										xTRACE("      Found in rtf string!\n");
+										//trace("      Found in rtf string!\n");
 										aResults.Add(pobjStart);
 										break;
 									}
@@ -718,7 +719,7 @@ int BDoc::GetObjects(
 										strPropertyValue.MakeLower();
 									int nPos = strPropertyValue.Find(strFindText, 0);
 									if (nPos != -1) {
-										xTRACE("      Found in regular string!\n");
+										//trace("      Found in regular string!\n");
 										aResults.Add(pobjStart);
 										break;
 									}
@@ -747,7 +748,7 @@ int BDoc::GetObjects(
 	}
 
 	// Clear the invisible rtf to save memory
-	theApp.m_rtf.SetWindowText("");
+	app.m_rtf.SetWindowText("");
 
 	return aResults.GetSize();
 }
@@ -889,7 +890,7 @@ void BDoc::DeleteContents() {
 
 	CWaitCursor cw;
 
-	theApp.SetStatusBarText(_T("Clearing memory..."));
+	app.SetStatusBarText(_T("Clearing memory..."));
 
 	// The base class implementation does nothing.
 //	CDocument::DeleteContents();
@@ -909,7 +910,7 @@ void BDoc::DeleteContents() {
 	m_pobjCurrent = NULL;
 
 	// Clear status bar
-	theApp.SetStatusBarText();
+	app.SetStatusBarText();
 
 	// Check assumptions
 	ASSERT(m_pobjRoot == NULL);
@@ -1057,7 +1058,7 @@ BOOL BDoc::UIChangeObjectIcon(BObject* pobj) {
 //	dlg.m_idDefault = idDefaultIcon;
 	dlg.m_nHelpID = IDD_CHANGE_OBJECT_ICON;
 	if (dlg.DoModalLinkSimple("Change Icon", "&Select an icon from the list below, or click on Import to import a new icon.", 
-									folderIcons, idIcon, idDefaultIcon, theApp.m_lngExcludeFlags) == IDOK) {
+									folderIcons, idIcon, idDefaultIcon, app.m_lngExcludeFlags) == IDOK) {
 		// Check if icon changed
 		OBJID idNewIcon = dlg.m_lngSelectedID;
 		if (idIcon != idNewIcon && idNewIcon != 0) {
@@ -1087,7 +1088,7 @@ BOOL BDoc::UIChangeObjectClass(BObject* pobj) {
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_CHANGE_OBJECT_CLASS;
 	if (dlg.DoModalLinkSimple("Change Class", "&Select the new class for the object.", 
-					rootClass, idClass, idClass, theApp.m_lngExcludeFlags, FALSE) == IDOK) {
+					rootClass, idClass, idClass, app.m_lngExcludeFlags, FALSE) == IDOK) {
 		// Check if class changed
 		OBJID idNewClass = dlg.m_lngSelectedID;
 		if (idClass != idNewClass && idNewClass != 0) {
@@ -1119,7 +1120,7 @@ BOOL BDoc::UIChangeObjectContents(BObject* pobj) {
 	dlg.m_nHelpID = IDD_CHANGE_OBJECT_CONTENTS;
 	if (dlg.DoModalLinkSimple("Change Contents", 
 				"&Select the class of object that will be added to this object by default.",
-				rootClass, idClass, idClass, theApp.m_lngExcludeFlags) == IDOK) {
+				rootClass, idClass, idClass, app.m_lngExcludeFlags) == IDOK) {
 		// Check if class changed
 		OBJID idNewClass = dlg.m_lngSelectedID;
 		if (idClass != idNewClass && idNewClass != 0) {
@@ -1152,7 +1153,7 @@ BOOL BDoc::UIChangeClassIcon(BObject *pobj) {
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_CHANGE_CLASS_ICON;
 	if (dlg.DoModalLinkSimple("Change Class Icon", "&Select an icon from the list below, or click on Import to import a new icon.", 
-									folderIcons, idIcon, idDefaultIcon, theApp.m_lngExcludeFlags) == IDOK) {
+									folderIcons, idIcon, idDefaultIcon, app.m_lngExcludeFlags) == IDOK) {
 		// Check if icon changed
 		OBJID idNewIcon = dlg.m_lngSelectedID;
 		if (idIcon != idNewIcon && idNewIcon != 0) {
@@ -1186,7 +1187,7 @@ BOOL BDoc::UIChangeClassContents(BObject *pobj) {
 	strInstructions.Format("&Select the class that will be added to objects of the class '%s' by default.", 
 		(LPCTSTR) pobj->GetPropertyString(propName));
 	if (dlg.DoModalLinkSimple("Change Class Contents", strInstructions,
-					rootClass, idClass, idClass, theApp.m_lngExcludeFlags) == IDOK) {
+					rootClass, idClass, idClass, app.m_lngExcludeFlags) == IDOK) {
 		// Check if class changed
 		OBJID idNewClass = dlg.m_lngSelectedID;
 		if (idClass != idNewClass && idNewClass != 0) {
@@ -1212,7 +1213,7 @@ BOOL BDoc::UIChangeClassContents(BObject *pobj) {
 BOOL BDoc::UIRenameObject(BObject* pobj) {
 	//, we don't really need this routine...
 //x	return pobj->UIEditValue(propName);
-	return theApp.ui.EditValue(pobj, propName);
+	return app.ui.EditValue(pobj, propName);
 }
 */
 
@@ -1224,7 +1225,7 @@ void BDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nForma
 	ASSERT_VALID(pobj);
 
 	//, this shouldn't be part of doc. 
-	theApp.SetStatusBarText(_T("Exporting file..."));
+	app.SetStatusBarText(_T("Exporting file..."));
 
 	// open the file
 //	CStdioFile file;
@@ -1256,10 +1257,10 @@ void BDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nForma
 
 		// Initialize the progress bar and show it
 		int nObjects = pobj->GetChildCount(TRUE) + 1;
-		theApp.GetProgressBar().SetRange(0, nObjects);
-		theApp.GetProgressBar().SetPos(0);
-		theApp.GetProgressBar().ShowWindow(SW_SHOW);
-		theApp.SetStatusBarText(_T("Exporting data..."));
+		app.GetProgressBar().SetRange(0, nObjects);
+		app.GetProgressBar().SetPos(0);
+		app.GetProgressBar().ShowWindow(SW_SHOW);
+		app.SetStatusBarText(_T("Exporting data..."));
 
 		// export header
 		file.WriteHeader(datProps);
@@ -1275,9 +1276,9 @@ void BDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nForma
 		file.Close();
 
 		// update status bar
-		theApp.GetProgressBar().SetPos(0);
-		theApp.GetProgressBar().ShowWindow(SW_HIDE);
-		theApp.SetStatusBarText(_T("Data exported"));
+		app.GetProgressBar().SetPos(0);
+		app.GetProgressBar().ShowWindow(SW_HIDE);
+		app.SetStatusBarText(_T("Data exported"));
 
 //		CString s = _T("Finished exporting data to file \"") + strFilename + _T("\".");
 //		AfxMessageBox(s, MB_ICONINFORMATION);
@@ -1290,7 +1291,7 @@ void BDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nForma
 
 
 	//, this shouldn't be part of doc. 
-//	theApp.SetStatusBarText();
+//	app.SetStatusBarText();
 
 /*
 	//, doc enums or app enums
@@ -1304,7 +1305,7 @@ void BDoc::Export(BObject* pobj, BOOL bRecurse, BOOL bSystem, eFileFormat nForma
 	case filetypeText: {
 			// Get the rtf text and convert it to plain text
 			LPCTSTR pszRtf = pobjFirst->GetPropertyString(propRtfText);
-			theApp.ConvertRtfToPlain(pszRtf, strText);
+			app.ConvertRtfToPlain(pszRtf, strText);
 			break;
 		}
 	}
@@ -1632,7 +1633,7 @@ ULONG BDoc::GetNextObjectID() {
 	ASSERT_VALID(this);
 	m_idNextObject++;
 	// If in user mode make sure ID is in UserID space
-//	if (!theApp.m_bAdmin && m_idNextObject < lngUserIDStart)
+//	if (!app.m_bAdmin && m_idNextObject < lngUserIDStart)
 	// Make sure ID is in UserID space
 	if (m_idNextObject < lngUserIDStart) {
 		m_idNextObject = lngUserIDStart;
@@ -1734,7 +1735,7 @@ void BDoc::OnCmdPropertyWizard() {
 //	CDialogEditLink	dlg;
 //	dlg.m_nHelpID = IDD_PROPERTY_WIZARD;
 //	dlg.DoModalEdit("Properties", "You can add a new property, or edit or delete an existing property here.", 
-//									folderProperties, theApp.m_lngExcludeFlags);
+//									folderProperties, app.m_lngExcludeFlags);
 	CDialogSelectProperty dlg;
 	dlg.m_nMode = IDD_PROPERTY_WIZARD;
 	dlg.DoModal();
@@ -1884,7 +1885,7 @@ BOOL BDoc::UIEditObject(BObject *pobj) {
 //	if (lngNamePropTypeID == proptypePersonName)
 	if (bPersonName || bIcon) {
 //x		if (pobj->GetData()->UIEditValue(pobj, 0)) {
-		if (pobj->GetData()->UIEditValue(pobj, 0, theApp.ui)) {
+		if (pobj->GetData()->UIEditValue(pobj, 0, app.ui)) {
 			CHint h;
 			h.pobjObject = pobj;
 			h.idProperty = propName;
@@ -1940,7 +1941,7 @@ void BDoc::OnCloseDocument() {
 	CDocument::OnCloseDocument();
 
 	// Show welcome dialog if no other files are open
-	theApp.ShowWelcomeDialog();
+	app.ShowWelcomeDialog();
 }
 
 
@@ -1997,10 +1998,10 @@ void BDoc::SetTargetObject(BObject *pobj) {
 //	m_datTargetObjects.AddLink(pobj);
 	//, for now, just one target object allowed
 	m_pobjTarget = pobj;
-	if (pobj)
-		xTRACE("SetTargetObject to %s\n", pobj->GetPropertyString(propName));
-	else
-		xTRACE("SetTargetObject to <null>\n");
+	//if (pobj)
+		//trace("SetTargetObject to %s\n", pobj->GetPropertyString(propName));
+	//else
+		//trace("SetTargetObject to <null>\n");
 }
 
 
@@ -2023,8 +2024,8 @@ void BDoc::OnObjEditInDialog() {
 	// First make sure there's just one object for the target
 	if (IsTargetSingle()) {
 //x		UIRenameObject(m_pobjTarget);
-//x		theApp.ui.EditValue(m_pobjTarget, propName);
-		m_pobjTarget->UIEditValue(propName, theApp.ui);
+//x		app.ui.EditValue(m_pobjTarget, propName);
+		m_pobjTarget->UIEditValue(propName, app.ui);
 	}	
 }
 
@@ -2288,7 +2289,7 @@ BOOL BDoc::SaveModified() {
 	}
 
 	// If doing AutoRecover don't ask user
-	if (theApp.m_bDoingAutoRecover)
+	if (app.m_bDoingAutoRecover)
 		return DoFileSave();
 
 	return CDocument::SaveModified();
@@ -2360,14 +2361,14 @@ CString BDoc::GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText) {
 
 	// If string is empty then file hasn't been saved yet - use the doc title (Document1)
 	if (strOriginalName.IsEmpty())
-		strOriginalName = theApp.m_strDocumentFolder + "\\" + GetTitle();
+		strOriginalName = app.m_strDocumentFolder + "\\" + GetTitle();
 
 	//, use CPath stuff?
 	int nPos = strOriginalName.ReverseFind('.');
 	if (nPos != -1)
-		strModifiedName = strOriginalName.Left(nPos) + szAppendText + theApp.m_strFileExtension;
+		strModifiedName = strOriginalName.Left(nPos) + szAppendText + app.m_strFileExtension;
 	else
-		strModifiedName = strOriginalName + szAppendText + theApp.m_strFileExtension;
+		strModifiedName = strOriginalName + szAppendText + app.m_strFileExtension;
 
 	return strModifiedName;
 }
@@ -2415,7 +2416,7 @@ void BDoc::OnNavigateGoto() {
 BOOL BDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 	m_bLoadingFile = TRUE;
 
-	TRACE("BDoc::OnOpenDocument(%s)\n", lpszPathName);
+	//trace("BDoc::OnOpenDocument(%s)\n", lpszPathName);
 
 	CWaitCursor cw;
 
@@ -2590,7 +2591,7 @@ BOOL BDoc::OnOpenDocument(LPCTSTR lpszPathName) {
 	// so the treeview has not even been loaded at this point.
 	// Therefore, we don't need to use SetCurrentObject to broadcast the hints.
 	// Splitter positions are set in overridden document template class.
-	xTRACE("    exiting OnOpenDocument\n");
+	//trace("    exiting OnOpenDocument\n");
 
 	m_bLoadingFile = FALSE;
 
@@ -2645,7 +2646,7 @@ BOOL BDoc::DoSave(LPCTSTR lpszPathName, BOOL bReplace) {
 //		if (!AfxGetApp()->DoPromptFileName(newName, bReplace ? AFX_IDS_SAVEFILE : AFX_IDS_SAVEFILECOPY,
 //			OFN_HIDEREADONLY | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN, FALSE, pTemplate)) //` Added OFN_NOREADONLYRETURN to the flags
 //			return FALSE;       // don't even attempt to save
-		CDocManagerEx* pDocMgr = STATIC_DOWNCAST(CDocManagerEx, theApp.m_pDocManager); // from CDocManager
+		CDocManagerEx* pDocMgr = STATIC_DOWNCAST(CDocManagerEx, app.m_pDocManager); // from CDocManager
 		ASSERT_VALID(pDocMgr);
 		if (!pDocMgr->DoPromptFileName2(newName, bReplace ? AFX_IDS_SAVEFILE : AFX_IDS_SAVEFILECOPY, 
 			OFN_HIDEREADONLY | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN, //` added OFN_NOREADONLYRETURN
@@ -2783,9 +2784,9 @@ void BDoc::Import() {
 
 	// Get import filename
 //	CString strFilename = _T("");
-//	CFileDialogEx dlg(TRUE, _T("rtf"), strFilename, OFN_HIDEREADONLY, theApp.m_strImportFilter);
-//x	CFileDialogEx dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, theApp.m_strImportFilter, AfxGetMainWnd());
-	CFileDialog dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, theApp.m_strImportFilter, AfxGetMainWnd());
+//	CFileDialogEx dlg(TRUE, _T("rtf"), strFilename, OFN_HIDEREADONLY, app.m_strImportFilter);
+//x	CFileDialogEx dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, app.m_strImportFilter, AfxGetMainWnd());
+	CFileDialog dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, app.m_strImportFilter, AfxGetMainWnd());
 	dlg.m_ofn.lpstrTitle = _T("Import File");
 	if (dlg.DoModal() == IDOK) {
 		CString strFilename = dlg.GetPathName();
@@ -2813,7 +2814,7 @@ void BDoc::Import() {
 //		BOOL bPlaintext = (strText.Left(4) != "{\\rt");
 //		if (bPlaintext) {
 //			CString strRtf;
-//			theApp.ConvertPlainToRtf(strText, strRtf);
+//			app.ConvertPlainToRtf(strText, strRtf);
 //			strText = strRtf;
 //		}
 
@@ -2935,7 +2936,7 @@ BOOL BDoc::OnSaveDocumentEx(LPCTSTR lpszPathName) {
 	END_CATCH_ALL
 
 	//` Don't clear this flag if we're doing AutoRecover save!
-	if (theApp.m_bDoingAutoRecover == FALSE)
+	if (app.m_bDoingAutoRecover == FALSE)
 		SetModifiedFlag(FALSE);     // back to unmodified
 
 	return TRUE;        // success
@@ -2969,7 +2970,7 @@ CFile* BDoc::GetFile(LPCTSTR lpszFileName, UINT nOpenFlags, CFileException* pErr
 // We'll always have access to the password, even though we never store it in the file, because the 
 // user must enter the correct password to open the file!
 void BDoc::Serialize(CArchive& ar) {
-	xTRACE("BDoc::Serialize\n");
+	//trace("BDoc::Serialize\n");
 
 	ASSERT_VALID(this);
 
@@ -2987,16 +2988,16 @@ void BDoc::Serialize(CArchive& ar) {
 	CDocument::Serialize(ar);
 
 	if (ar.IsStoring()) {
-		if (theApp.m_bDoingAutoRecover)
-			theApp.SetStatusBarText(_T("Saving AutoRecover information..."));
+		if (app.m_bDoingAutoRecover)
+			app.SetStatusBarText(_T("Saving AutoRecover information..."));
 		else
-			theApp.SetStatusBarText(_T("Saving file..."));
+			app.SetStatusBarText(_T("Saving file..."));
 
 		ar << lngMagic; // magic number to identify a NeoMem file
 		ar << m_nVersionFileStructure; // always write file with newest (current) version
 		ar << m_nVersionDataModel; // always write file with newest (current) version (assume was updated on load if necessary)
 		ar << m_bUnicode; // using unicode? might be part of data model version
-		ar << m_nEncryptionType; // type of encryption used on the file    //, and compression!
+		ar << m_nEncryptionType; // type of encryption used on the file
 		ar << m_strSessionKeyHash; // save hash of session key based on user's password (this was m_strPassword in v1)
 
 		// Turn encryption on at this point
@@ -3052,10 +3053,10 @@ void BDoc::Serialize(CArchive& ar) {
 		ar << nObjectIDs;
 
 		// Initialize the progress bar and show it
-		theApp.GetProgressBar().SetRange32(0, nObjects);
-		theApp.GetProgressBar().SetStep(1);
-		theApp.GetProgressBar().SetPos(0);
-		theApp.GetProgressBar().ShowWindow(SW_SHOW);
+		app.GetProgressBar().SetRange32(0, nObjects);
+		app.GetProgressBar().SetStep(1);
+		app.GetProgressBar().SetPos(0);
+		app.GetProgressBar().ShowWindow(SW_SHOW);
 
 		// This is what saves the entire file recursively!
 		ar << m_pobjRoot;
@@ -3067,16 +3068,16 @@ void BDoc::Serialize(CArchive& ar) {
 		ar.Flush();
 
 		// Turn progress bar off
-		theApp.GetProgressBar().ShowWindow(SW_HIDE);
+		app.GetProgressBar().ShowWindow(SW_HIDE);
 
 		// Turn encryption off
 		if (m_nEncryptionType)
 			parex->SetCryptoOff();
 
-		if (theApp.m_bDoingAutoRecover)
-			theApp.SetStatusBarText(_T("AutoRecover information saved"));
+		if (app.m_bDoingAutoRecover)
+			app.SetStatusBarText(_T("AutoRecover information saved"));
 		else
-			theApp.SetStatusBarText(_T("File saved"));
+			app.SetStatusBarText(_T("File saved"));
 
 	}
 
@@ -3112,7 +3113,7 @@ void BDoc::Serialize(CArchive& ar) {
 		// Note: Check for upgrading the file structure or data model is below, AFTER the check 
 		// for a valid password
 
-		theApp.SetStatusBarText(_T("Loading file..."));
+		app.SetStatusBarText(_T("Loading file..."));
 		ar >> m_bUnicode; // using unicode? might be part of data model version in future
 		ar >> m_nEncryptionType; // type of encryption used on file
 		ar >> m_strSessionKeyHash; // hash of session key based on password (hexascii) - used to verify password
@@ -3165,7 +3166,7 @@ void BDoc::Serialize(CArchive& ar) {
 //		ar >> m_pobjCurrent;
 		ar >> m_lngSplitterPos;
 		ar >> m_idNextObject;
-		xTRACE("  NextObjectID as stored in file is %d\n", m_idNextObject);
+		//trace("  NextObjectID as stored in file is %d\n", m_idNextObject);
 		m_lstSearches.Serialize(ar); // can't use >> for this
 		// Decrypt the search strings
 		//, don't need this yet because we don't store the search strings
@@ -3218,25 +3219,25 @@ void BDoc::Serialize(CArchive& ar) {
 		// Read total number of objects in file so can update progress bar correctly
 		ULONG nObjects;
 		ar >> nObjects;
-		yTRACE("  Total number of objects in file: %d\n", nObjects);
+		//trace("  Total number of objects in file: %d\n", nObjects);
 
 		// Read number of objects with ObjectID's
 		ULONG nObjectIDs;
 		ar >> nObjectIDs;
-		yTRACE("  Total number of objectIDs in file: %d\n", nObjectIDs);
+		//trace("  Total number of objectIDs in file: %d\n", nObjectIDs);
 
 		// Initialize the hash table to accommodate the required number of objects (maps from ObjectID to pobj).
 		// For best performance need to use a prime number, so get from table of primes.
 		ULONG nHashSize = nObjectIDs * 2;
 		nHashSize = GetNextPrime(nHashSize);
-		yTRACE("  Initializing Hash Table to %d positions\n", nHashSize);
+		//trace("  Initializing Hash Table to %d positions\n", nHashSize);
 		m_mapObjects.InitHashTable(nHashSize);
 
 		// Initialize the progress bar and show it
-		theApp.GetProgressBar().SetRange32(0, nObjects);
-		theApp.GetProgressBar().SetStep(1);
-		theApp.GetProgressBar().SetPos(0);
-		theApp.GetProgressBar().ShowWindow(SW_SHOW);
+		app.GetProgressBar().SetRange32(0, nObjects);
+		app.GetProgressBar().SetStep(1);
+		app.GetProgressBar().SetPos(0);
+		app.GetProgressBar().ShowWindow(SW_SHOW);
 
 		// This is what reads all the objects into memory, recursing from the root object!
 		TRY {
@@ -3307,14 +3308,14 @@ void BDoc::Serialize(CArchive& ar) {
 //		pdatViews->InsertView(1, 0, viewProperties, 0);
 
 		// Turn progress bar off
-		theApp.GetProgressBar().ShowWindow(SW_HIDE);
+		app.GetProgressBar().ShowWindow(SW_HIDE);
 
-		theApp.SetStatusBarText(_T("File loaded"));
+		app.SetStatusBarText(_T("File loaded"));
 	}
 
 	// Hide progress bar
-	theApp.GetProgressBar().SetPos(0);
-	theApp.GetProgressBar().ShowWindow(SW_HIDE);
+	app.GetProgressBar().SetPos(0);
+	app.GetProgressBar().ShowWindow(SW_HIDE);
 
 }
 
@@ -3365,7 +3366,7 @@ BObject* BDoc::UIMoveObjectTo() {
 		OBJID idOldParent = pobjParent->GetObjectID();
 
 //		CDialogEditLink dlg;
-//		if (IDOK == dlg.DoModalSelect("Move Object to New Location", strMsg, rootUser, lngOldParentID, lngOldParentID, theApp.m_lngExcludeFlags, TRUE))
+//		if (IDOK == dlg.DoModalSelect("Move Object to New Location", strMsg, rootUser, lngOldParentID, lngOldParentID, app.m_lngExcludeFlags, TRUE))
 		CDialogGetLocation dlg;
 		CString strMsg;
 		strMsg.Format("Select the new location for the %s and hit OK. "
@@ -3379,7 +3380,7 @@ BObject* BDoc::UIMoveObjectTo() {
 			if (pobjNewParent) {
 				// Move objects to new parent, set doc modified flag and notify views
 				ASSERT_VALID(pobjNewParent);
-				xTRACE("Move %s to %s\n", m_pobjTarget->GetName(TRUE), pobjNewParent->GetName(TRUE));
+				//trace("Move %s to %s\n", m_pobjTarget->GetName(TRUE), pobjNewParent->GetName(TRUE));
 				m_pobjTarget->MoveTo(pobjNewParent);
 				return pobjNewParent;
 			}
@@ -3399,7 +3400,7 @@ BObject* BDoc::UIMoveObjectTo() {
 BOOL BDoc::DoFileSave() {
 
 	// Handle AutoRecover save separately
-	if (theApp.m_bDoingAutoRecover)
+	if (app.m_bDoingAutoRecover)
 		return DoFileAutoRecoverSave();
 
 	// Check if file exists and is read-only
@@ -3430,7 +3431,7 @@ BOOL BDoc::DoFileSave() {
 		// AutoBackup
 		CString strBackup;
 		CString strBackup2;
-		if (theApp.m_bAutoBackup) {
+		if (app.m_bAutoBackup) {
 			// Get filenames
 			strBackup = GetModifiedName(m_strPathName, _T("_Backup"));
 			strBackup2 = GetModifiedName(m_strPathName, _T("_Backup__Old"));
@@ -3451,7 +3452,7 @@ BOOL BDoc::DoFileSave() {
 		}
 
 		// Finish AutoBackup
-		if (theApp.m_bAutoBackup) {
+		if (app.m_bAutoBackup) {
 			// Delete last _Backup file 
 			//. could save some of these occasionally, like once a week or once a month...
 			_tremove(strBackup2);
@@ -3461,11 +3462,11 @@ BOOL BDoc::DoFileSave() {
 	// AutoRecover 
 	// Delete the last AutoRecover file because it's not needed anymore (just saved the file normally).
 	// Also reset the timer so won't immediately do AutoRecover after this normal file save.
-	if (theApp.m_bAutoRecover) {
+	if (app.m_bAutoRecover) {
 		CString strAutoRecoverName = GetModifiedName(m_strPathName, _T("_AutoRecover"));
 		TRACE("Deleting %s\n", (LPCTSTR) strAutoRecoverName);
 		_tremove(strAutoRecoverName);
-		theApp.ResetAutoRecoverTimer(); // this will make sure that AutoRecover is actually specified
+		app.ResetAutoRecoverTimer(); // this will make sure that AutoRecover is actually specified
 		m_bAutoRecoverDirty = FALSE; // clear flag
 	}
 
@@ -3557,7 +3558,7 @@ CString BDoc::GetNumberOfObjectsString() {
 // modified to use our own CCryptoFile instead of CFile, to allow for encryption.
 BOOL BDoc::OnOpenDocumentEx(LPCTSTR lpszPathName) {
 
-	TRACE("BDoc::OnOpenDocumentEx(%s)\n", lpszPathName);
+	//trace("BDoc::OnOpenDocumentEx(%s)\n", lpszPathName);
 
 	if (IsModified())
 		TRACE0("Warning: OnOpenDocument replaces an unsaved document.\n");
@@ -3602,15 +3603,15 @@ BOOL BDoc::OnOpenDocumentEx(LPCTSTR lpszPathName) {
 	// After serializing data, finish handling upgrade of file structure and/or data model.
 	if (m_bUpgradeFileStructure || m_bUpgradeDataModel) {
 		// But don't if we're in the process of upgrading the template file itself (strictly admin stuff here)
-		if (theApp.m_strTemplatePath != lpszPathName) {
+		if (app.m_strTemplatePath != lpszPathName) {
 			// Synchronize file with Template.neo if data model needs to be upgraded
 			if (m_bUpgradeDataModel) {
 				// Open the template file and load all its data
 				BDoc* pdocTemplate = new BDoc();
-//				if (!pdocTemplate->OnOpenDocumentEx(theApp.m_strTemplatePath))
+//				if (!pdocTemplate->OnOpenDocumentEx(app.m_strTemplatePath))
 				if (!pdocTemplate->CreateTemplate()) { // will throw exception if fails
 //					CString s;
-//					s.Format("Unable to open template file. The file '%s' should be in the NeoMem application folder.", (LPCTSTR) theApp.m_strTemplateFileName);
+//					s.Format("Unable to open template file. The file '%s' should be in the NeoMem application folder.", (LPCTSTR) app.m_strTemplateFileName);
 //					AfxMessageBox(s, MB_ICONEXCLAMATION);
 					return FALSE;
 				}
@@ -3798,7 +3799,7 @@ void BDoc::SynchronizeDelete(BObject *pobjThis, BDoc* pdocTemplate) {
 
 
 void BDoc::UpdateAllViewsEx(CView *pSender, LPARAM lHint /*= 0L*/, CObject* pHint /*= NULL*/) {
-	TRACE("UpdateAllViewsEx - %s\n", theApp.GetHintName(lHint)); 
+	//trace("UpdateAllViewsEx - %s\n", app.GetHintName(lHint)); 
 	UpdateAllViews(pSender, lHint, pHint);
 }
 
@@ -3940,7 +3941,7 @@ BOOL BDoc::CreateTemplate() {
 
 	// wrap this for now
 	//. maybe easier to switch to an xml format? but icons...
-	return OnOpenDocument(theApp.m_strTemplatePath);
+	return OnOpenDocument(app.m_strTemplatePath);
 
 }
 

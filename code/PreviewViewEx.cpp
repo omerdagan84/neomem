@@ -201,7 +201,7 @@ void CPreviewViewEx::OnPreviewSetup()
 //	AfxMessageBox("hi!");
 //	ON_COMMAND(ID_FILE_PRINT_SETUP, OnFilePrintSetup)
 //	ON_COMMAND(ID_FILE_PAGE_SETUP, OnFilePageSetup)
-	theApp.m_pMainWnd->SendMessage(WM_COMMAND, ID_FILE_PRINT_SETUP);
+	app.m_pMainWnd->SendMessage(WM_COMMAND, ID_FILE_PRINT_SETUP);
 }
 
 
@@ -213,7 +213,7 @@ void CPreviewViewEx::OnPreviewPrint()
 	OnPreviewClose(); // force close of Preview
 
 	// set variable with view to print...
-//	theApp.m_lngPrintViewID = ;
+//	app.m_lngPrintViewID = ;
 
 	// cause print (can be overridden by catching the command)
 	CWnd* pMainWnd = AfxGetThread()->m_pMainWnd;
@@ -221,7 +221,7 @@ void CPreviewViewEx::OnPreviewPrint()
 	pMainWnd->SendMessage(WM_COMMAND, ID_FILE_PRINT_FROM_PREVIEW);
 
 	// clear view variable
-	theApp.m_lngPrintViewID = 0;
+	app.m_lngPrintViewID = 0;
 }
 
 
@@ -250,7 +250,7 @@ void CPreviewViewEx::OnActivateView(BOOL bActivate, CView*, CView*)
 
 void CPreviewViewEx::OnPreviewHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_PREVIEW_TOOLBAR); // shows default topic (overview)		
+	app.WinHelp(HID_BASE_RESOURCE + IDD_PREVIEW_TOOLBAR); // shows default topic (overview)		
 }
 
 

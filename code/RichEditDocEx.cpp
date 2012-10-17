@@ -21,7 +21,7 @@ CRichEditDocEx::CRichEditDocEx()
 
 CRichEditDocEx::~CRichEditDocEx()
 {
-	xTRACE("CRichEditDocEx::Destructor\n");
+	//trace("CRichEditDocEx::Destructor\n");
 }
 
 

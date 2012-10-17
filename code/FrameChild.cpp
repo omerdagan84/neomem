@@ -96,7 +96,7 @@ BOOL CFrameChild::PreCreateWindow(CREATESTRUCT& cs)
 // example, override the CWnd member function PreCreateWindow.
 BOOL CFrameChild::OnCreateClient(LPCREATESTRUCT /*lpcs*/,	CCreateContext* pContext)
 {
-	xTRACE("CFrameChild OnCreateClient - create main splitter and two tab views\n");
+	//trace("CFrameChild OnCreateClient - create main splitter and two tab views\n");
 
 	// Create a splitter with 1 row, 2 columns
 	// Use the CreateStatic member function to create a static splitter window. 
@@ -236,7 +236,7 @@ ULONG CFrameChild::GetSplitterPos()
 //	CRect r;
 //	m_wndSplitter.GetClientRect(&r);
 //	ULONG lngPosPct = lngSplitterPos * 10000 / r.right;
-//	xTRACE("GetSplitterPos  pos  %d width %d  pct %d\n", cxCur, r.right, lngPosPct);
+//	//trace("GetSplitterPos  pos  %d width %d  pct %d\n", cxCur, r.right, lngPosPct);
 //	return lngPosPct;
 }
 
@@ -260,7 +260,7 @@ void CFrameChild::SetSplitterPos(ULONG lngSplitterPos)
 	int cxCur = (int) lngSplitterPos;
 	int cxMin = 0;
 	m_wndSplitter.SetColumnInfo(0, cxCur, cxMin);
-	xTRACE("SetSplitterPos  pos  %d width %d  pct %d\n", cxCur, r.right, lngPosPct);
+	//trace("SetSplitterPos  pos  %d width %d  pct %d\n", cxCur, r.right, lngPosPct);
 */
 }
 
@@ -272,7 +272,7 @@ void CFrameChild::OnCmdFileExport()
 {
 	BDoc* pdoc = DYNAMIC_DOWNCAST(BDoc, GetActiveDocument());
 	BObject* pobj = pdoc->GetObject(rootUser);
-	theApp.Export(pobj);
+	app.Export(pobj);
 }
 
 
@@ -292,7 +292,7 @@ void CFrameChild::OnCmdFileImport()
 // Advance to next visible input view
 void CFrameChild::OnCmdViewNext() 
 {
-	xTRACE("CFrameChild OnCmdViewNext\n");
+	//trace("CFrameChild OnCmdViewNext\n");
 
 	// Check assumptions
 	ASSERT_VALID(m_pviewNavigation);
@@ -340,7 +340,7 @@ void CFrameChild::OnCmdViewNext()
 // Advance to previous visible input view
 void CFrameChild::OnCmdViewPrevious() 
 {
-	xTRACE("CFrameChild OnCmdViewPrevious\n");
+	//trace("CFrameChild OnCmdViewPrevious\n");
 
 	// Check assumptions
 	ASSERT_VALID(m_pviewNavigation);
@@ -452,7 +452,7 @@ void CFrameChild::OnSize(UINT nType, int cx, int cy)
 // Commands handled are ID_NAVIGATE_START through ID_NAVIGATE_STOP.
 void CFrameChild::OnCmdNavigate(UINT nCommandID) 
 {
-	xTRACE("CFrameChild OnCmdNavigate\n");
+	//trace("CFrameChild OnCmdNavigate\n");
 
 	CViewEx* pview = GetCurrentView(TRUE);
 	if (pview)
@@ -487,7 +487,7 @@ void CFrameChild::OnCmdNavigate(UINT nCommandID)
 		}
 		if (nVK)
 		{
-			xTRACE("  send keydown and up with %d\n", nVK);
+			//trace("  send keydown and up with %d\n", nVK);
 //			pViewTree->m_tvw.SendMessage(WM_KEYDOWN, (WPARAM) nVK, 0);
 //			pViewTree->m_tvw.SendMessage(WM_KEYUP, (WPARAM) nVK, 0);
 //			pview->SendMessage(WM_KEYDOWN, (WPARAM) nVK, 0);
@@ -652,25 +652,25 @@ BOOL CFrameChild::DoFilePrint(BOOL bPrintPreview, BOOL bAskForView)
 //	CViewEx* pview = GetCurrentView(FALSE);
 //	ULONG lngCurrentViewID = pview->GetViewID();
 //	ULONG lngCurrentViewID = viewText; // default
-//	xTRACE("current view is %d\n", lngCurrentViewID);
+//	//trace("current view is %d\n", lngCurrentViewID);
 
 	// Get last printed view
-	ULONG lngViewID = theApp.m_lngPrintViewID;
+	ULONG lngViewID = app.m_lngPrintViewID;
 	if (lngViewID == 0) lngViewID = viewText; // default
 
 	// Ask user which view they want to print
 	if (bAskForView)
 	{
 		CDialogPrint dlg;
-		dlg.m_bPrintHeaderFooter = theApp.m_bPrintHeaderFooter;
+		dlg.m_bPrintHeaderFooter = app.m_bPrintHeaderFooter;
 		if (IDCANCEL == dlg.DoModalParameters(lngViewID))
 			return FALSE;
 		lngViewID = dlg.m_lngSelectedViewID;
-		theApp.m_bPrintHeaderFooter = dlg.m_bPrintHeaderFooter;
+		app.m_bPrintHeaderFooter = dlg.m_bPrintHeaderFooter;
 	}
 
 	// Save selected view for next time also (also used when printing from preview)
-	theApp.m_lngPrintViewID = lngViewID; 
+	app.m_lngPrintViewID = lngViewID; 
 
 	// Get selected view and call print method
 	CViewEx* pview = DYNAMIC_DOWNCAST(CViewEx, GetView(lngViewID)); // null if not a cviewex

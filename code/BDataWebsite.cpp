@@ -147,7 +147,7 @@ void BDataWebsite::UIOnClick()
 
 void BDataWebsite::UIOnMouseMove()
 {
-	::SetCursor(theApp.m_hCursorHand);
+	::SetCursor(app.m_hCursorHand);
 }
 
 

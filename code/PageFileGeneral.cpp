@@ -58,14 +58,14 @@ BOOL CPageFileGeneral::OnInitDialog()
 	DisplayInfo();
 
 	// If in admin mode allow some changes
-//	m_txtDataModel.EnableWindow(theApp.m_bAdmin);
-//	m_txtFileStructure.EnableWindow(theApp.m_bAdmin);
+//	m_txtDataModel.EnableWindow(app.m_bAdmin);
+//	m_txtFileStructure.EnableWindow(app.m_bAdmin);
 
 	// Hide file structure if not admin (might confuse users)
-	m_lblFileStructure.ShowWindow(theApp.m_bAdmin ? SW_SHOW : SW_HIDE);	
-	m_txtFileStructure.ShowWindow(theApp.m_bAdmin ? SW_SHOW : SW_HIDE);
+	m_lblFileStructure.ShowWindow(app.m_bAdmin ? SW_SHOW : SW_HIDE);	
+	m_txtFileStructure.ShowWindow(app.m_bAdmin ? SW_SHOW : SW_HIDE);
 
-	m_btnDataModel.ShowWindow(theApp.m_bAdmin ? SW_SHOW : SW_HIDE);
+	m_btnDataModel.ShowWindow(app.m_bAdmin ? SW_SHOW : SW_HIDE);
 
 
 	return TRUE;  // return TRUE unless you set the focus to a control

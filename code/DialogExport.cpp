@@ -95,10 +95,10 @@ BOOL CDialogExport::OnInitDialog()
 //	m_cboFormat.AddString("Rich Text Format (.rtf)");
 //	m_cboItems.SetCurSel(0);
 
-/*	POSITION pos = theApp.m_listExportFormats.GetHeadPosition();
+/*	POSITION pos = app.m_listExportFormats.GetHeadPosition();
 	while (pos)
 	{
-		CFileFormat* ff = (CFileFormat*) theApp.m_listExportFormats.GetNext(pos);
+		CFileFormat* ff = (CFileFormat*) app.m_listExportFormats.GetNext(pos);
 		if (ff)
 		{
 			int i = m_cboFormat.AddString(ff->m_strDescription);
@@ -108,10 +108,10 @@ BOOL CDialogExport::OnInitDialog()
 	m_cboFormat.SetCurSel(0);
 */
 
-	int nFormats = theApp.m_listExportFormats.GetSize();
+	int nFormats = app.m_listExportFormats.GetSize();
 	for (int i=0; i < nFormats; i++)
 	{
-		CFileFormat* ff = theApp.m_listExportFormats.GetAt(i);
+		CFileFormat* ff = app.m_listExportFormats.GetAt(i);
 		if (ff)
 		{
 			int i = m_cboFormat.AddString(ff->m_strName);
@@ -140,7 +140,7 @@ void CDialogExport::OnBtnChooseFile()
 	CFileDialogEx dlg(FALSE, ff->m_strExtension, m_strFilename, 
 //,	CFileDialog dlg(FALSE, ff->m_strExtension, m_strFilename, 
 //		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szExportFilter);
-		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, (LPCTSTR) theApp.m_strExportFilter);
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, (LPCTSTR) app.m_strExportFilter);
 	CString strCaption = _T("Export to file");
 	dlg.m_ofn.lpstrTitle = strCaption;
 	dlg.m_bShowOptionButton = FALSE; // because exporting, don't need save options!

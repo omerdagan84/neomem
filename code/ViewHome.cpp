@@ -76,7 +76,7 @@ void CViewHome::Dump(CDumpContext& dc) const
 	if (!m_progDaysLeft.Create(WS_CHILD | WS_VISIBLE, r, this, 0))
 		return -1;
 	m_progDaysLeft.SetRange32(0, 60);
-	m_progDaysLeft.SetPos(theApp.m_nDaysLeft);
+	m_progDaysLeft.SetPos(app.m_nDaysLeft);
 */
 
 int CViewHome::OnCreate(LPCREATESTRUCT lpCreateStruct) 
@@ -92,31 +92,31 @@ int CViewHome::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	r.SetRectEmpty();
 
 	// Create header
-	m_lblHeader.m_clrBackground = theApp.m_clrHomeTopBack;
-	m_lblHeader.m_clrBackground2 = theApp.m_clrHomeTopBack2;
-	m_lblHeader.m_clrText = theApp.m_clrHomeTopFore;
+	m_lblHeader.m_clrBackground = app.m_clrHomeTopBack;
+	m_lblHeader.m_clrBackground2 = app.m_clrHomeTopBack2;
+	m_lblHeader.m_clrText = app.m_clrHomeTopFore;
 	m_lblHeader.SetFontEx("Verdana", 16.0);
 	m_lblHeader.Create(" NeoMem", r, this, 0, FALSE, DT_LEFT | DT_VCENTER);
 	m_nHeaderHeight = 30; //.
 
 	// Create footer
-	m_lblFooter.m_clrBackground = theApp.m_clrHomeBottomBack;
-	m_lblFooter.m_clrBackground2 = theApp.m_clrHomeBottomBack2;
-	m_lblFooter.m_clrText = theApp.m_clrHomeBottomFore;
+	m_lblFooter.m_clrBackground = app.m_clrHomeBottomBack;
+	m_lblFooter.m_clrBackground2 = app.m_clrHomeBottomBack2;
+	m_lblFooter.m_clrText = app.m_clrHomeBottomFore;
 	m_lblFooter.SetFontEx("MS Sans Serif", 10.0);
 	m_lblFooter.Create("  NeoMem.org", r, this, 0, FALSE, DT_LEFT | DT_VCENTER);
 	m_nFooterHeight = 22; //.
 
 	// Create footer buttons
-	m_lblWebsite.m_clrText = theApp.m_clrHomeBottomFore;
-	m_lblDot.m_clrText = theApp.m_clrHomeBottomFore;
-	m_lblEmail.m_clrText = theApp.m_clrHomeBottomFore;
+	m_lblWebsite.m_clrText = app.m_clrHomeBottomFore;
+	m_lblDot.m_clrText = app.m_clrHomeBottomFore;
+	m_lblEmail.m_clrText = app.m_clrHomeBottomFore;
 	m_lblWebsite.Create("website", r, &m_lblFooter, IDC_LBL_WEBSITE, TRUE, DT_CENTER | DT_VCENTER);
 	m_lblDot.Create("·", r, &m_lblFooter, 0, TRUE, DT_CENTER | DT_VCENTER);
 	m_lblEmail.Create("email", r, &m_lblFooter, IDC_LBL_EMAIL, TRUE, DT_CENTER | DT_VCENTER);
 
 	// Goto next available tip of the day
-	theApp.GotoNextTip();
+	app.GotoNextTip();
 
 	// Create inner view window
 	m_pview = DYNAMIC_DOWNCAST(CViewHomeInner, CreateChildView(RUNTIME_CLASS(CViewHomeInner), m_pDoc, r, 0));
@@ -128,14 +128,14 @@ int CViewHome::OnCreate(LPCREATESTRUCT lpCreateStruct)
 						CRect(0,0,0,0), this, 100);
 	
 	GetFileDescription();
-	m_strTip = theApp.GetTip();
+	m_strTip = app.GetTip();
 	m_strFileSize = m_pDoc->GetFileSizeString();
 	m_strObjects = m_pDoc->GetNumberOfObjectsString();
 
 	// Use default formatting rectangle
 	m_rtf.SetRect(NULL);
 
-	CString strColorDescription = CColor::GetRtfFormat(theApp.m_clrHomeDescriptionFore);
+	CString strColorDescription = CColor::GetRtfFormat(app.m_clrHomeDescriptionFore);
 	CString str;
 	str.Format( 
 					"{\\rtf1\\ansi\\deff0\\deftab720\\deflang1033"
@@ -166,7 +166,7 @@ int CViewHome::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_rtf.SetRtf(str);
 	
-//	TRACESTRING("%s\n", (LPCTSTR) str);
+//	traceString("%s\n", (LPCTSTR) str);
 */
 
 	return 0;
@@ -193,7 +193,7 @@ void CViewHome::OnDraw(CDC* pDC)
 
 void CViewHome::OnSize(UINT nType, int cx, int cy) 
 {
-	xTRACE("CViewHome::OnSize\n");
+	//trace("CViewHome::OnSize\n");
 
 	// Call base class
 //	CViewEx::OnSize(nType, cx, cy);
@@ -252,27 +252,27 @@ void CViewHome::OnSize(UINT nType, int cx, int cy)
 void CViewHome::OnMouseMove(UINT nFlags, CPoint point) 
 {
 	// Clear status bar text, because some labels in this view have status text associated with them.
-	theApp.SetStatusBarText();
+	app.SetStatusBarText();
 	CViewEx::OnMouseMove(nFlags, point);
 }
 
 
 void CViewHome::OnLblWebsite() 
 {
-	theApp.GotoWebsite();
+	app.GotoWebsite();
 }
 
 
 void CViewHome::OnLblEmail() 
 {
-//	theApp.SendEmail();
-	theApp.OnCmdHelpEmail();
+//	app.SendEmail();
+	app.OnCmdHelpEmail();
 }
 
 
 void CViewHome::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-	TRACE("    CViewHome::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewHome::OnUpdate %s\n", app.GetHintName(lHint));
 
 	switch (lHint)
 	{

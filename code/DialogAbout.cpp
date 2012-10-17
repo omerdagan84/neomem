@@ -55,7 +55,7 @@ BOOL CDialogAbout::OnInitDialog()
 //	m_rtf.SubclassDlgItem(IDC_RTF_ABOUT, this);
 
 	// Initialize tab control
-	m_tbc.SetFont(&theApp.m_fontControls);
+	m_tbc.SetFont(&app.m_fontControls);
 	m_tbc.InsertItem(TCIF_TEXT, 0, "  &About    ", 0, 0);
 	m_tbc.InsertItem(TCIF_TEXT, 1, "  C&redits  ", 0, 0);
 
@@ -68,7 +68,7 @@ BOOL CDialogAbout::OnInitDialog()
 	
 	// Check for richedit enhanced features
 	LPCTSTR szEnhancedFeatures = "";
-	float fVersion = theApp.m_objInfo.GetRichEditVersionNumber();
+	float fVersion = app.m_objInfo.GetRichEditVersionNumber();
 	if (fVersion < 5.0f)
 		szEnhancedFeatures = "{\\b (Enhanced features not available) }";
 
@@ -112,23 +112,23 @@ BOOL CDialogAbout::OnInitDialog()
 //					"\\par "
 //					"\\par "
 					"\\par }",
-					(LPCTSTR) theApp.m_objInfo.GetProgramVersion(),
-					(LPCTSTR) theApp.m_objInfo.GetProgramBuild(),
-//					(LPCTSTR) theApp.m_objInfo.GetProgramDate(),
-					(LPCTSTR) theApp.m_objInfo.GetProgramCopyright(),
+					(LPCTSTR) app.m_objInfo.GetProgramVersion(),
+					(LPCTSTR) app.m_objInfo.GetProgramBuild(),
+//					(LPCTSTR) app.m_objInfo.GetProgramDate(),
+					(LPCTSTR) app.m_objInfo.GetProgramCopyright(),
 
-					(LPCTSTR) theApp.m_strWebsite,
-					(LPCTSTR) theApp.m_strEmail,
+					(LPCTSTR) app.m_strWebsite,
+					(LPCTSTR) app.m_strEmail,
 
-					(LPCTSTR) theApp.m_objInfo.GetProcessor(),
-					(LPCTSTR) theApp.m_objInfo.GetWindowsVersion(),
-					theApp.m_objInfo.GetCommonControlsVersionNumber(),
-					(LPCTSTR) theApp.m_objInfo.GetRichEditVersionString(),
+					(LPCTSTR) app.m_objInfo.GetProcessor(),
+					(LPCTSTR) app.m_objInfo.GetWindowsVersion(),
+					app.m_objInfo.GetCommonControlsVersionNumber(),
+					(LPCTSTR) app.m_objInfo.GetRichEditVersionString(),
 					(LPCTSTR) szEnhancedFeatures, 
-					(LPCTSTR) theApp.m_objInfo.GetVirtualMemory(),
-					(LPCTSTR) theApp.m_objInfo.GetPhysicalMemory(),
-					(LPCTSTR) theApp.m_objInfo.GetScreenInfo()
-//					(LPCTSTR) theApp.m_objInfo.GetDiskSpaceAvailable(),
+					(LPCTSTR) app.m_objInfo.GetVirtualMemory(),
+					(LPCTSTR) app.m_objInfo.GetPhysicalMemory(),
+					(LPCTSTR) app.m_objInfo.GetScreenInfo()
+//					(LPCTSTR) app.m_objInfo.GetDiskSpaceAvailable(),
 					);
 
 	m_strCredits = 

@@ -55,7 +55,7 @@ BOOL BDataFlags::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 
 CString BDataFlags::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion)
 {
 	// Show numbers if in admin, for now
-	if (theApp.m_bAdmin)
+	if (app.m_bAdmin)
 //		m_strText.Format("%u (%x): ", m_lngFlags, m_lngFlags);
 //		m_strText.Format("0x%x: ", m_lngFlags);
 		m_strText.Format("%d: ", m_lngFlags);

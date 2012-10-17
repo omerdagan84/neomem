@@ -331,7 +331,7 @@ BOOL CUI::BrowseFolder(LPCTSTR pszInstructions, CString& strFolder) {
 		// Get help on BROWSEINFO struct - it's got all the bit settings.
 //		bi.hwndOwner = GetSafeHwnd();
 //		bi.hwndOwner = m_pMainWnd->GetSafeHwnd();
-		bi.hwndOwner = theApp.m_pMainWnd->GetSafeHwnd();
+		bi.hwndOwner = app.m_pMainWnd->GetSafeHwnd();
 		bi.pidlRoot = NULL;
 		bi.pszDisplayName = pszBuffer;
 		bi.lpszTitle = pszInstructions;
@@ -416,7 +416,7 @@ BOOL CUI::EditLink(CString strCaption, CString strInstructions, BOOL bMultiSelec
 	CDialogEditLink dlg;
 	dlg.m_nHelpID = IDD_EDIT_LINK; //, use sethelpid
 	if (dlg.DoModalLink(strCaption, strInstructions, bMultiSelectVisible, bMultiSelectEnabled, bMultiSelectOn, 
-									lngStartID, pdatLink, theApp.m_lngExcludeFlags) == IDOK)
+									lngStartID, pdatLink, app.m_lngExcludeFlags) == IDOK)
 	{
 		return TRUE;
 	}

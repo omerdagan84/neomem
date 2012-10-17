@@ -53,7 +53,7 @@ BOOL CPageClassType::OnInitDialog()
 	CPropertyPage::OnInitDialog();
 
 	// Set font for title
-	m_lblTitle.SetFont(&theApp.m_fontControlsBold);
+	m_lblTitle.SetFont(&app.m_fontControlsBold);
 
 	// Set context sensitive help
 	SetHelpID(IDD_CLASS_TYPE);

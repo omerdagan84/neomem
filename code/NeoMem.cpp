@@ -251,8 +251,8 @@ BOOL CNeoMem::InitInstance() {
 		afxMemDF |= checkAlwaysMemDF;
 	#endif
 
-//	afxTraceFlags |= traceCmdRouting; // Trace command routing
-//	afxTraceFlags |= traceWinMsg; // Trace windows messages
+//	af//traceFlags |= traceCmdRouting; // Trace command routing
+//	af//traceFlags |= traceWinMsg; // Trace windows messages
 //	AfxSetAllocHook(AllocHook); // Hook into memory allocation
 //	if (_heapchk() != _HEAPOK) DebugBreak(); // can do in debug and release mode
 
@@ -731,7 +731,7 @@ BOOL CNeoMem::InitInstance() {
 // objects.
 // Note: At this point, the windows have all been destroyed, so can't save Window positions here.
 int CNeoMem::ExitInstance() {
-	xTRACE("CNeoMem::ExitInstance\n");
+	//trace("CNeoMem::ExitInstance\n");
 
 	// Set flag
 //	m_bAppShuttingDown = TRUE;
@@ -1310,8 +1310,8 @@ void CNeoMem::OnFilePageSetup() {
 	CPageSetupDialog dlg;
 	PAGESETUPDLG& psd = dlg.m_psd;
 
-//	BOOL bMetric = theApp.GetUnits() == 1; //centimeters
-//	BOOL bMetric = (theApp.m_nUnits == 1);
+//	BOOL bMetric = app.GetUnits() == 1; //centimeters
+//	BOOL bMetric = (app.m_nUnits == 1);
 	BOOL bMetric = (m_nUnits == 1);
 	psd.Flags |= PSD_MARGINS | 
 						(bMetric ? PSD_INHUNDREDTHSOFMILLIMETERS : PSD_INTHOUSANDTHSOFINCHES);
@@ -1457,7 +1457,7 @@ BOOL CNeoMem::SaveAllModified() {
 
 
 BOOL CNeoMem::OnDDECommand(LPTSTR lpszCommand) {
-	xTRACE("CNeoMem::OnDDECommand(%s)\n", lpszCommand);
+	//trace("CNeoMem::OnDDECommand(%s)\n", lpszCommand);
 
 //	CString str;
 //	str.Format("OnDDECommand: %s", lpszCommand);
@@ -1815,7 +1815,7 @@ void CNeoMem::UpdateAllDocumentObjects(ULONG lngMsg, BOOL bRecurse /* = TRUE */)
 void CNeoMem::GotoWebsite() {
 	if (IDYES == AfxMessageBox("This will attempt to open the NeoMem.org website. Continue?", MB_ICONQUESTION + MB_YESNO)) {
 		CString strURL;
-		strURL.Format("http://%s", (LPCTSTR) theApp.m_strWebsite); // www.neomem.org
+		strURL.Format("http://%s", (LPCTSTR) app.m_strWebsite); // www.neomem.org
 		CWaitCursor wc;
 		HINSTANCE h = ::ShellExecute(NULL, "open", strURL, NULL, NULL, SW_SHOWNORMAL);	
 		Library::HandleShellExecuteError(h);
@@ -1914,7 +1914,7 @@ void CNeoMem::OnCmdHelpKeyboard() {
 	// dwData =  Address of a HELPWININFO structure that specifies the size and position of either 
 	// a primary or secondary Help window. 
 
-	theApp.HtmlHelpA(HID_KEYBOARD_SHORTCUTS);
+	app.HtmlHelpA(HID_KEYBOARD_SHORTCUTS);
 }
 
 
@@ -2342,16 +2342,16 @@ BOOL CNeoMem::ConvertPlainToRtf(CString& strPlain, CString& strRtf) {
 // ID_HELP_WHAT_IS
 // Brings up help page which explains NeoMem\nShow Help Topic
 void CNeoMem::OnCmdHelpWhatIs() {
-	theApp.HtmlHelpA(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)
-//	theApp.HtmlHelpA(IDR_NEOMEM_TYPE); // tried this
-//	theApp.HtmlHelpA(HID_WHAT_IS); // tried this
+	app.HtmlHelpA(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)
+//	app.HtmlHelpA(IDR_NEOMEM_TYPE); // tried this
+//	app.HtmlHelpA(HID_WHAT_IS); // tried this
 }
 
 
 // Bring up help topic
 // Must add keyword to hlp/HelpIDs.h file
 void CNeoMem::OnHelpWhatsNew() {
-	theApp.HtmlHelpA(HID_WHATS_NEW);
+	app.HtmlHelpA(HID_WHATS_NEW);
 }
 
 
@@ -2446,13 +2446,13 @@ void CNeoMem::Export(BObject *pobj) {
 //	CString strFilename = "c:\\documents and settings\\bburns\\desktop\\_test.csv";
 //	CFilename filename = CFilename(strItem);
 //	filename.RemoveBadChars();
-//	CString strFilename = theApp.m_strExportFolder + _T("\\") + filename;
-//	CString strFilename = theApp.m_strExportFolder + _T("\\") + strItem + strExtension;
+//	CString strFilename = app.m_strExportFolder + _T("\\") + filename;
+//	CString strFilename = app.m_strExportFolder + _T("\\") + strItem + strExtension;
 //	CString strFileTitle = ReplaceInvalid(strItem, '_');
-//	CString strFolder = theApp.m_strExportFolder;
+//	CString strFolder = app.m_strExportFolder;
 	// sorry, hardcoding for now - what a mess...
-	CString strFilename = theApp.m_strExportFolder + _T("\\") + strItem + ".csv";
-	CString strFormat = "csv"; // theApp.m_strExportFormat;
+	CString strFilename = app.m_strExportFolder + _T("\\") + strItem + ".csv";
+	CString strFormat = "csv"; // app.m_strExportFormat;
 	BOOL bRecurse = TRUE;
 	BOOL bSystem = FALSE;
 
@@ -2480,8 +2480,8 @@ void CNeoMem::Export(BObject *pobj) {
 		strFolder = strFolder.LeftFrom('\\'); // remove trailing slash
 
 		// remember the selected folder and format
-		theApp.m_strExportFolder = strFolder;
-		theApp.m_strExportFormat = strFormat;
+		app.m_strExportFolder = strFolder;
+		app.m_strExportFormat = strFormat;
 
 		// do the export, handled by document
 		CWaitCursor wc;
@@ -2512,7 +2512,7 @@ void CNeoMem::Export(BObject *pobj) {
 	// Initialize file dialog
 //, switch to cfiledialog, or fix ex
 	CFileDialogEx dlg(FALSE, strExtension, strFilename, 
-		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, (LPCTSTR) theApp.m_strExportFilter);
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, (LPCTSTR) app.m_strExportFilter);
 	CString strCaption = _T("Export to file");
 	dlg.m_ofn.lpstrTitle = strCaption;
 	dlg.m_bShowOptionButton = FALSE; // because exporting, don't need save options!
@@ -2521,7 +2521,7 @@ void CNeoMem::Export(BObject *pobj) {
 	if (dlg.DoModal() == IDOK) {
 		strFilename = dlg.GetPathName(); // eg full/path/test.rtf
 		int nFilterIndex = dlg.GetFilterIndex() - 1; // go from one-based to zero-based!
-		eFileFormat nFormat = theApp.m_listExportFormats.GetFormatId(nFilterIndex);
+		eFileFormat nFormat = app.m_listExportFormats.GetFormatId(nFilterIndex);
 		strExtension = dlg.GetFileExt(); // eg rtf
 //		strFolder = dlg.GetFolderPath(); // bombs
 
@@ -2892,6 +2892,11 @@ void CNeoMem::WinHelp(DWORD dwData, UINT nCmd)
 
 
 
+void CNeoMem::NewFile() {
+	OnFileNew();
+}
+
+
 
 
 
@@ -2900,14 +2905,14 @@ void CNeoMem::WinHelp(DWORD dwData, UINT nCmd)
 
 
 // The one and only CNeoMem object
-CNeoMem theApp;
+CNeoMem app;
 
 // ui alias 
-CUI& ui(theApp.ui); 
+CUI& ui(app.ui); 
 
 
 // Globally available cstring objects
-// even if moved these into app class as static members, this code
+// Note: even if moved these into app class as static members, this code
 // would still be here. eg CString CNeoMem::g_strSpace = _T(" ");
 CString g_strSpace = _T(" ");
 CString g_strCommaSpace = _T(", ");

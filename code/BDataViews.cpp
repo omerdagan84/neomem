@@ -64,7 +64,7 @@ BData* BDataViews::CreateCopy()
 {
 	ASSERT_VALID(this);
 	// Use the copy constructor
-	BDataViews* pdatCopy = new BDataViews(this);
+	BDataViews* pdatCopy = new BDataViews(this);  //, memory leak - one of these didn't get deleted
 	ASSERT_VALID(pdatCopy);
 	return pdatCopy;
 }

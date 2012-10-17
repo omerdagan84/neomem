@@ -63,7 +63,7 @@ CClock::CClock() :
 
 CClock::~CClock()
 {
-	xTRACE("cclock destructor\n");
+	//trace("cclock destructor\n");
 	// Bug: Don't put this here because by the time it gets called the window is gone, 
 	// and it will screw up MFC - wound up not calling ExitInstance
 //	if (m_nTimerID) 
@@ -112,7 +112,7 @@ BOOL CClock::Create(CRect& r, CWnd* pParentWnd)
 
 void CClock::OnSize(UINT nType, int cx, int cy) 
 {
-	xTRACE("Clock on size\n");
+	//trace("Clock on size\n");
 
 	CWnd::OnSize(nType, cx, cy);
 	
@@ -120,7 +120,7 @@ void CClock::OnSize(UINT nType, int cx, int cy)
 	// Note: If the main window is maximized the control goes all the way to the edge of the screen,
 	// so shrink it a bit on the right side
 	m_rControlSize.SetRect(0, 0, cx, cy);
-//	if (theApp.IsMaximized())
+//	if (app.IsMaximized())
 //		m_rControlSize.right -= 2; 
 
 	// Get draw rectangle also
@@ -134,7 +134,7 @@ void CClock::OnSize(UINT nType, int cx, int cy)
 // Note: m_strClockDisplay has been updated in OnTimer
 void CClock::OnPaint() 
 {
-	xTRACE("Clock on paint\n");
+	//trace("Clock on paint\n");
 
 	CPaintDC dc(this); // device context for painting
 	
@@ -441,7 +441,7 @@ void CClock::OnClockAlarm()
 
 void CClock::OnDestroy() 
 {
-	xTRACE("cclock ondestroy\n");
+	//trace("cclock ondestroy\n");
 	CWnd::OnDestroy();
 	
 	if (m_nTimerID) 
@@ -459,7 +459,7 @@ int CClock::GetWidth()
 	odt.SetDate(2000, 9, 30); // Wednesday, September 30, 2000 (a pretty long date)
 //	CString strDate = odt.Format(VAR_DATEVALUEONLY);
 	CString strDate = odt.Format("%#x"); // Long date format for current locale
-	xTRACE("Clock width based on date '%s'\n", (LPCTSTR) strDate);
+	//trace("Clock width based on date '%s'\n", (LPCTSTR) strDate);
 
 	CClientDC dc(this);
 	CSize sz = dc.GetTextExtent(strDate);
@@ -471,14 +471,14 @@ int CClock::GetWidth()
 
 void CClock::OnClockHelp() 
 {
-	theApp.WinHelp(HID_CLOCK);
+	app.WinHelp(HID_CLOCK);
 }
 
 
 
 void CClock::OnClockFormat() 
 {
-	if (theApp.ShowMessage(0) == IDOK)
+	if (app.ShowMessage(0) == IDOK)
 	{
 		// Note: If user clicks Apply or OK Windows will fire the WM_SETTINGCHANGE message,
 		// which this control will handle to redraw the time in the new format.

@@ -58,11 +58,11 @@ BOOL CPageOptionsFile::OnInitDialog()
 	CPropertyPage::OnInitDialog();
 	
 	// Make headings bold
-	m_lblFolder.SetFont(&theApp.m_fontControlsBold);
-	m_lblStartup.SetFont(&theApp.m_fontControlsBold);
-	m_lblAutoStart.SetFont(&theApp.m_fontControlsBold);
-	m_lblAutoRecover.SetFont(&theApp.m_fontControlsBold);
-	m_lblAutoBackup.SetFont(&theApp.m_fontControlsBold);
+	m_lblFolder.SetFont(&app.m_fontControlsBold);
+	m_lblStartup.SetFont(&app.m_fontControlsBold);
+	m_lblAutoStart.SetFont(&app.m_fontControlsBold);
+	m_lblAutoRecover.SetFont(&app.m_fontControlsBold);
+	m_lblAutoBackup.SetFont(&app.m_fontControlsBold);
 
 	// Set spin control range
 	m_spinAutoRecover.SetRange(1, 60);
@@ -128,8 +128,8 @@ void CPageOptionsFile::OnBtnBrowse()
 	CWaitCursor wc;
 	CString strFolder;
 	m_txtFolder.GetWindowText(strFolder);
-//x	if (theApp.BrowseFolder(_T("Select the Document Folder"), strFolder))
-	if (theApp.ui.BrowseFolder(_T("Select the Document Folder"), strFolder))
+//x	if (app.BrowseFolder(_T("Select the Document Folder"), strFolder))
+	if (app.ui.BrowseFolder(_T("Select the Document Folder"), strFolder))
 	{
 		// Set current directory here so that browse for startup file will use this folder.
 		// Note - this is also set after dialog is finished.
@@ -177,7 +177,7 @@ void CPageOptionsFile::OnBtnBrowseStartup()
 	CWaitCursor wc;
 
 	// Get default extension from string resource
-	CString strDefaultExtension = theApp.m_strFileExtension.Mid(1); // remove period
+	CString strDefaultExtension = app.m_strFileExtension.Mid(1); // remove period
 
 //	CFileDialogEx dlg(TRUE, _T("neo"), m_strAutoLoadFileName, 
 	CFileDialogEx dlg(TRUE, strDefaultExtension, m_strAutoLoadFileName, 

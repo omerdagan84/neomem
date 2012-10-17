@@ -113,7 +113,7 @@ BOOL CPageObjectGeneral::OnInitDialog()
 //	m_pobj->GetIconID();
 
 	// If in admin mode, show ObjectID, otherwise hide it
-//	if (theApp.m_bAdmin)
+//	if (app.m_bAdmin)
 //	{
 //		str.Format("%d", m_pobj->GetObjectID());
 //		m_txtObjectID.SetWindowText(str);
@@ -155,7 +155,7 @@ void CPageObjectGeneral::OnChangeTxtObjectID()
 // Note: This gets called even if user didn't change anything and apply button is disabled
 BOOL CPageObjectGeneral::OnApply() 
 {
-	xTRACE(" On Apply!\n");
+	//trace(" On Apply!\n");
 
 	if (m_bNameChanged)
 	{

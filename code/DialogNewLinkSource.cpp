@@ -55,13 +55,13 @@ BOOL CDialogNewLinkSource::OnInitDialog()
 	m_pDoc = BDoc::GetDoc();
 
 	// Set bold font
-	m_lblClass.SetFont(&theApp.m_fontControlsBold);
-	m_lblFolder.SetFont(&theApp.m_fontControlsBold);
+	m_lblClass.SetFont(&app.m_fontControlsBold);
+	m_lblFolder.SetFont(&app.m_fontControlsBold);
 	
 	// Fill combo with classes
 	m_cboClass.SetImageList(m_pDoc->GetImageList());
 	BObject* pobjClassFolder = m_pDoc->GetObject(rootClass);
-	m_cboClass.AddObjects(pobjClassFolder, theApp.m_lngExcludeFlags, FALSE, TRUE);
+	m_cboClass.AddObjects(pobjClassFolder, app.m_lngExcludeFlags, FALSE, TRUE);
 	
 	// Select default class (paper)
 	BObject* pobjDefaultClass = m_pDoc->GetObject(classPaper);
@@ -149,7 +149,7 @@ void CDialogNewLinkSource::OnSelChangeCboClass()
 // Bring up help for this dialog
 void CDialogNewLinkSource::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_NEW_LINK_SOURCE);
+	app.WinHelp(HID_BASE_RESOURCE + IDD_NEW_LINK_SOURCE);
 }
 
 

@@ -69,7 +69,7 @@ BOOL CDialogWelcome::OnInitDialog()
 	m_rtf.SetRtf((LPCTSTR) strText);
 
 	// Set checkbox
-	m_chkShowDialog.SetCheck(theApp.m_bShowWelcome ? 1 : 0);
+	m_chkShowDialog.SetCheck(app.m_bShowWelcome ? 1 : 0);
 
 //	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -95,7 +95,7 @@ void CDialogWelcome::DoDataExchange(CDataExchange* pDX)
 	// Save checkbox setting
 	if (pDX->m_bSaveAndValidate)
 	{
-		theApp.m_bShowWelcome = (m_chkShowDialog.GetCheck() == 1);
+		app.m_bShowWelcome = (m_chkShowDialog.GetCheck() == 1);
 	}
 }
 
@@ -130,8 +130,8 @@ void CDialogWelcome::OnBtnExample()
 	// Open the example file
 	CString strFile;
 	strFile.LoadString(IDS_EXAMPLE_FILE); // "Example.neo"
-	CString strFilePath = theApp.m_strApplicationFolder + _T("\\") + strFile; 
-	if (theApp.OpenDocumentFile(strFilePath))
+	CString strFilePath = app.m_strApplicationFolder + _T("\\") + strFile; 
+	if (app.OpenDocumentFile(strFilePath))
 	{
 		// Close the dialog
 		CDialog::OnOK();
@@ -144,10 +144,10 @@ void CDialogWelcome::OnBtnExample()
 void CDialogWelcome::OnBtnExistingFile() 
 {
 	CWaitCursor cw;
-	if (theApp.m_pMainWnd->SendMessage(WM_COMMAND, ID_FILE_OPEN, 0))
+	if (app.m_pMainWnd->SendMessage(WM_COMMAND, ID_FILE_OPEN, 0))
 	{
 		// Close this welcome dialog if the user actually opened a file
-		if (theApp.GetDocCount() > 0)
+		if (app.GetDocCount() > 0)
 		{
 			CDialog::OnOK();
 		}
@@ -159,8 +159,8 @@ void CDialogWelcome::OnBtnExistingFile()
 void CDialogWelcome::OnBtnNewFile() 
 {
 	CWaitCursor cw;
-//	theApp.OnFileNew(); // protected
-	if (theApp.m_pMainWnd->SendMessage(WM_COMMAND, ID_FILE_NEW, 0))
+//	app.OnFileNew(); // protected
+	if (app.m_pMainWnd->SendMessage(WM_COMMAND, ID_FILE_NEW, 0))
 	{
 		// Close this welcome dialog
 		CDialog::OnOK();
@@ -183,7 +183,7 @@ void CDialogWelcome::OnPaint()
 /*
 void CDialogWelcome::OnBtnHelp() 
 {
-//	theApp.WinHelp(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)	
+//	app.WinHelp(HID_BASE_RESOURCE + IDR_NEOMEM_TYPE); // shows default topic (overview)	
 }
 */
 

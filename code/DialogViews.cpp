@@ -66,7 +66,7 @@ BOOL CDialogViews::OnInitDialog()
 	m_lvw.InitializeColumns(&(m_pDoc->m_datColumnsViewFolder), FALSE, TRUE);
 
 	BObject* pobjStart = m_pDoc->GetObject(folderViews);
-	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags);
+	m_lvw.AddObjects(pobjStart, app.m_lngExcludeFlags);
 
 	// Check off views that are visible in this tab
 	//, get an array of views for a tab? then just walk through the array
@@ -116,7 +116,7 @@ void CDialogViews::DoDataExchange(CDataExchange* pDX)
 
 void CDialogViews::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_VIEWS);
+	app.WinHelp(HID_BASE_RESOURCE + IDD_VIEWS);
 }
 
 void CDialogViews::OnBtnUp() 

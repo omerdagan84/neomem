@@ -44,7 +44,7 @@ void CFilename::RemoveExtension() {
 
 	int nPos = this->ReverseFind('.');
 	if (nPos != -1)
-//		strModifiedName = strOriginalName.Left(nPos) + szAppendText + theApp.m_strFileExtension;
+//		strModifiedName = strOriginalName.Left(nPos) + szAppendText + app.m_strFileExtension;
 		this->Delete(nPos, -1);
 		this->
 }

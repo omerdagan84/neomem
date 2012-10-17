@@ -109,7 +109,7 @@ CFrameMain::CFrameMain() :
 
 CFrameMain::~CFrameMain()
 {
-	xTRACE("cframemain destructor\n");
+	//trace("cframemain destructor\n");
 }
 
 
@@ -164,7 +164,7 @@ int CFrameMain::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 	//. ole - Create the richeditdoc
-//	theApp.m_pRedoc = new CRichEditDocEx();
+//	app.m_pRedoc = new CRichEditDocEx();
 
 	return 0;
 }
@@ -212,7 +212,7 @@ void CFrameMain::Dump(CDumpContext& dc) const
 void CFrameMain::OnFilePrint()
 {
 	CWaitCursor cw;
-	xTRACE("CFrameMain OnFilePrint - send message to viewrtf\n");
+	//trace("CFrameMain OnFilePrint - send message to viewrtf\n");
 	CFrameChild* pChild = (CFrameChild*) MDIGetActive();
 	if (pChild)
 	{
@@ -228,7 +228,7 @@ void CFrameMain::OnFilePrint()
 void CFrameMain::OnFilePrintPreview()
 {
 	CWaitCursor cw;
-	xTRACE("CFrameMain OnFilePrintPreview - send message to viewrtf\n");
+	//trace("CFrameMain OnFilePrintPreview - send message to viewrtf\n");
 
 	// pass command to rtf view handler
 
@@ -268,7 +268,7 @@ BOOL CFrameMain::LoadWindowPlacement(LPCTSTR szSection, LPCTSTR szEntry)
 {
 	UINT nBytes;
 	BYTE* pData;
-	if (theApp.GetProfileBinary(szSection, szEntry, &pData, &nBytes))
+	if (app.GetProfileBinary(szSection, szEntry, &pData, &nBytes))
 	{
 		if (pData)
 		{
@@ -290,7 +290,7 @@ void CFrameMain::SaveWindowPlacement(LPCTSTR szSection, LPCTSTR szEntry)
 {
 	WINDOWPLACEMENT wp;
 	if (GetWindowPlacement(&wp))
-		theApp.WriteProfileBinary(szSection, szEntry, (LPBYTE) &wp, sizeof(WINDOWPLACEMENT));
+		app.WriteProfileBinary(szSection, szEntry, (LPBYTE) &wp, sizeof(WINDOWPLACEMENT));
 }
 
 
@@ -316,11 +316,11 @@ BOOL CFrameMain::PreTranslateMessage(MSG* pMsg)
 {
 //	if (pMsg->message = WM_SYSCHAR)
 //	{
-//		xTRACE("syschar!!!!!\n");
+//		//trace("syschar!!!!!\n");
 //	}
 	if (pMsg->message >= WM_KEYFIRST && pMsg->message <= WM_KEYLAST) 
 	{
-		xTRACE("CFrameMain PreTranslateMessage Key Msg: %d %d %d %d\n", pMsg->hwnd, pMsg->message, pMsg->wParam, pMsg->lParam);
+		//trace("CFrameMain PreTranslateMessage Key Msg: %d %d %d %d\n", pMsg->hwnd, pMsg->message, pMsg->wParam, pMsg->lParam);
 		// Translate the message using accelerator table
 		// TranslateAccelerator does all the magic to translate WM_KEYUP and WM_KEYDOWN 
 		// messages into WM_COMMAND messages when the keys pressed match commands 
@@ -337,14 +337,14 @@ BOOL CFrameMain::PreTranslateMessage(MSG* pMsg)
 
 void CFrameMain::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	xTRACE("CFrameMain OnChar %d\n", nChar);	
+	//trace("CFrameMain OnChar %d\n", nChar);	
 	BaseClass::OnChar(nChar, nRepCnt, nFlags);
 }
 
 
 void CFrameMain::OnSysChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	xTRACE("CFrameMain OnSysChar %d\n", nChar);	
+	//trace("CFrameMain OnSysChar %d\n", nChar);	
 	BaseClass::OnSysChar(nChar, nRepCnt, nFlags);
 }
 
@@ -538,7 +538,7 @@ BOOL CFrameMain::OnQueryEndSession()
 // as they are destroyed. It can be assumed that all child windows still exist while OnDestroy runs. 
 void CFrameMain::OnDestroy() 
 {
-	xTRACE("cframemain ondestroy\n");
+	//trace("cframemain ondestroy\n");
 
 	BaseClass::OnDestroy();
 
@@ -556,7 +556,7 @@ void CFrameMain::OnEndSession(BOOL bEnding)
 	BaseClass::OnEndSession(bEnding);
 
 	// Set flag so app will know Windows is shutting down
-	theApp.m_bWindowsShuttingDown = bEnding;
+	app.m_bWindowsShuttingDown = bEnding;
 }
 
 
@@ -565,7 +565,7 @@ void CFrameMain::OnEndSession(BOOL bEnding)
 BOOL CFrameMain::DestroyWindow() 
 {
 	// Add your specialized code here and/or call the base class
-	xTRACE("cframemain destroywindow\n");
+	//trace("cframemain destroywindow\n");
 	
 	return BaseClass::DestroyWindow();
 }
@@ -650,10 +650,10 @@ void CFrameMain::OnTimer(UINT nIDEvent)
 	// Bug: This was firing during debugging and walking through load code - 
 	// could also possibly fire during loading of a large file. So added flag.
   //, removed it
-//	if (!theApp.m_bDoingFileLoad)
+//	if (!app.m_bDoingFileLoad)
 //	{
 		if (nIDEvent == m_uAutoRecoverTimerID)
-			theApp.DoAutoRecoverSave();
+			app.DoAutoRecoverSave();
 //	}
 	BaseClass::OnTimer(nIDEvent);
 }
@@ -735,7 +735,7 @@ LRESULT CFrameMain::OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu)
 
 void CFrameMain::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu) 
 {
-//	xTRACE("CFrameMain OnInitMenuPopup %d\n", nIndex);
+//	//trace("CFrameMain OnInitMenuPopup %d\n", nIndex);
 //	BaseClass::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);	
 	// actually, could add all available views in app or create frame,
 	// then update handler could disable view if it's not avail for the current object,
@@ -745,7 +745,7 @@ void CFrameMain::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 	// for v1.0, view changes would apply globally, or to classes of objects
 //	if (nIndex == 3)
 //	{
-//		xTRACE("  modify view menu!\n");
+//		//trace("  modify view menu!\n");
 //		pPopupMenu->InsertMenu(ID_VIEW_VIEWS, MF_BYCOMMAND | MF_STRING, 
 //													ID_VIEW_SEARCH, _T("Search"));
 //	}
@@ -789,17 +789,17 @@ CDocument* CFrameMain::GetActiveDocumentMDI()
 
 void CFrameMain::OnClose() 
 {
-	yTRACE("CFrameMain::OnClose()\n");
+	//trace("CFrameMain::OnClose()\n");
 
 	// Save active document as the auto reload file
-	if (theApp.m_bAutoLoad)
+	if (app.m_bAutoLoad)
 	{
 		// Bug: Used GetActiveDocument which doesn't work for MDI
 		CDocument* pDoc = GetActiveDocumentMDI(); 
 		if (pDoc)
 		{
-			theApp.m_strAutoLoadFileName = pDoc->GetPathName();
-			yTRACE("    AutoLoad file set to \"%s\"\n", (LPCTSTR) theApp.m_strAutoLoadFileName);
+			app.m_strAutoLoadFileName = pDoc->GetPathName();
+			//trace("    AutoLoad file set to \"%s\"\n", (LPCTSTR) app.m_strAutoLoadFileName);
 		}
 	}
 
@@ -807,15 +807,15 @@ void CFrameMain::OnClose()
 	SaveWindowPlacement(Strings::szSettings, Strings::szWindowPosition);
 
 	// Set flag in the app so it knows we're closing
-	theApp.m_bAppShuttingDown = TRUE;
+	app.m_bAppShuttingDown = TRUE;
 
 	// Asks if you want to save the file and destroys the frame window
 //	BaseClass::OnClose();
 
 	// Delete the richeditdoc object
 	//. ole - access violation here - insert a link in rtf, close without saving
-//	if (theApp.m_pRedoc)
-//		delete theApp.m_pRedoc;
+//	if (app.m_pRedoc)
+//		delete app.m_pRedoc;
 
 
 	// This code is copied from MFC's CFrameWnd::OnClose() - Winfrm.cpp........
@@ -930,7 +930,7 @@ void CFrameMain::OnCmdViewTest()
 
 //	CDialogNewFile dlg;
 //	dlg.DoModal();
-//	theApp.m_strRegistrationKey = "";
+//	app.m_strRegistrationKey = "";
 //	AfxMessageBox("registration key reset to ''");
 
 /*

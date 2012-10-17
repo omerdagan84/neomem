@@ -68,7 +68,7 @@ BOOL CPageClassIcon::OnInitDialog()
 	CPropertyPage::OnInitDialog();
 
 	// Set font for title
-	m_lblTitle.SetFont(&theApp.m_fontControlsBold);
+	m_lblTitle.SetFont(&app.m_fontControlsBold);
 
 	// Set context sensitive help
 	SetHelpID(IDD_CLASS_ICON);
@@ -82,7 +82,7 @@ BOOL CPageClassIcon::OnInitDialog()
 
 	// Add icons to list
 	m_pobjIconFolder = m_pDoc->GetObject(folderIcons);
-	m_lvw.AddObjects(m_pobjIconFolder, theApp.m_lngExcludeFlags, FALSE, FALSE);
+	m_lvw.AddObjects(m_pobjIconFolder, app.m_lngExcludeFlags, FALSE, FALSE);
 	m_lvw.SortByProperty(propName, 1);
 
 	// Get default icon
@@ -159,7 +159,7 @@ BOOL CPageClassIcon::OnSetActive()
 void CPageClassIcon::OnBtnImport()
 {
 //x	BObject* pobjIcon = m_pDoc->UIImportIcon(gpgui);
-	BObject* pobjIcon = theApp.UIImportIcon(*m_pDoc);
+	BObject* pobjIcon = app.UIImportIcon(*m_pDoc);
 	if (pobjIcon)
 	{
 		// Add new icon to this listview and select it

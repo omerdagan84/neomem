@@ -67,9 +67,16 @@ END_MESSAGE_MAP()
 // Construction/Destruction
 //--------------------------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+
 CViewTabs::CViewTabs()
 {
-	xTRACE("CViewTabs Constructor\n");
+	TRACE("%s(%d): CViewTabs Constructor\n", __FILE__, __LINE__);
+//	trace("CViewTabs Constructor\n");
 
 	// Initialize module variables
 //	m_pSplitter = NULL;
@@ -95,8 +102,17 @@ CViewTabs::CViewTabs()
 }
 
 
+
 CViewTabs::~CViewTabs()
 {
+	//, wow, how can we make getname simpler? 
+//	objname(m_lngCurrentViewID)
+//	app.
+	// object might be deleted by time this is called (on destroying windows)
+//	TRACE("CViewTabs Destructor %d (%s)\n", m_lngCurrentViewID, BDoc::GetDoc()->GetObject(m_lngCurrentViewID)->GetName());
+	TRACE("CViewTabs Destructor %d\n", m_lngCurrentViewID);
+
+
 	// Destroy splitter windows
 	for (int i = 0; i < m_Splitters.GetSize(); i++)
 	{
@@ -131,7 +147,7 @@ BOOL CViewTabs::PreCreateWindow(CREATESTRUCT& cs)
 //	CCreateContext *pContext = (CCreateContext*)lpCreateStruct->lpCreateParams;
 int CViewTabs::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	xTRACE("CViewTabs OnCreate - create tab control\n");
+	//trace("CViewTabs OnCreate - create tab control\n");
 
 	// Call base class
 	if (CViewEx::OnCreate(lpCreateStruct) == -1)
@@ -155,7 +171,7 @@ int CViewTabs::OnCreate(LPCREATESTRUCT lpCreateStruct)
 							))
 	{
 		// Set font
-		m_tbc.SetFont(&theApp.m_fontControls);
+		m_tbc.SetFont(&app.m_fontControls);
 	}
 	else
 		return -1;
@@ -170,7 +186,7 @@ int CViewTabs::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CViewTabs::OnDraw(CDC* pDC)
 {
-	xTRACE("CViewTabs OnDraw mode %d\n", m_lngMode);
+	//trace("CViewTabs OnDraw mode %d\n", m_lngMode);
 	CViewEx::OnDraw(pDC);
 }
 
@@ -202,7 +218,7 @@ void CViewTabs::Dump(CDumpContext& dc) const
 // Warning: The treeview gets OnUpdate BEFORE OnInitialUpdate!
 void CViewTabs::OnInitialUpdate() 
 {
-	xTRACE("CViewTabs OnInitialUpdate - add tabs, select current tab, load that view\n");
+	//trace("CViewTabs OnInitialUpdate - add tabs, select current tab, load that view\n");
 
 	// If in navigation mode then add tabs and select view
 	if (m_lngMode == modeNavigation) 
@@ -233,7 +249,7 @@ void CViewTabs::OnInitialUpdate()
 		// If in admin mode, start with main root, otherwise start with user root
 		//, this is also set in OnNewDocument - combine?
 		BObject* pobjStart;
-//		if (theApp.m_bAdmin)
+//		if (app.m_bAdmin)
 //			pobjStart = pDoc->GetRoot();
 //		else
 //			pobjStart = pDoc->GetObject(rootUser);
@@ -266,7 +282,7 @@ void CViewTabs::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	if (m_lngMode != modeContents)
 		return;
 
-	TRACE("    CViewTabs(right side)::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewTabs(right side)::OnUpdate %s\n", app.GetHintName(lHint));
 
 	switch (lHint)
 	{
@@ -522,7 +538,7 @@ void CViewTabs::RecalcLayout(BOOL bRepaint)
 // Affects how Update events are handled
 void CViewTabs::SetMode(ULONG lngMode)
 {
-	xTRACE("CViewTabs SetMode %d\n", lngMode);
+	//trace("CViewTabs SetMode %d\n", lngMode);
 	m_lngMode = lngMode;
 	// Note: Can't select tab here because tries to lookup the view object to get the viewtype,
 	// and at this point the document has not been created yet.
@@ -637,7 +653,7 @@ void CViewTabs::ActivateFirstView()
 // Note: Not using Dynamic_downcast for speed
 void CViewTabs::ShowTab(int nTab)
 {
-	xTRACE("CViewTabs ShowTab %d\n", nTab);
+	//trace("CViewTabs ShowTab %d\n", nTab);
 
 	ASSERT(nTab < m_tbc.GetItemCount());
 
@@ -951,7 +967,7 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 	CViewEx* pView = GetView(lngViewID);
 	if (pView)
 	{
-		xTRACE("CViewTabs LoadView %d found in map\n", lngViewID);
+		//trace("CViewTabs LoadView %d found in map\n", lngViewID);
 
 		// Note: Since the view is already loaded, it should already have been updated to
 		// show the current object's data.
@@ -962,7 +978,7 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 	// Otherwise load a new view object
 	else
 	{
-		xTRACE("CViewTabs LoadView %d not in map - loading cview object\n", lngViewID);
+		//trace("CViewTabs LoadView %d not in map - loading cview object\n", lngViewID);
 
 		// Each view is associated with a different CView class 
 		// In the future, two or more views might share a CView class also
@@ -1052,7 +1068,7 @@ CViewEx* CViewTabs::LoadView(ULONG lngViewID)
 		pView->SetViewID(lngViewID);
 
 		// Call ViewEx routine that calls view's OnUpdate routine
-		if (theApp.m_bIgnoreLoadHint == FALSE)
+		if (app.m_bIgnoreLoadHint == FALSE)
 		{
 //			pView->SelectCurrent();
 			BObject* pobjCurrent = m_pDoc->GetCurrentObject();
@@ -1287,7 +1303,7 @@ void CViewTabs::OnTabMerge()
 // Note: This is a method called by the splitter window, not a normal message handler.
 void CViewTabs::OnSplitterResized()
 {
-	xTRACE("CViewTabs::OnSplitterResized - set heights of panes as pct of total height\n");
+	//trace("CViewTabs::OnSplitterResized - set heights of panes as pct of total height\n");
 
 	// Get current tab and splitter window (if any)
 	int nTab = m_tbc.GetCurSel();
@@ -1358,13 +1374,13 @@ void CViewTabs::OnSplitterPaneResized()
 
 void CViewTabs::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CViewTabs::OnActivateView bActivate %d\n", bActivate);
+	//trace("CViewTabs::OnActivateView bActivate %d\n", bActivate);
 	CView::OnActivateView(bActivate, pActivateView, pDeactiveView);
 
 	// If this view is being activated, set the focus to the child view (either splitter window or view)
 	if (bActivate) 
 	{
-		xTRACE("  activate first view (splitter or view)\n");
+		//trace("  activate first view (splitter or view)\n");
 		ActivateFirstView();
 	}
 }
@@ -1374,7 +1390,7 @@ void CViewTabs::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDea
 
 void CViewTabs::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CViewTabs::OnSetFocus - activate first view\n");
+	//trace("CViewTabs::OnSetFocus - activate first view\n");
 
 	CViewEx::OnSetFocus(pOldWnd);
 
@@ -1391,7 +1407,7 @@ void CViewTabs::OnSetFocus(CWnd* pOldWnd)
 
 void CViewTabs::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
-//	xTRACE("CViewTabs OnContextMenu %d  %d\n", ptScreen.x, ptScreen.y);
+//	//trace("CViewTabs OnContextMenu %d  %d\n", ptScreen.x, ptScreen.y);
 	CViewEx::OnContextMenu(pWnd, point);	
 }
 
@@ -1463,7 +1479,7 @@ void CViewTabs::OnTabRightClick(NMHDR* pNotify, LRESULT* result)
 			{
 				BObject* pobjView = STATIC_DOWNCAST(BObject, paChildren->GetAt(i));
 				ASSERT_VALID(pobjView);
-				if (!(pobjView->GetFlag(theApp.m_lngExcludeFlags)))
+				if (!(pobjView->GetFlag(app.m_lngExcludeFlags)))
 				{
 					CString strName = CString("Show ") + pobjView->GetPropertyString(propName) + CString(" View");
 					ULONG lngViewID = pobjView->GetObjectID();
@@ -1588,6 +1604,7 @@ void CViewTabs::OnViewEdit()
 	if (IDOK == dlg.DoModal())
 	{
 		// Note: If user hits okay, dialog will copy new settings to m_pdatViews!
+		//, yuck
 		ViewsModified();
 	}
 }
@@ -1709,7 +1726,8 @@ BOOL CViewTabs::MoveViewUp(ULONG lngViewID)
 
 
 
-// Copy m_pdatViewss to new memory block so we can modify it
+// Copy m_pdatViews to new memory block so we can modify it
+//, yuck
 void CViewTabs::PrepareToModifyViews()
 {
 	//, invoke copy constructor to create copy of the array
@@ -1747,6 +1765,7 @@ void CViewTabs::ViewsModified()
 
 
 // Delete view info if it was copied but not saved to a bobject
+//, yuck
 void CViewTabs::DeleteCopiedViewInfo()
 {
 	// If m_pdatViews was copied but not saved, delete it now
@@ -1797,6 +1816,7 @@ BOOL CViewTabs::LoadViews(BObject *pobj)
 	// for the default value. so it should never return null!
 	// unless something bad happened with the folder object
 	// or there's a bug in the code. ?
+	//,,, oh, if you make a folder out of an ordinary object, it might bomb.. test it. 
 	m_pdatViews = STATIC_DOWNCAST(BDataViews, pobj->GetPropertyData(propViewArrangement));
 	ASSERT_VALID(m_pdatViews);
 

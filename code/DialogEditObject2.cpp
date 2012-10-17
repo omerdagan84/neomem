@@ -82,7 +82,7 @@ BOOL CDialogEditObject2::OnInitDialog()
 
 	// Add classes to list
 	BObject* pobjStart = m_pDoc->GetObject(rootClass);
-	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE);
+	m_lvw.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, TRUE);
 	m_lvw.SortByProperty(propName, 1);
 
 	// Select class if specified
@@ -235,7 +235,7 @@ void CDialogEditObject2::FillDefaultClassCombo()
 	{
 		CWaitCursor cw;
 		BObject* pobjStart = m_pDoc->GetObject(rootClass);
-		m_cboDefaultClass.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE);
+		m_cboDefaultClass.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, TRUE);
 	}
 }
 
@@ -291,7 +291,7 @@ void CDialogEditObject2::OnClassChanged()
 // Bring up help for this dialog
 void CDialogEditObject2::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_OBJECT);
+	app.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_OBJECT);
 }
 
 
@@ -310,7 +310,7 @@ void CDialogEditObject2::OnDropdownCboLocation()
 
 		// Now add all user objects and reselect the original one, if specified
 		BObject* pobjStart = m_pDoc->GetObject(rootUser);
-		m_cboLocation.AddObjects(pobjStart, theApp.m_lngExcludeFlags, TRUE, TRUE);
+		m_cboLocation.AddObjects(pobjStart, app.m_lngExcludeFlags, TRUE, TRUE);
 		if (m_pobjParent)
 			m_cboLocation.SelectItemData((DWORD) m_pobjParent);
 

@@ -593,7 +593,7 @@ void CTreeCtrlEx::SortByProperty(HTREEITEM htiParent, ULONG lngPropertyID)
 // pass to the tree ctrl.
 int CTreeCtrlEx::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) 
 {
-	xTRACE("CTreeCtrlEx::OnMouseActivate\n");	
+	//trace("CTreeCtrlEx::OnMouseActivate\n");	
 	
 	// This code was taken from CListCtrlEx, which uses a custom edit ctrl with ID of IDC_TXT_EDIT.
 	// For treectrl, normal edit ctrl ID is 0..

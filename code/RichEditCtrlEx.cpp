@@ -92,7 +92,7 @@ CRichEditCtrlEx::CRichEditCtrlEx()
 
 CRichEditCtrlEx::~CRichEditCtrlEx()
 {
-	xTRACE("CRichEditCtrlEx::Destructor\n");
+	//trace("CRichEditCtrlEx::Destructor\n");
 }
 
 
@@ -216,7 +216,7 @@ public:
 // stop calling this function. 
 static DWORD CALLBACK EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb)
 {
-	xTRACE("EditStreamCallBack\n");
+	//trace("EditStreamCallBack\n");
 
 	// Get our callback object
 	RtfCallbackCookie* pcc = (RtfCallbackCookie*) dwCookie;
@@ -242,7 +242,7 @@ static DWORD CALLBACK EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb,
 			pcc->m_nCharsLeft -= cb;
 
 //			CString s((LPCTSTR) pszStart, cb);
-//			TRACESTRING("  Set %s\n", (LPCTSTR) s);
+//			traceString("  Set %s\n", (LPCTSTR) s);
 		}
 		else
 		{
@@ -253,7 +253,7 @@ static DWORD CALLBACK EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb,
 			pcc->m_nCharsLeft = 0;
 //			ASSERT(*(pcc->m_psz + pcc->m_nCurPos) == 0); // should point to null char at end of source string
 //			CString s((LPCTSTR) pszStart, *pcb);
-//			TRACESTRING("  Set %s\n", (LPCTSTR) s);
+//			traceString("  Set %s\n", (LPCTSTR) s);
 		}
 
 	}
@@ -268,7 +268,7 @@ static DWORD CALLBACK EditStreamCallBack(DWORD dwCookie, LPBYTE pbBuff, LONG cb,
 // selection only. 
 void CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 {
-	xTRACE("CRichEditCtrlEx::SetRtf\n");
+	//trace("CRichEditCtrlEx::SetRtf\n");
 
 	// Turn drawing off
 	::SendMessage(m_hWnd, WM_SETREDRAW, FALSE, 0);
@@ -282,7 +282,7 @@ void CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 
 		// then set the font to the default. not necessary! does this automatically. 
 //		this->SetSel(0,-1); // select all
-//		this->SetFont(&theApp.m_fontRtfDefault);
+//		this->SetFont(&app.m_fontRtfDefault);
 //		this->SetSel(-1,-1); // select none
 
 /*
@@ -294,7 +294,7 @@ void CRichEditCtrlEx::SetRtf(LPCTSTR pszRtf, BOOL bSelectionOnly /* = FALSE */)
 	// well, yeah, but can't get that to work
 		// Since we have to specify the font for the rtf, use the default font the user specified.
 		// Note: using CString should be acceptable here because shouldn't need to do this very often.
-		CFontEx& font = theApp.m_fontRtfDefault;
+		CFontEx& font = app.m_fontRtfDefault;
 		CString strFontName = font.GetFontName();
 		int nPointSize = font.GetPointSize();
 		// 1.1 removed \n's from rtf header and footer - was it causing problems with pasting? perhaps
@@ -493,7 +493,7 @@ long CRichEditCtrlEx::FindNext(CString& strFindText, BOOL bMatchCase, BOOL bWhol
 // See OnRButtonDown
 void CRichEditCtrlEx::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
-	xTRACE("CRichEditCtrlEx::OnContextMenu(point.x,y=%d,%d)\n", point.x, point.y);	
+	//trace("CRichEditCtrlEx::OnContextMenu(point.x,y=%d,%d)\n", point.x, point.y);	
 }
 
 
@@ -867,10 +867,10 @@ void CRichEditCtrlEx::SetDefaultCharFormat2(CHARFORMAT2 cf2)
 void CRichEditCtrlEx::Spike()
 {
 	CString str;
-	theApp.GetTextFromClipboard(str);
+	app.GetTextFromClipboard(str);
 	str += this->GetSelText();
 	this->ReplaceSel("", TRUE);
-	theApp.CopyToClipboard(str);
+	app.CopyToClipboard(str);
 }
 
 

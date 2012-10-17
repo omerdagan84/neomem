@@ -55,7 +55,7 @@ void CPrintInfoMore::Initialize(CDC *pDC)
 	int nTwipsPerInch = 1440;
 
 	// Header and footer information
-	if (theApp.m_bPrintHeaderFooter)
+	if (app.m_bPrintHeaderFooter)
 	{
 		m_nHeaderLines = 2;
 		m_nFooterLines = 2;
@@ -79,14 +79,14 @@ void CPrintInfoMore::Initialize(CDC *pDC)
 	m_nPixelsPerInchY = pDC->GetDeviceCaps(LOGPIXELSY);
 
 	// Get actual page size (eg 8.5x11") (convert twips to pixels)
-	m_nPageWidthActual = theApp.m_sizePaper.cx * m_nPixelsPerInchX / nTwipsPerInch; 
-	m_nPageHeightActual = theApp.m_sizePaper.cy * m_nPixelsPerInchY / nTwipsPerInch;
+	m_nPageWidthActual = app.m_sizePaper.cx * m_nPixelsPerInchX / nTwipsPerInch; 
+	m_nPageHeightActual = app.m_sizePaper.cy * m_nPixelsPerInchY / nTwipsPerInch;
 
 	// Get margins (convert twips to pixels)
-	m_rMargins.left = theApp.m_rectPageMargins.left * m_nPixelsPerInchX / nTwipsPerInch;
-	m_rMargins.right = theApp.m_rectPageMargins.right * m_nPixelsPerInchX / nTwipsPerInch;
-	m_rMargins.top = theApp.m_rectPageMargins.top * m_nPixelsPerInchY / nTwipsPerInch;
-	m_rMargins.bottom = theApp.m_rectPageMargins.bottom * m_nPixelsPerInchY / nTwipsPerInch;
+	m_rMargins.left = app.m_rectPageMargins.left * m_nPixelsPerInchX / nTwipsPerInch;
+	m_rMargins.right = app.m_rectPageMargins.right * m_nPixelsPerInchX / nTwipsPerInch;
+	m_rMargins.top = app.m_rectPageMargins.top * m_nPixelsPerInchY / nTwipsPerInch;
+	m_rMargins.bottom = app.m_rectPageMargins.bottom * m_nPixelsPerInchY / nTwipsPerInch;
 
 	// Get offsets to margins from start of printable area (pixels)
 	m_nOffsetToLeft = m_rMargins.left - nLeft; 

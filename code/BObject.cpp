@@ -227,7 +227,7 @@ void BObject::Serialize(CArchive& ar)
 		ar << m_bytViewHeight; //, remove in v2
 
 		// Update progress bar
-		theApp.GetProgressBar().StepIt();
+		app.GetProgressBar().StepIt();
 	}
 
 	else
@@ -444,10 +444,10 @@ void BObject::Serialize(CArchive& ar)
 		}
 
 		if (m_lngObjectID)
-			xTRACE("    Read ObjectID %d: \"%s\"\n", m_lngObjectID, (LPCTSTR) GetPropertyString(propName));
+			//trace("    Read ObjectID %d: \"%s\"\n", m_lngObjectID, (LPCTSTR) GetPropertyString(propName));
 
 		// Update progress bar
-		theApp.GetProgressBar().StepIt();
+		app.GetProgressBar().StepIt();
 	}
 
 }
@@ -1255,7 +1255,7 @@ CString BObject::GetPropertyString(OBJID lngPropertyID)
 		{
 			// get plain text version of rtf text contents
 			CString strRtf = GetPropertyString(propRtfText);
-			theApp.ConvertRtfToPlain(strRtf, m_strTextCache);
+			app.ConvertRtfToPlain(strRtf, m_strTextCache);
 			return m_strTextCache;
 		}
 		break;
@@ -1350,7 +1350,8 @@ ULONG BObject::GetPropertyFlags(OBJID idProperty)
 }
 
 
-
+//x
+/*
 BDataColumns* BObject::GetPropertyColumns(OBJID idProperty) {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -1382,14 +1383,14 @@ BDataColumns* BObject::GetPropertyColumns(OBJID idProperty) {
 		// Property was not found
 		return NULL;
 }
+*/
 
 
 
 // Set the underlying data for a property.
 // Makes a COPY of the BData object and saves it. 
 // Each property BObject stores its data in the m_pdat member, which is a pointer to a BData object.
-BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, 
-										BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
+BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig, BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews /* = TRUE */)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(m_pDoc);
@@ -1420,6 +1421,8 @@ BOOL BObject::SetPropertyData(OBJID lngPropertyID, BData *pdatOrig,
 //			m_lngClassID = pdatLink->GetLinkObjectID();
 			OBJID lngNewClassID = pdatLink->GetLinkObjectID();
 			SetClassID(lngNewClassID);
+			//, memory leak? test
+//			delete pdat;
 			break;
 		}
 	default:
@@ -1578,9 +1581,9 @@ BData* BObject::GetPropertyData(OBJID lngPropertyID, BOOL bCreateTempBDataIfNotF
 
 			// get plain text version of rtf text contents, and store it in the bdata
 			CString strRtf = GetPropertyString(propRtfText);
-			theApp.ConvertRtfToPlain(strRtf, m_strTextCache);
+			app.ConvertRtfToPlain(strRtf, m_strTextCache);
 			pdat->SetBDataText(m_strTextCache, 0, FALSE);
-//			theApp.ConvertRtfToPlain(pszRtf, pdat->m_strText); // protected member
+//			app.ConvertRtfToPlain(pszRtf, pdat->m_strText); // protected member
 			
 			// Return a pointer to the temporary bdata object
 			ASSERT_VALID(pdat);
@@ -2593,7 +2596,7 @@ BOOL BObject::IsMoveUpDownValid(BOOL bMoveUp)
 		if (m_pobjParent->GetObjectID() == rootMain)
 		{
 			// let admin move items up and down (note: no handling for first or last item)
-			if (theApp.m_bAdmin)
+			if (app.m_bAdmin)
 				bEnable = TRUE;
 			else
 				bEnable = FALSE;
@@ -2847,6 +2850,8 @@ BOOL BObject::SetIconID(OBJID lngIconID)
 }
 
 
+//x
+/*
 //, move to bfolder
 BOOL BObject::SetColumns(BDataColumns& cols) {
 	ASSERT_VALID(this);
@@ -2854,7 +2859,7 @@ BOOL BObject::SetColumns(BDataColumns& cols) {
 	delete &cols;
 	return bResult;
 }
-
+*/
 
 
 // For this folder object, initialize the column array (propColumnInfoArray) 
@@ -3070,7 +3075,7 @@ int BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
 // optionally recursing downwards.
 void BObject::ReplaceReferences(BObject* pobjFind, BObject* pobjNew /* = 0 */, BOOL bRecurse /* = TRUE */)
 {
-	xTRACE("BObject::ReplaceReferences\n");
+	//trace("BObject::ReplaceReferences\n");
 
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjFind);
@@ -3328,20 +3333,15 @@ BObject* BObject::GetClassObject()
 }
 
 
-//x provisional
-// user must delete returned object
-// eg 
-// BDataColumns& cols = obj.GetColumns();
-//..
-// delete &cols;
-//, crummy - fix that
-// at least convert to pointer return
+//x
+/*
 BDataColumns& BObject::GetColumns() {
 	ASSERT_VALID(this);
 	BDataColumns* pdatColumns = DYNAMIC_DOWNCAST(BDataColumns, this->GetPropertyData(propColumnInfoArray));
 	ASSERT_VALID(pdatColumns);
 	return *pdatColumns;
 }
+*/
 
 
 
@@ -3529,29 +3529,29 @@ BOOL BObject::AddRtf(OBJID lngPropertyID, CString& strRtf)
 	CString strOldText = GetPropertyString(lngPropertyID);
 
 	// Add existing text (rtf) to the dummy rtf control.
-	theApp.m_rtf.SetRtf(strOldText);
-//TRACESTRING("%s\n", pszOldText);
-//TRACETOFILE("_1.rtf", pszOldText);
+	app.m_rtf.SetRtf(strOldText);
+//traceString("%s\n", pszOldText);
+//traceToFile("_1.rtf", pszOldText);
 
 	// Select the last character.
-	long nChars = theApp.m_rtf.GetTextLength();
-	theApp.m_rtf.SetSel(nChars, nChars + 1); // bug: if nchars was 0 was leaving default system font at very end. fixed by using nchars+1 for end of range.
+	long nChars = app.m_rtf.GetTextLength();
+	app.m_rtf.SetSel(nChars, nChars + 1); // bug: if nchars was 0 was leaving default system font at very end. fixed by using nchars+1 for end of range.
 
 	// Replace the selection with the new selection.
-	theApp.m_rtf.SetRtf((LPCTSTR) strRtf, TRUE);
+	app.m_rtf.SetRtf((LPCTSTR) strRtf, TRUE);
 
 	// Get the new text (rtf)
 //,	GetRtfConst()?	
-	CString strNewText = theApp.m_rtf.GetRtf(FALSE);
-//TRACESTRING("%s\n", (LPCTSTR) strNewText);
-//TRACETOFILE("_2.rtf", (LPCTSTR) strNewText);
+	CString strNewText = app.m_rtf.GetRtf(FALSE);
+//traceString("%s\n", (LPCTSTR) strNewText);
+//traceToFile("_2.rtf", (LPCTSTR) strNewText);
 
 	// Assign new text (rtf) back to object.
 	// Set doc modified flag and tell all views.
 	SetPropertyString(lngPropertyID, (LPCTSTR) strNewText, TRUE, TRUE);
 
 	// Clear rtf contents to save memory.
-	theApp.m_rtf.SetWindowText("");
+	app.m_rtf.SetWindowText("");
 
 	return TRUE;
 }
@@ -3624,7 +3624,7 @@ void BObject::ConvertToHardLinks(BOOL bRecurse)
 			if (pdat)
 			{
 				OBJID lngPropertyID = pobjProp->GetClassID();
-				yTRACE("converting %s.[%d] to hard links\n", (LPCTSTR) this->GetName(TRUE), lngPropertyID);
+				//trace("converting %s.[%d] to hard links\n", (LPCTSTR) this->GetName(TRUE), lngPropertyID);
 				pdat->ConvertToHardLinks(pDoc);
 			}
 		}
@@ -3987,7 +3987,7 @@ void BObject::Export(CFileText &file, BOOL bRecurse, BDataLink& datProps)
 	}
 
 	// Update progress bar
-	theApp.GetProgressBar().StepIt();
+	app.GetProgressBar().StepIt();
 
 	nIndent++;
 	// Now walk through children and call this routine recursively

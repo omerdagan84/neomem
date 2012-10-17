@@ -72,7 +72,7 @@ BOOL CModuleVersion::GetFileVersionInfo(LPCTSTR modulename)
 	if (VerQueryValue(m_pVersionInfo, "\\VarFileInfo\\Translation", &lpvi, &iLen) && iLen >= 4) 
 	{
 		m_translation = *(TRANSLATION*)lpvi;
-		xTRACE("code page = %d\n", m_translation.charset);
+		//trace("code page = %d\n", m_translation.charset);
 	}
 
 	return dwSignature == VS_FFI_SIGNATURE;

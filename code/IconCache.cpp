@@ -33,8 +33,9 @@ CIconCache::CIconCache(CDocument* pDoc) :
 	ASSERT_VALID(pDoc);
 
 	// Create an image list to store icons in
-	if (!m_iml.Create(16, 16, ILC_MASK | ILC_COLOR16, 10, 10))
-		xTRACE("! CIconCache Constructor - Failed to create image list\n");
+	if (!m_iml.Create(16, 16, ILC_MASK | ILC_COLOR16, 10, 10)) {
+		//trace("! CIconCache Constructor - Failed to create image list\n");
+	}
 }
 
 
@@ -112,7 +113,7 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 		{
 			UINT nResourceID = pobjIcon->GetPropertyLong(propIconResourceID);
 			if (nResourceID)
-				hIcon = theApp.LoadIcon(nResourceID); //. bug: this has bombed in release mode (why?)
+				hIcon = app.LoadIcon(nResourceID); //. bug: this has bombed in release mode (why?)
 			else
 			{
 				//.
@@ -133,17 +134,17 @@ int CIconCache::GetIconIndex(ULONG lngIconID)
 		
 		// Now destroy the icon
 		if (!DestroyIcon(hIcon))
-			xTRACE("! DestroyIcon failed\n");
+			//trace("! DestroyIcon failed\n");
 
 		// Add the IconID to the map
 		m_mapIcons.SetAt(lngIconID, nIndex);
-		xTRACE("CIconCache GetIconIndex - Added IconID=%d to image list at index %d\n", lngIconID, nIndex);
+		//trace("CIconCache GetIconIndex - Added IconID=%d to image list at index %d\n", lngIconID, nIndex);
 		
 	}
 	else
 	{
 		// IconID was found
-		xTRACE("CIconCache GetIconIndex - Found IconID=%d in image list at index %d\n", lngIconID, nIndex);
+		//trace("CIconCache GetIconIndex - Found IconID=%d in image list at index %d\n", lngIconID, nIndex);
 	}
 	
 	return nIndex;

@@ -298,9 +298,10 @@ BOOL CDialogEditLink::OnInitDialog()
 	else
 	{
 		// Showing any other folder
-		BDataColumns& cols = m_pobjStart->GetColumns();
-		m_lvw.InitializeColumns(&cols);
-		delete &cols;
+//x		BDataColumns& cols = m_pobjStart->GetColumns();
+		BDataColumns* pdat = DYNAMIC_DOWNCAST(BDataColumns, m_pobjStart->GetPropertyData(propColumnInfoArray));
+		m_lvw.InitializeColumns(pdat);
+		delete pdat;
 		m_bHierarchy = TRUE; // show in tree form, sorting children alphabetically
 	}
 	
@@ -320,7 +321,7 @@ BOOL CDialogEditLink::OnInitDialog()
 
 	//, Now order the currently selected items (as long as we're not in hierarchy (tree) mode). 
 	//, only in admin mode for now
-	if (theApp.m_bAdmin && m_bMultiSelectOn)
+	if (app.m_bAdmin && m_bMultiSelectOn)
 	{
 		CObArray* pa = m_pdatLink->GetLinkArray();
 		int nItems = pa->GetSize();
@@ -339,7 +340,7 @@ BOOL CDialogEditLink::OnInitDialog()
 
 	// Show up and down buttons 
 	//, only in admin mode for now
-	if (theApp.m_bAdmin)
+	if (app.m_bAdmin)
 	{
 		m_btnUp.ShowWindow(SW_SHOW);
 		m_btnDown.ShowWindow(SW_SHOW);
@@ -613,8 +614,8 @@ void CDialogEditLink::UpdateControls()
 void CDialogEditLink::OnBtnHelp() 
 {
 	// Bring up different help topic depending on the mode this dialog is in
-//	theApp.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_LINK);
-	theApp.WinHelp(HID_BASE_RESOURCE + m_nHelpID);
+//	app.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_LINK);
+	app.WinHelp(HID_BASE_RESOURCE + m_nHelpID);
 }
 
 
@@ -684,7 +685,7 @@ void CDialogEditLink::AddObject(BOOL bAddAsChild)
 		// Import new icon from .ico file
 //		pobjNew = m_pDoc->UIImportIcon();
 //		pobjNew = m_pDoc->UIImportIcon(gpgui);
-		pobjNew = theApp.UIImportIcon(*m_pDoc);
+		pobjNew = app.UIImportIcon(*m_pDoc);
 		break;
 	default:
 		{

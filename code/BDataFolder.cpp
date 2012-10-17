@@ -89,7 +89,7 @@ BOOL BDataFolder::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
 	ASSERT_VALID(this);
 
 	CString strPath = m_strText;
-	if (theApp.BrowseFolder(_T("Select folder to link to:"), strPath))
+	if (app.BrowseFolder(_T("Select folder to link to:"), strPath))
 	{
 		if (!strPath.IsEmpty())
 		{
@@ -141,7 +141,7 @@ void BDataFolder::UIOnClick()
 
 void BDataFolder::UIOnMouseMove()
 {
-	::SetCursor(theApp.m_hCursorHand);
+	::SetCursor(app.m_hCursorHand);
 }
 
 

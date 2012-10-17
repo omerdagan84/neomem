@@ -135,7 +135,7 @@ CRichEditView2::CRichEditView2() : CCtrlView(RICHEDIT_CLASS, AFX_WS_DEFAULT_VIEW
 
 CRichEditView2::~CRichEditView2()
 {
-	xTRACE("CRichEditView2::Destructor\n");
+	//trace("CRichEditView2::Destructor\n");
 	//` added this
 	//, why comment this out?
 //	if (_afxRichEditState)
@@ -194,7 +194,7 @@ void CRichEditView2::OnInitialUpdate()
 
 void CRichEditView2::OnDestroy()
 {
-	xTRACE("CRichEditView2::OnDestroy\n");
+	//trace("CRichEditView2::OnDestroy\n");
 	if (m_lpRichEditOle != NULL)
 		m_lpRichEditOle->Release();
 	CCtrlView::OnDestroy();
@@ -963,7 +963,7 @@ BOOL AFX_CDECL CRichEditView2::IsRichEditFormat(CLIPFORMAT cf)
 	return ((cf == _oleData.cfRichTextFormat) ||
 		(cf == _oleData.cfRichTextAndObjects) || (cf == CF_TEXT));
 */
-	return ((cf == CF_TEXT) || (cf = theApp.m_cfRtf));
+	return ((cf == CF_TEXT) || (cf = app.m_cfRtf));
 }
 
 BOOL CRichEditView2::CanPaste() const
@@ -979,7 +979,7 @@ BOOL CRichEditView2::CanPaste() const
 //		IsClipboardFormatAvailable(CF_METAFILEPICT) ||
 //		IsClipboardFormatAvailable(CF_DIB) ||
 //		IsClipboardFormatAvailable(CF_BITMAP) ||
-		IsClipboardFormatAvailable(theApp.m_cfRtf) || 
+		IsClipboardFormatAvailable(app.m_cfRtf) || 
 		GetRichEditCtrlEx().CanPaste());
 }
 
@@ -1337,9 +1337,9 @@ HRESULT CRichEditView2::QueryAcceptData(LPDATAOBJECT lpdataobj,
 			return S_OK;
 		}
 */
-		if (dataobj.IsDataAvailable((CLIPFORMAT) theApp.m_cfRtf))
+		if (dataobj.IsDataAvailable((CLIPFORMAT) app.m_cfRtf))
 		{
-			*lpcfFormat = (CLIPFORMAT) theApp.m_cfRtf;
+			*lpcfFormat = (CLIPFORMAT) app.m_cfRtf;
 			return S_OK;
 		}
 		else if (dataobj.IsDataAvailable(CF_TEXT))
@@ -1759,8 +1759,8 @@ BDoc* CRichEditView2::GetDocument() // non-debug version is inline
 {
 //	ASSERT(FALSE);
 //	return NULL;
-//. ole 	ASSERT(theApp.m_pRedoc->IsKindOf(RUNTIME_CLASS(CRichEditDoc)));
-//. ole 	return theApp.m_pRedoc;
+//. ole 	ASSERT(app.m_pRedoc->IsKindOf(RUNTIME_CLASS(CRichEditDoc)));
+//. ole 	return app.m_pRedoc;
 	BDoc* pdoc = DYNAMIC_DOWNCAST(BDoc, m_pDocument);
 	ASSERT_VALID(pdoc);
 	return pdoc;
@@ -1816,7 +1816,7 @@ static const char _szAfxWinInl[] = "afxrich.inl";
 
 void CRichEditView2::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CRichEditView2::OnActivateView(bActivate=%d)\n", bActivate);
+	//trace("CRichEditView2::OnActivateView(bActivate=%d)\n", bActivate);
 
 	// Call base class
 	// i think this sends the setfocus message to this window also,
@@ -1829,7 +1829,7 @@ void CRichEditView2::OnActivateView(BOOL bActivate, CView* pActivateView, CView*
 	// so cviewrtf will be the active view, but this window will have the focus...
 	if (bActivate)
 	{
-		xTRACE("  set CViewRtf to be the active view\n");
+		//trace("  set CViewRtf to be the active view\n");
 		CFrameChild* pChild = DYNAMIC_DOWNCAST(CFrameChild, GetParentFrame());
 		ASSERT_VALID(pChild);
 		CView* pParentView = DYNAMIC_DOWNCAST(CView, GetParent()); // cviewrtf
@@ -1840,7 +1840,7 @@ void CRichEditView2::OnActivateView(BOOL bActivate, CView* pActivateView, CView*
 
 void CRichEditView2::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CRichEditView2::OnSetFocus - do nothing\n");
+	//trace("CRichEditView2::OnSetFocus - do nothing\n");
 //	CRichEditView::OnSetFocus(pOldWnd);
 	CCtrlView::OnSetFocus(pOldWnd);
 }
@@ -1851,7 +1851,7 @@ void CRichEditView2::OnSetFocus(CWnd* pOldWnd)
 // we could send a hintSave message at this point?
 void CRichEditView2::OnKillFocus(CWnd* pNewWnd) 
 {
-	xTRACE("CRichEditView2::OnKillFocus - do nothing\n");
+	//trace("CRichEditView2::OnKillFocus - do nothing\n");
 //	CRichEditView::OnKillFocus(pNewWnd);
 	CCtrlView::OnKillFocus(pNewWnd);
 }
@@ -1874,7 +1874,7 @@ void CRichEditView2::OnFilePrintPreview()
 	// Be sure to Unhook Frame Window close if hooked.
 
 	// test - make this view a child of the child frame
-//	m_pwndOldParent = SetParent(theApp.GetChildFrame());
+//	m_pwndOldParent = SetParent(app.GetChildFrame());
 
 	// Must not create this on the frame - must outlive this function.
 	CPrintPreviewState* pState = new CPrintPreviewState;
@@ -1905,16 +1905,16 @@ void CRichEditView2::OnFilePrintPreview()
 // You must override this function to enable printing and print preview. 
 BOOL CRichEditView2::OnPreparePrinting(CPrintInfo* pInfo) 
 {
-	xTRACE("CRichEditView2::OnPreparePrinting\n");
+	//trace("CRichEditView2::OnPreparePrinting\n");
 
 	// Get margins from app object (saved in registry)
 	// Note that the margins used by PrintPage are relative to the physical page, not the logical 
 	// page. Thus, margins of zero will often clip the text since many printers have unprintable 
 	// areas on the page. To avoid clipping your text, you should call use SetMargins to set 
 	// reasonable printer margins before printing.
-//	CRichEditView::SetMargins(theApp.m_rectPageMargins);
+//	CRichEditView::SetMargins(app.m_rectPageMargins);
 	// this sets the m_rectMargin rect;
-	SetMargins(theApp.m_rectPageMargins);
+	SetMargins(app.m_rectPageMargins);
 
 	// Tell CRichEditView about any changes to the printer...
 	// WordPad does this through printer change notification message, but that was a little overkill...
@@ -1973,7 +1973,7 @@ BOOL CRichEditView2::OnPreparePrinting(CPrintInfo* pInfo)
 //` code adapted from viewrich.cpp
 void CRichEditView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
-	xTRACE("CRichEditView2::OnBeginPrinting\n");
+	//trace("CRichEditView2::OnBeginPrinting\n");
 
 	ASSERT_VALID(this);
 //  ASSERT_VALID(pDC);
@@ -1999,7 +1999,7 @@ void CRichEditView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	// can't because this is derived from cctrlview!
 	// all the routine does is initialize the print info object...
 //	CViewEx::OnBeginPrinting(pDC, pInfo);
-	CPrintInfoMore& rpim = theApp.m_printinfo;
+	CPrintInfoMore& rpim = app.m_printinfo;
 	BDoc* pDoc = BDoc::GetDoc();
 	rpim.Initialize(pDC);
 	rpim.InitFonts(pDC);
@@ -2122,7 +2122,7 @@ void CRichEditView2::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
 //` code adapted from viewrich.cpp
 void CRichEditView2::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 {
-	xTRACE("CRichEditView2::OnPrint\n");
+	//trace("CRichEditView2::OnPrint\n");
 
 	// Check assumptions
 	ASSERT_VALID(this);
@@ -2160,7 +2160,7 @@ void CRichEditView2::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 	}
 
 	//` Draw header, footer and margins using printinfomore object
-	CPrintInfoMore& rpim = theApp.m_printinfo;
+	CPrintInfoMore& rpim = app.m_printinfo;
 	pDC->SetMapMode(MM_TEXT); // switch to pixel mode for all rpim methods
 	pDC->SetViewportOrg(0, 0);
 	rpim.PrintHeader(pDC, pInfo);
@@ -2471,7 +2471,7 @@ void CRichEditView2::DrawMargins(CDC* pDC, CPrintInfo* pInfo)
 {
 	if (pDC->m_hAttribDC != NULL)
 	{
-		CRect& rMargins = theApp.m_rectPageMargins;
+		CRect& rMargins = app.m_rectPageMargins;
 
 		// Get margin positions in twips
 		CRect rect;
@@ -2514,13 +2514,13 @@ void CRichEditView2::DrawMargins(CDC* pDC, CPrintInfo* pInfo)
 // Called by the framework after a document has been printed or previewed. 
 void CRichEditView2::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
-	xTRACE("CRichEditView2::OnEndPrinting\n");
+	//trace("CRichEditView2::OnEndPrinting\n");
 	ASSERT_VALID(this);
 	// It is very important to free cached information after the last time you use FormatRange 
 	// by specifying NULL in lParam!!!
 	GetRichEditCtrlEx().FormatRange(NULL, FALSE); // required by RichEdit to clear out cache
 	m_aPageStart.RemoveAll();
-	theApp.m_printinfo.Terminate(); //` delete gdi objects
+	app.m_printinfo.Terminate(); //` delete gdi objects
 
 	// test- restore parent
 //	if (m_pwndOldParent)
@@ -2613,7 +2613,7 @@ void CRichEditView2::SetFindText(CString &str, BOOL bMatchCase, BOOL bWholeWord)
 
 BOOL CRichEditView2::DestroyWindow() 
 {
-	xTRACE("CRichEditView2::DestroyWindow()\n");
+	//trace("CRichEditView2::DestroyWindow()\n");
 	
 	return CCtrlView::DestroyWindow();
 }
@@ -2631,7 +2631,7 @@ BOOL CRichEditView2::DestroyWindow()
 // Show popup menu
 void CRichEditView2::OnRButtonDown(UINT nFlags, CPoint point) 
 {
-	xTRACE("CRichEditView2::OnRButtonDown(nFlags=%d, point.x=%d, point.y=%d)\n", nFlags, point.x, point.y);
+	//trace("CRichEditView2::OnRButtonDown(nFlags=%d, point.x=%d, point.y=%d)\n", nFlags, point.x, point.y);
 
 	// Get current selection
 	CHARRANGE cr;
@@ -2682,7 +2682,7 @@ void CRichEditView2::OnRButtonDown(UINT nFlags, CPoint point)
 // see OnContextMenu
 HMENU CRichEditView2::GetContextMenu(WORD seltyp, LPOLEOBJECT lpoleobj, CHARRANGE* lpchrg)
 {
-	xTRACE("CRichEditView2::GetContextMenu seltyp %d\n", seltyp);
+	//trace("CRichEditView2::GetContextMenu seltyp %d\n", seltyp);
 //	return CRichEditView::GetContextMenu(seltyp, lpoleobj, lpchrg); // just returns NULL
 	return NULL;
 }
@@ -2693,7 +2693,7 @@ HMENU CRichEditView2::GetContextMenu(WORD seltyp, LPOLEOBJECT lpoleobj, CHARRANG
 // Note: This does not get called on right button click - see OnRButtonDown
 void CRichEditView2::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
-	xTRACE("CRichEditView2::OnContextMenu(point.x=%d, point.y=%d)\n", point.x, point.y);
+	//trace("CRichEditView2::OnContextMenu(point.x=%d, point.y=%d)\n", point.x, point.y);
 
 	// Get current selection
 	long nStart, nStop;
@@ -2725,7 +2725,7 @@ void CRichEditView2::OnContextMenu(CWnd* pWnd, CPoint point)
 		
 		// Convert to screen coords		
 		ClientToScreen(&point);
-		xTRACE("  convert to %d %d\n", point.x, point.y);
+		//trace("  convert to %d %d\n", point.x, point.y);
 	}
 
 	// Show popup menu

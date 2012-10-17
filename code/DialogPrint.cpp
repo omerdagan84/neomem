@@ -59,7 +59,7 @@ BOOL CDialogPrint::OnInitDialog()
 	// Add objects to list
 	BObject* pobjStart = m_pDoc->GetObject(folderViews);
 	ASSERT_VALID(pobjStart);
-	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags);
+	m_lvw.AddObjects(pobjStart, app.m_lngExcludeFlags);
 
 	// Select view
 	BObject* pobjView = m_pDoc->GetObject(m_lngSelectedViewID);
@@ -115,7 +115,7 @@ void CDialogPrint::DoDataExchange(CDataExchange* pDX)
 
 void CDialogPrint::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_PRINT);
+	app.WinHelp(HID_BASE_RESOURCE + IDD_PRINT);
 }
 
 

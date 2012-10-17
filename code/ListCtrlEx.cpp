@@ -252,7 +252,7 @@ int CListCtrlEx::FindItemData(LPARAM lParam)
 // but then we'll lose the current position if user is tabbing between views
 void CListCtrlEx::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CListCtrlEx::OnSetFocus(pOldWnd=0x%p) - highlight current cell\n", pOldWnd);
+	//trace("CListCtrlEx::OnSetFocus(pOldWnd=0x%p) - highlight current cell\n", pOldWnd);
 
 	CListCtrl::OnSetFocus(pOldWnd);
 	
@@ -285,7 +285,7 @@ void CListCtrlEx::OnSetFocus(CWnd* pOldWnd)
 		BOOL bFullRowSelectMode = (GetExtendedStyle() & LVS_EX_FULLROWSELECT);
 		if ((pos != 0) && (GetItemCount() > 0) && !bFullRowSelectMode)
 		{
-			xTRACE("  modeNormal set focus to first item\n");
+			//trace("  modeNormal set focus to first item\n");
 			SetItemState(0, LVIS_FOCUSED, LVIS_FOCUSED);
 		}
 	}
@@ -295,10 +295,10 @@ void CListCtrlEx::OnSetFocus(CWnd* pOldWnd)
 // We have lost focus, so update the drawing of the current cell if necessary
 void CListCtrlEx::OnKillFocus(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CListCtrlEx::OnKillFocus - if in cell select mode, draw current cell in inactive colors\n");
+	//trace("CListCtrlEx::OnKillFocus - if in cell select mode, draw current cell in inactive colors\n");
 	if (m_nMode & modeSelectCell)
 	{
-		xTRACE("   erase highlight\n");
+		//trace("   erase highlight\n");
 		// Set focus mode to none and redraw the current cell
 //		m_nFocusState = fsNone;
 		m_nFocusState = fsInactive;
@@ -314,7 +314,7 @@ void CListCtrlEx::OnKillFocus(NMHDR* pNMHDR, LRESULT* pResult)
 // Pass -1 to select all items.
 void CListCtrlEx::SelectItem(int nItem)
 {
-	xTRACE("CListCtrlEx::SelectItem %d\n", nItem);
+	//trace("CListCtrlEx::SelectItem %d\n", nItem);
 	if (m_nMode & modeSelectCell)
 	{
 		// If we're in cell select mode, select a cell using our own SelectCell method,
@@ -440,7 +440,7 @@ int CListCtrlEx::GetSelectedItem()
 // See OnEndLabelEdit for reselection code
 CEdit* CListCtrlEx::EditSubItem(int nItem, int nCol, LPCTSTR pszEditText /* = 0 */)
 {
-	xTRACE("CListCtrlEx::EditSubItem row %d col %d text %s\n", nItem, nCol, pszEditText);
+	//trace("CListCtrlEx::EditSubItem row %d col %d text %s\n", nItem, nCol, pszEditText);
 
 	// Make sure that the item is visible
 	if (!EnsureVisible(nItem, TRUE)) 
@@ -528,7 +528,7 @@ CEdit* CListCtrlEx::EditSubItem(int nItem, int nCol, LPCTSTR pszEditText /* = 0 
 // Returns a pointer to the edit control, or 0 if not able to edit property value.
 CEdit* CListCtrlEx::EditCurrentCell(LPCTSTR pszEditText /* = 0 */)
 {
-	xTRACE("CListCtrlEx::EditCurrentCell %s\n", pszEditText);
+	//trace("CListCtrlEx::EditCurrentCell %s\n", pszEditText);
 
 	// Check if user is allowed to edit this cell
 	//. check if read only flag is set also
@@ -718,12 +718,12 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 
 			// Note: Had to put this if statement here because if property view wasn't entirely visible,
 			// getitemdata was returning 0!
-			xTRACE("  custom draw propid %d\n", lngPropertyID);
+			//trace("  custom draw propid %d\n", lngPropertyID);
 			if (pobjPropertyDef)
 			{
 				ASSERT_VALID(pobjPropertyDef);
 				OBJID idPropertyType = pobjPropertyDef->GetPropertyLink(propPropertyType);
-				xTRACE("     custom draw proptypeid %d\n", idPropertyType);
+				//trace("     custom draw proptypeid %d\n", idPropertyType);
 				switch (idPropertyType) 
 				{
 					case proptypeHyperlink:
@@ -751,7 +751,7 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 				{
 					if (lplvcd->iSubItem == m_nCol)
 					{
-						xTRACE("CListCtrlEx::OnCustomDraw, on the selected col/row (%d/%d) - set to inactive or highlight colors\n", m_nCol, m_nRow);
+						//trace("CListCtrlEx::OnCustomDraw, on the selected col/row (%d/%d) - set to inactive or highlight colors\n", m_nCol, m_nRow);
 						if (m_nFocusState == fsInactive)
 						{
 							clrBack = Library::clrInactive;
@@ -787,10 +787,10 @@ void CListCtrlEx::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 				BOOL bBehindHeader = (m_nRow < nTopRow);
 				if (bDrawFocus && bValidCell & !bBehindHeader)
 				{
-					xTRACE("   draw focus rectangle around current cell (row %d, col %d)\n", m_nRow, m_nCol);
+					//trace("   draw focus rectangle around current cell (row %d, col %d)\n", m_nRow, m_nCol);
 					CRect r;
 					GetCellRect(m_nRow, m_nCol, r); // LVIR_BOUNDS, r);
-					xTRACE("      left, top, right, bottom (%d, %d, %d, %d)\n", r.left, r.top, r.right, r.bottom);
+					//trace("      left, top, right, bottom (%d, %d, %d, %d)\n", r.left, r.top, r.right, r.bottom);
 					CClientDC dc(this);
 					dc.DrawFocusRect(&r);
 				}
@@ -865,7 +865,7 @@ BOOL CListCtrlEx::GetCellRect(int nRow, int nColIndex, CRect &r, int nArea /* = 
 // Handle repositioning of current cell with arrow keys etc
 void CListCtrlEx::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	xTRACE("CListCtrlEx::OnKeyDown\n");
+	//trace("CListCtrlEx::OnKeyDown\n");
 
 	// Let control handle keydown if not in cell select mode
 	if (!(m_nMode & modeSelectCell))
@@ -979,7 +979,7 @@ void CListCtrlEx::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CListCtrlEx::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	xTRACE("CListCtrlEx::OnChar\n");
+	//trace("CListCtrlEx::OnChar\n");
 
 	BOOL bControl = ::GetKeyState(VK_CONTROL) < 0;
 	BOOL bInvalidChar = ((nChar == VK_ESCAPE) | (nChar == VK_TAB) | (nChar == VK_RETURN));
@@ -1018,7 +1018,7 @@ void CListCtrlEx::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 // Also sends a CM_ITEM_SELECTED message to parent window.
 void CListCtrlEx::SelectCell(int nRow, int nCol, BOOL bEnsureVisible /* = TRUE */)
 {
-	xTRACE("CListCtrlEx::SelectCell row %d col %d\n", nRow, nCol);
+	//trace("CListCtrlEx::SelectCell row %d col %d\n", nRow, nCol);
 
 	// Erase the current cell
 	InvalidateCurrentCell();
@@ -1027,7 +1027,7 @@ void CListCtrlEx::SelectCell(int nRow, int nCol, BOOL bEnsureVisible /* = TRUE *
 	BOOL bInvalidCell = ((nRow >= GetItemCount()) || (nCol >= GetColumnCount()));
 	if (bInvalidCell)
 	{
-		xTRACE("  invalid cell - setting to 0, 0\n");
+		//trace("  invalid cell - setting to 0, 0\n");
 		nRow = 0;
 		nCol = 0;
 	}
@@ -1042,7 +1042,7 @@ void CListCtrlEx::SelectCell(int nRow, int nCol, BOOL bEnsureVisible /* = TRUE *
 	if (bEnsureVisible)
 		EnsureCellVisible(nRow, nCol);
 
-	xTRACE("   changed to row %d, col %d\n", nRow, nCol);
+	//trace("   changed to row %d, col %d\n", nRow, nCol);
 
 	// Save target column for commands and such. 
 	m_nTargetColumn = nCol;
@@ -1070,7 +1070,7 @@ void CListCtrlEx::SelectCellOrder(int nRow, int nColOrder, BOOL bEnsureVisible /
 // This was causing a bug in the release version only, which was slowing down the program tremendously.
 BOOL CListCtrlEx::EnsureCellVisible(int nRow, int nCol)
 {
-	xTRACE("CListCtrlEx::EnsureCellVisible row %d col %d\n", nRow, nCol);
+	//trace("CListCtrlEx::EnsureCellVisible row %d col %d\n", nRow, nCol);
 
 	// Exit if no row or column specified
 	if ((nRow == -1) || (nCol == -1)) return FALSE;
@@ -1113,7 +1113,7 @@ BOOL CListCtrlEx::EnsureCellVisible(int nRow, int nCol)
 // Invalidate the current cell's area, forcing it to be redrawn
 void CListCtrlEx::InvalidateCurrentCell()
 {
-	xTRACE("CListCtrlEx InvalidateCurrentCell (row %d, col %d)\n", m_nRow, m_nCol);
+	//trace("CListCtrlEx InvalidateCurrentCell (row %d, col %d)\n", m_nRow, m_nCol);
 	if ((m_nRow != -1) && (m_nCol != -1))
 	{
 		CRect r;
@@ -1296,7 +1296,7 @@ void CListCtrlEx::SelectNone()
 // Copies column headers and accounts for column order also.
 BOOL CListCtrlEx::CopyToClipboard(BOOL bIncludeHeaders)
 {
-	xTRACE("CListCtrlEx::CopyToClipboard\n");
+	//trace("CListCtrlEx::CopyToClipboard\n");
 
 	// Walk through rows and columns, adding text to string separated by tabs
 	// Copy the text to the clipboard when done
@@ -1344,7 +1344,7 @@ BOOL CListCtrlEx::CopyToClipboard(BOOL bIncludeHeaders)
 	}
 
 	// Copy text to clipboard
-	theApp.CopyToClipboard(str);
+	app.CopyToClipboard(str);
 
 	return TRUE;
 }
@@ -1380,7 +1380,7 @@ int CListCtrlEx::IndexToOrder(int nColIndex)
 // Move the source item either before or after the target item.
 int CListCtrlEx::MoveItemToSibling(int nSource, int nTarget, BOOL bAfter)
 {
-	xTRACE("CListCtrlEx::MoveItemToSibling\n");
+	//trace("CListCtrlEx::MoveItemToSibling\n");
 
 	// Copy the source item to LVITEM structure
 	LVITEM lvi;
@@ -1504,7 +1504,7 @@ int CListCtrlEx::GetSelectedItemsArray(CObArray& aObjects)
 // Merge GetSelectedItemsArray into this - needs to handle cell select mode!
 int CListCtrlEx::GetSelectedItems(BDataLink *pdatLink)
 {
-	xTRACE("CListCtrlEx::GetSelectedItems\n");
+	//trace("CListCtrlEx::GetSelectedItems\n");
 
 	ASSERT_VALID(pdatLink);
 	if (m_nMode == modeCheckboxes)
@@ -1870,8 +1870,8 @@ BOOL CListCtrlEx::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 	NMHDR* pnm = (NMHDR*) lParam;
 	UINT nIDFrom = pnm->idFrom;
 	UINT nCode = pnm->code;
-	CString str = theApp.GetNotifyCodeString(nCode);
-	xTRACE("CListCtrlEx OnNotify id %d, code %d %s\n", nIDFrom, nCode, (LPCTSTR) str);
+	CString str = app.GetNotifyCodeString(nCode);
+	//trace("CListCtrlEx OnNotify id %d, code %d %s\n", nIDFrom, nCode, (LPCTSTR) str);
 	return CListCtrl::OnNotify(wParam, lParam, pResult);
 }
 */
@@ -1982,7 +1982,7 @@ BOOL CListCtrlEx::CopyCurrentCellToClipboard()
 	if (m_nRow != -1 && m_nCol != -1)
 	{
 		CString str = GetItemTextOP(m_nRow, m_nCol);
-		theApp.CopyToClipboard(str);
+		app.CopyToClipboard(str);
 		return TRUE;
 	}
 	return FALSE;
@@ -2020,7 +2020,7 @@ BOOL CListCtrlEx::PasteClipboardToCurrentCell()
 	if (m_nCol != -1 && m_nRow != -1)
 	{
 		CString str;
-		if (theApp.GetTextFromClipboard(str))
+		if (app.GetTextFromClipboard(str))
 		{
 			EditCurrentCell(str);
 			return TRUE;
@@ -2054,7 +2054,7 @@ void CListCtrlEx::UpdateEdit(CCmdUI *pCmdUI)
 			// data object represents the destination side
 			COleDataObject codo;
 			codo.AttachClipboard();
-//			pCmdUI->Enable(codo.IsDataAvailable(theApp.m_cfObjects));
+//			pCmdUI->Enable(codo.IsDataAvailable(app.m_cfObjects));
 			pCmdUI->Enable(bValidCell && codo.IsDataAvailable(CF_TEXT));
 			break;
 		}
@@ -2101,13 +2101,13 @@ CString CListCtrlEx::GetItemTextOP(int nItem, int nSubItem)
 
 void CListCtrlEx::OnLButtonDown(UINT nFlags, CPoint ptClient) 
 {
-	xTRACE("CListCtrlEx::OnLButtonDown\n");
+	//trace("CListCtrlEx::OnLButtonDown\n");
 
 	// If in select cell mode, swallow the left button event - don't let control get it (otherwise it will
 	// select the item also its own way, which we don't want).
 	if (m_nMode & modeSelectCell)
 	{
-		xTRACE("  olbd: swallow event since we're in select cell mode\n");
+		//trace("  olbd: swallow event since we're in select cell mode\n");
 		// If user has already selected multiple cells, then this will just set the focus cell.
 
 		// Find column and row clicked on
@@ -2136,7 +2136,7 @@ void CListCtrlEx::OnLButtonDown(UINT nFlags, CPoint ptClient)
 	}
 	else
 	{
-		xTRACE("  olbd: let control have event\n");
+		//trace("  olbd: let control have event\n");
 		// Let control have it
 		CListCtrl::OnLButtonDown(nFlags, ptClient);
 	}
@@ -2152,7 +2152,7 @@ void CListCtrlEx::OnMouseMove(UINT nFlags, CPoint ptClient)
 		//, see if moved far enough
 //		ptClient - m_ptDragStart
 //		this->DragAcceptFiles
-		xTRACE("start drag\n");
+		//trace("start drag\n");
 		
 		// Send notification to parent of ListView ctrl
 		NMLVDISPINFO nmdi;
@@ -2193,7 +2193,7 @@ void CListCtrlEx::OnMouseMove(UINT nFlags, CPoint ptClient)
 
 void CListCtrlEx::OnLButtonUp(UINT nFlags, CPoint point) 
 {	
-	xTRACE("CListCtrlEx::OnLButtonUp - call base class\n");
+	//trace("CListCtrlEx::OnLButtonUp - call base class\n");
 
 	// Clear drag start flag
 	m_bMouseDown = FALSE;
@@ -2243,7 +2243,7 @@ int CListCtrlEx::GetItemIndent(int nItem)
 // pass to the listctrl!
 int CListCtrlEx::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) 
 {
-	xTRACE("CListCtrlEx::OnMouseActivate\n");	
+	//trace("CListCtrlEx::OnMouseActivate\n");	
 	
 	// If editing a cell, return noactivate, otherwise call the base class as usual.
 	// Bug: This bombed when switching focus from another app - pwnd was 0.
@@ -2396,7 +2396,7 @@ CString CListCtrlEx::GetColumnText(int nColOrder)
 //. handle word wrapping in cells (eg for long descriptions)
 void CListCtrlEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
-	CPrintInfoMore& rpim = theApp.m_printinfo;
+	CPrintInfoMore& rpim = app.m_printinfo;
 
 	// Get grid info
 	int nCols = GetColumnCount();
@@ -2408,7 +2408,7 @@ void CListCtrlEx::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	// Get screen font information (for this control)
 	TEXTMETRIC tm;
 	CDC* pScreenDC = GetDC();
-	CFont* poldfont = pScreenDC->SelectObject(&theApp.m_fontControls);
+	CFont* poldfont = pScreenDC->SelectObject(&app.m_fontControls);
 	pScreenDC->GetTextMetrics(&tm);
 	pScreenDC->SelectObject(poldfont);
 	int nScreenCharWidth = tm.tmAveCharWidth; // avg character width
@@ -2508,7 +2508,7 @@ void CListCtrlEx::PrintPage(CDC *pDC, CPrintInfo *pInfo)
 {
 	if (m_nPrintLinesTotal != 0)
 	{
-		CPrintInfoMore& rpim = theApp.m_printinfo;
+		CPrintInfoMore& rpim = app.m_printinfo;
 		
 		pDC->SetBkMode(TRANSPARENT); // otherwise text will erase parts of line
 		
@@ -2753,7 +2753,7 @@ BOOL CListCtrlEx::SaveColumnOrder(BDataColumns* pdatColumns)
 // Folders always get their own unique column array, other objects don't.
 BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 {
-	xTRACE("CListCtrlEx::SaveColumnInfo\n");
+	//trace("CListCtrlEx::SaveColumnInfo\n");
 
 	ASSERT_VALID(m_pDoc);
 	ASSERT_VALID(pobj);
@@ -2782,14 +2782,14 @@ BOOL CListCtrlEx::SaveColumnInfo(BObject *pobj)
 		// BUG:: Used = instead of == again!
 		if (pobj->GetClassID() == classFolder)
 		{
-			xTRACE("  save to object\n");
+			//trace("  save to object\n");
 			// Save column info to the object
 			pobj->SetPropertyData(propColumnInfoArray, pdatColumns, TRUE, FALSE);
 //,			pobj->SetColumns(*pdatColumns, 
 		}
 		else
 		{
-			xTRACE("  save to class\n");
+			//trace("  save to class\n");
 			// Save column info to the object's class
 			ULONG lngClassID = pobj->GetClassID();
 			BObject* pobjClass = m_pDoc->GetObject(lngClassID);
@@ -2877,7 +2877,7 @@ BOOL CListCtrlEx::RemoveColumn(int nCol /* = -1 */) {
 // Returns number of columns added.
 int CListCtrlEx::InitializeColumns(BDataColumns* pdatColumns, BOOL bExpandLastColumn /* = FALSE */, BOOL bSaveChangesAutomatically /* = FALSE */)
 {
-	xTRACE("CListCtrlEx::InitializeColumns\n");
+	//trace("CListCtrlEx::InitializeColumns\n");
 
 	ASSERT_VALID(m_pDoc);
 	ASSERT_VALID(pdatColumns);
@@ -3278,7 +3278,7 @@ void CListCtrlEx::OnColumnEditProperty()
 // m_nTargetColumn has been set. 
 void CListCtrlEx::OnColumnInsert() {
 
-	xTRACE("CListCtrlEx OnColumnInsert\n");
+	//trace("CListCtrlEx OnColumnInsert\n");
 	BObject* pobjCurrent = m_pDoc->GetCurrentObject();
 	// First we want to disable all the currently visible properties
 	DisableVisibleProperties();
@@ -3348,7 +3348,7 @@ void CListCtrlEx::OnColumnSortClear()
 	// Add the children of the start object to the list, with no recursion
 	DeleteAllItems();
 	BObject* pobjStart = m_pDoc->GetCurrentObject();
-	AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, FALSE, 0, TRUE);
+	AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, FALSE, 0, TRUE);
 
 	// Add dummy new row
 	AddDummyRow();
@@ -3384,7 +3384,7 @@ void CListCtrlEx::OnUpdateColumnSortClear(CCmdUI* pCmdUI)
 // This is the CM_COLUMNS_CHANGED handler, sent by the control.
 LRESULT CListCtrlEx::OnLvwColumnsChanged(WPARAM wParam, LPARAM lParam)
 {
-	xTRACE("CListCtrlEx CM_COLUMNS_CHANGED handler - save column info\n");
+	//trace("CListCtrlEx CM_COLUMNS_CHANGED handler - save column info\n");
 	BObject* pobj = m_pDoc->GetCurrentObject();
 	ASSERT_VALID(pobj);
 	SaveColumnInfo(pobj); // this saves the BDataColumns object to the current pobj

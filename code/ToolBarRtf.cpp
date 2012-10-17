@@ -70,7 +70,7 @@ int CToolBarRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Get size of average characters
 	CClientDC dc(this);
-	CFont* pOldFont = dc.SelectObject(&theApp.m_fontControls);
+	CFont* pOldFont = dc.SelectObject(&app.m_fontControls);
 	TEXTMETRIC tm;
 	dc.GetTextMetrics(&tm);
 	int cxChar = tm.tmAveCharWidth;
@@ -118,8 +118,8 @@ int CToolBarRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	// Assign font to controls
-	m_cboFontName.SetFont(&theApp.m_fontControls);
-	m_cboFontSize.SetFont(&theApp.m_fontControls);
+	m_cboFontName.SetFont(&app.m_fontControls);
+	m_cboFontSize.SetFont(&app.m_fontControls);
 
 
 	// Create color button controls
@@ -131,13 +131,13 @@ int CToolBarRtf::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (!m_ctlBackcolor.Create2(r, this, ID_FORMAT_APPLY_BACKCOLOR, ID_FORMAT_BACKCOLOR))
 		return -1;
 	m_ctlBackcolor.SetDefaultColor(Library::clrWindow); // should be white // (this value ignored)
-	m_ctlBackcolor.SetColor(theApp.m_clrTextViewBackcolor);
+	m_ctlBackcolor.SetColor(app.m_clrTextViewBackcolor);
 	GetItemRectFromID(ID_FORMAT_FORECOLOR, &r);
 	r.right = r.left + nWidth;
 	if(!m_ctlForecolor.Create2(r, this, ID_FORMAT_APPLY_FORECOLOR, ID_FORMAT_FORECOLOR))
 		return -1;
 	m_ctlForecolor.SetDefaultColor(Library::clrWindowText); // (this value ignored)
-	m_ctlForecolor.SetColor(theApp.m_clrTextViewForecolor);
+	m_ctlForecolor.SetColor(app.m_clrTextViewForecolor);
 
 
 

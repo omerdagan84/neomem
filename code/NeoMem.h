@@ -68,6 +68,7 @@ public:
 	BOOL IsMaximized();
 	void LoadStrings();
 	void LoadTips();
+	void NewFile();
 	void OnFileOpen();
 	void ResetAutoRecoverTimer();
 	BOOL SaveAllModifiedBackup(CString& strMsg);
@@ -276,12 +277,7 @@ public:
 // these are just declarations. see elsewhere for definitions. 
 
 // This lets other modules access the global application object
-extern CNeoMem theApp; //, rename to app or gapp
-
-
-//extern CGUI& gui; // reference to the gui object? can't do that. 
-//extern CGUI gui; 
-extern CGUI* gpgui; 
+extern CNeoMem app; //, rename to app or gapp
 
 
 // Let other modules access the global strings

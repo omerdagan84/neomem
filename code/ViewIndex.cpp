@@ -109,7 +109,7 @@ int CViewIndex::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		if (m_cboClass.Create(WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST, r, &m_tbr, IDC_CBO_CLASS))
 		{
 			// Initialize comboboxex
-			m_cboClass.SetFont(&(theApp.m_fontControls));
+			m_cboClass.SetFont(&(app.m_fontControls));
 			m_cboClass.SetImageList(m_pDoc->GetImageList());
 
 			//, make methods to do all this stuff..
@@ -132,7 +132,7 @@ int CViewIndex::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 			// Now add all individual classes in alpha order
 			BObject* pobjClasses = m_pDoc->GetObject(folderClasses);
-			m_cboClass.AddObjects(pobjClasses, theApp.m_lngExcludeFlags, FALSE, TRUE);
+			m_cboClass.AddObjects(pobjClasses, app.m_lngExcludeFlags, FALSE, TRUE);
 //			m_cboClass.AddObjects(pobjClasses, 0, FALSE, TRUE);
 
 			// Select first item
@@ -146,7 +146,7 @@ int CViewIndex::OnCreate(LPCREATESTRUCT lpCreateStruct)
 //		m_tbr.GetClientRect(r);
 //		if (!m_lbl.Create("Click on column heading to sort", WS_CHILD | WS_VISIBLE, r, &m_tbr))
 //			return -1;
-//		m_lbl.SetFont(&theApp.m_fontControls);
+//		m_lbl.SetFont(&app.m_fontControls);
 		
 		// Must call this to initialize the toolbar position correctly
 		m_tbr.Position();
@@ -192,7 +192,7 @@ void CViewIndex::Dump(CDumpContext& dc) const
 
 void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {	
-	TRACE("    CViewIndex::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewIndex::OnUpdate %s\n", app.GetHintName(lHint));
 
 	switch (lHint)
 	{
@@ -313,7 +313,7 @@ void CViewIndex::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			int nItem = m_lvw.FindItemData((LPARAM) pobj);
 			if (nItem == -1)
 			{
-				if (!(pobj->GetFlag(theApp.m_lngExcludeFlags)))
+				if (!(pobj->GetFlag(app.m_lngExcludeFlags)))
 				{
 					// Get index of icon associated with this object
 					int nImage = pobj->GetIconIndex();
@@ -360,7 +360,7 @@ void CViewIndex::AddChildrenToList(BObject* pobjStart)
 
 			// Only add this object if it's not a system object
 //			if (!(pobj->GetFlag(flagSystem)))
-			if (!(pobj->GetFlag(theApp.m_lngSearchExcludeFlags)))
+			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags)))
 			{
 				// filter by class
 				if ((m_lngClassID==0) || (pobj->GetClassID() == m_lngClassID))
@@ -391,7 +391,7 @@ void CViewIndex::AddChildrenToList(BObject* pobjStart)
 
 void CViewIndex::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CViewIndex::OnActivateView(bActivate=%d)\n", bActivate);
+	//trace("CViewIndex::OnActivateView(bActivate=%d)\n", bActivate);
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
 
 	// If this view is being activated, set the focus to the child control
@@ -450,7 +450,7 @@ void CViewIndex::OnObjEditInDialog()
 	{
 		ASSERT_VALID(pobj);
 		pobj->UIEditValue(propName);
-		theApp.ui.EditValue(pobj, propName);
+		app.ui.EditValue(pobj, propName);
 	}		
 }
 */
@@ -537,7 +537,7 @@ void CViewIndex::OnCmdEditProperties()
 
 void CViewIndex::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewIndex::OnEndLabelEdit\n");
+	//trace("CViewIndex::OnEndLabelEdit\n");
 	//, do data validation, return FALSE if you don't like it
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
 	LVITEM* pLVITEM = &(pDispInfo->item);
@@ -565,7 +565,7 @@ void CViewIndex::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CViewIndex::OnObjEditInPlace() 
 {
-	xTRACE("CViewIndex::OnObjEditInPlace\n");
+	//trace("CViewIndex::OnObjEditInPlace\n");
 	int nItem = m_lvw.GetSelectedItem();
 	if (nItem != -1)
 	{
@@ -599,7 +599,7 @@ void CViewIndex::OnPopupEditInDialog()
 	// Edit value in dialog
 	BObject* pobj = (BObject*) m_lvw.GetItemData(m_nPopupItem);
 	ASSERT_VALID (pobj);
-	m_pDoc->UIRenameObject(pobj); // was just theApp.ui.EditValue(pobj, propName);
+	m_pDoc->UIRenameObject(pobj); // was just app.ui.EditValue(pobj, propName);
 }
 */
 
@@ -651,7 +651,7 @@ BOOL CViewIndex::PressKey(UINT nVK)
 // Set target on gaining focus
 void CViewIndex::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CViewIndex::OnSetFocus - set target object\n");
+	//trace("CViewIndex::OnSetFocus - set target object\n");
 	CViewEx::OnSetFocus(pOldWnd);
 	
 	BObject* pobj = (BObject*) m_lvw.GetSelectedItemData();
@@ -792,7 +792,7 @@ void CViewIndex::ReloadItems()
 	BObject* pobjRoot = m_pDoc->GetRoot();
 	ASSERT_VALID(pobjRoot);
 //	if (!(pobjRoot->GetFlag(flagSystem)))
-	if (!(pobjRoot->GetFlag(theApp.m_lngSearchExcludeFlags)))
+	if (!(pobjRoot->GetFlag(app.m_lngSearchExcludeFlags)))
 	{
 		// filter by class
 		if ((m_lngClassID==0) || (pobjRoot->GetClassID() == m_lngClassID))
@@ -808,7 +808,7 @@ void CViewIndex::ReloadItems()
 	AddChildrenToList(pobjRoot);
 
 	//, use above code until listviewex handles textcallback
-//		m_lvw.AddObjects(pobjRoot, theApp.m_lngExcludeFlags, TRUE, TRUE);
+//		m_lvw.AddObjects(pobjRoot, app.m_lngExcludeFlags, TRUE, TRUE);
 
 	// Sort items
 //	m_lvw.SortByProperty(propName);

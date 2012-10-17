@@ -87,7 +87,7 @@ BOOL CDialogUpgradeFile::OnInitDialog()
 
 void CDialogUpgradeFile::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_UPGRADE_FILE); 
+	app.WinHelp(HID_BASE_RESOURCE + IDD_UPGRADE_FILE); 
 }
 
 

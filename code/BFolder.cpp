@@ -29,7 +29,19 @@ BFolder& BFolder::New(BDoc& doc, LPCTSTR pszName, OBJID idParent, OBJID idDefaul
 
 
 
+// add a column to this folder's contents view
+void BFolder::AddColumn(OBJID idProperty, int nWidth, int nCol) {
+	BData* pdat = GetPropertyData(propColumnInfoArray);
+	if (!pdat) return;
+	BDataColumns* pdatCols = DYNAMIC_DOWNCAST(BDataColumns, pdat);
+	if (!pdatCols) {delete pdat; return;} //, d_d will eventually throw, so won't need this
+	pdatCols->InsertColumn(idProperty, m_pDoc, nWidth, nCol);
+	SetPropertyData(propColumnInfoArray, pdatCols);	// saves a copy of pdatcols
+	delete pdat; // don't forget this!
+}
 
+
+// remove a column from this folder's contents view
 void BFolder::RemoveColumn(OBJID idProperty) {
 	BData* pdat = GetPropertyData(propColumnInfoArray);
 	if (!pdat) return;
@@ -39,16 +51,7 @@ void BFolder::RemoveColumn(OBJID idProperty) {
 	if (nCol==-1) return;
 	pdatCols->RemoveColumn(nCol);
 	SetPropertyData(propColumnInfoArray, pdatCols);
-}
-
-
-void BFolder::AddColumn(OBJID idProperty, int nWidth, int nCol) {
-	BData* pdat = GetPropertyData(propColumnInfoArray);
-	if (!pdat) return;
-	BDataColumns* pdatCols = DYNAMIC_DOWNCAST(BDataColumns, pdat);
-	if (!pdatCols) return;
-	pdatCols->InsertColumn(idProperty, m_pDoc, nWidth, nCol);
-	SetPropertyData(propColumnInfoArray, pdatCols);	
+	delete pdat;
 }
 
 

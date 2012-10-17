@@ -137,20 +137,20 @@ CString CError::GetReportText()
 					,
 					(LPCTSTR) m_strError,
 					(LPCTSTR) m_strDescription,
-					(LPCTSTR) theApp.m_objInfo.GetProgramVersion(),
-					(LPCTSTR) theApp.m_objInfo.GetProgramBuild(),
+					(LPCTSTR) app.m_objInfo.GetProgramVersion(),
+					(LPCTSTR) app.m_objInfo.GetProgramBuild(),
 					(LPCTSTR) m_strFiletitle,
 					m_nLine,
 					(LPCTSTR) m_strExpression,
 
-					(LPCTSTR) theApp.m_objInfo.GetProcessor(),
-					(LPCTSTR) theApp.m_objInfo.GetWindowsVersion(),
-					theApp.m_objInfo.GetCommonControlsVersionNumber(),
-					(LPCTSTR) theApp.m_objInfo.GetRichEditVersionString(),
-					(LPCTSTR) theApp.m_objInfo.GetVirtualMemory(),
-					(LPCTSTR) theApp.m_objInfo.GetPhysicalMemory(),
-					(LPCTSTR) theApp.m_objInfo.GetScreenInfo(),
-					(LPCTSTR) theApp.m_objInfo.GetLocaleInfo()
+					(LPCTSTR) app.m_objInfo.GetProcessor(),
+					(LPCTSTR) app.m_objInfo.GetWindowsVersion(),
+					app.m_objInfo.GetCommonControlsVersionNumber(),
+					(LPCTSTR) app.m_objInfo.GetRichEditVersionString(),
+					(LPCTSTR) app.m_objInfo.GetVirtualMemory(),
+					(LPCTSTR) app.m_objInfo.GetPhysicalMemory(),
+					(LPCTSTR) app.m_objInfo.GetScreenInfo(),
+					(LPCTSTR) app.m_objInfo.GetLocaleInfo()
 					);
 	return str;
 }

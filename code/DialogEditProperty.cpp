@@ -84,7 +84,7 @@ BOOL CDialogEditProperty::OnInitDialog()
 	// Add property types to list
 	// Note: Normal user gets limited list (eg just string, number, link, etc)
 	BObject* pobjStart = m_pDoc->GetObject(folderPropertyTypes);
-	m_cboType.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, FALSE);
+	m_cboType.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, FALSE);
 
 	// Modify caption and instructions depending on Edit/Add mode
 	// bug:: Had = instead of ==
@@ -293,7 +293,7 @@ void CDialogEditProperty::OnBtnNewLinkSource()
 // Bring up help for this dialog
 void CDialogEditProperty::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_PROPERTY);
+	app.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_PROPERTY);
 }
 
 
@@ -312,8 +312,8 @@ void CDialogEditProperty::FillLinkSourceCombo()
 		datValidClasses.AddLinkID(classFolder, m_pDoc);
 		datValidClasses.AddLinkID(classHome, m_pDoc);
 		BObject* pobjStart = m_pDoc->GetObject(rootMain);
-		BOOL bIncludeStart = theApp.m_bAdmin ? TRUE : FALSE;
-		m_cboLinkSource.AddObjects(pobjStart, theApp.m_lngExcludeFlags, bIncludeStart, TRUE, 0, &datValidClasses);
+		BOOL bIncludeStart = app.m_bAdmin ? TRUE : FALSE;
+		m_cboLinkSource.AddObjects(pobjStart, app.m_lngExcludeFlags, bIncludeStart, TRUE, 0, &datValidClasses);
 	}
 }
 
@@ -331,7 +331,7 @@ void CDialogEditProperty::FillPropertyCombo()
 
 		// Add propertydefs
 		BObject* pobjStart = m_pDoc->GetObject(folderProperties);
-		m_cboAdditionalProperty.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, FALSE, 0, 0);
+		m_cboAdditionalProperty.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, FALSE, 0, 0);
 	}
 }
 
@@ -344,7 +344,7 @@ void CDialogEditProperty::FillUnitsCombo()
 	{
 		CWaitCursor cw;
 		BObject* pobjStart = m_pDoc->GetObject(folderUnits);
-		m_cboUnits.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE);
+		m_cboUnits.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, TRUE);
 	}
 }
 

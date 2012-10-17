@@ -67,7 +67,7 @@ BOOL CTabCtrlEx::OnEraseBkgnd(CDC* pDC)
 
 void CTabCtrlEx::OnLButtonDown(UINT nFlags, CPoint point) 
 {
-	xTRACE("CTabCtrlEx::OnLButtonDown\n");
+	//trace("CTabCtrlEx::OnLButtonDown\n");
 /*
 	//, commented out for v1
 
@@ -148,7 +148,7 @@ void CTabCtrlEx::OnMouseMove(UINT nFlags, CPoint point)
 
 void CTabCtrlEx::OnLButtonUp(UINT nFlags, CPoint point) 
 {
-	xTRACE("CTabCtrlEx::OnLButtonUp\n");
+	//trace("CTabCtrlEx::OnLButtonUp\n");
 /*
 	//, commented out for v1
 

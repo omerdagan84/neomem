@@ -48,7 +48,7 @@ void CEmail::AskSend()
 	if (IDYES == AfxMessageBox("This will open your email client to send an email to NeoMem.org. Continue?", MB_ICONQUESTION + MB_YESNO))
 	{
 		CString strURL;
-		strURL.Format("mailto:%s", (LPCTSTR) theApp.m_strEmail); // "mailto:info@neomem.org"
+		strURL.Format("mailto:%s", (LPCTSTR) app.m_strEmail); // "mailto:info@neomem.org"
 //		HINSTANCE h = ::ShellExecute(NULL, "open", strURL, NULL, NULL, SW_SHOWNORMAL);
 
 		CString strMessage;
@@ -69,24 +69,24 @@ void CEmail::AskSend()
 //					"    Disk Space Available: %s \n " // disk free info 
 					"\n\n\n\n"
 					,
-					(LPCTSTR) theApp.m_objInfo.GetProgramVersion(),
-					(LPCTSTR) theApp.m_objInfo.GetProgramBuild(),
-//					(LPCTSTR) theApp.m_objInfo.GetProgramDate(),
-//					(LPCTSTR) theApp.m_objInfo.GetProcessor(),
-					(LPCTSTR) theApp.m_objInfo.GetWindowsVersion(),
-					theApp.m_objInfo.GetCommonControlsVersionNumber(),
-					(LPCTSTR) theApp.m_objInfo.GetRichEditVersionString()
-//					(LPCTSTR) theApp.m_objInfo.GetVirtualMemory(),
-//					(LPCTSTR) theApp.m_objInfo.GetPhysicalMemory(),
-//					(LPCTSTR) theApp.m_objInfo.GetScreenInfo(),
+					(LPCTSTR) app.m_objInfo.GetProgramVersion(),
+					(LPCTSTR) app.m_objInfo.GetProgramBuild(),
+//					(LPCTSTR) app.m_objInfo.GetProgramDate(),
+//					(LPCTSTR) app.m_objInfo.GetProcessor(),
+					(LPCTSTR) app.m_objInfo.GetWindowsVersion(),
+					app.m_objInfo.GetCommonControlsVersionNumber(),
+					(LPCTSTR) app.m_objInfo.GetRichEditVersionString()
+//					(LPCTSTR) app.m_objInfo.GetVirtualMemory(),
+//					(LPCTSTR) app.m_objInfo.GetPhysicalMemory(),
+//					(LPCTSTR) app.m_objInfo.GetScreenInfo(),
 //					nLocale,
 //					nLanguage
-//					(LPCTSTR) theApp.m_objInfo.GetLocaleInfo()
-//					(LPCTSTR) theApp.m_objInfo.GetDiskSpaceAvailable()
+//					(LPCTSTR) app.m_objInfo.GetLocaleInfo()
+//					(LPCTSTR) app.m_objInfo.GetDiskSpaceAvailable()
 					);
 
 		m_strToName = "";
-		m_strToAddress = theApp.m_strEmail;
+		m_strToAddress = app.m_strEmail;
 		m_strSubject = "";
 		m_strMessage = strMessage;
 		Send();

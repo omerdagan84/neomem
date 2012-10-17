@@ -197,7 +197,7 @@ BOOL CStaticEx::Create(
 	if (m_nCommandID)
 	{
 //		m_hCursor = AfxGetApp()->LoadCursor(IDC_CURSOR_HAND);
-		m_hCursor = theApp.m_hCursorHand;
+		m_hCursor = app.m_hCursorHand;
 	}
 
 	// Save flags
@@ -303,7 +303,7 @@ BOOL CStaticEx::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 void CStaticEx::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	xTRACE("CStaticEx::OnMouseMove %d %d\n", point.x, point.y);
+	//trace("CStaticEx::OnMouseMove %d %d\n", point.x, point.y);
 
 	// Show status bar text if this label has it.
 	// Gets status string from string table (resource ID should match command ID).
@@ -311,12 +311,12 @@ void CStaticEx::OnMouseMove(UINT nFlags, CPoint point)
 	{
 		CString str;
 		if (str.LoadString(m_nCommandID))
-			theApp.SetStatusBarText(str);
+			app.SetStatusBarText(str);
 		else
-			theApp.SetStatusBarText();
+			app.SetStatusBarText();
 	}
 	else
-		theApp.SetStatusBarText();
+		app.SetStatusBarText();
 	CStatic::OnMouseMove(nFlags, point);
 }
 
@@ -356,7 +356,7 @@ int CStaticEx::SetWidthGetHeight(int nWidth)
 
 void CStaticEx::OnClicked() 
 {
-	xTRACE("CStaticEx::OnClicked\n");
+	//trace("CStaticEx::OnClicked\n");
 	if (m_nCommandID)
 	{
 		CWaitCursor cw;

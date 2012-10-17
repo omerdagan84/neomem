@@ -93,10 +93,10 @@ int CViewHeader::OnCreate(LPCREATESTRUCT lpCreateStruct)
 // Display icon and name of currently selected object
 void CViewHeader::OnDraw(CDC* pDC)
 {
-	xTRACE("CViewHeader::OnDraw\n");
+	//trace("CViewHeader::OnDraw\n");
 
 	// Exit if display is turned off
-	if (!theApp.m_bDisplayHeader) 
+	if (!app.m_bDisplayHeader) 
 		return;
 
 	BObject* pobj = m_pDoc->GetCurrentObject();
@@ -108,14 +108,14 @@ void CViewHeader::OnDraw(CDC* pDC)
 	CRect r;
 	GetClientRect(r);
 	r.bottom = m_nHeight;
-	pDC->FillSolidRect(r, theApp.m_clrHeaderBackground);
-	pDC->SetTextColor(theApp.m_clrHeaderForeground);
+	pDC->FillSolidRect(r, app.m_clrHeaderBackground);
+	pDC->SetTextColor(app.m_clrHeaderForeground);
 
 	// Draw 3d border around all
 	pDC->DrawEdge(r,  BDR_RAISEDINNER, BF_RECT);
 
 	// Select font
-	CFont* pOldFont = pDC->SelectObject(&theApp.m_fontHeader);
+	CFont* pOldFont = pDC->SelectObject(&app.m_fontHeader);
 
 	// Draw icon of currently selected item
 	CImageList* piml = m_pDoc->GetImageList();
@@ -176,7 +176,7 @@ void CViewHeader::RecalcLayout(BOOL bRepaint)
 	{
 		CRect r;
 		GetClientRect(r);
-		if (theApp.m_bDisplayHeader)
+		if (app.m_bDisplayHeader)
 			m_pviewTabs->MoveWindow(0, m_nHeight, r.right, r.bottom - m_nHeight, bRepaint);
 		else
 			m_pviewTabs->MoveWindow(0, 0, r.right, r.bottom, bRepaint);
@@ -204,7 +204,7 @@ void CViewHeader::OnRButtonDown(UINT nFlags, CPoint point)
 		if (pPopup)
 		{
 //			pPopup->SetDefaultItem(ID_OBJ_OPEN);
-			// let main window handle commands since theApp handles them
+			// let main window handle commands since app handles them
 //			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, AfxGetMainWnd());
 		}
@@ -222,7 +222,7 @@ void CViewHeader::OnRButtonDown(UINT nFlags, CPoint point)
 // message is received. 
 void CViewHeader::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-	TRACE("    CViewHeader::OnUpdate %s\n", theApp.GetHintName(lHint));
+	//trace("    CViewHeader::OnUpdate %s\n", app.GetHintName(lHint));
 
 	switch (lHint)
 	{
@@ -248,7 +248,7 @@ void CViewHeader::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	case hintSelect:
 		{
 			// Invalidate the header display area so it will be redrawn in OnDraw
-			if (theApp.m_bDisplayHeader)
+			if (app.m_bDisplayHeader)
 			{
 				CRect r;
 				GetClientRect(r);
@@ -284,7 +284,7 @@ void CViewHeader::OnInitialUpdate()
 
 void CViewHeader::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CViewHeader::OnActivateView bActivate %d - if True, set focus to child view (tabs view)\n", bActivate);
+	//trace("CViewHeader::OnActivateView bActivate %d - if True, set focus to child view (tabs view)\n", bActivate);
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	
 	// If this view is being activated, set the focus to the child view
@@ -300,7 +300,7 @@ void CViewHeader::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pD
 
 void CViewHeader::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CViewHeader::OnSetFocus - set focus to child view (tabview)\n");
+	//trace("CViewHeader::OnSetFocus - set focus to child view (tabview)\n");
 
 	CViewEx::OnSetFocus(pOldWnd);
 
@@ -317,7 +317,7 @@ void CViewHeader::OnSetFocus(CWnd* pOldWnd)
 
 int CViewHeader::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) 
 {
-	xTRACE("CViewHeader::OnMouseActivate\n");	
+	//trace("CViewHeader::OnMouseActivate\n");	
 //	return CView::OnMouseActivate(pDesktopWnd, nHitTest, message);
 //	return MA_NOACTIVATEANDEAT; // Do not activate CWnd object and discard the mouse event
 
@@ -330,7 +330,7 @@ int CViewHeader::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message)
 	BOOL bClickedInHeader = (pwndClick->m_hWnd == this->m_hWnd);
 	if (bClickedInHeader)
 	{
-		xTRACE("  clicked in header window, so don't activate\n");
+		//trace("  clicked in header window, so don't activate\n");
 		return MA_NOACTIVATE; // Do not activate CWnd object
 	}
 

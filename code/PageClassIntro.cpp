@@ -65,9 +65,9 @@ BOOL CPageClassIntro::OnInitDialog() {
 
 	// Fill listview with classes
 	// Include root class if we're in admin mode
-	BOOL bIncludeRoot = theApp.m_bAdmin ? TRUE : FALSE;
+	BOOL bIncludeRoot = app.m_bAdmin ? TRUE : FALSE;
 	BObject* pobjStart = m_pDoc->GetObject(rootClass);
-	m_lvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, bIncludeRoot, TRUE);
+	m_lvw.AddObjects(pobjStart, app.m_lngExcludeFlags, bIncludeRoot, TRUE);
 	m_lvw.SortByProperty(propName, 1);
 
 	// Remove the dummy new class object, which is included in the list because 

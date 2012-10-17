@@ -56,7 +56,7 @@ BOOL CDialogTip::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// Set label to bold
-	m_lblInstructions.SetFont(&theApp.m_fontControlsBold);
+	m_lblInstructions.SetFont(&app.m_fontControlsBold);
 
 	GetNextTip();
 

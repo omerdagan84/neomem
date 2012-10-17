@@ -178,25 +178,25 @@ BOOL CFileDialogEx::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 // up. You can delete them if you like.
 BOOL CFileDialogEx::OnFileNameOK()
 {
-	xTRACE(_T("CFileDialogEx::OnFileNameOK\n"));
+	//trace(_T("CFileDialogEx::OnFileNameOK\n"));
 	return CFileDialog::OnFileNameOK();
 }
 
 void CFileDialogEx::OnInitDone()
 {
-	xTRACE(_T("CFileDialogEx::OnInitDone\n"));
+	//trace(_T("CFileDialogEx::OnInitDone\n"));
 	CFileDialog::OnInitDone();
 }
 
 void CFileDialogEx::OnFileNameChange()
 {
-	xTRACE(_T("CFileDialogEx::OnFileNameChange\n"));
+	//trace(_T("CFileDialogEx::OnFileNameChange\n"));
 	CFileDialog::OnFileNameChange();
 }
 
 void CFileDialogEx::OnFolderChange()
 {
-	xTRACE(_T("CFileDialogEx::OnFolderChange\n"));
+	//trace(_T("CFileDialogEx::OnFolderChange\n"));
 	CFileDialog::OnFolderChange();
 }
 

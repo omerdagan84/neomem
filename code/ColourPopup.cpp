@@ -125,10 +125,10 @@ void CColourPopup::Initialise()
     if (m_nNumColours > MAX_COLOURS)
         m_nNumColours = MAX_COLOURS;
 
-	//` Get custom colors from theApp
+	//` Get custom colors from app
 	for (int j = 0; j < 16; j++)
 	{
-		m_crColours[m_nNumColours - 16 + j].crColour = theApp.m_clrCustomColors[j];
+		m_crColours[m_nNumColours - 16 + j].crColour = app.m_clrCustomColors[j];
 	}
 
     m_nNumColumns       = 0;
@@ -831,7 +831,7 @@ void CColourPopup::EndSelection(int nMessage)
         CColorDialog dlg(m_crInitialColour, CC_FULLOPEN | CC_ANYCOLOR, this);
 
 		//` Set custom colors
-		dlg.m_cc.lpCustColors = &theApp.m_clrCustomColors[0];
+		dlg.m_cc.lpCustColors = &app.m_clrCustomColors[0];
 
         if (dlg.DoModal() == IDOK)
             m_crColour = dlg.GetColor();

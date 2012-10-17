@@ -106,7 +106,7 @@ void CDialogEditDate::OnChkTime()
 
 void CDialogEditDate::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_DATE);
+	app.WinHelp(HID_BASE_RESOURCE + IDD_EDIT_DATE);
 }
 
 

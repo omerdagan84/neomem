@@ -255,7 +255,7 @@ inline CRichEditDoc* CRichEditView2::GetDocument() const
 { 
 	ASSERT(0);
 	return 0;
-//	return &theApp.m_redoc; 
+//	return &app.m_redoc; 
 }
 */
 inline BDoc* CRichEditView2::GetDocument()

@@ -155,7 +155,7 @@ void BDataEmail::UIOnMouseMove()
 	// If your application must set the cursor while it is in a window, make sure the class cursor 
 	// for the specified window's class is set to NULL. If the class cursor is not NULL, the system 
 	// restores the class cursor each time the mouse is moved. 
-	::SetCursor(theApp.m_hCursorHand);
+	::SetCursor(app.m_hCursorHand);
 }
 
 

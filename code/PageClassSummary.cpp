@@ -60,7 +60,7 @@ BOOL CPageClassSummary::OnInitDialog()
 	CPropertyPage::OnInitDialog();
 	
 	// Set font for title
-	m_lblTitle.SetFont(&theApp.m_fontControlsBold);
+	m_lblTitle.SetFont(&app.m_fontControlsBold);
 
 	// Set instructions if in edit mode
 	if (!m_psh->m_bAddMode)

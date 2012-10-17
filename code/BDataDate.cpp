@@ -300,7 +300,7 @@ CString BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 	//			if (m_odt.GetAsSystemTime(systime))
 	//			{
 	//				// Use short or long date based on global option.
-	//				DWORD dwFlags = (theApp.m_nDateFormat == 0) ? DATE_SHORTDATE : DATE_LONGDATE;
+	//				DWORD dwFlags = (app.m_nDateFormat == 0) ? DATE_SHORTDATE : DATE_LONGDATE;
 	//				const int nChars = 50;
 	//				LPTSTR pszBuffer = m_strText.GetBuffer(nChars);
 	//				::GetDateFormat(NULL, dwFlags, &systime, NULL, pszBuffer, nChars);

@@ -118,7 +118,7 @@ int CViewTree::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	else return -1;
 
-//	m_tvw.SetFont(&theApp.m_fontControls);
+//	m_tvw.SetFont(&app.m_fontControls);
 
 	// Register this window as an OLE drop target
 	//. could also specify borders in init
@@ -175,20 +175,20 @@ void CViewTree::OnFilePrintPreview()
 
 BOOL CViewTree::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	xTRACE("CViewTree OnPreparePrinting\n");
+	//trace("CViewTree OnPreparePrinting\n");
 	// default preparation
 	return DoPreparePrinting(pInfo);
 }
 
 void CViewTree::OnBeginPrinting(CDC*, CPrintInfo*)
 {
-	xTRACE("CViewTree OnBeginPrinting\n");
+	//trace("CViewTree OnBeginPrinting\n");
 	// TODO: add extra initialization before printing
 }
 
 void CViewTree::OnEndPrinting(CDC*, CPrintInfo*)
 {
-	xTRACE("CViewTree OnEndPrinting\n");
+	//trace("CViewTree OnEndPrinting\n");
 	// TODO: add cleanup after printing
 }
 */
@@ -212,8 +212,8 @@ void CViewTree::OnInitialUpdate()
 // Document has changed - update the treeview to reflect those changes
 void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-	TRACE("    CViewTree::OnUpdate %s\n", theApp.GetHintName(lHint));
-//	xTRACE("CViewTree::OnUpdate(lHint=%d, pHint=0x%pL)\n", lHint, pHint);
+	//trace("    CViewTree::OnUpdate %s\n", app.GetHintName(lHint));
+//	//trace("CViewTree::OnUpdate(lHint=%d, pHint=0x%pL)\n", lHint, pHint);
 //	CWaitCursor cw;
 
 	// To use lHint, define special hint values, typically a bitmask or an enumerated type, 
@@ -243,15 +243,15 @@ void CViewTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				BOOL bIncludeStart = TRUE;
 				if (pobjStart->GetObjectID() == rootMain)
 				{
-					bIncludeStart = (theApp.m_bAdmin);
+					bIncludeStart = (app.m_bAdmin);
 				}
 
 				// Add objects
-				ULONG lngExcludeFlags = theApp.m_lngExcludeFlags;
+				ULONG lngExcludeFlags = app.m_lngExcludeFlags;
 				m_tvw.AddObjects(pobjStart, lngExcludeFlags, bIncludeStart, TRUE, TRUE);
 
 				// Select current item
-				xTRACE("  select current item in tree\n");
+				//trace("  select current item in tree\n");
 				// this should generate the selchanged event
 				// why would this not generate the selchange event if it wasn't on the doc root object?
 				HTREEITEM htiCurrent = m_tvw.FindItemData((DWORD) m_pDoc->GetCurrentObject(), 0);
@@ -585,8 +585,8 @@ void CViewTree::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 	NMTREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	*pResult = 0;
 
-	xTRACE("CViewTree::OnSelChanged!\n");
-	xTRACE("  item old: hti %d lparam %d\n", pNMTreeView->itemOld.hItem, pNMTreeView->itemOld.lParam);
+	//trace("CViewTree::OnSelChanged!\n");
+	//trace("  item old: hti %d lparam %d\n", pNMTreeView->itemOld.hItem, pNMTreeView->itemOld.lParam);
 
 	// Get newly selected item
 	TVITEM itemNew = pNMTreeView->itemNew;
@@ -619,7 +619,7 @@ void CViewTree::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 // Rename the selected item
 void CViewTree::OnObjEditInPlace() 
 {
-	xTRACE("CViewTree:OnObjEditInPlace()\n");
+	//trace("CViewTree:OnObjEditInPlace()\n");
 //	ASSERT(m_htiPopup);
 
 	// Note: This mimics Explorer behavior - you can rename an item without changing the current selection.
@@ -648,7 +648,7 @@ void CViewTree::OnObjEditInPlace()
 // and prevent editing of others. Returning 0 allows editing, and returning nonzero prevents it. 
 void CViewTree::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewTree::OnBeginLabelEdit\n");
+	//trace("CViewTree::OnBeginLabelEdit\n");
 	TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
 	//. check here if the object text is read-only or not
 	*pResult = 0;
@@ -661,7 +661,7 @@ void CViewTree::OnBeginLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 // edited text. Return FALSE to reject the edited text and revert to the original label. 
 void CViewTree::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewTree::OnEndLabelEdit\n");
+	//trace("CViewTree::OnEndLabelEdit\n");
 	TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
 	TVITEM* pTVITEM = &(pTVDispInfo->item);
 	
@@ -796,7 +796,7 @@ CViewTree::OnSize(UINT nType, int cx, int cy)
 //, why did I have this? it was causing duplicate context menus to popup
 void CViewTree::OnRClick(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-//	xTRACE("CViewTree OnRClick\n");
+//	//trace("CViewTree OnRClick\n");
 //	CPoint point(::GetMessagePos()); // screen coords
 //	OnContextMenu(this, point);
 	*pResult = 0;
@@ -807,7 +807,7 @@ void CViewTree::OnRClick(NMHDR* pNMHDR, LRESULT* pResult)
 // Bring up context menu for tree
 void CViewTree::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 {
-	xTRACE("CViewTree OnContextMenu %d  %d\n", ptScreen.x, ptScreen.y);
+	//trace("CViewTree OnContextMenu %d  %d\n", ptScreen.x, ptScreen.y);
 
 	HTREEITEM hti = 0;
 
@@ -961,7 +961,7 @@ void CViewTree::OnUpdateEdit(CCmdUI* pCmdUI)
 			// data object represents the destination side
 			COleDataObject odo;
 			odo.AttachClipboard();
-			pCmdUI->Enable(odo.IsDataAvailable(theApp.m_cfObjects));
+			pCmdUI->Enable(odo.IsDataAvailable(app.m_cfObjects));
 			break;
 		}
 	}
@@ -989,7 +989,7 @@ void CViewTree::OnUpdateEdit(CCmdUI* pCmdUI)
 // the left mouse button is being initiated. 
 void CViewTree::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	xTRACE("CViewTree::OnBeginDrag\n");
+	//trace("CViewTree::OnBeginDrag\n");
 
 	// Get drag object and save to array
 	NMTREEVIEW* ptv = (NMTREEVIEW*) pNMHDR;
@@ -1027,7 +1027,7 @@ void CViewTree::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 // If this function returns DROPEFFECT_NONE, then OnDrop will NOT get called on mouseup
 DROPEFFECT CViewTree::OnDragOver(COleDataObject* pDataObject, DWORD dwKeyState, CPoint point) 
 {
-	xTRACE("CViewTree::OnDragOver\n");
+	//trace("CViewTree::OnDragOver\n");
 
 	// Call base class
 	CViewEx::OnDragOver(pDataObject, dwKeyState, point);
@@ -1119,7 +1119,7 @@ DROPEFFECT CViewTree::OnDropEx(COleDataObject* pDataObject, DROPEFFECT dropDefau
 // object was dragged and dropped.
 void CViewTree::OnDragLeave() 
 {
-	xTRACE("CViewTree::OnDragLeave\n");
+	//trace("CViewTree::OnDragLeave\n");
 
 	// Call base class
 	CViewEx::OnDragLeave();
@@ -1190,7 +1190,7 @@ BObject* CViewTree::DragGetDropTarget(CPoint ptClient)
 //. (could highlight the view border or something)
 void CViewTree::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-	xTRACE("CViewTree OnActivateView %d\n", bActivate);
+	//trace("CViewTree OnActivateView %d\n", bActivate);
 	CViewEx::OnActivateView(bActivate, pActivateView, pDeactiveView);
 
 	// If this view is being activated, set the focus to the child control
@@ -1215,7 +1215,7 @@ void CViewTree::Navigate(UINT nCommandID)
 void CViewTree::OnNotifyKeyDown(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMTVKEYDOWN* pkd = (NMTVKEYDOWN*) pNMHDR;
-	xTRACE("CViewTree OnNotifyKeyDown %d\n", pkd->wVKey);
+	//trace("CViewTree OnNotifyKeyDown %d\n", pkd->wVKey);
 	if (pkd->wVKey == VK_DELETE)
 	{
 		// If user is not editing a label, translate the delete to an ID_EDIT_DELETE command
@@ -1263,7 +1263,7 @@ BOOL CViewTree::PressKey(UINT nVK)
 // Set target object on gaining focus
 void CViewTree::OnSetFocus(CWnd* pOldWnd) 
 {
-	xTRACE("CViewTree::OnSetFocus - set target object\n");
+	//trace("CViewTree::OnSetFocus - set target object\n");
 	CViewEx::OnSetFocus(pOldWnd);
 	
 	BObject* pobj = (BObject*) m_tvw.GetSelectedItemData();
@@ -1288,7 +1288,7 @@ void CViewTree::OnCmdFileExport()
 {
 	BObject* pobj = m_pDoc->GetTargetObject();
 	if (pobj)
-		theApp.Export(pobj);
+		app.Export(pobj);
 }
 
 
@@ -1302,7 +1302,7 @@ BOOL CViewTree::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 	NMHDR* pnm = (NMHDR*) lParam;
 	UINT nIDFrom = pnm->idFrom;
 	UINT nCode = pnm->code;
-	CString str = theApp.GetNotifyCodeString(nCode);
+	CString str = app.GetNotifyCodeString(nCode);
 	TRACE("CViewTree OnNotify id %d, code %d %s\n", nIDFrom, nCode, (LPCTSTR) str);
 	return CViewEx::OnNotify(wParam, lParam, pResult);
 }

@@ -107,7 +107,7 @@ void CDialogSaveOptions::OnChkEncrypt()
 
 void CDialogSaveOptions::OnBtnHelp() 
 {
-	theApp.WinHelp(HID_BASE_RESOURCE + IDD_FILE_SECURITY); 
+	app.WinHelp(HID_BASE_RESOURCE + IDD_FILE_SECURITY); 
 }
 
 

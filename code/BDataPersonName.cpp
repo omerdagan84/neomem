@@ -86,7 +86,7 @@ BOOL BDataPersonName::SetBDataText(const CString& str, BObject* pobjPropertyDef 
 		}
 	}
 
-	yTRACE("Parsed %s into %s and %s!\n", (LPCTSTR) str, (LPCTSTR) m_strFirst, (LPCTSTR) m_strLast);
+	//trace("Parsed %s into %s and %s!\n", (LPCTSTR) str, (LPCTSTR) m_strFirst, (LPCTSTR) m_strLast);
 
 	// Reset flag so will know to recalculate full name
 	m_bCacheValid = FALSE;
@@ -110,7 +110,7 @@ CString BDataPersonName::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMac
 	// Clear cache
 	m_strText.Empty();
 
-	switch (theApp.m_nNameFormat)
+	switch (app.m_nNameFormat)
 	{
 		case nfLastFirst:
 			{

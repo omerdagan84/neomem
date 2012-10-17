@@ -80,7 +80,7 @@ void CDialogImport::OnBtnSelectFile()
 
 //x	CFileDialogEx dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, 
 	CFileDialog dlg(TRUE, _T("rtf"), _T(""), OFN_HIDEREADONLY, 
-		theApp.m_strImportFilter, AfxGetMainWnd());
+		app.m_strImportFilter, AfxGetMainWnd());
 	dlg.m_ofn.lpstrTitle = _T("Import File");
 	if (dlg.DoModal() == IDOK)
 	{

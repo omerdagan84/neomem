@@ -53,9 +53,9 @@ BOOL CPageOptionsDisplay::OnInitDialog()
 	m_font.CreateFontIndirect(&m_lf);
 	UpdateFontName();
 	
-	m_lblFont.SetFont(&theApp.m_fontControlsBold);
-	m_lblDateFormat.SetFont(&theApp.m_fontControlsBold);
-	m_lblNameFormat.SetFont(&theApp.m_fontControlsBold);
+	m_lblFont.SetFont(&app.m_fontControlsBold);
+	m_lblDateFormat.SetFont(&app.m_fontControlsBold);
+	m_lblNameFormat.SetFont(&app.m_fontControlsBold);
 
 	// Get available date formats and fill the combo
 	// Unfortunately, windows 98 only
@@ -122,9 +122,9 @@ void CPageOptionsDisplay::OnBtnFont()
 BOOL CPageOptionsDisplay::OnApply() 
 {
 	// Apply changes
-//	theApp.m_fontRtfDefault.DeleteObject();
-//	theApp.m_fontRtfDefault.CreateFontIndirect(&m_lf);
-//	theApp.m_bShowTips = m_bShowTips;
+//	app.m_fontRtfDefault.DeleteObject();
+//	app.m_fontRtfDefault.CreateFontIndirect(&m_lf);
+//	app.m_bShowTips = m_bShowTips;
 
 	//. will need to notify rtf view also - send a hint?
 	// ie tell the app, which will walk through docs, calling updateallviewsEx with hintRtfDefaultFontChange

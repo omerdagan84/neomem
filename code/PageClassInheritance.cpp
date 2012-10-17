@@ -60,7 +60,7 @@ BOOL CPageClassInheritance::OnInitDialog()
 	CPropertyPage::OnInitDialog();	
 
 	// Set font for title
-	m_lblTitle.SetFont(&theApp.m_fontControlsBold);
+	m_lblTitle.SetFont(&app.m_fontControlsBold);
 
 	// Initialize tree
 	m_tvw.SetImageList(m_pDoc->GetImageList(), TVSIL_NORMAL);
@@ -93,8 +93,8 @@ CPageClassInheritance::DoDataExchange(CDataExchange* pDX)
 		// Fill tree with classes
 		BObject* pobjStart = m_pDoc->GetObject(rootClass);
 		m_tvw.DeleteAllItems();
-		m_tvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, TRUE, TRUE);
-//		m_tvw.AddObjects(pobjStart, theApp.m_lngExcludeFlags, FALSE, TRUE); //. bug if you don't include start item
+		m_tvw.AddObjects(pobjStart, app.m_lngExcludeFlags, TRUE, TRUE);
+//		m_tvw.AddObjects(pobjStart, app.m_lngExcludeFlags, FALSE, TRUE); //. bug if you don't include start item
 		
 		// Select parent
 		BObject* pobjParent = m_pobj->GetParent();
