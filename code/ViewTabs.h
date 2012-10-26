@@ -67,7 +67,7 @@ public:
 
 // Attributes
 private:
-	ULONG m_lngMode;	// Mode of view (navigation or contents)
+	ULONG m_lngMode;	// Mode of view (navigation or contents) //, mode? not subclass? 
 	BOOL m_bDrag;
 	int m_nTabRClick; 
 //	CView* m_pCurrentView;

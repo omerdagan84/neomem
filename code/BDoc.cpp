@@ -69,6 +69,8 @@ static char THIS_FILE[] = __FILE__;
 
 
 
+
+
 // Macros
 //---------------------------------------------------------------------------
 
@@ -121,6 +123,7 @@ END_MESSAGE_MAP()
 
 
 // FileClose - ID_FILE_CLOSE - handled by MFC - see SaveModified, SaveAllModified
+
 
 
 // Construction/Destruction
@@ -1706,12 +1709,12 @@ void BDoc::OnCmdFileProperties() {
 // Will fill array with objects that reference the Find object, and return the number of references.
 // If no Start object is passed, will start at rootMain
 //, rename to GetObjectReferences
-int BDoc::FindReferences(BObject *pobjFind, CObArray &aRefs, BObject *pobjStart /* = 0 */, BOOL bRecurse /* = TRUE */) {
+int BDoc::GetReferences(BObject *pobjFind, CObArray &aRefs, BObject *pobjStart /* = 0 */, BOOL bRecurse /* = TRUE */) {
 	ASSERT_VALID(pobjFind);
 	if (pobjStart == 0)
 		pobjStart = GetObject(rootMain);
 
-	return pobjStart->FindReferences(pobjFind, aRefs, bRecurse);
+	return pobjStart->GetReferences(pobjFind, aRefs, bRecurse);
 }
 
 
@@ -1829,7 +1832,7 @@ BObject* BDoc::UIAddNewObject(
 			// Add a new object to the document
 			BObject& objNew = BObject::New(*this, idClass, strName, pobjParent->id);
 
-			//, this is really kludgy being here - move into bobj::new?
+			//, this is really kludgy being here - move into bobj::new
 			// Special properties for folder objects
 			if (idClass == classFolder) {
 				// Default class
@@ -1877,6 +1880,7 @@ BOOL BDoc::UIEditObject(BObject *pobj) {
 	// If editing an icon, just let user modify name!
 	ULONG idClass = pobj->GetClassID();
 	BOOL bIcon = (idClass == classIcon);
+	//, bad way to check this - should be a pobj property
 	BOOL bPersonName = (pobj->GetData()->IsKindOf(RUNTIME_CLASS(BDataPersonName)));
 //	ULONG idClass = pobj->GetClassID();
 //	BObject* pobjClass = m_pDoc->GetObject(idClass);

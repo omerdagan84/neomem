@@ -985,7 +985,7 @@ BEGIN
     "M",            ID_OBJ_MOVE_TO,         VIRTKEY, CONTROL, NOINVERT
 END
 
-IDR_DIALOG_ABOUT  ACCELERATORS
+IDR_DIALOG_ABOUT ACCELERATORS
 BEGIN
     "A",            ID_TAB_ABOUT,           VIRTKEY, ALT, NOINVERT
     "R",            ID_TAB_CREDITS,         VIRTKEY, ALT, NOINVERT
@@ -1002,7 +1002,6 @@ END
 //
 // Dialog
 //
-
 
 IDD_EDIT_LINK DIALOGEX 0, 0, 278, 199
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
@@ -1836,7 +1835,6 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO
 BEGIN
-
     IDD_EDIT_LINK, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -2323,13 +2321,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// BINARYFILE
-//
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // String Table
 //
 
@@ -2715,52 +2706,6 @@ BEGIN
     ID_NAVIGATE_BACK        "Goto previous object in history list\nBack (Alt+,)"
     ID_NAVIGATE_FORWARD     "Goto next object in history list\nForward (Alt+.)"
     ID_HELP_WHAT_IS         "Brings up help page which explains NeoMem\nShow Help Topic"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_DATE_AFTER          "After,after,aft.,aft"
-    IDS_DATE_BEFORE         "Before,before,bef.,bef"
-    IDS_DATE_CIRCA          "Circa,circa,about,abt.,abt,ca.,ca"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_DATE_JANUARY        "January,january,jan.,jan"
-    IDS_DATE_FEBRUARY       "February,february,feb.,feb"
-    IDS_DATE_MARCH          "March,march,mar.,mar"
-    IDS_DATE_APRIL          "April,april,apr.,apr"
-    IDS_DATE_MAY            "May,may"
-    IDS_DATE_JUNE           "June,june,jun"
-    IDS_DATE_JULY           "July,july,jul"
-    IDS_DATE_AUGUST         "August,august,aug.,aug"
-    IDS_DATE_SEPTEMBER      "September,september,sept.,sept,sep.,sep"
-    IDS_DATE_OCTOBER        "October,october,oct.,oct"
-    IDS_DATE_NOVEMBER       "November,november,nov.,nov"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_DATE_DECEMBER       "December,december,dec.,dec"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_DATE_SPRINGBREAK    "Spring Break,spring break,springbreak"
-    IDS_DATE_SUMMER         "Summer,summer,sum"
-    IDS_DATE_AUTUMN         "Autumn,autumn,aut,fall"
-    IDS_DATE_WINTER         "Winter,winter"
-    IDS_DATE_NEWYEARSEVE    "New Year's Eve,new year's eve,new years eve"
-    IDS_DATE_NEWYEARSDAY    "New Year's Day,new year's day,new years day"
-    IDS_DATE_EASTER         "Easter,easter"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_DATE_CHRISTMAS      "Christmas,christmas,xmas"
-    IDS_DATE_THANKSGIVING   "Thanksgiving,thanksgiving,tgiving,thanks"
-    IDS_DATE_SPRING         "Spring,spring,spr"
-    IDS_DATE_HALLOWEEN      "Halloween,halloween,haloween"
 END
 
 STRINGTABLE

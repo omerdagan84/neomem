@@ -12,7 +12,7 @@
 
 // 'new' handler - create a BObject
 BFolder::BFolder(BDoc& doc, LPCTSTR pszName, OBJID idParent, OBJID idDefaultClass, OBJID idIcon, ULONG lngFlags) : 
-	// this is an object of class 'folder', not something in the 'class' folder. confusing. 
+	// "classFolder": this is an object of class 'folder', not something in the 'class' folder. confusing. 
 	BObject(doc, classFolder, pszName, idParent, idIcon, lngFlags) // put overrides here
 {
 	if (idDefaultClass)

@@ -100,6 +100,25 @@ BObject::BObject(BDoc& doc, OBJID idClass, LPCTSTR pszName, OBJID idParent, OBJI
 	SetIconID(idIcon); //, leave as direct ref for now (too confusing yet!)
 
 
+//,
+/*
+	// Special properties for folder objects
+	//, put in bfolder? but ui may say new bobject(class=folder)... hmm...
+	// oh, but bfolder calls bobjcect
+	// but here we don't get default class. shit. 
+	if (idClass == classFolder) {
+		// Default class
+		BObject* pobjDefaultClass = dlg.m_pobjDefaultClass;
+		if (pobjDefaultClass != 0) {
+			ASSERT_VALID(pobjDefaultClass);
+//,			BClassDef& objClassDef = (BClassDef&) objNew; //?
+			objNew.SetPropertyLink(propDefaultClass, pobjDefaultClass->id, FALSE, FALSE);
+			// Initialize column array based on default class
+			objNew.SetColumnsBasedOnClass(pobjDefaultClass);
+		}
+	}
+*/
+
 	// Validate object
 //	ASSERT_VALID(&obj);
 
@@ -2316,7 +2335,7 @@ int BObject::GetPropertyDefs(CObArray& aPropertyDefs, BOOL bInheritedOnly,
 
 
 /*
-// see findreferences
+// see getreferences
 // Search through document, looking for links to this object.
 // Returns total number of links.
 //. add objects that link to this object to the array
@@ -3001,7 +3020,7 @@ void BObject::ChangeNamePropertyType(OBJID lngClassID, OBJID lngNewPropertyTypeI
 // Find references in this object and its properties to the Find object.
 // If recurse is specified, will search recursively through any child objects also.
 //. eventually add an object that includes the pobj referencing it and the propid.
-int BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
+int BObject::GetReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
 
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjFind);
@@ -3062,7 +3081,7 @@ int BObject::FindReferences(BObject *pobjFind, CObArray &aRefs, BOOL bRecurse) {
 		for (int i = 0; i < nChildren; i++) {
 			BObject* pobjChild = DYNAMIC_DOWNCAST(BObject, m_paChildren->GetAt(i));
 			ASSERT_VALID(pobjChild);
-			pobjChild->FindReferences(pobjFind, aRefs, bRecurse);
+			pobjChild->GetReferences(pobjFind, aRefs, bRecurse);
 		}
 	}
 
@@ -3223,7 +3242,7 @@ BOOL BObject::DeleteObject(BOOL bSetModifiedFlag /* = TRUE */, BOOL bUpdateViews
 
 	// Check for links to <this> bobject recursively through entire document
 	BObjects aReferences;
-	int nLinks = m_pDoc->FindReferences(this, aReferences);
+	int nLinks = m_pDoc->GetReferences(this, aReferences);
 	if (nLinks) {
 
 		// Get object's class name (lowercase)

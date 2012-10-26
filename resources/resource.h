@@ -488,6 +488,8 @@
 #define IDC_EMAIL                       1507
 #define IDC_COMPANYDESC2                1508
 #define IDC_VERSION_LAST                1509
+
+/*
 #define IDS_DATE_AFTER                  2000
 #define IDS_DATE_BEFORE                 2001
 #define IDS_DATE_CIRCA                  2002
@@ -514,6 +516,8 @@
 #define IDS_DATE_THANKSGIVING           2209
 #define IDS_DATE_SPRING                 2210
 #define IDS_DATE_HALLOWEEN              2211
+*/
+
 #define IDS_TIP1                        4001
 #define IDS_TIP2                        4002
 #define IDS_TIP3                        4003

@@ -251,8 +251,8 @@ BOOL CNeoMem::InitInstance() {
 		afxMemDF |= checkAlwaysMemDF;
 	#endif
 
-//	af//traceFlags |= traceCmdRouting; // Trace command routing
-//	af//traceFlags |= traceWinMsg; // Trace windows messages
+//	afxTraceFlags |= traceCmdRouting; // Trace command routing
+//	afxTraceFlags |= traceWinMsg; // Trace windows messages
 //	AfxSetAllocHook(AllocHook); // Hook into memory allocation
 //	if (_heapchk() != _HEAPOK) DebugBreak(); // can do in debug and release mode
 

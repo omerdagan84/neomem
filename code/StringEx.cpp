@@ -51,19 +51,22 @@ LPCTSTR CStringEx::GetNextToken(LPCTSTR pszDelimiter)
 }
 
 
-// Search through the string for tokens obtained from the string table whose resourceID's are specified.
+// Search through this string for tokens obtained from the string table whose resourceID's are specified.
 // If a token was found, returns the resourceID of the matching token.
 // If bSwallowToken True will also remove the token and any trailing spaces from this string.
 // If no token matches, returns 0.
-UINT CStringEx::GetNextTokenID(UINT nStartID, UINT nStopID, BOOL bSwallowToken)
+// Just used by bdatadate
+//xUINT CStringEx::GetNextTokenID(CStringArray& sa, UINT nStartID, UINT nStopID, BOOL bSwallowToken)
+UINT CStringEx::GetNextTokenID(char* sa[], UINT nStartID, UINT nStopID, BOOL bSwallowToken)
 {
 	TCHAR pszDelimiters[] = _T(",");
 
 	UINT nFoundID = 0;
 	for (UINT nID = nStartID; (nFoundID == 0) && (nID <= nStopID); nID++)
 	{
-		CString strTokens;
-		strTokens.LoadString(nID);
+//		CString strTokens;
+//		strTokens.LoadString(nID);
+		CString strTokens = sa[nID];
 		LPTSTR pszTokens = strTokens.GetBuffer(0);
 		char* pos = 0;
 

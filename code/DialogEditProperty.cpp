@@ -427,7 +427,7 @@ void CDialogEditProperty::OnOK()
 		{
 			// Check if this property type is actually used anywhere
 			CObArray aRefs;
-			int nRefs = m_pDoc->FindReferences(m_pobjPropertyDef, aRefs);
+			int nRefs = m_pDoc->GetReferences(m_pobjPropertyDef, aRefs);
 			if (nRefs > 0)
 			{
 				if (IDNO == AfxMessageBox("Warning: You have selected a new property type for an existing property. "

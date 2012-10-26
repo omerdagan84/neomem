@@ -36,12 +36,51 @@ public:
 	virtual ~BDataDate();
 
 public:
+
+	// These had been constants in resource.h, but on separating ui from db,
+	// needed to move these here. 
+	// Must stay in sync with strings in s_dates.
+	typedef enum {
+		IDS_DATE_EMPTY, // need this to take zeroth place so stringex::getnexttokenid works properly
+		IDS_DATE_AFTER,
+		IDS_DATE_BEFORE,
+		IDS_DATE_CIRCA,
+		IDS_DATE_JANUARY,
+		IDS_DATE_FEBRUARY,
+		IDS_DATE_MARCH,
+		IDS_DATE_APRIL,
+		IDS_DATE_MAY,
+		IDS_DATE_JUNE,
+		IDS_DATE_JULY,
+		IDS_DATE_AUGUST,
+		IDS_DATE_SEPTEMBER,
+		IDS_DATE_OCTOBER,
+		IDS_DATE_NOVEMBER,
+		IDS_DATE_DECEMBER,
+		IDS_DATE_SPRINGBREAK,
+		IDS_DATE_SUMMER,
+		IDS_DATE_AUTUMN,
+		IDS_DATE_WINTER,
+		IDS_DATE_NEWYEARSEVE,
+		IDS_DATE_NEWYEARSDAY,
+		IDS_DATE_EASTER,
+		IDS_DATE_CHRISTMAS,
+		IDS_DATE_THANKSGIVING,
+		IDS_DATE_SPRING,
+		IDS_DATE_HALLOWEEN 
+	} e_dates; // enum dates
+
+	static char* s_dates[]; // string dates
+
+
+public:
 	virtual BData* CreateCopy();
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
 	virtual CString GetBDataText(BDoc* pDoc=NULL, ULONG lngPropertyID=0, BOOL bMachineVersion=FALSE);
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
+
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui);
 
 public:

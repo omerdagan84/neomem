@@ -1,14 +1,20 @@
 
 // BDataViews
 // This class stores information describing what tabs and views are 
-// available for a class or an object. Eg classPaper just has viewText 
-// available, classFolder has viewText and viewContents.
+// available for a class or an object. Eg classHome has viewHome and 
+// viewContents available, classPaper just has viewText available, 
+// classFolder has viewText and viewContents.
 //-----------------------------------------------------------------------------------------------------------------
 
 // Note: Each view is specified in a ViewInfo object, and an array of 
 // these objects specifies the entire tab/view arrangement. Each tab is 
 // separated by a ViewInfo object with 0 for all values.
 // The last ViewInfo object in the array should be all zeros also.
+
+
+
+//,, rather than hardcode a collection class like this, use a standard one and store normal bobjects
+
 
 
 #pragma once

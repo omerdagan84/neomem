@@ -74,36 +74,44 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 		// trace macro
+		if (0) {
 	
-		// trace("CViewTabs");
-		// gives output something like - 
-		// [..\code\ViewTabs.cpp(80):] CViewTabs
-		// (vs doesn't like the [] though)
-//		#define trace(str) TRACE("%s(%d): " str "\n", __FILE__, __LINE__)
-
-		// test 
-//		trace("hi");
-//		trace("say %s alfie", "frog!");
-
-//		trace("here is %d cows", 5);
-//		becomes
-//		TRACE("[%s(%d):] " 
-//			"say %s alfie", "frog!"
-//			"\n",
-//			__FILE__, __LINE__);
-//
-//		want nested evaluation
-//			maybe a fn
-//		ie fn uses printf to get string, then calls TRACE with that string
+			// trace("CViewTabs");
+			// gives output something like - 
+			// [..\code\ViewTabs.cpp(80):] CViewTabs
+			// (vs doesn't like the [] though)
+			#define trace(str) TRACE("%s(%d): " str "\n", __FILE__, __LINE__)
 
 
+			// why couldn't this just be a fn? 
+			// trace(s, ...)
+			// cstring str(s, ...)
+			// s+= __file__ +...
+			// TRACE(s)
+
+
+			// test 
+			trace("hi");
+	//		trace("say %s alfie", "frog!"); //, bomb
+
+			// so
+	//		trace("here is %d cows", 5);
+	//		becomes
+	//		TRACE("[%s(%d):] " 
+	//			"say %s alfie", "frog!"
+	//			"\n",
+	//			__FILE__, __LINE__);
+
+	//		want nested evaluation
+	//			maybe a fn
+	//		ie fn uses printf to get string, then calls TRACE with that string
+
+		}
 
 
 		// maybe simplest to create a new document, 
 		// throw ALL commands at it (esp flaky/suspicious ones), 
-		// then check that it's in proper state.
-
-
+		// then check that it's in the proper state.
 
 		BDoc& doc = BDoc::New(); 
 
@@ -111,6 +119,7 @@ void CTest::DoTests(CNeoMem& app) {
 		//, should document really know about current object? no, that's a ui thing. 
 		// there could be multiple ui's looking at the db. 
 		// it's pretty entwined in BDoc though. 
+//		currentobject
 
 
 		// add folder for fish
@@ -406,8 +415,6 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
-return;
-
 
 		// make a category for fish
 		BClass& classCategory = BClass::New(doc, "Category");
@@ -566,7 +573,7 @@ return;
 		}
 
 
-		// 2. by string date
+		// 2. by odd string date
 		//, brings up ui dialog - bad
 		//, also asserts oddly
 
@@ -577,14 +584,35 @@ return;
 //		ASSERT(pdat->IsStringDate());
 //		ASSERT(pdat->GetBDataText(&doc, propDate.id) == "ktbday");
 		//, if had overloading based on return type...
-//		CString strFish = objGlassfish.GetPropertyDate(propDate.id);
-//		ASSERT(strFish == "ktbday");
+		CString strFish = objGlassfish.GetPropertyString(propDate.id);
+		ASSERT(strFish == "ktbday");
 		}
 
 
 		// 3. by numeric date
 		{
 //		objSquid.SetPropertyDate(propDate.id, 1995, 03, 25);
+		}
+
+
+		// 4. by string date
+		{
+		objSquid.SetPropertyString(propDate.id, "3/5/1959");
+		COleDateTime odt = objSquid.GetPropertyDate(propDate.id);
+		ASSERT(odt == COleDateTime(1959,3,5,0,0,0));
+		}
+
+		// 5. by odd string dates
+		{
+		objSquid.SetPropertyString(propDate.id, "afTer fALL 1972  ? ");
+		CString strResult = objSquid.GetPropertyString(propDate.id);
+		ASSERT(strResult == "After Autumn 1972?");
+		}
+
+		{
+		objOctopus.SetPropertyString(propDate.id, "jun 2012");
+		CString strResult = objOctopus.GetPropertyString(propDate.id);
+		ASSERT(strResult == "June 2012");
 		}
 
 		//, eh, this is all a bit extraneous to the main goal. 
@@ -671,33 +699,47 @@ return;
 		objJack.SetPropertyString(propBoolean.id, "yes");
 
 
-//		folderPeople.AddColumn(propDescription);
 
 
-		// test file compression - oh not there yet
-
-		// fix memory leaks
 
 
-		// test bobject.setpropertydata
+
+
+
+		//, take code out of db into ui, eg bdoc.uiaddnewobject
+//		BObject* pobjnew = doc.UIAddNewObject();
+
+
+		// test odd dates
+
+
+
+
+
+
+
+
+		//, go through view classes
+		//, go through dialog classes, incl propsheet
+		//, keep taking code out of ui into bdoc
+		//, and out of ui into cui eg standard dialogs
+		//, try to clean up api - getting/setting/saving values. macros?
+		//, better query api
+
+
+		//? test bobject.setpropertydata
 //		BObject& obj = objPlecy;
 //		BData* pdat = obj.GetPropertyData(propClassName);
 //		obj.SetPropertyData(propClassName, pdat);
 
-
-
-
-
-
-
-		//, test file compression, password function
-		//, keep taking code out of ui into bdoc
-		//, and out of ui into cui eg standard dialogs
-		//, try to clean up api - getting/setting/saving values - use templates? 
-		//, better query api
+		//, test file encryption, password function
+		//, test pasting garbage into richedit, lots of data, etc.
 		//, figure out unicode stuff
 		//, check file upgrade process
-
+		//, tests for import/export
+		//, fix memory leaks (do later, after new api)
+		//, test file compression - oh not there yet
+		//, add simple password protection, no encryption
 
 		// ui stuff - put into ui level
 /*

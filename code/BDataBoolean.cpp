@@ -7,8 +7,8 @@
 #include "BDataBoolean.h"
 #include "ConstantsDatabase.h"
 
+#include "UI.h"
 
-#include "NeoMem.h" // cui
 
 
 #ifdef _DEBUG

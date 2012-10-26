@@ -39,7 +39,9 @@ public:
 public: 
 	BOOL IsAscii();
 	int GetCheckSum();
-	UINT GetNextTokenID(UINT nStartID, UINT nStopID, BOOL bSwallowToken);
+//x	UINT GetNextTokenID(UINT nStartID, UINT nStopID, BOOL bSwallowToken);
+//x	UINT GetNextTokenID(CStringArray& sa, UINT nStartID, UINT nStopID, BOOL bSwallowToken);
+	UINT GetNextTokenID(char* sa[], UINT nStartID, UINT nStopID, BOOL bSwallowToken);
 	LPCTSTR GetNextToken(LPCTSTR pszDelimiter);
 	void AppendComma(LPCTSTR lpsz);
 	void FormatBytes(ULONG nBytes);

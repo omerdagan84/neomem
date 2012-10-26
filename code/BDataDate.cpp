@@ -4,17 +4,20 @@
 
 #include "precompiled.h"
 
-
-#include "BDoc.h"
 #include "BDataDate.h"
 #include "ConstantsDatabase.h"
 
+#include "BDoc.h"
 
-#include "NeoMem.h" // string constants
-#include "StringEx.h"
+#include "StringEx.h" //, will need to split out for ui/db split
 
-//x#include "DialogEditDate.h"
-//x#include "DialogEditString.h"
+
+
+//x#include "NeoMem.h" // string constants
+
+
+
+
 
 
 
@@ -28,6 +31,43 @@ static char THIS_FILE[]=__FILE__;
 
 
 IMPLEMENT_SERIAL(BDataDate, BData, VERSIONABLE_SCHEMA | versionFileStructure) // last parameter is version number
+
+
+
+
+	// String constants - had been in resource file, but in separating ui and db, 
+	// needed to move these here. 
+char* BDataDate::s_dates[] = {
+	"",
+	"After,after,aft.,aft",
+	"Before,before,bef.,bef",
+	"Circa,circa,about,abt.,abt,ca.,ca",
+	"January,january,jan.,jan",
+	"February,february,feb.,feb",
+	"March,march,mar.,mar",
+	"April,april,apr.,apr",
+	"May,may",
+	"June,june,jun",
+	"July,july,jul",
+	"August,august,aug.,aug",
+	"September,september,sept.,sept,sep.,sep",
+	"October,october,oct.,oct",
+	"November,november,nov.,nov",
+	"December,december,dec.,dec",
+
+	"Spring Break,spring break,springbreak",
+	"Summer,summer,sum",
+	"Autumn,autumn,aut,fall",
+	"Winter,winter",
+	"New Year's Eve,new year's eve,new years eve",
+	"New Year's Day,new year's day,new years day",
+	"Easter,easter",
+	"Christmas,christmas,xmas",
+	"Thanksgiving,thanksgiving,tgiving,thanks",
+	"Spring,spring,spr",
+	"Halloween,halloween,haloween"
+};
+
 
 
 // Construction/Destruction
@@ -92,7 +132,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	bitsNewFlags.Season = 0;
 
 	// Check for modifiers (after, before, circa)
-	UINT nModifierID = strCopy.GetNextTokenID(IDS_DATE_AFTER, IDS_DATE_CIRCA, TRUE);
+	UINT nModifierID = strCopy.GetNextTokenID(s_dates, IDS_DATE_AFTER, IDS_DATE_CIRCA, TRUE);
 	if (nModifierID)
 	{
 		ULONG nModifiers[] = {flagAfter, flagBefore, flagCirca};
@@ -120,7 +160,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	int nDay = 1;
 
 	// Check for seasons and holidays
-	UINT nSeasonID = strCopy.GetNextTokenID(IDS_DATE_SPRINGBREAK, IDS_DATE_HALLOWEEN, TRUE);
+	UINT nSeasonID = strCopy.GetNextTokenID(s_dates, IDS_DATE_SPRINGBREAK, IDS_DATE_HALLOWEEN, TRUE);
 	if (nSeasonID)
 	{
 		bitsNewFlags.Type = flagSeasonYear;
@@ -142,7 +182,7 @@ BOOL BDataDate::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 		// Check for month year
 		// Save backup of string in case user entered "jan 15 1988" or somesuch
 		strCopyBackup = strCopy; 
-		UINT nMonthID = strCopy.GetNextTokenID(IDS_DATE_JANUARY, IDS_DATE_DECEMBER, TRUE);
+		UINT nMonthID = strCopy.GetNextTokenID(s_dates, IDS_DATE_JANUARY, IDS_DATE_DECEMBER, TRUE);
 		if (nMonthID)
 		{
 			bitsNewFlags.Type = flagMonthYear;
@@ -278,8 +318,9 @@ CString BDataDate::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVe
 			case flagSeasonYear:
 				{
 					//, make method in cstringex
-					CStringEx strTokens;
-					strTokens.LoadString(IDS_DATE_SPRINGBREAK + m_bitsFlags.Season - 1);
+//x					CStringEx strTokens;
+//x					strTokens.LoadString(IDS_DATE_SPRINGBREAK + m_bitsFlags.Season - 1);
+					CStringEx strTokens = s_dates[IDS_DATE_SPRINGBREAK + m_bitsFlags.Season - 1];
 					TCHAR pszDelimiters[] = _T(",");
 					LPTSTR pszTokens = strTokens.GetBuffer(0);
 					TCHAR* nextToken = NULL;

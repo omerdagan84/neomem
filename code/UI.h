@@ -3,6 +3,7 @@
 // Defines a generic User Interface.
 // The Gui and ConsoleUI would need to implement these functions. 
 
+
 //x
 // this is part of the database. 
 // it defines the callback interface. 

@@ -88,8 +88,6 @@ public:
 
 	// Static (class) methods
 	static BDoc* GetDoc(); // class method used to get pointer to current document object
-
-
 	// Operations
 	void AddObject(HOBJECT hobj, CView* pviewIgnore = NULL);
 	BOOL AddObjectToIndex(HOBJECT hobj);
@@ -98,39 +96,24 @@ public:
 	BData* CreateBDataFromPropertyType(OBJID idPropertyType);
 	BOOL CreateTemplate();
 	BOOL DoFileAutoRecoverSave();
-	int FindReferences(BObject* pobjFind, CObArray& aRefs, BObject* pobjStart = 0, BOOL bRecurse = TRUE);
-	BObject* GetCurrentObject();
 	int GetEncryptionType() { return m_nEncryptionType; }; 
 	CString GetFileSizeString();
+	ULONG GetFlags(LPCTSTR strFlags); // convert bdataflags string to number
+	LPCTSTR GetFlagText(ULONG lngFlags); // convert bdataflags number to string
 	int GetIconIndex(OBJID idIcon);
 	CImageList* GetImageList();
 	CFrameChild* GetMDIChildFrame();
 	CString GetModifiedName(LPCTSTR szFileName, LPCTSTR szAppendText);
 	ULONG GetNextObjectID(); // get next available objectid
 	CString GetNumberOfObjectsString();
-
-	//, both these would return copies of objects, so would need to delete them
-	BObject* GetObject(OBJID idObject);
-	BObject* GetObjectNull(OBJID idObject);
-	BObjects* GetObjects(); //, placeholder
-	int GetObjects(BObject* pobjStart, OBJID idProperty, CString strFindText, BObjects& aResults, 
-					ULONG lngExcludeFlags = 0, BOOL bMatchCase = FALSE, BOOL bWholeWord = FALSE,
-					BOOL bSearchStartObject = FALSE, BOOL bOriginalCall = TRUE);
-
-	BObject* GetObject2(OBJID idObject);
-
-
-	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
-	BObject* GetRoot() { return m_pobjRoot; }; // get the root object of the document
 	ULONG GetSplitterPos() { return m_lngSplitterPos; };
-	BObject* GetTargetObject();
 	int GetVersionFileStructure() { return m_nVersionFileStructure; };
 	int GetVersionDataModel() { return m_nVersionDataModel; };
 	BOOL IsBObjectValid(BObject* pobj);
 	BOOL IsSettingCurrentObject() { return m_bSettingCurrentObject; } ;
 	BOOL IsTargetSingle();
 	BObject& NewObject(const OBJID idClass, const CString& strName, OBJID idLocation = NULL);
-	OBJID NewProperty(const CString& strName, OBJID idPropType, const CString& strDescription);
+//x	OBJID NewProperty(const CString& strName, OBJID idPropType, const CString& strDescription);
 	void RemoveObjectFromIndex(OBJID idObject);
 	void Save(LPCTSTR pszFilename = NULL, BOOL bReplace = TRUE);
 	BOOL SaveModifiedBackup();
@@ -141,6 +124,24 @@ public:
 	void SetVersionDataModel(int n) { m_nVersionDataModel = n; };
 	void UpdateAllViewsEx(CView* pSender, LPARAM lHint = 0L, CObject* pHint = NULL);
 	void UpdateDocument(BObject* pobj);
+
+
+
+
+	// Retrieving objects (query routines)
+	int GetReferences(BObject* pobjFind, CObArray& aRefs, BObject* pobjStart = 0, BOOL bRecurse = TRUE);
+	BObject* GetCurrentObject();
+	//, both these would return copies of objects, so would need to delete them
+	BObject* GetObject(OBJID idObject);
+	BObject* GetObjectNull(OBJID idObject);
+	BObjects* GetObjects(); //, placeholder
+	int GetObjects(BObject* pobjStart, OBJID idProperty, CString strFindText, BObjects& aResults, 
+					ULONG lngExcludeFlags = 0, BOOL bMatchCase = FALSE, BOOL bWholeWord = FALSE,
+					BOOL bSearchStartObject = FALSE, BOOL bOriginalCall = TRUE);
+	BObject* GetObject2(OBJID idObject); //, ?
+	int GetProperties(BDataLink& datProps, BObject *pobj = NULL);
+	BObject* GetRoot() { return m_pobjRoot; }; // get the root object of the document
+	BObject* GetTargetObject();
 
 
 	// User-interface routines - generally bring up a dialog to get 
@@ -210,13 +211,12 @@ private:
 	CMapObjects m_mapObjects;  // Map from ObjectID to BObject pointer
 	BOOL m_bSettingCurrentObject; // Flag used by SetCurrentObject routine
 
-public:
-	ULONG GetFlags(LPCTSTR strFlags); // convert bdataflags string to number
-	LPCTSTR GetFlagText(ULONG lngFlags); // convert bdataflags number to string
+
+
 
 	// Implementation
 private:
-	BObject* m_pobjTarget; // Object which will be acted on by the object command handlers
+	BObject* m_pobjTarget; // Object which will be acted on by the object command handlers //, move to ui
 
 	BOOL OnOpenDocumentEx(LPCTSTR lpszPathName);
 	BOOL OnSaveDocumentEx(LPCTSTR lpszPathName);

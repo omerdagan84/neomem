@@ -75,8 +75,8 @@ END_MESSAGE_MAP()
 
 CViewTabs::CViewTabs()
 {
-	TRACE("%s(%d): CViewTabs Constructor\n", __FILE__, __LINE__);
-//	trace("CViewTabs Constructor\n");
+//	TRACE("%s(%d): CViewTabs Constructor\n", __FILE__, __LINE__);
+	trace("CViewTabs Constructor");
 
 	// Initialize module variables
 //	m_pSplitter = NULL;
@@ -105,6 +105,8 @@ CViewTabs::CViewTabs()
 
 CViewTabs::~CViewTabs()
 {
+	//, wait, current view id is just the selected view. nothing else. 
+
 	//, wow, how can we make getname simpler? 
 //	objname(m_lngCurrentViewID)
 //	app.
@@ -1727,7 +1729,7 @@ BOOL CViewTabs::MoveViewUp(ULONG lngViewID)
 
 
 // Copy m_pdatViews to new memory block so we can modify it
-//, yuck
+//, yuck - do better to have .save, .cancel on an object? 
 void CViewTabs::PrepareToModifyViews()
 {
 	//, invoke copy constructor to create copy of the array

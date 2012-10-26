@@ -103,8 +103,12 @@ extern NUMBERFMT g_nf;
 
 // This makes it easier to track down which trace statements are turned on -
 // ie if you use trace instead of TRACE, then you can search on trace to find them all.
-//#define trace TRACE
+//#define tracey TRACE
 
+
+
+
+#define trace(str) TRACE("%s(%d): " str "\n", __FILE__, __LINE__)
 
 
 

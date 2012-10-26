@@ -73,11 +73,13 @@ public:
 	BOOL DeleteProperty(OBJID lngPropertyID, BOOL bSetModifiedFlag = TRUE, BOOL bUpdateViews = TRUE, BOOL bAskUser = FALSE);
 	void DisplayProperties(); // const
 	void Export(CFileText& file, BOOL bRecurse, BDataLink& datProps);
+
 	BObject* FindProperty(OBJID lngPropertyID, BOOL bAddIfNotFound);
-	int FindReferences(BObject* pobjFind, CObArray& aRefs, BOOL bRecurse);
+	int GetReferences(BObject* pobjFind, CObArray& aRefs, BOOL bRecurse);
 	BObject* GetChild(int nChild);
 	int GetChildCount(BOOL bRecurse = FALSE, BOOL bIncludeProperties = FALSE) const;
 	BObjects* GetChildren() { return m_paChildren; };
+
 	BOOL GetClassDefNewName(CString& strName);
 	OBJID GetClassID() { return m_lngClassID; }; 
 	BObject* GetClassObject();
