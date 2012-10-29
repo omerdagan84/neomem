@@ -106,7 +106,7 @@ BOOL BDataFile::FindReferences(BObject* pobjFind)
 }
 
 
-
+//,, pass to ui
 void BDataFile::UIOnClick()
 {
 	CString strMsg;
@@ -122,14 +122,20 @@ void BDataFile::UIOnClick()
 
 
 
-
+//x
+/*
 void BDataFile::UIOnMouseMove()
 {
 	::SetCursor(app.m_hCursorHand);
 }
+*/
+
+int BDataFile::UICursorOnMouseover() {
+	return 1; // hand
+}
 
 
-
+/*
 // Add menu items for bdata value popup
 BOOL BDataFile::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
@@ -137,13 +143,22 @@ BOOL BDataFile::UIAddMenuItems(CMenu* pMenu, int nPos)
 	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
 	return TRUE;
 }
+*/
+
+CStringArray& BDataFile::UICommands() {
+	static CStringArray cmds; // static so can return reference to it
+	if (cmds.IsEmpty()) {
+		cmds.Add("&Open File...");
+	}
+	return cmds;
+}
 
 
 
 BOOL BDataFile::UIHandleCommand(UINT nCommandID)
 {
-	if (nCommandID == ID_POPUP_BDATA_START)
-	{
+//x	if (nCommandID == ID_POPUP_BDATA_START)
+	if (nCommandID == 0) { // open file
 		UIOnClick();
 		return TRUE;
 	}

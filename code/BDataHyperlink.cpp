@@ -177,6 +177,7 @@ BOOL BDataHyperlink::IsWebsite()
 
 
 
+//,, move to ui
 void BDataHyperlink::UIOnClick()
 {
 	// See if we have an email address or website address
@@ -217,15 +218,21 @@ void BDataHyperlink::UIOnClick()
 
 
 
-
+//x
+/*
 void BDataHyperlink::UIOnMouseMove()
 {
 	::SetCursor(app.m_hCursorHand);
 }
-
+*/
+int BDataHyperlink::UICursorOnMouseover() {
+	return 1; // hand
+}
 
 
 // Add menu items for bdata value popup
+//x
+/*
 BOOL BDataHyperlink::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
 	if (IsEmail())
@@ -235,13 +242,25 @@ BOOL BDataHyperlink::UIAddMenuItems(CMenu* pMenu, int nPos)
 	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
 	return TRUE;
 }
+*/
 
+CStringArray& BDataHyperlink::UICommands() {
+	static CStringArray cmds; // static so can return reference to it
+//	if (cmds.IsEmpty()) {
+	cmds.RemoveAll();
+	if (IsEmail())
+		cmds.Add("&Send Email...");
+	else
+		cmds.Add("&Open Website...");
+//	}
+	return cmds;
+}
 
 
 BOOL BDataHyperlink::UIHandleCommand(UINT nCommandID)
 {
-	if (nCommandID == ID_POPUP_BDATA_START)
-	{
+//x	if (nCommandID == ID_POPUP_BDATA_START)
+	if (nCommandID == 0) { // send email / open website
 		UIOnClick();
 		return TRUE;
 	}

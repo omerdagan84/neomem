@@ -89,18 +89,6 @@ void BDataString::Serialize(CArchive &ar)
 BOOL BDataString::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 {
 	ASSERT_VALID(this);
-//x
-/*
-	CDialogEditString dlg;
-	dlg.m_strValue = m_strText;
-	if (dlg.DoModal() == IDOK)
-	{
-		// Save new string value
-		m_strText = dlg.m_strValue;
-		return TRUE;
-	}
-	return FALSE;
-*/
 	return ui.EditString(m_strText);
 }
 

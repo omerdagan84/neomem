@@ -26,11 +26,13 @@ public:
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
-	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
+//x	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
+	virtual CStringArray& UICommands();
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui);
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 	virtual void UIOnClick();
-	virtual void UIOnMouseMove();
+//x	virtual void UIOnMouseMove();
+	virtual int UICursorOnMouseover();
 
 };
 

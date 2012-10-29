@@ -6,24 +6,12 @@
 //-----------------------------------------------------------------------------------------------------------------
 
 
-//, don't like how all these ui things wound up getting into this class. 
-// addmenuitems, handlecommand, onclick, onmousemove, editvalue...
-// rename with UI prefix for now. 
-// eventually handle with a ui callback object. 
-
-
-
 #pragma once
 
 
 class BObject;
 class BDoc;
-
-//, don't like having these here, but makes other code nicer
-//xclass BDataColumns; //,
 class CUI;
-
-
 
 
 class BData : public CObject {
@@ -43,20 +31,23 @@ public:
 	virtual BOOL FindReferences(BObject* pobjFind);
 	virtual ULONG GetMemoryUsed(BOOL bRecursive);
 //x	virtual LPCTSTR GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
-	//, pDoc and lngPropID are not used in BDataDate, for instance. make them optional here
-//x	virtual CString GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMachineVersion=FALSE);
 	virtual CString GetBDataText(BDoc* pDoc = NULL, ULONG lngPropertyID = 0, BOOL bMachineVersion=FALSE);
 	virtual BOOL IsValid(BDoc* pDoc);
 	virtual BOOL ReplaceReferences(BObject* pobjFind, BObject* pobjNew = 0);
 	virtual void ResetData(); // use this to reset bdata's m_bCacheValid flag
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
-	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
-//x	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
-	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui);
+
+//, don't like how all these ui things wound up getting into this class. 
+// eventually handle with a ui callback object. 
+
+//x	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
+	virtual CStringArray& UICommands();
+	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui); //, ?
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 	virtual void UIOnClick();
-	virtual void UIOnMouseMove();
+//x	virtual void UIOnMouseMove();
+	virtual int UICursorOnMouseover();
 
 
 //x	BDataColumns* ToColumns();
@@ -67,6 +58,7 @@ public:
 
 	// Attributes
 protected:
+	//, get rid of this
 	CString m_strText; // This is a cache for the text-representation for this data object
 	// This is moved to the individual bdata's that need it in order to save memory
 //	BOOL m_bCacheValid; // Flag indicating if string cache is valid. Set to false when data changes

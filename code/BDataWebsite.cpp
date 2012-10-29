@@ -144,14 +144,20 @@ void BDataWebsite::UIOnClick()
 
 
 
-
+//x
+/*
 void BDataWebsite::UIOnMouseMove()
 {
 	::SetCursor(app.m_hCursorHand);
 }
+*/
 
+int BDataWebsite::UICursorOnMouseover() {
+	return 1;
+}
 
-
+//x
+/*
 // Add menu items for bdata value popup
 BOOL BDataWebsite::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
@@ -159,12 +165,24 @@ BOOL BDataWebsite::UIAddMenuItems(CMenu* pMenu, int nPos)
 	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
 	return TRUE;
 }
+*/
+
+
+CStringArray& BDataWebsite::UICommands() {
+	static CStringArray cmds; // static so can return reference to it
+	if (cmds.IsEmpty()) {
+		cmds.Add("&Goto Website...");
+	}
+	return cmds;
+}
+
 
 
 
 BOOL BDataWebsite::UIHandleCommand(UINT nCommandID)
 {
-	if (nCommandID == ID_POPUP_BDATA_START)
+//x	if (nCommandID == ID_POPUP_BDATA_START)
+	if (nCommandID == 0)
 	{
 		UIOnClick();
 		return TRUE;

@@ -123,6 +123,7 @@ BOOL BDataFolder::FindReferences(BObject* pobjFind)
 
 
 
+//,, pass to ui
 void BDataFolder::UIOnClick()
 {
 	CString strMsg;
@@ -138,14 +139,19 @@ void BDataFolder::UIOnClick()
 
 
 
-
+//x
+/*
 void BDataFolder::UIOnMouseMove()
 {
 	::SetCursor(app.m_hCursorHand);
 }
+*/
+int BDataFolder::UICursorOnMouseover() {
+	return 1; // hand
+}
 
-
-
+//x
+/*
 // Add menu items for bdata value popup
 BOOL BDataFolder::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
@@ -153,13 +159,21 @@ BOOL BDataFolder::UIAddMenuItems(CMenu* pMenu, int nPos)
 	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
 	return TRUE;
 }
+*/
 
+CStringArray& BDataFolder::UICommands() {
+	static CStringArray cmds; // static so can return reference to it
+	if (cmds.IsEmpty()) {
+		cmds.Add("&Open Folder...");
+	}
+	return cmds;
+}
 
 
 BOOL BDataFolder::UIHandleCommand(UINT nCommandID)
 {
-	if (nCommandID == ID_POPUP_BDATA_START)
-	{
+//x	if (nCommandID == ID_POPUP_BDATA_START)
+	if (nCommandID == 0) { // open folder
 		UIOnClick();
 		return TRUE;
 	}

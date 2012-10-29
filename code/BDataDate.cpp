@@ -35,13 +35,14 @@ IMPLEMENT_SERIAL(BDataDate, BData, VERSIONABLE_SCHEMA | versionFileStructure) //
 
 
 
-	// String constants - had been in resource file, but in separating ui and db, 
-	// needed to move these here. 
+// String constants - had been in resource file, but in separating ui and db, 
+// needed to move these here. Need to stay in sync with e_dates in .h
 char* BDataDate::s_dates[] = {
 	"",
 	"After,after,aft.,aft",
 	"Before,before,bef.,bef",
 	"Circa,circa,about,abt.,abt,ca.,ca",
+
 	"January,january,jan.,jan",
 	"February,february,feb.,feb",
 	"March,march,mar.,mar",
@@ -481,6 +482,7 @@ BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 		((m_bitsFlags.Type != 0) && (m_bitsFlags.Type != flagBlank))
 		)
 	{
+		//,,, ui.msgbox
 		if (IDNO == AfxMessageBox("Warning: By selecting a new value with the Edit Date dialog you will lose \n"
 								"any current modifiers (e.g. After, Before, Year Only, Year Month, etc.). Continue?", MB_YESNO + MB_ICONQUESTION))
 			return FALSE;

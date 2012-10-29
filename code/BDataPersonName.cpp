@@ -215,36 +215,6 @@ BOOL BDataPersonName::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& 
 //	ASSERT_VALID(pobj);
 //	ASSERT_VALID(pobjPropertyDef);
 
-//x
-/*
-	CDialogEditPersonName dlg;
-
-	dlg.m_strTitle = m_strTitle;
-	dlg.m_strFirst = m_strFirst;
-	dlg.m_strMiddle = m_strMiddle;
-	dlg.m_strNickname = m_strNickname;
-	dlg.m_strLast = m_strLast;
-	dlg.m_strSuffix = m_strSuffix;
-
-	// Bring up simple dialog to edit name parts
-	if (dlg.DoModal() == IDOK)
-	{
-		// Save new string values
-		m_strTitle = dlg.m_strTitle;
-		m_strFirst = dlg.m_strFirst;
-		m_strMiddle = dlg.m_strMiddle;
-		m_strNickname = dlg.m_strNickname;
-		m_strLast = dlg.m_strLast;
-		m_strSuffix = dlg.m_strSuffix;
-
-		// Reset flag so will know to recalculate full name
-		m_bCacheValid = FALSE;
-
-		return TRUE;
-	}
-	return FALSE;
-*/
-
 	if (ui.EditName(m_strTitle, m_strFirst, m_strMiddle, m_strNickname, m_strLast, m_strSuffix)) {
 		// Reset flag so will know to recalculate full name
 		m_bCacheValid = FALSE;

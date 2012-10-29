@@ -128,11 +128,13 @@ void BData::ConvertToHardLinks(BDoc* pDoc) {
 }
 
 
-
+//x
+/*
 BOOL BData::UIAddMenuItems(CMenu* pMenu, int nPos) {
 	// default: do nothing
 	return FALSE;
 }
+*/
 
 
 // The UIEditValue routine should set the document modified flag
@@ -155,8 +157,20 @@ void BData::UIOnClick() {
 }
 
 
+//x
+/*
 void BData::UIOnMouseMove() {
 	// default: do nothing
+}
+*/
+
+
+// This lets the data type control what kind of cursor
+// appears over a value in a grid control, for instance. 
+// Return a zero for the default cursor (an arrow), 
+// return one for a hand.
+int BData::UICursorOnMouseover() {
+	return 0; // default 
 }
 
 
@@ -173,3 +187,20 @@ BDataColumns& BData::ToColumns() {
 //x	return cols;
 }
 */
+
+
+
+// Return an array of popup menu item strings when user right clicks on a cell in a control. 
+// Called from CViewContents::OnContextMenu etc
+// considered:
+// static char* ca[] = {"hi","bye","rye"}; // but would need to return # items also
+//, might need to return by value to cross lib boundary? 
+CStringArray& BData::UICommands() {
+	static CStringArray cmds; // static so can return reference to it
+	return cmds;
+}
+
+
+
+
+

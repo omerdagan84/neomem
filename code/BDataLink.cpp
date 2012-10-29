@@ -954,51 +954,52 @@ BOOL BDataLink::CreateCopyFrom(BDataLink *pdatSource)
 
 
 
-// Add menu items for bdata value popup
-BOOL BDataLink::UIAddMenuItems(CMenu* pMenu, int nPos)
-{
+
+
+CStringArray& BDataLink::UICommands() {
 	ASSERT_VALID(this);
 	ASSERT(IsHard());
+
+	static CStringArray cmds; // static so can return reference to it
+
+	cmds.RemoveAll();
 
 	const int nChars = 256;
 	TCHAR szBuffer[nChars];
 
 	//, just want to walk through links - need an iterator
-	if (IsSingle())
-	{
+	if (IsSingle()) {
 		BObject* pobj = DYNAMIC_DOWNCAST(BObject, m_p);
-		if (pobj)
-		{
-			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags)))
-			{
+		if (pobj) {
+			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags))) {
 				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyString(propName)); //, wsprintf
-				pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, szBuffer);
-				pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
+//x				pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, szBuffer);
+//x				pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
+				cmds.Add(szBuffer);
 			}
 		}
 	}
-	else // multiple links
-	{
+	else { // multiple links
 		// Search through array for pobj
 		CObArray* pa = GetLinkArray();
 		ASSERT_VALID(pa);
 		int nItems = pa->GetSize();
-		int nAdded = 0;
-		for (int i = 0; i < nItems; i++)
-		{
+//x		int nAdded = 0;
+		for (int i = 0; i < nItems; i++) {
 			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 			ASSERT_VALID(pobj);
-			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags)))
-			{
+			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags))) {
 				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyString(propName)); //, wsprintf
-				pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, szBuffer);
-				nAdded++;
+//x				pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, szBuffer);
+				cmds.Add(szBuffer);
+//x				nAdded++;
 			}
 		}
-		if (nAdded > 0)
-			pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_SEPARATOR);
+//x		if (nAdded > 0)
+//x			pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_SEPARATOR);
 	}
-	return TRUE;
+
+	return cmds;
 }
 
 
@@ -1008,7 +1009,9 @@ BOOL BDataLink::UIHandleCommand(UINT nCommandID)
 	ASSERT_VALID(this);
 	ASSERT(IsHard());
 
-	int nIndex = nCommandID - ID_POPUP_BDATA_START; // 0 based
+//x	int nIndex = nCommandID - ID_POPUP_BDATA_START; // 0 based
+	int nIndex = nCommandID; // already 0 based
+	ASSERT(nIndex >= 0);
 
 	BObject* pobj = 0;
 	if (IsSingle())

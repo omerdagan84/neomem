@@ -8,7 +8,8 @@
 #include "ConstantsDatabase.h"
 #include "BDoc.h"
 
-#include "NeoMem.h"
+
+//#include "NeoMem.h"
 //x#include "DialogEditString.h"
 
 
@@ -92,18 +93,6 @@ BOOL BDataEmail::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 	ASSERT_VALID(this);
 
 	return ui.EditString(m_strText);
-
-/*
-	CDialogEditString dlg;
-	dlg.m_strValue = m_strText;
-	if (dlg.DoModal() == IDOK)
-	{
-		// Save new string value
-		m_strText = dlg.m_strValue;
-		return TRUE;
-	}
-	return FALSE;
-*/
 }
 
 
@@ -126,7 +115,7 @@ BOOL BDataEmail::FindReferences(BObject* pobjFind)
 }
 
 
-
+//,, pass to ui
 void BDataEmail::UIOnClick()
 {
 	CString strMsg;
@@ -146,7 +135,8 @@ void BDataEmail::UIOnClick()
 
 
 
-
+//x
+/*
 void BDataEmail::UIOnMouseMove()
 {
 	// Windows 95: The width and height of the cursor must be the values returned by the 
@@ -157,23 +147,38 @@ void BDataEmail::UIOnMouseMove()
 	// restores the class cursor each time the mouse is moved. 
 	::SetCursor(app.m_hCursorHand);
 }
+*/
+int BDataEmail::UICursorOnMouseover() {
+	return 1; // hand
+}
 
 
-
+//x
+/*
 // Add menu items for bdata value popup
 BOOL BDataEmail::UIAddMenuItems(CMenu* pMenu, int nPos)
 {
-	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Send Email...");
-	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
+//x	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Send Email...");
+//x	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
 	return TRUE;
 }
+*/
 
+
+
+CStringArray& BDataEmail::UICommands() {
+	static CStringArray cmds; // static so can return reference to it
+	if (cmds.IsEmpty()) {
+		cmds.Add("&Send Email...");
+	}
+	return cmds;
+}
 
 
 BOOL BDataEmail::UIHandleCommand(UINT nCommandID)
 {
-	if (nCommandID == ID_POPUP_BDATA_START)
-	{
+//x	if (nCommandID == ID_POPUP_BDATA_START)
+	if (nCommandID == 0) { // send email
 		UIOnClick();
 		return TRUE;
 	}

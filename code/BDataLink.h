@@ -31,7 +31,7 @@ public:
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
-	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
+	virtual CStringArray& BDataLink::UICommands();
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui);
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 

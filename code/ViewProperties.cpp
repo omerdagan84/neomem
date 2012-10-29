@@ -423,12 +423,23 @@ void CViewProperties::OnContextMenu(CWnd* pWnd, CPoint ptScreen)
 		{
 			// Add bdata menu items, if any
 			BData* pdat = m_lvw.GetCellBData();
-			if (pdat)
-			{
+
+			//, duplicate code
+			if (pdat) {
 				ASSERT_VALID(pdat);
 				int nPos = pPopup->GetMenuItemCount() - 1; // insert before "Cancel"
-				pdat->UIAddMenuItems(pPopup, nPos);
+//x				pdat->UIAddMenuItems(pPopup, nPos);
+				CStringArray& cmds = pdat->UICommands();
+				if (cmds.GetSize()) {
+					int i = 0;
+					for (i = 0; i < cmds.GetSize(); i++) {
+						pPopup->InsertMenu(nPos + i, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, cmds[i]);
+					}
+					pPopup->InsertMenu(nPos + i, MF_BYPOSITION | MF_SEPARATOR);
+				}
 			}
+
+
 			// Enable/disable undo menu
 //			pPopup->EnableMenuItem(ID_EDIT_UNDO, MF_BYCOMMAND | (m_objUndo.IsValid() ? MF_ENABLED : MF_GRAYED));
 			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, ptScreen.x, ptScreen.y, this);
@@ -594,7 +605,8 @@ void CViewProperties::OnPopupBDataCommand(UINT nBDataCommandID)
 	if (pdat)
 	{
 		ASSERT_VALID(pdat);
-		pdat->UIHandleCommand(nBDataCommandID);
+//x		pdat->UIHandleCommand(nBDataCommandID);
+		pdat->UIHandleCommand(nBDataCommandID - ID_POPUP_BDATA_START);
 	}	
 }
 

@@ -797,10 +797,20 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen) {
 			if (pPopup) {
 				// Add bdata menu items, if any
 				BData* pdat = m_lvw.GetCellBData();
+
+				//, duplicate code
 				if (pdat) {
 					ASSERT_VALID(pdat);
 					int nPos = pPopup->GetMenuItemCount() - 1; // insert before "Cancel"
-					pdat->UIAddMenuItems(pPopup, nPos);
+//x					pdat->UIAddMenuItems(pPopup, nPos);
+					CStringArray& cmds = pdat->UICommands();
+					if (cmds.GetSize()) {
+						int i = 0;
+						for (i = 0; i < cmds.GetSize(); i++) {
+							pPopup->InsertMenu(nPos + i, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, cmds[i]);
+						}
+						pPopup->InsertMenu(nPos + i, MF_BYPOSITION | MF_SEPARATOR);
+					}
 				}
 				
 				// Enable/disable undo menu
@@ -852,7 +862,8 @@ void CViewContents::OnPopupBDataCommand(UINT nCommandID) {
 	BData* pdat = m_lvw.GetCellBData();
 	if (pdat) {
 		ASSERT_VALID(pdat);
-		pdat->UIHandleCommand(nCommandID);
+//x		pdat->UIHandleCommand(nCommandID);
+		pdat->UIHandleCommand(nCommandID - ID_POPUP_BDATA_START);
 	}	
 }
 
