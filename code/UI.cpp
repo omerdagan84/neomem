@@ -282,6 +282,7 @@ BOOL CUI::EditValue(BObject* pobj, OBJID idProperty) {
 
 
 // Callback used by BrowseFolder
+// Pass the initial path name as a psz through lParam, or zero for current dir
 int CALLBACK BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData) {
 	TCHAR pszDir[MAX_PATH];
 	switch (uMsg) {
@@ -292,10 +293,19 @@ int CALLBACK BrowseCallbackProc(HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpDa
 			// and set wParam to FALSE. 
 			// To specify the folder's path, set the message's lParam value to point to a 
 			// NULL-terminated string with the path, and set wParam to TRUE. 
-			if (::GetCurrentDirectory (sizeof(pszDir) / sizeof(TCHAR), pszDir))
-			{
-				::SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM) pszDir);
-			}
+			//, use specified directory. um. like use lpdata to point to it
+			// start with current directory
+
+			//, neither of these seem to work
+			if (lParam)
+				::SendMessage(hwnd, BFFM_SETSELECTION, TRUE, lParam);
+			else
+				if (::GetCurrentDirectory (sizeof(pszDir) / sizeof(TCHAR), pszDir)) {
+					::SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM) pszDir);
+				}
+
+			// passing 0 starts in "my computer" folder
+//			::SendMessage(hwnd, BFFM_SETSELECTION, TRUE, 0);
 			break;
                   
 		// Indicates the selection has changed. The lParam parameter points to the item identifier list for the newly selected item. 
@@ -338,10 +348,11 @@ BOOL CUI::BrowseFolder(LPCTSTR pszInstructions, CString& strFolder) {
 		bi.ulFlags = BIF_RETURNFSANCESTORS | BIF_RETURNONLYFSDIRS;
 //		bi.lpfn = NULL;
 		bi.lpfn = BrowseCallbackProc;
-		bi.lParam = 0;
+//x		bi.lParam = 0;
+		bi.lParam = (LPARAM) pszBuffer; // starting path
 		// This next call issues the dialog box
 		if ((pidl = ::SHBrowseForFolder(&bi)) != NULL) {
-			if (::SHGetPathFromIDList(pidl, pszBuffer)) { 
+			if (::SHGetPathFromIDList(pidl, pszBuffer)) { // psz here will RECEIVE path
 				// At this point pszBuffer contains the selected path
 				strFolder = pszBuffer;
 				bOK = TRUE;
@@ -463,3 +474,5 @@ BOOL CUI::EditName(CString& strTitle, CString& strFirst, CString& strMiddle,
 	}
 	return FALSE;
 }
+
+

@@ -11,9 +11,6 @@
 #include "ConstantsDatabase.h"
 
 #include "NeoMem.h"
-#include "Constants.h"
-//x#include "DialogEditLink.h"
-#include "StringEx.h"
 
 
 #ifdef _DEBUG
@@ -86,6 +83,7 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 	// e.g. this might be an Authors folder.
 	OBJID idLinkSource = pobjPropertyDef->GetPropertyLink(propLinkSource);
 	if (idLinkSource == 0) 
+		//, hmm... 
 		idLinkSource = app.GetTopObjectID(); // get root object
 	BObject* pobjLinkSource = pDoc->GetObject(idLinkSource);
 
@@ -956,7 +954,7 @@ BOOL BDataLink::CreateCopyFrom(BDataLink *pdatSource)
 
 
 
-CStringArray& BDataLink::UICommands() {
+CStringArray& BDataLink::UIGetCommands() {
 	ASSERT_VALID(this);
 	ASSERT(IsHard());
 
@@ -964,6 +962,7 @@ CStringArray& BDataLink::UICommands() {
 
 	cmds.RemoveAll();
 
+	//, better way to handle string?
 	const int nChars = 256;
 	TCHAR szBuffer[nChars];
 
@@ -973,8 +972,6 @@ CStringArray& BDataLink::UICommands() {
 		if (pobj) {
 			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags))) {
 				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyString(propName)); //, wsprintf
-//x				pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, szBuffer);
-//x				pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
 				cmds.Add(szBuffer);
 			}
 		}
@@ -984,19 +981,14 @@ CStringArray& BDataLink::UICommands() {
 		CObArray* pa = GetLinkArray();
 		ASSERT_VALID(pa);
 		int nItems = pa->GetSize();
-//x		int nAdded = 0;
 		for (int i = 0; i < nItems; i++) {
 			BObject* pobj = DYNAMIC_DOWNCAST(BObject, pa->GetAt(i));
 			ASSERT_VALID(pobj);
 			if (!(pobj->GetFlag(app.m_lngSearchExcludeFlags))) {
 				_sntprintf_s(szBuffer, nChars, "Goto %s", pobj->GetPropertyString(propName)); //, wsprintf
-//x				pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START + i, szBuffer);
 				cmds.Add(szBuffer);
-//x				nAdded++;
 			}
 		}
-//x		if (nAdded > 0)
-//x			pMenu->InsertMenu(nPos + nAdded, MF_BYPOSITION | MF_SEPARATOR);
 	}
 
 	return cmds;
@@ -1013,6 +1005,7 @@ BOOL BDataLink::UIHandleCommand(UINT nCommandID)
 	int nIndex = nCommandID; // already 0 based
 	ASSERT(nIndex >= 0);
 
+	//, ugh all this pobj stuff just to get a pdoc?
 	BObject* pobj = 0;
 	if (IsSingle())
 		pobj = DYNAMIC_DOWNCAST(BObject, m_p);

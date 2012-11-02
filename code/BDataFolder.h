@@ -29,11 +29,12 @@ public:
 //x	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
 
 //x	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
-	virtual CStringArray& UICommands();
+	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui);
+	virtual CStringArray& UIGetCommands();
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 	virtual void UIOnClick();
 //x	virtual void UIOnMouseMove();
-	virtual int UICursorOnMouseover();
+	virtual int UIGetCursor();
 
 };
 

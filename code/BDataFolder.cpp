@@ -7,10 +7,6 @@
 #include "ConstantsDatabase.h"
 #include "BDoc.h"
 
-#include "NeoMem.h"
-#include "DialogEditString.h"
-#include "library.h"
-
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -80,26 +76,24 @@ void BDataFolder::Serialize(CArchive &ar)
 }
 
 
-//x
-/*
+
 // Bring up dialog to select a Folder
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataFolder::UIEditValue(BObject* pobj, BObject* pobjPropertyDef)
-{
+// virtual
+BOOL BDataFolder::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui) {
 	ASSERT_VALID(this);
 
 	CString strPath = m_strText;
-	if (app.BrowseFolder(_T("Select folder to link to:"), strPath))
-	{
-		if (!strPath.IsEmpty())
-		{
+
+	if (ui.BrowseFolder(_T("Select folder to link to:"), strPath)) {
+		if (!strPath.IsEmpty()) {
 			m_strText = strPath;
 			return TRUE;
 		}
 	}
 	return FALSE;
 }
-*/
+
 
 
 // Create a copy of this object
@@ -139,29 +133,12 @@ void BDataFolder::UIOnClick()
 
 
 
-//x
-/*
-void BDataFolder::UIOnMouseMove()
-{
-	::SetCursor(app.m_hCursorHand);
-}
-*/
-int BDataFolder::UICursorOnMouseover() {
+int BDataFolder::UIGetCursor() {
 	return 1; // hand
 }
 
-//x
-/*
-// Add menu items for bdata value popup
-BOOL BDataFolder::UIAddMenuItems(CMenu* pMenu, int nPos)
-{
-	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Open Folder...");
-	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
-	return TRUE;
-}
-*/
 
-CStringArray& BDataFolder::UICommands() {
+CStringArray& BDataFolder::UIGetCommands() {
 	static CStringArray cmds; // static so can return reference to it
 	if (cmds.IsEmpty()) {
 		cmds.Add("&Open Folder...");
@@ -170,9 +147,7 @@ CStringArray& BDataFolder::UICommands() {
 }
 
 
-BOOL BDataFolder::UIHandleCommand(UINT nCommandID)
-{
-//x	if (nCommandID == ID_POPUP_BDATA_START)
+BOOL BDataFolder::UIHandleCommand(UINT nCommandID) {
 	if (nCommandID == 0) { // open folder
 		UIOnClick();
 		return TRUE;

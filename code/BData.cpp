@@ -7,7 +7,8 @@
 #include "BData.h"
 #include "ConstantsDatabase.h"
 
-//, bleh
+
+//, experimental
 //x#include "BDataColumns.h" 
 
 
@@ -157,24 +158,17 @@ void BData::UIOnClick() {
 }
 
 
-//x
-/*
-void BData::UIOnMouseMove() {
-	// default: do nothing
-}
-*/
-
 
 // This lets the data type control what kind of cursor
 // appears over a value in a grid control, for instance. 
 // Return a zero for the default cursor (an arrow), 
 // return one for a hand.
-int BData::UICursorOnMouseover() {
+int BData::UIGetCursor() {
 	return 0; // default 
 }
 
 
-//x
+//x may be useful
 /*
 //xBDataColumns* BData::ToColumns() {
 //xBDataColumns BData::ToColumns() {
@@ -195,12 +189,10 @@ BDataColumns& BData::ToColumns() {
 // considered:
 // static char* ca[] = {"hi","bye","rye"}; // but would need to return # items also
 //, might need to return by value to cross lib boundary? 
-CStringArray& BData::UICommands() {
+CStringArray& BData::UIGetCommands() {
 	static CStringArray cmds; // static so can return reference to it
 	return cmds;
 }
-
-
 
 
 

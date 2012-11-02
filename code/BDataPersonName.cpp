@@ -9,7 +9,8 @@
 #include "ConstantsDatabase.h"
 #include "BDoc.h"
 
-#include "NeoMem.h"
+#include "UI.h"
+#include "NeoMem.h" //, lots of tangles to remove
 //x#include "DialogEditPersonName.h"
 
 

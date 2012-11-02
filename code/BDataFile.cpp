@@ -7,10 +7,6 @@
 #include "ConstantsDatabase.h"
 #include "BDoc.h"
 
-#include "NeoMem.h"
-//#include "DialogEditString.h"
-//#include "FileDialogEx.h"
-
 
 
 #ifdef _DEBUG
@@ -130,22 +126,13 @@ void BDataFile::UIOnMouseMove()
 }
 */
 
-int BDataFile::UICursorOnMouseover() {
+int BDataFile::UIGetCursor() {
 	return 1; // hand
 }
 
 
-/*
 // Add menu items for bdata value popup
-BOOL BDataFile::UIAddMenuItems(CMenu* pMenu, int nPos)
-{
-	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Open File...");
-	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
-	return TRUE;
-}
-*/
-
-CStringArray& BDataFile::UICommands() {
+CStringArray& BDataFile::UIGetCommands() {
 	static CStringArray cmds; // static so can return reference to it
 	if (cmds.IsEmpty()) {
 		cmds.Add("&Open File...");
@@ -154,10 +141,7 @@ CStringArray& BDataFile::UICommands() {
 }
 
 
-
-BOOL BDataFile::UIHandleCommand(UINT nCommandID)
-{
-//x	if (nCommandID == ID_POPUP_BDATA_START)
+BOOL BDataFile::UIHandleCommand(UINT nCommandID) {
 	if (nCommandID == 0) { // open file
 		UIOnClick();
 		return TRUE;

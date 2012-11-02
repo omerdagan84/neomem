@@ -6,7 +6,6 @@
 #include "BDataIcon.h"
 #include "ConstantsDatabase.h"
 
-#include "NeoMem.h"
 
 
 #ifdef _DEBUG
@@ -271,3 +270,5 @@ BData* BDataIcon::CreateCopy()
 	memcpy_s(pdat->m_pData, pdat->m_nBytes, this->m_pData, this->m_nBytes);
 	return pdat; // upcast is automatic
 }
+
+

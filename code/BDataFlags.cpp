@@ -9,7 +9,7 @@
 #include "BObject.h"
 
 #include "NeoMem.h"
-#include "DialogEditLink.h"
+//x#include "DialogEditLink.h"
 
 
 

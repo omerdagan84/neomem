@@ -8,7 +8,6 @@
 #include "BObject.h"
 #include "BDoc.h"
 
-#include "NeoMem.h"
 
 
 
@@ -217,7 +216,7 @@ BOOL BDataViews::GetTabName(int nTab, CString& strName, BDoc* pDoc)
 			// Remove any ampersand so only first view name will get underline character.
 			// (otherwise Windows will just underline the last &'d character in the string).
 			strView.Remove(_T('&'));
-			strName += g_strCommaSpace;
+			strName += ", "; 
 			strName += strView;
 		}
 		else
@@ -532,3 +531,6 @@ int BDataViews::GetViewHeight(int nTab, int nView)
 	int nIndex = GetTabIndex(nTab) + nView;
 	return m_avi[nIndex].m_lngViewHeight;
 }
+
+
+

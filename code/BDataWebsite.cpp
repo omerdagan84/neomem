@@ -8,8 +8,9 @@
 #include "ConstantsDatabase.h"
 #include "BDoc.h"
 
-#include "NeoMem.h"
-//x#include "DialogEditString.h"
+
+#include "UI.h"
+
 
 
 #ifdef _DEBUG
@@ -87,18 +88,6 @@ void BDataWebsite::Serialize(CArchive &ar)
 BOOL BDataWebsite::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 {
 	ASSERT_VALID(this);
-
-//x
-/*	CDialogEditString dlg;
-	dlg.m_strValue = m_strText;
-	if (dlg.DoModal() == IDOK)
-	{
-		// Save new string value
-		m_strText = dlg.m_strValue;
-		return TRUE;
-	}
-	return FALSE;
-*/
 	return ui.EditString(m_strText);
 }
 
@@ -124,18 +113,22 @@ BOOL BDataWebsite::FindReferences(BObject* pobjFind)
 }
 
 
-
+//,, ui stuff
 void BDataWebsite::UIOnClick()
 {
 	CString strMsg;
 	strMsg.Format("Open the website %s?", (LPCTSTR) m_strText);
 	if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
+	//,,
+//	if (IDYES == ui.MessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
 	{
 		CString strURL;
 		if (_tcsncmp((LPCTSTR) m_strText, _T("http://"), 7) == 0)
 			strURL = m_strText;
 		else
 			strURL.Format("http://%s", (LPCTSTR) m_strText);
+
+		//, put in ui.h
 		CWaitCursor wc;
 		HINSTANCE h = ::ShellExecute(NULL, "open", strURL, NULL, NULL, SW_SHOWNORMAL);
 		Library::HandleShellExecuteError(h);
@@ -144,31 +137,13 @@ void BDataWebsite::UIOnClick()
 
 
 
-//x
-/*
-void BDataWebsite::UIOnMouseMove()
-{
-	::SetCursor(app.m_hCursorHand);
-}
-*/
-
-int BDataWebsite::UICursorOnMouseover() {
-	return 1;
+int BDataWebsite::UIGetCursor() {
+	return 1; // hand
 }
 
-//x
-/*
-// Add menu items for bdata value popup
-BOOL BDataWebsite::UIAddMenuItems(CMenu* pMenu, int nPos)
-{
-	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Open Website...");
-	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
-	return TRUE;
-}
-*/
 
 
-CStringArray& BDataWebsite::UICommands() {
+CStringArray& BDataWebsite::UIGetCommands() {
 	static CStringArray cmds; // static so can return reference to it
 	if (cmds.IsEmpty()) {
 		cmds.Add("&Goto Website...");
@@ -179,11 +154,8 @@ CStringArray& BDataWebsite::UICommands() {
 
 
 
-BOOL BDataWebsite::UIHandleCommand(UINT nCommandID)
-{
-//x	if (nCommandID == ID_POPUP_BDATA_START)
-	if (nCommandID == 0)
-	{
+BOOL BDataWebsite::UIHandleCommand(UINT nCommandID) {
+	if (nCommandID == 0) {
 		UIOnClick();
 		return TRUE;
 	}

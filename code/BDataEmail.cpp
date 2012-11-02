@@ -9,9 +9,6 @@
 #include "BDoc.h"
 
 
-//#include "NeoMem.h"
-//x#include "DialogEditString.h"
-
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -148,25 +145,13 @@ void BDataEmail::UIOnMouseMove()
 	::SetCursor(app.m_hCursorHand);
 }
 */
-int BDataEmail::UICursorOnMouseover() {
+int BDataEmail::UIGetCursor() {
 	return 1; // hand
 }
 
 
-//x
-/*
-// Add menu items for bdata value popup
-BOOL BDataEmail::UIAddMenuItems(CMenu* pMenu, int nPos)
-{
-//x	pMenu->InsertMenu(nPos, MF_BYPOSITION | MF_STRING, ID_POPUP_BDATA_START, "&Send Email...");
-//x	pMenu->InsertMenu(nPos + 1, MF_BYPOSITION | MF_SEPARATOR);
-	return TRUE;
-}
-*/
 
-
-
-CStringArray& BDataEmail::UICommands() {
+CStringArray& BDataEmail::UIGetCommands() {
 	static CStringArray cmds; // static so can return reference to it
 	if (cmds.IsEmpty()) {
 		cmds.Add("&Send Email...");
@@ -175,9 +160,7 @@ CStringArray& BDataEmail::UICommands() {
 }
 
 
-BOOL BDataEmail::UIHandleCommand(UINT nCommandID)
-{
-//x	if (nCommandID == ID_POPUP_BDATA_START)
+BOOL BDataEmail::UIHandleCommand(UINT nCommandID) {
 	if (nCommandID == 0) { // send email
 		UIOnClick();
 		return TRUE;

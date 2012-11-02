@@ -8,8 +8,7 @@
 #include "ConstantsDatabase.h"
 #include "BDoc.h"
 
-//x#include "NeoMem.h"
-//x#include "DialogEditString.h"
+
 
 
 #ifdef _DEBUG

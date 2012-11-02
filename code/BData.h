@@ -42,12 +42,12 @@ public:
 // eventually handle with a ui callback object. 
 
 //x	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
-	virtual CStringArray& UICommands();
 	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui); //, ?
+	virtual CStringArray& UIGetCommands(); // maybe more common to do uigetcommands(csa& sa)?
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 	virtual void UIOnClick();
 //x	virtual void UIOnMouseMove();
-	virtual int UICursorOnMouseover();
+	virtual int UIGetCursor();
 
 
 //x	BDataColumns* ToColumns();

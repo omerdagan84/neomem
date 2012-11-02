@@ -670,23 +670,23 @@ void CTest::DoTests(CNeoMem& app) {
 		// add file property
 		BProperty& propFile = BProperty::New(doc, "File", "file", proptypeFile);
 		folderPeople.AddColumn(propFile.id);
-		objJack.SetPropertyString(propFile.id, "jack.txt");
+		objJack.SetPropertyString(propFile.id, "neomem.hlp");
 
 		// add folder property
 		BProperty& propFolder = BProperty::New(doc, "Folder", "folder", proptypeFolder);
 		folderPeople.AddColumn(propFolder.id);
-		objJack.SetPropertyString(propFolder.id, "C:\\Test\\");
+		objJack.SetPropertyString(propFolder.id, "C:\\");
 
 		// add hyperlink property
 		BProperty& propHyperlink = BProperty::New(doc, "Hyperlink", "a hyperlink", proptypeHyperlink);
 		folderPeople.AddColumn(propHyperlink.id);
-		objKate.SetPropertyString(propHyperlink.id, "http://go.co");
+		objKate.SetPropertyString(propHyperlink.id, "http://gooogle.com");
 
 		// add website property
 		BProperty& propWebsite = BProperty::New(doc, "Website", "wwwww", proptypeWebsite);
 //x		folderPeople.SetPropertyColumnsAdd(propColumnInfoArray, propWebsite.id);
 		folderPeople.AddColumn(propWebsite.id);
-		objJack.SetPropertyString(propWebsite.id, "www.eww.com");
+		objJack.SetPropertyString(propWebsite.id, "www.cnn.com");
 
 
 		// hide description column

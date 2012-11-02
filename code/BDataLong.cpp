@@ -6,7 +6,8 @@
 #include "BDataLong.h"
 #include "ConstantsDatabase.h"
 
-#include "NeoMem.h"
+
+#include "UI.h"
 
 
 
@@ -102,6 +103,7 @@ ULONG BDataLong::GetMemoryUsed(BOOL bRecursive)
 // enter amount and select units from combo.
 // for now bring up windows calculator
 // (same as bdatanumber)
+//, but no data exchange!
 BOOL BDataLong::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 {
 	return ui.EditNumber();
@@ -110,4 +112,7 @@ BOOL BDataLong::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
 //	Library::HandleShellExecuteError(h);
 //	return FALSE;
 }
+
+
+
 

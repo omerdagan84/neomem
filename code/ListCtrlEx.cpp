@@ -2182,7 +2182,7 @@ void CListCtrlEx::OnMouseMove(UINT nFlags, CPoint ptClient)
 		{
 			ASSERT_VALID(pdat);
 //x			pdat->UIOnMouseMove();
-			if (pdat->UICursorOnMouseover())
+			if (pdat->UIGetCursor())
 				::SetCursor(app.m_hCursorHand);
 		}
 	}

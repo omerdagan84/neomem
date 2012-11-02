@@ -803,7 +803,7 @@ void CViewContents::OnContextMenu(CWnd* pWnd, CPoint ptScreen) {
 					ASSERT_VALID(pdat);
 					int nPos = pPopup->GetMenuItemCount() - 1; // insert before "Cancel"
 //x					pdat->UIAddMenuItems(pPopup, nPos);
-					CStringArray& cmds = pdat->UICommands();
+					CStringArray& cmds = pdat->UIGetCommands();
 					if (cmds.GetSize()) {
 						int i = 0;
 						for (i = 0; i < cmds.GetSize(); i++) {
