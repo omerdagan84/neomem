@@ -40,6 +40,9 @@ public:
 	BOOL EditString(CString& str);
 	BOOL GetDate(COleDateTime& odt, BOOL& bUseTime);
 	int MessageBox(CString& str, UINT nType = 0);
+	void OpenURL(CString strURL);
+
+
 	BOOL EditLink(CString strCaption, CString strInstructions, BOOL bMultiSelectVisible, 
 								 BOOL bMultiSelectEnabled, BOOL bMultiSelectOn, ULONG lngStartID, 
 								 BDataLink* pdatLink, ULONG lngExcludeFlags = 0, 

@@ -16,6 +16,10 @@
 
 
 
+// this is gui.cpp but for ease of development putting it here
+
+
+
 CUI::CUI() {
 }
 
@@ -476,3 +480,25 @@ BOOL CUI::EditName(CString& strTitle, CString& strFirst, CString& strMiddle,
 }
 
 
+
+
+
+void CUI::OpenURL(CString strURL) {
+
+	CString strMsg;
+	strMsg.Format("Open the website %s?", (LPCTSTR) strURL);
+	if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
+//	if (IDYES == ui.MessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
+	{
+		CString strHttpURL;
+		if (_tcsncmp((LPCTSTR) strURL, _T("http://"), 7) == 0)
+			strHttpURL = strURL;
+		else
+			strHttpURL.Format("http://%s", (LPCTSTR) strURL);
+
+		CWaitCursor wc;
+		HINSTANCE h = ::ShellExecute(NULL, "open", strHttpURL, NULL, NULL, SW_SHOWNORMAL);
+		Library::HandleShellExecuteError(h);
+	}
+
+}

@@ -607,6 +607,7 @@ void CViewProperties::OnPopupBDataCommand(UINT nBDataCommandID)
 		ASSERT_VALID(pdat);
 //x		pdat->UIHandleCommand(nBDataCommandID);
 		pdat->UIHandleCommand(nBDataCommandID - ID_POPUP_BDATA_START);
+//		pdat->UIHandleCommand(nBDataCommandID - ID_POPUP_BDATA_START, app.ui);
 	}	
 }
 

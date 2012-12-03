@@ -28,8 +28,8 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 	virtual BData* CreateCopy();
 
+public:
 	BOOL VerifyData();
-
 	HICON GetIcon(int x, int y);
 	BOOL LoadFile(LPCTSTR pszFileName);
 

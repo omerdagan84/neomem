@@ -124,9 +124,15 @@ protected:
 	afx_msg LRESULT OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
 //.	afx_msg void OnCmdAddObject();
 	//}}AFX_MSG
+
 	afx_msg BOOL OnToolTipText(UINT id, NMHDR* pNMHDR, LRESULT* pResult);
 //	afx_msg void OnFilePrint();
 	afx_msg void OnFilePrintPreview();
+
+	// moved here from BDoc
+	afx_msg void OnObjChangeObjectIcon();
+	afx_msg void OnObjChangeClassContents();
+
 	DECLARE_MESSAGE_MAP()
 
 };

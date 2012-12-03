@@ -81,9 +81,10 @@ void BDataHyperlink::Serialize(CArchive &ar)
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataHyperlink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataHyperlink::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
+	// pobj and pobjpd can be zero
 	
 	//, will want to say the object we're editing and the property name
 	// Object: System
@@ -124,7 +125,7 @@ BOOL BDataHyperlink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& u
 	}
 	return FALSE;
 */
-
+	// okay to edit mstrtext directly because it IS the underlying representation
 	return ui.EditString(m_strText);
 }
 

@@ -153,9 +153,12 @@ BOOL BDataFile::UIHandleCommand(UINT nCommandID) {
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataFile::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataFile::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
+	// pobj and pobjpd can be zero
+
+	// okay to edit mstrtext directly because it IS the underlying representation
 	return ui.EditString(m_strText);
 }
 

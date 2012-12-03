@@ -2555,7 +2555,8 @@ BOOL BObject::UIEditValue(OBJID lngPropertyID, CUI& ui)
 		// Need to pass object and property so it knows the context.
 		// It will return True if user said OK in dialog.
 //x		ret = pdat->UIEditValue(this, pobjPropertyDef);
-		ret = pdat->UIEditValue(this, pobjPropertyDef, ui);
+//x		ret = pdat->UIEditValue(this, pobjPropertyDef, ui);
+		ret = pdat->UIEditValue(ui, this, pobjPropertyDef);
 		if (ret) {
 			// User said OK, so let's set the BData copy with the new value to the object.
 			// This also sets the document modified flag and updates views.

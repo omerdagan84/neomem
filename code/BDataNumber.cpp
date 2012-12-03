@@ -233,8 +233,11 @@ BData* BDataNumber::CreateCopy()
 // could have date also?
 // for now bring up windows calculator
 // (same as bdatalong)
-BOOL BDataNumber::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataNumber::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
+	ASSERT_VALID(this);
+	// pobj and pobjpd can be zero
+
 	return ui.EditNumber();
 //x	CWaitCursor wc;
 //	HINSTANCE h = ::ShellExecute(NULL, "open", "Calc.exe", NULL, NULL, SW_SHOWNORMAL);

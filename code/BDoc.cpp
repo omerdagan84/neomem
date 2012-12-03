@@ -98,11 +98,13 @@ BEGIN_MESSAGE_MAP(BDoc, CDocument)
 	ON_COMMAND(ID_OBJ_ADD, OnObjAdd) //.
 	ON_COMMAND(ID_OBJ_ADD_FOLDER, OnObjAddFolder)
 	ON_COMMAND(ID_OBJ_AUTOSORT, OnObjAutosort)
-	ON_COMMAND(ID_OBJ_CHANGE_CLASS_CONTENTS, OnObjChangeClassContents)
-	ON_COMMAND(ID_OBJ_CHANGE_CLASS_ICON, OnObjChangeClassIcon)
 	ON_COMMAND(ID_OBJ_CHANGE_OBJECT_CLASS, OnObjChangeObjectClass)
 	ON_COMMAND(ID_OBJ_CHANGE_OBJECT_CONTENTS, OnObjChangeObjectContents)
-	ON_COMMAND(ID_OBJ_CHANGE_OBJECT_ICON, OnObjChangeObjectIcon)
+	ON_COMMAND(ID_OBJ_CHANGE_CLASS_ICON, OnObjChangeClassIcon)
+
+//x	ON_COMMAND(ID_OBJ_CHANGE_OBJECT_ICON, OnObjChangeObjectIcon)
+//x	ON_COMMAND(ID_OBJ_CHANGE_CLASS_CONTENTS, OnObjChangeClassContents)
+
 	ON_COMMAND(ID_OBJ_DELETE, OnObjDelete)
 	ON_COMMAND(ID_OBJ_EDIT_IN_DIALOG, OnObjEditInDialog)
 	ON_COMMAND(ID_OBJ_MOVE_DOWN, OnObjMoveDown)
@@ -463,13 +465,18 @@ int BDoc::GetIconIndex(OBJID idIcon) {
 // Will also set the target object to the specified object.
 // Pass Navigating True if user is navigating through history list 
 // (back or forward), so won't write selection to history list.
-void BDoc::SetCurrentObject(BObject *pobjCurrent, CView* pSender /* = NULL */, 
-							   BOOL bNavigating /* = FALSE */) {
+// default psender null, bnav false
+void BDoc::SetCurrentObject(BObject *pobjCurrent, CView* pSender, BOOL bNavigating) {
                    
 	ASSERT_VALID(this);
 	ASSERT_VALID(pobjCurrent);
 
 	TRACE("BDoc::SetCurrentObject to %s\n", pobjCurrent->GetName(TRUE));
+
+
+//x	ui.
+
+
 
 	// Set flag
 	m_bSettingCurrentObject = TRUE;
@@ -1042,7 +1049,8 @@ BOOL BDoc::UIDeleteObject(BObject *pobj, BOOL bQuiet /* = FALSE */) {
 
 
 
-
+//x
+/*
 // Let user choose a new icon for the specified object.
 //. don't let user set icon for classIcon objects!!
 BOOL BDoc::UIChangeObjectIcon(BObject* pobj) {
@@ -1073,6 +1081,7 @@ BOOL BDoc::UIChangeObjectIcon(BObject* pobj) {
 	}
 	return FALSE;
 }
+*/
 
 
 
@@ -1170,42 +1179,6 @@ BOOL BDoc::UIChangeClassIcon(BObject *pobj) {
 }
 
 
-// Change the default contents for the class of the specified object.
-BOOL BDoc::UIChangeClassContents(BObject *pobj) {
-	ASSERT_VALID(pobj);
-
-	// Get object's class
-	pobj = pobj->GetClassObject();
-	ASSERT_VALID(pobj);
-
-	//, move out of ui
-	OBJID idClass = pobj->GetPropertyLink(propObjectDefaultClass);
-	if (idClass == 0)
-		idClass = classPaper;
-
-
-	CDialogEditLink dlg;
-	dlg.m_nHelpID = IDD_CHANGE_CLASS_CONTENTS;
-	CString strInstructions;
-	strInstructions.Format("&Select the class that will be added to objects of the class '%s' by default.", 
-		(LPCTSTR) pobj->GetPropertyString(propName));
-	if (dlg.DoModalLinkSimple("Change Class Contents", strInstructions,
-					rootClass, idClass, idClass, app.m_lngExcludeFlags) == IDOK) {
-		// Check if class changed
-		OBJID idNewClass = dlg.m_lngSelectedID;
-		if (idClass != idNewClass && idNewClass != 0) {
-			BObject* pobjNewClass = dlg.m_pobjSelected;
-			ASSERT_VALID(pobjNewClass);
-			// This will set document modified flag and update views
-			pobj->SetPropertyLink(propObjectDefaultClass, pobjNewClass->id);
-			return TRUE;
-		}
-
-	}
-	return FALSE;
-
-
-}
 
 
 //x
@@ -1889,7 +1862,8 @@ BOOL BDoc::UIEditObject(BObject *pobj) {
 //	if (lngNamePropTypeID == proptypePersonName)
 	if (bPersonName || bIcon) {
 //x		if (pobj->GetData()->UIEditValue(pobj, 0)) {
-		if (pobj->GetData()->UIEditValue(pobj, 0, app.ui)) {
+//x		if (pobj->GetData()->UIEditValue(pobj, 0, app.ui)) {
+		if (pobj->GetData()->UIEditValue(app.ui, pobj, 0)) {
 			CHint h;
 			h.pobjObject = pobj;
 			h.idProperty = propName;
@@ -1996,6 +1970,7 @@ void BDoc::OnUpdateNavigateForward(CCmdUI* pCmdUI) {
 // Set the specified object as the command target, which will be acted on by any
 // ID_OBJ_xxx command handlers.
 // Pass 0 for new object.(?)
+//, should be a prop of ui 
 void BDoc::SetTargetObject(BObject *pobj) {
 //	ASSERT(pobj != (BObject*) (CListCtrlEx::keyDummyRow)); //, catch this
 //	m_datTargetObjects.RemoveAll();
@@ -2080,6 +2055,8 @@ void BDoc::OnObjPriorityHigh() {
 
 
 
+//x
+/*
 // Change the default contents for the target object's class.
 void BDoc::OnObjChangeClassContents() {
 	if (m_pobjTarget) {
@@ -2087,6 +2064,42 @@ void BDoc::OnObjChangeClassContents() {
 		UIChangeClassContents(m_pobjTarget);
 	}
 }
+
+// Change the default contents for the class of the specified object.
+BOOL BDoc::UIChangeClassContents(BObject *pobj) {
+	ASSERT_VALID(pobj);
+
+	// Get object's class
+	pobj = pobj->GetClassObject();
+	ASSERT_VALID(pobj);
+
+	//, move out of ui
+	OBJID idClass = pobj->GetPropertyLink(propObjectDefaultClass);
+	if (idClass == 0)
+		idClass = classPaper;
+
+
+	CDialogEditLink dlg;
+	dlg.m_nHelpID = IDD_CHANGE_CLASS_CONTENTS;
+	CString strInstructions;
+	strInstructions.Format("&Select the class that will be added to objects of the class '%s' by default.", 
+		(LPCTSTR) pobj->GetPropertyString(propName));
+	if (dlg.DoModalLinkSimple("Change Class Contents", strInstructions,
+					rootClass, idClass, idClass, app.m_lngExcludeFlags) == IDOK) {
+		// Check if class changed
+		OBJID idNewClass = dlg.m_lngSelectedID;
+		if (idClass != idNewClass && idNewClass != 0) {
+			BObject* pobjNewClass = dlg.m_pobjSelected;
+			ASSERT_VALID(pobjNewClass);
+			// This will set document modified flag and update views
+			pobj->SetPropertyLink(propObjectDefaultClass, pobjNewClass->id);
+			return TRUE;
+		}
+
+	}
+	return FALSE;
+}
+*/
 
 
 // Change the default icon for the target object's class.
@@ -2117,7 +2130,8 @@ void BDoc::OnObjChangeObjectContents() {
 	}
 }
 
-
+//x
+/*
 // Select the icon to be associated with the target object.
 void BDoc::OnObjChangeObjectIcon() {
 	// Bring up dialog with list of all icons in file, let user choose one
@@ -2126,6 +2140,7 @@ void BDoc::OnObjChangeObjectIcon() {
 		UIChangeObjectIcon(m_pobjTarget);
 	}
 }
+*/
 
 
 // Delete the target object.
@@ -2983,6 +2998,7 @@ void BDoc::Serialize(CArchive& ar) {
 	ULONG lngMagic = 0x38af34ad; // Magic bytes to recognize NeoMem file ("NeoMem" in zork bytes: 3 chars in 2 bytes)
 
 	// Downcast CArchive variable to our extension class
+	//,, this cast looks weird - valid? 
 	CCryptoArchive* parex = (CCryptoArchive*) &ar; // can't use dynamic or static downcast here
 
 	// Create encryption/decryption object
@@ -3136,17 +3152,19 @@ void BDoc::Serialize(CArchive& ar) {
 				// User hit cancel so exit
 				AfxThrowUserException();
 			}
-			m_strPassword = dlg.m_strName;
+			CString strTestPassword = dlg.m_strName;
 
-			// Test hash of session key based on entered string with hash of session key based on true password.
+			// Test [hash of session key based on test password] with [hash of session key based on true password].
 			objCrypto.Init();
-			CString strNewHash = objCrypto.GetSessionKeyHash(m_strPassword);
-			TRACE("  NewHash: %s\n", strNewHash);
-			if (strNewHash != m_strSessionKeyHash) {
+			CString strTestHash = objCrypto.GetSessionKeyHash(strTestPassword);
+			TRACE("  TestHash: %s\n", strTestHash);
+			if (strTestHash != m_strSessionKeyHash) {
 				AfxMessageBox("Invalid password entered.", MB_ICONINFORMATION);
 				AfxThrowUserException();
 			}
-			// User must have entered the correct password, so we can continue. 
+			// User must have entered the correct password, so we can continue.
+			// The actual password isn't stored in the document, so set it here. 
+			m_strPassword = strTestPassword;
 
 			// Use the password to create a session key for decrypting the file. 
 			objCrypto.MakeKey(m_strPassword);

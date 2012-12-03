@@ -80,8 +80,9 @@ void BDataFolder::Serialize(CArchive &ar)
 // Bring up dialog to select a Folder
 // Updates value and returns TRUE if user hit OK in dialog.
 // virtual
-BOOL BDataFolder::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui) {
+BOOL BDataFolder::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef) {
 	ASSERT_VALID(this);
+	// pobj and pobjpd can be zero
 
 	CString strPath = m_strText;
 

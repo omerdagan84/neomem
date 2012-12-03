@@ -210,11 +210,10 @@ CString BDataPersonName::GetBDataText(BDoc* pDoc, ULONG lngPropertyID, BOOL bMac
 
 // Edit the name in a dialog.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataPersonName::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataPersonName::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
-//	ASSERT_VALID(pobj);
-//	ASSERT_VALID(pobjPropertyDef);
+	// pobj and pobjpd can be zero
 
 	if (ui.EditName(m_strTitle, m_strFirst, m_strMiddle, m_strNickname, m_strLast, m_strSuffix)) {
 		// Reset flag so will know to recalculate full name

@@ -104,8 +104,11 @@ ULONG BDataLong::GetMemoryUsed(BOOL bRecursive)
 // for now bring up windows calculator
 // (same as bdatanumber)
 //, but no data exchange!
-BOOL BDataLong::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataLong::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
+	ASSERT_VALID(this);
+	// pobj and pobjpd can be zero
+
 	return ui.EditNumber();
 //x	CWaitCursor wc;
 //	HINSTANCE h = ::ShellExecute(NULL, "open", "Calc.exe", NULL, NULL, SW_SHOWNORMAL);

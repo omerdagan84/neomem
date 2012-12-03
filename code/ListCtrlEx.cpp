@@ -2130,6 +2130,7 @@ void CListCtrlEx::OnLButtonDown(UINT nFlags, CPoint ptClient)
 		if (pdat)
 		{
 			ASSERT_VALID(pdat);
+//x			pdat->UIOnClick(app.ui);
 			pdat->UIOnClick();
 		}
 

@@ -85,9 +85,12 @@ void BDataString::Serialize(CArchive &ar)
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataString::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataString::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
+	// pobj and pobjpd can be zero
+
+	// okay to edit mstrtext directly because it IS the underlying representation
 	return ui.EditString(m_strText);
 }
 

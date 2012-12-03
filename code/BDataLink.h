@@ -32,7 +32,7 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
 	virtual CStringArray& BDataLink::UIGetCommands();
-	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui);
+	virtual BOOL UIEditValue(CUI& ui, BObject* pobj = NULL, BObject* pobjPropertyDef = NULL);
 	virtual BOOL UIHandleCommand(UINT nCommandID);
 
 public:

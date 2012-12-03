@@ -117,7 +117,7 @@ public:
 	void RemoveObjectFromIndex(OBJID idObject);
 	void Save(LPCTSTR pszFilename = NULL, BOOL bReplace = TRUE);
 	BOOL SaveModifiedBackup();
-	void SetCurrentObject(BObject* pobjCurrent, CView* pSender = 0, BOOL bNavigating = FALSE);
+	void SetCurrentObject(BObject* pobjCurrent, CView* pSender = NULL, BOOL bNavigating = FALSE);
 	virtual void SetModifiedFlag(BOOL bModified = TRUE);
 	void SetRoot(BObject* pobj);
 	void SetTargetObject(BObject* pobj);
@@ -146,7 +146,7 @@ public:
 
 	// User-interface routines - generally bring up a dialog to get 
 	// information from user.
-	//. ideally should have callbacks to ui layer. 
+	//.. move these to ui
 	BObject* UIAddNewClass();
 	BObject* UIAddNewFolder(BObject* pobjParent = 0, BOOL bSelectNewObject = TRUE);
 	BObject* UIAddNewObject(BObject* pobjParent = 0, BOOL bSelectNewObject = TRUE); 
@@ -155,7 +155,7 @@ public:
 	BOOL UIChangeClassIcon(BObject* pobj);
 	BOOL UIChangeObjectClass(BObject* pobj);
 	BOOL UIChangeObjectContents(BObject* pobj);
-	BOOL UIChangeObjectIcon(BObject* pobj);
+//x	BOOL UIChangeObjectIcon(BObject* pobj);
 	BOOL UIDeleteObject(BObject* pobj, BOOL bQuiet = FALSE);
 	BOOL UIDeleteObjects(BObjects* paObjects, BOOL bOriginalCall = TRUE, BOOL bQuiet = FALSE);
 	BOOL UIEditClass(BObject* pobjClass);
@@ -277,11 +277,13 @@ protected:
 	afx_msg void OnObjProperties();
 	afx_msg void OnUpdateObjProperties(CCmdUI* pCmdUI);
 	afx_msg void OnObjPriorityHigh();
-	afx_msg void OnObjChangeClassContents();
-	afx_msg void OnObjChangeClassIcon();
 	afx_msg void OnObjChangeObjectClass();
 	afx_msg void OnObjChangeObjectContents();
-	afx_msg void OnObjChangeObjectIcon();
+	afx_msg void OnObjChangeClassIcon();
+
+//x	afx_msg void OnObjChangeObjectIcon();
+//x	afx_msg void OnObjChangeClassContents();
+
 	afx_msg void OnObjDelete();
 	afx_msg void OnObjMoveDown();
 	afx_msg void OnObjMoveUp();

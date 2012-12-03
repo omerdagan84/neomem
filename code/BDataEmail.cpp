@@ -83,16 +83,6 @@ void BDataEmail::Serialize(CArchive &ar)
 
 
 
-// Bring up dialog to edit string value.
-// Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataEmail::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
-{
-	ASSERT_VALID(this);
-
-	return ui.EditString(m_strText);
-}
-
-
 
 // Create a copy of this object
 BData* BDataEmail::CreateCopy()
@@ -112,9 +102,24 @@ BOOL BDataEmail::FindReferences(BObject* pobjFind)
 }
 
 
-//,, pass to ui
+// Bring up dialog to edit string value.
+// Updates value and returns TRUE if user hit OK in dialog.
+BOOL BDataEmail::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
+{
+	ASSERT_VALID(this);
+	// pobj and pobjpd can be zero
+
+	// okay to edit mstrtext directly because it IS the underlying representation
+	return ui.EditString(m_strText);
+
+}
+
+
+//xvoid BDataEmail::UIOnClick(CUI& ui)
 void BDataEmail::UIOnClick()
 {
+//	ui.OpenURL(
+
 	CString strMsg;
 	strMsg.Format("Send email to %s?", (LPCTSTR) m_strText);
 	if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))

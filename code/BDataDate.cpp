@@ -428,30 +428,21 @@ void BDataDate::Serialize(CArchive &ar)
 
 // Bring up dialog to enter date/time
 // Updates value and returns TRUE if user hit OK in dialog
-BOOL BDataDate::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataDate::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
 	// Check assumptions
 	ASSERT_VALID(this);
-	ASSERT_VALID(pobj);
-	ASSERT_VALID(pobjPropertyDef);
+	// pobj and pobjpd can be zero
+
+//x	ASSERT_VALID(pobj);
+//x	ASSERT_VALID(pobjPropertyDef);
 //	ASSERT_VALID(m_pobj); // not always true
 
 	// If storing a string bring up edit string dialog
 	if (m_bitsFlags.Type == flagString)
 	{
-
-//x
-		/*		CDialogEditString dlg;
-		dlg.m_strValue = m_strText;
-		if (dlg.DoModal() == IDOK)
-		{
-			// Save new string value
-			m_strText = dlg.m_strValue;
-			return TRUE;
-		}
-		*/
+		// okay to edit mstrtext directly because it IS the date representation in this case
 		return ui.EditString(m_strText);
-//x		return FALSE;
 	}
 
 	// Get current date/time if date is empty or invalid

@@ -25,7 +25,9 @@ public:
 	virtual CString GetBDataText(BDoc* pDoc=NULL, ULONG lngPropertyID=0, BOOL bMachineVersion=FALSE);
 	virtual void Serialize(CArchive &ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
-//x	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef);
+
+
+//x	virtual BOOL UIEditValue(CUI& ui, BObject* pobj = NULL, BObject* pobjPropertyDef = NULL);
 
 public:
 	void SetFlags(ULONG lngFlags) { m_lngFlags = lngFlags; };

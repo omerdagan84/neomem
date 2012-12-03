@@ -24,8 +24,11 @@ public:
 	virtual void ResetData(); // use this to reset m_bCacheValid flag
 	virtual void Serialize(CArchive& ar);
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
-	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui);
 
+
+	virtual BOOL UIEditValue(CUI& ui, BObject* pobj = NULL, BObject* pobjPropertyDef = NULL);
+
+public:
 	// These are selected in global options combo
 	enum eNameFormats {nfNone = 0, nfFirstLast = 1, nfLastFirst = 2, nfFirstLAST = 3, nfLASTFirst = 4};
 

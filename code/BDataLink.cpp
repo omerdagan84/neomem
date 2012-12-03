@@ -223,11 +223,11 @@ BOOL BDataLink::SetBDataText(const CString& str, BObject* pobjPropertyDef /* = 0
 
 // Bring up dialog to select object(s) to refer to for this link.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataLink::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataLink::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
 	// Check assumptions
 	ASSERT_VALID(this);
-//	ASSERT_VALID(pobj);
+	// pobj can be zero
 	ASSERT_VALID(pobjPropertyDef);
 //	ASSERT_VALID(m_pobj); // not always true
 	ASSERT(IsHard());

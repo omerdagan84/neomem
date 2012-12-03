@@ -117,13 +117,13 @@ ULONG BDataBoolean::GetMemoryUsed(BOOL bRecursive)
 
 // Bring up dialog to enter value
 // Updates value and returns TRUE if user hit OK in dialog
-BOOL BDataBoolean::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataBoolean::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
 	// Check assumptions
 	ASSERT_VALID(this);
-//	ASSERT_VALID(pobj); // compile error?
-//	ASSERT_VALID(pobjPropertyDef); // ditto
+	// pobj and pobjpd can be zero
 
+	// this is invalid - mstrtext is not in synch with mvalue
 //	return ui.EditString(m_strText);
 
 	CString str = this->GetBDataText();

@@ -85,9 +85,11 @@ void BDataWebsite::Serialize(CArchive &ar)
 
 // Bring up dialog to edit string value.
 // Updates value and returns TRUE if user hit OK in dialog.
-BOOL BDataWebsite::UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui)
+BOOL BDataWebsite::UIEditValue(CUI& ui, BObject* pobj, BObject* pobjPropertyDef)
 {
 	ASSERT_VALID(this);
+	// pobj and pobjpd can be zero
+
 	return ui.EditString(m_strText);
 }
 
@@ -113,26 +115,9 @@ BOOL BDataWebsite::FindReferences(BObject* pobjFind)
 }
 
 
-//,, ui stuff
-void BDataWebsite::UIOnClick()
+void BDataWebsite::UIOnClick(CUI& ui)
 {
-	CString strMsg;
-	strMsg.Format("Open the website %s?", (LPCTSTR) m_strText);
-	if (IDYES == AfxMessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
-	//,,
-//	if (IDYES == ui.MessageBox(strMsg, MB_ICONQUESTION + MB_YESNO))
-	{
-		CString strURL;
-		if (_tcsncmp((LPCTSTR) m_strText, _T("http://"), 7) == 0)
-			strURL = m_strText;
-		else
-			strURL.Format("http://%s", (LPCTSTR) m_strText);
-
-		//, put in ui.h
-		CWaitCursor wc;
-		HINSTANCE h = ::ShellExecute(NULL, "open", strURL, NULL, NULL, SW_SHOWNORMAL);
-		Library::HandleShellExecuteError(h);
-	}
+	ui.OpenURL(m_strText);
 }
 
 
@@ -152,11 +137,9 @@ CStringArray& BDataWebsite::UIGetCommands() {
 }
 
 
-
-
-BOOL BDataWebsite::UIHandleCommand(UINT nCommandID) {
-	if (nCommandID == 0) {
-		UIOnClick();
+BOOL BDataWebsite::UIHandleCommand(UINT nCommandID, CUI& ui) {
+	if (nCommandID == 0) { // goto website
+		UIOnClick(ui);
 		return TRUE;
 	}
 	return FALSE;

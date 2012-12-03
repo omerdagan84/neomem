@@ -38,16 +38,16 @@ public:
 	virtual BOOL SetBDataText(const CString& str, BObject* pobjPropertyDef = 0, BOOL bShowErrorMessage = TRUE);
 
 
-//, don't like how all these ui things wound up getting into this class. 
-// eventually handle with a ui callback object. 
 
-//x	virtual BOOL UIAddMenuItems(CMenu* pMenu, int nPos);
-	virtual BOOL UIEditValue(BObject* pobj, BObject* pobjPropertyDef, CUI& ui); //, ?
-	virtual CStringArray& UIGetCommands(); // maybe more common to do uigetcommands(csa& sa)?
-	virtual BOOL UIHandleCommand(UINT nCommandID);
-	virtual void UIOnClick();
-//x	virtual void UIOnMouseMove();
+	virtual BOOL UIEditValue(CUI& ui, BObject* pobj = NULL, BObject* pobjPropertyDef = NULL); //, ?
+	virtual CStringArray& UIGetCommands(); //, maybe more common to do uigetcommands(csa& sa)?
 	virtual int UIGetCursor();
+
+
+	virtual BOOL UIHandleCommand(UINT nCommandID);
+//	virtual BOOL UIHandleCommand(UINT nCommandID, CUI& ui);
+	virtual void UIOnClick();
+//	virtual void UIOnClick(CUI& ui);
 
 
 //x	BDataColumns* ToColumns();

@@ -134,11 +134,8 @@ void CCrypto::MakeKey(CString& strPassword)
 	if (!::CryptCreateHash(m_hProvider, m_nHashID, hMACKey, 0, &hHash))
 		Error();
 
-	// Hash the password string.
-	// is this where things are going wrong? i don't think so. it looks okay...
+	// Hash the password string and add it to the hash object.
 	const BYTE* pbBuffer = (const BYTE*) (LPCTSTR) strPassword;
-	// The CryptHashData function adds data to the specified hash object. 
-//	if (!::CryptHashData(hHash, (BYTE*) pszPassword, dwLength, 0)) 
 	if (!::CryptHashData(hHash, pbBuffer, dwLength, 0)) 
 		Error();
 

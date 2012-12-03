@@ -14,6 +14,8 @@
 //#include "BFolder.h"
 //#include "BClass.h"
 
+#include "BDataEmail.h"
+
 //, ui stuff
 //#include "GUI.h"
 #include "FrameChild.h"
@@ -706,19 +708,27 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
+		//, test file encryption, password function
+
+		TestEncryption();
+
+
+		doc.SetEncryption(); // and pw
+		doc.SaveAs();
+
+		doc.Close();
+		eh?
+
+		doc = BDoc::Open(); // w/password?
+
+
+
+
 		//, take code out of db into ui, eg bdoc.uiaddnewobject
 //		BObject* pobjnew = doc.UIAddNewObject();
 
 
-		// test odd dates
-
-
-
-
-
-
-
-
+		//, test odd dates (before jan 210)
 		//, go through view classes
 		//, go through dialog classes, incl propsheet
 		//, keep taking code out of ui into bdoc
@@ -732,7 +742,6 @@ void CTest::DoTests(CNeoMem& app) {
 //		BData* pdat = obj.GetPropertyData(propClassName);
 //		obj.SetPropertyData(propClassName, pdat);
 
-		//, test file encryption, password function
 		//, test pasting garbage into richedit, lots of data, etc.
 		//, figure out unicode stuff
 		//, check file upgrade process
@@ -741,9 +750,52 @@ void CTest::DoTests(CNeoMem& app) {
 		//, test file compression - oh not there yet
 		//, add simple password protection, no encryption
 
+
+
+
+
 		// ui stuff - put into ui level
+
+		// specific bdata cmds would be in the bdata files. self-contained tests? or separate file. eh. self-contained.
+		// test all the methods. 
+		{
+		CString s = "sculley@fbi.gov";
+		BDataEmail* pdat = new BDataEmail();
+		pdat->SetBDataText(s);
+		ASSERT(pdat->GetBDataText() == s);
+
+		CStringArray& sa = pdat->UIGetCommands();
+		ASSERT(sa.GetSize() == 1);
+		ASSERT(sa[0] == "&Send Email...");
+	
+//		pdat->UIEditValue(app.ui); // works
+
+
+		// set current and target objects. or just target i guess. 
+		// set to a folder
+		// get access to current view and call this on it? 
+		// in ui, pick fish class
+//		pview->OnObjChangeClassContents();
+		// then here check things work.
+		// first that fish class is new value
+		// then add something to a folder
+		// check that it's a fish
+
+		// so only user intervention needed is to pick fish
+		// but still, not tenable for long term use. 
+		// hm but want how can we move some of this to db?
+		// 
+
+
+
+		}
+
+
 /*
 		CUI& ui = app.ui;
+
+
+
 
 
 		// select the fish folder
@@ -789,6 +841,21 @@ void CTest::DoTests(CNeoMem& app) {
 //, beeps too loud		AfxMessageBox("All tests done.");
 
 }
+
+
+
+
+void TestEncryption() {
+
+
+	// load file, turn on encryption, save it new name, load it, turn off encryption, save as 3rd name,
+	// then compare first and third files
+
+	
+
+
+}
+
 
 
 

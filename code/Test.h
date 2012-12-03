@@ -16,6 +16,7 @@ public:
 
 
 	static void DoTests(CNeoMem& app);
+	static void TestEncryption();
 };
 
 

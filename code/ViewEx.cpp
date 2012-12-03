@@ -51,6 +51,13 @@ BEGIN_MESSAGE_MAP(CViewEx, CView)
 //	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipText)
 //	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
 	ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnToolTipText) // id of a tooltip is always zero
+
+	// moved from BDoc
+	ON_COMMAND(ID_OBJ_CHANGE_OBJECT_ICON, OnObjChangeObjectIcon)
+//x	ON_COMMAND(ID_OBJ_CHANGE_CLASS_ICON, OnObjChangeClassIcon)
+	ON_COMMAND(ID_OBJ_CHANGE_CLASS_CONTENTS, OnObjChangeClassContents)
+//	ON_COMMAND(ID_OBJ_CHANGE_OBJECT_CONTENTS, OnObjChangeObjectContents)
+
 	// user-defined message
 END_MESSAGE_MAP()
 
@@ -1381,5 +1388,85 @@ BOOL CViewEx::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pH
 	return bHandled;
 }
 */
+
+
+
+
+// Select the icon to be associated with the target object.
+//. don't let user set icon for classIcon objects!!
+void CViewEx::OnObjChangeObjectIcon() 
+{
+//x	// Bring up dialog with list of all icons in file, let user choose one
+//	if (m_pobjTarget) {
+//		ASSERT_VALID(m_pobjTarget);
+//		UIChangeObjectIcon(m_pobjTarget);
+//	}
+
+	BObject* pobj = m_pDoc->GetTargetObject();
+	if (!pobj) return;
+
+	// Get current icon and default icon
+	OBJID idIcon = pobj->GetIconID();
+	OBJID idDefaultIcon = pobj->GetDefaultIconID();
+
+	CDialogEditLink dlg;
+//	dlg.m_nMode = IDD_CHANGE_ICON;
+//	dlg.m_strCaption = "Change Icon";
+//	dlg.m_strInstructions = "Select an icon from the list below, or click on Import to import a new icon.";
+//	dlg.m_idStart = folderIcons;
+//	dlg.m_idSelected = idIcon;
+//	dlg.m_idDefault = idDefaultIcon;
+	dlg.m_nHelpID = IDD_CHANGE_OBJECT_ICON;
+	if (dlg.DoModalLinkSimple("Change Icon", 
+			"&Select an icon from the list below, or click on Import to import a new icon.", 
+			folderIcons, idIcon, idDefaultIcon, app.m_lngExcludeFlags) == IDOK) {
+		// Check if icon changed
+		OBJID idNewIcon = dlg.m_lngSelectedID;
+		if (idIcon != idNewIcon && idNewIcon != 0) {
+			// This will set doc modified flag and update views
+			pobj->SetIconID(idNewIcon);
+		}
+	}
+}
+
+
+
+
+
+
+
+// Change the default contents for the target object's class.
+void CViewEx::OnObjChangeClassContents() {
+
+	BObject* pobj = m_pDoc->GetTargetObject();
+	if (!pobj) return;
+
+	// Get object's class
+	pobj = pobj->GetClassObject();
+	ASSERT_VALID(pobj);
+
+	OBJID idClass = pobj->GetPropertyLink(propObjectDefaultClass);
+	//, move out of ui!
+	if (idClass == 0)
+		idClass = classPaper;
+
+
+	CDialogEditLink dlg;
+	dlg.m_nHelpID = IDD_CHANGE_CLASS_CONTENTS;
+	CString strInstructions;
+	strInstructions.Format("&Select the class that will be added to objects of the class '%s' by default.", 
+		(LPCTSTR) pobj->GetPropertyString(propName));
+	if (dlg.DoModalLinkSimple("Change Class Contents", strInstructions,
+					rootClass, idClass, idClass, app.m_lngExcludeFlags) == IDOK) {
+		// Check if class changed
+		OBJID idNewClass = dlg.m_lngSelectedID;
+		if (idClass != idNewClass && idNewClass != 0) {
+			BObject* pobjNewClass = dlg.m_pobjSelected;
+			ASSERT_VALID(pobjNewClass);
+			// This will set document modified flag and update views
+			pobj->SetPropertyLink(propObjectDefaultClass, pobjNewClass->id);
+		}
+	}
+}
 
 
