@@ -115,9 +115,13 @@ public:
 	BObject& NewObject(const OBJID idClass, const CString& strName, OBJID idLocation = NULL);
 //x	OBJID NewProperty(const CString& strName, OBJID idPropType, const CString& strDescription);
 	void RemoveObjectFromIndex(OBJID idObject);
-	void Save(LPCTSTR pszFilename = NULL, BOOL bReplace = TRUE);
+//	void Save(LPCTSTR pszFilename = NULL, BOOL bReplace = TRUE);
+//	void SaveAs(BOOL bReplace = TRUE);
+	void Save(BOOL bReplace = TRUE);
+	void SaveAs(LPCTSTR pszFilename, BOOL bReplace = TRUE);
 	BOOL SaveModifiedBackup();
 	void SetCurrentObject(BObject* pobjCurrent, CView* pSender = NULL, BOOL bNavigating = FALSE);
+	void SetEncryption(EncryptionTypes nEncryption, LPCTSTR pszPassword = NULL);
 	virtual void SetModifiedFlag(BOOL bModified = TRUE);
 	void SetRoot(BObject* pobj);
 	void SetTargetObject(BObject* pobj);

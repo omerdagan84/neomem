@@ -3979,17 +3979,41 @@ void BDoc::RemoveObjectFromIndex(OBJID idObject)
 
 
 // Prompt user for filename if not specified
-void BDoc::Save(LPCTSTR pszFilename, BOOL bReplace) {
-	if (pszFilename)
-		DoSave(pszFilename, bReplace);
-	else
-		OnFileSave();
+//void BDoc::Save(LPCTSTR pszFilename, BOOL bReplace) {
+void BDoc::Save(BOOL bReplace) {
+//	if (pszFilename)
+//		DoSave(pszFilename, bReplace);
+//	else
+//		OnFileSave();
+
+	// uh, this always prompts for filename? 
+	// then get filename from this-> 
+	// check if it's uninitialized, call dosave or onfilesave
+	// and breplace?
+	OnFileSave();
+
 }
 
 
+// Prompt user for filename
+void BDoc::SaveAs(LPCTSTR pszFilename, BOOL bReplace) {
+	DoSave(pszFilename, bReplace);
+}
+
+
+// this just provides access to cdoc's protected method
 void BDoc::OnFileSave()
 {
 	CDocument::OnFileSave();
 }
+
+
+
+void BDoc::SetEncryption(EncryptionTypes nEncryption, LPCTSTR pszPassword = NULL) {
+	m_nEncryptionType = nEncryption;
+//?	if (pszPassword)
+		m_strPassword = pszPassword;
+}
+
 
 

@@ -706,20 +706,30 @@ void CTest::DoTests(CNeoMem& app) {
 
 
 
+		doc.SaveAs();
 
 
 		//, test file encryption, password function
 
-		TestEncryption();
+//x		TestEncryption();
+
+		// so we have this file, and we want to encrypt it when we next save it. 
+		// so we set the encryption properties and save it. simplest api. 
+		// but why is password optional? um. eh leave it required for now. 
+
+		//, cf uisetencryption
+
+		// enum EncryptionTypes {encryptNone = 0, encryptRC4 = 1};
+		// then password
+		doc.SetEncryption(BDoc::encryptRC4, "hello"); 
+		doc.SaveAs("TestEncryption.neo");
+		doc.SetEncryption(BDoc::encryptNone); 
 
 
-		doc.SetEncryption(); // and pw
-		doc.SaveAs();
+//		doc.Close();
+//		eh?
 
-		doc.Close();
-		eh?
-
-		doc = BDoc::Open(); // w/password?
+//		doc = BDoc::Open(); // w/password?
 
 
 
@@ -825,8 +835,9 @@ void CTest::DoTests(CNeoMem& app) {
 
 		// save doc
 //		doc.Save(); // if modified brings up saveas dialog etc
-		doc.Save("../test/files/TestRun.neo");
-
+//		doc.Save("../test/files/TestRun.neo");
+		doc.SaveAs("../test/files/TestRun.neo");
+		doc.Save(); // should not bring up dialog. 
 
 
 
