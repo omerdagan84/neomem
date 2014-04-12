@@ -1,20 +1,27 @@
-
-NeoMem 1.2d
-An information manager (word processor+database)
+NeoMem 1.2d  
+An information manager  
 C++/MFC 50k sloc
-------------------------------------------------------------------------
+<hr/>
 
-The backend for the program is called Brooklyn - the BDocument, BData 
-and BObject classes contain that. 
+NeoMem is a kind of cross between a word processor and a database,
+with an interface similar to Windows Explorer. 
 
-Some things to do are marked with //. comments, or //, for lower 
-priority items. or //! for high priority. 
+You can define types of objects you want to store, e.g. Projects, 
+Computers, Cars, and properties for them, e.g. Due Date, Processor, 
+License Plate. Objects can be stored in folders, and the complete
+tree of objects is available in a pane on the left side. 
 
-It uses Rake to build the project, except for the actual compilation, 
+The backend for the program is called Brooklyn, and is contained in
+the BDocument, BData and BObject classes. 
+
+Some things to do in the code are marked with //. comments, 
+or //, for lower priority items, or //! for high priority. 
+
+Rake is used to build the project, except for the actual compilation, 
 as calling msdev from the cmdline seems to leave out the version info. 
-So install Rake [1], and say rake -T to see the list of tasks it can do, 
-eg
+Call rake -T to see the list of tasks it can do, e.g.
 
+```
 > rake -T
 
 rake build     # build the exe (broken!)
@@ -26,8 +33,7 @@ rake readme    # Update the readme file
 rake setup     # make setup files and zips etc
 rake version   # Update the project's version information
 rake website   # Update the website
+```
 
 
 [1] http://rake.rubyforge.org/
-
-
