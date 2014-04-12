@@ -1,5 +1,5 @@
-NeoMem 1.2d  
-An information manager  
+**NeoMem, an information manager**  
+Version 1.2d  
 C++/MFC 50k sloc
 <hr/>
 
